@@ -1,0 +1,132 @@
+{
+  "Actor": {
+    "types": ["character"],
+    "templates": {
+      "base": {
+        "health": {
+          "value": 10,
+          "min": 0,
+          "max": 10
+        },
+        "power": {
+          "value": 5,
+          "min": 0,
+          "max": 5
+        }
+      }
+    },
+    "character": {
+      "templates": ["base"],
+      "biography": "",
+      "attributes": {
+        "level": {
+          "value": 1
+        }
+      },
+      "abilities": {
+        "str": {
+          "name": "ACTOR.AbilStrength",  
+          "min": 0,
+          "value": 10,
+          "fvalue": 0,
+          "max": 99
+        },
+        "int": {
+          "name": "ACTOR.AbilStrength",  
+          "min": 0,
+          "value": 10,
+          "fvalue": 0,
+          "max": 99
+        },
+        "wis": {
+          "name": "ACTOR.AbilStrength",  
+          "min": 0,
+          "value": 10,
+          "fvalue": 0,
+          "max": 99
+        },
+        "dex": {
+          "name": "ACTOR.AbilStrength",  
+          "min": 0,
+          "value": 10,
+          "fvalue": 0,
+          "max": 99
+        },
+        "con": {
+          "name": "ACTOR.AbilStrength",  
+          "min": 0,
+          "value": 10,
+          "fvalue": 0,
+          "max": 99
+        },
+        "lks": {
+          "name": "ACTOR.AbilStrength",  
+          "min": 0,
+          "value": 10,
+          "fvalue": 0,
+          "max": 99
+        },
+        "cha": {
+          "name": "ACTOR.AbilStrength",  
+          "min": 0,
+          "value": 10,
+          "fvalue": 0,
+          "max": 99
+        }
+      }
+    }
+  },
+  "Item": {
+    "types": ["item", "feature", "spell", "skill"],
+    "templates": {
+      "base": {
+        "description": ""
+      }
+    },
+    "item": {
+      "templates": ["base"],
+      "quantity": 1,
+      "weight": 0
+    },
+    "feature": {
+      "templates": ["base"]
+    },
+    "spell": {
+      "templates": ["base"],
+      "spellLevel": 1
+    },
+    "skill": {
+      "templates": ["base"],
+      "value": 0,
+      "bp": {
+        "value": 1
+      },
+      "universal": {
+        "value": false
+      },
+      "abilities": {
+        "str": {
+          "value": false
+        },
+        "int": {
+          "value": false
+        },
+        "wis": {
+          "value": false
+        },
+        "dex": {
+          "value": false
+        },
+        "con": {
+          "value": false
+        },
+        "lks": {
+          "value": false
+        },
+        "cha": {
+          "value": false
+        }
+      }
+    }
+  }
+}

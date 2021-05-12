@@ -1,0 +1,23 @@
+{
+    "ACTOR": {
+        "ability_short": {
+            "str": "STR",
+            "int": "INT",
+            "wis": "WIS",
+            "dex": "DEX",
+            "con": "CON",
+            "lks": "LKS",
+            "cha": "CHA"
+        },
+
+        "ability": {
+            "str": "Strength",
+            "int": "Intelligence",
+            "wis": "Wisdom",
+            "dex": "Dexterity",
+            "con": "Constitution",
+            "lks": "Looks",
+            "cha": "Charisma"
+        }
+    }
+}

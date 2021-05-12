@@ -1,0 +1,29 @@
+{
+    "name": "hackmaster",
+    "title": "Hackmaster 5th Edition",
+    "description": "Unofficial system for Hackmaster 5e by Kenzer and Co.",
+    "version": "0.0",
+    "minimumCoreVersion": "0.8.2",
+    "compatibleCoreVersion": "0.8.3",
+    "templateVersion": 1,
+    "author": "n0q",
+    "authors": [
+      {
+        "name": "n0q",
+        "discord": "n0qtrnL#2610"
+      }
+    ],
+    "esmodules": [
+        "module/hackmaster.js"
+    ],
+    "styles": [
+        "styles/hackmaster.css"
+    ],
+    "languages": [
+      {  
+        "lang": "en",
+        "name": "English",
+        "path": "lang/en.json"
+      }
+    ]
+}
