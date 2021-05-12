@@ -2,10 +2,10 @@
     <section class="sheet-body">
         <div class="attributes" data-group="primary" data-tab="attributes">
             <div class="resource">
-                <label class="resource-label">wound</label><br>
+                <label class="resource-label">{{localize "WOUND.wound"}}</label><br>
                 HP: <input type="text" name="data.hp.value" value="{{data.data.hp.value}}" data-dtype="Number"/>
-                Duration: <input type="text" name="data.duration.value" value="{{data.data.duration.value}}" data-dtype="Number"/>
-                Treated: <input type="checkbox" name="data.treated" {{checked data.data.treated}}/>
+                {{localize "WOUND.duration"}}: <input type="text" name="data.duration.value" value="{{data.data.duration.value}}" data-dtype="Number"/>
+                {{localize "WOUND.treated"}}: <input type="checkbox" name="data.treated" {{checked data.data.treated}}/>
             </div>
         </div>
     </section>

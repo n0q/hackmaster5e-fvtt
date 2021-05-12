@@ -18,6 +18,18 @@
             "con": "Constitution",
             "lks": "Looks",
             "cha": "Charisma"
-        }
+        },
+
+        "age": "Age",
+        "class": "Class",
+        "race": "Race"
+
+    },
+
+
+    "WOUND": {
+        "wound": "Wound",
+        "duration": "Duration",
+        "treated": "Treated"
     }
 }
