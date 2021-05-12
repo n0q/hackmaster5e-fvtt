@@ -8,7 +8,7 @@ export class HackmasterActorSheet extends ActorSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["hackmaster", "sheet", "actor"],
-      template: "systems/hackmaster/templates/actor/actor-sheet.hbs",
+      template: "systems/hackmaster5e/templates/actor/actor-sheet.hbs",
       width: 600,
       height: 600,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]

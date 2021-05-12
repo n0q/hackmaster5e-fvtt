@@ -16,7 +16,7 @@ export class HackmasterItemSheet extends ItemSheet {
 
   /** @override */
   get template() {
-    const path = "systems/hackmaster/templates/item";
+    const path = "systems/hackmaster5e/templates/item";
     // Return a single sheet for all item types.
     // return `${path}/item-sheet.html`;
 

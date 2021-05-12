@@ -1,5 +1,5 @@
 {
-    "name": "hackmaster",
+    "name": "hackmaster5e",
     "title": "Hackmaster 5th Edition",
     "description": "Unofficial system for Hackmaster 5e by Kenzer and Co.",
     "version": "0.0",
@@ -25,5 +25,6 @@
         "name": "English",
         "path": "lang/en.json"
       }
-    ]
+    ],
+    "manifest": "https://raw.githubusercontent.com/n0q/hackmaster5e-fvtt/main/system.json"
 }
