@@ -1,5 +1,5 @@
 {
-    "ACTOR": {
+    "HM": {
         "ability_short": {
             "str": "STR",
             "int": "INT",
@@ -20,16 +20,21 @@
             "cha": "Charisma"
         },
 
-        "age": "Age",
-        "class": "Class",
-        "race": "Race"
-
-    },
+        "bp": "bp",
+        "hp": "hp",
+        "sp": "sp",
 
 
-    "WOUND": {
-        "wound": "Wound",
-        "duration": "Duration",
-        "treated": "Treated"
+        "age":          "Age",
+        "class":        "Class",
+        "duration":     "Duration",
+        "mastery":      "Mastery",
+        "tools":        "Tools",
+        "treated":      "Treated",
+        "race":         "Race",
+        "skill":        "Skill",
+        "specific":     "Specific",
+        "universal":    "Universal",
+        "wound":        "Wound"
     }
 }
