@@ -28,6 +28,8 @@
         "age":          "Age",
         "class":        "Class",
         "duration":     "Duration",
+        "language":     "Language",
+        "literate":     "Literate",
         "mastery":      "Mastery",
         "tools":        "Tools",
         "treated":      "Treated",

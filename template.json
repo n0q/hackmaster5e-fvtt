@@ -18,48 +18,13 @@
 
             "statblock": {
                 "abilities": {
-                    "str": {
-                        "min": 0,
-                        "value": 10,
-                        "fvalue": 0,
-                        "max": 99
-                    },
-                    "int": {
-                        "min": 0,
-                        "value": 10,
-                        "fvalue": 0,
-                        "max": 99
-                    },
-                    "wis": {
-                        "min": 0,
-                        "value": 10,
-                        "fvalue": 0,
-                        "max": 99
-                    },
-                    "dex": {
-                        "min": 0,
-                        "value": 10,
-                        "fvalue": 0,
-                        "max": 99
-                    },
-                    "con": {
-                        "min": 0,
-                        "value": 10,
-                        "fvalue": 0,
-                        "max": 99
-                    },
-                    "lks": {
-                        "min": 0,
-                        "value": 10,
-                        "fvalue": 0,
-                        "max": 99
-                    },
-                    "cha": {
-                        "min": 0,
-                        "value": 10,
-                        "fvalue": 0,
-                        "max": 99
-                    }
+                    "str": {"min": 0, "value": 10, "fvalue": 0, "max": 99},
+                    "int": {"min": 0, "value": 10, "fvalue": 0, "max": 99},
+                    "wis": {"min": 0, "value": 10, "fvalue": 0, "max": 99},
+                    "dex": {"min": 0, "value": 10, "fvalue": 0, "max": 99},
+                    "con": {"min": 0, "value": 10, "fvalue": 0, "max": 99},
+                    "lks": {"min": 0, "value": 10, "fvalue": 0, "max": 99},
+                    "cha": {"min": 0, "value": 10, "fvalue": 0, "max": 99}
                 }
             }
         },
@@ -90,47 +55,52 @@
         "feature": {
             "templates": ["base"]
         },
+
         "spell": {
             "templates": ["base"],
-            "spellLevel": 1
+            "divine": {"checked": false, "value": ""},
+            "component": {
+                "verbal":   {"checked": true},
+                "somatic":  {"checked": true},
+                "material": {"checked": true},
+                "catalyst": {"checked": false},
+                "iconic":   {"checked": false}
+            },
+            "speed": {"min": 0, "value": null, "max": 9999},
+            "sp":    {"min": 0, "value": null, "max": 999},
+            "level": ""       
         },
 
         "skill": {
             "templates": ["base"],
-            "level": {
-                "min": 0,
-                "value": 0,
-                "max": 999
+            "mastery":   {"min": 0, "value": 0, "max": 999},
+            "bp":        {"min": 0, "value": null, "max": 99},
+            "specific":  {"checked": false, "value": ""},
+            "universal": {"checked": false},
+            "tools":     {"checked": false},
+            "language":  {
+                "checked": false,
+                "literate": {
+                    "checked": false,
+                    "mastery": {"min": 0, "value": 0, "max": 999}
+                }
             },
-            "bp": {
-                "min": 0,
-                "value": 0,
-                "max": 99
-            },
-            "universal": false,
-            "tools": false,
             "abilities": {
-                "str": false,
-                "int": false,
-                "wis": false,
-                "dex": false,
-                "con": false,
-                "lks": false,
-                "cha": false
+                "str": {"checked": false},
+                "int": {"checked": false},
+                "wis": {"checked": false},
+                "dex": {"checked": false},
+                "con": {"checked": false},
+                "lks": {"checked": false},
+                "cha": {"checked": false}
             }
         },
 
         "wound": {
             "templates": ["base"],
-            "hp": {
-                "min": 0,
-                "value": 0
-            },
-            "duration": {
-                "min": 0,
-                "value": 0
-            },
-            "treated": false
+            "hp":       {"min": 0, "value": null},
+            "duration": {"min": 0, "value": null},
+            "treated":  {"checked": false}
         }
     }
 }
