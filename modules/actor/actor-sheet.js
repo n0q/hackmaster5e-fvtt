@@ -44,6 +44,7 @@ export class HackmasterActorSheet extends ActorSheet {
     const actorData = sheetData.actor;
 
     // Initialize containers.
+    const skills = [];
     const gear = [];
     const features = [];
     const spells = {
@@ -101,14 +102,15 @@ export class HackmasterActorSheet extends ActorSheet {
     // Update Inventory Item
     html.find('.item-edit').click(ev => {
       const li = $(ev.currentTarget).parents(".item");
-      const item = this.actor.getOwnedItem(li.data("itemId"));
+      const item = this.actor.items.get(li.data("itemId"));
       item.sheet.render(true);
     });
 
     // Delete Inventory Item
     html.find('.item-delete').click(ev => {
       const li = $(ev.currentTarget).parents(".item");
-      this.actor.deleteOwnedItem(li.data("itemId"));
+      const item = this.actor.items.get(li.data("itemId"));
+      item.delete();
       li.slideUp(200, () => this.render(false));
     });
 
@@ -131,7 +133,7 @@ export class HackmasterActorSheet extends ActorSheet {
    * @param {Event} event   The originating click event
    * @private
    */
-  _onItemCreate(event) {
+async _onItemCreate(event) {
     event.preventDefault();
     const header = event.currentTarget;
     // Get the type of item to create.
@@ -150,7 +152,7 @@ export class HackmasterActorSheet extends ActorSheet {
     delete itemData.data["type"];
 
     // Finally, create the item!
-    return this.actor.createOwnedItem(itemData);
+      return await Item.create(itemData, {parent: this.actor});
   }
 
   /**

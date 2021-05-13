@@ -15,17 +15,17 @@
               <div class="resource flex-group-center">
                   <label for="data.health.value" class="resource-label">Health</label>
                   <div class="resource-content flexrow flex-center flex-between">
-                    <input type="text" name="data.health.value" value="{{data.health.value}}" data-dtype="Number"/>
+                    <input type="text" name="data.health.value" value="{{data.data.health.value}}" data-dtype="Number"/>
                     <span> / </span>
-                    <input type="text" name="data.health.max" value="{{data.health.max}}" data-dtype="Number"/>
+                    <input type="text" name="data.health.max" value="{{data.data.health.max}}" data-dtype="Number"/>
                   </div>
               </div>
               <div class="resource flex-group-center">
                   <label for="data.power.value" class="resource-label">Power</label>
                   <div class="resource-content flexrow flex-center flex-between">
-                    <input type="text" name="data.power.value" value="{{data.power.value}}" data-dtype="Number"/>
+                    <input type="text" name="data.power.value" value="{{data.data.power.value}}" data-dtype="Number"/>
                     <span> / </span>
-                    <input type="text" name="data.power.max" value="{{data.power.max}}" data-dtype="Number"/>
+                    <input type="text" name="data.power.max" value="{{data.data.power.max}}" data-dtype="Number"/>
                   </div>
               </div>
           </div>
@@ -37,7 +37,7 @@
               
               <div class="ability flexrow flex-group-center">
                 <label for="data.data.abilities.{{key}}.value" class="resource-label">{{localize (findConfigValue "ability_short" key)}}</label>
-                <input type="text" name="data.data.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number"/>
+                <input type="text" name="data.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number"/>
                 <span class="ability-mod rollable" data-roll="d20+@abilities.{{key}}.mod" data-label="{{key}}">{{numberFormat ability.mod decimals=0 sign=true}}</span>
               </div>
             {{/each}}
@@ -76,7 +76,7 @@
                   </div>
                 </li>
             {{#each actor.items as |item id|}}
-                <li class="item flexrow" data-item-id="{{item._id}}">
+                <li class="item flexrow" data-item-id="{{item.id}}">
                     <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/></div>
                     <h4 class="item-name">{{item.name}}</h4>
                     <div class="item-controls">
