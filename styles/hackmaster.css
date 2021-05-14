@@ -196,3 +196,39 @@
   flex: 0 0 86px;
   text-align: right;
 }
+.hackmaster .skills-list {
+  list-style: none;
+  margin: 7px 0;
+  padding: 0;
+  overflow-y: auto;
+}
+.hackmaster .skills-list .skills-header {
+  font-weight: bold;
+}
+.hackmaster .skills-list .skill {
+  height: 30px;
+  line-height: 24px;
+  padding: 3px 0;
+  border-bottom: 1px solid #BBB;
+}
+.hackmaster .skills-list .skill .skill-image {
+  flex: 0 0 24px;
+  margin-right: 5px;
+}
+.hackmaster .skills-list .skill img {
+  display: block;
+}
+.hackmaster .skills-list .skill-name {
+  margin: 0;
+}
+.hackmaster .skills-list .skill-controls {
+  flex: 0 1 auto;
+  text-align: right;
+}
+.hackmaster .skills-list .skill-column {
+  display: flex;
+  flex-direction: row;
+}
+.hackmaster .skills-list .skill-column div {
+  flex: 1 0 auto;
+}

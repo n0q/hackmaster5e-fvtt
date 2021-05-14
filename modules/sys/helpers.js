@@ -34,4 +34,16 @@ export default function registerHandlebarsHelpers() {
         return "INVALID_LIST";
     });
 
+    // TODO: Arbitrary splits.
+    Handlebars.registerHelper("each_div_split", (context, options) => {
+        var ret = "";
+        const midpoint = Math.floor(context.length / 2) - 1;
+        for (var i = 0, j = context.length; i < j; i++) {
+            ret = ret + options.fn(context[i]);
+            if (i === midpoint) {
+                ret = ret + "</div><div>";
+            }
+        }
+        return ret;
+    });
 }

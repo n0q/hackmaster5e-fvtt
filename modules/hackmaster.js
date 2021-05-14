@@ -31,8 +31,8 @@ Hooks.once("init", async() => {
 Hooks.once("ready", async() => {
     LOGGER.log("Ready start.");
     // render a sheet to the screen as soon as we enter, for testing purposes.
-    game.items.contents[0].sheet.render(true);
-    game.actors.contents[0].sheet.render(true);
+    // game.items.contents[0].sheet.render(true);
+    // game.actors.contents[0].sheet.render(true);
 
     LOGGER.log("Ready complete.");
 });
