@@ -47,9 +47,9 @@
 
     {{!-- Sheet Tab Navigation --}}
     <nav class="sheet-tabs tabs" data-group="primary">
+        <a class="item" data-tab="skills">{{localize "HM.skills"}}</a>
         <a class="item" data-tab="description">Description</a>
-        <a class="item" data-tab="items">Items</a>
-        <a class="item" data-tab="skills">Skills</a>
+        <a class="item" data-tab="items">{{localize "HM.inventory"}}</a>
     </nav>
 
     {{!-- Sheet Body --}}
@@ -57,7 +57,25 @@
 
         {{!-- Skills Tab --}}
         <div class="tab skills" data-group="primary" data-tab="skills">
-            Test
+            <ol class="items-list">
+                <li class="item flexrow item-header">
+                  <div class="item-image"></div>
+                  <div class="item-name">Name</div>
+                  <div class="item-controls">
+                    <a class="item-control item-create" title="Create item" data-type="skill"><i class="fas fa-plus"></i> Add item</a>
+                  </div>
+                </li>
+            {{#each actor.skills as |item id|}}
+                <li class="item flexrow" data-item-id="{{item._id}}">
+                    <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/></div>
+                    <h4 class="item-name">{{item.name}}</h4>
+                    <div class="item-controls">
+                        <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+                        <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                    </div>
+                </li>
+            {{/each}}
+            </ol>
         </div>
 
         {{!-- Biography Tab --}}
@@ -75,8 +93,8 @@
                     <a class="item-control item-create" title="Create item" data-type="item"><i class="fas fa-plus"></i> Add item</a>
                   </div>
                 </li>
-            {{#each actor.items as |item id|}}
-                <li class="item flexrow" data-item-id="{{item.id}}">
+            {{#each actor.gear as |item id|}}
+                <li class="item flexrow" data-item-id="{{item._id}}">
                     <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/></div>
                     <h4 class="item-name">{{item.name}}</h4>
                     <div class="item-controls">

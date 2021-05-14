@@ -5,7 +5,7 @@ import { HackmasterItemSheet } from "./item/item-sheet.js";
 
 import LOGGER from "./utils/logger.js";
 
-import registerHandlebarsHelpers from "./system/helpers.js";
+import registerHandlebarsHelpers from "./sys/helpers.js";
 
 import './dice.js';
 
@@ -35,4 +35,19 @@ Hooks.once("ready", async() => {
     game.actors.contents[0].sheet.render(true);
 
     LOGGER.log("Ready complete.");
+});
+
+Hooks.on("createActor", async (actor) => {
+    // TODO: Localize skill pack before pushing.
+    if (actor.items.size === 0) {
+        const skillPack = game.packs.get("hackmaster5e.skills");
+        const skillIndex = await skillPack.getIndex();
+        let toAdd = [];
+        for (let idx of skillIndex) {
+            let _ = await skillPack.getDocument(idx._id);
+            toAdd.push(_.data);
+        }
+
+        await actor.createEmbeddedDocuments("Item", toAdd);
+     }
 });

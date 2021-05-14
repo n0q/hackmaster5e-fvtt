@@ -11,7 +11,7 @@ export class HackmasterActorSheet extends ActorSheet {
       template: "systems/hackmaster5e/templates/actor/actor-sheet.hbs",
       width: 600,
       height: 600,
-      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]
+      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "skills" }]
     });
   }
 
@@ -63,26 +63,30 @@ export class HackmasterActorSheet extends ActorSheet {
     // Iterate through items, allocating to containers
     // let totalWeight = 0;
     for (let i of sheetData.items) {
-      let item = i.data;
-      i.img = i.img || DEFAULT_TOKEN;
-      // Append to gear.
-      if (i.type === 'item') {
-        gear.push(i);
-      }
-      // Append to features.
-      else if (i.type === 'feature') {
-        features.push(i);
-      }
-      // Append to spells.
-      else if (i.type === 'spell') {
-        if (i.data.spellLevel != undefined) {
-          spells[i.data.spellLevel].push(i);
+        let item = i.data;
+        i.img = i.img || DEFAULT_TOKEN;
+
+        switch(i.type) {
+            case "item":
+                gear.push(i);
+                break;
+            case "skill":
+                skills.push(i);
+                break;
+            case "features":
+                features.push(i);
+                break;
+            case "spell":
+                if (i.data.spellLevel != undefined) {
+                    spells[i.data.spellLevel].push(i);
+                }
+                break;
         }
-      }
     }
 
     // Assign and return
     actorData.gear = gear;
+    actorData.skills = skills;
     actorData.features = features;
     actorData.spells = spells;
   }

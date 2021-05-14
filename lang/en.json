@@ -28,6 +28,7 @@
         "age":          "Age",
         "class":        "Class",
         "duration":     "Duration",
+        "inventory":    "Inventory",
         "language":     "Language",
         "literate":     "Literate",
         "mastery":      "Mastery",
@@ -35,6 +36,7 @@
         "treated":      "Treated",
         "race":         "Race",
         "skill":        "Skill",
+        "skills":       "Skills",
         "specific":     "Specific",
         "universal":    "Universal",
         "wound":        "Wound"
