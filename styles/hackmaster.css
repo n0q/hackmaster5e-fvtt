@@ -232,3 +232,11 @@
 .hackmaster .skills-list .skill-column div {
   flex: 1 0 auto;
 }
+.hackmaster .actor-sheet {
+  display: grid;
+  grid-gap: 4 px;
+  width: 600px;
+  grid-template-rows: auto;
+  grid-template-columns: auto;
+  grid-template-areas: "sheet-header" "sheet-abilities" "sheet-tabs" "sheet-body";
+}

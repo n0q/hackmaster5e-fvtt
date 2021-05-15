@@ -39,9 +39,9 @@ export default function registerHandlebarsHelpers() {
         var ret = "";
         const midpoint = Math.floor(context.length / 2) - 1;
         for (var i = 0, j = context.length; i < j; i++) {
-            ret = ret + options.fn(context[i]);
+            ret += options.fn(context[i]);
             if (i === midpoint) {
-                ret = ret + "</div><div>";
+                ret += "</div><div>";
             }
         }
         return ret;

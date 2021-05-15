@@ -6,6 +6,7 @@ import { HackmasterItemSheet } from "./item/item-sheet.js";
 import LOGGER from "./utils/logger.js";
 
 import registerHandlebarsHelpers from "./sys/helpers.js";
+import preloadHandlebarsTemplates from "./sys/partials.js";
 
 import './dice.js';
 
@@ -25,6 +26,7 @@ Hooks.once("init", async() => {
     Items.registerSheet("hackmaster", HackmasterItemSheet, { makeDefault: true });
 
     registerHandlebarsHelpers();
+    preloadHandlebarsTemplates();
     LOGGER.log("Initialization complete.");
 });
 

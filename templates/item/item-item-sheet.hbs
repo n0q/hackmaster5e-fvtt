@@ -4,18 +4,18 @@
         <div class="header-fields">
             <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
             <div class="grid grid-3col">
-              <div class="resource">
-                  <label class="resource-label">{{localize "HM.quantity"}}</label>
-                  <input type="number" name="data.quantity.value" value="{{data.data.quantity.value}}" data-dtype="Number"/>
-              </div>
-              <div class="resource">
-                  <label class="resource-label">{{localize "HM.weight"}}</label>
-                  <input type="number" name="data.weight.value" value="{{data.data.weight.value}}" data-dtype="Number"/>
-              </div>
-              <div class="resource">
-                  <label class="resource-label">{{localize "HM.cost"}}</label>
-                  <input type="number" name="data.cost.value" value="{{data.data.cost.value}}" data-dtype="Number"/>
-              </div>
+                <div class="resource">
+                    <label class="resource-label">{{localize "HM.quantity"}}</label>
+                    <input type="number" name="data.quantity.value" value="{{data.data.quantity.value}}" data-dtype="Number"/>
+                </div>
+                <div class="resource">
+                    <label class="resource-label">{{localize "HM.weight"}}</label>
+                    <input type="number" name="data.weight.value" value="{{data.data.weight.value}}" data-dtype="Number"/>
+                </div>
+                <div class="resource">
+                    <label class="resource-label">{{localize "HM.cost"}}</label>
+                    <input type="number" name="data.cost.value" value="{{data.data.cost.value}}" data-dtype="Number"/>
+                </div>
             </div>
         </div>
     </header>
@@ -54,13 +54,11 @@
             <li class="item flexrow">
                 <label class="resource-label">{{localize "HM.quality"}}</label>
                 <select name="data.quality" data-dtype="{{data.quality}}">
-                    {{#select data.data.quality}}
-                    {{#each (findConfigObj "quality") as |type t| }}
-                    <option value="{{t}}">{{localize type}}</option>
-                    {{/each}}
-                    {{/select}}
-                 </select>
+                    {{#select data.data.quality}}{{#each (findConfigObj "quality") as |type t|}}
+                        <option value="{{t}}">{{localize type}}</option>
+                    {{/each}}{{/select}}
+                </select>
             </li>
-        </div>
+        </div> 
     </section>
 </form>
