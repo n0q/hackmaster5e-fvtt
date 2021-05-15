@@ -3,14 +3,18 @@
         <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
         <div class="header-fields">
             <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
-            <div class="grid grid-2col">
+            <div class="grid grid-3col">
               <div class="resource">
-                <label class="resource-label">Quantity</label>
-                  <input type="text" name="data.quantity" value="{{data.quantity}}" data-dtype="Number"/>
+                  <label class="resource-label">{{localize "HM.quantity"}}</label>
+                  <input type="number" name="data.quantity.value" value="{{data.data.quantity.value}}" data-dtype="Number"/>
               </div>
               <div class="resource">
-                <label class="resource-label">Weight</label>
-                  <input type="text" name="data.weight" value="{{data.weight}}" data-dtype="Number"/>
+                  <label class="resource-label">{{localize "HM.weight"}}</label>
+                  <input type="number" name="data.weight.value" value="{{data.data.weight.value}}" data-dtype="Number"/>
+              </div>
+              <div class="resource">
+                  <label class="resource-label">{{localize "HM.cost"}}</label>
+                  <input type="number" name="data.cost.value" value="{{data.data.cost.value}}" data-dtype="Number"/>
               </div>
             </div>
         </div>
@@ -32,7 +36,31 @@
 
         {{!-- Attributes Tab --}}
         <div class="tab attributes" data-group="primary" data-tab="attributes">
-            {{!-- As you add new fields, add them in here! --}}
+            <div class="grid grid-4col">
+                <label class="resource-label">{{localize "HM.availability"}}</label>
+                <div class="resource">
+                    <label class="resource-label">{{localize "HM.avail.high"}}</label>
+                    <input type="number" name="data.avail.high.value" value="{{data.data.avail.high.value}}" data-dtype="Number"/>
+                </div>
+                <div class="resource">
+                    <label class="resource-label">{{localize "HM.avail.med"}}</label>
+                    <input type="number" name="data.avail.med.value" value="{{data.data.avail.med.value}}" data-dtype="Number"/>
+                </div>
+                <div class="resource">
+                    <label class="resource-label">{{localize "HM.avail.low"}}</label>
+                    <input type="number" name="data.avail.low.value" value="{{data.data.avail.low.value}}" data-dtype="Number"/>
+                </div>
+            </div>
+            <li class="item flexrow">
+                <label class="resource-label">{{localize "HM.quality"}}</label>
+                <select name="data.quality" data-dtype="{{data.quality}}">
+                    {{#select data.data.quality}}
+                    {{#each (findConfigObj "quality") as |type t| }}
+                    <option value="{{t}}">{{localize type}}</option>
+                    {{/each}}
+                    {{/select}}
+                 </select>
+            </li>
         </div>
     </section>
 </form>

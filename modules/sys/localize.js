@@ -19,6 +19,16 @@ idx.ability = {
     con: "HM.con",
     lks: "HM.lks",
     cha: "HM.cha"
+},
+
+idx.quality = {
+    worthless:     "HM.qualitySelect.worthless",
+    poor:          "HM.qualitySelect.poor",
+    shoddy:        "HM.qualitySelect.shoddy",
+    average:       "HM.qualitySelect.average",
+    professional:  "HM.qualitySelect.professional",
+    extraordinary: "HM.qualitySelect.extraordinary",
+    superlative:   "HM.qualitySelect.superlative"
 }
 
 export default idx;

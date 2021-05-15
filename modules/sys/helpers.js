@@ -1,5 +1,5 @@
 import LOGGER from "../utils/logger.js";
-import idx from "../utils/localize.js";
+import idx from "./localize.js";
 
 export default function registerHandlebarsHelpers() {
     LOGGER.log("Calling Register Handlebars Helpers");

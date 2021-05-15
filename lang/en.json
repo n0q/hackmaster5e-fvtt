@@ -20,18 +20,37 @@
             "cha": "Charisma"
         },
 
+        "qualitySelect": {
+            "worthless":     "Worthless",
+            "poor":          "Poor",
+            "shoddy":        "Shoddy",
+            "average":       "Average",
+            "professional":  "Professional",
+            "extraordinary": "Extraordinary",
+            "superlative":   "Superlative"
+        },
+
         "bp": "bp",
         "hp": "hp",
         "sp": "sp",
 
+        "avail": {
+            "high": "High",
+            "med":  "Med",
+            "low":  "Low"
+        },
 
         "age":          "Age",
+        "availability": "Availability",
         "class":        "Class",
+        "cost":         "Cost",
         "duration":     "Duration",
         "inventory":    "Inventory",
         "language":     "Language",
         "literate":     "Literate",
         "mastery":      "Mastery",
+        "quality":      "Quality",
+        "quantity":     "Quantity",
         "tools":        "Tools",
         "treated":      "Treated",
         "race":         "Race",
@@ -39,6 +58,7 @@
         "skills":       "Skills",
         "specific":     "Specific",
         "universal":    "Universal",
+        "weight":       "Weight",
         "wound":        "Wound"
     }
 }

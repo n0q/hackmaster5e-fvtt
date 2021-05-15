@@ -45,13 +45,25 @@
         "templates": {
             "base": {
                 "description": ""
+            },
+
+            "logistics": {
+                "quality": null,
+                "weight":   {"min": 0, "value": 0, "max": 999},
+                "cost":     {"min": 0, "value": 0, "max": 999},
+                "avail": {
+                    "high": {"min": 0, "value": 0, "max": 99},
+                    "med":  {"min": 0, "value": 0, "max": 99},
+                    "low":  {"min": 0, "value": 0, "max": 99}
+                }
             }
         },
+
         "item": {
-            "templates": ["base"],
-            "quantity": 1,
-            "weight": 0
+            "templates": ["base", "logistics"],
+            "quantity": {"min": 0, "value": 0, "max": 999}
         },
+
         "feature": {
             "templates": ["base"]
         },
