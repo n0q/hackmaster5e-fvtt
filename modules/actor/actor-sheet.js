@@ -9,7 +9,7 @@ export class HackmasterActorSheet extends ActorSheet {
     return mergeObject(super.defaultOptions, {
       classes: ["hackmaster", "sheet", "actor"],
       template: "systems/hackmaster5e/templates/actor/actor-sheet.hbs",
-      width: 620,
+      width: 820,
       height: 800,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "skills" }]
     });
@@ -44,6 +44,7 @@ export class HackmasterActorSheet extends ActorSheet {
     const actorData = sheetData.actor;
 
     // Initialize containers.
+    const uskills = [];
     const skills = [];
     const gear = [];
     const features = [];
@@ -71,7 +72,11 @@ export class HackmasterActorSheet extends ActorSheet {
                 gear.push(i);
                 break;
             case "skill":
-                skills.push(i);
+                if (i.data.universal.checked) {
+                    uskills.push(i);
+                } else {
+                    skills.push(i);
+                }
                 break;
             case "features":
                 features.push(i);
@@ -87,6 +92,7 @@ export class HackmasterActorSheet extends ActorSheet {
     // Assign and return
     actorData.gear = gear;
     actorData.skills = skills;
+    actorData.uskills = uskills;
     actorData.features = features;
     actorData.spells = spells;
   }

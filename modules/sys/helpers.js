@@ -34,14 +34,20 @@ export default function registerHandlebarsHelpers() {
         return "INVALID_LIST";
     });
 
-    // TODO: Arbitrary splits.
-    Handlebars.registerHelper("each_div_split", (context, options) => {
-        var ret = "";
-        const midpoint = Math.floor(context.length / 2) - 1;
+    Handlebars.registerHelper("each_split", (context, options) => {
+        let delimiter = "</div><div>";
+        let slices    = 2;
+
+        const ohash = options.hash;
+        if (ohash.hasOwnProperty('delimiter')) {delimiter = ohash['delimiter'];}
+        if (ohash.hasOwnProperty('slices')) {slices = ohash['slices'];}
+
+        let ret = "";
+        const midpoint = Math.ceil(context.length / slices);
         for (var i = 0, j = context.length; i < j; i++) {
             ret += options.fn(context[i]);
-            if (i === midpoint) {
-                ret += "</div><div>";
+            if ((i + 1) % midpoint === 0) {
+                ret += delimiter;
             }
         }
         return ret;

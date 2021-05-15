@@ -6,12 +6,19 @@
         </div>
     </li>
     <div class="skill-column"><div>    
-    {{#each_div_split actor.skills}}
+            {{#each_split actor.uskills}}
+        <li class="item flexrow" data-item-id="{{_id}}">
+            <h4 class="skill-name">{{name}}</h4>
+            <div class="skill-controls">
+                <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+        </li>
+    {{/each_split}}</div><div>
+    {{#each actor.skills}}        
         <li class="item flexrow" data-item-id="{{_id}}">
             <h4 class="skill-name">{{name}}</h4>
             <div class="skill-controls">
                 <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
                 <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
         </li>
-    {{/each_div_split}}</div></div>
+    {{/each}}</div>
 </ol>

@@ -1,6 +1,4 @@
 <form class="{{cssClass}} flexcol actor-sheet" autocomplete="off">
-
-    {{!-- Sheet Header --}}
     <header class="sheet-header">
         {{> "systems/hackmaster5e/templates/actor/parts/header.hbs"}}
     </header>
@@ -8,30 +6,24 @@
     <section class="sheet-abilities">
         {{> "systems/hackmaster5e/templates/actor/parts/abilities.hbs"}}
     </section> 
-    {{!-- Sheet Tab Navigation --}}
+
     <nav class="sheet-tabs tabs" data-group="primary">
         <a class="item" data-tab="skills">{{localize "HM.skills"}}</a>
         <a class="item" data-tab="description">Description</a>
         <a class="item" data-tab="inventory">{{localize "HM.inventory"}}</a>
     </nav>
 
-    {{!-- Sheet Body --}}
     <section class="sheet-body">
-
-        {{!-- Skills Tab --}}
         <div class="tab skills" data-group="primary" data-tab="skills">
             {{> "systems/hackmaster5e/templates/actor/parts/skills.hbs"}}
         </div>
 
-        {{!-- Biography Tab --}}
         <div class="tab biography" data-group="primary" data-tab="description">
             {{> "systems/hackmaster5e/templates/actor/parts/biography.hbs"}}
         </div>
 
-        {{!-- Owned Items Tab --}}
         <div class="tab items" data-group="primary" data-tab="inventory">
             {{> "systems/hackmaster5e/templates/actor/parts/inventory.hbs"}}
         </div>
-
     </section>
 </form>

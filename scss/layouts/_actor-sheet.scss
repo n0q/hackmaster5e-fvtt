@@ -1,7 +1,7 @@
 .actor-sheet {
     display: grid;
     grid-gap: 4 px;
-    width: 600px;
+    width: 800px;
     grid-template-rows: auto;
     grid-template-columns: auto;
     grid-template-areas:
@@ -9,4 +9,20 @@
         "sheet-abilities"
         "sheet-tabs"
         "sheet-body";
+}
+
+.sheet-abilities {
+    display: grid;
+    grid-gap: 4 px;
+    width: inherit;
+    grid-template-columns: 8em 1fr;
+    grid-template-areas:
+        "abilities foobar";
+    .abilities {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .abilities-attributes {
+    }
 }

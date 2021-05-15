@@ -235,8 +235,19 @@
 .hackmaster .actor-sheet {
   display: grid;
   grid-gap: 4 px;
-  width: 600px;
+  width: 800px;
   grid-template-rows: auto;
   grid-template-columns: auto;
   grid-template-areas: "sheet-header" "sheet-abilities" "sheet-tabs" "sheet-body";
+}
+.hackmaster .sheet-abilities {
+  display: grid;
+  grid-gap: 4 px;
+  width: inherit;
+  grid-template-columns: 8em 1fr;
+  grid-template-areas: "abilities foobar";
+}
+.hackmaster .sheet-abilities .abilities {
+  display: flex;
+  flex-direction: column;
 }
