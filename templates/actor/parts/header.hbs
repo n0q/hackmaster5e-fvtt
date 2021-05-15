@@ -1,0 +1,22 @@
+<img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
+<div class="header-fields">
+    <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
+    <div class="resources grid grid-2col">
+        <div class="resource flex-group-center">
+            <label for="data.health.value" class="resource-label">Health</label>
+            <div class="resource-content flexrow flex-center flex-between">
+                <input type="text" name="data.health.value" value="{{data.data.health.value}}" data-dtype="Number"/>
+                <span> / </span>
+                <input type="text" name="data.health.max" value="{{data.data.health.max}}" data-dtype="Number"/>
+            </div>
+        </div>
+        <div class="resource flex-group-center">
+            <label for="data.power.value" class="resource-label">Power</label>
+            <div class="resource-content flexrow flex-center flex-between">
+                <input type="text" name="data.power.value" value="{{data.data.power.value}}" data-dtype="Number"/>
+                <span> / </span>
+                <input type="text" name="data.power.max" value="{{data.data.power.max}}" data-dtype="Number"/>
+            </div>
+        </div>
+    </div>
+</div>

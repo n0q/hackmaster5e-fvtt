@@ -1,132 +1,118 @@
 {
-  "Actor": {
-    "types": ["character"],
-    "templates": {
-      "base": {
-        "health": {
-          "value": 10,
-          "min": 0,
-          "max": 10
+    "Actor": {
+        "types": ["character"],
+        "templates": {
+
+            "base": {
+                "health": {
+                    "value": 10,
+                    "min": 0,
+                    "max": 10
+                },
+                "power": {
+                    "value": 5,
+                    "min": 0,
+                    "max": 5
+                }
+            },
+
+            "statblock": {
+                "abilities": {
+                    "str": {"min": 0, "value": 10, "fvalue": 0, "max": 99},
+                    "int": {"min": 0, "value": 10, "fvalue": 0, "max": 99},
+                    "wis": {"min": 0, "value": 10, "fvalue": 0, "max": 99},
+                    "dex": {"min": 0, "value": 10, "fvalue": 0, "max": 99},
+                    "con": {"min": 0, "value": 10, "fvalue": 0, "max": 99},
+                    "lks": {"min": 0, "value": 10, "fvalue": 0, "max": 99},
+                    "cha": {"min": 0, "value": 10, "fvalue": 0, "max": 99}
+                }
+            }
         },
-        "power": {
-          "value": 5,
-          "min": 0,
-          "max": 5
+
+        "character": {
+            "templates": ["base", "statblock"],
+            "biography": "",
+            "attributes": {
+                "level": {
+                    "value": 1
+                }
+            }
         }
-      }
     },
-    "character": {
-      "templates": ["base"],
-      "biography": "",
-      "attributes": {
-        "level": {
-          "value": 1
+
+    "Item": {
+        "types": ["item", "feature", "spell", "skill", "wound"],
+        "templates": {
+            "base": {
+                "description": ""
+            },
+
+            "logistics": {
+                "quality": null,
+                "weight":   {"min": 0, "value": 0, "max": 999},
+                "cost":     {"min": 0, "value": 0, "max": 999},
+                "avail": {
+                    "high": {"min": 0, "value": 0, "max": 99},
+                    "med":  {"min": 0, "value": 0, "max": 99},
+                    "low":  {"min": 0, "value": 0, "max": 99}
+                }
+            }
+        },
+
+        "item": {
+            "templates": ["base", "logistics"],
+            "quantity": {"min": 0, "value": 0, "max": 999}
+        },
+
+        "feature": {
+            "templates": ["base"]
+        },
+
+        "spell": {
+            "templates": ["base"],
+            "divine": {"checked": false, "value": ""},
+            "component": {
+                "verbal":   {"checked": true},
+                "somatic":  {"checked": true},
+                "material": {"checked": true},
+                "catalyst": {"checked": false},
+                "iconic":   {"checked": false}
+            },
+            "speed": {"min": 0, "value": null, "max": 9999},
+            "sp":    {"min": 0, "value": null, "max": 999},
+            "level": ""       
+        },
+
+        "skill": {
+            "templates": ["base"],
+            "mastery":   {"min": 0, "value": 0, "max": 999},
+            "bp":        {"min": 0, "value": null, "max": 99},
+            "specific":  {"checked": false, "value": ""},
+            "universal": {"checked": false},
+            "tools":     {"checked": false},
+            "language":  {
+                "checked": false,
+                "literate": {
+                    "checked": false,
+                    "mastery": {"min": 0, "value": 0, "max": 999}
+                }
+            },
+            "abilities": {
+                "str": {"checked": false},
+                "int": {"checked": false},
+                "wis": {"checked": false},
+                "dex": {"checked": false},
+                "con": {"checked": false},
+                "lks": {"checked": false},
+                "cha": {"checked": false}
+            }
+        },
+
+        "wound": {
+            "templates": ["base"],
+            "hp":       {"min": 0, "value": null},
+            "duration": {"min": 0, "value": null},
+            "treated":  {"checked": false}
         }
-      },
-      "abilities": {
-        "str": {
-          "name": "ACTOR.AbilStrength",  
-          "min": 0,
-          "value": 10,
-          "fvalue": 0,
-          "max": 99
-        },
-        "int": {
-          "name": "ACTOR.AbilStrength",  
-          "min": 0,
-          "value": 10,
-          "fvalue": 0,
-          "max": 99
-        },
-        "wis": {
-          "name": "ACTOR.AbilStrength",  
-          "min": 0,
-          "value": 10,
-          "fvalue": 0,
-          "max": 99
-        },
-        "dex": {
-          "name": "ACTOR.AbilStrength",  
-          "min": 0,
-          "value": 10,
-          "fvalue": 0,
-          "max": 99
-        },
-        "con": {
-          "name": "ACTOR.AbilStrength",  
-          "min": 0,
-          "value": 10,
-          "fvalue": 0,
-          "max": 99
-        },
-        "lks": {
-          "name": "ACTOR.AbilStrength",  
-          "min": 0,
-          "value": 10,
-          "fvalue": 0,
-          "max": 99
-        },
-        "cha": {
-          "name": "ACTOR.AbilStrength",  
-          "min": 0,
-          "value": 10,
-          "fvalue": 0,
-          "max": 99
-        }
-      }
     }
-  },
-  "Item": {
-    "types": ["item", "feature", "spell", "skill"],
-    "templates": {
-      "base": {
-        "description": ""
-      }
-    },
-    "item": {
-      "templates": ["base"],
-      "quantity": 1,
-      "weight": 0
-    },
-    "feature": {
-      "templates": ["base"]
-    },
-    "spell": {
-      "templates": ["base"],
-      "spellLevel": 1
-    },
-    "skill": {
-      "templates": ["base"],
-      "value": 0,
-      "bp": {
-        "value": 1
-      },
-      "universal": {
-        "value": false
-      },
-      "abilities": {
-        "str": {
-          "value": false
-        },
-        "int": {
-          "value": false
-        },
-        "wis": {
-          "value": false
-        },
-        "dex": {
-          "value": false
-        },
-        "con": {
-          "value": false
-        },
-        "lks": {
-          "value": false
-        },
-        "cha": {
-          "value": false
-        }
-      }
-    }
-  }
 }

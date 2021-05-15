@@ -9,9 +9,9 @@ export class HackmasterActorSheet extends ActorSheet {
     return mergeObject(super.defaultOptions, {
       classes: ["hackmaster", "sheet", "actor"],
       template: "systems/hackmaster5e/templates/actor/actor-sheet.hbs",
-      width: 600,
-      height: 600,
-      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]
+      width: 620,
+      height: 800,
+      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "skills" }]
     });
   }
 
@@ -44,6 +44,7 @@ export class HackmasterActorSheet extends ActorSheet {
     const actorData = sheetData.actor;
 
     // Initialize containers.
+    const skills = [];
     const gear = [];
     const features = [];
     const spells = {
@@ -62,26 +63,30 @@ export class HackmasterActorSheet extends ActorSheet {
     // Iterate through items, allocating to containers
     // let totalWeight = 0;
     for (let i of sheetData.items) {
-      let item = i.data;
-      i.img = i.img || DEFAULT_TOKEN;
-      // Append to gear.
-      if (i.type === 'item') {
-        gear.push(i);
-      }
-      // Append to features.
-      else if (i.type === 'feature') {
-        features.push(i);
-      }
-      // Append to spells.
-      else if (i.type === 'spell') {
-        if (i.data.spellLevel != undefined) {
-          spells[i.data.spellLevel].push(i);
+        let item = i.data;
+        i.img = i.img || DEFAULT_TOKEN;
+
+        switch(i.type) {
+            case "item":
+                gear.push(i);
+                break;
+            case "skill":
+                skills.push(i);
+                break;
+            case "features":
+                features.push(i);
+                break;
+            case "spell":
+                if (i.data.spellLevel != undefined) {
+                    spells[i.data.spellLevel].push(i);
+                }
+                break;
         }
-      }
     }
 
     // Assign and return
     actorData.gear = gear;
+    actorData.skills = skills;
     actorData.features = features;
     actorData.spells = spells;
   }
@@ -101,14 +106,15 @@ export class HackmasterActorSheet extends ActorSheet {
     // Update Inventory Item
     html.find('.item-edit').click(ev => {
       const li = $(ev.currentTarget).parents(".item");
-      const item = this.actor.getOwnedItem(li.data("itemId"));
+      const item = this.actor.items.get(li.data("itemId"));
       item.sheet.render(true);
     });
 
     // Delete Inventory Item
     html.find('.item-delete').click(ev => {
       const li = $(ev.currentTarget).parents(".item");
-      this.actor.deleteOwnedItem(li.data("itemId"));
+      const item = this.actor.items.get(li.data("itemId"));
+      item.delete();
       li.slideUp(200, () => this.render(false));
     });
 
@@ -131,7 +137,7 @@ export class HackmasterActorSheet extends ActorSheet {
    * @param {Event} event   The originating click event
    * @private
    */
-  _onItemCreate(event) {
+async _onItemCreate(event) {
     event.preventDefault();
     const header = event.currentTarget;
     // Get the type of item to create.
@@ -150,7 +156,7 @@ export class HackmasterActorSheet extends ActorSheet {
     delete itemData.data["type"];
 
     // Finally, create the item!
-    return this.actor.createOwnedItem(itemData);
+      return await Item.create(itemData, {parent: this.actor});
   }
 
   /**

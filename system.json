@@ -6,25 +6,25 @@
     "minimumCoreVersion": "0.8.2",
     "compatibleCoreVersion": "0.8.3",
     "templateVersion": 1,
-    "author": "n0q",
-    "authors": [
-      {
-        "name": "n0q",
-        "discord": "n0qtrnL#2610"
-      }
-    ],
-    "esmodules": [
-        "module/hackmaster.js"
-    ],
-    "styles": [
-        "styles/hackmaster.css"
+    "author": "n0qtrnL#2610",
+    "esmodules": ["modules/hackmaster.js"],
+    "styles": ["styles/hackmaster.css"],
+    "packs": [
+        {
+            "label": "Universal Skills",
+            "entity": "Item",
+            "name": "skills",
+            "path": "packs/universal-skills.db",
+            "system": "hackmaster5e",
+            "package": "hackmaster5e"
+        }
     ],
     "languages": [
-      {  
-        "lang": "en",
-        "name": "English",
-        "path": "lang/en.json"
-      }
+        {  
+            "lang": "en",
+            "name": "English",
+            "path": "lang/en.json"
+        }
     ],
     "manifest": "https://raw.githubusercontent.com/n0q/hackmaster5e-fvtt/main/system.json"
 }

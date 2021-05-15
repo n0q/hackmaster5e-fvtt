@@ -8,26 +8,60 @@
 
     {{!-- Sheet Tab Navigation --}}
     <nav class="sheet-tabs tabs" data-group="primary">
-        <a class="item" data-tab="description">Description</a>
         <a class="item" data-tab="attributes">Attributes</a>
+        <!--        <a class="item" data-tab="description">Description</a> -->
     </nav>
 
     {{!-- Sheet Body --}}
     <section class="sheet-body">
 
-        {{!-- Description Tab --}}
-        <div class="tab" data-group="primary" data-tab="description">
-            {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
-        </div>
 
         {{!-- Attributes Tab --}}
         <div class="tab attributes" data-group="primary" data-tab="attributes">
             {{!-- As you add new fields, add them in here! --}}
             <div class="resource">
-              <label class="resource-label">Spell Level</label>
-                Spell: <input type="text" name="data.spellLevel" value="{{data.data.spellLevel}}" data-dtype="Number"/>
-                BP: <input type="text" name="data.bp.value" value="{{data.data.bp.value}}" data-dtype="Number"/>
+                <label class="resource-label">{{localize "HM.bp"}}:</label>
+                <input type="number" name="data.bp.value" value="{{data.data.bp.value}}" data-dtype="Number"/>
+                <label class="resource-label">{{localize "HM.mastery"}}:</label>
+                <input type="number" name="data.mastery.value" value="{{data.data.mastery.value}}" data-dtype="Number"/>
+                <div class="grid grid-4col">
+                    {{#each data.data.abilities as |ability key|}}
+                        <span>    
+                            <label for="data.data.abilities.{{key}}.value" class="resource-label">
+                                {{localize (findConfigValue "ability_short" key)}}
+                            </label>
+                            <input type="checkbox" name="data.abilities.{{key}}.checked" {{checked ability.checked}}/>
+                        </span>
+                    {{/each}}
+                </div>
+                <br>
+                <label class="resource-label">{{localize "HM.universal"}}:</label>
+                <input type="checkbox" name="data.universal.checked" {{checked data.data.universal.checked}}/>
+                <label class="resource-label">{{localize "HM.tools"}}:</label>
+                <input type="checkbox" name="data.tools.checked" {{checked data.data.tools.checked}}/>
+                <br><label class="resource-label">{{localize "HM.specific"}}:</label>
+                <input type="checkbox" name="data.specific.checked" {{checked data.data.specific.checked}}/>
+                {{#if data.data.specific.checked}}
+                    <input type="text" name="data.specific.value" value="{{data.data.specific.value}}" data-dtype="String"/>
+                {{/if}}
+                <br><label class="resource-label">{{localize "HM.language"}}:</label>
+                <input type="checkbox" name="data.language.checked" {{checked data.data.language.checked}}/>
+                {{#if data.data.language.checked}}
+                    <label class="resource-label">{{localize "HM.literate"}}:</label>
+                    <input type="checkbox" name="data.language.literate.checked" {{checked data.data.language.literate.checked}}/>
+                    {{#if data.data.language.literate.checked}}
+                        <label class="resource-label">{{localize "HM.mastery"}}:</label>
+                        <input type="number" name="data.language.literate.mastery" value="{{data.data.language.literate.mastery}}" data-dtype="Number"/>
+                    {{/if}}
+                {{/if}}
             </div>
         </div>
+<!--
+        {{!-- Description Tab --}}
+        <div class="tab" data-group="primary" data-tab="description">
+            {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+         </div>
+-->
     </section>
 </form>
+
