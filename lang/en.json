@@ -30,7 +30,16 @@
             "superlative":   "Superlative"
         },
 
+        "armorSelect": {
+            "none":   "None",
+            "light":  "Light",
+            "medium": "Medium",
+            "heavy":  "Heavy",
+            "shield": "Shield"
+        },
+
         "bp": "bp",
+        "dr": "dr",
         "hp": "hp",
         "sp": "sp",
 
@@ -41,9 +50,15 @@
         },
 
         "age":          "Age",
+        "armortype":    "Armor Type",
         "availability": "Availability",
         "class":        "Class",
         "cost":         "Cost",
+        "drmod":        "DR Mod",
+        "defmod":       "Def Mod",
+        "initmod":      "Init Mod",
+        "speedmod":     "Speed Mod",
+        "movece":       "Move Coeff",
         "duration":     "Duration",
         "inventory":    "Inventory",
         "language":     "Language",

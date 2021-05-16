@@ -1,0 +1,92 @@
+<form class="{{cssClass}}" autocomplete="off">
+    <header class="sheet-header">
+        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+        <div class="header-fields">
+            <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+            <div class="grid grid-3col">
+                <div class="resource">
+                    <label class="resource-label">{{localize "HM.quantity"}}</label>
+                    <input type="number" name="data.quantity.value" value="{{data.data.quantity.value}}" data-dtype="Number"/>
+                </div>
+                <div class="resource">
+                    <label class="resource-label">{{localize "HM.weight"}}</label>
+                    <input type="number" name="data.weight.value" value="{{data.data.weight.value}}" data-dtype="Number"/>
+                </div>
+                <div class="resource">
+                    <label class="resource-label">{{localize "HM.cost"}}</label>
+                    <input type="number" name="data.cost.value" value="{{data.data.cost.value}}" data-dtype="Number"/>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    {{!-- Sheet Tab Navigation --}}
+    <nav class="sheet-tabs tabs" data-group="primary">
+        <a class="item" data-tab="description">Description</a>
+        <a class="item" data-tab="attributes">Attributes</a>
+    </nav>
+
+    {{!-- Sheet Body --}}
+    <section class="sheet-body">
+
+        {{!-- Description Tab --}}
+        <div class="tab" data-group="primary" data-tab="description">
+            {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+        </div>
+
+        {{!-- Attributes Tab --}}
+        <div class="tab attributes" data-group="primary" data-tab="attributes">
+            <div class="grid grid-4col">
+                <label class="resource-label">{{localize "HM.availability"}}</label>
+                <div class="resource">
+                    <label class="resource-label">{{localize "HM.avail.high"}}</label>
+                    <input type="number" name="data.avail.high.value" value="{{data.data.avail.high.value}}" data-dtype="Number"/>
+                </div>
+                <div class="resource">
+                    <label class="resource-label">{{localize "HM.avail.med"}}</label>
+                    <input type="number" name="data.avail.med.value" value="{{data.data.avail.med.value}}" data-dtype="Number"/>
+                </div>
+                <div class="resource">
+                    <label class="resource-label">{{localize "HM.avail.low"}}</label>
+                    <input type="number" name="data.avail.low.value" value="{{data.data.avail.low.value}}" data-dtype="Number"/>
+                </div>
+            </div><br>
+            <div class="grid grid-5col">
+                <div class="resource">
+                    <label class="resource-label">{{localize "HM.drmod"}}</label>
+                    <input type="number" name="data.dr_mod.value" value="{{data.data.dr_mod.value}}" data-dtype="Number"/>
+                </div>
+                <div class="resource">
+                    <label class="resource-label">{{localize "HM.defmod"}}</label>
+                    <input type="number" name="data.def_mod.value" value="{{data.data.def_mod.value}}" data-dtype="Number"/>
+                </div>
+                <div class="resource">
+                    <label class="resource-label">{{localize "HM.initmod"}}</label>
+                    <input type="number" name="data.init_mod.value" value="{{data.data.init_mod.value}}" data-dtype="Number"/>
+                </div>
+                <div class="resource">
+                    <label class="resource-label">{{localize "HM.speedmod"}}</label>
+                    <input type="number" name="data.speed_mod.value" value="{{data.data.speed_mod.value}}" data-dtype="Number"/>
+                </div>
+                <div class="resource">
+                    <label class="resource-label">{{localize "HM.movece"}}</label>
+                    <input type="number" name="data.move_ce.value" value="{{data.data.move_ce.value}}" data-dtype="Number"/>
+                </div>
+            </div>
+            <div class="grid grid-2col">
+                <div class="resource">
+                    <label class="resource-label">{{localize "HM.armortype"}}</label>
+                    <select name="data.armortype" data-dtype="{{data.armortype}}">
+                        {{#select data.data.armortype}}{{#each (findConfigObj "armortype") as |type t|}}
+                            <option value="{{t}}">{{localize type}}</option>
+                        {{/each}}{{/select}}
+                    </select>
+                </div>
+                <div class="resource">
+                    <label class="resource-label">{{localize "HM.quality"}}</label>
+                    <input type="number" name="data.quality.value" value="{{data.data.quality.value}}" data-dtype="Number"/>
+                </div>
+            </div>
+        </div> 
+    </section>
+</form>
