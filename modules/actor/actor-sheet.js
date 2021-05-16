@@ -138,51 +138,65 @@ export class HackmasterActorSheet extends ActorSheet {
     }
   }
 
+    _getItemId(event) {
+        let id = $(event.currentTarget).parents(".item").attr("data-item-id");
+        if (typeof id === "undefined") {
+            id = $(event.currentTarget).attr("data-item-id");
+        }
+        return id;
+    }
+
+    _getOwnedItem(itemId) { return this.actor.items.get(itemId); }
+
   /**
    * Handle creating a new Owned Item for the actor using initial data defined in the HTML dataset
    * @param {Event} event   The originating click event
    * @private
    */
-async _onItemCreate(event) {
-    event.preventDefault();
-    const header = event.currentTarget;
-    // Get the type of item to create.
-    const type = header.dataset.type;
-    // Grab any data associated with this control.
-    const data = duplicate(header.dataset);
-    // Initialize a default name.
-    const name = `New ${type.capitalize()}`;
-    // Prepare the item object.
-    const itemData = {
-      name: name,
-      type: type,
-      data: data
-    };
-    // Remove the type from the dataset since it's in the itemData.type prop.
-    delete itemData.data["type"];
+    async _onItemCreate(event) {
+        event.preventDefault();
+        const header = event.currentTarget;
+        // Get the type of item to create.
+        const type = header.dataset.type;
+        // Grab any data associated with this control.
+        const data = duplicate(header.dataset);
+        // Initialize a default name.
+        const name = `New ${type.capitalize()}`;
+        // Prepare the item object.
+        const itemData = {
+            name: name,
+            type: type,
+            data: data
+        };
+        // Remove the type from the dataset since it's in the itemData.type prop.
+        delete itemData.data["type"];
 
-    // Finally, create the item!
-      return await Item.create(itemData, {parent: this.actor});
-  }
-
-  /**
-   * Handle clickable rolls.
-   * @param {Event} event   The originating click event
-   * @private
-   */
-  _onRoll(event) {
-    event.preventDefault();
-    const element = event.currentTarget;
-    const dataset = element.dataset;
-
-    if (dataset.roll) {
-      let roll = new Roll(dataset.roll, this.actor.data.data.data);
-      let label = dataset.label ? `Rolling ${dataset.label}` : '';
-      roll.roll().toMessage({
-        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-        flavor: label
-      });
+        // Finally, create the item!
+        return await Item.create(itemData, {parent: this.actor});
     }
-  }
 
+   /**
+    * Handle clickable rolls.
+    * @param {Event} event   The originating click event
+    * @private
+    */
+    async _onRoll(event) {
+        event.preventDefault();
+        const element = event.currentTarget;
+        const dataset = element.dataset;
+        // TODO: This is a god-awful mess, and it ignores the dataset.roll entirely.
+        if (dataset.roll) {
+            const itemid  = this._getItemId(event);
+            const item    = this._getOwnedItem(itemid);
+            const mastery = item.data.data.mastery.value;
+
+            let roll      = new Roll("1d100p +" + mastery, this.actor.data.data);
+            let label     = dataset.label ? `Rolling ${dataset.label}` : '';
+            let rolled    = await roll.evaluate({async: true});
+            rolled.toMessage({
+                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                flavor: label
+            });
+        }
+    }
 }
