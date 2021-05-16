@@ -1,24 +1,22 @@
-<ol class="skills-list">
-    <li class="skill flexrow skill-header">
-        <div class="skill-name">Name</div>
-        <div class="skill-controls">
-            <a class="skill-control skill-create" title="Create item" data-type="skill"><i class="fas fa-plus"></i> Add skill</a>
-        </div>
-    </li>
-    <div class="skill-column"><div>    
-            {{#each_split actor.uskills}}
-        <li class="item flexrow" data-item-id="{{_id}}">
-            <h4 class="skill-name">{{name}}</h4>
-            <div class="skill-controls">
-                <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-        </li>
-    {{/each_split}}</div><div>
-    {{#each actor.skills}}        
-        <li class="item flexrow" data-item-id="{{_id}}">
-            <h4 class="skill-name">{{name}}</h4>
-            <div class="skill-controls">
-                <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-                <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
-        </li>
-    {{/each}}</div>
+<ol class="skills-list grid-3col">
+    <div>
+        {{#each_split actor.uskills}}
+            <li class="item flexrow" data-item-id="{{_id}}">
+                <h4 class="skill-name">{{name}}</h4>
+                <div class="skill-controls">
+                    <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+                </div>
+            </li>
+        {{/each_split}}
+    </div><div>
+        {{#each actor.skills}}
+            <li class="item flexrow" data-item-id="{{_id}}">
+                <h4 class="skill-name">{{name}}</h4>
+                <div class="skill-controls">
+                    <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+                    <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                </div>
+            </li>
+        {{/each}}
+    </div>
 </ol>

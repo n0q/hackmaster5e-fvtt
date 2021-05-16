@@ -1,0 +1,31 @@
+$max_grid_cols: 12;
+@for $i from 1 through $max_grid_cols {
+    .grid-#{$i}col {
+        display: grid;
+        grid-column: span $i / span $i;
+        grid-template-columns: repeat($i, minmax(0, 1fr));
+        gap: 10px;
+        margin: 10px 0;
+        padding: 0;
+    }
+}
+
+.flex-group-center,
+.flex-group-left,
+.flex-group-right {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 5px;
+  border: 1px solid #999;
+}
+
+.flex-group-left {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.flex-group-right {
+  justify-content: flex-end;
+  text-align: right;
+}
