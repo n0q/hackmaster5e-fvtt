@@ -1,22 +1,33 @@
 <ol class="skills-list grid-3col">
-    <div>
-        {{#each_split actor.uskills}}
-            <li class="item flexrow" data-item-id="{{_id}}">
-                <h4 class="skill-name">{{name}}</h4>
-                <div class="skill-controls">
-                    <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-                </div>
-            </li>
-        {{/each_split}}
-    </div><div>
-        {{#each actor.skills}}
-            <li class="item flexrow" data-item-id="{{_id}}">
-                <h4 class="skill-name">{{name}}</h4>
-                <div class="skill-controls">
-                    <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-                    <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
-                </div>
-            </li>
-        {{/each}}
-    </div>
+    <div>{{#each_split actor.uskills}}
+        <li class="item flexrow" data-item-id="{{_id}}">
+            <h4 class="skill-name">{{name}}
+                {{#if data.specific.checked}}
+                    ({{data.specific.value}})
+                {{/if}}
+            </h4>
+            <div class="skill-value">
+                {{data.mastery.value}}
+            </div>
+            <div class="skill-controls">
+                <a class="item-control item-edit" title="Edit Skill"><i class="fas fa-edit"></i></a>
+            </div>
+        </li>
+        {{/each_split}}</div>
+    <div>{{#each actor.skills}}
+        <li class="item flexrow" data-item-id="{{_id}}">
+            <h4 class="skill-name">{{name}}
+                {{#if data.specific.checked}}
+                    ({{data.specific.value}})
+                {{/if}}
+            </h4>
+            <div class="skill-value">
+                {{data.mastery.value}}
+            </div>
+            <div class="skill-controls">
+                <a class="item-control item-edit" title="Edit Skill"><i class="fas fa-edit"></i></a>
+                <a class="item-control item-delete" title="Delete Skill"><i class="fas fa-trash"></i></a>
+            </div>
+        </li>
+    {{/each}}</div>
 </ol>

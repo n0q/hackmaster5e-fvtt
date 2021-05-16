@@ -3,7 +3,7 @@ $actor-gridgap: 4px;
 .actor-sheet {
     display: grid;
     grid-gap: $actor-gridgap;
-    width: 800px;
+    width: $gwidth;
     grid-template-rows: repeat(3, min-content);
     grid-template-columns: auto;
     grid-template-areas:
