@@ -1,21 +1,21 @@
 // Import utilities.
-@import 'utils/typography';
-@import 'utils/colors';
-@import 'utils/mixins';
-@import 'utils/variables';
+@import 'base/typography';
+@import 'helpers/colors';
+@import 'helpers/mixins';
+@import 'helpers/variables';
 
 /* Global styles */
-@import 'global/window';
-@import 'global/grid';
-@import 'global/flex';
+@import 'layout/window';
+@import 'layout/grid';
+@import 'layout/flex';
 
 /* Styles limited to hackmaster sheets */
 .hackmaster {
-  @import 'components/forms';
-  @import 'components/resource';
-  @import 'components/tabs';
-  @import 'components/items';
-  @import 'components/skills';
+  @import 'parts/forms';
+  @import 'parts/resource';
+  @import 'parts/tabs';
+  @import 'parts/items';
+  @import 'parts/skills';
 
   @import 'layouts/actor-sheet';
 }
