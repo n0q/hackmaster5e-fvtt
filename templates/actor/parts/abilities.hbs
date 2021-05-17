@@ -1,9 +1,14 @@
-    <div class="abilities grid grid-3col">
-        {{#each data.data.abilities as |ability key|}}
-            <div class="ability flexrow flex-group-center">
-                <label for="data.data.abilities.{{key}}.value" class="resource-label">{{localize (findConfigValue "ability_short" key)}}</label>
-                <input type="text" name="data.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number"/>
-                <span class="ability-mod rollable" data-roll="d20+@abilities.{{key}}.mod" data-label="{{key}}">{{numberFormat ability.mod decimals=0 sign=true}}</span>
-            </div>
-        {{/each}}
-    </div>
+<section class="abilities">
+    {{#each data.data.abilities as |ability key|}}
+        <div class="ability flexrow">
+            <input type="text" name="data.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number"/>
+            <input type="text" name="data.abilities.{{key}}.fvalue" value="{{ability.fvalue}}" data-dtype="Number"/>
+            <label for="data.data.abilities.{{key}}.value" class="resource-label rollable" data-roll-type="ability">
+                {{localize (findConfigValue "ability_short" key)}}
+            </label>
+        </div>
+    {{/each}}
+</section>
+
+<section class="abilities-attributes">
+</section>

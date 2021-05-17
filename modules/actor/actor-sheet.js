@@ -9,8 +9,8 @@ export class HackmasterActorSheet extends ActorSheet {
     return mergeObject(super.defaultOptions, {
       classes: ["hackmaster", "sheet", "actor"],
       template: "systems/hackmaster5e/templates/actor/actor-sheet.hbs",
-      width: 620,
-      height: 800,
+      width: 920,
+      height: 730,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "skills" }]
     });
   }
@@ -44,6 +44,7 @@ export class HackmasterActorSheet extends ActorSheet {
     const actorData = sheetData.actor;
 
     // Initialize containers.
+    const uskills = [];
     const skills = [];
     const gear = [];
     const features = [];
@@ -71,7 +72,11 @@ export class HackmasterActorSheet extends ActorSheet {
                 gear.push(i);
                 break;
             case "skill":
-                skills.push(i);
+                if (i.data.universal.checked) {
+                    uskills.push(i);
+                } else {
+                    skills.push(i);
+                }
                 break;
             case "features":
                 features.push(i);
@@ -87,6 +92,7 @@ export class HackmasterActorSheet extends ActorSheet {
     // Assign and return
     actorData.gear = gear;
     actorData.skills = skills;
+    actorData.uskills = uskills;
     actorData.features = features;
     actorData.spells = spells;
   }
@@ -132,51 +138,85 @@ export class HackmasterActorSheet extends ActorSheet {
     }
   }
 
+    _getItemId(event) {
+        let id = $(event.currentTarget).parents(".item").attr("data-item-id");
+        if (typeof id === "undefined") {
+            id = $(event.currentTarget).attr("data-item-id");
+        }
+        return id;
+    }
+
+    _getOwnedItem(itemId) { return this.actor.items.get(itemId); }
+
   /**
    * Handle creating a new Owned Item for the actor using initial data defined in the HTML dataset
    * @param {Event} event   The originating click event
    * @private
    */
-async _onItemCreate(event) {
-    event.preventDefault();
-    const header = event.currentTarget;
-    // Get the type of item to create.
-    const type = header.dataset.type;
-    // Grab any data associated with this control.
-    const data = duplicate(header.dataset);
-    // Initialize a default name.
-    const name = `New ${type.capitalize()}`;
-    // Prepare the item object.
-    const itemData = {
-      name: name,
-      type: type,
-      data: data
-    };
-    // Remove the type from the dataset since it's in the itemData.type prop.
-    delete itemData.data["type"];
+    async _onItemCreate(event) {
+        event.preventDefault();
+        const header = event.currentTarget;
+        // Get the type of item to create.
+        const type = header.dataset.type;
+        // Grab any data associated with this control.
+        const data = duplicate(header.dataset);
+        // Initialize a default name.
+        const name = `New ${type.capitalize()}`;
+        // Prepare the item object.
+        const itemData = {
+            name: name,
+            type: type,
+            data: data
+        };
+        // Remove the type from the dataset since it's in the itemData.type prop.
+        delete itemData.data["type"];
 
-    // Finally, create the item!
-      return await Item.create(itemData, {parent: this.actor});
-  }
-
-  /**
-   * Handle clickable rolls.
-   * @param {Event} event   The originating click event
-   * @private
-   */
-  _onRoll(event) {
-    event.preventDefault();
-    const element = event.currentTarget;
-    const dataset = element.dataset;
-
-    if (dataset.roll) {
-      let roll = new Roll(dataset.roll, this.actor.data.data.data);
-      let label = dataset.label ? `Rolling ${dataset.label}` : '';
-      roll.roll().toMessage({
-        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-        flavor: label
-      });
+        // Finally, create the item!
+        return await Item.create(itemData, {parent: this.actor});
     }
-  }
+
+   /**
+    * Handle clickable rolls.
+    * @param {Event} event   The originating click event
+    * @private
+    */
+    async _onRoll(event) {
+        event.preventDefault();
+        const element = event.currentTarget;
+        const dataset = element.dataset;
+
+        //TODO: Clean this whole mess up.
+        //TODO: We're repeating the roll function because we have no idea wtf we're doing with rolls, yet.
+        if (dataset.rollType) {
+            switch (dataset.rollType) {
+                case "skill": {
+                    const itemid  = this._getItemId(event);
+                    const item    = this._getOwnedItem(itemid);
+                    const mastery = item.data.data.mastery.value;
+                    let roll      = new Roll("1d100p +" + mastery, this.actor.data.data);
+                    let label     = dataset.label ? `Rolling ${dataset.label}` : '';
+                    let rolled    = await roll.evaluate({async: true});
+                    rolled.toMessage({
+                        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                        flavor: label
+                    });
+                    break;
+                }
+                case "ability": {
+                    const sKey = $(event.currentTarget).attr('for');
+                    const ability = getProperty(this.actor, sKey);
+                    let roll      = new Roll("1d20p +" + ability, this.actor.data.data);
+                    let label     = dataset.label ? `Rolling ${dataset.label}` : '';
+                    let rolled    = await roll.evaluate({async: true});
+                    rolled.toMessage({
+                        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                        flavor: label
+                    });
+                    break;
+                }
+            }
+        }
+    }
+
 
 }

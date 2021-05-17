@@ -4,27 +4,19 @@
         "templates": {
 
             "base": {
-                "health": {
-                    "value": 10,
-                    "min": 0,
-                    "max": 10
-                },
-                "power": {
-                    "value": 5,
-                    "min": 0,
-                    "max": 5
-                }
+                "hp": {"max": 30},
+                "sp": {"value": 25, "max": 30}
             },
 
             "statblock": {
                 "abilities": {
-                    "str": {"min": 0, "value": 10, "fvalue": 0, "max": 99},
-                    "int": {"min": 0, "value": 10, "fvalue": 0, "max": 99},
-                    "wis": {"min": 0, "value": 10, "fvalue": 0, "max": 99},
-                    "dex": {"min": 0, "value": 10, "fvalue": 0, "max": 99},
-                    "con": {"min": 0, "value": 10, "fvalue": 0, "max": 99},
-                    "lks": {"min": 0, "value": 10, "fvalue": 0, "max": 99},
-                    "cha": {"min": 0, "value": 10, "fvalue": 0, "max": 99}
+                    "str": {"value": 10, "fvalue": 0},
+                    "int": {"value": 10, "fvalue": 0},
+                    "wis": {"value": 10, "fvalue": 0},
+                    "dex": {"value": 10, "fvalue": 0},
+                    "con": {"value": 10, "fvalue": 0},
+                    "lks": {"value": 10, "fvalue": 0},
+                    "cha": {"value": 10, "fvalue": 0}
                 }
             }
         },
@@ -41,7 +33,7 @@
     },
 
     "Item": {
-        "types": ["item", "feature", "spell", "skill", "wound"],
+        "types": ["armor", "item", "feature", "spell", "skill", "weapon", "wound"],
         "templates": {
             "base": {
                 "description": ""
@@ -49,19 +41,40 @@
 
             "logistics": {
                 "quality": null,
-                "weight":   {"min": 0, "value": 0, "max": 999},
-                "cost":     {"min": 0, "value": 0, "max": 999},
+                "weight":   {"value": 0},
+                "cost":     {"value": 0},
                 "avail": {
-                    "high": {"min": 0, "value": 0, "max": 99},
-                    "med":  {"min": 0, "value": 0, "max": 99},
-                    "low":  {"min": 0, "value": 0, "max": 99}
+                    "high": {"value": 0},
+                    "med":  {"value": 0},
+                    "low":  {"value": 0}
                 }
             }
         },
 
         "item": {
             "templates": ["base", "logistics"],
-            "quantity": {"min": 0, "value": 0, "max": 999}
+            "quantity": {"value": 1},
+            "container": {
+                "checked": false,
+                "capacity": 0
+            }
+        },
+
+        "armor": {
+            "templates": ["base", "logistics"],
+            "armortype": null,
+            "dr_mod":    {"value": 0,   "max": 0},
+            "def_mod":   {"value": 0,   "max": 0},
+            "init_mod":  {"value": 0,   "max": 0},
+            "speed_mod": {"value": 0,   "max": 0},
+            "move_ce":   {"value": 1.0, "max": 1.0},
+            "shield": {
+                "checked": false,
+                "cover": {
+                    "passive": {"value": 0, "max": 0},
+                    "active":  {"value": 0, "max": 0}
+                }
+            }
         },
 
         "feature": {
@@ -78,23 +91,23 @@
                 "catalyst": {"checked": false},
                 "iconic":   {"checked": false}
             },
-            "speed": {"min": 0, "value": null, "max": 9999},
-            "sp":    {"min": 0, "value": null, "max": 999},
+            "speed": {"value": null},
+            "sp":    {"value": null},
             "level": ""       
         },
 
         "skill": {
             "templates": ["base"],
-            "mastery":   {"min": 0, "value": 0, "max": 999},
-            "bp":        {"min": 0, "value": null, "max": 99},
-            "specific":  {"checked": false, "value": ""},
+            "mastery":   {"value": 0},
+            "bp":        {"value": null},
+            "specific":  {"checked": false, "value": "Unspecified"},
             "universal": {"checked": false},
             "tools":     {"checked": false},
             "language":  {
                 "checked": false,
                 "literate": {
                     "checked": false,
-                    "mastery": {"min": 0, "value": 0, "max": 999}
+                    "mastery": {"value": 0}
                 }
             },
             "abilities": {
@@ -108,10 +121,29 @@
             }
         },
 
+        "weapon": {
+            "templates": ["base", "logistics"],
+            "skill": "",
+            "size": "",
+            "type": "",
+            "min_str":      {"value": null},
+            "damage":       {"normal": "", "shield": ""},
+            "speed":        {"value": 0},
+            "reach":        {"value": 0},
+            "two_handed":   {"checked": false},
+            "dr_reduction": {"value": 0},
+            "mounted":      {"checked": false},
+            "jab": {
+                "checked": false,
+                "damage": "",
+                "speed": 0
+            }
+        },
+
         "wound": {
             "templates": ["base"],
-            "hp":       {"min": 0, "value": null},
-            "duration": {"min": 0, "value": null},
+            "hp":       {"value": null},
+            "duration": {"value": null},
             "treated":  {"checked": false}
         }
     }

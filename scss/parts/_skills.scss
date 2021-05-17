@@ -1,0 +1,65 @@
+.skills-list {
+    list-style: none;
+    margin: 7px 0;
+    padding: 0;
+    overflow-y: auto;
+
+    .skills-header {
+        font-weight: bold;
+    }
+
+    .skill {
+        height: 30px;
+        line-height: 24px;
+        padding: 3px 0;
+        border-bottom: 1px solid #BBB;
+
+        .skill-image {
+            flex: 0 0 24px;
+            margin-right: 5px;
+        }
+
+        img {
+            display: block;
+        }
+    }
+
+    .skill-name {
+        margin: 0;
+    }
+
+    .skill-value {
+        background: grey;
+        margin-right: 2px;
+        flex: 0 1 2em;
+        text-align: right;
+    }
+
+    .skill-controls {
+        flex: 0 1 auto;
+        text-align: right;
+    }
+
+    .skill-column {
+        display: flex;
+        flex-direction: row;
+        div {
+            flex: 1 0 auto;
+        }
+    }
+}
+
+
+
+.myflexrow {
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+   justify-content: flex-start;
+   * {
+       flex: 1;
+   }
+ }
+
+
+

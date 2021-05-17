@@ -31,4 +31,12 @@ idx.quality = {
     superlative:   "HM.qualitySelect.superlative"
 }
 
+idx.armortype = {
+    "none":   "HM.armorSelect.none",
+    "light":  "HM.armorSelect.light",
+    "medium": "HM.armorSelect.medium",
+    "heavy":  "HM.armorSelect.heavy",
+    "shield": "HM.armorSelect.shield"
+}
+
 export default idx;

@@ -14,7 +14,8 @@ Hooks.once("init", async() => {
     LOGGER.log("Initialization start.");
 
     game.hackmaster = {
-        HackmasterActor
+        HackmasterActor,
+        HackmasterItem
     };
 
     CONFIG.Actor.documentClass = HackmasterActor;

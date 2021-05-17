@@ -1,8 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Martel:wght@400;800&family=Roboto:wght@300;400;500&display=swap");
-@font-face {
-  font-family: "Empire Crown";
-  src: url(system/hackmaster/fonts/empirecrown.ttf) format "truetype";
-}
 /* Global styles */
 .window-app {
   font-family: "Roboto", sans-serif;
@@ -14,7 +10,15 @@
   cursor: pointer;
 }
 
-.grid,
+.grid-1col {
+  display: grid;
+  grid-column: span 1/span 1;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 10px;
+  margin: 10px 0;
+  padding: 0;
+}
+
 .grid-2col {
   display: grid;
   grid-column: span 2/span 2;
@@ -25,53 +29,93 @@
 }
 
 .grid-3col {
+  display: grid;
   grid-column: span 3/span 3;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 10px 0;
+  padding: 0;
 }
 
 .grid-4col {
+  display: grid;
   grid-column: span 4/span 4;
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 10px 0;
+  padding: 0;
 }
 
 .grid-5col {
+  display: grid;
   grid-column: span 5/span 5;
   grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  margin: 10px 0;
+  padding: 0;
 }
 
 .grid-6col {
-  grid-column: span 5/span 5;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  display: grid;
+  grid-column: span 6/span 6;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 10px;
+  margin: 10px 0;
+  padding: 0;
 }
 
 .grid-7col {
+  display: grid;
   grid-column: span 7/span 7;
   grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 10px;
+  margin: 10px 0;
+  padding: 0;
 }
 
 .grid-8col {
+  display: grid;
   grid-column: span 8/span 8;
   grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 10px;
+  margin: 10px 0;
+  padding: 0;
 }
 
 .grid-9col {
+  display: grid;
   grid-column: span 9/span 9;
   grid-template-columns: repeat(9, minmax(0, 1fr));
+  gap: 10px;
+  margin: 10px 0;
+  padding: 0;
 }
 
 .grid-10col {
+  display: grid;
   grid-column: span 10/span 10;
   grid-template-columns: repeat(10, minmax(0, 1fr));
+  gap: 10px;
+  margin: 10px 0;
+  padding: 0;
 }
 
 .grid-11col {
+  display: grid;
   grid-column: span 11/span 11;
   grid-template-columns: repeat(11, minmax(0, 1fr));
+  gap: 10px;
+  margin: 10px 0;
+  padding: 0;
 }
 
 .grid-12col {
+  display: grid;
   grid-column: span 12/span 12;
   grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 10px;
+  margin: 10px 0;
+  padding: 0;
 }
 
 .flex-group-center,
@@ -116,6 +160,7 @@
   flex-wrap: wrap;
   justify-content: flex-start;
   margin-bottom: 10px;
+  align-content: start;
 }
 .hackmaster .sheet-header .profile-img {
   flex: 0 0 100px;
@@ -221,6 +266,12 @@
 .hackmaster .skills-list .skill-name {
   margin: 0;
 }
+.hackmaster .skills-list .skill-value {
+  background: grey;
+  margin-right: 2px;
+  flex: 0 1 2em;
+  text-align: right;
+}
 .hackmaster .skills-list .skill-controls {
   flex: 0 1 auto;
   text-align: right;
@@ -232,11 +283,31 @@
 .hackmaster .skills-list .skill-column div {
   flex: 1 0 auto;
 }
+.hackmaster .myflexrow {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+.hackmaster .myflexrow * {
+  flex: 1;
+}
 .hackmaster .actor-sheet {
   display: grid;
-  grid-gap: 4 px;
-  width: 600px;
-  grid-template-rows: auto;
+  grid-gap: 4px;
+  width: 900px;
+  grid-template-rows: repeat(3, min-content);
   grid-template-columns: auto;
-  grid-template-areas: "sheet-header" "sheet-abilities" "sheet-tabs" "sheet-body";
+  grid-template-areas: "sheet-header" "sheet-tabs" "sheet-body";
+}
+.hackmaster .sheet-abilities {
+  display: grid;
+  grid-gap: 4px;
+  width: inherit;
+  grid-template-columns: 8em 1fr;
+  grid-template-areas: "abilities foobar";
+}
+.hackmaster .sheet-abilities .abilities {
+  display: flex;
+  flex-direction: column;
 }
