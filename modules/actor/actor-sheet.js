@@ -4,16 +4,16 @@
  */
 export class HackmasterActorSheet extends ActorSheet {
 
-  /** @override */
-  static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
-      classes: ["hackmaster", "sheet", "actor"],
-      template: "systems/hackmaster5e/templates/actor/actor-sheet.hbs",
-      width: 920,
-      height: 730,
-      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "skills" }]
-    });
-  }
+    /** @override */
+    static get defaultOptions() {
+        return mergeObject(super.defaultOptions, {
+            classes: ["hackmaster", "sheet", "actor"],
+            template: "systems/hackmaster5e/templates/actor/actor-sheet.hbs",
+            width: 820,
+            height: 730,
+            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "skills" }]
+        });
+    }
 
   /* -------------------------------------------- */
 
