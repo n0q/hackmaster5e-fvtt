@@ -17,11 +17,8 @@ export class HackmasterActor extends Actor {
     _prepareCharacterData(actorData) {
         const data = actorData.data;
 
-        // This sample from boilerplate just creates DnD style ability mods.
-        for (let [key, ability] of Object.entries(data.abilities)) {
-            ability.mod = Math.floor((ability.value - 10) / 2);
+        if (data.hp.value === undefined) {
+            data.hp.value = data.hp.max;
         }
-
-        // TODO: We'll put things like Max HP, ToP saves, and so on here.
     }
 }
