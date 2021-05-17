@@ -3,7 +3,7 @@
         <div class="ability flexrow">
             <input type="text" name="data.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number"/>
             <input type="text" name="data.abilities.{{key}}.fvalue" value="{{ability.fvalue}}" data-dtype="Number"/>
-            <label for="data.data.abilities.{{key}}.value" class="resource-label">
+            <label for="data.data.abilities.{{key}}.value" class="resource-label rollable" data-roll-type="ability">
                 {{localize (findConfigValue "ability_short" key)}}
             </label>
         </div>

@@ -184,19 +184,39 @@ export class HackmasterActorSheet extends ActorSheet {
         event.preventDefault();
         const element = event.currentTarget;
         const dataset = element.dataset;
-        // TODO: This is a god-awful mess, and it ignores the dataset.roll entirely.
-        if (dataset.roll) {
-            const itemid  = this._getItemId(event);
-            const item    = this._getOwnedItem(itemid);
-            const mastery = item.data.data.mastery.value;
 
-            let roll      = new Roll("1d100p +" + mastery, this.actor.data.data);
-            let label     = dataset.label ? `Rolling ${dataset.label}` : '';
-            let rolled    = await roll.evaluate({async: true});
-            rolled.toMessage({
-                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                flavor: label
-            });
+        //TODO: Clean this whole mess up.
+        //TODO: We're repeating the roll function because we have no idea wtf we're doing with rolls, yet.
+        if (dataset.rollType) {
+            switch (dataset.rollType) {
+                case "skill": {
+                    const itemid  = this._getItemId(event);
+                    const item    = this._getOwnedItem(itemid);
+                    const mastery = item.data.data.mastery.value;
+                    let roll      = new Roll("1d100p +" + mastery, this.actor.data.data);
+                    let label     = dataset.label ? `Rolling ${dataset.label}` : '';
+                    let rolled    = await roll.evaluate({async: true});
+                    rolled.toMessage({
+                        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                        flavor: label
+                    });
+                    break;
+                }
+                case "ability": {
+                    const sKey = $(event.currentTarget).attr('for');
+                    const ability = getProperty(this.actor, sKey);
+                    let roll      = new Roll("1d20p +" + ability, this.actor.data.data);
+                    let label     = dataset.label ? `Rolling ${dataset.label}` : '';
+                    let rolled    = await roll.evaluate({async: true});
+                    rolled.toMessage({
+                        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                        flavor: label
+                    });
+                    break;
+                }
+            }
         }
     }
+
+
 }
