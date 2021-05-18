@@ -3,12 +3,12 @@ import { HackmasterActorSheet } from "./actor/actor-sheet.js";
 import { HackmasterItem } from "./item/item.js";
 import { HackmasterItemSheet } from "./item/item-sheet.js";
 
-import LOGGER from "./utils/logger.js";
+import LOGGER from "./sys/logger.js";
 
 import registerHandlebarsHelpers from "./sys/helpers.js";
 import preloadHandlebarsTemplates from "./sys/partials.js";
 
-import './dice.js';
+import './sys/dice.js';
 
 Hooks.once("init", async() => {
     LOGGER.log("Initialization start.");

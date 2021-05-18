@@ -1,3 +1,6 @@
+import RollHandler from "../sys/roller.js";
+import ChatHandler from "../chat/chat.js";
+
 /**
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheet}
@@ -225,32 +228,32 @@ export class HackmasterActorSheet extends ActorSheet {
         const dataset = element.dataset;
 
         //TODO: Clean this whole mess up.
-        //TODO: We're repeating the roll function because we have no idea wtf we're doing with rolls, yet.
+        //      Everything here is temporary. If it's still here by 0.2,
+        //      <span class="uncle roger">You fucked up.</span>
         if (dataset.rollType) {
             switch (dataset.rollType) {
                 case "skill": {
                     const itemid  = this._getItemId(event);
                     const item    = this._getOwnedItem(itemid);
                     const mastery = item.data.data.mastery.value;
-                    let roll      = new Roll("1d100p +" + mastery, this.actor.data.data);
-                    let label     = dataset.label ? `Rolling ${dataset.label}` : '';
-                    let rolled    = await roll.evaluate({async: true});
-                    rolled.toMessage({
-                        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                        flavor: label
-                    });
+                    const roll    = new RollHandler("1d100p - " + mastery);
+                    await roll.roll();
+                    var myhtml    = await roll._roll.render();
+                    var card      = ChatHandler.ChatDataSetup(myhtml, item.data.name);
+                    await ChatMessage.create(card);
                     break;
                 }
                 case "ability": {
                     const sKey = $(event.currentTarget).attr('for');
                     const ability = getProperty(this.actor, sKey);
-                    let roll      = new Roll("1d20p +" + ability, this.actor.data.data);
-                    let label     = dataset.label ? `Rolling ${dataset.label}` : '';
-                    let rolled    = await roll.evaluate({async: true});
-                    rolled.toMessage({
-                        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                        flavor: label
-                    });
+
+                    const complete_mess = sKey.split('.').slice(3,4)[0];
+                    const gah           = game.i18n.localize("HM.ability." + complete_mess);
+                    const roll    = new RollHandler("1d20p + " + ability);
+                    await roll.roll();
+                    var myhtml    = await roll._roll.render();
+                    var card      = ChatHandler.ChatDataSetup(myhtml, gah);
+                    await ChatMessage.create(card);
                     break;
                 }
             }
