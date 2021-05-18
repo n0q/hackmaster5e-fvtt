@@ -43,7 +43,7 @@ export class HackmasterActorSheet extends ActorSheet {
    *
    * @return {undefined}
    */
-    _prepareCharacterItems(sheetData) {
+    async _prepareCharacterItems(sheetData) {
         const actorData = sheetData.actor;
 
         // Initialize containers.
@@ -52,6 +52,7 @@ export class HackmasterActorSheet extends ActorSheet {
         const gear = [];
         const wounds = [];
         const features = [];
+        let race = null;
 
         const spells = {
             0: [],
@@ -91,12 +92,19 @@ export class HackmasterActorSheet extends ActorSheet {
                         spells[i.data.spellLevel].push(i);
                     }
                     break;
-                case "wound":
-                    //console.warn(i.data.duration.value);
-                    wounds.push(i);
-                    //i.data.duration.value = 10;
-                    //console.warn(wounds[0].data.duration.value);
+                case "race":
 
+                    // Swap race objects.
+                    // TODO: Is this the best place to make this check?
+                    if (race) {
+                        const oldId = race._id;
+                        const oldRace = this.actor.items.get(oldId);
+                        await oldRace.delete();
+                    }
+                    race = i;
+                    break;
+                case "wound":
+                    wounds.push(i);
                     break;
             }
         }
@@ -108,6 +116,7 @@ export class HackmasterActorSheet extends ActorSheet {
         actorData.features = features;
         actorData.spells = spells;
         actorData.wounds = wounds;
+        actorData.race = race;
     }
 
   /* -------------------------------------------- */
