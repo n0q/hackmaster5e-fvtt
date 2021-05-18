@@ -26,5 +26,6 @@
             "path": "lang/en.json"
         }
     ],
-    "manifest": "https://raw.githubusercontent.com/n0q/hackmaster5e-fvtt/main/system.json"
+    "manifest": "https://raw.githubusercontent.com/n0q/hackmaster5e-fvtt/main/system.json",
+    "download": "https://github.com/n0q/hackmaster5e-fvtt/archive/refs/tags/v0.0.1.zip"
 }
