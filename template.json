@@ -4,7 +4,7 @@
         "templates": {
 
             "base": {
-                "hp": {"max": 30},
+                "hp": {},
                 "sp": {"value": 25, "max": 30}
             },
 
@@ -42,7 +42,7 @@
     },
 
     "Item": {
-        "types": ["armor", "item", "feature", "spell", "skill", "weapon", "wound"],
+        "types": ["armor", "item", "feature", "race", "skill", "spell", "weapon", "wound"],
         "templates": {
             "base": {
                 "description": "",
@@ -89,6 +89,21 @@
 
         "feature": {
             "templates": ["base"]
+        },
+
+        "race": {
+            "templates": ["base"],
+            "hp_mod":    {"value": 10},
+            "kb_mult":   {"value": 10},
+            "reach_mod": {"value": 0},
+            "size":      "medium",
+            "move": {
+                "crawl":  {"value": 2.5},
+                "walk":   {"value": 5},
+                "jog":    {"value": 10},
+                "run":    {"value": 15},
+                "sprint": {"value": 20}
+            }
         },
 
         "spell": {

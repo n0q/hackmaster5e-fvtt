@@ -38,16 +38,26 @@
             "shield": "Shield"
         },
 
-        "bp": "bp",
-        "dr": "dr",
-        "hp": "hp",
-        "sp": "sp",
+        "sizeSelect": {
+            "tiny":   "Tiny",
+            "small":  "Small",
+            "medium": "Medium",
+            "large":  "Large"
+        },
 
         "avail": {
             "high": "High",
             "med":  "Med",
             "low":  "Low"
         },
+
+        "bp": "bp",
+        "dr": "dr",
+        "hp": "hp",
+        "sp": "sp",
+
+        "hp_mod":       "HP mod",
+        "reach_mod":    "reach mod",
 
         "age":          "Age",
         "armortype":    "Armor Type",
@@ -61,6 +71,7 @@
         "movece":       "Move Coeff",
         "duration":     "Duration",
         "inventory":    "Inventory",
+        "knockback":    "Knockback",
         "language":     "Language",
         "literate":     "Literate",
         "mastery":      "Mastery",
@@ -69,6 +80,7 @@
         "tools":        "Tools",
         "treated":      "Treated",
         "race":         "Race",
+        "size":         "Size",
         "skill":        "Skill",
         "skills":       "Skills",
         "specific":     "Specific",

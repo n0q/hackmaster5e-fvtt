@@ -21,6 +21,13 @@ idx.ability = {
     cha: "HM.cha"
 },
 
+idx.size = {
+    tiny:   "HM.sizeSelect.tiny",
+    small:  "HM.sizeSelect.small",
+    medium: "HM.sizeSelect.medium",
+    large:  "HM.sizeSelect.large"
+},
+
 idx.quality = {
     worthless:     "HM.qualitySelect.worthless",
     poor:          "HM.qualitySelect.poor",
