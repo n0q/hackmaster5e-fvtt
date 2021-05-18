@@ -40,62 +40,72 @@ export class HackmasterActorSheet extends ActorSheet {
    *
    * @return {undefined}
    */
-  _prepareCharacterItems(sheetData) {
-    const actorData = sheetData.actor;
+    _prepareCharacterItems(sheetData) {
+        const actorData = sheetData.actor;
 
-    // Initialize containers.
-    const uskills = [];
-    const skills = [];
-    const gear = [];
-    const features = [];
-    const spells = {
-      0: [],
-      1: [],
-      2: [],
-      3: [],
-      4: [],
-      5: [],
-      6: [],
-      7: [],
-      8: [],
-      9: []
-    };
+        // Initialize containers.
+        const uskills = [];
+        const skills = [];
+        const gear = [];
+        const wounds = [];
+        const features = [];
 
-    // Iterate through items, allocating to containers
-    // let totalWeight = 0;
-    for (let i of sheetData.items) {
-        let item = i.data;
-        i.img = i.img || DEFAULT_TOKEN;
+        const spells = {
+            0: [],
+            1: [],
+            2: [],
+            3: [],
+            4: [],
+            5: [],
+            6: [],
+            7: [],
+            8: [],
+            9: []
+        };
 
-        switch(i.type) {
-            case "item":
-                gear.push(i);
-                break;
-            case "skill":
-                if (i.data.universal.checked) {
-                    uskills.push(i);
-                } else {
-                    skills.push(i);
-                }
-                break;
-            case "features":
-                features.push(i);
-                break;
-            case "spell":
-                if (i.data.spellLevel != undefined) {
-                    spells[i.data.spellLevel].push(i);
-                }
-                break;
+        // Iterate through items, allocating to containers
+        // let totalWeight = 0;
+        for (let i of sheetData.items) {
+            let item = i.data;
+            i.img = i.img || DEFAULT_TOKEN;
+
+            switch(i.type) {
+                case "item":
+                    gear.push(i);
+                    break;
+                case "skill":
+                    if (i.data.universal.checked) {
+                        uskills.push(i);
+                    } else {
+                        skills.push(i);
+                    }
+                    break;
+                case "features":
+                    features.push(i);
+                    break;
+                case "spell":
+                    if (i.data.spellLevel != undefined) {
+                        spells[i.data.spellLevel].push(i);
+                    }
+                    break;
+                case "wound":
+                    //console.warn(i.data.duration.value);
+                    wounds.push(i);
+                    //i.data.duration.value = 10;
+                    //console.warn(wounds[0].data.duration.value);
+
+                    break;
+            }
         }
-    }
 
-    // Assign and return
-    actorData.gear = gear;
-    actorData.skills = skills;
-    actorData.uskills = uskills;
-    actorData.features = features;
-    actorData.spells = spells;
-  }
+        // Assign and return
+        actorData.gear = gear;
+        actorData.skills = skills;
+        actorData.uskills = uskills;
+        actorData.features = features;
+        actorData.spells = spells;
+        actorData.wounds = wounds;
+    }
 
   /* -------------------------------------------- */
 
@@ -127,6 +137,8 @@ export class HackmasterActorSheet extends ActorSheet {
     // Rollable abilities.
     html.find('.rollable').click(this._onRoll.bind(this));
 
+    html.find('.editable').click(this._onEdit.bind(this));
+
     // Drag events for macros.
     if (this.actor.isOwner) {
       let handler = ev => this._onDragStart(ev);
@@ -138,6 +150,8 @@ export class HackmasterActorSheet extends ActorSheet {
     }
   }
 
+
+    // Getters
     _getItemId(event) {
         let id = $(event.currentTarget).parents(".item").attr("data-item-id");
         if (typeof id === "undefined") {
@@ -147,6 +161,10 @@ export class HackmasterActorSheet extends ActorSheet {
     }
 
     _getOwnedItem(itemId) { return this.actor.items.get(itemId); }
+
+
+    _getObjProp(event) { return $(event.currentTarget).attr("data-item-prop"); }
+
 
   /**
    * Handle creating a new Owned Item for the actor using initial data defined in the HTML dataset
@@ -173,6 +191,27 @@ export class HackmasterActorSheet extends ActorSheet {
 
         // Finally, create the item!
         return await Item.create(itemData, {parent: this.actor});
+    }
+
+  _updateOwnedItem(item) {
+    return this.actor.updateEmbeddedDocuments("Item", item.data);
+  }
+
+   async _onEdit(event) {
+        event.preventDefault();
+        const element = event.currentTarget;
+        const dataset = element.dataset;
+        const item    = this._getOwnedItem(this._getItemId(event));
+
+        if (dataset.itemProp) {
+            const itemProp = dataset.itemProp;
+            const oldValue = getProperty(item.data, itemProp);
+
+            setProperty(item.data, itemProp, oldValue -1);
+
+            // TODO: Update only the altered property.
+            await this.actor.updateEmbeddedDocuments("Item", [{_id:item.id, data:item.data.data}]);
+        }
     }
 
    /**

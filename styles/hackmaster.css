@@ -289,16 +289,20 @@
   width: 800px;
   grid-template-rows: repeat(3, min-content);
   grid-template-columns: auto;
-  grid-template-areas: "sheet-header" "sheet-tabs" "sheet-body";
+  grid-template-areas: "sheet-header" "sheet-abilities" "sheet-tabs" "sheet-body";
 }
 .hackmaster .sheet-abilities {
   display: grid;
   grid-gap: 4px;
   width: inherit;
-  grid-template-columns: 8em 1fr;
-  grid-template-areas: "abilities foobar";
+  grid-template-columns: 8em 1fr 13em;
+  grid-template-areas: "abilities abilities-mods abilities-wounds";
 }
 .hackmaster .sheet-abilities .abilities {
   display: flex;
   flex-direction: column;
+}
+.hackmaster .sheet-abilities .abilities-mods {
+  border: 2px solid;
+  border-radius: 6px;
 }
