@@ -25,7 +25,6 @@ Die.prototype.penetrate = function(modifier, {recursive=true}={}) {
     while ( checked < this.results.length ) {
       let r = this.results[checked];
       checked++;
-      console.warn(checked);
       if (!r.active) continue;
 
       // Maybe we have run out of explosions

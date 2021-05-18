@@ -1,4 +1,4 @@
-import LOGGER from "../utils/logger.js";
+import LOGGER from "./logger.js";
 import idx from "./localize.js";
 
 export default function registerHandlebarsHelpers() {
