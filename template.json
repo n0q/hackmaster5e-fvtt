@@ -36,11 +36,13 @@
         "types": ["armor", "item", "feature", "spell", "skill", "weapon", "wound"],
         "templates": {
             "base": {
-                "description": ""
+                "description": "",
+                "location": null
             },
 
             "logistics": {
                 "quality": null,
+                "quantity": {"value": 1},
                 "weight":   {"value": 0},
                 "cost":     {"value": 0},
                 "avail": {
@@ -53,7 +55,6 @@
 
         "item": {
             "templates": ["base", "logistics"],
-            "quantity": {"value": 1},
             "container": {
                 "checked": false,
                 "capacity": 0
@@ -100,7 +101,7 @@
             "templates": ["base"],
             "mastery":   {"value": 0},
             "bp":        {"value": null},
-            "specific":  {"checked": false, "value": "Unspecified"},
+            "specific":  {"checked": false, "value": null},
             "universal": {"checked": false},
             "tools":     {"checked": false},
             "language":  {

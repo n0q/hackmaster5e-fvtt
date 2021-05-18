@@ -13,12 +13,19 @@ export class HackmasterActor extends Actor {
         if (actorData.type === 'character') this._prepareCharacterData(actorData);
     }
 
-    // Derived (NOT SAVED) data is generated here.
     _prepareCharacterData(actorData) {
         const data = actorData.data;
 
-        if (data.hp.value === undefined) {
-            data.hp.value = data.hp.max;
+        let hpcurrent = data.hp.max;
+        for (let i of this.items) {
+            let item = i.data;
+            switch(i.type) {
+                case "wound": {
+                    hpcurrent -= i.data.data.hp.value;
+                    break;
+                }
+            }
         }
+        data.hp.value = hpcurrent;
     }
 }

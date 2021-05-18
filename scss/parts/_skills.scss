@@ -24,8 +24,12 @@
         }
     }
 
+
     .skill-name {
         margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        min-width: 0;
     }
 
     .skill-value {
@@ -43,23 +47,6 @@
     .skill-column {
         display: flex;
         flex-direction: row;
-        div {
-            flex: 1 0 auto;
-        }
     }
 }
-
-
-
-.myflexrow {
-   display: flex;
-   flex-direction: row;
-   flex-wrap: wrap;
-   justify-content: flex-start;
-   * {
-       flex: 1;
-   }
- }
-
-
 

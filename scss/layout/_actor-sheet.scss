@@ -8,6 +8,7 @@ $actor-gridgap: 4px;
     grid-template-columns: auto;
     grid-template-areas:
         "sheet-header"
+        "sheet-abilities"
         "sheet-tabs"
         "sheet-body";
 }
@@ -16,14 +17,19 @@ $actor-gridgap: 4px;
     display: grid;
     grid-gap: $actor-gridgap;
     width: inherit;
-    grid-template-columns: 8em 1fr;
+    grid-template-columns: 8em 1fr 13em;
     grid-template-areas:
-        "abilities foobar";
+        "abilities abilities-mods abilities-wounds";
     .abilities {
         display: flex;
         flex-direction: column;
     }
 
-    .abilities-attributes {
+    .abilities-mods {
+        border: 2px solid;
+        border-radius: 6px;
+    }
+
+    .abilities-wounds {
     }
 }
