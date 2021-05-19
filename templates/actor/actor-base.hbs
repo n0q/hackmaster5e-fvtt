@@ -9,8 +9,9 @@
 
     <nav class="sheet-tabs tabs" data-group="primary">
         <a class="item" data-tab="skills">{{localize "HM.skills"}}</a>
-        <a class="item" data-tab="description">Description</a>
+        <a class="item" data-tab="description">{{localize "HM.description"}}</a>
         <a class="item" data-tab="inventory">{{localize "HM.inventory"}}</a>
+        <a class="item" data-tab="setup">{{localize "HM.setup"}}</a>
     </nav>
 
     <section class="sheet-body">
@@ -24,6 +25,10 @@
 
         <div class="tab items" data-group="primary" data-tab="inventory">
             {{> "systems/hackmaster5e/templates/actor/parts/inventory.hbs"}}
+        </div>
+
+        <div class="tab setup" data-group="primary" data-tab="setup">
+            {{> "systems/hackmaster5e/templates/actor/parts/setup/base-setup.hbs"}}
         </div>
     </section>
 </form>

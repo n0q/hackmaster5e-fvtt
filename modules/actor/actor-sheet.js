@@ -11,10 +11,10 @@ export class HackmasterActorSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             classes: ["hackmaster", "sheet", "actor"],
-            template: "systems/hackmaster5e/templates/actor/actor-sheet.hbs",
+            template: "systems/hackmaster5e/templates/actor/actor-base.hbs",
             width: 820,
             height: 750,
-            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "skills" }]
+            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "setup" }]
         });
     }
 
@@ -53,6 +53,7 @@ export class HackmasterActorSheet extends ActorSheet {
         const wounds = [];
         const features = [];
         let race = null;
+        const level = [];
 
         const spells = {
             0: [],
@@ -72,8 +73,15 @@ export class HackmasterActorSheet extends ActorSheet {
         for (let i of sheetData.items) {
             let item = i.data;
             i.img = i.img || DEFAULT_TOKEN;
-
+            var _;
             switch(i.type) {
+                case "class":
+                    if (!i.data._ord) {
+                        i.data._ord = level.length + 1;
+                        _ = await actorData.updateEmbeddedDocuments("Item", [i]);
+                    }
+                    level.push(i);
+                    break;
                 case "item":
                     gear.push(i);
                     break;
@@ -117,6 +125,8 @@ export class HackmasterActorSheet extends ActorSheet {
         actorData.spells = spells;
         actorData.wounds = wounds;
         actorData.race = race;
+        actorData.level = level.sort((a, b) => { a.data_ord - b.data._ord });
+
     }
 
   /* -------------------------------------------- */

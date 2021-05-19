@@ -16,25 +16,14 @@ export class HackmasterActor extends Actor {
     _prepareCharacterData(actorData) {
         const data = actorData.data;
 
-        let hp_racial, hp_lost = 0;
+        const race      = this.items.filter((a) => a.type === "race")[0];
+        const racial_hp = race.data.data.hp_mod.value || 0;
+        const con_hp    = data.abilities.con.value || 0;
+        data.hp.max     = racial_hp + con_hp;
 
-        // Setting HP
-        // TODO: This could certainly be done more nicely.
-        for (let i of this.items) {
-            let item = i.data;
-            switch(i.type) {
-                case "race": {
-                    hp_racial = (i.data.data.hp_mod.value || 0);
-                    break;
-                }
-                case "wound": {
-                    hp_lost += i.data.data.hp.value;
-                    break;
-                }
-            }
-        }
-
-        data.hp.max   = (hp_racial || 0) + (data.abilities.con.value || 0);
-        data.hp.value = data.hp.max - hp_lost;
+        const wounds    = this.items.filter((a) => a.type === "wound");
+        let hp_loss     = 0;
+        Object.keys(wounds).forEach( (a) => hp_loss += wounds[a].data.data.hp.value);
+        data.hp.value = data.hp.max - hp_loss;
     }
 }

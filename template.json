@@ -89,7 +89,8 @@
                 "value": null,
                 "hitdie": ""
             },
-            "top_mod": {"value": 0.01}
+            "top_mod": {"value": 0.01},
+            "_ord": null
         },
 
         "item": {
