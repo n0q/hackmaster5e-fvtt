@@ -34,7 +34,7 @@ export class HackmasterActor extends Actor {
             }
         }
 
-        data.hp.max   = hp_racial + (data.abilities.con.value || 0);
+        data.hp.max   = (hp_racial || 0) + (data.abilities.con.value || 0);
         data.hp.value = data.hp.max - hp_lost;
     }
 }
