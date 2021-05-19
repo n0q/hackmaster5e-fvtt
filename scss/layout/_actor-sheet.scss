@@ -13,17 +13,64 @@ $actor-gridgap: 4px;
         "sheet-body";
 }
 
-.sheet-header {
-    display: grid;
-    grid-gap: $actor-gridgap;
-    width: inherit;
-    grid-template-columns: 1fr 1fr;
+$actor-portrait-dim: 150px;
+.base-header {
+    display: flex;
+    flex: 0 0 auto;
+    overflow: hidden;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+    align-content: start;
 
-    img {
-        width: 200px;
+    .header-portrait {
+        flex: 0 1 auto;
+    }
+
+    .header-stats {
+        flex: 1 0 auto;
+    }
+
+    .profile-img {
+        flex: 0 0 100px;
+        width: $actor-portrait-dim;
+        height: $actor-portrait-dim;
+        min-height: $actor-portrait-dim;
+        margin-right: 10px;
+    }
+
+    .header-fields {
+        flex: 1;
+    }
+
+    h1.charname {
+        height: 50px;
+        padding: 0px;
+        margin: 5px 0;
+        border-bottom: 0;
+        input {
+            width: 60%;
+            height: 100%;
+            margin: 0;
+        }
     }
 }
 
+
+
+/*
+    display: grid;
+    grid-gap: $actor-gridgap;
+    width: inherit;
+    grid-template-rows: 1fr 1fr;
+    flex-direction: row;
+    .header-portrait: {
+        background: grey;
+        flex: 0 1 auto;
+    }
+}
+*/
 .sheet-abilities {
     display: grid;
     grid-gap: $actor-gridgap;
@@ -37,8 +84,7 @@ $actor-gridgap: 4px;
     }
 
     .abilities-mods {
-        border: 2px solid;
-        border-radius: 6px;
+        @include border_rounded;
     }
 
     .abilities-wounds {

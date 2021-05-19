@@ -149,6 +149,20 @@
 }
 
 /* Styles limited to hackmaster sheets */
+.hackmaster {
+  /*
+      display: grid;
+      grid-gap: $actor-gridgap;
+      width: inherit;
+      grid-template-rows: 1fr 1fr;
+      flex-direction: row;
+      .header-portrait: {
+          background: grey;
+          flex: 0 1 auto;
+      }
+  }
+  */
+}
 .hackmaster .item-form {
   font-family: "Roboto", sans-serif;
 }
@@ -291,14 +305,42 @@
   grid-template-columns: auto;
   grid-template-areas: "sheet-header" "sheet-abilities" "sheet-tabs" "sheet-body";
 }
-.hackmaster .sheet-header {
-  display: grid;
-  grid-gap: 4px;
-  width: inherit;
-  grid-template-columns: 1fr 1fr;
+.hackmaster .base-header {
+  display: flex;
+  flex: 0 0 auto;
+  overflow: hidden;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+  align-content: start;
 }
-.hackmaster .sheet-header img {
-  width: 200px;
+.hackmaster .base-header .header-portrait {
+  flex: 0 1 auto;
+}
+.hackmaster .base-header .header-stats {
+  flex: 1 0 auto;
+}
+.hackmaster .base-header .profile-img {
+  flex: 0 0 100px;
+  width: 150px;
+  height: 150px;
+  min-height: 150px;
+  margin-right: 10px;
+}
+.hackmaster .base-header .header-fields {
+  flex: 1;
+}
+.hackmaster .base-header h1.charname {
+  height: 50px;
+  padding: 0px;
+  margin: 5px 0;
+  border-bottom: 0;
+}
+.hackmaster .base-header h1.charname input {
+  width: 60%;
+  height: 100%;
+  margin: 0;
 }
 .hackmaster .sheet-abilities {
   display: grid;
