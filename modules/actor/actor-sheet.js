@@ -13,7 +13,7 @@ export class HackmasterActorSheet extends ActorSheet {
             classes: ["hackmaster", "sheet", "actor"],
             template: "systems/hackmaster5e/templates/actor/actor-sheet.hbs",
             width: 820,
-            height: 730,
+            height: 750,
             tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "skills" }]
         });
     }
