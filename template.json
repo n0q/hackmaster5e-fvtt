@@ -84,12 +84,12 @@
 
         "class": {
             "templates": ["base"],
-            "hitdie": "",
-            "hp": {"value": 0, "max": 0},
-            "cleric": {
-                "checked": false,
-                "patron": null
-            }
+            "hp": {
+                "reroll": {"checked": false},
+                "value": null,
+                "hitdie": ""
+            },
+            "top_mod": {"value": 0.01}
         },
 
         "item": {
