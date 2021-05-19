@@ -18,23 +18,23 @@ export class HackmasterActorSheet extends ActorSheet {
         });
     }
 
-  /* -------------------------------------------- */
+    /* -------------------------------------------- */
 
-  /** @override */
-  getData() {
-    const data = super.getData();
-    data.dtypes = ["String", "Number", "Boolean"];
-    for (let attr of Object.values(data.data.data.attributes)) {
-      attr.isCheckbox = attr.dtype === "Boolean";
+    /** @override */
+    getData() {
+        const data = super.getData();
+        data.dtypes = ["String", "Number", "Boolean"];
+//      for (let attr of Object.values(data.data.data.attributes)) {
+//          attr.isCheckbox = attr.dtype === "Boolean";
+//      }
+
+        // Prepare items.
+        if (this.actor.data.type == 'character') {
+            this._prepareCharacterItems(data);
+        }
+
+        return data;
     }
-
-    // Prepare items.
-    if (this.actor.data.type == 'character') {
-      this._prepareCharacterItems(data);
-    }
-
-    return data;
-  }
 
   /**
    * Organize and classify Items for Character sheets.
