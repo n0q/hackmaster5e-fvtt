@@ -1,9 +1,5 @@
-<div class="grid grid-2row">
-    <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
-    <div>
-        {{#if actor.race.name}}{{actor.race.name}}{{/if}}
-    </div>
-</div>
+<div class="header-portrait">
+    {{> "systems/hackmaster5e/templates/actor/parts/header/header-portrait.hbs" }}
 <div class="header-fields">
     <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
     <div class="resources grid grid-2col">

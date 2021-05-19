@@ -13,6 +13,17 @@ $actor-gridgap: 4px;
         "sheet-body";
 }
 
+.sheet-header {
+    display: grid;
+    grid-gap: $actor-gridgap;
+    width: inherit;
+    grid-template-columns: 1fr 1fr;
+
+    img {
+        width: 200px;
+    }
+}
+
 .sheet-abilities {
     display: grid;
     grid-gap: $actor-gridgap;
