@@ -149,20 +149,6 @@
 }
 
 /* Styles limited to hackmaster sheets */
-.hackmaster {
-  /*
-      display: grid;
-      grid-gap: $actor-gridgap;
-      width: inherit;
-      grid-template-rows: 1fr 1fr;
-      flex-direction: row;
-      .header-portrait: {
-          background: grey;
-          flex: 0 1 auto;
-      }
-  }
-  */
-}
 .hackmaster .item-form {
   font-family: "Roboto", sans-serif;
 }
