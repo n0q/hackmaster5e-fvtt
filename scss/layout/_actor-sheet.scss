@@ -57,20 +57,6 @@ $actor-portrait-dim: 150px;
     }
 }
 
-
-
-/*
-    display: grid;
-    grid-gap: $actor-gridgap;
-    width: inherit;
-    grid-template-rows: 1fr 1fr;
-    flex-direction: row;
-    .header-portrait: {
-        background: grey;
-        flex: 0 1 auto;
-    }
-}
-*/
 .sheet-abilities {
     display: grid;
     grid-gap: $actor-gridgap;

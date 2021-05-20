@@ -14,7 +14,7 @@ export class HackmasterActorSheet extends ActorSheet {
             template: "systems/hackmaster5e/templates/actor/actor-base.hbs",
             width: 820,
             height: 750,
-            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "setup" }]
+            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "skills" }]
         });
     }
 
@@ -76,10 +76,6 @@ export class HackmasterActorSheet extends ActorSheet {
             var _;
             switch(i.type) {
                 case "character_class":
-        //            if (!i.data._ord) {
-        //                i.data._ord = level.length + 1;
-        //                _ = await actorData.updateEmbeddedDocuments("Item", [i]);
-        //            }
                     character_classes.push(i);
                     break;
                 case "item":
