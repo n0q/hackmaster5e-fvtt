@@ -46,8 +46,11 @@ export class HackmasterActor extends Actor {
 
         if (b_reorder) { this.updateEmbeddedDocuments("Item", dataUpdate); }
 
+        // TODO: Sloppy.
         const race      = this.items.filter((a) => a.type === "race")[0];
-        const racial_hp = race.data.data.hp_mod.value || 0;
+        var racial_hp   = 0;
+        if (race) { racial_hp = race.data.data.hp_mod.value || 0 };
+
         const con_hp    = data.abilities.con.value || 0;
         const level_hp  = levelData.level_hp || 0;
         data.hp.max     = racial_hp + con_hp + level_hp;
@@ -57,13 +60,4 @@ export class HackmasterActor extends Actor {
         Object.keys(wounds).forEach( (a) => hp_loss += wounds[a].data.data.hp.value);
         data.hp.value = data.hp.max - hp_loss;
     }
-
-
-
-    /*
-     *   79                     if (!i.data._ord) {
-  80                         i.data._ord = level.length + 1;
-  81                         _ = await actorData.updateEmbeddedDocuments("Item", [i]);
-  82                     }
-  */
 }
