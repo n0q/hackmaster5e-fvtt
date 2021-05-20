@@ -42,9 +42,9 @@
 
     "Item": {
         "types": [
-              "armor",    "class",     "item",
-            "feature",     "race",    "skill",
-              "spell",   "weapon",    "wound"
+              "armor",   "character_class",    "item",
+            "feature",              "race",   "skill",
+              "spell",            "weapon",   "wound"
         ],
         "templates": {
             "base": {
@@ -82,7 +82,7 @@
             }
         },
 
-        "class": {
+        "character_class": {
             "templates": ["base"],
             "hp": {
                 "reroll": {"checked": false},

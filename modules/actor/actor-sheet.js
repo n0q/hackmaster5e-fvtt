@@ -53,7 +53,7 @@ export class HackmasterActorSheet extends ActorSheet {
         const wounds = [];
         const features = [];
         let race = null;
-        const level = [];
+        const character_classes = [];
 
         const spells = {
             0: [],
@@ -75,12 +75,12 @@ export class HackmasterActorSheet extends ActorSheet {
             i.img = i.img || DEFAULT_TOKEN;
             var _;
             switch(i.type) {
-                case "class":
-                    if (!i.data._ord) {
-                        i.data._ord = level.length + 1;
-                        _ = await actorData.updateEmbeddedDocuments("Item", [i]);
-                    }
-                    level.push(i);
+                case "character_class":
+        //            if (!i.data._ord) {
+        //                i.data._ord = level.length + 1;
+        //                _ = await actorData.updateEmbeddedDocuments("Item", [i]);
+        //            }
+                    character_classes.push(i);
                     break;
                 case "item":
                     gear.push(i);
@@ -125,8 +125,12 @@ export class HackmasterActorSheet extends ActorSheet {
         actorData.spells = spells;
         actorData.wounds = wounds;
         actorData.race = race;
-        actorData.level = level.sort((a, b) => { a.data_ord - b.data._ord });
+        actorData.character_classes = character_classes.sort((a, b) => { return a.data._ord - b.data._ord });
 
+        if (actorData.character_classes) {
+            const cclength = actorData.character_classes.length;
+            actorData.curr_class = actorData.character_classes[cclength -1];
+        }
     }
 
   /* -------------------------------------------- */
