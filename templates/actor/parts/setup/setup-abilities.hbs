@@ -1,0 +1,27 @@
+<div class="row">
+    <label class="resource-label column">{{localize "HM.raw"}}</label> 
+    <label class="resource-label column">{{localize "HM.racial"}}</label> 
+    <label class="resource-label column">{{localize "HM.misc"}}</label> 
+</div>
+{{#each data.data.abilities as |ability key|}}
+    <div class="row">
+        <div class="ability column">
+            <input type="number" name="data.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number"/>
+            <input type="number" name="data.abilities.{{key}}.fvalue" value="{{ability.fvalue}}" data-dtype="Number"/>
+            <label for="data.data.abilities.{{key}}.value" class="resource-label">
+            {{localize (findConfigValue "ability_short" key)}}    
+        </div>
+        <div class="ability column">
+            {{#with (lookup ../actor.race.data.mods.abilities key)}}
+                <span class="resource-label">+</span>
+                <input type="number" value="{{value}}" readonly="true"/>
+            {{/with}}
+        </div>
+        <div class="ability column">
+            {{#with (lookup ../actor.data.data.mods key)}}
+                <span class="resource-label">+</span>
+                <input type="number" name="data.mods.{{key}}.value" value="{{value}}" data-dtype="Number"/>
+            {{/with}}
+        </div>
+    </div>
+{{/each}}

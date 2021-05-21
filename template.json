@@ -19,13 +19,13 @@
                     "cha": {"value": 10, "fvalue": 0}
                 },
                 "mods": {
-                    "str": {"dmg": 0, "fos": 0},
-                    "int": {"atk": 0},
-                    "wis": {"init": 0, "def": 0, "mental": 0},
-                    "dex": {"init": 0, "atk": 0, "def": 0, "dodge": 0, "foa": 0},
-                    "con": {"physical": 0},
-                    "lks": {},
-                    "cha": {"turning": 0, "morale": 0}
+                    "str": {"value": 0, "dmg": 0, "fos": 0},
+                    "int": {"value": 0, "atk": 0},
+                    "wis": {"value": 0, "init": 0, "def": 0, "mental": 0},
+                    "dex": {"value": 0, "init": 0, "atk": 0, "def": 0, "dodge": 0, "foa": 0},
+                    "con": {"value": 0, "physical": 0},
+                    "lks": {"value": 0},
+                    "cha": {"value": 0, "turning": 0, "morale": 0}
                 }
             }
         },
@@ -111,6 +111,14 @@
             "kb_mult":   {"value": 10},
             "reach_mod": {"value": 0},
             "size":      "medium",
+            "mods": {
+                "abilities": {
+                    "str": {"value": 0}, "int": {"value": 0}, 
+                    "wis": {"value": 0}, "dex": {"value": 0},
+                    "con": {"value": 0}, "lks": {"value": 0},
+                    "cha": {"value": 0}
+                }
+            },
             "move": {
                 "crawl":  {"value": 2.5},
                 "walk":   {"value": 5},

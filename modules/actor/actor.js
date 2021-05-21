@@ -17,13 +17,26 @@ export class HackmasterActor extends Actor {
         const data = actorData.data;
         const dataUpdate = [];
 
+        // Ability adjustments
+        const d_abilities = deepClone(data.abilities);
+        const actorRace = this.items.find((a) => a.type === "race");
+        if(actorRace) {
+            let modsRace = actorRace.data.data.mods.abilities;
+            for (let key in d_abilities) {
+                d_abilities[key].value += modsRace[key].value;
+                d_abilities[key].value += data.mods[key].value;
+            }
+         }
+        data.derived = {abilities: d_abilities};
+
+
+        // Level sorting
         const levelData = {level_hp: 0, level_top: 0.00};
         const levelObj  = this.items.filter((a) => a.type === "character_class");
         const levelSort = levelObj.sort((a, b) => { return a.data_ord - b.data._ord });
         let b_reorder = false;
 
         let hp_prev = 0;
-        // Level sorting
         for (let i = 0; i < levelSort.length; i++) {
             if (levelSort[i].data.data._ord !== i + 1 || b_reorder) {
                 levelSort[i].data.data._ord = i + 1;
@@ -51,7 +64,7 @@ export class HackmasterActor extends Actor {
         var racial_hp   = 0;
         if (race) { racial_hp = race.data.data.hp_mod.value || 0 };
 
-        const con_hp    = data.abilities.con.value || 0;
+        const con_hp    = data.derived.abilities.con.value || 0;
         const level_hp  = levelData.level_hp || 0;
         data.hp.max     = racial_hp + con_hp + level_hp;
 

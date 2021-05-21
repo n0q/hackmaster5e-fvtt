@@ -76,3 +76,14 @@ $actor-portrait-dim: 150px;
     .abilities-wounds {
     }
 }
+
+.base-setup {
+    .setup-abilities {
+        @include flexgrid;
+    
+        input {
+            width: 2em;
+        }
+    }
+
+}
