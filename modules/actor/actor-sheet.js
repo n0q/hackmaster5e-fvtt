@@ -52,6 +52,7 @@ export class HackmasterActorSheet extends ActorSheet {
         const gear = [];
         const wounds = [];
         const weapons = [];
+        const profs = [];
         const features = [];
         let race = null;
         const character_classes = [];
@@ -81,6 +82,9 @@ export class HackmasterActorSheet extends ActorSheet {
                     break;
                 case "item":
                     gear.push(i);
+                    break;
+                case "proficiency":
+                    profs.push(i);
                     break;
                 case "skill":
                     if (i.data.universal.checked) {
@@ -126,6 +130,7 @@ export class HackmasterActorSheet extends ActorSheet {
         actorData.spells = spells;
         actorData.wounds = wounds;
         actorData.weapons = weapons;
+        actorData.profs = profs;
         actorData.race = race;
         actorData.character_classes = character_classes.sort((a, b) => { return a.data._ord - b.data._ord });
 

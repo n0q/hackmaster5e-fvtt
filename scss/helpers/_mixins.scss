@@ -20,6 +20,10 @@
     border-radius: 6px;
 }
 
+@mixin common_border {
+    border: 1px solid #999;
+    padding: 5px;
+}
 
 @mixin flexgrid {
     .row {
