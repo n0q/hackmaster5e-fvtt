@@ -14,7 +14,7 @@ export class HackmasterActorSheet extends ActorSheet {
             template: "systems/hackmaster5e/templates/actor/actor-base.hbs",
             width: 820,
             height: 750,
-            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "setup" }]
+            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "combat" }]
         });
     }
 
@@ -51,6 +51,7 @@ export class HackmasterActorSheet extends ActorSheet {
         const skills = [];
         const gear = [];
         const wounds = [];
+        const weapons = [];
         const features = [];
         let race = null;
         const character_classes = [];
@@ -107,6 +108,10 @@ export class HackmasterActorSheet extends ActorSheet {
                     }
                     race = i;
                     break;
+                case "weapon":
+                    gear.push(i);
+                    weapons.push(i);
+                    break;
                 case "wound":
                     wounds.push(i);
                     break;
@@ -120,6 +125,7 @@ export class HackmasterActorSheet extends ActorSheet {
         actorData.features = features;
         actorData.spells = spells;
         actorData.wounds = wounds;
+        actorData.weapons = weapons;
         actorData.race = race;
         actorData.character_classes = character_classes.sort((a, b) => { return a.data._ord - b.data._ord });
 
