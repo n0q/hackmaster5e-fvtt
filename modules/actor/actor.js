@@ -24,6 +24,7 @@ export class HackmasterActor extends Actor {
             let modsRace = actorRace.data.data.mods.abilities;
             for (let key in d_abilities) {
                 d_abilities[key].value += modsRace[key].value;
+                d_abilities[key].value += data.mods[key].value;
             }
          }
         data.derived = {abilities: d_abilities};
