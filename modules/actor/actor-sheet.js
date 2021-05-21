@@ -266,7 +266,7 @@ export class HackmasterActorSheet extends ActorSheet {
                     const sKey = $(event.currentTarget).attr('for');
                     const ability = getProperty(this.actor, sKey);
 
-                    const complete_mess = sKey.split('.').slice(3,4)[0];
+                    const complete_mess = sKey.split('.').slice(4,5)[0];
                     const gah           = game.i18n.localize("HM.ability." + complete_mess);
                     const roll    = new RollHandler("1d20p + " + ability);
                     await roll.roll();
