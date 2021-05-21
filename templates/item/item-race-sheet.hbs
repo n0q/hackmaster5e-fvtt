@@ -44,6 +44,16 @@
                     {{/each}}{{/select}}
                 </select>
             </li>
+            <div class="grid grid-2col">
+                {{#each data.data.mods.abilities as |ability key|}}
+                    <div class="ability flexrow">
+                        <input type="text" name="data.mods.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number"/>
+                        <label for="data.mods.abilities.{{key}}.value" class="resource-label">
+                            {{localize (findConfigValue "ability_short" key)}}
+                        </label>
+                    </div>
+                {{/each}}
+            </div>
         </div> 
     </section>
 </form>

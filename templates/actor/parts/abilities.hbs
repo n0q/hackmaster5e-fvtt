@@ -1,8 +1,7 @@
 <section class="abilities">
-    {{#each data.data.abilities as |ability key|}}
+    {{#each data.data.derived.abilities as |ability key|}}
         <div class="ability flexrow">
-            <input type="text" name="data.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number"/>
-            <input type="text" name="data.abilities.{{key}}.fvalue" value="{{ability.fvalue}}" data-dtype="Number"/>
+            <h4>{{ability.value}}/{{ability.fvalue}}</h4>
             <label for="data.data.abilities.{{key}}.value" class="resource-label rollable" data-roll-type="ability">
                 {{localize (findConfigValue "ability_short" key)}}
             </label>

@@ -19,3 +19,17 @@
     border: 2px solid;
     border-radius: 6px;
 }
+
+
+@mixin flexgrid {
+    .row {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .column {
+        flex-basis: 100%;
+        flex: 1;
+    }
+}
