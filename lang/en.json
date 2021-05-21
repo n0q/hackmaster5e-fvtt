@@ -51,6 +51,18 @@
             "low":  "Low"
         },
 
+        "weaponskillSelect": {
+            "minimal":  "Minimal",
+            "low":      "Low",
+            "medium":   "Medium",
+            "high":     "High"
+        },
+
+        "atk":  "atk",
+        "def":  "def",
+        "dam":  "dam",
+        "spd":  "spd",
+
         "bp": "bp",
         "dr": "dr",
         "hp": "hp",

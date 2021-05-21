@@ -44,6 +44,13 @@ idx.armortype = {
     "medium": "HM.armorSelect.medium",
     "heavy":  "HM.armorSelect.heavy",
     "shield": "HM.armorSelect.shield"
+},
+
+idx.weaponskill = {
+    "minimal":  "HM.weaponskillSelect.minimal",
+    "low":      "HM.weaponskillSelect.low",
+    "medium":   "HM.weaponskillSelect.medium",
+    "high":     "HM.weaponskillSelect.high"
 }
 
 export default idx;
