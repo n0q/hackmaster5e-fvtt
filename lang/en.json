@@ -86,6 +86,11 @@
         "specific":     "Specific",
         "universal":    "Universal",
         "weight":       "Weight",
-        "wound":        "Wound"
+        "wound":        "Wound",
+
+
+        "raw":          "Raw",
+        "racial":       "Racial",
+        "misc":         "Misc"
     }
 }

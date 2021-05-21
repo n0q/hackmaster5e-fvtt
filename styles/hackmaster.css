@@ -343,3 +343,15 @@
   border: 2px solid;
   border-radius: 6px;
 }
+.hackmaster .base-setup .setup-abilities .row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.hackmaster .base-setup .setup-abilities .column {
+  flex-basis: 100%;
+  flex: 1;
+}
+.hackmaster .base-setup .setup-abilities input {
+  width: 2em;
+}
