@@ -51,6 +51,18 @@
             "low":  "Low"
         },
 
+        "weaponskillSelect": {
+            "minimal":  "Minimal",
+            "low":      "Low",
+            "medium":   "Medium",
+            "high":     "High"
+        },
+
+        "atk":  "atk",
+        "def":  "def",
+        "dam":  "dam",
+        "spd":  "spd",
+
         "bp": "bp",
         "dr": "dr",
         "hp": "hp",
@@ -69,18 +81,21 @@
         "initmod":      "Init Mod",
         "speedmod":     "Speed Mod",
         "movece":       "Move Coeff",
+        "damage":       "Damage",
         "duration":     "Duration",
         "inventory":    "Inventory",
         "knockback":    "Knockback",
         "language":     "Language",
         "literate":     "Literate",
         "mastery":      "Mastery",
+        "normal":       "Normal",
         "quality":      "Quality",
         "quantity":     "Quantity",
         "tools":        "Tools",
         "treated":      "Treated",
         "race":         "Race",
         "size":         "Size",
+        "shield":       "Shield",
         "skill":        "Skill",
         "skills":       "Skills",
         "specific":     "Specific",

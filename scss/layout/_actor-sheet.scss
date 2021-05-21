@@ -78,6 +78,9 @@ $actor-portrait-dim: 150px;
 }
 
 .base-setup {
+    section {
+        @include common_border;
+    }
     .setup-abilities {
         @include flexgrid;
     
@@ -85,5 +88,5 @@ $actor-portrait-dim: 150px;
             width: 2em;
         }
     }
-
 }
+

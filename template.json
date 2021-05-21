@@ -44,8 +44,10 @@
         "types": [
               "armor",   "character_class",    "item",
             "feature",              "race",   "skill",
-              "spell",            "weapon",   "wound"
+              "spell",            "weapon",   "wound",
+        "proficiency"
         ],
+
         "templates": {
             "base": {
                 "description": "",
@@ -103,6 +105,17 @@
 
         "feature": {
             "templates": ["base"]
+        },
+
+        "proficiency": {
+            "skill": null,
+            "ranged": {"checked": false},
+            "mod": {
+                "atk": {"value": 0},
+                "def": {"value": 0},
+                "dam": {"value": 0},
+                "spd": {"value": 0}
+            }
         },
 
         "race": {
