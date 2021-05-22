@@ -18,10 +18,8 @@
             {{/with}}
         </div>
         <div class="ability column">
-            {{#with (lookup ../actor.data.data.mods key)}}
-                <span class="resource-label">+</span>
-                <input type="number" name="data.mods.{{key}}.value" value="{{value}}" data-dtype="Number"/>
-            {{/with}}
+            <span class="resource-label">+</span>
+            <input type="number" name="data.abilities.{{key}}.mod.value" value="{{ability.mod.value}}" data-dtype="Number"/>
         </div>
     </div>
 {{/each}}
