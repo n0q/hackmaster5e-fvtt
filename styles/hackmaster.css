@@ -283,6 +283,48 @@
   display: flex;
   flex-direction: row;
 }
+.hackmaster .cards-list {
+  list-style: none;
+  margin: 7px 0;
+  padding: 0;
+  overflow-y: auto;
+}
+.hackmaster .cards-list .cards-header {
+  font-weight: bold;
+}
+.hackmaster .cards-list .card {
+  padding: 3px 0;
+  border: 2px solid #BBB;
+  border-radius: 5px;
+}
+.hackmaster .cards-list .card-image {
+  flex: 0 0 24px;
+  margin-right: 5px;
+  background: green;
+}
+.hackmaster .cards-list .card img {
+  display: block;
+}
+.hackmaster .cards-list .card-name {
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  min-width: 0;
+}
+.hackmaster .cards-list .card-value {
+  background: grey;
+  margin-right: 2px;
+  flex: 0 1 2em;
+  text-align: right;
+}
+.hackmaster .cards-list .card-controls {
+  flex: 0 1 auto;
+  text-align: right;
+}
+.hackmaster .cards-list .card-column {
+  display: flex;
+  flex-direction: row;
+}
 .hackmaster .actor-sheet {
   display: grid;
   grid-gap: 4px;
@@ -294,9 +336,9 @@
 .hackmaster .base-header {
   display: flex;
   flex: 0 0 auto;
+  direction: row;
+  wrap: wrap;
   overflow: hidden;
-  flex-direction: row;
-  flex-wrap: wrap;
   justify-content: flex-start;
   margin-bottom: 10px;
   align-content: start;
@@ -358,4 +400,13 @@
 }
 .hackmaster .base-setup .setup-abilities input {
   width: 2em;
+}
+.hackmaster .base-combat .row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.hackmaster .base-combat .column {
+  flex-basis: 100%;
+  flex: 1;
 }

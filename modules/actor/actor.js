@@ -18,13 +18,16 @@ export class HackmasterActor extends Actor {
         const dataUpdate = [];
 
         // Ability adjustments
+        // TODO: Strip mods from 'derived' to avoid confusion.
         const d_abilities = deepClone(data.abilities);
         const actorRace = this.items.find((a) => a.type === "race");
+        // TODO: Non-racial mods don't work if there is no race.
         if(actorRace) {
             let modsRace = actorRace.data.data.mods.abilities;
             for (let key in d_abilities) {
-                d_abilities[key].value += modsRace[key].value;
-                d_abilities[key].value += data.mods[key].value;
+                d_abilities[key].value  += modsRace[key].value;
+                d_abilities[key].value  += data.abilities[key].mod.value;
+                d_abilities[key].fvalue += data.abilities[key].mod.fvalue;
             }
          }
         data.derived = {abilities: d_abilities};

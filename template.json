@@ -4,28 +4,44 @@
         "templates": {
 
             "base": {
-                "hp": {},
+                "hp": {"mod": {"value": 0}},
                 "sp": {"value": 25, "max": 30}
             },
 
             "statblock": {
                 "abilities": {
-                    "str": {"value": 10, "fvalue": 0},
-                    "int": {"value": 10, "fvalue": 0},
-                    "wis": {"value": 10, "fvalue": 0},
-                    "dex": {"value": 10, "fvalue": 0},
-                    "con": {"value": 10, "fvalue": 0},
-                    "lks": {"value": 10, "fvalue": 0},
-                    "cha": {"value": 10, "fvalue": 0}
+                    "str": {"value": 10, "fvalue": 0, "mod": {
+                            "value": 0,  "fvalue": 0}},
+                    "int": {"value": 10, "fvalue": 0, "mod": {
+                            "value": 0,  "fvalue": 0}},
+                    "wis": {"value": 10, "fvalue": 0, "mod": {
+                            "value": 0,  "fvalue": 0}},
+                    "dex": {"value": 10, "fvalue": 0, "mod": {
+                            "value": 0,  "fvalue": 0}},
+                    "con": {"value": 10, "fvalue": 0, "mod": {
+                            "value": 0,  "fvalue": 0}},
+                    "lks": {"value": 10, "fvalue": 0, "mod": {
+                            "value": 0,  "fvalue": 0}},
+                    "cha": {"value": 10, "fvalue": 0, "mod": {
+                            "value": 0,  "fvalue": 0}}
                 },
-                "mods": {
-                    "str": {"value": 0, "dmg": 0, "fos": 0},
-                    "int": {"value": 0, "atk": 0},
-                    "wis": {"value": 0, "init": 0, "def": 0, "mental": 0},
-                    "dex": {"value": 0, "init": 0, "atk": 0, "def": 0, "dodge": 0, "foa": 0},
-                    "con": {"value": 0, "physical": 0},
-                    "lks": {"value": 0},
-                    "cha": {"value": 0, "turning": 0, "morale": 0}
+
+                "stats": {
+                    "str": {"dmg":      {"value": 0, "mod": {"value": 0}},
+                            "fos":      {"value": 0, "mod": {"value": 0}}},
+                    "int": {"atk":      {"value": 0, "mod": {"value": 0}}},
+                    "wis": {"init":     {"value": 0, "mod": {"value": 0}},
+                            "def":      {"value": 0, "mod": {"value": 0}},
+                            "mental":   {"value": 0, "mod": {"value": 0}}},
+                    "dex": {"init":     {"value": 0, "mod": {"value": 0}},
+                            "atk":      {"value": 0, "mod": {"value": 0}},
+                            "def":      {"value": 0, "mod": {"value": 0}},
+                            "dodge":    {"value": 0, "mod": {"value": 0}},
+                            "foa":      {"value": 0, "mod": {"value": 0}}},
+                    "con": {"physical": {"value": 0, "mod": {"value": 0}}},
+                    "lks":              {},
+                    "cha": {"turning":  {"value": 0, "mod": {"value": 0}},
+                            "morale":   {"value": 0, "mod": {"value": 0}}}
                 }
             }
         },
@@ -183,12 +199,13 @@
 
         "weapon": {
             "templates": ["base", "logistics"],
+            "proficiency": null,
             "skill": "",
             "size": "",
             "type": "",
             "min_str":      {"value": null},
-            "damage":       {"normal": "", "shield": ""},
-            "speed":        {"value": 0},
+            "dmg":          {"normal": "", "shield": ""},
+            "spd":          {"value": 0},
             "reach":        {"value": 0},
             "two_handed":   {"checked": false},
             "dr_reduction": {"value": 0},
