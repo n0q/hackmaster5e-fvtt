@@ -57,19 +57,31 @@
                     <div class="row">
                         <div class="column">
                             <input type="number" value="{{data.atk.prof.value}}" readonly="true"/>
-                            <input type="number" value="{{data.atk.mod.value}}" readonly="true"/>
+                            <input type="number" class="editable" value="{{data.atk.mod.value}}" 
+                                data-item-id="{{_id}}"
+                                data-item-prop="data.atk.mod.value" 
+                                data-dtype="Number"/>
                         </div>
                         <div class="column">
                             <input type="number" value="{{data.dmg.prof.value}}" readonly="true"/>
-                            <input type="number" value="{{data.dmg.mod.value}}" readonly="true"/>
+                            <input type="number" class="editable" value="{{data.dmg.mod.value}}" 
+                                data-item-id="{{_id}}"
+                                data-item-prop="data.dmg.mod.value" 
+                                data-dtype="Number"/>
                         </div>
                         <div class="column">
                             <input type="number" value="{{data.def.prof.value}}" readonly="true"/>
-                            <input type="number" value="{{data.def.mod.value}}" readonly="true"/>
+                            <input type="number" class="editable" value="{{data.def.mod.value}}" 
+                                data-item-id="{{_id}}"
+                                data-item-prop="data.def.mod.value" 
+                                data-dtype="Number"/>
                         </div>
                         <div class="column">
                             <input type="number" value="{{data.spd.prof.value}}" readonly="true"/>
-                            <input type="number" value="{{data.spd.mod.value}}" readonly="true"/>
+                            <input type="number" class="editable" value="{{data.spd.mod.value}}" 
+                                data-item-id="{{_id}}"
+                                data-item-prop="data.spd.mod.value" 
+                                data-dtype="Number"/>
                         </div>
                     </div>
                 {{/if}}
