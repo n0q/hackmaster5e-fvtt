@@ -296,14 +296,27 @@
   padding: 3px 0;
   border: 2px solid #BBB;
   border-radius: 5px;
+  display: grid;
+  grid-template-columns: min-content 1fr;
 }
 .hackmaster .cards-list .card-image {
   flex: 0 0 24px;
   margin-right: 5px;
-  background: green;
 }
 .hackmaster .cards-list .card img {
   display: block;
+}
+.hackmaster .cards-list .card .statblock {
+  background: lightgrey;
+}
+.hackmaster .cards-list .card .statblock .row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.hackmaster .cards-list .card .statblock .column {
+  flex-basis: 100%;
+  flex: 1;
 }
 .hackmaster .cards-list .card-name {
   margin: 0;

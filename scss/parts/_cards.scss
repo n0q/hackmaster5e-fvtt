@@ -12,15 +12,27 @@
         padding: 3px 0;
         border: 2px solid #BBB;
         border-radius: 5px;
+
+        display: grid;
+        grid-template-columns: min-content 1fr; 
         
         &-image {
             flex: 0 0 24px;
             margin-right: 5px;
-            background: green;
         }
 
         img {
             display: block;
+        }
+
+        .statblock {
+            background: lightgrey;
+            @include flexgrid;
+        }
+
+        header {
+
+
         }
     }
 

@@ -60,7 +60,21 @@ export class HackmasterActor extends Actor {
             hp_prev = hp_curr;
         }
 
-        if (b_reorder) { this.updateEmbeddedDocuments("Item", dataUpdate); }
+
+        const weaponObj  = this.items.filter((a) => a.type === "weapon");
+        for (let i = 0; i < weaponObj.length; i++) {
+            const wdata = weaponObj[i].data.data;
+            wdata.atk.derived = {"value": wdata.atk.mod.value};
+            wdata.dmg.derived = {"value": wdata.dmg.mod.value};
+            wdata.def.derived = {"value": wdata.def.mod.value};
+            wdata.spd.derived = {"value": wdata.spd.mod.value};
+        }
+
+
+        if (dataUpdate.length) {console.warn("Hi hello");}
+        if (dataUpdate.length) { this.updateEmbeddedDocuments("Item", dataUpdate); }
+
+
 
         // TODO: Sloppy.
         const race      = this.items.filter((a) => a.type === "race")[0];
