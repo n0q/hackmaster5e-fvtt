@@ -2,8 +2,20 @@
     {{#each actor.weapons as |weapon|}}
         <li class="card">
             <header class="toggle" data-item-id="{{_id}}">
-                <img src="{{img}}" title="{{name}}" height="48"/>
-                <h4 class="card-name">{{name}}</h4>
+                <label for="{{name}}">
+                    <img src="{{img}}" title="{{name}}" height="48"/>
+                    <h4 class="card-name">{{name}}</h4>
+                </label>
+                {{#if flags.hackmaster5e.ui.toggle}}
+                    <div class="details">
+                        <div>Reach: {{data.reach.value}}</div>
+                        <div>Proficiency</div>
+                    </div>
+                    <div class="details">
+                        <div></div>
+                        <div>Misc</div>
+                    </div>
+                {{/if}}
             </header>
             <div class="statblock">
                 <div class="row">

@@ -49,4 +49,6 @@
      border-radius: $card-border-radius;
      border-top-right-radius: 0;
      border-bottom-right-radius: 0;
+     margin: -$card_border;
+     margin-right: inherit;
  }
