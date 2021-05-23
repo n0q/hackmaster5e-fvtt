@@ -28,6 +28,10 @@ $card_border: 2px;
         .statblock {
             background: lightgrey;
             @include flexgrid;
+
+            .dnone {
+                display: none;
+            }
         }
 
         header {
@@ -36,6 +40,7 @@ $card_border: 2px;
 
         }
     }
+
 
     .card-name {
         padding: 2px;

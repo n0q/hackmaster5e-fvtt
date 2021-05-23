@@ -8,19 +8,36 @@
             <div class="statblock">
                 <div class="row">
                     <div class="column">
-                        <label class="rollable">ATK</label>
+                        <label class="resource-label rollable"
+                            data-roll-type="atk"
+                            data-roll="1d20p + @atk.derived.value"
+                            data-item-id="{{_id}}">
+                            {{localize "HM.atk"}}
+                        </label>
                         <input type="number" value="{{data.atk.derived.value}}" readonly="true"/>
                     </div>
                     <div class="column">
-                        <label class="rollable">DMG</label>
+                        <label class="resource-label rollable"
+                            data-roll-type="dmg"
+                            data-roll="@dmg.normal + @dmg.derived.value"
+                            data-item-id="{{_id}}">
+                            {{localize "HM.dmg"}}
+                        </label>
                         <input type="number" value="{{data.dmg.derived.value}}" readonly="true"/>
                     </div>
                     <div class="column">
-                        <label class="rollable">DEF</label>
+                        <label class="resource-label rollable"
+                            data-roll-type="def"
+                            data-roll="1d20p + @def.derived.value"
+                            data-item-id="{{_id}}">
+                            {{localize "HM.def"}}
+                        </label>
                         <input type="number" value="{{data.def.derived.value}}" readonly="true"/>
                     </div>
                     <div class="column">
-                        <label>SPD</label>
+                        <label class="resource-label">
+                            {{localize "HM.spd"}}
+                        </label>
                         <input type="number" value="{{data.spd.derived.value}}" readonly="true"/>
                     </div>
                 </div>
