@@ -14,7 +14,7 @@ export class HackmasterActorSheet extends ActorSheet {
             template: "systems/hackmaster5e/templates/actor/actor-base.hbs",
             width: 820,
             height: 750,
-            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "setup" }]
+            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "combat" }]
         });
     }
 
@@ -51,6 +51,8 @@ export class HackmasterActorSheet extends ActorSheet {
         const skills = [];
         const gear = [];
         const wounds = [];
+        const weapons = [];
+        const profs = [];
         const features = [];
         let race = null;
         const character_classes = [];
@@ -81,6 +83,9 @@ export class HackmasterActorSheet extends ActorSheet {
                 case "item":
                     gear.push(i);
                     break;
+                case "proficiency":
+                    profs.push(i);
+                    break;
                 case "skill":
                     if (i.data.universal.checked) {
                         uskills.push(i);
@@ -107,6 +112,10 @@ export class HackmasterActorSheet extends ActorSheet {
                     }
                     race = i;
                     break;
+                case "weapon":
+                    gear.push(i);
+                    weapons.push(i);
+                    break;
                 case "wound":
                     wounds.push(i);
                     break;
@@ -120,6 +129,8 @@ export class HackmasterActorSheet extends ActorSheet {
         actorData.features = features;
         actorData.spells = spells;
         actorData.wounds = wounds;
+        actorData.weapons = weapons;
+        actorData.profs = profs;
         actorData.race = race;
         actorData.character_classes = character_classes.sort((a, b) => { return a.data._ord - b.data._ord });
 
@@ -157,9 +168,13 @@ export class HackmasterActorSheet extends ActorSheet {
     });
 
     // Rollable abilities.
+    html.find('.wound').click(this._onEditWound.bind(this));
     html.find('.rollable').click(this._onRoll.bind(this));
 
-    html.find('.editable').click(this._onEdit.bind(this));
+    html.find('.editable').change(this._onEdit.bind(this));
+
+    // ui elements
+    html.find('.toggle').click(this._onToggle.bind(this));
 
     // Drag events for macros.
     if (this.actor.isOwner) {
@@ -215,11 +230,21 @@ export class HackmasterActorSheet extends ActorSheet {
         return await Item.create(itemData, {parent: this.actor});
     }
 
-  _updateOwnedItem(item) {
-    return this.actor.updateEmbeddedDocuments("Item", item.data);
-  }
+    _updateOwnedItem(item) {
+        return this.actor.updateEmbeddedDocuments("Item", item.data);
+    }
 
-   async _onEdit(event) {
+    // TODO: This should obviously take args.
+    // TODO: These should function autonomously between users.
+    async _onToggle(event) {
+        event.preventDefault();
+        const element = event.currentTarget;
+        const item    = this._getOwnedItem(this._getItemId(event));
+        const toggle = item.getFlag('hackmaster5e', "ui.toggle");
+        item.setFlag('hackmaster5e', "ui.toggle", !toggle);
+    }
+
+    async _onEditWound(event) {
         event.preventDefault();
         const element = event.currentTarget;
         const dataset = element.dataset;
@@ -227,12 +252,33 @@ export class HackmasterActorSheet extends ActorSheet {
 
         if (dataset.itemProp) {
             const itemProp = dataset.itemProp;
-            const oldValue = getProperty(item.data, itemProp);
-
-            setProperty(item.data, itemProp, oldValue -1);
+            let propValue = getProperty(item.data, itemProp);
+            if (--propValue < 1 && dataset.itemProp === "data.duration.value") {
+                let hpValue = getProperty(item.data, "data.hp.value");
+                hpValue = Math.max(hpValue -1, 0);
+                propValue = hpValue;
+                setProperty(item.data, "data.hp.value", hpValue);
+            }
+            setProperty(item.data, itemProp, propValue);
 
             // TODO: Update only the altered property.
             await this.actor.updateEmbeddedDocuments("Item", [{_id:item.id, data:item.data.data}]);
+        }
+    }
+
+    async _onEdit(event) {
+        event.preventDefault();
+        const element = event.currentTarget;
+        const dataset = element.dataset;
+        const item    = this._getOwnedItem(this._getItemId(event));
+        if (dataset.itemProp) {
+            const itemProp = dataset.itemProp;
+            let targetValue = event.target.value;
+            if (dataset.dtype === "Number") { targetValue = parseInt(targetValue); }
+            setProperty(item.data, itemProp, targetValue);
+
+            // TODO: Update only the altered property.
+           await this.actor.updateEmbeddedDocuments("Item", [{_id:item.id, data:item.data.data}]);
         }
     }
 
@@ -248,17 +294,56 @@ export class HackmasterActorSheet extends ActorSheet {
 
         //TODO: Clean this whole mess up.
         //      Everything here is temporary. If it's still here by 0.2,
-        //      <span class="uncle roger">You fucked up.</span>
+        //      <span class="uncle_roger">You fucked up.</span>
+        //
+        //      Most of these could be generalized. Chat handler should deal with.
+        //      card data, as that's what it's there for.
+        //
+        //      RollHandler should interpret specialized tokens to provide double
+        //      roll returns (+/- for skills, save or checks for attributes, etc).
         if (dataset.rollType) {
             switch (dataset.rollType) {
+                case "atk": {
+                    const itemid  = this._getItemId(event);
+                    const item    = this._getOwnedItem(itemid);
+                    const roll    = new RollHandler(dataset.roll, item.data.data);
+                    await roll.roll();
+                    const myhtml  = await roll._roll.render();
+                    const title   = this.actor.name + " attacks with " + item.data.name + ".<p>" +
+                                    "Speed: " + item.data.data.spd.derived.value;
+                    const card    = ChatHandler.ChatDataSetup(myhtml, title);
+                    await ChatMessage.create(card);
+                    break;
+                }
+                case "def": {
+                    const itemid  = this._getItemId(event);
+                    const item    = this._getOwnedItem(itemid);
+                    const roll    = new RollHandler(dataset.roll, item.data.data);
+                    await roll.roll();
+                    const myhtml  = await roll._roll.render();
+                    const title   = this.actor.name + " defends with " + item.data.name + ".";
+                    const card    = ChatHandler.ChatDataSetup(myhtml, title);
+                    await ChatMessage.create(card);
+                    break;
+                }
+                case "dmg": {
+                    const itemid  = this._getItemId(event);
+                    const item    = this._getOwnedItem(itemid);
+                    const roll    = new RollHandler(dataset.roll, item.data.data);
+                    await roll.roll();
+                    const myhtml  = await roll._roll.render();
+                    const title   = this.actor.name + " damages with " + item.data.name + ".";
+                    const card    = ChatHandler.ChatDataSetup(myhtml, title);
+                    await ChatMessage.create(card);
+                    break;
+                }
                 case "skill": {
                     const itemid  = this._getItemId(event);
                     const item    = this._getOwnedItem(itemid);
-                    const mastery = item.data.data.mastery.value;
-                    const roll    = new RollHandler("1d100p - " + mastery);
+                    const roll    = new RollHandler(dataset.roll, item.data.data);
                     await roll.roll();
-                    var myhtml    = await roll._roll.render();
-                    var card      = ChatHandler.ChatDataSetup(myhtml, item.data.name);
+                    const myhtml  = await roll._roll.render();
+                    const card    = ChatHandler.ChatDataSetup(myhtml, item.data.name);
                     await ChatMessage.create(card);
                     break;
                 }
@@ -266,7 +351,7 @@ export class HackmasterActorSheet extends ActorSheet {
                     const sKey = $(event.currentTarget).attr('for');
                     const ability = getProperty(this.actor, sKey);
 
-                    const complete_mess = sKey.split('.').slice(3,4)[0];
+                    const complete_mess = sKey.split('.').slice(4,5)[0];
                     const gah           = game.i18n.localize("HM.ability." + complete_mess);
                     const roll    = new RollHandler("1d20p + " + ability);
                     await roll.roll();

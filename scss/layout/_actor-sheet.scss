@@ -17,9 +17,9 @@ $actor-portrait-dim: 150px;
 .base-header {
     display: flex;
     flex: 0 0 auto;
+        direction: row;
+        wrap: wrap;
     overflow: hidden;
-    flex-direction: row;
-    flex-wrap: wrap;
     justify-content: flex-start;
     margin-bottom: 10px;
     align-content: start;
@@ -78,6 +78,9 @@ $actor-portrait-dim: 150px;
 }
 
 .base-setup {
+    section {
+        @include common_border;
+    }
     .setup-abilities {
         @include flexgrid;
     
@@ -85,5 +88,15 @@ $actor-portrait-dim: 150px;
             width: 2em;
         }
     }
-
 }
+
+.base-combat {
+    @include flexgrid;
+}
+
+
+
+
+
+
+

@@ -18,13 +18,16 @@ export class HackmasterActor extends Actor {
         const dataUpdate = [];
 
         // Ability adjustments
+        // TODO: Strip mods from 'derived' to avoid confusion.
         const d_abilities = deepClone(data.abilities);
         const actorRace = this.items.find((a) => a.type === "race");
+        // TODO: Non-racial mods don't work if there is no race.
         if(actorRace) {
             let modsRace = actorRace.data.data.mods.abilities;
             for (let key in d_abilities) {
-                d_abilities[key].value += modsRace[key].value;
-                d_abilities[key].value += data.mods[key].value;
+                d_abilities[key].value  += modsRace[key].value;
+                d_abilities[key].value  += data.abilities[key].mod.value;
+                d_abilities[key].fvalue += data.abilities[key].mod.fvalue;
             }
          }
         data.derived = {abilities: d_abilities};
@@ -57,7 +60,49 @@ export class HackmasterActor extends Actor {
             hp_prev = hp_curr;
         }
 
-        if (b_reorder) { this.updateEmbeddedDocuments("Item", dataUpdate); }
+
+        // TODO: Yes, of course this whole setup is horseshit.
+        // Doing it right can come later. Let's just make it work for now.
+        // Yes. That was as scary to type as it was to read.
+
+        const weaponObj  = this.items.filter((a) => a.type === "weapon");
+        for (let i = 0; i < weaponObj.length; i++) {
+            const wdata = weaponObj[i].data.data;
+            const wProf = wdata.proficiency;
+            var profData;
+            const prof  = this.items.find((a) => {
+                return a.type === "proficiency" && a.name === wProf;
+            });
+            if (prof) {
+                profData = deepClone(prof.data.data);
+            } else {
+                const wSkill   = wdata.skill;
+                const profPenalty = {
+                    minimal: -1,
+                    low:     -2,
+                    medium:  -4,
+                    high:    -6
+                }[wSkill];
+
+                profData.atk = {mod: {value: profPenalty}};
+                profData.dmg = {mod: {value: profPenalty}};
+                profData.def = {mod: {value: profPenalty}};
+                profData.spd = {mod: {value: -profPenalty}};
+            }
+
+            wdata.atk.prof    = profData.atk.mod;
+            wdata.dmg.prof    = profData.dmg.mod;
+            wdata.def.prof    = profData.def.mod;
+            wdata.spd.prof    = profData.spd.mod;
+
+            wdata.atk.derived = {"value":                   wdata.atk.mod.value + wdata.atk.prof.value};
+            wdata.dmg.derived = {"value":                   wdata.dmg.mod.value + wdata.dmg.prof.value};
+            wdata.def.derived = {"value":                   wdata.def.mod.value + wdata.def.prof.value};
+            wdata.spd.derived = {"value": wdata.spd.value + wdata.spd.mod.value + wdata.spd.prof.value};
+        }
+
+        if (dataUpdate.length) { this.updateEmbeddedDocuments("Item", dataUpdate); }
+
 
         // TODO: Sloppy.
         const race      = this.items.filter((a) => a.type === "race")[0];

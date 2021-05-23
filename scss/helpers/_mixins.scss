@@ -20,6 +20,10 @@
     border-radius: 6px;
 }
 
+@mixin common_border {
+    border: 1px solid #999;
+    padding: 5px;
+}
 
 @mixin flexgrid {
     .row {
@@ -33,3 +37,18 @@
         flex: 1;
     }
 }
+
+@mixin card-border-right {
+    border: transparent;
+    -webkit-border-radius: $card-border-radius;
+    -webkit-border-top-right-radius: 0;
+    -webkit-border-bottom-right-radius: 0;
+    -moz-border-radius: $card-border-radius;
+    -moz-border-top-right-radius: 0;
+    -moz-border-bottom-right-radius: 0;
+     border-radius: $card-border-radius;
+     border-top-right-radius: 0;
+     border-bottom-right-radius: 0;
+     margin: -$card_border;
+     margin-right: inherit;
+ }

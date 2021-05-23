@@ -1,0 +1,74 @@
+.cards-list {
+    list-style: none;
+    margin: 7px 0;
+    padding: 0;
+    overflow-y: auto;
+
+    .card {
+        border: $card_border solid #BBB;
+        border-radius: $card-border-radius; 
+        display: grid;
+        margin: 5px;
+        grid-template-columns: 50% 1fr; 
+        
+        .statblock {
+            background: lightgrey;
+            @include flexgrid;
+
+            .dnone {
+                display: none;
+            }
+        }
+
+        header {
+            display: flex;
+            flex-direction: column;
+
+            img {
+                flex: 0 0 auto;
+                align-self: flex-start;
+                display: block;
+                @include card-border-right;
+            }
+
+            label {
+                display: flex;
+                flex-direction: row;
+            }
+
+            .details {
+                display: flex;
+                padding: 5px;
+                margin-left: -3px;
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+    }
+
+
+    .card-name {
+        padding: 2px;
+        white-space: nowrap;
+        overflow: hidden;
+        min-width: 0;
+    }
+
+    .card-value {
+        background: grey;
+        margin-right: 2px;
+        flex: 0 1 2em;
+        text-align: right;
+    }
+
+    .card-controls {
+        flex: 0 1 auto;
+        text-align: right;
+    }
+
+    .card-column {
+        display: flex;
+        flex-direction: row;
+    }
+}
+
