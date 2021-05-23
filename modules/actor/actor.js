@@ -74,7 +74,7 @@ export class HackmasterActor extends Actor {
                 return a.type === "proficiency" && a.name === wProf;
             });
             if (prof) {
-                profData = prof.data.data;
+                profData = deepClone(prof.data.data);
             } else {
                 const wSkill   = wdata.skill;
                 const profPenalty = {
@@ -101,10 +101,7 @@ export class HackmasterActor extends Actor {
             wdata.spd.derived = {"value": wdata.spd.value + wdata.spd.mod.value + wdata.spd.prof.value};
         }
 
-
-        if (dataUpdate.length) {console.warn("Hi hello");}
         if (dataUpdate.length) { this.updateEmbeddedDocuments("Item", dataUpdate); }
-
 
 
         // TODO: Sloppy.

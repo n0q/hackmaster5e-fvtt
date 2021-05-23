@@ -171,7 +171,7 @@ export class HackmasterActorSheet extends ActorSheet {
     html.find('.wound').click(this._onEditWound.bind(this));
     html.find('.rollable').click(this._onRoll.bind(this));
 
-    html.find('.editable').click(this._onEdit.bind(this));
+    html.find('.editable').change(this._onEdit.bind(this));
 
     // ui elements
     html.find('.toggle').click(this._onToggle.bind(this));
@@ -271,15 +271,14 @@ export class HackmasterActorSheet extends ActorSheet {
         const element = event.currentTarget;
         const dataset = element.dataset;
         const item    = this._getOwnedItem(this._getItemId(event));
-
         if (dataset.itemProp) {
             const itemProp = dataset.itemProp;
-            const oldValue = getProperty(item.data, itemProp);
-
-            setProperty(item.data, itemProp, oldValue -1);
+            let targetValue = event.target.value;
+            if (dataset.dtype === "Number") { targetValue = parseInt(targetValue); }
+            setProperty(item.data, itemProp, targetValue);
 
             // TODO: Update only the altered property.
-            await this.actor.updateEmbeddedDocuments("Item", [{_id:item.id, data:item.data.data}]);
+           await this.actor.updateEmbeddedDocuments("Item", [{_id:item.id, data:item.data.data}]);
         }
     }
 
