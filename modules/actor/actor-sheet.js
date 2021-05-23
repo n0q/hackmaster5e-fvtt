@@ -272,17 +272,56 @@ export class HackmasterActorSheet extends ActorSheet {
 
         //TODO: Clean this whole mess up.
         //      Everything here is temporary. If it's still here by 0.2,
-        //      <span class="uncle roger">You fucked up.</span>
+        //      <span class="uncle_roger">You fucked up.</span>
+        //
+        //      Most of these could be generalized. Chat handler should deal with.
+        //      card data, as that's what it's there for.
+        //
+        //      RollHandler should interpret specialized tokens to provide double
+        //      roll returns (+/- for skills, save or checks for attributes, etc).
         if (dataset.rollType) {
             switch (dataset.rollType) {
+                case "atk": {
+                    const itemid  = this._getItemId(event);
+                    const item    = this._getOwnedItem(itemid);
+                    const roll    = new RollHandler(dataset.roll, item.data.data);
+                    await roll.roll();
+                    const myhtml  = await roll._roll.render();
+                    const title   = this.actor.name + " attacks with " + item.data.name + ".<p>" +
+                                    "Speed: " + item.data.data.spd.derived.value;
+                    const card    = ChatHandler.ChatDataSetup(myhtml, title);
+                    await ChatMessage.create(card);
+                    break;
+                }
+                case "def": {
+                    const itemid  = this._getItemId(event);
+                    const item    = this._getOwnedItem(itemid);
+                    const roll    = new RollHandler(dataset.roll, item.data.data);
+                    await roll.roll();
+                    const myhtml  = await roll._roll.render();
+                    const title   = this.actor.name + " defends with " + item.data.name + ".";
+                    const card    = ChatHandler.ChatDataSetup(myhtml, title);
+                    await ChatMessage.create(card);
+                    break;
+                }
+                case "dmg": {
+                    const itemid  = this._getItemId(event);
+                    const item    = this._getOwnedItem(itemid);
+                    const roll    = new RollHandler(dataset.roll, item.data.data);
+                    await roll.roll();
+                    const myhtml  = await roll._roll.render();
+                    const title   = this.actor.name + " damages with " + item.data.name + ".";
+                    const card    = ChatHandler.ChatDataSetup(myhtml, title);
+                    await ChatMessage.create(card);
+                    break;
+                }
                 case "skill": {
                     const itemid  = this._getItemId(event);
                     const item    = this._getOwnedItem(itemid);
-                    const mastery = item.data.data.mastery.value;
-                    const roll    = new RollHandler("1d100p - " + mastery);
+                    const roll    = new RollHandler(dataset.roll, item.data.data);
                     await roll.roll();
-                    var myhtml    = await roll._roll.render();
-                    var card      = ChatHandler.ChatDataSetup(myhtml, item.data.name);
+                    const myhtml  = await roll._roll.render();
+                    const card    = ChatHandler.ChatDataSetup(myhtml, item.data.name);
                     await ChatMessage.create(card);
                     break;
                 }

@@ -333,6 +333,9 @@
   flex-basis: 100%;
   flex: 1;
 }
+.hackmaster .cards-list .card .statblock .dnone {
+  display: none;
+}
 .hackmaster .cards-list .card header {
   display: flex;
   flex-direction: row;
