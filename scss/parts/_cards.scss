@@ -1,3 +1,5 @@
+$card_border: 2px;
+
 .cards-list {
     list-style: none;
     margin: 7px 0;
@@ -9,7 +11,7 @@
     }
 
     .card {
-        border: 2px solid #BBB;
+        border: $card_border solid #BBB;
         border-radius: $card-border-radius; 
         display: grid;
         margin: 5px;
@@ -19,7 +21,8 @@
             flex: 0 0 auto;
             display: block;
             @include card-border-right;
-            margin: -2px; 
+            margin: -$card_border;
+            margin-right: inherit;
         }
 
         .statblock {

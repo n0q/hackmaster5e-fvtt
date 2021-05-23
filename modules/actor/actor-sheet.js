@@ -234,6 +234,7 @@ export class HackmasterActorSheet extends ActorSheet {
     }
 
     // TODO: This should obviously take args.
+    // TODO: These should function autonomously between users.
     async _onToggle(event) {
         event.preventDefault();
         const element = event.currentTarget;

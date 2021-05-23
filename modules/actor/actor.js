@@ -61,19 +61,35 @@ export class HackmasterActor extends Actor {
         }
 
 
+        // TODO: Yes, of course this whole setup is horseshit.
+        // Doing it right can come later. Let's just make it work for now.
+        // Yes. That was as scary to type as it was to read.
+
         const weaponObj  = this.items.filter((a) => a.type === "weapon");
         for (let i = 0; i < weaponObj.length; i++) {
             const wdata = weaponObj[i].data.data;
-
+            const wProf = wdata.proficiency;
             var profData;
             const prof  = this.items.find((a) => {
-                return a.type === "proficiency" && a.name === "Longswords";
+                return a.type === "proficiency" && a.name === wProf;
             });
             if (prof) {
                 profData = prof.data.data;
+            } else {
+                const wSkill   = wdata.skill;
+                const profPenalty = {
+                    minimal: -1,
+                    low:     -2,
+                    medium:  -4,
+                    high:    -6
+                }[wSkill];
+
+                profData.atk = {mod: {value: profPenalty}};
+                profData.dmg = {mod: {value: profPenalty}};
+                profData.def = {mod: {value: profPenalty}};
+                profData.spd = {mod: {value: -profPenalty}};
             }
 
-            // TODO: Yes, of course this whole setup is horseshit. Step 1 is getting it on the page.
             wdata.atk.prof    = profData.atk.mod;
             wdata.dmg.prof    = profData.dmg.mod;
             wdata.def.prof    = profData.def.mod;

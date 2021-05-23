@@ -319,6 +319,7 @@
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   margin: -2px;
+  margin-right: inherit;
 }
 .hackmaster .cards-list .card .statblock {
   background: lightgrey;
