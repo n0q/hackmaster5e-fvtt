@@ -26,8 +26,8 @@
     </li>
     {{#each actor.wounds}}
         <li class="item flexrow" data-item-id="{{_id}}">
-            <input type="text" class="editable" data-item-prop="data.hp.value" value="{{data.hp.value}}" data-dtype="Number"/>
-            <input type="text" class="editable" data-item-prop="data.duration.value" value="{{data.duration.value}}" data-dtype="Number"/>
+            <input type="text" class="wound" data-item-prop="data.hp.value" value="{{data.hp.value}}" data-dtype="Number"/>
+            <input type="text" class="wound" data-item-prop="data.duration.value" value="{{data.duration.value}}" data-dtype="Number"/>
             <div class="item-controls">
                 <a class="item-control item-edit" title="Edit Wound"><i class="fas fa-edit"></i></a>
                 <a class="item-control item-delete" title="Delete Wound"><i class="fas fa-trash"></i></a>

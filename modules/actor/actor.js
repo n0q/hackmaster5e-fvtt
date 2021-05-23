@@ -95,10 +95,10 @@ export class HackmasterActor extends Actor {
             wdata.def.prof    = profData.def.mod;
             wdata.spd.prof    = profData.spd.mod;
 
-            wdata.atk.derived = {"value": wdata.atk.mod.value + wdata.atk.prof.value};
-            wdata.dmg.derived = {"value": wdata.dmg.mod.value + wdata.dmg.prof.value};
-            wdata.def.derived = {"value": wdata.def.mod.value + wdata.def.prof.value};
-            wdata.spd.derived = {"value": wdata.spd.mod.value + wdata.spd.prof.value};
+            wdata.atk.derived = {"value":                   wdata.atk.mod.value + wdata.atk.prof.value};
+            wdata.dmg.derived = {"value":                   wdata.dmg.mod.value + wdata.dmg.prof.value};
+            wdata.def.derived = {"value":                   wdata.def.mod.value + wdata.def.prof.value};
+            wdata.spd.derived = {"value": wdata.spd.value + wdata.spd.mod.value + wdata.spd.prof.value};
         }
 
 

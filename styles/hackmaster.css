@@ -295,31 +295,12 @@
   padding: 0;
   overflow-y: auto;
 }
-.hackmaster .cards-list .cards-header {
-  font-weight: bold;
-}
 .hackmaster .cards-list .card {
   border: 2px solid #BBB;
   border-radius: 5px;
   display: grid;
   margin: 5px;
   grid-template-columns: 50% 1fr;
-}
-.hackmaster .cards-list .card img {
-  flex: 0 0 auto;
-  display: block;
-  border: transparent;
-  -webkit-border-radius: 5px;
-  -webkit-border-top-right-radius: 0;
-  -webkit-border-bottom-right-radius: 0;
-  -moz-border-radius: 5px;
-  -moz-border-top-right-radius: 0;
-  -moz-border-bottom-right-radius: 0;
-  border-radius: 5px;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  margin: -2px;
-  margin-right: inherit;
 }
 .hackmaster .cards-list .card .statblock {
   background: lightgrey;
@@ -338,7 +319,34 @@
 }
 .hackmaster .cards-list .card header {
   display: flex;
+  flex-direction: column;
+}
+.hackmaster .cards-list .card header img {
+  flex: 0 0 auto;
+  align-self: flex-start;
+  display: block;
+  border: transparent;
+  -webkit-border-radius: 5px;
+  -webkit-border-top-right-radius: 0;
+  -webkit-border-bottom-right-radius: 0;
+  -moz-border-radius: 5px;
+  -moz-border-top-right-radius: 0;
+  -moz-border-bottom-right-radius: 0;
+  border-radius: 5px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  margin: -2px;
+  margin-right: inherit;
+}
+.hackmaster .cards-list .card header label {
+  display: flex;
   flex-direction: row;
+}
+.hackmaster .cards-list .card header .details {
+  display: flex;
+  padding: 5px;
+  flex-direction: row;
+  justify-content: space-between;
 }
 .hackmaster .cards-list .card-name {
   padding: 2px;
