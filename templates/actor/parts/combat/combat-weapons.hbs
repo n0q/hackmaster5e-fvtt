@@ -1,8 +1,8 @@
 <ol class="cards-list">
     {{#each actor.weapons as |weapon|}}
-        <li class="card" data-card-id="{{_id}}">
-            <header>
-                <div class="card-image"><img src="{{img}}" title="{{name}}" width="24" height="24"/></div>
+        <li class="card">
+            <header class="toggle" data-item-id="{{_id}}">
+                <img src="{{img}}" title="{{name}}" height="48"/>
                 <h4 class="card-name">{{name}}</h4>
             </header>
             <div class="statblock">
@@ -24,22 +24,22 @@
                         <input type="number" value="{{data.spd.derived.value}}" readonly="true"/>
                     </div>
                 </div>
-                {{#if true}}
+                {{#if flags.hackmaster5e.ui.toggle}}
                     <div class="row">
                         <div class="column">
-                            <input type="number" value="0" readonly="true"/>
+                            <input type="number" value="{{data.atk.prof.value}}" readonly="true"/>
                             <input type="number" value="{{data.atk.mod.value}}" readonly="true"/>
                         </div>
                         <div class="column">
-                            <input type="number" value="0" readonly="true"/>
+                            <input type="number" value="{{data.dmg.prof.value}}" readonly="true"/>
                             <input type="number" value="{{data.dmg.mod.value}}" readonly="true"/>
                         </div>
                         <div class="column">
-                            <input type="number" value="0" readonly="true"/>
+                            <input type="number" value="{{data.def.prof.value}}" readonly="true"/>
                             <input type="number" value="{{data.def.mod.value}}" readonly="true"/>
                         </div>
                         <div class="column">
-                            <input type="number" value="0" readonly="true"/>
+                            <input type="number" value="{{data.spd.prof.value}}" readonly="true"/>
                             <input type="number" value="{{data.spd.mod.value}}" readonly="true"/>
                         </div>
                     </div>

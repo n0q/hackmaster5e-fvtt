@@ -126,12 +126,10 @@
         "proficiency": {
             "skill": null,
             "ranged": {"checked": false},
-            "mod": {
-                "atk": {"value": 0},
-                "def": {"value": 0},
-                "dam": {"value": 0},
-                "spd": {"value": 0}
-            }
+            "atk": {"mod": {"value": 0}},
+            "def": {"mod": {"value": 0}},
+            "dmg": {"mod": {"value": 0}},
+            "spd": {"mod": {"value": 0}}
         },
 
         "race": {

@@ -64,10 +64,25 @@ export class HackmasterActor extends Actor {
         const weaponObj  = this.items.filter((a) => a.type === "weapon");
         for (let i = 0; i < weaponObj.length; i++) {
             const wdata = weaponObj[i].data.data;
-            wdata.atk.derived = {"value": wdata.atk.mod.value};
-            wdata.dmg.derived = {"value": wdata.dmg.mod.value};
-            wdata.def.derived = {"value": wdata.def.mod.value};
-            wdata.spd.derived = {"value": wdata.spd.mod.value};
+
+            var profData;
+            const prof  = this.items.find((a) => {
+                return a.type === "proficiency" && a.name === "Longswords";
+            });
+            if (prof) {
+                profData = prof.data.data;
+            }
+
+            // TODO: Yes, of course this whole setup is horseshit. Step 1 is getting it on the page.
+            wdata.atk.prof    = profData.atk.mod;
+            wdata.dmg.prof    = profData.dmg.mod;
+            wdata.def.prof    = profData.def.mod;
+            wdata.spd.prof    = profData.spd.mod;
+
+            wdata.atk.derived = {"value": wdata.atk.mod.value + wdata.atk.prof.value};
+            wdata.dmg.derived = {"value": wdata.dmg.mod.value + wdata.dmg.prof.value};
+            wdata.def.derived = {"value": wdata.def.mod.value + wdata.def.prof.value};
+            wdata.spd.derived = {"value": wdata.spd.mod.value + wdata.spd.prof.value};
         }
 
 

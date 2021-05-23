@@ -9,20 +9,17 @@
     }
 
     .card {
-        padding: 3px 0;
         border: 2px solid #BBB;
-        border-radius: 5px;
-
+        border-radius: $card-border-radius; 
         display: grid;
-        grid-template-columns: min-content 1fr; 
+        margin: 5px;
+        grid-template-columns: 50% 1fr; 
         
-        &-image {
-            flex: 0 0 24px;
-            margin-right: 5px;
-        }
-
         img {
+            flex: 0 0 auto;
             display: block;
+            @include card-border-right;
+            margin: -2px; 
         }
 
         .statblock {
@@ -31,14 +28,14 @@
         }
 
         header {
-
+            display: flex;
+            flex-direction: row;
 
         }
     }
 
-
     .card-name {
-        margin: 0;
+        padding: 2px;
         white-space: nowrap;
         overflow: hidden;
         min-width: 0;
