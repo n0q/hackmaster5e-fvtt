@@ -60,7 +60,7 @@
 
         "atk":  "atk",
         "def":  "def",
-        "dam":  "dam",
+        "dmg":  "dmg",
         "spd":  "spd",
 
         "bp": "bp",
@@ -75,6 +75,7 @@
         "armortype":    "Armor Type",
         "availability": "Availability",
         "class":        "Class",
+        "combat":       "Combat",
         "cost":         "Cost",
         "drmod":        "DR Mod",
         "defmod":       "Def Mod",

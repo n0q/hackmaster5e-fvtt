@@ -126,12 +126,10 @@
         "proficiency": {
             "skill": null,
             "ranged": {"checked": false},
-            "mod": {
-                "atk": {"value": 0},
-                "def": {"value": 0},
-                "dam": {"value": 0},
-                "spd": {"value": 0}
-            }
+            "atk": {"mod": {"value": 0}},
+            "def": {"mod": {"value": 0}},
+            "dmg": {"mod": {"value": 0}},
+            "spd": {"mod": {"value": 0}}
         },
 
         "race": {
@@ -204,12 +202,15 @@
             "size": "",
             "type": "",
             "min_str":      {"value": null},
-            "dmg":          {"normal": "", "shield": ""},
-            "spd":          {"value": 0},
+            "atk":          {                            "mod": {"value": 0}},
+            "dmg":          {"normal": "", "shield": "", "mod": {"value": 0}},
+            "def":          {                            "mod": {"value": 0}},
+            "spd":          {"value": 0,                 "mod": {"value": 0}},
             "reach":        {"value": 0},
             "two_handed":   {"checked": false},
             "dr_reduction": {"value": 0},
             "mounted":      {"checked": false},
+            "prof": null,
             "jab": {
                 "checked": false,
                 "damage": "",

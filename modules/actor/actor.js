@@ -60,7 +60,52 @@ export class HackmasterActor extends Actor {
             hp_prev = hp_curr;
         }
 
-        if (b_reorder) { this.updateEmbeddedDocuments("Item", dataUpdate); }
+
+        // TODO: Yes, of course this whole setup is horseshit.
+        // Doing it right can come later. Let's just make it work for now.
+        // Yes. That was as scary to type as it was to read.
+
+        const weaponObj  = this.items.filter((a) => a.type === "weapon");
+        for (let i = 0; i < weaponObj.length; i++) {
+            const wdata = weaponObj[i].data.data;
+            const wProf = wdata.proficiency;
+            var profData;
+            const prof  = this.items.find((a) => {
+                return a.type === "proficiency" && a.name === wProf;
+            });
+            if (prof) {
+                profData = prof.data.data;
+            } else {
+                const wSkill   = wdata.skill;
+                const profPenalty = {
+                    minimal: -1,
+                    low:     -2,
+                    medium:  -4,
+                    high:    -6
+                }[wSkill];
+
+                profData.atk = {mod: {value: profPenalty}};
+                profData.dmg = {mod: {value: profPenalty}};
+                profData.def = {mod: {value: profPenalty}};
+                profData.spd = {mod: {value: -profPenalty}};
+            }
+
+            wdata.atk.prof    = profData.atk.mod;
+            wdata.dmg.prof    = profData.dmg.mod;
+            wdata.def.prof    = profData.def.mod;
+            wdata.spd.prof    = profData.spd.mod;
+
+            wdata.atk.derived = {"value": wdata.atk.mod.value + wdata.atk.prof.value};
+            wdata.dmg.derived = {"value": wdata.dmg.mod.value + wdata.dmg.prof.value};
+            wdata.def.derived = {"value": wdata.def.mod.value + wdata.def.prof.value};
+            wdata.spd.derived = {"value": wdata.spd.mod.value + wdata.spd.prof.value};
+        }
+
+
+        if (dataUpdate.length) {console.warn("Hi hello");}
+        if (dataUpdate.length) { this.updateEmbeddedDocuments("Item", dataUpdate); }
+
+
 
         // TODO: Sloppy.
         const race      = this.items.filter((a) => a.type === "race")[0];

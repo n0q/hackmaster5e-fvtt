@@ -1,4 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Martel:wght@400;800&family=Roboto:wght@300;400;500&display=swap");
+@font-face {
+  font-family: "Empire Crown";
+  font-style: normal;
+  font-weight: 400;
+  src: local(""), url("../fonts/empirecrown.ttf");
+}
 /* Global styles */
 .window-app {
   font-family: "Roboto", sans-serif;
@@ -293,20 +299,46 @@
   font-weight: bold;
 }
 .hackmaster .cards-list .card {
-  padding: 3px 0;
   border: 2px solid #BBB;
   border-radius: 5px;
-}
-.hackmaster .cards-list .card-image {
-  flex: 0 0 24px;
-  margin-right: 5px;
-  background: green;
+  display: grid;
+  margin: 5px;
+  grid-template-columns: 50% 1fr;
 }
 .hackmaster .cards-list .card img {
+  flex: 0 0 auto;
   display: block;
+  border: transparent;
+  -webkit-border-radius: 5px;
+  -webkit-border-top-right-radius: 0;
+  -webkit-border-bottom-right-radius: 0;
+  -moz-border-radius: 5px;
+  -moz-border-top-right-radius: 0;
+  -moz-border-bottom-right-radius: 0;
+  border-radius: 5px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  margin: -2px;
+  margin-right: inherit;
+}
+.hackmaster .cards-list .card .statblock {
+  background: lightgrey;
+}
+.hackmaster .cards-list .card .statblock .row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.hackmaster .cards-list .card .statblock .column {
+  flex-basis: 100%;
+  flex: 1;
+}
+.hackmaster .cards-list .card header {
+  display: flex;
+  flex-direction: row;
 }
 .hackmaster .cards-list .card-name {
-  margin: 0;
+  padding: 2px;
   white-space: nowrap;
   overflow: hidden;
   min-width: 0;

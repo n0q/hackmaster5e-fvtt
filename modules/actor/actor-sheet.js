@@ -172,6 +172,9 @@ export class HackmasterActorSheet extends ActorSheet {
 
     html.find('.editable').click(this._onEdit.bind(this));
 
+    // ui elements
+    html.find('.toggle').click(this._onToggle.bind(this));
+
     // Drag events for macros.
     if (this.actor.isOwner) {
       let handler = ev => this._onDragStart(ev);
@@ -226,11 +229,21 @@ export class HackmasterActorSheet extends ActorSheet {
         return await Item.create(itemData, {parent: this.actor});
     }
 
-  _updateOwnedItem(item) {
-    return this.actor.updateEmbeddedDocuments("Item", item.data);
-  }
+    _updateOwnedItem(item) {
+        return this.actor.updateEmbeddedDocuments("Item", item.data);
+    }
 
-   async _onEdit(event) {
+    // TODO: This should obviously take args.
+    // TODO: These should function autonomously between users.
+    async _onToggle(event) {
+        event.preventDefault();
+        const element = event.currentTarget;
+        const item    = this._getOwnedItem(this._getItemId(event));
+        const toggle = item.getFlag('hackmaster5e', "ui.toggle");
+        item.setFlag('hackmaster5e', "ui.toggle", !toggle);
+    }
+
+    async _onEdit(event) {
         event.preventDefault();
         const element = event.currentTarget;
         const dataset = element.dataset;
