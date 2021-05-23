@@ -168,6 +168,7 @@ export class HackmasterActorSheet extends ActorSheet {
     });
 
     // Rollable abilities.
+    html.find('.wound').click(this._onEditWound.bind(this));
     html.find('.rollable').click(this._onRoll.bind(this));
 
     html.find('.editable').click(this._onEdit.bind(this));
@@ -241,6 +242,28 @@ export class HackmasterActorSheet extends ActorSheet {
         const item    = this._getOwnedItem(this._getItemId(event));
         const toggle = item.getFlag('hackmaster5e', "ui.toggle");
         item.setFlag('hackmaster5e', "ui.toggle", !toggle);
+    }
+
+    async _onEditWound(event) {
+        event.preventDefault();
+        const element = event.currentTarget;
+        const dataset = element.dataset;
+        const item    = this._getOwnedItem(this._getItemId(event));
+
+        if (dataset.itemProp) {
+            const itemProp = dataset.itemProp;
+            let propValue = getProperty(item.data, itemProp);
+            if (--propValue < 1 && dataset.itemProp === "data.duration.value") {
+                let hpValue = getProperty(item.data, "data.hp.value");
+                hpValue = Math.max(hpValue -1, 0);
+                propValue = hpValue;
+                setProperty(item.data, "data.hp.value", hpValue);
+            }
+            setProperty(item.data, itemProp, propValue);
+
+            // TODO: Update only the altered property.
+            await this.actor.updateEmbeddedDocuments("Item", [{_id:item.id, data:item.data.data}]);
+        }
     }
 
     async _onEdit(event) {
