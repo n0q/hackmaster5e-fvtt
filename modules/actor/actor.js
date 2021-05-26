@@ -65,6 +65,16 @@ export class HackmasterActor extends Actor {
         // Doing it right can come later. Let's just make it work for now.
         // Yes. That was as scary to type as it was to read.
 
+        const armorObj = this.items.filter((a) => a.type === "armor");
+        for (let i = 0; i <armorObj.length; i++) {
+            const adata = armorObj[i].data.data;
+            adata.dr.derived     = {"value":adata.dr.value    + adata.dr.mod.value};
+            adata.def.derived    = {"value":adata.def.value   + adata.def.mod.value};
+            adata.init.derived   = {"value":adata.init.value  + adata.init.mod.value};
+            adata.spd.derived    = {"value":adata.spd.value   + adata.spd.mod.value};
+            adata.movcf.derived  = {"value":adata.movcf.value + adata.movcf.mod.value};
+        }
+
         const weaponObj  = this.items.filter((a) => a.type === "weapon");
         for (let i = 0; i < weaponObj.length; i++) {
             const wdata = weaponObj[i].data.data;
