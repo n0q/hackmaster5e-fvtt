@@ -79,7 +79,7 @@ export class HackmasterActor extends Actor {
         for (let i = 0; i < weaponObj.length; i++) {
             const wdata = weaponObj[i].data.data;
             const wProf = wdata.proficiency;
-            var profData;
+            var profData = {};
             const prof  = this.items.find((a) => {
                 return a.type === "proficiency" && a.name === wProf;
             });
