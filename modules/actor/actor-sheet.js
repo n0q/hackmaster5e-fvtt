@@ -47,6 +47,7 @@ export class HackmasterActorSheet extends ActorSheet {
         const actorData = sheetData.actor;
 
         // Initialize containers.
+        const armors = [];
         const uskills = [];
         const skills = [];
         const gear = [];
@@ -77,6 +78,10 @@ export class HackmasterActorSheet extends ActorSheet {
             i.img = i.img || DEFAULT_TOKEN;
             var _;
             switch(i.type) {
+                case "armor":
+                    gear.push(i);
+                    armors.push(i);
+                    break;
                 case "character_class":
                     character_classes.push(i);
                     break;
@@ -123,6 +128,7 @@ export class HackmasterActorSheet extends ActorSheet {
         }
 
         // Assign and return
+        actorData.armors = armors;
         actorData.gear = gear;
         actorData.skills = skills;
         actorData.uskills = uskills;

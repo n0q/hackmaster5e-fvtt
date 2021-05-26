@@ -1,0 +1,87 @@
+<li class="card">
+    <header class="toggle" data-item-id="{{_id}}">
+        <label for="{{name}}">
+            <img src="{{img}}" title="{{name}}" height="48"/>
+            <h4 class="card-name">{{name}}</h4>
+        </label>
+        {{#if flags.hackmaster5e.ui.toggle}}
+            <div class="details">
+                <div>Reach: {{data.reach.value}}</div>
+                <div>Proficiency</div>
+            </div>
+            <div class="details">
+                <div></div>
+                <div>Misc</div>
+            </div>
+        {{/if}}
+    </header>
+    <div class="statblock">
+        <div class="row">
+            <div class="column">
+                <label class="resource-label rollable"
+                    data-roll-type="atk"
+                    data-roll="1d20p + @atk.derived.value"
+                    data-item-id="{{_id}}">
+                    {{localize "HM.atk"}}
+                </label>
+                <input type="number" value="{{data.atk.derived.value}}" readonly="true"/>
+            </div>
+            <div class="column">
+                <label class="resource-label rollable"
+                    data-roll-type="dmg"
+                    data-roll="@dmg.normal + @dmg.derived.value"
+                    data-item-id="{{_id}}">
+                    {{localize "HM.dmg"}}
+                </label>
+                <input type="number" value="{{data.dmg.derived.value}}" readonly="true"/>
+            </div>
+            <div class="column">
+                <label class="resource-label rollable"
+                    data-roll-type="def"
+                    data-roll="1d20p + @def.derived.value"
+                    data-item-id="{{_id}}">
+                    {{localize "HM.def"}}
+                </label>
+                <input type="number" value="{{data.def.derived.value}}" readonly="true"/>
+            </div>
+            <div class="column">
+                <label class="resource-label">
+                    {{localize "HM.spd"}}
+                </label>
+                <input type="number" value="{{data.spd.derived.value}}" readonly="true"/>
+            </div>
+        </div>
+        {{#if flags.hackmaster5e.ui.toggle}}
+            <div class="row">
+                <div class="column">
+                    <input type="number" value="{{data.atk.prof.value}}" readonly="true"/>
+                    <input type="number" class="editable" value="{{data.atk.mod.value}}" 
+                        data-item-id="{{_id}}"
+                        data-item-prop="data.atk.mod.value" 
+                        data-dtype="Number"/>
+                </div>
+                <div class="column">
+                    <input type="number" value="{{data.dmg.prof.value}}" readonly="true"/>
+                    <input type="number" class="editable" value="{{data.dmg.mod.value}}" 
+                        data-item-id="{{_id}}"
+                        data-item-prop="data.dmg.mod.value" 
+                        data-dtype="Number"/>
+                </div>
+                <div class="column">
+                    <input type="number" value="{{data.def.prof.value}}" readonly="true"/>
+                    <input type="number" class="editable" value="{{data.def.mod.value}}" 
+                        data-item-id="{{_id}}"
+                        data-item-prop="data.def.mod.value" 
+                        data-dtype="Number"/>
+                </div>
+                <div class="column">
+                    <input type="number" value="{{data.spd.prof.value}}" readonly="true"/>
+                    <input type="number" class="editable" value="{{data.spd.mod.value}}" 
+                        data-item-id="{{_id}}"
+                        data-item-prop="data.spd.mod.value" 
+                        data-dtype="Number"/>
+                </div>
+            </div>
+        {{/if}}
+    </div>
+</li>

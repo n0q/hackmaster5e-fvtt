@@ -43,7 +43,7 @@ Hooks.once("ready", async() => {
     //    game.items.contents[0].sheet.render(true);
     }
     if (game.actors.contents[0]) {
-//        game.actors.contents[0].sheet.render(true);
+        game.actors.contents[0].sheet.render(true);
     }
 
     LOGGER.log("Ready complete.");

@@ -86,16 +86,18 @@
         "armor": {
             "templates": ["base", "logistics"],
             "armortype": null,
-            "dr_mod":    {"value": 0,   "max": 0},
-            "def_mod":   {"value": 0,   "max": 0},
-            "init_mod":  {"value": 0,   "max": 0},
-            "speed_mod": {"value": 0,   "max": 0},
-            "move_ce":   {"value": 1.0, "max": 1.0},
+            "dr":   {"value": null, "mod": {"value": 0}},
+            "def":  {"value": null, "mod": {"value": 0}},
+            "init": {"value": null, "mod": {"value": 0}},
+            "spd":  {"value": null, "mod": {"value": 0}},
+            "movc": {"value": 1.0,  "mod": {"value": 0.0}},
             "shield": {
                 "checked": false,
+                "limit": {"value": 0, "mod": {"value": 0}},
+                "save":  {"value": 0, "mod": {"value": 0}},
                 "cover": {
-                    "passive": {"value": 0, "max": 0},
-                    "active":  {"value": 0, "max": 0}
+                    "passive": {"value": 0, "mod": {"value": 0}},
+                    "active":  {"value": 0, "mod": {"value": 0}}
                 }
             }
         },
