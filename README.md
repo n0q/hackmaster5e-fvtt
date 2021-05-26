@@ -13,4 +13,4 @@ Feature parity with roll20.
 The roll20 system offers some features I won't get to in 0.1.x, and this will be where I incorporate all the missing pieces.
 
 #### legal
-(C) Copyright 2001-2021 Kenzer and Company.  The Hackmaster name, rules and trademarks are used here with permission and under license.  Kenzer and Company reserves all other rights.
+Hackmaster is (C) Copyright 2001-2021 Kenzer and Company.  The Hackmaster name, rules and trademarks are used here with permission and under license.  Kenzer and Company reserves all other rights.
