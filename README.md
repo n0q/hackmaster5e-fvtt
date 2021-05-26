@@ -1,6 +1,6 @@
 # hackmaster5e-fvtt
 
-Hackmaster 5e (unofficial) for Foundry. This is in no way usable yet. Here be dragons. Here be a LOT of dragons. Truth be told, it's all dragons at this stage.
+Hackmaster 5e (unofficial) for Foundry. This is in no way usable yet. Here be dragons. Here be a LOT of dragons. Truth be told, it's all dragons all the way down.
 
 ## roadmap
 At this early stage, I'm keeping expectations low. Getting this out the door and usable is all that matters. Bigger and better things to come, hopefully!
