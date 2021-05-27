@@ -1,0 +1,18 @@
+<img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+<div class="header-fields">
+    <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+    <div class="grid grid-3col">
+        <div class="resource">
+            <label class="resource-label">{{localize "HM.quantity"}}</label>
+            <input type="number" name="data.quantity.value" value="{{data.data.quantity.value}}" data-dtype="Number"/>
+        </div>
+        <div class="resource">
+            <label class="resource-label">{{localize "HM.weight"}}</label>
+            <input type="number" name="data.weight.value" value="{{data.data.weight.value}}" data-dtype="Number"/>
+        </div>
+        <div class="resource">
+            <label class="resource-label">{{localize "HM.cost"}}</label>
+            <input type="number" name="data.cost.value" value="{{data.data.cost.value}}" data-dtype="Number"/>
+        </div>
+    </div>
+</div>

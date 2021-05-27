@@ -1,0 +1,81 @@
+<li class="card">
+    <header class="toggle" data-item-id="{{_id}}">
+        <label for="{{name}}">
+            <img src="{{img}}" title="{{name}}" height="48"/>
+            <h4 class="card-name">{{name}}</h4>
+        </label>
+        {{#if flags.hackmaster5e.ui.toggle}}
+            <div class="details">
+                <div></div>
+                <div>Base</div>
+            </div>
+            <div class="details">
+                <div></div>
+                <div>Misc</div>
+            </div>
+        {{/if}}
+    </header>
+    <div class="statblock">
+        <div class="row">
+            <div class="column">
+                <label class="resource-label">{{localize "HM.dr"}}</label>
+                <input type="number" value="{{data.derived.dr.value}}" readonly="true"/>
+            </div>
+            <div class="column">
+                <label class="resource-label">{{localize "HM.def"}}</label>
+                <input type="number" value="{{data.derived.def.value}}" readonly="true"/>
+            </div>
+            <div class="column">
+                <label class="resource-label">{{localize "HM.init"}}</label>
+                <input type="number" value="{{data.derived.init.value}}" readonly="true"/>
+            </div>
+            <div class="column">
+                <label class="resource-label">{{localize "HM.spd"}}</label>
+                <input type="number" value="{{data.derived.spd.value}}" readonly="true"/>
+            </div>
+            <div class="column">
+                <label class="resource-label">{{localize "HM.mov"}}</label>
+                <input type="number" value="{{numberFormat data.derived.movcf.value decimals=2}}" readonly="true"/>
+            </div>
+        </div>
+        {{#if flags.hackmaster5e.ui.toggle}}
+            <div class="row">
+                <div class="column">
+                    <input type="number" value="{{data.dr.value}}" readonly="true"/>
+                    <input type="number" class="editable" value="{{data.dr.mod.value}}" 
+                        data-item-id="{{_id}}"
+                        data-item-prop="data.dr.mod.value" 
+                        data-dtype="Number"/>
+                </div>
+                <div class="column">
+                    <input type="number" value="{{data.def.value}}" readonly="true"/>
+                    <input type="number" class="editable" value="{{data.def.mod.value}}" 
+                        data-item-id="{{_id}}"
+                        data-item-prop="data.def.mod.value" 
+                        data-dtype="Number"/>
+                </div>
+                <div class="column">
+                    <input type="number" value="{{data.init.value}}" readonly="true"/>
+                    <input type="number" class="editable" value="{{data.init.mod.value}}" 
+                        data-item-id="{{_id}}"
+                        data-item-prop="data.init.mod.value" 
+                        data-dtype="Number"/>
+                </div>
+                <div class="column">
+                    <input type="number" value="{{data.spd.value}}" readonly="true"/>
+                    <input type="number" class="editable" value="{{data.spd.mod.value}}" 
+                        data-item-id="{{_id}}"
+                        data-item-prop="data.spd.mod.value" 
+                        data-dtype="Number"/>
+                </div>
+                <div class="column">
+                    <input type="number" value="{{numberFormat data.movcf.value decimals=2}}" readonly="true"/>
+                    <input type="number" class="editable" value="{{numberFormat data.movcf.mod.value decimals=2}}" 
+                        data-item-id="{{_id}}"
+                        data-item-prop="data.movcf.mod.value" 
+                        data-dtype="Float"/>
+                </div>
+            </div>
+        {{/if}}
+    </div>
+</li>

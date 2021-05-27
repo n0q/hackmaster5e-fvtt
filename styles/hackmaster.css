@@ -1,10 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Martel:wght@400;800&family=Roboto:wght@300;400;500&display=swap");
-@font-face {
-  font-family: "Empire Crown";
-  font-style: normal;
-  font-weight: 400;
-  src: local(""), url("../fonts/empirecrown.ttf");
-}
 /* Global styles */
 .window-app {
   font-family: "Roboto", sans-serif;
