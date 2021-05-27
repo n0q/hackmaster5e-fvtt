@@ -3,7 +3,7 @@
     "title": "Hackmaster 5th Edition",
     "description": "Unofficial system for Hackmaster 5e by Kenzer and Co.",
     "url": "https://github.com/n0q/hackmaster5e-fvtt",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "minimumCoreVersion": "0.8.2",
     "compatibleCoreVersion": "0.8.5",
     "templateVersion": 1,
@@ -31,5 +31,5 @@
     "gridUnits": "ft",
     "primaryTokenAttribute": "hp",
     "manifest": "https://raw.githubusercontent.com/n0q/hackmaster5e-fvtt/main/system.json",
-    "download": "https://github.com/n0q/hackmaster5e-fvtt/archive/refs/tags/v0.1.1.zip"
+    "download": "https://github.com/n0q/hackmaster5e-fvtt/archive/refs/tags/v0.1.2.zip"
 }
