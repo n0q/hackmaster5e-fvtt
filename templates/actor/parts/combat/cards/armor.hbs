@@ -19,23 +19,23 @@
         <div class="row">
             <div class="column">
                 <label class="resource-label">{{localize "HM.dr"}}</label>
-                <input type="number" value="{{data.dr.derived.value}}" readonly="true"/>
+                <input type="number" value="{{data.derived.dr.value}}" readonly="true"/>
             </div>
             <div class="column">
                 <label class="resource-label">{{localize "HM.def"}}</label>
-                <input type="number" value="{{data.def.derived.value}}" readonly="true"/>
+                <input type="number" value="{{data.derived.def.value}}" readonly="true"/>
             </div>
             <div class="column">
                 <label class="resource-label">{{localize "HM.init"}}</label>
-                <input type="number" value="{{data.init.derived.value}}" readonly="true"/>
+                <input type="number" value="{{data.derived.init.value}}" readonly="true"/>
             </div>
             <div class="column">
                 <label class="resource-label">{{localize "HM.spd"}}</label>
-                <input type="number" value="{{data.spd.derived.value}}" readonly="true"/>
+                <input type="number" value="{{data.derived.spd.value}}" readonly="true"/>
             </div>
             <div class="column">
                 <label class="resource-label">{{localize "HM.mov"}}</label>
-                <input type="number" value="{{numberFormat data.movcf.derived.value decimals=2}}" readonly="true"/>
+                <input type="number" value="{{numberFormat data.derived.movcf.value decimals=2}}" readonly="true"/>
             </div>
         </div>
         {{#if flags.hackmaster5e.ui.toggle}}
