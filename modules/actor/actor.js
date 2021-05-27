@@ -13,7 +13,7 @@ export class HackmasterActor extends Actor {
         if (actorData.type === 'character') this._prepareCharacterData(actorData);
     }
 
-    _prepareCharacterData(actorData) {
+        _prepareCharacterData(actorData) {
         const data = actorData.data;
         const dataUpdate = [];
 
@@ -21,6 +21,7 @@ export class HackmasterActor extends Actor {
         // TODO: Strip mods from 'derived' to avoid confusion.
         const d_abilities = deepClone(data.abilities);
         const actorRace = this.items.find((a) => a.type === "race");
+
         // TODO: Non-racial mods don't work if there is no race.
         if(actorRace) {
             let modsRace = actorRace.data.data.mods.abilities;
@@ -65,11 +66,33 @@ export class HackmasterActor extends Actor {
         // Doing it right can come later. Let's just make it work for now.
         // Yes. That was as scary to type as it was to read.
 
+        // Armor calculations
+        const totalArmor = {"dr": {"value": 0}, "def": {"value": 0}, "init": {"value": 0}, "spd": {"value": 0}};
+        const armorObj = this.items.filter((a) => a.type === "armor");
+        for (let i = 0; i <armorObj.length; i++) {
+            const armorData = armorObj[i].data.data;
+            const armorDerived = {};
+            armorDerived.dr     = {"value": armorData.dr.value    + armorData.dr.mod.value};
+            armorDerived.def    = {"value": armorData.def.value   + armorData.def.mod.value};
+            armorDerived.init   = {"value": armorData.init.value  + armorData.init.mod.value};
+            armorDerived.spd    = {"value": armorData.spd.value   + armorData.spd.mod.value};
+            armorDerived.movcf  = {"value": armorData.movcf.value + armorData.movcf.mod.value};
+            armorObj[i].data.data.derived = armorDerived;
+
+            totalArmor.dr.value   += armorDerived.dr.value;
+            totalArmor.def.value  += armorDerived.def.value;
+            totalArmor.init.value += armorDerived.init.value;
+            totalArmor.spd.value  += armorDerived.spd.value;
+        }
+
+        data.derived.armor = totalArmor;
+        // Weapon calculations
         const weaponObj  = this.items.filter((a) => a.type === "weapon");
         for (let i = 0; i < weaponObj.length; i++) {
             const wdata = weaponObj[i].data.data;
             const wProf = wdata.proficiency;
-            var profData;
+            wdata.armor = totalArmor;
+            var profData = {};
             const prof  = this.items.find((a) => {
                 return a.type === "proficiency" && a.name === wProf;
             });
@@ -90,21 +113,21 @@ export class HackmasterActor extends Actor {
                 profData.spd = {mod: {value: -profPenalty}};
             }
 
-            wdata.atk.prof    = profData.atk.mod;
-            wdata.dmg.prof    = profData.dmg.mod;
-            wdata.def.prof    = profData.def.mod;
-            wdata.spd.prof    = profData.spd.mod;
+            wdata.atk.prof = profData.atk.mod;
+            wdata.dmg.prof = profData.dmg.mod;
+            wdata.def.prof = profData.def.mod;
+            wdata.spd.prof = profData.spd.mod;
 
             wdata.atk.derived = {"value":                   wdata.atk.mod.value + wdata.atk.prof.value};
             wdata.dmg.derived = {"value":                   wdata.dmg.mod.value + wdata.dmg.prof.value};
-            wdata.def.derived = {"value":                   wdata.def.mod.value + wdata.def.prof.value};
-            wdata.spd.derived = {"value": wdata.spd.value + wdata.spd.mod.value + wdata.spd.prof.value};
+            wdata.def.derived = {"value":                   wdata.def.mod.value + wdata.def.prof.value + wdata.armor.def.value};
+            wdata.spd.derived = {"value": wdata.spd.value + wdata.spd.mod.value + wdata.spd.prof.value + wdata.armor.spd.value};
         }
 
         if (dataUpdate.length) { this.updateEmbeddedDocuments("Item", dataUpdate); }
 
 
-        // TODO: Sloppy.
+        // HP Calculations
         const race      = this.items.filter((a) => a.type === "race")[0];
         var racial_hp   = 0;
         if (race) { racial_hp = race.data.data.hp_mod.value || 0 };
@@ -117,5 +140,17 @@ export class HackmasterActor extends Actor {
         let hp_loss     = 0;
         Object.keys(wounds).forEach( (a) => hp_loss += wounds[a].data.data.hp.value);
         data.hp.value = data.hp.max - hp_loss;
+
+
+        function sumObjectsByKey(...objs) {
+            const res = objs.reduce((a, b) => {
+                for (let k in b) {
+                    if (b.hasOwnProperty(k)) a[k] = (a[k] || 0) + b[k];
+                }
+                return a;
+            }, {});
+            return res;
+        }
+
     }
 }

@@ -280,7 +280,14 @@ export class HackmasterActorSheet extends ActorSheet {
         if (dataset.itemProp) {
             const itemProp = dataset.itemProp;
             let targetValue = event.target.value;
-            if (dataset.dtype === "Number") { targetValue = parseInt(targetValue); }
+            switch (dataset.dtype) {
+                case "Number":
+                    targetValue = parseInt(targetValue);
+                    break;
+                case "Float":
+                    targetValue = parseFloat(targetValue);
+                    break;
+            }
             setProperty(item.data, itemProp, targetValue);
 
             // TODO: Update only the altered property.

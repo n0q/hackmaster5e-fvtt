@@ -3,21 +3,16 @@
         {{> "systems/hackmaster5e/templates/item/parts/header-logistics.hbs" }}
     </header>
 
-    {{!-- Sheet Tab Navigation --}}
     <nav class="sheet-tabs tabs" data-group="primary">
         <a class="item" data-tab="description">Description</a>
         <a class="item" data-tab="attributes">Attributes</a>
     </nav>
 
-    {{!-- Sheet Body --}}
     <section class="sheet-body">
-
-        {{!-- Description Tab --}}
         <div class="tab" data-group="primary" data-tab="description">
             {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
         </div>
 
-        {{!-- Attributes Tab --}}
         <div class="tab attributes" data-group="primary" data-tab="attributes">
             {{> "systems/hackmaster5e/templates/item/parts/logistics.hbs" }}
             <br>
@@ -42,7 +37,7 @@
                     </div>
                     <div class="resource">
                         <label class="resource-label">{{localize "HM.movece"}}</label>
-                        <input type="number" name="data.movc.value" value="{{data.data.movc.value}}" data-dtype="Number"/>
+                        <input type="number" name="data.movcf.value" value="{{numberFormat data.data.movcf.value decimals=2}}" data-dtype="Number"/>
                     </div>
                 </div>
             </div>

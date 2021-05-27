@@ -11,6 +11,10 @@
             </div>
             <div class="details">
                 <div></div>
+                <div>Armor</div>
+            </div>
+            <div class="details">
+                <div></div>
                 <div>Misc</div>
             </div>
         {{/if}}
@@ -55,6 +59,7 @@
             <div class="row">
                 <div class="column">
                     <input type="number" value="{{data.atk.prof.value}}" readonly="true"/>
+                    <input type="number" value="" readonly="true"/>
                     <input type="number" class="editable" value="{{data.atk.mod.value}}" 
                         data-item-id="{{_id}}"
                         data-item-prop="data.atk.mod.value" 
@@ -62,6 +67,7 @@
                 </div>
                 <div class="column">
                     <input type="number" value="{{data.dmg.prof.value}}" readonly="true"/>
+                    <input type="number" value="" readonly="true"/>
                     <input type="number" class="editable" value="{{data.dmg.mod.value}}" 
                         data-item-id="{{_id}}"
                         data-item-prop="data.dmg.mod.value" 
@@ -69,6 +75,7 @@
                 </div>
                 <div class="column">
                     <input type="number" value="{{data.def.prof.value}}" readonly="true"/>
+                    <input type="number" value="{{data.armor.def.value}}" readonly="true"/>
                     <input type="number" class="editable" value="{{data.def.mod.value}}" 
                         data-item-id="{{_id}}"
                         data-item-prop="data.def.mod.value" 
@@ -76,6 +83,7 @@
                 </div>
                 <div class="column">
                     <input type="number" value="{{data.spd.prof.value}}" readonly="true"/>
+                    <input type="number" value="{{data.armor.spd.value}}" readonly="true"/>
                     <input type="number" class="editable" value="{{data.spd.mod.value}}" 
                         data-item-id="{{_id}}"
                         data-item-prop="data.spd.mod.value" 
