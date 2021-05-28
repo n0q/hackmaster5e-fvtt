@@ -291,7 +291,8 @@
 }
 .hackmaster .cards-list .card {
   border: 2px solid #BBB;
-  border-radius: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
   display: grid;
   margin: 5px;
   grid-template-columns: 50% 1fr;

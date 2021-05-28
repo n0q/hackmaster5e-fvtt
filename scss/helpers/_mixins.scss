@@ -38,15 +38,15 @@
     }
 }
 
-@mixin card-border-right {
+@mixin card-border-left ($_border-radius) {
     border: transparent;
-    -webkit-border-radius: $card-border-radius;
+    -webkit-border-radius: #{$_border-radius};
     -webkit-border-top-right-radius: 0;
     -webkit-border-bottom-right-radius: 0;
-    -moz-border-radius: $card-border-radius;
+    -moz-border-radius: #{$_border-radius};
     -moz-border-top-right-radius: 0;
     -moz-border-bottom-right-radius: 0;
-     border-radius: $card-border-radius;
+     border-radius: #{$_border-radius};
      border-top-right-radius: 0;
      border-bottom-right-radius: 0;
      margin: -$card_border;
