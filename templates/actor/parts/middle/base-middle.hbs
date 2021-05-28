@@ -1,0 +1,18 @@
+<section class="abilities">
+    {{> "systems/hackmaster5e/templates/actor/parts/middle/middle-abilities.hbs"}} 
+</section>
+
+<section class="abilities-mods">
+    {{#each data.data.mods as |ability key|}}
+        <div class="ability flexrow">
+        </div>
+    {{/each}}
+</section>
+
+<section class="middle-saves">
+    {{> "systems/hackmaster5e/templates/actor/parts/middle/middle-saves.hbs"}} 
+</section>
+
+<section class="middle-wounds">
+    {{> "systems/hackmaster5e/templates/actor/parts/middle/middle-wounds.hbs"}} 
+</section>

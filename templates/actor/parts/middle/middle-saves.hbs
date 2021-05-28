@@ -1,0 +1,5 @@
+{{#each actor.data.data.saves as |save key|}}
+    <li class="item flexrow" data-item-id="{{_id}}">
+        {{key}} {{save.value}} 
+    </li>
+{{/each}}

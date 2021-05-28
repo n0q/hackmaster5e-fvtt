@@ -35,7 +35,7 @@ export class HackmasterActor extends Actor {
 
 
         // Level sorting
-        const levelData = {level_hp: 0, level_top: 0.00};
+        const levelData = {level_hp: 0, top: 0.00};
         const levelObj  = this.items.filter((a) => a.type === "character_class");
         const levelSort = levelObj.sort((a, b) => { return a.data_ord - b.data._ord });
         let b_reorder = false;
@@ -49,14 +49,14 @@ export class HackmasterActor extends Actor {
             }
 
         // Level processing.
-            let level_top = levelSort[i].data.data.top_mod.value || 0.00;
+            let top = levelSort[i].data.data.top_mod.value || 0.00;
             let hp_curr = levelSort[i].data.data.hp.value || 0;
             let hp_curr_checked = levelSort[i].data.data.hp.reroll.checked;
             if (hp_curr_checked) {
                 hp_curr = Math.max(0, hp_curr - hp_prev);
             }
 
-            levelData.level_top += level_top;
+            levelData.top      += top;
             levelData.level_hp += hp_curr;
             hp_prev = hp_curr;
         }
@@ -124,8 +124,6 @@ export class HackmasterActor extends Actor {
             wdata.spd.derived = {"value": wdata.spd.value + wdata.spd.mod.value + wdata.spd.prof.value + wdata.armor.spd.value};
         }
 
-        if (dataUpdate.length) { this.updateEmbeddedDocuments("Item", dataUpdate); }
-
 
         // HP Calculations
         const race      = this.items.filter((a) => a.type === "race")[0];
@@ -141,6 +139,17 @@ export class HackmasterActor extends Actor {
         Object.keys(wounds).forEach( (a) => hp_loss += wounds[a].data.data.hp.value);
         data.hp.value = data.hp.max - hp_loss;
 
+
+        // Save Calculations
+        const savesData = data.saves;
+
+        savesData.dodge.value    = savesData.dodge.mod.value;
+        savesData.mental.value   = savesData.dodge.mod.value;
+        savesData.physical.value = savesData.dodge.mod.value;
+        savesData.poison.value   = data.derived.abilities.con.value;
+        savesData.top.value      = Math.ceil((0.3 + levelData.top) * data.hp.max);
+
+        if (dataUpdate.length) { this.updateEmbeddedDocuments("Item", dataUpdate); }
 
         function sumObjectsByKey(...objs) {
             const res = objs.reduce((a, b) => {
