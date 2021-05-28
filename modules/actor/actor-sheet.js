@@ -309,44 +309,18 @@ export class HackmasterActorSheet extends ActorSheet {
         //      Everything here is temporary. If it's still here by 0.2,
         //      <span class="uncle_roger">You fucked up.</span>
         //
-        //      Most of these could be generalized. Chat handler should deal with.
-        //      card data, as that's what it's there for.
-        //
         //      RollHandler should interpret specialized tokens to provide double
         //      roll returns (+/- for skills, save or checks for attributes, etc).
         if (dataset.rollType) {
+            const hChat = new ChatHandler();
             switch (dataset.rollType) {
-                case "atk": {
+                case "combat": {
                     const itemid  = this._getItemId(event);
                     const item    = this._getOwnedItem(itemid);
                     const roll    = new RollHandler(dataset.roll, item.data.data);
                     await roll.roll();
                     const myhtml  = await roll._roll.render();
-                    const title   = this.actor.name + " attacks with " + item.data.name + ".<p>" +
-                                    "Speed: " + item.data.data.spd.derived.value;
-                    const card    = ChatHandler.ChatDataSetup(myhtml, title);
-                    await ChatMessage.create(card);
-                    break;
-                }
-                case "def": {
-                    const itemid  = this._getItemId(event);
-                    const item    = this._getOwnedItem(itemid);
-                    const roll    = new RollHandler(dataset.roll, item.data.data);
-                    await roll.roll();
-                    const myhtml  = await roll._roll.render();
-                    const title   = this.actor.name + " defends with " + item.data.name + ".";
-                    const card    = ChatHandler.ChatDataSetup(myhtml, title);
-                    await ChatMessage.create(card);
-                    break;
-                }
-                case "dmg": {
-                    const itemid  = this._getItemId(event);
-                    const item    = this._getOwnedItem(itemid);
-                    const roll    = new RollHandler(dataset.roll, item.data.data);
-                    await roll.roll();
-                    const myhtml  = await roll._roll.render();
-                    const title   = this.actor.name + " damages with " + item.data.name + ".";
-                    const card    = ChatHandler.ChatDataSetup(myhtml, title);
+                    const card    = hChat.genCard(myhtml, this.actor, dataset, item.data);
                     await ChatMessage.create(card);
                     break;
                 }
@@ -356,7 +330,7 @@ export class HackmasterActorSheet extends ActorSheet {
                     const roll    = new RollHandler(dataset.roll, item.data.data);
                     await roll.roll();
                     const myhtml  = await roll._roll.render();
-                    const card    = ChatHandler.ChatDataSetup(myhtml, item.data.name);
+                    const card    = hChat.genCard(myhtml, this.actor, dataset, item.data);
                     await ChatMessage.create(card);
                     break;
                 }
