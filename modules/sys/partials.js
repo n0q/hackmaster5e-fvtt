@@ -4,6 +4,7 @@ export default function preloadHandlebarsTemplates() {
         "systems/hackmaster5e/templates/actor/parts/middle/middle-abilities.hbs",
         "systems/hackmaster5e/templates/actor/parts/middle/middle-saves.hbs",
         "systems/hackmaster5e/templates/actor/parts/middle/middle-wounds.hbs",
+        "systems/hackmaster5e/templates/actor/parts/middle/cards/saves.hbs",
         "systems/hackmaster5e/templates/actor/parts/biography.hbs",
         "systems/hackmaster5e/templates/actor/parts/combat/base-combat.hbs",
         "systems/hackmaster5e/templates/actor/parts/combat/combat-armors.hbs",

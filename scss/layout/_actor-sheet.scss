@@ -75,7 +75,6 @@ $actor-portrait-dim: 150px;
     }
 
     .middle-saves {
-        background: lightgrey;
     }
 
     .middle-wounds {
@@ -98,10 +97,4 @@ $actor-portrait-dim: 150px;
 .base-combat {
     @include flexgrid;
 }
-
-
-
-
-
-
 

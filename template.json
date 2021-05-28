@@ -56,7 +56,7 @@
                     "mental":   {"mod": {"value": 0}},
                     "physical": {"mod": {"value": 0}},
                     "poison":   {"mod": {"value": 0}},
-                    "top":      {"mod": {"value": 0}}
+                    "top":      {"mod": {"value": 0}, "limit": {"value": 0}}
                 }
             }
         },

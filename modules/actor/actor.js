@@ -143,11 +143,12 @@ export class HackmasterActor extends Actor {
         // Save Calculations
         const savesData = data.saves;
 
-        savesData.dodge.value    = savesData.dodge.mod.value;
-        savesData.mental.value   = savesData.dodge.mod.value;
-        savesData.physical.value = savesData.dodge.mod.value;
-        savesData.poison.value   = data.derived.abilities.con.value;
-        savesData.top.value      = Math.ceil((0.3 + levelData.top) * data.hp.max);
+        savesData.dodge.value     = savesData.dodge.mod.value;
+        savesData.mental.value    = savesData.dodge.mod.value;
+        savesData.physical.value  = savesData.dodge.mod.value;
+        savesData.poison.value    = data.derived.abilities.con.value + savesData.poison.mod.value;
+        savesData.top.value       = Math.floor(data.derived.abilities.con.value / 2);
+        savesData.top.limit.value = Math.ceil((0.3 + levelData.top) * data.hp.max);
 
         if (dataUpdate.length) { this.updateEmbeddedDocuments("Item", dataUpdate); }
 
