@@ -23,7 +23,8 @@
         <div class="row">
             <div class="column">
                 <label class="resource-label rollable"
-                    data-roll-type="atk"
+                    data-roll-type="combat"   
+                    data-roll-combat="atk"
                     data-roll="1d20p + @atk.derived.value"
                     data-item-id="{{_id}}">
                     {{localize "HM.atk"}}
@@ -32,7 +33,8 @@
             </div>
             <div class="column">
                 <label class="resource-label rollable"
-                    data-roll-type="dmg"
+                    data-roll-type="combat"
+                    data-roll-combat="dmg"
                     data-roll="@dmg.normal + @dmg.derived.value"
                     data-item-id="{{_id}}">
                     {{localize "HM.dmg"}}
@@ -41,7 +43,8 @@
             </div>
             <div class="column">
                 <label class="resource-label rollable"
-                    data-roll-type="def"
+                    data-roll-type="combat"
+                    data-roll-combat="def"
                     data-roll="1d20p + @def.derived.value"
                     data-item-id="{{_id}}">
                     {{localize "HM.def"}}
