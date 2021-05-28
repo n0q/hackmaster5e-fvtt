@@ -76,7 +76,6 @@ export class HackmasterActorSheet extends ActorSheet {
         for (let i of sheetData.items) {
             let item = i.data;
             i.img = i.img || DEFAULT_TOKEN;
-            var _;
             switch(i.type) {
                 case "armor":
                     gear.push(i);

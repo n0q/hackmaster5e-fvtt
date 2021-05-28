@@ -8,6 +8,13 @@
                 "sp": {"value": 25, "max": 30}
             },
 
+            "pc": {
+                "luck":  {"value": 0, "max": 0},
+                "ep":    {"value": 0, "max": 400},
+                "bp":    {"value": 40},
+                "honor": {"value": 0}
+            },
+
             "statblock": {
                 "abilities": {
                     "str": {"value": 10, "fvalue": 0, "mod": {
@@ -42,6 +49,14 @@
                     "lks":              {},
                     "cha": {"turning":  {"value": 0, "mod": {"value": 0}},
                             "morale":   {"value": 0, "mod": {"value": 0}}}
+                },
+
+                "saves": {
+                    "dodge":    {"mod": {"value": 0}},
+                    "mental":   {"mod": {"value": 0}},
+                    "physical": {"mod": {"value": 0}},
+                    "poison":   {"mod": {"value": 0}},
+                    "top":      {"mod": {"value": 0}, "limit": {"value": 0}}
                 }
             }
         },
@@ -146,7 +161,8 @@
                     "wis": {"value": 0}, "dex": {"value": 0},
                     "con": {"value": 0}, "lks": {"value": 0},
                     "cha": {"value": 0}
-                }
+                },
+                "def": {"checked": false, "mod": {"value": 0}}
             },
             "move": {
                 "crawl":  {"value": 2.5},

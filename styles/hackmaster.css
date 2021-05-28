@@ -291,7 +291,8 @@
 }
 .hackmaster .cards-list .card {
   border: 2px solid #BBB;
-  border-radius: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
   display: grid;
   margin: 5px;
   grid-template-columns: 50% 1fr;
@@ -371,7 +372,7 @@
   grid-template-columns: auto;
   grid-template-areas: "sheet-header" "sheet-abilities" "sheet-tabs" "sheet-body";
 }
-.hackmaster .base-header {
+.hackmaster .sheet-header {
   display: flex;
   flex: 0 0 auto;
   direction: row;
@@ -381,45 +382,45 @@
   margin-bottom: 10px;
   align-content: start;
 }
-.hackmaster .base-header .header-portrait {
+.hackmaster .sheet-header .header-portrait {
   flex: 0 1 auto;
 }
-.hackmaster .base-header .header-stats {
+.hackmaster .sheet-header .header-stats {
   flex: 1 0 auto;
 }
-.hackmaster .base-header .profile-img {
+.hackmaster .sheet-header .profile-img {
   flex: 0 0 100px;
   width: 150px;
   height: 150px;
   min-height: 150px;
   margin-right: 10px;
 }
-.hackmaster .base-header .header-fields {
+.hackmaster .sheet-header .header-fields {
   flex: 1;
 }
-.hackmaster .base-header h1.charname {
+.hackmaster .sheet-header h1.charname {
   height: 50px;
   padding: 0px;
   margin: 5px 0;
   border-bottom: 0;
 }
-.hackmaster .base-header h1.charname input {
+.hackmaster .sheet-header h1.charname input {
   width: 60%;
   height: 100%;
   margin: 0;
 }
-.hackmaster .sheet-abilities {
+.hackmaster .sheet-middle {
   display: grid;
   grid-gap: 4px;
   width: inherit;
-  grid-template-columns: 8em 1fr 13em;
-  grid-template-areas: "abilities abilities-mods abilities-wounds";
+  grid-template-columns: 8em 1fr 13em 13em;
+  grid-template-areas: "abilities abilities-mods middle-saves middle-wounds";
 }
-.hackmaster .sheet-abilities .abilities {
+.hackmaster .sheet-middle .abilities {
   display: flex;
   flex-direction: column;
 }
-.hackmaster .sheet-abilities .abilities-mods {
+.hackmaster .sheet-middle .abilities-mods {
   border: 2px solid;
   border-radius: 6px;
 }

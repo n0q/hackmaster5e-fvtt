@@ -14,7 +14,7 @@ $actor-gridgap: 4px;
 }
 
 $actor-portrait-dim: 150px;
-.base-header {
+.sheet-header {
     display: flex;
     flex: 0 0 auto;
         direction: row;
@@ -57,13 +57,14 @@ $actor-portrait-dim: 150px;
     }
 }
 
-.sheet-abilities {
+.sheet-middle {
     display: grid;
     grid-gap: $actor-gridgap;
     width: inherit;
-    grid-template-columns: 8em 1fr 13em;
+    grid-template-columns: 8em 1fr 13em 13em;
+
     grid-template-areas:
-        "abilities abilities-mods abilities-wounds";
+        "abilities abilities-mods middle-saves middle-wounds";
     .abilities {
         display: flex;
         flex-direction: column;
@@ -73,7 +74,10 @@ $actor-portrait-dim: 150px;
         @include border_rounded;
     }
 
-    .abilities-wounds {
+    .middle-saves {
+    }
+
+    .middle-wounds {
     }
 }
 
@@ -93,10 +97,4 @@ $actor-portrait-dim: 150px;
 .base-combat {
     @include flexgrid;
 }
-
-
-
-
-
-
 
