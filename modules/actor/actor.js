@@ -161,6 +161,5 @@ export class HackmasterActor extends Actor {
             }, {});
             return res;
         }
-
     }
 }

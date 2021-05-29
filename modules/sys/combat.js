@@ -32,7 +32,7 @@ export class HMCombat extends Combat {
          let cn = a.name.localeCompare(b.name);
          if ( cn !== 0 ) return cn;
          return a.id - b.id;
-   }
+    }
 };
 
 export class HMCombatTracker extends CombatTracker {
@@ -42,6 +42,50 @@ export class HMCombatTracker extends CombatTracker {
             template: "systems/hackmaster5e/templates/sidebar/combat-tracker.hbs",
             title: "Count Up",
             scrollY: [".directory-list"]
+        });
+    }
+
+    async _onCombatantControl(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        const btn = event.currentTarget;
+        const li = btn.closest(".combatant");
+        const combat = this.viewed;
+        const c = combat.combatants.get(li.dataset.combatantId);
+
+        // Switch control action
+        switch (btn.dataset.control) {
+
+        // Toggle combatant visibility
+        case "toggleHidden":
+            return c.update({hidden: !c.hidden});
+
+        // Toggle combatant defeated flag
+        case "toggleDefeated":
+            return this._onToggleDefeatedStatus(c);
+
+        // Roll combatant initiative
+        case "rollInitiative":
+            const initDie = await this._getInitiativeDie();
+            const initFormula = initDie;
+            console.warn(initDie);
+            return combat.rollInitiative([c.id], {formula: initFormula});
+        }
+    }
+
+    async _getInitiativeDie() {
+        return await new Promise(async resolve => {
+            new Dialog({
+                title: game.i18n.localize("HM.dialog.initTitle"),
+                content: await renderTemplate("systems/hackmaster5e/templates/dialog/getinitdie.hbs"),
+                buttons: {
+                    getdie: {
+                        label: "Roll",
+                        callback: () => { resolve(document.getElementById("choices").value) }
+                    }
+                },
+                default:"getdie"
+            }).render(true);
         });
     }
 };
