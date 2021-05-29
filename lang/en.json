@@ -133,5 +133,9 @@
         "raw":          "Raw",
         "racial":       "Racial",
         "misc":         "Misc"
+    },
+
+    "COMBAT": {
+        "Second":       "Second"
     }
 }
