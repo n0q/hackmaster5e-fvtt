@@ -6,7 +6,8 @@
 
     .card {
         border: $card_border solid #BBB;
-        border-radius: $card-border-radius; 
+        border-top-left-radius: $card-border-radius; 
+        border-bottom-left-radius: $card-border-radius; 
         display: grid;
         margin: 5px;
         grid-template-columns: 50% 1fr; 
@@ -28,7 +29,7 @@
                 flex: 0 0 auto;
                 align-self: flex-start;
                 display: block;
-                @include card-border-right;
+                @include card-border-left($card-border-radius);
             }
 
             label {
@@ -71,4 +72,3 @@
         flex-direction: row;
     }
 }
-

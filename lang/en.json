@@ -58,6 +58,14 @@
             "high":     "High"
         },
 
+        "saves": {
+            "dodge":    "Dodge",
+            "mental":   "Mental",
+            "physical": "Physical",
+            "poison":   "Poison",
+            "top":      "ToP"
+        },
+
         "atk":  "atk",
         "def":  "def",
         "dmg":  "dmg",
@@ -80,6 +88,8 @@
         "cost":         "Cost",
         "drmod":        "DR Mod",
         "defmod":       "Def Mod",
+        "description":  "Description",
+        "dodge":        "Dodge",
         "initmod":      "Init Mod",
         "speedmod":     "Speed Mod",
         "movece":       "Move Coeff",
@@ -92,12 +102,18 @@
         "language":     "Language",
         "literate":     "Literate",
         "mastery":      "Mastery",
+        "mental":       "Mental",
         "normal":       "Normal",
+        "physical":     "Physical",
+        "poison":       "Poison",
         "quality":      "Quality",
         "quantity":     "Quantity",
         "tools":        "Tools",
         "treated":      "Treated",
+        "top":          "ToP",
         "race":         "Race",
+        "save":         "Save",
+        "setup":        "Setup",
         "size":         "Size",
         "shield":       "Shield",
         "speed":        "Speed",

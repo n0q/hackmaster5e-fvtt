@@ -1,0 +1,15 @@
+<li class="card">
+    <header>
+        <label for="{{@key}}">
+            <img src="{{findConfigValue "savesImg" @key}}" title="{{@key}}" height=32"/>
+            <h4 class="card-name">{{localize (findConfigValue "saves" @key)}}</h4>
+        </label>
+    </header>
+    <div class="statblock">
+        <input class="rollable" type="number" value="{{value}}" readonly="true"
+            data-roll-type="save"
+            data-roll="1d20p + @saves.{{@key}}.value"
+            data-save-type="{{@key}}"
+            />
+    </div>
+</li>

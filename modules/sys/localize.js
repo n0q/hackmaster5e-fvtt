@@ -1,6 +1,6 @@
-// for localizing by key
 const idx = {};
 
+// Localization
 idx.ability_short = {
     str: "HM.ability_short.str",
     int: "HM.ability_short.int",
@@ -51,6 +51,23 @@ idx.weaponskill = {
     "low":      "HM.weaponskillSelect.low",
     "medium":   "HM.weaponskillSelect.medium",
     "high":     "HM.weaponskillSelect.high"
+}
+
+idx.saves = {
+    "dodge":    "HM.saves.dodge",
+    "mental":   "HM.saves.mental",
+    "physical": "HM.saves.physical",
+    "poison":   "HM.saves.poison",
+    "top":      "HM.saves.top"
+}
+
+// Images
+idx.savesImg = {
+    "dodge":    "icons/skills/movement/feet-winged-boots-brown.webp",
+    "mental":   "icons/skills/wounds/anatomy-organ-brain-pink-red.webp",
+    "physical": "icons/skills/wounds/anatomy-bone-joint.webp",
+    "poison":   "icons/skills/toxins/poison-bottle-corked-fire-green.webp",
+    "top":      "icons/skills/wounds/injury-face-impact-orange.webp"
 }
 
 export default idx;
