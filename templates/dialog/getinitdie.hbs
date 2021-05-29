@@ -1,0 +1,6 @@
+<p>{{localize "HM.dialog.initBody"}}</p>
+<select name="data.quality" id="choices">
+    {{#select data.data.initdie}}{{#each (findConfigObj "dice") as |type t|}}
+        <option value="{{t}}">{{type}}</option>
+    {{/each}}{{/select}}
+</select>

@@ -66,6 +66,11 @@
             "top":      "ToP"
         },
 
+        "dialog": {
+            "initTitle":    "Choose an Initiative Die",
+            "initBody":     "Please select the appropriate initiative die."
+        },
+
         "atk":  "atk",
         "def":  "def",
         "dmg":  "dmg",
