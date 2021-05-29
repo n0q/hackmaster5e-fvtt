@@ -33,6 +33,44 @@ export class HMCombat extends Combat {
          if ( cn !== 0 ) return cn;
          return a.id - b.id;
     }
+
+    async rollAll(options={}) {
+        const ids = this.combatants.reduce((ids, c) => {
+            if ( c.isOwner && !c.initiative) ids.push(c.id);
+            return ids;
+        }, []);
+        const initDie = await this._getInitiativeDie();
+        const initFormula = initDie;
+        options.formula = initFormula;
+        return this.rollInitiative(ids, options);
+    }
+
+    async rollNPC(options={}) {
+        const ids = this.combatants.reduce((ids, c) => {
+        if ( c.isOwner && c.isNPC && !c.initiative) ids.push(c.id);
+            return ids;
+        }, []);
+        const initDie = await this._getInitiativeDie();
+        const initFormula = initDie;
+        options.formula = initFormula;
+        return this.rollInitiative(ids, options);
+    }
+
+    async _getInitiativeDie() {
+        return await new Promise(async resolve => {
+            new Dialog({
+                title: game.i18n.localize("HM.dialog.initTitle"),
+                content: await renderTemplate("systems/hackmaster5e/templates/dialog/getinitdie.hbs"),
+                buttons: {
+                    getdie: {
+                        label: "Roll",
+                        callback: () => { resolve(document.getElementById("choices").value) }
+                    }
+                },
+                default:"getdie"
+            }).render(true);
+        });
+    }
 };
 
 export class HMCombatTracker extends CombatTracker {
@@ -66,26 +104,9 @@ export class HMCombatTracker extends CombatTracker {
 
         // Roll combatant initiative
         case "rollInitiative":
-            const initDie = await this._getInitiativeDie();
+            const initDie = await combat._getInitiativeDie();
             const initFormula = initDie;
-            console.warn(initDie);
             return combat.rollInitiative([c.id], {formula: initFormula});
         }
-    }
-
-    async _getInitiativeDie() {
-        return await new Promise(async resolve => {
-            new Dialog({
-                title: game.i18n.localize("HM.dialog.initTitle"),
-                content: await renderTemplate("systems/hackmaster5e/templates/dialog/getinitdie.hbs"),
-                buttons: {
-                    getdie: {
-                        label: "Roll",
-                        callback: () => { resolve(document.getElementById("choices").value) }
-                    }
-                },
-                default:"getdie"
-            }).render(true);
-        });
     }
 };
