@@ -6,7 +6,7 @@ export default class ChatHandler {
         this._user = game.user.id;
     }
 
-    genCard(html, actor, dataset, itemData) {
+    genCard(html, actor, dataset, itemData=null) {
         var title;
         switch (dataset.rollType) {
             case "combat":
@@ -14,6 +14,9 @@ export default class ChatHandler {
                 break;
             case "skill":
                 title = this._createSkillCard(itemData);
+                break;
+            case "save":
+                title = this._createSaveCard(dataset.saveType);
                 break;
         }
 
@@ -55,6 +58,11 @@ export default class ChatHandler {
         return itemData.name;
     }
 
+    _createSaveCard(dataType) {
+        let savetype = game.i18n.localize("HM.saves." + dataType);
+        let savename = game.i18n.localize("HM.save");
+        return savetype + " " + savename;
+    }
 
     static ChatDataSetup(content, title) {
         const newcontent = title + content;

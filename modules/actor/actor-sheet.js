@@ -313,7 +313,8 @@ export class HackmasterActorSheet extends ActorSheet {
         if (dataset.rollType) {
             const hChat = new ChatHandler();
             switch (dataset.rollType) {
-                case "combat": {
+                case "combat":
+                case "skill": {
                     const itemid  = this._getItemId(event);
                     const item    = this._getOwnedItem(itemid);
                     const roll    = new RollHandler(dataset.roll, item.data.data);
@@ -323,13 +324,11 @@ export class HackmasterActorSheet extends ActorSheet {
                     await ChatMessage.create(card);
                     break;
                 }
-                case "skill": {
-                    const itemid  = this._getItemId(event);
-                    const item    = this._getOwnedItem(itemid);
-                    const roll    = new RollHandler(dataset.roll, item.data.data);
+                case "save": {
+                    const roll    = new RollHandler(dataset.roll, this.actor.data.data);
                     await roll.roll();
                     const myhtml  = await roll._roll.render();
-                    const card    = hChat.genCard(myhtml, this.actor, dataset, item.data);
+                    const card    = hChat.genCard(myhtml, this.actor, dataset);
                     await ChatMessage.create(card);
                     break;
                 }
