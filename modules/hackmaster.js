@@ -3,7 +3,7 @@ import { HackmasterActorSheet } from "./actor/actor-sheet.js";
 import { HackmasterItem } from "./item/item.js";
 import { HackmasterItemSheet } from "./item/item-sheet.js";
 
-import { HMCombat } from "./sys/combat.js";
+import { HMCombat, HMCombatTracker } from "./sys/combat.js";
 
 import LOGGER from "./sys/logger.js";
 
@@ -29,6 +29,7 @@ Hooks.once("init", async() => {
     Items.registerSheet("hackmaster", HackmasterItemSheet, { makeDefault: true });
 
     CONFIG.Combat.documentClass = HMCombat;
+    CONFIG.ui.combat = HMCombatTracker;
 
     registerHandlebarsHelpers();
     preloadHandlebarsTemplates();

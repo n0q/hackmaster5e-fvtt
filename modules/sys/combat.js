@@ -1,5 +1,4 @@
 export class HMCombat extends Combat {
-
     async nextTurn() {
         let turn = this.turn;
         let skip = this.settings.skipDefeated;
@@ -17,12 +16,6 @@ export class HMCombat extends Combat {
         }
         else next = turn + 1;
 
-/*      // Maybe advance to the next round
-        let round = this.round;
-        if ( (this.round === 0) || (next === null) || (next >= this.turns.length) ) {
-            return this.nextRound();
-        }
-*/
         // HACK: Just shorting out the next round logic.
         return this.nextRound();
 
@@ -40,7 +33,15 @@ export class HMCombat extends Combat {
          if ( cn !== 0 ) return cn;
          return a.id - b.id;
    }
+};
 
-
-
+export class HMCombatTracker extends CombatTracker {
+    static get defaultOptions() {
+        return foundry.utils.mergeObject(super.defaultOptions, {
+            id: "combat",
+            template: "systems/hackmaster5e/templates/sidebar/combat-tracker.hbs",
+            title: "Count Up",
+            scrollY: [".directory-list"]
+        });
+    }
 };
