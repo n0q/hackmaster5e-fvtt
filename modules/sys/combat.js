@@ -1,27 +1,7 @@
 export class HMCombat extends Combat {
     async nextTurn() {
-        let turn = this.turn;
-        let skip = this.settings.skipDefeated;
-
-        // Determine the next turn number
-        let next = null;
-        if ( skip ) {
-            for ( let [i, t] of this.turns.entries() ) {
-                if ( i <= turn ) continue;
-                if ( t.defeated ) continue;
-                if ( t.actor?.effects.find(e => e.getFlag("core", "statusId") === CONFIG.Combat.defeatedStatusId ) ) continue;
-                next = i;
-                break;
-            }
-        }
-        else next = turn + 1;
-
-        // HACK: Just shorting out the next round logic.
+        console.warn("nextTurn was called, somehow.");
         return this.nextRound();
-
-        // Update the encounter
-        const advanceTime = CONFIG.time.turnTime;
-        return this.update({round: round, turn: next}, {advanceTime});
     }
 
     _sortCombatants(a, b) {
