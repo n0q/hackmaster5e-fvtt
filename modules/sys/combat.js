@@ -4,15 +4,7 @@ export class HMCombat extends Combat {
         return this.nextRound();
     }
 
-    _sortCombatants(a, b) {
-         const ia = Number.isNumeric(a.initiative) ? a.initiative : -9999;
-         const ib = Number.isNumeric(b.initiative) ? b.initiative : -9999;
-         let ci = ia - ib;
-         if ( ci !== 0 ) return ci;
-         let cn = a.name.localeCompare(b.name);
-         if ( cn !== 0 ) return cn;
-         return a.id - b.id;
-    }
+    _sortCombatants(a, b) { return -super._sortCombatants(a, b) };
 
     async rollAll(options={}) {
         const ids = this.combatants.reduce((ids, c) => {
@@ -36,25 +28,24 @@ export class HMCombat extends Combat {
         return this.rollInitiative(ids, options);
     }
 
-
     async _HM_setInitiative(cid) {
-        const foobar = await new Promise(async resolve => {
+        const newInit = await new Promise(async resolve => {
             new Dialog({
                 title: game.i18n.localize("HM.dialog.setinitTitle"),
                 content: await renderTemplate("systems/hackmaster5e/templates/dialog/setinit.hbs"),
                 buttons: {
-                    getdie: {
+                    setinit: {
                         label: "Set Init",
                         callback: () => { resolve(document.getElementById("choices").value) }
                     }
                 },
-                default:"getdie",
+                default:"setinit",
                 render: () => { document.getElementById("choices").focus() }
             }).render(true);
         });
-        if (!foobar) return foobar;
+        if (!newInit) return newInit;
         const messageOptions = {sound: null, flavor: "Initiative shift"};
-        return this.rollInitiative(cid, {formula: foobar, messageOptions: messageOptions});
+        return this.rollInitiative(cid, {formula: newInit, messageOptions: messageOptions});
     }
 
     async _getInitiativeDie() {
