@@ -36,6 +36,27 @@ export class HMCombat extends Combat {
         return this.rollInitiative(ids, options);
     }
 
+
+    async _HM_setInitiative(cid) {
+        const foobar = await new Promise(async resolve => {
+            new Dialog({
+                title: game.i18n.localize("HM.dialog.setinitTitle"),
+                content: await renderTemplate("systems/hackmaster5e/templates/dialog/setinit.hbs"),
+                buttons: {
+                    getdie: {
+                        label: "Set Init",
+                        callback: () => { resolve(document.getElementById("choices").value) }
+                    }
+                },
+                default:"getdie",
+                render: () => { document.getElementById("choices").focus() }
+            }).render(true);
+        });
+        if (!foobar) return foobar;
+        const messageOptions = {sound: null, flavor: "Initiative shift"};
+        return this.rollInitiative(cid, {formula: foobar, messageOptions: messageOptions});
+    }
+
     async _getInitiativeDie() {
         return await new Promise(async resolve => {
             new Dialog({
@@ -88,5 +109,18 @@ export class HMCombatTracker extends CombatTracker {
             const initFormula = initDie;
             return combat.rollInitiative([c.id], {formula: initFormula});
         }
+    }
+
+    _getEntryContextOptions() {
+        const context = super._getEntryContextOptions();
+        context.push({
+            name: "Set Initiative",
+            icon: '<i class="fas fa-clock"></i>',
+            callback: li => {
+                const combatant = this.viewed.combatants.get(li.data("combatant-id"));
+                if (combatant) return this.viewed._HM_setInitiative([combatant.id]);
+            }
+        });
+        return context;
     }
 };

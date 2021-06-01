@@ -23,6 +23,7 @@ export default function preloadHandlebarsTemplates() {
         "systems/hackmaster5e/templates/item/parts/header-logistics.hbs",
         "systems/hackmaster5e/templates/item/parts/logistics.hbs",
         "systems/hackmaster5e/templates/sidebar/combat-tracker.hbs",
-        "systems/hackmaster5e/templates/dialog/getinitdie.hbs"
+        "systems/hackmaster5e/templates/dialog/getinitdie.hbs",
+        "systems/hackmaster5e/templates/dialog/setinit.hbs"
     ]);
 }
