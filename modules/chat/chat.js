@@ -1,67 +1,76 @@
-import RollHandler from "../sys/roller.js";
 import LOGGER from "../sys/logger.js";
 
 export default class ChatHandler {
-    constructor() {
+    constructor(actor) {
         this._user = game.user.id;
+        this._actor = actor;
     }
 
-    genCard(html, actor, dataset, itemData=null) {
-        var title;
+    async genCard(roll, dataset, itemData=null) {
+        const html = await roll.render();
+        let cData;
         switch (dataset.rollType) {
             case "combat":
-                title = this._createCombatCard(dataset.rollCombat, actor, itemData);
+                cData = this._createCombatCard(dataset, html, itemData);
                 break;
             case "skill":
-                title = this._createSkillCard(itemData);
+                cData = this._createSkillCard(itemData, html);
                 break;
             case "save":
-                title = this._createSaveCard(dataset.saveType);
+                cData = this._createSaveCard(dataset.saveType, html);
+                break;
+            case "ability":
+                cData = this._createAbilityCard(dataset, html);
                 break;
         }
 
-        var content = title + html;
         const chatData = {
+            roll: roll,
+            type: CONST.CHAT_MESSAGE_TYPES.ROLL,
             user: this._user,
-            content: content,
+            flavor: cData.flavor,
+            content: cData.content,
             sound: CONFIG.sounds.dice
         };
         return chatData;
     }
 
-    _createCombatCard(combatType, actor, itemData) {
-        var title;
-        var nameActor  = actor.name;
-        var nameWeapon = itemData.name;
-        switch (combatType) {
+    _createCombatCard(data, html, itemData) {
+        const nameActor  = this._actor.name;
+        const nameWeapon = itemData.name;
+        switch (data.rollCombat) {
             case "atk": {
-                let speedWeapon = itemData.data.spd.derived.value;
-                title = nameActor + " attacks with " + nameWeapon +
-                        ".<p>"    + "Speed: " + speedWeapon;
-                break;
+                const speedWeapon = itemData.data.spd.derived.value;
+                const title = nameActor + " attacks with " + nameWeapon;
+                const card = "Speed: " + speedWeapon + "<p>" + html;
+                return {flavor: title, content: card};
             }
 
             case "dmg": {
-                title = nameActor + " damages with " + nameWeapon;
-                break;
+                const title = nameActor + " damages with " + nameWeapon;
+                return {flavor: title, content: html};
             }
 
             case "def": {
-                title = nameActor + " defends with " + nameWeapon;
-                break;
+                const title = nameActor + " defends with " + nameWeapon;
+                return {flavor: title, content: html};
             }
         }
-        return title;
     }
 
-    _createSkillCard(itemData) {
-        return itemData.name;
+    _createSkillCard(itemData, html) {
+        return {flavor: itemData.name, content: html};
     }
 
-    _createSaveCard(dataType) {
-        let savetype = game.i18n.localize("HM.saves." + dataType);
-        let savename = game.i18n.localize("HM.save");
-        return savetype + " " + savename;
+    _createSaveCard(dataType, html) {
+        const savetype = game.i18n.localize("HM.saves." + dataType);
+        const savename = game.i18n.localize("HM.save");
+        return {flavor: savetype + " " + savename, content: html};
+    }
+
+    _createAbilityCard(data, html) {
+        const title = this._actor.name + " rolls " + data.ability;
+        return {flavor: title, content: html};
     }
 
     static ChatDataSetup(content, title) {

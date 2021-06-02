@@ -1,4 +1,3 @@
-import RollHandler from "../sys/roller.js";
 import ChatHandler from "../chat/chat.js";
 
 /**
@@ -14,7 +13,7 @@ export class HackmasterActorSheet extends ActorSheet {
             template: "systems/hackmaster5e/templates/actor/actor-base.hbs",
             width: 820,
             height: 750,
-            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "combat" }]
+            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "inventory" }]
         });
     }
 
@@ -304,46 +303,29 @@ export class HackmasterActorSheet extends ActorSheet {
         const element = event.currentTarget;
         const dataset = element.dataset;
 
-        //TODO: Clean this whole mess up.
-        //      Everything here is temporary. If it's still here by 0.2,
-        //      <span class="uncle_roger">You fucked up.</span>
-        //
-        //      RollHandler should interpret specialized tokens to provide double
-        //      roll returns (+/- for skills, save or checks for attributes, etc).
         if (dataset.rollType) {
-            const hChat = new ChatHandler();
+            const hChat = new ChatHandler(this.actor);
             switch (dataset.rollType) {
                 case "combat":
                 case "skill": {
-                    const itemid  = this._getItemId(event);
-                    const item    = this._getOwnedItem(itemid);
-                    const roll    = new RollHandler(dataset.roll, item.data.data);
-                    await roll.roll();
-                    const myhtml  = await roll._roll.render();
-                    const card    = hChat.genCard(myhtml, this.actor, dataset, item.data);
-                    await ChatMessage.create(card);
-                    break;
+                    const itemid = this._getItemId(event);
+                    const item = this._getOwnedItem(itemid);
+                    const roll = await new Roll(dataset.roll, item.data.data);
+                    await roll.evaluate({async: true});
+                    const card = await hChat.genCard(roll, dataset, item.data);
+                    return await ChatMessage.create(card);
                 }
                 case "save": {
-                    const roll    = new RollHandler(dataset.roll, this.actor.data.data);
-                    await roll.roll();
-                    const myhtml  = await roll._roll.render();
-                    const card    = hChat.genCard(myhtml, this.actor, dataset);
-                    await ChatMessage.create(card);
-                    break;
+                    const roll = new Roll(dataset.roll, this.actor.data.data)
+                    await roll.evaluate({async: true});
+                    const card = await hChat.genCard(roll, dataset);
+                    return await ChatMessage.create(card);
                 }
                 case "ability": {
-                    const sKey = $(event.currentTarget).attr('for');
-                    const ability = getProperty(this.actor, sKey);
-
-                    const complete_mess = sKey.split('.').slice(4,5)[0];
-                    const gah           = game.i18n.localize("HM.ability." + complete_mess);
-                    const roll    = new RollHandler("1d20p + " + ability);
-                    await roll.roll();
-                    var myhtml    = await roll._roll.render();
-                    var card      = ChatHandler.ChatDataSetup(myhtml, gah);
-                    await ChatMessage.create(card);
-                    break;
+                    const roll = new Roll(dataset.roll, this.actor.data.data);
+                    await roll.evaluate({async: true});
+                    const card = await hChat.genCard(roll, dataset);
+                    return await ChatMessage.create(card);
                 }
             }
         }

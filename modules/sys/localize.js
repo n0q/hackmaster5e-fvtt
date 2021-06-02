@@ -11,6 +11,16 @@ idx.ability_short = {
     cha: "HM.ability_short.cha"
 },
 
+idx.ability_long = {
+    str: "HM.ability.str",
+    int: "HM.ability.int",
+    wis: "HM.ability.wis",
+    dex: "HM.ability.dex",
+    con: "HM.ability.con",
+    lks: "HM.ability.lks",
+    cha: "HM.ability.cha"
+},
+
 idx.ability = {
     str: "HM.str",
     int: "HM.int",
