@@ -66,6 +66,13 @@
             "top":      "ToP"
         },
 
+        "dialog": {
+            "initTitle":    "Choose an Initiative Die",
+            "initBody":     "Please select the appropriate initiative die.",
+            "setinitTitle": "Set Initiative",
+            "setinitBody":  "Enter a new initiative."
+        },
+
         "atk":  "atk",
         "def":  "def",
         "dmg":  "dmg",
@@ -128,5 +135,9 @@
         "raw":          "Raw",
         "racial":       "Racial",
         "misc":         "Misc"
+    },
+
+    "COMBAT": {
+        "Second":       "Second"
     }
 }

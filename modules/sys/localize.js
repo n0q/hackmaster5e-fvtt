@@ -61,6 +61,17 @@ idx.saves = {
     "top":      "HM.saves.top"
 }
 
+// Dialog
+idx.dice = {
+    "1d20":      "d20",
+    "1d12":      "d12",
+    "1d10":      "d10",
+    "1d8":       "d8",
+    "1d6":       "d6",
+    "1d4":       "d4",
+    "1d3":       "d3"
+}
+
 // Images
 idx.savesImg = {
     "dodge":    "icons/skills/movement/feet-winged-boots-brown.webp",

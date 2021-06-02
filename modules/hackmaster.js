@@ -3,7 +3,7 @@ import { HackmasterActorSheet } from "./actor/actor-sheet.js";
 import { HackmasterItem } from "./item/item.js";
 import { HackmasterItemSheet } from "./item/item-sheet.js";
 
-import { HMCombat } from "./sys/combat.js";
+import { HMCombat, HMCombatTracker } from "./sys/combat.js";
 
 import LOGGER from "./sys/logger.js";
 
@@ -29,6 +29,7 @@ Hooks.once("init", async() => {
     Items.registerSheet("hackmaster", HackmasterItemSheet, { makeDefault: true });
 
     CONFIG.Combat.documentClass = HMCombat;
+    CONFIG.ui.combat = HMCombatTracker;
 
     registerHandlebarsHelpers();
     preloadHandlebarsTemplates();
@@ -43,10 +44,41 @@ Hooks.once("ready", async() => {
     //    game.items.contents[0].sheet.render(true);
     }
     if (game.actors.contents[0]) {
-        game.actors.contents[0].sheet.render(true);
+//        game.actors.contents[0].sheet.render(true);
     }
 
     LOGGER.log("Ready complete.");
+});
+
+// Add 1 to penetration dice so dsn shows actual die throws.
+// TODO: Correct representation of decayed penetration dice.
+Hooks.on("diceSoNiceRollStart", (messageId, context) => {
+    const roll = context.roll;
+    const r = 5;
+    unpenetrate(roll, r);
+
+    function unpenetrate(roll, r) {
+        if (r < 0) {
+            LOGGER.warn("Unpenetrate recursion limit reached.");
+            return;
+        }
+
+        for (let i = 0; i < roll.terms.length; i++) {
+            // PoolTerms contain sets of terms we need to evaluate.
+            if (roll.terms[i]?.rolls) {
+                for (let j = 0; j < roll.terms[i].rolls.length; j++) {
+                    unpenetrate(roll.terms[i].rolls[j], --r);
+                }
+            }
+
+            let penetrated = false;
+            for (let j = 0; j < roll.terms[i]?.results?.length; j++) {
+                const result = roll.terms[i].results[j];
+                if (penetrated && j) result.result++;
+                penetrated = result.penetrated;
+            }
+        }
+    }
 });
 
 Hooks.on("createActor", async (actor) => {
