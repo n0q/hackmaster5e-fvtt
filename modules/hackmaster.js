@@ -74,7 +74,8 @@ Hooks.on("diceSoNiceRollStart", (messageId, context) => {
             let penetrated = false;
             for (let j = 0; j < roll.terms[i]?.results?.length; j++) {
                 const result = roll.terms[i].results[j];
-                penetrated && j ? result.result++ : penetrated = result.penetrated;
+                if (penetrated && j) result.result++;
+                penetrated = result.penetrated;
             }
         }
     }
