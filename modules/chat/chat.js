@@ -7,20 +7,19 @@ export default class ChatHandler {
     }
 
     async genCard(roll, dataset, itemData=null) {
-        const html = await roll.render();
         let cData;
         switch (dataset.rollType) {
             case "combat":
-                cData = this._createCombatCard(dataset, html, itemData);
+                cData = await this._createCombatCard(dataset, roll, itemData);
                 break;
             case "skill":
-                cData = this._createSkillCard(itemData, html);
+                cData = await this._createSkillCard(itemData, roll);
                 break;
             case "save":
-                cData = this._createSaveCard(dataset.saveType, html);
+                cData = await this._createSaveCard(dataset.saveType, roll);
                 break;
             case "ability":
-                cData = this._createAbilityCard(dataset, html);
+                cData = await this._createAbilityCard(dataset, roll);
                 break;
         }
 
@@ -35,14 +34,21 @@ export default class ChatHandler {
         return chatData;
     }
 
-    _createCombatCard(data, html, itemData) {
+    async _createCombatCard(data, roll, itemData) {
         const nameActor  = this._actor.name;
         const nameWeapon = itemData.name;
+        const html = await roll.render();
         switch (data.rollCombat) {
             case "atk": {
-                const speedWeapon = itemData.data.spd.derived.value;
+                const sumDice = getDiceSum(roll);
+                let specialRow = "<p>";
+                if (sumDice >= 20) { specialRow += "<b>Critical!</b>";     } else
+                if (sumDice == 19) { specialRow += "<b>Near Perfect!</b>"; }
+
                 const title = nameActor + " attacks with " + nameWeapon;
-                const card = "Speed: " + speedWeapon + "<p>" + html;
+
+                const speedRow = "Speed: " + itemData.data.spd.derived.value;
+                const card = speedRow + specialRow + html;
                 return {flavor: title, content: card};
             }
 
@@ -52,23 +58,43 @@ export default class ChatHandler {
             }
 
             case "def": {
+                const sumDice = getDiceSum(roll);
+                let specialRow = "<p>";
+                if (sumDice >= 20) { specialRow += "<b>Perfect!</b>";      } else
+                if (sumDice == 19) { specialRow += "<b>Near Perfect!</b>"; } else
+                if (sumDice == 18) { specialRow += "<b>Superior!</b>";     }
+
                 const title = nameActor + " defends with " + nameWeapon;
-                return {flavor: title, content: html};
+                const card  = specialRow + html;
+                return {flavor: title, content: card};
             }
+        }
+
+        function getDiceSum(roll) {
+            let sum = 0;
+            for (let i = 0; i < roll.terms.length; i++) {
+                for (let j = 0; j < roll.terms[i]?.results?.length; j++) {
+                    sum += roll.terms[i].results[j].result;
+                }
+            }
+            return sum;
         }
     }
 
-    _createSkillCard(itemData, html) {
+    async _createSkillCard(itemData, roll) {
+        const html = await roll.render();
         return {flavor: itemData.name, content: html};
     }
 
-    _createSaveCard(dataType, html) {
+    async _createSaveCard(dataType, roll) {
+        const html = await roll.render();
         const savetype = game.i18n.localize("HM.saves." + dataType);
         const savename = game.i18n.localize("HM.save");
         return {flavor: savetype + " " + savename, content: html};
     }
 
-    _createAbilityCard(data, html) {
+    async _createAbilityCard(data, roll) {
+        const html = await roll.render();
         const title = this._actor.name + " rolls " + data.ability;
         return {flavor: title, content: html};
     }
