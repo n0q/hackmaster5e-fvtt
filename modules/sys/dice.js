@@ -47,7 +47,7 @@ Die.prototype.penetrate = function(modifier, {recursive=true}={}) {
       if ( (max !== null) && (max <= 0) ) break;
       // Determine whether to explode the result and roll again!
       if (this.faces > 1 && DiceTerm.compareResult(r.result, comparison, target) ) {
-        r.exploded = true;
+        r.penetrated = true;
 
         while (true) {
           // Limit recursion
@@ -60,7 +60,7 @@ Die.prototype.penetrate = function(modifier, {recursive=true}={}) {
           // TODO: There's an odd interaction with rolling something like 1d20p>=19
           // This is my best and temporary fix, but it's hacky
           if (recursive && DiceTerm.compareResult(reroll_num, comparison, Math.min(target, explode_faces))) {
-            reroll.exploded = true;
+            reroll.penetrated = true;
           }
           else {
             break;
@@ -95,7 +95,7 @@ DiceTerm.prototype.getResultCSS = function(result) {
     result.success ? "success" : null,
     result.failure ? "failure" : null,
     result.rerolled ? "rerolled" : null,
-    result.exploded ? "exploded" : null,
+    result.penetrated ? "exploded" : null,
     result.discarded ? "discarded" : null,
     !(hasSuccess || hasFailure) && isMin ? "min" : null,
     !(hasSuccess || hasFailure) && isMax ? "max" : null

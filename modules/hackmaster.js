@@ -50,6 +50,20 @@ Hooks.once("ready", async() => {
     LOGGER.log("Ready complete.");
 });
 
+// Add 1 to penetration dice so dsn shows actual die throws.
+// TODO: Correct representation of decayed penetration dice.
+Hooks.on("diceSoNiceRollStart", (messageId, context) => {
+    const roll = context.roll;
+    for (let i = 0; i < roll.terms.length; i++) {
+        let penetrated = false;
+        for (let j = 0; j < roll.terms[i].results.length; j++) {
+            const result = roll.terms[i].results[j];
+            if (penetrated && j) result.result++;
+            penetrated = result.penetrated;
+        }
+    }
+});
+
 Hooks.on("createActor", async (actor) => {
     // TODO: Localize skill pack before pushing.
     if (actor.items.size === 0) {
