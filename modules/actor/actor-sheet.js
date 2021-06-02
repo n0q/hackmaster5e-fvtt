@@ -315,21 +315,15 @@ export class HackmasterActorSheet extends ActorSheet {
                     const card = await hChat.genCard(roll, dataset, item.data);
                     return await ChatMessage.create(card);
                 }
+                case "ability":
                 case "save": {
                     const roll = new Roll(dataset.roll, this.actor.data.data)
                     await roll.evaluate({async: true});
                     const card = await hChat.genCard(roll, dataset);
                     return await ChatMessage.create(card);
                 }
-                case "ability": {
-                    const roll = new Roll(dataset.roll, this.actor.data.data);
-                    await roll.evaluate({async: true});
-                    const card = await hChat.genCard(roll, dataset);
-                    return await ChatMessage.create(card);
-                }
             }
         }
+
     }
-
-
 }
