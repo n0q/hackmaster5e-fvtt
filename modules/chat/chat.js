@@ -42,8 +42,9 @@ export default class ChatHandler {
             case "atk": {
                 const sumDice = getDiceSum(roll);
                 let specialRow = "<p>";
-                if (sumDice >= 20) { specialRow += "<b>Critical!</b>";     } else
-                if (sumDice == 19) { specialRow += "<b>Near Perfect!</b>"; }
+                if (sumDice >= 20) { specialRow += "<b>Critical!</b>";        } else
+                if (sumDice == 19) { specialRow += "<b>Near Perfect!</b>";    } else
+                if (sumDice == 1)  { specialRow += "<b>Potential Fumble!/b>"; }
 
                 const title = nameActor + " attacks with " + nameWeapon;
 
@@ -60,9 +61,10 @@ export default class ChatHandler {
             case "def": {
                 const sumDice = getDiceSum(roll);
                 let specialRow = "<p>";
-                if (sumDice >= 20) { specialRow += "<b>Perfect!</b>";      } else
-                if (sumDice == 19) { specialRow += "<b>Near Perfect!</b>"; } else
-                if (sumDice == 18) { specialRow += "<b>Superior!</b>";     }
+                if (sumDice >= 20) { specialRow += "<b>Perfect!</b>";               } else
+                if (sumDice == 19) { specialRow += "<b>Near Perfect!</b>";          } else
+                if (sumDice == 18) { specialRow += "<b>Superior!</b>";              } else
+                if (sumDice == 1)  { specialRow += "<b>Automatic Free Attack!</b>"; } else
 
                 const title = nameActor + " defends with " + nameWeapon;
                 const card  = specialRow + html;
