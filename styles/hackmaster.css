@@ -302,7 +302,7 @@
 }
 .hackmaster .cards-list .card .lid section, .hackmaster .combat-list .card .lid section {
   display: flex;
-  flex-direction: row;
+  flex-direction: row-reverse;
   justify-content: flex-end;
   align-items: center;
   flex: 0 1 auto;
