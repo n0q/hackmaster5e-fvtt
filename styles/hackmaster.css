@@ -212,35 +212,6 @@
   text-decoration: underline;
   text-shadow: none;
 }
-.hackmaster .items-list {
-  list-style: none;
-  margin: 7px 0;
-  padding: 0;
-  overflow-y: auto;
-}
-.hackmaster .items-list .item-header {
-  font-weight: bold;
-}
-.hackmaster .items-list .item {
-  height: 30px;
-  line-height: 24px;
-  padding: 3px 0;
-  border-bottom: 1px solid #BBB;
-}
-.hackmaster .items-list .item .item-image {
-  flex: 0 0 24px;
-  margin-right: 5px;
-}
-.hackmaster .items-list .item img {
-  display: block;
-}
-.hackmaster .items-list .item-name {
-  margin: 0;
-}
-.hackmaster .items-list .item-controls {
-  flex: 0 0 86px;
-  text-align: right;
-}
 .hackmaster .skills-list {
   list-style: none;
   margin: 7px 0;
@@ -283,40 +254,56 @@
   display: flex;
   flex-direction: row;
 }
-.hackmaster .cards-list, .hackmaster .saves-list {
+.hackmaster .cards-list, .hackmaster .combat-list {
   list-style: none;
-  margin: 7px 0;
+  margin: 0;
   padding: 0;
   overflow-y: auto;
 }
-.hackmaster .cards-list .card, .hackmaster .saves-list .card {
+.hackmaster .cards-list .card, .hackmaster .combat-list .card {
   border: 2px solid #BBB;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
-  display: grid;
-  margin: 5px;
-  grid-template-columns: 50% 1fr;
+  margin: 3px;
+  display: flex;
+  justify-content: space-between;
 }
-.hackmaster .cards-list .card .statblock, .hackmaster .saves-list .card .statblock {
+.hackmaster .cards-list .card section, .hackmaster .combat-list .card section {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  flex: 0 1 auto;
+  border: 0;
+  padding: 0;
+}
+.hackmaster .cards-list .card .statblock, .hackmaster .combat-list .card .statblock {
   background: lightgrey;
 }
-.hackmaster .cards-list .card .statblock .row, .hackmaster .saves-list .card .statblock .row {
+.hackmaster .cards-list .card .statblock .row, .hackmaster .combat-list .card .statblock .row {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 }
-.hackmaster .cards-list .card .statblock .column, .hackmaster .saves-list .card .statblock .column {
+.hackmaster .cards-list .card .statblock .column, .hackmaster .combat-list .card .statblock .column {
   flex-basis: 100%;
   flex: 1;
 }
-.hackmaster .cards-list .card .statblock .dnone, .hackmaster .saves-list .card .statblock .dnone {
+.hackmaster .cards-list .card .statblock .dnone, .hackmaster .combat-list .card .statblock .dnone {
   display: none;
 }
-.hackmaster .cards-list .card header, .hackmaster .saves-list .card header {
+.hackmaster .cards-list .card input, .hackmaster .combat-list .card input {
+  margin-top: 1px;
+  width: 2em;
+  margin-right: 2px;
+}
+.hackmaster .cards-list .card header, .hackmaster .combat-list .card header {
+  flex: 1 0 auto;
   display: flex;
   flex-direction: column;
+  margin-right: 10px;
 }
-.hackmaster .cards-list .card header img, .hackmaster .saves-list .card header img {
+.hackmaster .cards-list .card header img, .hackmaster .combat-list .card header img {
   flex: 0 0 auto;
   align-self: flex-start;
   display: block;
@@ -333,34 +320,36 @@
   margin: -2px;
   margin-right: inherit;
 }
-.hackmaster .cards-list .card header label, .hackmaster .saves-list .card header label {
+.hackmaster .cards-list .card header label, .hackmaster .combat-list .card header label {
   display: flex;
+  align-items: center;
   flex-direction: row;
 }
-.hackmaster .cards-list .card header .details, .hackmaster .saves-list .card header .details {
+.hackmaster .cards-list .card header .details, .hackmaster .combat-list .card header .details {
   display: flex;
   padding: 5px;
   margin-left: -3px;
   flex-direction: row;
   justify-content: space-between;
 }
-.hackmaster .cards-list .card-name, .hackmaster .saves-list .card-name {
+.hackmaster .cards-list .card-name, .hackmaster .combat-list .card-name {
   padding: 2px;
   white-space: nowrap;
   overflow: hidden;
   min-width: 0;
 }
-.hackmaster .cards-list .card-value, .hackmaster .saves-list .card-value {
+.hackmaster .cards-list .card-value, .hackmaster .combat-list .card-value {
   background: grey;
   margin-right: 2px;
   flex: 0 1 2em;
   text-align: right;
 }
-.hackmaster .cards-list .card-controls, .hackmaster .saves-list .card-controls {
-  flex: 0 1 auto;
+.hackmaster .cards-list .card-controls, .hackmaster .combat-list .card-controls {
+  margin-left: 5px;
+  margin-right: 2px;
   text-align: right;
 }
-.hackmaster .cards-list .card-column, .hackmaster .saves-list .card-column {
+.hackmaster .cards-list .card-column, .hackmaster .combat-list .card-column {
   display: flex;
   flex-direction: row;
 }
@@ -449,18 +438,17 @@
   flex-basis: 100%;
   flex: 1;
 }
-.hackmaster .saves-list {
-  margin: 0;
-  padding: 0;
+.hackmaster .combat-list {
+  margin: 7px 0;
 }
-.hackmaster .saves-list header {
-  margin-right: 10px;
+.hackmaster .combat-list .card {
+  grid-template-columns: 60% 1fr;
 }
-.hackmaster .saves-list input {
+.hackmaster .combat-list header {
+  margin-right: 0;
+}
+.hackmaster .combat-list input {
   margin-top: 1px;
   width: 2em;
   margin-right: 2px;
-}
-.hackmaster .saves-list .card {
-  grid-template-columns: 1fr auto;
 }

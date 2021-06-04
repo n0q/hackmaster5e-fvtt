@@ -1,18 +1,18 @@
-.saves-list {
+.combat-list {
     @extend .cards-list;
-    margin: 0;
-    padding: 0;
+    margin: 7px 0; 
+
+    .card {
+        grid-template-columns: 60% 1fr; 
+    }
 
     header {
-        margin-right: 10px;
+        margin-right: 0;
     }
 
     input {
         margin-top: 1px;
         width: 2em;
         margin-right: 2px;
-    }
-    .card {
-        grid-template-columns: 1fr auto;
     }
 }
