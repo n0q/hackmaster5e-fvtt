@@ -8,10 +8,21 @@
         border: $card_border solid #BBB;
         border-top-left-radius: $card-border-radius; 
         border-bottom-left-radius: $card-border-radius; 
-        display: grid;
-        margin: 5px;
-        grid-template-columns: 1fr auto;
-        
+        margin: 3px;
+        display: flex;
+        justify-content: space-between;
+
+        section {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+            flex: 0 1 auto;
+            border: 0;
+            padding: 0;
+        }
+
+
         .statblock {
             background: lightgrey;
             @include flexgrid;
@@ -28,6 +39,7 @@
         }
 
         header {
+            flex: 1 0 auto;
             display: flex;
             flex-direction: column;
             margin-right: 10px;
@@ -40,8 +52,8 @@
             }
 
             label {
-                align-items: center;
                 display: flex;
+                align-items: center;
                 flex-direction: row;
             }
 
@@ -71,7 +83,8 @@
     }
 
     .card-controls {
-        flex: 0 1 auto;
+        margin-left: 5px;
+        margin-right: 2px;
         text-align: right;
     }
 
