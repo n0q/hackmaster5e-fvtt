@@ -1,98 +1,94 @@
 <li class="card">
-    <header class="toggle" data-item-id="{{_id}}">
-        <label for="{{name}}">
-            <img src="{{img}}" title="{{name}}" height="48"/>
-            <h4 class="card-name">{{name}}</h4>
-        </label>
-        {{#if flags.hackmaster5e.ui.toggle}}
-            <div class="details">
-                <div>Reach: {{data.reach.value}}</div>
-                <div>Proficiency</div>
-            </div>
-            <div class="details">
+    <div class="lid">
+        <header class="toggle" data-item-id="{{_id}}">
+            <label for="{{name}}">
+                <img src="{{img}}" title="{{name}}" height="48"/>
+                <h4 class="card-name">{{name}}</h4>
+            </label>
+        </header>
+        <section>
+            <img class="rollable" src="{{findConfigValue "combatImg" "atk"}}" height="36" title="Attack"
+                data-roll-type="combat"   
+                data-roll-combat="atk"
+                data-roll="1d20p + @atk.derived.value"
+                data-item-id="{{_id}}">
+            <img class="rollable" src="{{findConfigValue "combatImg" "dmg"}}" height="36" title="Damage"
+                data-roll-type="combat"
+                data-roll-combat="dmg"
+                data-roll="@dmg.normal + @dmg.derived.value"
+                data-item-id="{{_id}}">
+            <img class="rollable" src="{{findConfigValue "combatImg" "def"}}" height="36" title="Defend"
+                data-roll-type="combat"
+                data-roll-combat="def"
+                data-roll="1d20p + @def.derived.value"
+                data-item-id="{{_id}}">
+        </section>
+    </div>
+    {{#if flags.hackmaster5e.ui.toggle}}
+        <div class="details">
+            <div class="stats">
                 <div></div>
-                <div>Armor</div>
-            </div>
-            <div class="details">
-                <div></div>
-                <div>Misc</div>
-            </div>
-        {{/if}}
-    </header>
-    <section class="statblock">
-        <div class="row">
-            <div class="column">
-                <label class="resource-label rollable"
-                    data-roll-type="combat"   
-                    data-roll-combat="atk"
-                    data-roll="1d20p + @atk.derived.value"
-                    data-item-id="{{_id}}">
-                    {{localize "HM.atk"}}
-                </label>
-                <input type="number" value="{{data.atk.derived.value}}" readonly="true"/>
-            </div>
-            <div class="column">
-                <label class="resource-label rollable"
-                    data-roll-type="combat"
-                    data-roll-combat="dmg"
-                    data-roll="@dmg.normal + @dmg.derived.value"
-                    data-item-id="{{_id}}">
-                    {{localize "HM.dmg"}}
-                </label>
-                <input type="number" value="{{data.dmg.derived.value}}" readonly="true"/>
-            </div>
-            <div class="column">
-                <label class="resource-label rollable"
-                    data-roll-type="combat"
-                    data-roll-combat="def"
-                    data-roll="1d20p + @def.derived.value"
-                    data-item-id="{{_id}}">
-                    {{localize "HM.def"}}
-                </label>
-                <input type="number" value="{{data.def.derived.value}}" readonly="true"/>
-            </div>
-            <div class="column">
-                <label class="resource-label">
-                    {{localize "HM.spd"}}
-                </label>
-                <input type="number" value="{{data.spd.derived.value}}" readonly="true"/>
+                <label class="resource-label">{{localize "HM.atk"}}</label>
+                <label class="resource-label">{{localize "HM.dmg"}}</label>
+                <label class="resource-label">{{localize "HM.def"}}</label>
+                <label class="resource-label">{{localize "HM.spd"}}</label>
             </div>
         </div>
-        {{#if flags.hackmaster5e.ui.toggle}}
-            <div class="row">
-                <div class="column">
-                    <input type="number" value="{{data.atk.prof.value}}" readonly="true"/>
-                    <input type="number" value="" readonly="true"/>
-                    <input type="number" class="editable" value="{{data.atk.mod.value}}" 
-                        data-item-id="{{_id}}"
-                        data-item-prop="data.atk.mod.value" 
-                        data-dtype="Number"/>
-                </div>
-                <div class="column">
-                    <input type="number" value="{{data.dmg.prof.value}}" readonly="true"/>
-                    <input type="number" value="" readonly="true"/>
-                    <input type="number" class="editable" value="{{data.dmg.mod.value}}" 
-                        data-item-id="{{_id}}"
-                        data-item-prop="data.dmg.mod.value" 
-                        data-dtype="Number"/>
-                </div>
-                <div class="column">
-                    <input type="number" value="{{data.def.prof.value}}" readonly="true"/>
-                    <input type="number" value="{{data.armor.def.value}}" readonly="true"/>
-                    <input type="number" class="editable" value="{{data.def.mod.value}}" 
-                        data-item-id="{{_id}}"
-                        data-item-prop="data.def.mod.value" 
-                        data-dtype="Number"/>
-                </div>
-                <div class="column">
-                    <input type="number" value="{{data.spd.prof.value}}" readonly="true"/>
-                    <input type="number" value="{{data.armor.spd.value}}" readonly="true"/>
-                    <input type="number" class="editable" value="{{data.spd.mod.value}}" 
-                        data-item-id="{{_id}}"
-                        data-item-prop="data.spd.mod.value" 
-                        data-dtype="Number"/>
-                </div>
+        <div class="details">
+            <label>Reach: {{data.reach.value}}</label>
+            <div class="stats">
+                <label>Total</label>
+                <input type="number" value="{{data.atk.derived.value}}" readonly="true"/> 
+                <input type="number" value="{{data.dmg.derived.value}}" readonly="true"/> 
+                <input type="number" value="{{data.def.derived.value}}" readonly="true"/> 
+                <input type="number" value="{{data.spd.derived.value}}" readonly="true"/> 
             </div>
-        {{/if}}
-    </section>
+        </div>
+        <div class="details">
+            <label>Damage: {{data.dmg.normal}} + {{data.dmg.derived.value}}</label>
+            <div class="stats">
+                <label>Proficiency</label>
+                <input type="number" value="{{data.atk.prof.value}}" readonly="true"/> 
+                <input type="number" value="{{data.dmg.prof.value}}" readonly="true"/> 
+                <input type="number" value="{{data.def.prof.value}}" readonly="true"/> 
+                <input type="number" value="{{data.spd.prof.value}}" readonly="true"/> 
+            </div>
+        </div>
+        <div class="details">
+            <label>Shield Damage: {{data.dmg.shield}} + {{data.dmg.derived.value}}</label>
+            <div class="stats">
+                <label>Armor</label>
+                <input type="number" value="{{data.armor.atk.value}}" readonly="true"/> 
+                <input type="number" value="{{data.armor.dmg.value}}" readonly="true"/> 
+                <input type="number" value="{{data.armor.def.value}}" readonly="true"/> 
+                <input type="number" value="{{data.armor.spd.value}}" readonly="true"/> 
+            </div>
+        </div>
+        <div class="details">
+            <label>Speed X</label>
+            <div class="stats">
+                <label>Misc</label>
+                <input type="number" value="{{data.atk.mod.value}}"
+                    data-item-id="{{_id}}"
+                    data-item-prop="data.atk.mod.value"
+                    data-dtype="Number"
+                />
+                <input type="number" value="{{data.dmg.mod.value}}"
+                    data-item-id="{{_id}}"
+                    data-item-prop="data.dmg.mod.value"
+                    data-dtype="Number"
+                />
+                <input type="number" value="{{data.def.mod.value}}"
+                    data-item-id="{{_id}}"
+                    data-item-prop="data.def.mod.value"
+                    data-dtype="Number"
+                />
+                <input type="number" value="{{data.spd.mod.value}}"
+                    data-item-id="{{_id}}"
+                    data-item-prop="data.spd.mod.value"
+                    data-dtype="Number"
+                />
+            </div>
+        </div>
+    {{/if}}
 </li>
