@@ -260,15 +260,47 @@
   padding: 0;
   overflow-y: auto;
 }
+.hackmaster .cards-list .card-controls, .hackmaster .combat-list .card-controls {
+  margin-left: 5px;
+  margin-right: 2px;
+  text-align: right;
+}
 .hackmaster .cards-list .card, .hackmaster .combat-list .card {
   border: 2px solid #BBB;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
+  display: flex;
+  flex-direction: column;
   margin: 3px;
+}
+.hackmaster .cards-list .card .details, .hackmaster .combat-list .card .details {
+  display: flex;
+  flex-direction: row;
+  flex: 1 1 auto;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-left: 3px;
+  margin-right: 3px;
+}
+.hackmaster .cards-list .card .details .stats, .hackmaster .combat-list .card .details .stats {
+  display: flex;
+  flex-direction: row;
+  flex: 1 1 3em;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+.hackmaster .cards-list .card .details .stats label, .hackmaster .combat-list .card .details .stats label {
+  margin-left: 5px;
+  margin-right: 3px;
+}
+.hackmaster .cards-list .card .details .stats input, .hackmaster .combat-list .card .details .stats input {
+  margin-left: 5px;
+}
+.hackmaster .cards-list .card .lid, .hackmaster .combat-list .card .lid {
   display: flex;
   justify-content: space-between;
 }
-.hackmaster .cards-list .card section, .hackmaster .combat-list .card section {
+.hackmaster .cards-list .card .lid section, .hackmaster .combat-list .card .lid section {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -277,22 +309,7 @@
   border: 0;
   padding: 0;
 }
-.hackmaster .cards-list .card .statblock, .hackmaster .combat-list .card .statblock {
-  background: lightgrey;
-}
-.hackmaster .cards-list .card .statblock .row, .hackmaster .combat-list .card .statblock .row {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-.hackmaster .cards-list .card .statblock .column, .hackmaster .combat-list .card .statblock .column {
-  flex-basis: 100%;
-  flex: 1;
-}
-.hackmaster .cards-list .card .statblock .dnone, .hackmaster .combat-list .card .statblock .dnone {
-  display: none;
-}
-.hackmaster .cards-list .card input, .hackmaster .combat-list .card input {
+.hackmaster .cards-list .card .lid input, .hackmaster .combat-list .card .lid input {
   margin-top: 1px;
   width: 2em;
   margin-right: 2px;
@@ -323,34 +340,6 @@
 .hackmaster .cards-list .card header label, .hackmaster .combat-list .card header label {
   display: flex;
   align-items: center;
-  flex-direction: row;
-}
-.hackmaster .cards-list .card header .details, .hackmaster .combat-list .card header .details {
-  display: flex;
-  padding: 5px;
-  margin-left: -3px;
-  flex-direction: row;
-  justify-content: space-between;
-}
-.hackmaster .cards-list .card-name, .hackmaster .combat-list .card-name {
-  padding: 2px;
-  white-space: nowrap;
-  overflow: hidden;
-  min-width: 0;
-}
-.hackmaster .cards-list .card-value, .hackmaster .combat-list .card-value {
-  background: grey;
-  margin-right: 2px;
-  flex: 0 1 2em;
-  text-align: right;
-}
-.hackmaster .cards-list .card-controls, .hackmaster .combat-list .card-controls {
-  margin-left: 5px;
-  margin-right: 2px;
-  text-align: right;
-}
-.hackmaster .cards-list .card-column, .hackmaster .combat-list .card-column {
-  display: flex;
   flex-direction: row;
 }
 .hackmaster .actor-sheet {
@@ -441,14 +430,13 @@
 .hackmaster .combat-list {
   margin: 7px 0;
 }
-.hackmaster .combat-list .card {
-  grid-template-columns: 60% 1fr;
-}
-.hackmaster .combat-list header {
-  margin-right: 0;
-}
 .hackmaster .combat-list input {
   margin-top: 1px;
   width: 2em;
   margin-right: 2px;
+}
+.hackmaster .combat-list section img {
+  border: 0;
+  margin-left: 5px;
+  margin-right: 5px;
 }

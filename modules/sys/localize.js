@@ -91,4 +91,11 @@ idx.savesImg = {
     "top":      "icons/skills/wounds/injury-face-impact-orange.webp"
 }
 
+idx.combatImg = {
+    "atk":      "icons/commodities/treasure/broach-lightning-gold.webp",
+    "dmg":      "icons/skills/melee/weapons-crossed-poleaxes-white.webp",
+    "def":      "icons/skills/melee/shield-damaged-broken-%20brown.webp"
+}
+
+
 export default idx;
