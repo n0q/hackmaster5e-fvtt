@@ -1,20 +1,27 @@
 <section style="common-border">
     <label class="resource-label">Character Levels</label>
-    <ol class="items-list">
+    <ol class="cards-list">
         {{#each actor.character_classes}}
-            <li class="item flexrow" data-item-id="{{_id}}">
-                <div class="item-image"><img src="{{img}}" title="{{name}}" width="24" height="24"/></div>
-                <h4 class="item-name">{{data._ord}}. {{name}}</h4>
-                <div class="flexrow resource-label">HP: 
-                {{#if data.hp.value}}
-                    {{data.hp.value}}
-                {{else}}0
-                {{/if}}
-                {{#if data.hp.reroll.checked}}(reroll){{/if}} 
-                </div>
-                <div class="item-controls">
-                    <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-                    <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+            <li class="card" data-item-id="{{_id}}">
+                <header>
+                    <label for="{{name}}">
+                        <div class="item-image"><img src="{{img}}" title="{{name}}" width="28" height="28"/></div>
+                        <h4 class="item-name">{{data._ord}}. {{name}}</h4>
+                    </label>
+                </header>
+                <div class="statblock">
+                    <div class="flexrow resource-label">HP: 
+                        {{#if data.hp.value}}
+                            {{data.hp.value}}
+                        {{else}}
+                                0
+                        {{/if}}
+                        {{#if data.hp.reroll.checked}}(reroll){{/if}} 
+                    </div>
+                    <div class="item-controls">
+                        <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+                        <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                    </div>
                 </div>
             </li>
         {{/each}}

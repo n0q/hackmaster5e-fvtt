@@ -1,6 +1,6 @@
 .cards-list {
     list-style: none;
-    margin: 7px 0;
+    margin: 0;
     padding: 0;
     overflow-y: auto;
 
@@ -10,7 +10,7 @@
         border-bottom-left-radius: $card-border-radius; 
         display: grid;
         margin: 5px;
-        grid-template-columns: 50% 1fr; 
+        grid-template-columns: 1fr auto;
         
         .statblock {
             background: lightgrey;
@@ -21,9 +21,16 @@
             }
         }
 
+        input {
+            margin-top: 1px;
+            width: 2em;
+            margin-right: 2px;
+        }
+
         header {
             display: flex;
             flex-direction: column;
+            margin-right: 10px;
 
             img {
                 flex: 0 0 auto;
@@ -33,6 +40,7 @@
             }
 
             label {
+                align-items: center;
                 display: flex;
                 flex-direction: row;
             }
