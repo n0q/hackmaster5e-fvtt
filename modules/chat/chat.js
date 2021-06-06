@@ -25,6 +25,7 @@ export default class ChatHandler {
 
         const chatData = {
             roll: roll,
+            rollMode: game.settings.get("core", "rollMode"),
             type: CONST.CHAT_MESSAGE_TYPES.ROLL,
             user: this._user,
             flavor: cData.flavor,
