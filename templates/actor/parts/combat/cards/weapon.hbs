@@ -7,20 +7,20 @@
             </label>
         </header>
         <section>
-            <img class="rollable" src="{{findConfigValue "combatImg" "atk"}}" height="36" title="Attack"
-                data-roll-type="combat"   
-                data-roll-combat="atk"
-                data-roll="1d20p + @atk.derived.value"
+            <img class="rollable" src="{{findConfigValue "combatImg" "def"}}" height="36" title="Defend"
+                data-roll-type="combat"
+                data-roll-combat="def"
+                data-roll="1d20p + @def.derived.value"
                 data-item-id="{{_id}}">
             <img class="rollable" src="{{findConfigValue "combatImg" "dmg"}}" height="36" title="Damage"
                 data-roll-type="combat"
                 data-roll-combat="dmg"
                 data-roll="@dmg.normal + @dmg.derived.value"
                 data-item-id="{{_id}}">
-            <img class="rollable" src="{{findConfigValue "combatImg" "def"}}" height="36" title="Defend"
-                data-roll-type="combat"
-                data-roll-combat="def"
-                data-roll="1d20p + @def.derived.value"
+            <img class="rollable" src="{{findConfigValue "combatImg" "atk"}}" height="36" title="Attack"
+                data-roll-type="combat"   
+                data-roll-combat="atk"
+                data-roll="1d20p + @atk.derived.value"
                 data-item-id="{{_id}}">
         </section>
     </div>

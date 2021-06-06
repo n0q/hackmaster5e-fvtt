@@ -2,7 +2,6 @@ import { HackmasterActor } from "./actor/actor.js";
 import { HackmasterActorSheet } from "./actor/actor-sheet.js";
 import { HackmasterItem } from "./item/item.js";
 import { HackmasterItemSheet } from "./item/item-sheet.js";
-
 import { HMCombat, HMCombatTracker } from "./sys/combat.js";
 
 import LOGGER from "./sys/logger.js";
@@ -44,7 +43,7 @@ Hooks.once("ready", async() => {
     //    game.items.contents[0].sheet.render(true);
     }
     if (game.actors.contents[0]) {
-//        game.actors.contents[0].sheet.render(true);
+        game.actors.contents[0].sheet.render(true);
     }
 
     LOGGER.log("Ready complete.");

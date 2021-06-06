@@ -81,11 +81,12 @@
 
         "templates": {
             "base": {
-                "description": "",
-                "location": null
+                "description": ""
             },
 
             "logistics": {
+                "state": {"equipped": {"checked": false},
+                          "carried":  {"checked": false}},
                 "quality": null,
                 "quantity": {"value": 1},
                 "weight":   {"value": 0},

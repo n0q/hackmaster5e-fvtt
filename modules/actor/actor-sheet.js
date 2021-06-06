@@ -13,7 +13,7 @@ export class HackmasterActorSheet extends ActorSheet {
             template: "systems/hackmaster5e/templates/actor/actor-base.hbs",
             width: 820,
             height: 750,
-            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "setup" }]
+            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "inventory" }]
         });
     }
 
@@ -171,10 +171,12 @@ export class HackmasterActorSheet extends ActorSheet {
       li.slideUp(200, () => this.render(false));
     });
 
+    // Move Inventory Item
+    html.find('.item-state').click(this._onItemState.bind(this));
+
     // Rollable abilities.
     html.find('.wound').click(this._onEditWound.bind(this));
     html.find('.rollable').click(this._onRoll.bind(this));
-
     html.find('.editable').change(this._onEdit.bind(this));
 
     // ui elements
@@ -246,6 +248,21 @@ export class HackmasterActorSheet extends ActorSheet {
         const item    = this._getOwnedItem(this._getItemId(event));
         const toggle = item.getFlag('hackmaster5e', "ui.toggle");
         item.setFlag('hackmaster5e', "ui.toggle", !toggle);
+    }
+
+    // Toggle between an item being equipped, carried, or stored.
+    async _onItemState(ev) {
+        ev.preventDefault();
+        const li = $(ev.currentTarget).parents(".card");
+        const item = this.actor.items.get(li.data("itemId"));
+        const state = item.data.data.state;
+        // TODO: This can't possibly stay like this.
+        if (state.equipped.checked) { state.equipped.checked = false; } else
+        if (state.carried.checked)  { state.carried.checked  = false; } else {
+            state.equipped.checked = true;
+            state.carried.checked = true;
+        }
+        await this.actor.updateEmbeddedDocuments("Item", [{_id:item.id, data:item.data.data}]);
     }
 
     async _onEditWound(event) {
