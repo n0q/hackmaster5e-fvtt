@@ -6,9 +6,24 @@
                 <h4 class="item-name">{{name}}</h4>
             </label>
         </header>
-        <div class="item-controls">
-            <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-            <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
-        </div>
+        <section>
+            <div class="card-controls">
+                <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+                <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+            </div>
+            <div class="weight">
+                {{numberFormat data.weight.value decimals=1}} lbs.
+            </div>
+            <div class="item-control item-state location">
+                {{#if data.state.equipped.checked}}Equipped
+                    {{else}}{{#if data.state.carried.checked}}Carried
+                        {{else}}Stored
+                    {{/if}}
+                {{/if}}
+            </div>
+            <div class="type">
+                {{type}}
+            </div>
+        </section>
     </div>
 </li>

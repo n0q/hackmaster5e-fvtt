@@ -1,0 +1,7 @@
+.inventory-list {
+    @extend .cards-list;
+    .lid {
+        section {
+        }
+    }
+}
