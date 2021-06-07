@@ -139,7 +139,6 @@ export class HackmasterActor extends Actor {
         Object.keys(wounds).forEach( (a) => hp_loss += wounds[a].data.data.hp.value);
         data.hp.value = data.hp.max - hp_loss;
 
-
         // Save Calculations
         const savesData = data.saves;
 
@@ -150,7 +149,31 @@ export class HackmasterActor extends Actor {
         savesData.top.value       = Math.floor(data.derived.abilities.con.value / 2);
         savesData.top.limit.value = Math.ceil((0.3 + levelData.top) * data.hp.max);
 
+        // uskill defaults
+        setUntrainedSkillMastery(this.items, data.derived.abilities);
+
         if (dataUpdate.length) { this.updateEmbeddedDocuments("Item", dataUpdate); }
+
+        function setUntrainedSkillMastery(items, abilities) {
+            const abilKeys = Object.keys(abilities);
+            const uskills = items.filter((a) => a.type === "skill");
+
+            for (let i = 0; i < uskills.length; i++) {
+                let skillData = uskills[i].data.data;
+                if (skillData.mastery.value) {
+                    skillData.mastery.derived = {"value": skillData.mastery.value};
+                    continue;
+                }
+
+                let abilValues = [];
+                abilKeys.forEach((key) => {
+                    if (skillData.abilities[key].checked) {
+                        abilValues.push(abilities[key].value);
+                    }
+                });
+                skillData.mastery.derived = {"value": Math.min(...abilValues)};
+            }
+        }
 
         function sumObjectsByKey(...objs) {
             const res = objs.reduce((a, b) => {
