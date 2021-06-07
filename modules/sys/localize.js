@@ -71,6 +71,12 @@ idx.saves = {
     "top":      "HM.saves.top"
 }
 
+idx.itemTypes = {
+    "armor":    "HM.itemTypes.armor",
+    "item":     "HM.itemTypes.item",
+    "weapon":   "HM.itemTypes.weapon"
+}
+
 // Dialog
 idx.dice = {
     "1d20":      "d20",
