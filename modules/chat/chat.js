@@ -1,67 +1,105 @@
-import RollHandler from "../sys/roller.js";
 import LOGGER from "../sys/logger.js";
 
 export default class ChatHandler {
-    constructor() {
+    constructor(actor) {
         this._user = game.user.id;
+        this._actor = actor;
     }
 
-    genCard(html, actor, dataset, itemData=null) {
-        var title;
+    async genCard(roll, dataset, itemData=null) {
+        let cData;
         switch (dataset.rollType) {
             case "combat":
-                title = this._createCombatCard(dataset.rollCombat, actor, itemData);
+                cData = await this._createCombatCard(dataset, roll, itemData);
                 break;
             case "skill":
-                title = this._createSkillCard(itemData);
+                cData = await this._createSkillCard(itemData, roll);
                 break;
             case "save":
-                title = this._createSaveCard(dataset.saveType);
+                cData = await this._createSaveCard(dataset.saveType, roll);
+                break;
+            case "ability":
+                cData = await this._createAbilityCard(dataset, roll);
                 break;
         }
 
-        var content = title + html;
         const chatData = {
+            roll: roll,
+            rollMode: game.settings.get("core", "rollMode"),
+            type: CONST.CHAT_MESSAGE_TYPES.ROLL,
             user: this._user,
-            content: content,
+            flavor: cData.flavor,
+            content: cData.content,
             sound: CONFIG.sounds.dice
         };
         return chatData;
     }
 
-    _createCombatCard(combatType, actor, itemData) {
-        var title;
-        var nameActor  = actor.name;
-        var nameWeapon = itemData.name;
-        switch (combatType) {
+    async _createCombatCard(data, roll, itemData) {
+        const nameActor  = this._actor.name;
+        const nameWeapon = itemData.name;
+        const html = await roll.render();
+        switch (data.rollCombat) {
             case "atk": {
-                let speedWeapon = itemData.data.spd.derived.value;
-                title = nameActor + " attacks with " + nameWeapon +
-                        ".<p>"    + "Speed: " + speedWeapon;
-                break;
+                const sumDice = getDiceSum(roll);
+                let specialRow = "<p>";
+                if (sumDice >= 20) { specialRow += "<b>Critical!</b>";         } else
+                if (sumDice == 19) { specialRow += "<b>Near Perfect!</b>";     } else
+                if (sumDice == 1)  { specialRow += "<b>Potential Fumble!</b>"; }
+
+                const title = nameActor + " attacks with " + nameWeapon;
+
+                const speedRow = "Speed: " + itemData.data.spd.derived.value;
+                const card = speedRow + specialRow + html;
+                return {flavor: title, content: card};
             }
 
             case "dmg": {
-                title = nameActor + " damages with " + nameWeapon;
-                break;
+                const title = nameActor + " damages with " + nameWeapon;
+                return {flavor: title, content: html};
             }
 
             case "def": {
-                title = nameActor + " defends with " + nameWeapon;
-                break;
+                const sumDice = getDiceSum(roll);
+                let specialRow = "<p>";
+                if (sumDice >= 20) { specialRow += "<b>Perfect!</b>";            } else
+                if (sumDice == 19) { specialRow += "<b>Near Perfect!</b>";       } else
+                if (sumDice == 18) { specialRow += "<b>Superior!</b>";           } else
+                if (sumDice == 1)  { specialRow += "<b>Free Second Attack!</b>"; }
+
+                const title = nameActor + " defends with " + nameWeapon;
+                const card  = specialRow + html;
+                return {flavor: title, content: card};
             }
         }
-        return title;
+
+        function getDiceSum(roll) {
+            let sum = 0;
+            for (let i = 0; i < roll.terms.length; i++) {
+                for (let j = 0; j < roll.terms[i]?.results?.length; j++) {
+                    sum += roll.terms[i].results[j].result;
+                }
+            }
+            return sum;
+        }
     }
 
-    _createSkillCard(itemData) {
-        return itemData.name;
+    async _createSkillCard(itemData, roll) {
+        const html = await roll.render();
+        return {flavor: itemData.name, content: html};
     }
 
-    _createSaveCard(dataType) {
-        let savetype = game.i18n.localize("HM.saves." + dataType);
-        let savename = game.i18n.localize("HM.save");
-        return savetype + " " + savename;
+    async _createSaveCard(dataType, roll) {
+        const html = await roll.render();
+        const savetype = game.i18n.localize("HM.saves." + dataType);
+        const savename = game.i18n.localize("HM.save");
+        return {flavor: savetype + " " + savename, content: html};
+    }
+
+    async _createAbilityCard(data, roll) {
+        const html = await roll.render();
+        const title = this._actor.name + " rolls " + data.ability;
+        return {flavor: title, content: html};
     }
 
     static ChatDataSetup(content, title) {

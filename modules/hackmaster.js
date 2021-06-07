@@ -2,7 +2,6 @@ import { HackmasterActor } from "./actor/actor.js";
 import { HackmasterActorSheet } from "./actor/actor-sheet.js";
 import { HackmasterItem } from "./item/item.js";
 import { HackmasterItemSheet } from "./item/item-sheet.js";
-
 import { HMCombat, HMCombatTracker } from "./sys/combat.js";
 
 import LOGGER from "./sys/logger.js";
@@ -44,22 +43,17 @@ Hooks.once("ready", async() => {
     //    game.items.contents[0].sheet.render(true);
     }
     if (game.actors.contents[0]) {
-//        game.actors.contents[0].sheet.render(true);
+        game.actors.contents[0].sheet.render(true);
     }
 
     LOGGER.log("Ready complete.");
 });
 
-// Add 1 to penetration dice so dsn shows actual die throws.
-// TODO: Correct representation of decayed penetration dice.
 Hooks.on("diceSoNiceRollStart", (messageId, context) => {
-    const roll = context.roll;
-    const r = 5;
-    unpenetrate(roll, r);
-
-    function unpenetrate(roll, r) {
+    // Add 1 to penetration dice so dsn shows actual die throws.
+    const normalize = (roll, r=5) => {
         if (r < 0) {
-            LOGGER.warn("Unpenetrate recursion limit reached.");
+            LOGGER.warn("Normalize recursion limit reached.");
             return;
         }
 
@@ -67,7 +61,7 @@ Hooks.on("diceSoNiceRollStart", (messageId, context) => {
             // PoolTerms contain sets of terms we need to evaluate.
             if (roll.terms[i]?.rolls) {
                 for (let j = 0; j < roll.terms[i].rolls.length; j++) {
-                    unpenetrate(roll.terms[i].rolls[j], --r);
+                    normalize(roll.terms[i].rolls[j], --r);
                 }
             }
 
@@ -78,7 +72,8 @@ Hooks.on("diceSoNiceRollStart", (messageId, context) => {
                 penetrated = result.penetrated;
             }
         }
-    }
+    };
+    normalize(context.roll);
 });
 
 Hooks.on("createActor", async (actor) => {

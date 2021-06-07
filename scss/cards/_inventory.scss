@@ -1,0 +1,10 @@
+.inventory-list {
+    @extend .cards-list;
+    
+    .inventory-details {
+        display: grid;
+        grid-template-areas: type location weight location;
+        grid-template-columns: 1fr 5em 5em;
+        column-gap: 2em;
+    }
+}

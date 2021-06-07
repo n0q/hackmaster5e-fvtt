@@ -6,28 +6,6 @@ export class HMCombat extends Combat {
 
     _sortCombatants(a, b) { return -super._sortCombatants(a, b) };
 
-    async rollAll(options={}) {
-        const ids = this.combatants.reduce((ids, c) => {
-            if ( c.isOwner && !c.initiative) ids.push(c.id);
-            return ids;
-        }, []);
-        const initDie = await this._getInitiativeDie();
-        const initFormula = initDie;
-        options.formula = initFormula;
-        return this.rollInitiative(ids, options);
-    }
-
-    async rollNPC(options={}) {
-        const ids = this.combatants.reduce((ids, c) => {
-        if ( c.isOwner && c.isNPC && !c.initiative) ids.push(c.id);
-            return ids;
-        }, []);
-        const initDie = await this._getInitiativeDie();
-        const initFormula = initDie;
-        options.formula = initFormula;
-        return this.rollInitiative(ids, options);
-    }
-
     async _HM_setInitiative(cid) {
         const newInit = await new Promise(async resolve => {
             new Dialog({
@@ -63,43 +41,22 @@ export class HMCombat extends Combat {
             }).render(true);
         });
     }
+
+    async rollInitiative(ids, {formula=null, updateTurn=true, messageOptions={}}={}) {
+        const initDie = await this._getInitiativeDie();
+        const initFormula = initDie;
+        const rollData = {formula: initFormula, updateTurn: updateTurn, messageOptions: messageOptions};
+        return await super.rollInitiative(ids, rollData);
+    }
+
 };
 
 export class HMCombatTracker extends CombatTracker {
     static get defaultOptions() {
-        return foundry.utils.mergeObject(super.defaultOptions, {
-            id: "combat",
-            template: "systems/hackmaster5e/templates/sidebar/combat-tracker.hbs",
-            title: "Count Up",
-            scrollY: [".directory-list"]
-        });
-    }
-
-    async _onCombatantControl(event) {
-        event.preventDefault();
-        event.stopPropagation();
-        const btn = event.currentTarget;
-        const li = btn.closest(".combatant");
-        const combat = this.viewed;
-        const c = combat.combatants.get(li.dataset.combatantId);
-
-        // Switch control action
-        switch (btn.dataset.control) {
-
-        // Toggle combatant visibility
-        case "toggleHidden":
-            return c.update({hidden: !c.hidden});
-
-        // Toggle combatant defeated flag
-        case "toggleDefeated":
-            return this._onToggleDefeatedStatus(c);
-
-        // Roll combatant initiative
-        case "rollInitiative":
-            const initDie = await combat._getInitiativeDie();
-            const initFormula = initDie;
-            return combat.rollInitiative([c.id], {formula: initFormula});
-        }
+        const opt = super.defaultOptions;
+        opt.template = "systems/hackmaster5e/templates/sidebar/combat-tracker.hbs";
+        opt.title = "Count Up";
+        return opt;
     }
 
     _getEntryContextOptions() {

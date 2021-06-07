@@ -11,6 +11,16 @@ idx.ability_short = {
     cha: "HM.ability_short.cha"
 },
 
+idx.ability_long = {
+    str: "HM.ability.str",
+    int: "HM.ability.int",
+    wis: "HM.ability.wis",
+    dex: "HM.ability.dex",
+    con: "HM.ability.con",
+    lks: "HM.ability.lks",
+    cha: "HM.ability.cha"
+},
+
 idx.ability = {
     str: "HM.str",
     int: "HM.int",
@@ -61,6 +71,12 @@ idx.saves = {
     "top":      "HM.saves.top"
 }
 
+idx.itemTypes = {
+    "armor":    "HM.itemTypes.armor",
+    "item":     "HM.itemTypes.item",
+    "weapon":   "HM.itemTypes.weapon"
+}
+
 // Dialog
 idx.dice = {
     "1d20":      "d20",
@@ -80,5 +96,12 @@ idx.savesImg = {
     "poison":   "icons/skills/toxins/poison-bottle-corked-fire-green.webp",
     "top":      "icons/skills/wounds/injury-face-impact-orange.webp"
 }
+
+idx.combatImg = {
+    "atk":      "icons/commodities/treasure/broach-lightning-gold.webp",
+    "dmg":      "icons/skills/melee/weapons-crossed-poleaxes-white.webp",
+    "def":      "icons/skills/melee/shield-damaged-broken-%20brown.webp"
+}
+
 
 export default idx;

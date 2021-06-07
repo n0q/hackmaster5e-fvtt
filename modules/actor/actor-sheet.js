@@ -1,4 +1,3 @@
-import RollHandler from "../sys/roller.js";
 import ChatHandler from "../chat/chat.js";
 
 /**
@@ -14,7 +13,7 @@ export class HackmasterActorSheet extends ActorSheet {
             template: "systems/hackmaster5e/templates/actor/actor-base.hbs",
             width: 820,
             height: 750,
-            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "combat" }]
+            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "inventory" }]
         });
     }
 
@@ -159,23 +158,25 @@ export class HackmasterActorSheet extends ActorSheet {
 
     // Update Inventory Item
     html.find('.item-edit').click(ev => {
-      const li = $(ev.currentTarget).parents(".item");
+      const li = $(ev.currentTarget).parents(".card");
       const item = this.actor.items.get(li.data("itemId"));
       item.sheet.render(true);
     });
 
     // Delete Inventory Item
     html.find('.item-delete').click(ev => {
-      const li = $(ev.currentTarget).parents(".item");
+      const li = $(ev.currentTarget).parents(".card");
       const item = this.actor.items.get(li.data("itemId"));
       item.delete();
       li.slideUp(200, () => this.render(false));
     });
 
+    // Move Inventory Item
+    html.find('.item-state').click(this._onItemState.bind(this));
+
     // Rollable abilities.
     html.find('.wound').click(this._onEditWound.bind(this));
     html.find('.rollable').click(this._onRoll.bind(this));
-
     html.find('.editable').change(this._onEdit.bind(this));
 
     // ui elements
@@ -239,14 +240,29 @@ export class HackmasterActorSheet extends ActorSheet {
         return this.actor.updateEmbeddedDocuments("Item", item.data);
     }
 
-    // TODO: This should obviously take args.
-    // TODO: These should function autonomously between users.
-    async _onToggle(event) {
-        event.preventDefault();
-        const element = event.currentTarget;
-        const item    = this._getOwnedItem(this._getItemId(event));
-        const toggle = item.getFlag('hackmaster5e', "ui.toggle");
-        item.setFlag('hackmaster5e', "ui.toggle", !toggle);
+    async _onToggle(ev) {
+        ev.preventDefault();
+        const element = ev.currentTarget;
+        const id      = this._getItemId(ev);
+        const target  = $(element).find("[data-toggle='" + id + "']");
+        for (let i = 0; i < target.length; i++) {
+            $(target[i]).toggleClass("hide");
+        }
+    }
+
+    // Toggle between an item being equipped, carried, or stored.
+    async _onItemState(ev) {
+        ev.preventDefault();
+        const li = $(ev.currentTarget).parents(".card");
+        const item = this.actor.items.get(li.data("itemId"));
+        const state = item.data.data.state;
+        // TODO: This can't possibly stay like this.
+        if (state.equipped.checked) { state.equipped.checked = false; } else
+        if (state.carried.checked)  { state.carried.checked  = false; } else {
+            state.equipped.checked = true;
+            state.carried.checked = true;
+        }
+        await this.actor.updateEmbeddedDocuments("Item", [{_id:item.id, data:item.data.data}]);
     }
 
     async _onEditWound(event) {
@@ -301,53 +317,31 @@ export class HackmasterActorSheet extends ActorSheet {
     */
     async _onRoll(event) {
         event.preventDefault();
+        event.stopPropagation();
         const element = event.currentTarget;
         const dataset = element.dataset;
 
-        //TODO: Clean this whole mess up.
-        //      Everything here is temporary. If it's still here by 0.2,
-        //      <span class="uncle_roger">You fucked up.</span>
-        //
-        //      RollHandler should interpret specialized tokens to provide double
-        //      roll returns (+/- for skills, save or checks for attributes, etc).
         if (dataset.rollType) {
-            const hChat = new ChatHandler();
+            const hChat = new ChatHandler(this.actor);
             switch (dataset.rollType) {
                 case "combat":
                 case "skill": {
-                    const itemid  = this._getItemId(event);
-                    const item    = this._getOwnedItem(itemid);
-                    const roll    = new RollHandler(dataset.roll, item.data.data);
-                    await roll.roll();
-                    const myhtml  = await roll._roll.render();
-                    const card    = hChat.genCard(myhtml, this.actor, dataset, item.data);
-                    await ChatMessage.create(card);
-                    break;
+                    const itemid = this._getItemId(event);
+                    const item = this._getOwnedItem(itemid);
+                    const roll = await new Roll(dataset.roll, item.data.data);
+                    await roll.evaluate({async: true});
+                    const card = await hChat.genCard(roll, dataset, item.data);
+                    return await ChatMessage.create(card);
                 }
+                case "ability":
                 case "save": {
-                    const roll    = new RollHandler(dataset.roll, this.actor.data.data);
-                    await roll.roll();
-                    const myhtml  = await roll._roll.render();
-                    const card    = hChat.genCard(myhtml, this.actor, dataset);
-                    await ChatMessage.create(card);
-                    break;
-                }
-                case "ability": {
-                    const sKey = $(event.currentTarget).attr('for');
-                    const ability = getProperty(this.actor, sKey);
-
-                    const complete_mess = sKey.split('.').slice(4,5)[0];
-                    const gah           = game.i18n.localize("HM.ability." + complete_mess);
-                    const roll    = new RollHandler("1d20p + " + ability);
-                    await roll.roll();
-                    var myhtml    = await roll._roll.render();
-                    var card      = ChatHandler.ChatDataSetup(myhtml, gah);
-                    await ChatMessage.create(card);
-                    break;
+                    const roll = new Roll(dataset.roll, this.actor.data.data)
+                    await roll.evaluate({async: true});
+                    const card = await hChat.genCard(roll, dataset);
+                    return await ChatMessage.create(card);
                 }
             }
         }
+
     }
-
-
 }
