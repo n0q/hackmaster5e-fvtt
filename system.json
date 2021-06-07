@@ -3,7 +3,7 @@
     "title": "Hackmaster",
     "description": "Unofficial system for Hackmaster, 5th edition.",
     "url": "https://github.com/n0q/hackmaster5e-fvtt",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "minimumCoreVersion": "0.8.3",
     "compatibleCoreVersion": "0.8.6",
     "templateVersion": 1,
@@ -31,6 +31,8 @@
     "gridUnits": "ft",
     "initiative": "+0",
     "primaryTokenAttribute": "hp",
+    "flags": { "allowBugReporter": true },
+    "bugs": "https://github.com/n0q/hackmaster5e-fvtt/issues",
     "manifest": "https://raw.githubusercontent.com/n0q/hackmaster5e-fvtt/main/system.json",
-    "download": "https://github.com/n0q/hackmaster5e-fvtt/archive/refs/tags/v0.1.3.zip"
+    "download": "https://github.com/n0q/hackmaster5e-fvtt/archive/refs/tags/v0.1.4.zip"
 }

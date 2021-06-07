@@ -1,6 +1,6 @@
-<li class="card">
+<li class="card toggle" data-item-id="{{_id}}">
     <div class="lid">
-        <header class="toggle" data-item-id="{{_id}}">
+        <header data-item-id="{{_id}}">
             <label for="{{name}}">
                 <img src="{{img}}" title="{{name}}" height="48"/>
                 <h4 class="card-name">{{name}}</h4>
@@ -24,7 +24,7 @@
                 data-item-id="{{_id}}">
         </section>
     </div>
-    {{#if flags.hackmaster5e.ui.toggle}}
+    <article class="hide" data-toggle="{{_id}}">
         <div class="details">
             <div class="stats">
                 <div></div>
@@ -90,5 +90,5 @@
                 />
             </div>
         </div>
-    {{/if}}
+    </article>
 </li>
