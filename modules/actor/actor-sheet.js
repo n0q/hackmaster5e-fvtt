@@ -240,14 +240,14 @@ export class HackmasterActorSheet extends ActorSheet {
         return this.actor.updateEmbeddedDocuments("Item", item.data);
     }
 
-    // TODO: This should obviously take args.
-    // TODO: These should function autonomously between users.
-    async _onToggle(event) {
-        event.preventDefault();
-        const element = event.currentTarget;
-        const item    = this._getOwnedItem(this._getItemId(event));
-        const toggle = item.getFlag('hackmaster5e', "ui.toggle");
-        item.setFlag('hackmaster5e', "ui.toggle", !toggle);
+    async _onToggle(ev) {
+        ev.preventDefault();
+        const element = ev.currentTarget;
+        const id      = this._getItemId(ev);
+        const target  = $(element).find("[data-toggle='" + id + "']");
+        for (let i = 0; i < target.length; i++) {
+            $(target[i]).toggleClass("hide");
+        }
     }
 
     // Toggle between an item being equipped, carried, or stored.
@@ -317,6 +317,7 @@ export class HackmasterActorSheet extends ActorSheet {
     */
     async _onRoll(event) {
         event.preventDefault();
+        event.stopPropagation();
         const element = event.currentTarget;
         const dataset = element.dataset;
 

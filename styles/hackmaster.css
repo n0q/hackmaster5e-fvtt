@@ -260,6 +260,9 @@
   padding: 0;
   overflow-y: auto;
 }
+.hackmaster .cards-list .hide, .hackmaster .inventory-list .hide, .hackmaster .combat-list .hide {
+  display: none;
+}
 .hackmaster .cards-list .card-controls, .hackmaster .inventory-list .card-controls, .hackmaster .combat-list .card-controls {
   text-align: right;
   margin-right: 2px;
@@ -443,4 +446,10 @@
   border: 0;
   margin-left: 5px;
   margin-right: 5px;
+}
+.hackmaster .inventory-list .inventory-details {
+  background: lightgrey;
+  display: grid;
+  grid-template-areas: weight location type;
+  grid-template-columns: 1fr 5em 5em;
 }
