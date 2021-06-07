@@ -66,6 +66,12 @@
             "top":      "ToP"
         },
 
+        "itemTypes": {
+            "armor":    "Armor",
+            "item":     "Item",
+            "weapon":   "Weapon"
+        },
+
         "dialog": {
             "initTitle":    "Choose an Initiative Die",
             "initBody":     "Please select the appropriate initiative die.",
@@ -90,6 +96,7 @@
         "age":          "Age",
         "armortype":    "Armor Type",
         "availability": "Availability",
+        "carried":      "Carried",
         "class":        "Class",
         "combat":       "Combat",
         "cost":         "Cost",
@@ -97,6 +104,7 @@
         "defmod":       "Def Mod",
         "description":  "Description",
         "dodge":        "Dodge",
+        "equipped":     "Equipped",
         "initmod":      "Init Mod",
         "speedmod":     "Speed Mod",
         "movece":       "Move Coeff",
@@ -111,6 +119,7 @@
         "mastery":      "Mastery",
         "mental":       "Mental",
         "normal":       "Normal",
+        "owned":        "Owned",
         "physical":     "Physical",
         "poison":       "Poison",
         "quality":      "Quality",
