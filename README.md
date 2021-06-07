@@ -2,15 +2,25 @@
 
 Hackmaster 5e (unofficial) for Foundry. This is in no way usable yet. Here be dragons. Here be a LOT of dragons. Truth be told, it's dragons all the way down.
 
-## roadmap
-Presently on the 0.1.x arc. At this early stage, I'm keeping expectations low. Getting this out the door and usable is all that matters. Bigger and better things to come, hopefully!
-### 0.1.x
-Operation: Minimally Viable Product.
+----
+## Roadmap
+Against all odds, this is venturing close to being a functional product. It's still not something a person could actually use to play hackmaster, but I am beginning to run out of missing essentials.
+
+##### 0.1.x
+###### Operation: Minimally Viable Product.
 The 0.1.x arc is just about getting something out the door that you could theoretically play hackmaster with. It won't be a convenient experience, but it should be doable, and markedly better than going without.
 
-### 0.2.x
-Feature parity with roll20.
+##### 0.2.x
+###### Feature parity with roll20.
 The roll20 system offers some features I won't get to in 0.1.x, and this will be where I incorporate all the missing pieces.
 
-#### Hackmaster
-(C) Copyright 2001-2021 Kenzer and Company.  The Hackmaster name, rules and trademarks are used here with permission and under license.  Kenzer and Company reserves all other rights.
+----
+### Credits and Thanks
+- **The League of Extraordinary Developers** for their unending patience and assistance.
+- **asacolips** for his excellent Boilerplate system, which provided the initial bones for this one.
+- **derg** for providing penetration dice code.
+- The **Cyberpunk Red Core** foundry system, for providing some hbs helpers and a function or two.
+- Kenzer and Company for granting permission to undertake this project.
+
+#### Legal
+Hackmaster is (C) Copyright 2001-2021 Kenzer and Company.  The Hackmaster name, rules and trademarks are used here with permission and under license.  Kenzer and Company reserves all other rights.
