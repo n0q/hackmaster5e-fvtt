@@ -19,6 +19,7 @@ export default function preloadHandlebarsTemplates() {
         "systems/hackmaster5e/templates/actor/parts/magic/base-magic.hbs",
         "systems/hackmaster5e/templates/actor/parts/magic/magic-prepared.hbs",
         "systems/hackmaster5e/templates/actor/parts/magic/magic-unprepared.hbs",
+        "systems/hackmaster5e/templates/actor/parts/magic/cards/spell.hbs",
         "systems/hackmaster5e/templates/actor/parts/setup/base-setup.hbs",
         "systems/hackmaster5e/templates/actor/parts/setup/setup-abilities.hbs",
         "systems/hackmaster5e/templates/actor/parts/setup/setup-classes.hbs",

@@ -1,0 +1,8 @@
+<label class="resource-label">Prepared Spells</label>
+<ol class="card-list">
+    {{#each actor.spells}}
+        {{#if data.prepared.checked}}
+            {{> "systems/hackmaster5e/templates/actor/parts/magic/cards/spell.hbs" }}
+        {{/if}}
+    {{/each}}
+</ol>

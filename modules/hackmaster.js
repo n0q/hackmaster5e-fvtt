@@ -13,7 +13,7 @@ import './sys/dice.js';
 
 Hooks.once("init", async() => {
     LOGGER.log("Initialization start.");
-    CONFIG.debug.hooks = true;
+
     game.hackmaster = {
         HackmasterActor,
         HackmasterItem
