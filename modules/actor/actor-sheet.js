@@ -161,6 +161,8 @@ export class HackmasterActorSheet extends ActorSheet {
     // Move Inventory Item
     html.find('.item-state').click(this._onItemState.bind(this));
 
+    html.find('.spell-state').click(this._onSpellState.bind(this));
+
     // Rollable abilities.
     html.find('.wound').click(this._onEditWound.bind(this));
     html.find('.rollable').click(this._onRoll.bind(this));
@@ -180,7 +182,6 @@ export class HackmasterActorSheet extends ActorSheet {
     }
   }
 
-
     // Getters
     _getItemId(event) {
         let id = $(event.currentTarget).parents(".item").attr("data-item-id");
@@ -191,7 +192,6 @@ export class HackmasterActorSheet extends ActorSheet {
     }
 
     _getOwnedItem(itemId) { return this.actor.items.get(itemId); }
-
 
     _getObjProp(event) { return $(event.currentTarget).attr("data-item-prop"); }
 
@@ -249,6 +249,15 @@ export class HackmasterActorSheet extends ActorSheet {
             state.equipped.checked = true;
             state.carried.checked = true;
         }
+        await this.actor.updateEmbeddedDocuments("Item", [{_id:item.id, data:item.data.data}]);
+    }
+
+    async _onSpellState(ev) {
+        ev.preventDefault();
+        const li = $(ev.currentTarget).parents(".card");
+        const item = this.actor.items.get(li.data("itemId"));
+        const prepped = item.data.data.prepared;
+        prepped.checked = !prepped.checked;
         await this.actor.updateEmbeddedDocuments("Item", [{_id:item.id, data:item.data.data}]);
     }
 
