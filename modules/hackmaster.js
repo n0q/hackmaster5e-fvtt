@@ -13,7 +13,7 @@ import './sys/dice.js';
 
 Hooks.once("init", async() => {
     LOGGER.log("Initialization start.");
-
+    CONFIG.debug.hooks = true;
     game.hackmaster = {
         HackmasterActor,
         HackmasterItem
@@ -47,6 +47,12 @@ Hooks.once("ready", async() => {
     }
 
     LOGGER.log("Ready complete.");
+});
+
+Hooks.on('renderCombatTracker', (chat, html, user) => {
+    html.find("[data-control='nextTurn']")[0].remove();
+    html.find("[data-control='previousTurn']")[0].remove();
+    html.find(".active").removeClass("active");
 });
 
 Hooks.on("diceSoNiceRollStart", (messageId, context) => {

@@ -148,6 +148,6 @@
     },
 
     "COMBAT": {
-        "Second":       "Second"
+        "Round":       "Second"
     }
 }

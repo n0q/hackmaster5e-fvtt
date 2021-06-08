@@ -50,6 +50,7 @@ export class HackmasterActorSheet extends ActorSheet {
         const uskills = [];
         const skills = [];
         const gear = [];
+        const spells = [];
         const wounds = [];
         const weapons = [];
         const profs = [];
@@ -57,18 +58,6 @@ export class HackmasterActorSheet extends ActorSheet {
         let race = null;
         const character_classes = [];
 
-        const spells = {
-            0: [],
-            1: [],
-            2: [],
-            3: [],
-            4: [],
-            5: [],
-            6: [],
-            7: [],
-            8: [],
-            9: []
-        };
 
         // Iterate through items, allocating to containers
         // let totalWeight = 0;
@@ -100,9 +89,7 @@ export class HackmasterActorSheet extends ActorSheet {
                     features.push(i);
                     break;
                 case "spell":
-                    if (i.data.spellLevel != undefined) {
-                        spells[i.data.spellLevel].push(i);
-                    }
+                    spells.push(i);
                     break;
                 case "race":
 
