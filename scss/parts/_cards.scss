@@ -4,94 +4,92 @@
     padding: 0;
     overflow-y: auto;
 
-    .hide {
-        @include hide;
-    }
-
     .card-controls {
         text-align: right;
         margin-right: 2px;
         margin-left: 2px;
     }
+}
+    
+.card {
+    border: $card_border solid #BBB;
+    border-top-left-radius: $card-border-radius; 
+    border-bottom-left-radius: $card-border-radius; 
+    display: flex;
+    flex-direction: column;
+    margin: 3px;
 
-    .card {
-        border: $card_border solid #BBB;
-        border-top-left-radius: $card-border-radius; 
-        border-bottom-left-radius: $card-border-radius; 
+    .hide { @include hide; }
+
+    .details {
         display: flex;
-        flex-direction: column;
-        margin: 3px;
+        flex-direction: row;
+        flex: 1 1 auto;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-left: 3px;
+        margin-right: 3px;
 
-        .details {
+        .stats {
             display: flex;
             flex-direction: row;
-            flex: 1 1 auto;
-            justify-content: space-between;
+            flex: 1 1 3em;
             align-items: flex-end;
-            margin-left: 3px;
-            margin-right: 3px;
+            justify-content: flex-end;
+            label {
+                margin-left: 5px;
+                margin-right: 3px;
+            }
 
-            .stats {
-                display: flex;
-                flex-direction: row;
-                flex: 1 1 3em;
-                align-items: flex-end;
-                justify-content: flex-end;
-                label {
-                    margin-left: 5px;
-                    margin-right: 3px;
-                }
-
-                input {
-                    margin-left: 5px;
-                }
+            input {
+                margin-left: 5px;
             }
         }
+    }
 
-        .lid { 
+    .lid { 
+        display: flex;
+        justify-content: space-between;
+
+        section {
             display: flex;
-            justify-content: space-between;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+            align-items: center;
+            flex: 0 1 auto;
+            border: 0;
+            padding: 0;
+        }
 
-            section {
-                display: flex;
-                flex-direction: row-reverse;
-                justify-content: flex-end;
-                align-items: center;
-                flex: 0 1 auto;
-                border: 0;
-                padding: 0;
-            }
-    
-            input {
-                margin-top: 1px;
-                width: 2em;
-                margin-right: 2px;
-            }
-        } 
+        input {
+            margin-top: 1px;
+            width: 2em;
+            margin-right: 2px;
+        }
+    } 
 
-        header {
-            flex: 1 0 auto;
+    header {
+        flex: 1 0 auto;
+        display: flex;
+        flex-direction: column;
+        margin-right: 10px;
+
+        h4 {
+            margin-top: 1px;
+            margin-bottom: -1px;
+        }
+
+        img {
+            flex: 0 0 auto;
+            align-self: flex-start;
+            display: block;
+            @include card-border-left($card-border-radius);
+        }
+
+        label {
             display: flex;
-            flex-direction: column;
-            margin-right: 10px;
-
-            h4 {
-                margin-top: 1px;
-                margin-bottom: -1px;
-            }
-    
-            img {
-                flex: 0 0 auto;
-                align-self: flex-start;
-                display: block;
-                @include card-border-left($card-border-radius);
-            }
-    
-            label {
-                display: flex;
-                align-items: center;
-                flex-direction: row;
-            }
+            align-items: center;
+            flex-direction: row;
         }
     }
 }
