@@ -54,7 +54,7 @@ export class HMCombat extends Combat {
 export class HMCombatTracker extends CombatTracker {
     static get defaultOptions() {
         const opt = super.defaultOptions;
-        opt.template = "systems/hackmaster5e/templates/sidebar/combat-tracker.hbs";
+//        opt.template = "systems/hackmaster5e/templates/sidebar/combat-tracker.hbs";
         opt.title = "Count Up";
         return opt;
     }
