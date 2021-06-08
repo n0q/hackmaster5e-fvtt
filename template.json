@@ -184,8 +184,9 @@
                 "catalyst": {"checked": false},
                 "iconic":   {"checked": false}
             },
-            "speed": {"value": null},
-            "sp":    {"value": null},
+            "speed":    {"value": null},
+            "sp":       {"value": null},
+            "prepared": {"checked": false},
             "level": ""       
         },
 
