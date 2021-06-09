@@ -50,6 +50,7 @@ Hooks.once("ready", async() => {
 });
 
 Hooks.on('renderCombatTracker', (chat, html, user) => {
+    if (!html.find("[data-control='nextTurn']").length) return;
     html.find("[data-control='nextTurn']")[0].remove();
     html.find("[data-control='previousTurn']")[0].remove();
     html.find(".active").removeClass("active");
