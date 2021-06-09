@@ -73,10 +73,12 @@
         },
 
         "dialog": {
-            "initTitle":    "Choose an Initiative Die",
-            "initBody":     "Please select the appropriate initiative die.",
-            "setinitTitle": "Set Initiative",
-            "setinitBody":  "Enter a new initiative."
+            "initTitle":     "Choose an Initiative Die",
+            "initBody":      "Please select the appropriate initiative die.",
+            "setinitTitle":  "Set Initiative",
+            "setinitBody":   "Enter a new initiative.",
+            "setWoundTitle": "Inflict Wound",
+            "setWoundBody":  "Wound HP"
         },
 
         "atk":  "atk",
