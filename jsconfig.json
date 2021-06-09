@@ -1,0 +1,4 @@
+{
+    "include": ["hm.js", "modules/**/*"],
+    "exclude": ["node_modules"]
+}
