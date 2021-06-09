@@ -3,12 +3,12 @@
     "title": "Hackmaster",
     "description": "Unofficial system for Hackmaster, 5th edition.",
     "url": "https://github.com/n0q/hackmaster5e-fvtt",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "minimumCoreVersion": "0.8.3",
     "compatibleCoreVersion": "0.8.6",
     "templateVersion": 1,
     "author": "n0qtrnL#2610",
-    "esmodules": ["modules/hackmaster.js"],
+    "esmodules": ["hm.js"],
     "styles": ["styles/hackmaster.css"],
     "packs": [
         {
@@ -16,8 +16,14 @@
             "entity": "Item",
             "name": "skills",
             "path": "packs/universal-skills.db",
-            "system": "hackmaster5e",
-            "package": "hackmaster5e"
+            "system": "hackmaster5e"
+        },
+        {
+            "label": "Combat Macros",
+            "entity": "Macro",
+            "name": "combat_macros",
+            "path": "packs/combat-macros.db",
+            "system": "hackmaster5e"
         }
     ],
     "languages": [
@@ -34,5 +40,5 @@
     "flags": { "allowBugReporter": true },
     "bugs": "https://github.com/n0q/hackmaster5e-fvtt/issues",
     "manifest": "https://raw.githubusercontent.com/n0q/hackmaster5e-fvtt/main/system.json",
-    "download": "https://github.com/n0q/hackmaster5e-fvtt/archive/refs/tags/v0.1.4.zip"
+    "download": "https://github.com/n0q/hackmaster5e-fvtt/archive/refs/tags/v0.1.5.zip"
 }

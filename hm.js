@@ -1,15 +1,15 @@
-import { HackmasterActor } from "./actor/actor.js";
-import { HackmasterActorSheet } from "./actor/actor-sheet.js";
-import { HackmasterItem } from "./item/item.js";
-import { HackmasterItemSheet } from "./item/item-sheet.js";
-import { HMCombat, HMCombatTracker } from "./sys/combat.js";
+import { HackmasterActor } from "./modules/actor/actor.js";
+import { HackmasterActorSheet } from "./modules/actor/actor-sheet.js";
+import { HackmasterItem } from "./modules/item/item.js";
+import { HackmasterItemSheet } from "./modules/item/item-sheet.js";
+import { HMCombat, HMCombatTracker } from "./modules/sys/combat.js";
 
-import LOGGER from "./sys/logger.js";
+import LOGGER from "./modules/sys/logger.js";
 
-import registerHandlebarsHelpers from "./sys/helpers.js";
-import preloadHandlebarsTemplates from "./sys/partials.js";
+import registerHandlebarsHelpers from "./modules/sys/helpers.js";
+import preloadHandlebarsTemplates from "./modules/sys/partials.js";
 
-import './sys/dice.js';
+import './modules/sys/dice.js';
 
 Hooks.once("init", async() => {
     LOGGER.log("Initialization start.");
