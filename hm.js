@@ -1,5 +1,5 @@
 import { HackmasterActor } from "./modules/actor/actor.js";
-import { HackmasterActorSheet } from "./modules/actor/actor-sheet.js";
+import { HMCharacterSheet } from "./modules/actor/character-actor-sheet.js";
 import { HackmasterItem } from "./modules/item/item.js";
 import { HackmasterItemSheet } from "./modules/item/item-sheet.js";
 import { HMCombat, HMCombatTracker } from "./modules/sys/combat.js";
@@ -21,7 +21,7 @@ Hooks.once("init", async() => {
 
     CONFIG.Actor.documentClass = HackmasterActor;
     Actors.unregisterSheet("core", ActorSheet);
-    Actors.registerSheet("hackmaster", HackmasterActorSheet, { makeDefault: true });
+    Actors.registerSheet("hackmaster", HMCharacterSheet, { makeDefault: true });
 
     CONFIG.Item.documentClass = HackmasterItem;
     Items.unregisterSheet("core", ItemSheet);
