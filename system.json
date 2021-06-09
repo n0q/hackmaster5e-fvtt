@@ -16,8 +16,14 @@
             "entity": "Item",
             "name": "skills",
             "path": "packs/universal-skills.db",
-            "system": "hackmaster5e",
-            "package": "hackmaster5e"
+            "system": "hackmaster5e"
+        },
+        {
+            "label": "Combat Macros",
+            "entity": "Macro",
+            "name": "combat_macros",
+            "path": "packs/combat-macros.db",
+            "system": "hackmaster5e"
         }
     ],
     "languages": [
