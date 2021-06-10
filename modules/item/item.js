@@ -14,7 +14,7 @@ export class HackmasterItem extends Item {
       const actorData = this.actor ? this.actor.data : null;
 
       if (itemType === "armor")  { this._prepArmorData(itemData, actorData);  } else
-      if (itemType === "skill")  { this._prepSkillData(itemData);             }
+      if (itemType === "weapon") { this._prepWeaponData(itemData, actorData); }
   }
 
   /**
@@ -48,6 +48,13 @@ export class HackmasterItem extends Item {
         }
     }
 
-    _prepSkillData(data) {
+    _prepWeaponData(data, actorData) {
+        if (!actorData) return;
+        const stats = data.stats;
+        for (const key in stats) {
+            if (stats.hasOwnProperty(key)) {
+                stats[key].derived = {"value": stats[key].value + stats[key].mod.value};
+            }
+        }
     }
 }

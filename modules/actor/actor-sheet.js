@@ -154,6 +154,7 @@ export class HMActorSheet extends ActorSheet {
 
     async _onEdit(event) {
         event.preventDefault();
+        event.stopPropagation();
         const element = event.currentTarget;
         const dataset = element.dataset;
         const item    = this._getOwnedItem(this._getItemId(event));

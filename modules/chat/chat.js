@@ -49,7 +49,7 @@ export default class ChatHandler {
 
                 const title = nameActor + " attacks with " + nameWeapon;
 
-                const speedRow = "Speed: " + itemData.data.spd.derived.value;
+                const speedRow = "Speed: " + itemData.data.stats.spd.derived.value;
                 const card = speedRow + specialRow + html;
                 return {flavor: title, content: card};
             }

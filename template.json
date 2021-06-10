@@ -116,10 +116,10 @@
             "templates": ["base", "logistics"],
             "armortype": null,
             "stats": {
-                "dr":    {"value": null, "mod": {"value": 0}},
-                "def":   {"value": null, "mod": {"value": 0}},
-                "init":  {"value": null, "mod": {"value": 0}},
-                "spd":   {"value": null, "mod": {"value": 0}},
+                "dr":    {"value": 0,    "mod": {"value": 0}},
+                "def":   {"value": 0,    "mod": {"value": 0}},
+                "init":  {"value": 0,    "mod": {"value": 0}},
+                "spd":   {"value": 0,    "mod": {"value": 0}},
                 "movcf": {"value": 1.0,  "mod": {"value": 0.0}}
             },
             "shield": {
@@ -157,12 +157,10 @@
         },
 
         "proficiency": {
-            "skill": null,
-            "ranged": {"checked": false},
-            "atk": {"mod": {"value": 0}},
-            "def": {"mod": {"value": 0}},
-            "dmg": {"mod": {"value": 0}},
-            "spd": {"mod": {"value": 0}}
+            "atk": {"value": 0},
+            "def": {"value": 0},
+            "dmg": {"value": 0},
+            "spd": {"value": 0}
         },
 
         "race": {
@@ -234,23 +232,14 @@
             "templates": ["base", "logistics"],
             "proficiency": null,
             "skill": "",
-            "size": "",
-            "type": "",
-            "min_str":      {"value": null},
-            "atk":          {                            "mod": {"value": 0}},
-            "dmg":          {"normal": "", "shield": "", "mod": {"value": 0}},
-            "def":          {                            "mod": {"value": 0}},
-            "spd":          {"value": 0,                 "mod": {"value": 0}},
-            "reach":        {"value": 0},
-            "two_handed":   {"checked": false},
-            "dr_reduction": {"value": 0},
-            "mounted":      {"checked": false},
-            "prof": null,
-            "jab": {
-                "checked": false,
-                "damage": "",
-                "speed": 0
-            }
+            "stats": {
+                "atk": {"value": 0, "mod": {"value": 0}},
+                "def": {"value": 0, "mod": {"value": 0}},
+                "dmg": {"value": 0, "mod": {"value": 0}},
+                "spd": {"value": 0, "mod": {"value": 0}}
+            },
+            "dmg":     {"normal": "", "shield": ""},
+            "reach":   {"value": 0}
         },
 
         "wound": {

@@ -1,3 +1,5 @@
+import { HMTABLES } from '../sys/constants.js';
+
 export class HackmasterActor extends Actor {
 
     prepareData() {
@@ -69,48 +71,34 @@ export class HackmasterActor extends Actor {
                 armorDerived[key].value += armors[i].data.data.stats[key].derived.value;
             }
         }
-
-/*
         // Weapon calculations
-        const weaponObj  = this.items.filter((a) => a.type === "weapon");
-        for (let i = 0; i < weaponObj.length; i++) {
-            const wdata = weaponObj[i].data.data;
-            const wProf = wdata.proficiency;
-            wdata.armor = totalArmor;
-            var profData = {};
-            const prof  = this.items.find((a) => {
+        const weapons = this.items.filter((a) => a.type === "weapon");
+        const noprof = HMTABLES.weapons.noprof;
+
+        for (let i = 0; i < weapons.length; i++) {
+            const data   = weapons[i].data.data;
+            const stats  = data.stats;
+            const wSkill = data.skill;
+            const wProf  = data.proficiency;
+
+            const prof = this.items.find((a) => {
                 return a.type === "proficiency" && a.name === wProf;
             });
-            if (prof) {
-                profData = deepClone(prof.data.data);
-            } else {
-                const wSkill   = wdata.skill;
-                const profPenalty = {
-                    minimal: -1,
-                    low:     -2,
-                    medium:  -4,
-                    high:    -6
-                }[wSkill];
 
-                profData.atk = {mod: {value: profPenalty}};
-                profData.dmg = {mod: {value: profPenalty}};
-                profData.def = {mod: {value: profPenalty}};
-                profData.spd = {mod: {value: -profPenalty}};
+            let j = 0;
+            for (const key in stats) {
+                let profValue = 0;
+                let armorValue = 0;
+                if (armorDerived[key]) armorValue = armorDerived[key].value;
+                prof ? profValue = prof.data.data[key].value
+                     : profValue = noprof.table[wSkill] * noprof.vector[j++];
+                stats[key].prof  = {"value": profValue};
+                stats[key].armor = {"value": armorValue};
+                stats[key].derived.value += stats[key].prof.value + stats[key].armor.value;
             }
-
-            wdata.atk.prof = profData.atk.mod;
-            wdata.dmg.prof = profData.dmg.mod;
-            wdata.def.prof = profData.def.mod;
-            wdata.spd.prof = profData.spd.mod;
-
-            wdata.atk.derived = {"value":                   wdata.atk.mod.value + wdata.atk.prof.value};
-            wdata.dmg.derived = {"value":                   wdata.dmg.mod.value + wdata.dmg.prof.value};
-            wdata.def.derived = {"value":                   wdata.def.mod.value + wdata.def.prof.value + wdata.armor.def.value};
-            wdata.spd.derived = {"value": wdata.spd.value + wdata.spd.mod.value + wdata.spd.prof.value + wdata.armor.spd.value};
+            console.warn(stats);
         }
-
-
-
+/*
         // HP Calculations
         const race      = this.items.filter((a) => a.type === "race")[0];
         var racial_hp   = 0;
@@ -161,14 +149,5 @@ export class HackmasterActor extends Actor {
             }
         }
 */
-        function sumObjectsByKey(...objs) {
-            const res = objs.reduce((a, b) => {
-                for (let k in b) {
-                    if (b.hasOwnProperty(k)) a[k] = (a[k] || 0) + b[k];
-                }
-                return a;
-            }, {});
-            return res;
-        }
     }
 }
