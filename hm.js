@@ -1,4 +1,4 @@
-import { HackmasterActor } from "./modules/actor/actor.js";
+import { HMActor } from "./modules/actor/actor.js";
 import { HMCharacterActorSheet } from "./modules/actor/character-actor-sheet.js";
 import { HackmasterItem } from "./modules/item/item.js";
 import { HackmasterItemSheet } from "./modules/item/item-sheet.js";
@@ -14,7 +14,7 @@ import './modules/sys/dice.js';
 Hooks.once("init", async() => {
     LOGGER.log("Initialization start.");
 
-    CONFIG.Actor.documentClass = HackmasterActor;
+    CONFIG.Actor.documentClass = HMActor;
     Actors.unregisterSheet("core", ActorSheet);
     Actors.registerSheet("hackmaster", HMCharacterActorSheet, { makeDefault: true });
 

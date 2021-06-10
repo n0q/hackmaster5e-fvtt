@@ -1,12 +1,11 @@
 import { HMTABLES } from '../sys/constants.js';
 
-export class HackmasterActor extends Actor {
+export class HMActor extends Actor {
 
     prepareData() {
         super.prepareData();
         const actorData = this.data;
         const data = actorData.data;
-        const flags = actorData.flags;
 
         if (actorData.type === 'character') this._prepareCharacterData(data);
     }
@@ -66,6 +65,21 @@ export class HackmasterActor extends Actor {
         }
     }
 
+    setCharacterMaxHP(data, levelData) {
+        const race      = this.items.find((a) => a.type === "race");
+        const racial_hp = race ? race.data.data.hp.value : 0;
+        const con_hp    = data.abilities.con.derived.value || 0;
+        const level_hp  = levelData.level_hp || 0;
+        data.hp.max     = racial_hp + con_hp + level_hp;
+    }
+
+    setCurrentHP(data) {
+        const wounds = this.items.filter((a) => a.type === "wound");
+        let hp_loss = 0;
+        Object.keys(wounds).forEach( (a) => hp_loss += wounds[a].data.data.hp.value);
+        data.hp.value = data.hp.max - hp_loss;
+    }
+
     _prepareCharacterData(data) {
         const dataUpdate = [];
 
@@ -99,22 +113,9 @@ export class HackmasterActor extends Actor {
 
         const armorDerived = this.setArmor(data);
         this.setWeapons(armorDerived);
-
+        this.setCharacterMaxHP(data, levelData);
+        this.setCurrentHP(data);
 /*
-        // HP Calculations
-        const race      = this.items.filter((a) => a.type === "race")[0];
-        var racial_hp   = 0;
-        if (race) { racial_hp = race.data.data.hp_mod.value || 0 };
-
-        const con_hp    = data.derived.abilities.con.value || 0;
-        const level_hp  = levelData.level_hp || 0;
-        data.hp.max     = racial_hp + con_hp + level_hp;
-
-        const wounds    = this.items.filter((a) => a.type === "wound");
-        let hp_loss     = 0;
-        Object.keys(wounds).forEach( (a) => hp_loss += wounds[a].data.data.hp.value);
-        data.hp.value = data.hp.max - hp_loss;
-
         // Save Calculations
         const savesData = data.saves;
 
