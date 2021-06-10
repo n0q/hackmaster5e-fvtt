@@ -80,12 +80,20 @@ export class HMActor extends Actor {
         data.hp.value = data.hp.max - hp_loss;
     }
 
-    _prepareCharacterData(data) {
+    setSaves(data, levelData) {
+        const savesData = data.saves;
+        const constitution = data.abilities.con.derived.value;
+        savesData.dodge.value     = savesData.dodge.mod.value;
+        savesData.mental.value    = savesData.dodge.mod.value;
+        savesData.physical.value  = savesData.dodge.mod.value;
+        savesData.poison.value    = constitution + savesData.poison.mod.value;
+        savesData.top.value       = Math.floor(constitution / 2);
+        savesData.top.limit.value = Math.ceil((0.3 + levelData.top) * data.hp.max);
+    }
+
+    // TODO: Refactor
+    processLevels() {
         const dataUpdate = [];
-
-        this.setAbilities(data);
-
-        // Level sorting
         const levelData = {level_hp: 0, top: 0.00};
         const levelObj  = this.items.filter((a) => a.type === "character_class");
         const levelSort = levelObj.sort((a, b) => { return a.data_ord - b.data._ord });
@@ -110,21 +118,16 @@ export class HMActor extends Actor {
             hp_prev = hp_curr;
         }
         if (dataUpdate.length) this.updateEmbeddedDocuments("Item", dataUpdate);
+        return levelData;
+    }
 
+    _prepareCharacterData(data) {
+        this.setAbilities(data);
+        const levelData = this.processLevels(data);
         const armorDerived = this.setArmor(data);
         this.setWeapons(armorDerived);
         this.setCharacterMaxHP(data, levelData);
         this.setCurrentHP(data);
-/*
-        // Save Calculations
-        const savesData = data.saves;
-
-        savesData.dodge.value     = savesData.dodge.mod.value;
-        savesData.mental.value    = savesData.dodge.mod.value;
-        savesData.physical.value  = savesData.dodge.mod.value;
-        savesData.poison.value    = data.derived.abilities.con.value + savesData.poison.mod.value;
-        savesData.top.value       = Math.floor(data.derived.abilities.con.value / 2);
-        savesData.top.limit.value = Math.ceil((0.3 + levelData.top) * data.hp.max);
-*/
+        this.setSaves(data, levelData);
     }
 }
