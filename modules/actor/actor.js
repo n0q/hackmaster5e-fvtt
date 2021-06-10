@@ -30,7 +30,7 @@ export class HackmasterActor extends Actor {
         _prepareCharacterData(actorData) {
             const data = actorData.data;
             const dataUpdate = [];
-            console.warn(data);
+
             this.setAbilities(data);
 
             // Level sorting
@@ -120,31 +120,6 @@ export class HackmasterActor extends Actor {
         savesData.poison.value    = data.derived.abilities.con.value + savesData.poison.mod.value;
         savesData.top.value       = Math.floor(data.derived.abilities.con.value / 2);
         savesData.top.limit.value = Math.ceil((0.3 + levelData.top) * data.hp.max);
-
-        // uskill defaults
-        setUntrainedSkillMastery(this.items, data.derived.abilities);
-
-
-        function setUntrainedSkillMastery(items, abilities) {
-            const abilKeys = Object.keys(abilities);
-            const uskills = items.filter((a) => a.type === "skill");
-
-            for (let i = 0; i < uskills.length; i++) {
-                let skillData = uskills[i].data.data;
-                if (skillData.mastery.value) {
-                    skillData.mastery.derived = {"value": skillData.mastery.value};
-                    continue;
-                }
-
-                let abilValues = [];
-                abilKeys.forEach((key) => {
-                    if (skillData.abilities[key].checked) {
-                        abilValues.push(abilities[key].value);
-                    }
-                });
-                skillData.mastery.derived = {"value": Math.min(...abilValues)};
-            }
-        }
 */
     }
 }
