@@ -14,6 +14,7 @@ export class HackmasterItem extends Item {
       const actorData = this.actor ? this.actor.data : null;
 
       if (itemType === "armor")  { this._prepArmorData(itemData, actorData);  } else
+      if (itemType === "skill")  { this._prepSkillData(itemData, actorData);  } else
       if (itemType === "weapon") { this._prepWeaponData(itemData, actorData); }
   }
 
@@ -56,5 +57,25 @@ export class HackmasterItem extends Item {
                 stats[key].derived = {"value": stats[key].value + stats[key].mod.value};
             }
         }
+    }
+
+    _prepSkillData(data, actorData) {
+        if (!actorData) return;
+        if (!data.universal.checked) return;
+        const abilities = actorData.data.abilities;
+        const relevant  = data.abilities;
+        const stack = [];
+
+        // HACK: Need derived abilities to set uskill minimums,
+        // but they're usually called after items are done.
+        if (abilities.str.derived.value === 0) {
+            const actor = this.actor;
+            actor.setAbilities(actorData.data, actor);
+        }
+
+        for (let key in relevant) {
+            if (relevant[key].checked) stack.push(abilities[key].derived.value);
+        }
+        data.mastery.derived = {"value": Math.min(...stack)};
     }
 }

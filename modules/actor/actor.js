@@ -12,53 +12,51 @@ export class HackmasterActor extends Actor {
         if (actorData.type === 'character') this._prepareCharacterData(actorData);
     }
 
+    setAbilities(data) {
+        const abilities = data.abilities;
+        const actorRace = this.items.find((a) => a.type === "race");
+        for (let i in abilities) {
+            const stat = abilities[i];
+            let race = {"value": 0, "fvalue": 0};
+            if (actorRace) {
+                race.value  = actorRace.data.data.abilities[i].value;
+                race.fvalue = actorRace.data.data.abilities[i].fvalue;
+            }
+            stat.derived.value  = stat.raw.value  + stat.mod.value  + race.value;
+            stat.derived.fvalue = stat.raw.fvalue + stat.mod.fvalue + race.fvalue;
+        }
+    }
+
         _prepareCharacterData(actorData) {
             const data = actorData.data;
             const dataUpdate = [];
+            console.warn(data);
+            this.setAbilities(data);
 
-            // Ability score calculations
-            const abilities = data.abilities;
-            const actorRace = this.items.find((a) => a.type === "race");
-            for (let i in abilities) {
-                const stat = abilities[i];
-                let race = {"value": 0, "fvalue": 0};
-                if (actorRace) {
-                    race.value  = actorRace.data.data.abilities[i].value;
-                    race.fvalue = actorRace.data.data.abilities[i].fvalue;
+            // Level sorting
+            const levelData = {level_hp: 0, top: 0.00};
+            const levelObj  = this.items.filter((a) => a.type === "character_class");
+            const levelSort = levelObj.sort((a, b) => { return a.data_ord - b.data._ord });
+            let b_reorder = false;
+
+            let hp_prev = 0;
+            for (let i = 0; i < levelSort.length; i++) {
+                if (levelSort[i].data.data._ord !== i + 1 || b_reorder) {
+                    levelSort[i].data.data._ord = i + 1;
+                    dataUpdate.push({_id:levelSort[i].id, data:levelSort[i].data.data});
+                    b_reorder = true;
                 }
-                stat.derived.value  = stat.raw.value  + stat.mod.value  + race.value;
-                stat.derived.fvalue = stat.raw.fvalue + stat.mod.fvalue + race.fvalue;
+
+                // Level processing.
+                let top = levelSort[i].data.data.top_mod.value || 0.00;
+                let hp_curr = levelSort[i].data.data.hp.value || 0;
+                let hp_curr_checked = levelSort[i].data.data.hp.reroll.checked;
+                if (hp_curr_checked) hp_curr = Math.max(0, hp_curr - hp_prev);
+
+                levelData.top      += top;
+                levelData.level_hp += hp_curr;
+                hp_prev = hp_curr;
             }
-
-/*
-        // Level sorting
-        const levelData = {level_hp: 0, top: 0.00};
-        const levelObj  = this.items.filter((a) => a.type === "character_class");
-        const levelSort = levelObj.sort((a, b) => { return a.data_ord - b.data._ord });
-        let b_reorder = false;
-
-        let hp_prev = 0;
-        for (let i = 0; i < levelSort.length; i++) {
-            if (levelSort[i].data.data._ord !== i + 1 || b_reorder) {
-                levelSort[i].data.data._ord = i + 1;
-                dataUpdate.push({_id:levelSort[i].id, data:levelSort[i].data.data});
-                b_reorder = true;
-            }
-
-        // Level processing.
-            let top = levelSort[i].data.data.top_mod.value || 0.00;
-            let hp_curr = levelSort[i].data.data.hp.value || 0;
-            let hp_curr_checked = levelSort[i].data.data.hp.reroll.checked;
-            if (hp_curr_checked) {
-                hp_curr = Math.max(0, hp_curr - hp_prev);
-            }
-
-            levelData.top      += top;
-            levelData.level_hp += hp_curr;
-            hp_prev = hp_curr;
-        }
-
-*/
 
         // Armor calculations
         const armors = this.items.filter((a) => a.type === "armor");
@@ -96,6 +94,8 @@ export class HackmasterActor extends Actor {
                 stats[key].derived.value += stats[key].prof.value + stats[key].armor.value;
             }
         }
+
+        if (dataUpdate.length) { this.updateEmbeddedDocuments("Item", dataUpdate); }
 /*
         // HP Calculations
         const race      = this.items.filter((a) => a.type === "race")[0];
@@ -124,7 +124,6 @@ export class HackmasterActor extends Actor {
         // uskill defaults
         setUntrainedSkillMastery(this.items, data.derived.abilities);
 
-        if (dataUpdate.length) { this.updateEmbeddedDocuments("Item", dataUpdate); }
 
         function setUntrainedSkillMastery(items, abilities) {
             const abilKeys = Object.keys(abilities);
