@@ -4,12 +4,11 @@ export class HackmasterActor extends Actor {
 
     prepareData() {
         super.prepareData();
-
         const actorData = this.data;
         const data = actorData.data;
         const flags = actorData.flags;
 
-        if (actorData.type === 'character') this._prepareCharacterData(actorData);
+        if (actorData.type === 'character') this._prepareCharacterData(data);
     }
 
     setAbilities(data) {
@@ -27,38 +26,7 @@ export class HackmasterActor extends Actor {
         }
     }
 
-        _prepareCharacterData(actorData) {
-            const data = actorData.data;
-            const dataUpdate = [];
-
-            this.setAbilities(data);
-
-            // Level sorting
-            const levelData = {level_hp: 0, top: 0.00};
-            const levelObj  = this.items.filter((a) => a.type === "character_class");
-            const levelSort = levelObj.sort((a, b) => { return a.data_ord - b.data._ord });
-            let b_reorder = false;
-
-            let hp_prev = 0;
-            for (let i = 0; i < levelSort.length; i++) {
-                if (levelSort[i].data.data._ord !== i + 1 || b_reorder) {
-                    levelSort[i].data.data._ord = i + 1;
-                    dataUpdate.push({_id:levelSort[i].id, data:levelSort[i].data.data});
-                    b_reorder = true;
-                }
-
-                // Level processing.
-                let top = levelSort[i].data.data.top_mod.value || 0.00;
-                let hp_curr = levelSort[i].data.data.hp.value || 0;
-                let hp_curr_checked = levelSort[i].data.data.hp.reroll.checked;
-                if (hp_curr_checked) hp_curr = Math.max(0, hp_curr - hp_prev);
-
-                levelData.top      += top;
-                levelData.level_hp += hp_curr;
-                hp_prev = hp_curr;
-            }
-
-        // Armor calculations
+    setArmor(data) {
         const armors = this.items.filter((a) => a.type === "armor");
         const armorDerived = data.derived.armor;
         for (const key in armorDerived) {
@@ -67,8 +35,10 @@ export class HackmasterActor extends Actor {
                 armorDerived[key].value += armors[i].data.data.stats[key].derived.value;
             }
         }
+        return armorDerived;
+    }
 
-        // Weapon calculations
+    setWeapons(armorDerived) {
         const weapons = this.items.filter((a) => a.type === "weapon");
         const noprof = HMTABLES.weapons.noprof;
 
@@ -94,8 +64,42 @@ export class HackmasterActor extends Actor {
                 stats[key].derived.value += stats[key].prof.value + stats[key].armor.value;
             }
         }
+    }
 
-        if (dataUpdate.length) { this.updateEmbeddedDocuments("Item", dataUpdate); }
+    _prepareCharacterData(data) {
+        const dataUpdate = [];
+
+        this.setAbilities(data);
+
+        // Level sorting
+        const levelData = {level_hp: 0, top: 0.00};
+        const levelObj  = this.items.filter((a) => a.type === "character_class");
+        const levelSort = levelObj.sort((a, b) => { return a.data_ord - b.data._ord });
+        let b_reorder = false;
+
+        let hp_prev = 0;
+        for (let i = 0; i < levelSort.length; i++) {
+            if (levelSort[i].data.data._ord !== i + 1 || b_reorder) {
+                levelSort[i].data.data._ord = i + 1;
+                dataUpdate.push({_id:levelSort[i].id, data:levelSort[i].data.data});
+                b_reorder = true;
+            }
+
+            // Level processing.
+            let top = levelSort[i].data.data.top_mod.value || 0.00;
+            let hp_curr = levelSort[i].data.data.hp.value || 0;
+            let hp_curr_checked = levelSort[i].data.data.hp.reroll.checked;
+            if (hp_curr_checked) hp_curr = Math.max(0, hp_curr - hp_prev);
+
+            levelData.top      += top;
+            levelData.level_hp += hp_curr;
+            hp_prev = hp_curr;
+        }
+        if (dataUpdate.length) this.updateEmbeddedDocuments("Item", dataUpdate);
+
+        const armorDerived = this.setArmor(data);
+        this.setWeapons(armorDerived);
+
 /*
         // HP Calculations
         const race      = this.items.filter((a) => a.type === "race")[0];
