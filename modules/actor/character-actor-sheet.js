@@ -1,6 +1,6 @@
 import { HMActorSheet } from './actor-sheet.js';
 
-export class HMCharacterSheet extends HMActorSheet {
+export class HMCharacterActorSheet extends HMActorSheet {
 
     /** @override */
     static get defaultOptions() {

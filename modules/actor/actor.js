@@ -7,16 +7,13 @@ export class HackmasterActor extends Actor {
         const data = actorData.data;
         const flags = actorData.flags;
 
-
-        // Make separate methods for each Actor type (character, npc, etc.) to keep
-        // things organized.
         if (actorData.type === 'character') this._prepareCharacterData(actorData);
     }
 
         _prepareCharacterData(actorData) {
         const data = actorData.data;
         const dataUpdate = [];
-
+/*
         // Ability adjustments
         // TODO: Strip mods from 'derived' to avoid confusion.
         const d_abilities = deepClone(data.abilities);
@@ -61,31 +58,19 @@ export class HackmasterActor extends Actor {
             hp_prev = hp_curr;
         }
 
-
-        // TODO: Yes, of course this whole setup is horseshit.
-        // Doing it right can come later. Let's just make it work for now.
-        // Yes. That was as scary to type as it was to read.
+*/
 
         // Armor calculations
-        const totalArmor = {"dr": {"value": 0}, "def": {"value": 0}, "init": {"value": 0}, "spd": {"value": 0}};
-        const armorObj = this.items.filter((a) => a.type === "armor");
-        for (let i = 0; i <armorObj.length; i++) {
-            const armorData = armorObj[i].data.data;
-            const armorDerived = {};
-            armorDerived.dr     = {"value": armorData.dr.value    + armorData.dr.mod.value};
-            armorDerived.def    = {"value": armorData.def.value   + armorData.def.mod.value};
-            armorDerived.init   = {"value": armorData.init.value  + armorData.init.mod.value};
-            armorDerived.spd    = {"value": armorData.spd.value   + armorData.spd.mod.value};
-            armorDerived.movcf  = {"value": armorData.movcf.value + armorData.movcf.mod.value};
-            armorObj[i].data.data.derived = armorDerived;
-
-            totalArmor.dr.value   += armorDerived.dr.value;
-            totalArmor.def.value  += armorDerived.def.value;
-            totalArmor.init.value += armorDerived.init.value;
-            totalArmor.spd.value  += armorDerived.spd.value;
+        const armors = this.items.filter((a) => a.type === "armor");
+        const armorDerived = data.derived.armor;
+        for (const key in armorDerived) {
+            armorDerived[key].value = 0;
+            for (let i = 0; i <armors.length; i++) {
+                armorDerived[key].value += armors[i].data.data.stats[key].derived.value;
+            }
         }
 
-        data.derived.armor = totalArmor;
+/*
         // Weapon calculations
         const weaponObj  = this.items.filter((a) => a.type === "weapon");
         for (let i = 0; i < weaponObj.length; i++) {
@@ -123,6 +108,7 @@ export class HackmasterActor extends Actor {
             wdata.def.derived = {"value":                   wdata.def.mod.value + wdata.def.prof.value + wdata.armor.def.value};
             wdata.spd.derived = {"value": wdata.spd.value + wdata.spd.mod.value + wdata.spd.prof.value + wdata.armor.spd.value};
         }
+
 
 
         // HP Calculations
@@ -174,7 +160,7 @@ export class HackmasterActor extends Actor {
                 skillData.mastery.derived = {"value": Math.min(...abilValues)};
             }
         }
-
+*/
         function sumObjectsByKey(...objs) {
             const res = objs.reduce((a, b) => {
                 for (let k in b) {

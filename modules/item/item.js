@@ -7,18 +7,14 @@ export class HackmasterItem extends Item {
    * Augment the basic Item data model with additional dynamic data.
    */
   prepareData() {
-    super.prepareData();
+      super.prepareData();
 
-    // Get the Item's data
-    const itemData = this.data;
-    const actorData = this.actor ? this.actor.data : {};
-    const data = itemData.data;
+      const itemData  = this.data.data;
+      const itemType  = this.data.type;
+      const actorData = this.actor ? this.actor.data : null;
 
-    switch(this.data.type) {
-        case "skill":
-            this._prepareSkillData(this.data.data);
-            break;
-    }
+      if (itemType === "armor")  { this._prepArmorData(itemData, actorData);  } else
+      if (itemType === "skill")  { this._prepSkillData(itemData);             }
   }
 
   /**
@@ -41,8 +37,17 @@ export class HackmasterItem extends Item {
     });
   }
 
-    _prepareSkillData(data) {
+    // Adjust for mod value.
+    _prepArmorData(data, actorData) {
+        if (!actorData) return;
+        const stats = data.stats;
+        for (const key in stats) {
+            if (stats.hasOwnProperty(key)) {
+                stats[key].derived = {"value": stats[key].value + stats[key].mod.value};
+            }
+        }
     }
 
-
+    _prepSkillData(data) {
+    }
 }
