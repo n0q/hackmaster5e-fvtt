@@ -13,26 +13,24 @@ export class HackmasterActor extends Actor {
     }
 
         _prepareCharacterData(actorData) {
-        const data = actorData.data;
-        const dataUpdate = [];
-/*
-        // Ability adjustments
-        // TODO: Strip mods from 'derived' to avoid confusion.
-        const d_abilities = deepClone(data.abilities);
-        const actorRace = this.items.find((a) => a.type === "race");
+            const data = actorData.data;
+            const dataUpdate = [];
 
-        // TODO: Non-racial mods don't work if there is no race.
-        if(actorRace) {
-            let modsRace = actorRace.data.data.mods.abilities;
-            for (let key in d_abilities) {
-                d_abilities[key].value  += modsRace[key].value;
-                d_abilities[key].value  += data.abilities[key].mod.value;
-                d_abilities[key].fvalue += data.abilities[key].mod.fvalue;
+            // Ability score calculations
+            const abilities = data.abilities;
+            const actorRace = this.items.find((a) => a.type === "race");
+            for (let i in abilities) {
+                const stat = abilities[i];
+                let race = {"value": 0, "fvalue": 0};
+                if (actorRace) {
+                    race.value  = actorRace.data.data.abilities[i].value;
+                    race.fvalue = actorRace.data.data.abilities[i].fvalue;
+                }
+                stat.derived.value  = stat.raw.value  + stat.mod.value  + race.value;
+                stat.derived.fvalue = stat.raw.fvalue + stat.mod.fvalue + race.fvalue;
             }
-         }
-        data.derived = {abilities: d_abilities};
 
-
+/*
         // Level sorting
         const levelData = {level_hp: 0, top: 0.00};
         const levelObj  = this.items.filter((a) => a.type === "character_class");
@@ -71,6 +69,7 @@ export class HackmasterActor extends Actor {
                 armorDerived[key].value += armors[i].data.data.stats[key].derived.value;
             }
         }
+
         // Weapon calculations
         const weapons = this.items.filter((a) => a.type === "weapon");
         const noprof = HMTABLES.weapons.noprof;
@@ -96,7 +95,6 @@ export class HackmasterActor extends Actor {
                 stats[key].armor = {"value": armorValue};
                 stats[key].derived.value += stats[key].prof.value + stats[key].armor.value;
             }
-            console.warn(stats);
         }
 /*
         // HP Calculations

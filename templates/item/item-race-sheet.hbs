@@ -22,32 +22,29 @@
 
         {{!-- Attributes Tab --}}
         <div class="tab attributes" data-group="primary" data-tab="attributes">
-            <div class="grid grid-3col">
+            <div class="grid grid-4col">
                 <div class="resource">
                     <label class="resource-label">{{localize "HM.hp_mod"}}</label>
-                    <input type="number" name="data.hp_mod.value" value="{{data.data.hp_mod.value}}" data-dtype="Number"/>
+                    <input type="number" name="data.hp.value" value="{{data.data.hp.value}}" data-dtype="Number"/>
                 </div>
                 <div class="resource">
                     <label class="resource-label">{{localize "HM.knockback"}}</label>
-                    <input type="number" name="data.kb_mult.value" value="{{data.data.kb_mult.value}}" data-dtype="Number"/>
+                    <input type="number" name="data.kb.value" value="{{data.data.kb.value}}" data-dtype="Number"/>
                 </div>
                 <div class="resource">
                     <label class="resource-label">{{localize "HM.reach_mod"}}</label>
-                    <input type="number" name="data.reach_mod.value" value="{{data.data.reach_mod.value}}" data-dtype="Number"/>
+                    <input type="number" name="data.reach.value" value="{{data.data.reach.value}}" data-dtype="Number"/>
+                </div>
+                <div class="resource">
+                    <label class="resource-label">{{localize "HM.defense_mod"}}</label>
+                    <input type="number" name="data.def.value" value="{{data.data.def.value}}" data-dtype="Number"/>
                 </div>
             </div>
-            <li class="item flexrow">
-                <label class="resource-label">{{localize "HM.size"}}</label>
-                <select name="data.size" data-dtype="{{data.sizeSelect}}">
-                    {{#select data.data.size}}{{#each (findConfigObj "size") as |type t|}}
-                        <option value="{{t}}">{{localize type}}</option>
-                    {{/each}}{{/select}}
-                </select>
-            </li>
             <div class="grid grid-2col">
-                {{#each data.data.mods.abilities as |ability key|}}
+                {{#each data.data.abilities as |ability key|}}
                     <div class="ability flexrow">
-                        <input type="text" name="data.mods.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number"/>
+                        <input type="text" name="data.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number"/>
+                        <input type="text" name="data.abilities.{{key}}.fvalue" value="{{ability.fvalue}}" data-dtype="Number"/>
                         <label for="data.mods.abilities.{{key}}.value" class="resource-label">
                             {{localize (findConfigValue "ability_short" key)}}
                         </label>
