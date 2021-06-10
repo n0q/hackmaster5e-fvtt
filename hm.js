@@ -1,5 +1,5 @@
-import { HackmasterActor } from "./modules/actor/actor.js";
-import { HackmasterActorSheet } from "./modules/actor/actor-sheet.js";
+import { HMActor } from "./modules/actor/actor.js";
+import { HMCharacterActorSheet } from "./modules/actor/character-actor-sheet.js";
 import { HackmasterItem } from "./modules/item/item.js";
 import { HackmasterItemSheet } from "./modules/item/item-sheet.js";
 import { HMCombat, HMCombatTracker } from "./modules/sys/combat.js";
@@ -14,14 +14,9 @@ import './modules/sys/dice.js';
 Hooks.once("init", async() => {
     LOGGER.log("Initialization start.");
 
-    game.hackmaster = {
-        HackmasterActor,
-        HackmasterItem
-    };
-
-    CONFIG.Actor.documentClass = HackmasterActor;
+    CONFIG.Actor.documentClass = HMActor;
     Actors.unregisterSheet("core", ActorSheet);
-    Actors.registerSheet("hackmaster", HackmasterActorSheet, { makeDefault: true });
+    Actors.registerSheet("hackmaster", HMCharacterActorSheet, { makeDefault: true });
 
     CONFIG.Item.documentClass = HackmasterItem;
     Items.unregisterSheet("core", ItemSheet);
@@ -36,17 +31,13 @@ Hooks.once("init", async() => {
 });
 
 Hooks.once("ready", async() => {
-    LOGGER.log("Ready start.");
     // render a sheet to the screen as soon as we enter, for testing purposes.
-
     if (game.items.contents[0]) {
     //    game.items.contents[0].sheet.render(true);
     }
     if (game.actors.contents[0]) {
         game.actors.contents[0].sheet.render(true);
     }
-
-    LOGGER.log("Ready complete.");
 });
 
 Hooks.on('renderCombatTracker', (chat, html, user) => {
