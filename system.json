@@ -39,6 +39,6 @@
     "primaryTokenAttribute": "hp",
     "flags": { "allowBugReporter": true },
     "bugs": "https://github.com/n0q/hackmaster5e-fvtt/issues",
-    "manifest": "https://github.com/n0q/hackmaster5e-fvtt/releases/latest/download/system.json",
-    "download": "https://github.com/n0q/hackmaster5e-fvtt/archive/refs/tags/v0.1.5.zip"
+    "manifest": "https://raw.githubusercontent.com/n0q/hackmaster5e-fvtt/main/system.json",
+    "download": "https://github.com/n0q/hackmaster5e-fvtt/releases/download/0.1.5/system.zip"
 }
