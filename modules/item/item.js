@@ -70,7 +70,7 @@ export class HackmasterItem extends Item {
         // but they're usually called after items are done.
         if (abilities.str.derived.value === 0) {
             const actor = this.actor;
-            actor.setAbilities(actorData.data, actor);
+            actor.setAbilities(actorData.data);
         }
 
         for (let key in relevant) {

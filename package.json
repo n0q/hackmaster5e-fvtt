@@ -3,5 +3,8 @@
     "dart-sass": "^1.25.0",
     "gulp": "^4.0.2",
     "gulp-dart-sass": "^1.0.2"
+  },
+  "dependencies": {
+    "dompurify": "^2.2.9"
   }
 }

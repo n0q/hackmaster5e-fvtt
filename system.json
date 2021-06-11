@@ -8,7 +8,7 @@
     "compatibleCoreVersion": "0.8.6",
     "templateVersion": 1,
     "author": "n0qtrnL#2610",
-    "esmodules": ["hm.js"],
+    "esmodules": ["node_modules/dompurify/dist/purify.js", "hm.js"],
     "styles": ["styles/hackmaster.css"],
     "packs": [
         {
