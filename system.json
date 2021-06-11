@@ -33,12 +33,12 @@
             "path": "lang/en.json"
         }
     ],
-    "gridDistance": 5,
+    "gridDistance": 2.5,
     "gridUnits": "ft",
     "initiative": "+0",
     "primaryTokenAttribute": "hp",
     "flags": { "allowBugReporter": true },
     "bugs": "https://github.com/n0q/hackmaster5e-fvtt/issues",
-    "manifest": "https://raw.githubusercontent.com/n0q/hackmaster5e-fvtt/main/system.json",
+    "manifest": "https://github.com/n0q/hackmaster5e-fvtt/releases/latest/download/system.json",
     "download": "https://github.com/n0q/hackmaster5e-fvtt/archive/refs/tags/v0.1.5.zip"
 }
