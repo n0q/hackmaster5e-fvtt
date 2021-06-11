@@ -1,5 +1,9 @@
 export const SYSTEM_NAME = 'hackmaster5e';
 
+export const MACRO_VERS = {
+    "setWound": 1
+}
+
 // system rules
 export const HMTABLES = {
     "weapons": {

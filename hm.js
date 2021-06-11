@@ -3,6 +3,7 @@ import { HMCharacterActorSheet } from "./modules/actor/character-actor-sheet.js"
 import { HackmasterItem } from "./modules/item/item.js";
 import { HackmasterItemSheet } from "./modules/item/item-sheet.js";
 import { HMCombat, HMCombatTracker } from "./modules/sys/combat.js";
+import { HMMacro } from './modules/sys/macro.js';
 
 import LOGGER from "./modules/sys/logger.js";
 
@@ -24,6 +25,7 @@ Hooks.once("init", async() => {
 
     CONFIG.Combat.documentClass = HMCombat;
     CONFIG.ui.combat = HMCombatTracker;
+    CONFIG.Macro.documentClass = HMMacro;
 
     registerHandlebarsHelpers();
     preloadHandlebarsTemplates();
