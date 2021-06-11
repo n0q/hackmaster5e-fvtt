@@ -18,6 +18,10 @@ export default function registerHandlebarsHelpers() {
         return str.toLowerCase();
     });
 
+    Handlebars.registerHelper('sanitize', function(str) {
+        return DOMPurify.sanitize(str);
+    });
+
     Handlebars.registerHelper("findConfigValue", (obj, key) => {
         LOGGER.trace(`Calling findConfigValue Helper | Arg1:${obj} Arg2:${key}`);
         if (obj in idx) {
