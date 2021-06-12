@@ -1,6 +1,9 @@
 export const SYSTEM_NAME = 'hackmaster5e';
 
 export const MACRO_VERS = {
+    "getAttack": 1,
+    "getDamage": 1,
+    "getDefend": 1,
     "setWound": 1
 }
 

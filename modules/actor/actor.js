@@ -28,10 +28,16 @@ export class HMActor extends Actor {
     setArmor(data) {
         const armors = this.items.filter((a) => a.type === "armor");
         const armorDerived = data.derived.armor;
-        for (const key in armorDerived) {
-            armorDerived[key].value = 0;
-            for (let i = 0; i <armors.length; i++) {
-                armorDerived[key].value += armors[i].data.data.stats[key].derived.value;
+        // Remember, we're not zeroing out armorDerived.
+        // If we start saving actordata, armorDerived will break.
+        for (let i = 0; i <armors.length; i++) {
+            for (const key in armorDerived) {
+                const armorData = armors[i].data.data;
+                if (armorData.armortype === 'shield' && key === 'dr') {
+                   armorDerived[key].shield.value += armorData.stats[key].derived.value;
+                   continue;
+                }
+                armorDerived[key].value += armorData.stats[key].derived.value;
             }
         }
         return armorDerived;

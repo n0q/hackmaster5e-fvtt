@@ -1,4 +1,6 @@
-import ChatHandler from "../chat/chat.js";
+import HMDialogMgr from "../sys/dialogmgr.js";
+import HMChatMgr from "../sys/chatmgr.js";
+import HMRollMgr from "../sys/rollmgr.js";
 
 export class HMActorSheet extends ActorSheet {
 
@@ -188,9 +190,29 @@ export class HMActorSheet extends ActorSheet {
         const dataset = element.dataset;
 
         if (dataset.rollType) {
-            const hChat = new ChatHandler(this.actor);
+            const hChat = new HMChatMgr(this.actor);
+            const dialogMgr = new HMDialogMgr();
+
             switch (dataset.rollType) {
-                case "combat":
+                // TODO: Bless this mess.
+                case "combat": {
+                    const itemid = this._getItemId(event);
+                    const item = this._getOwnedItem(itemid);
+                    const itemData = item.data.data;
+
+                    const dialogData = {actor: this.actor, weapons: {weapon: [item.data]}};
+
+                    const dialogResp = await dialogMgr.getDialog(dataset.rollCombat, dialogData);
+                    // dmg rolls
+                    if (dialogResp.dmgtype) {
+                        dataset.dmgtype = dialogResp.dmgtype;
+                        dataset.roll = "@dmg." + dialogResp.dmgtype + " + @stats.dmg.derived.value";
+                    }
+                    const rollMgr = new HMRollMgr(this.actor);
+                    const roll = await rollMgr.getRoll(dataset.rollCombat, dataset.roll, itemData, dialogResp.mod);
+                    const card = await hChat.genCard(roll, dataset, item.data);
+                    return await ChatMessage.create(card);
+                }
                 case "skill": {
                     const itemid = this._getItemId(event);
                     const item = this._getOwnedItem(itemid);
