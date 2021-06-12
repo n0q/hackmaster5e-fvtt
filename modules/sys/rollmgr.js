@@ -8,6 +8,7 @@ export default class HMRollMgr {
 
     async getRoll(rollType, formula, data, mod=0) {
         if (rollType === "atk") { return await this._rollAttack(formula, data, mod) } else
+        if (rollType === "def") { return await this._rollAttack(formula, data, mod) } else
         if (rollType === "dmg") { return await this._rollAttack(formula, data, mod) }
     }
 

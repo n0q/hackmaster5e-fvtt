@@ -7,7 +7,8 @@ export default class HMDialogMgr {
         const name = DOMPurify.sanitize(nameD);
         if (name === 'setWound')  { return this.setWound();      } else
         if (name === 'atk')       { return this.getAttack(data); } else
-        if (name === 'dmg')       { return this.getDamage(data); }
+        if (name === 'dmg')       { return this.getDamage(data); } else
+        if (name === 'def')       { return this.getDefend(data); }
     }
 
     _focusById(id) {
@@ -89,6 +90,31 @@ export default class HMDialogMgr {
                     }
                 },
                 default: "normal"
+            }).render(true);
+            this._focusById('mod');
+        });
+    }
+
+    async getDefend(data) {
+        const actor = data.actor;
+        const weapons = data.weapons;
+        return await new Promise(async resolve => {
+            new Dialog({
+                title: actor.name + game.i18n.localize("HM.dialog.getDefendTitle"),
+                content: await renderTemplate("systems/hackmaster5e/templates/dialog/getDefend.hbs", weapons),
+                buttons: {
+                    defend: {
+                        label: game.i18n.localize("HM.defend"),
+                        callback: (html) => {
+                            const widx = html.find('#weapon-select')[0].value;
+                            resolve({
+                                "mod": parseInt(document.getElementById("mod").value || 0),
+                                "weapon": weapons.weapon[widx]
+                            })
+                        }
+                    }
+                },
+                default: "defend"
             }).render(true);
             this._focusById('mod');
         });

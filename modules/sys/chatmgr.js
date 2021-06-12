@@ -49,7 +49,7 @@ export default class HMChatMgr {
                 if (sumDice == 19) { specialRow += "<b>Near Perfect!</b>";     } else
                 if (sumDice == 1)  { specialRow += "<b>Potential Fumble!</b>"; }
 
-                const title = nameActor + " attacks with " + nameWeapon;
+                const title = nameActor + " attacks with a " + nameWeapon;
 
                 const speedRow = "Speed: " + itemData.data.stats.spd.derived.value;
                 const card = speedRow + specialRow + html;
@@ -70,8 +70,12 @@ export default class HMChatMgr {
                 if (sumDice == 18) { specialRow += "<b>Superior!</b>";           } else
                 if (sumDice == 1)  { specialRow += "<b>Free Second Attack!</b>"; }
 
-                const title = nameActor + " defends with " + nameWeapon;
-                const card  = specialRow + html;
+                const title = nameActor + " defends with a " + nameWeapon;
+
+                const fa_shield = '<i class="fas fa-shield-alt"></i>';
+                const actordr = this._actor.data.data.derived.armor.dr;
+                const drRow   = "DR: " + actordr.value + " + " + fa_shield + actordr.shield.value;
+                const card  = drRow + specialRow + html;
                 return {flavor: title, content: card};
             }
         }

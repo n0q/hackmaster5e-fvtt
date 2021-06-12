@@ -40,7 +40,6 @@ export class HMActor extends Actor {
                 armorDerived[key].value += armorData.stats[key].derived.value;
             }
         }
-        console.warn(armorDerived);
         return armorDerived;
     }
 
