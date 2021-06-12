@@ -4,7 +4,6 @@ import { HackmasterItem } from "./modules/item/item.js";
 import { HackmasterItemSheet } from "./modules/item/item-sheet.js";
 import { HMCombat, HMCombatTracker } from "./modules/sys/combat.js";
 import { HMMacro } from './modules/sys/macro.js';
-
 import LOGGER from "./modules/sys/logger.js";
 
 import registerHandlebarsHelpers from "./modules/sys/helpers.js";
@@ -13,23 +12,24 @@ import preloadHandlebarsTemplates from "./modules/sys/partials.js";
 import './modules/sys/dice.js';
 
 Hooks.once("init", async() => {
-    LOGGER.log("Initialization start.");
+    LOGGER.log("+++ Init");
 
     CONFIG.Actor.documentClass = HMActor;
-    Actors.unregisterSheet("core", ActorSheet);
-    Actors.registerSheet("hackmaster", HMCharacterActorSheet, { makeDefault: true });
-
     CONFIG.Item.documentClass = HackmasterItem;
-    Items.unregisterSheet("core", ItemSheet);
-    Items.registerSheet("hackmaster", HackmasterItemSheet, { makeDefault: true });
-
     CONFIG.Combat.documentClass = HMCombat;
     CONFIG.ui.combat = HMCombatTracker;
     CONFIG.Macro.documentClass = HMMacro;
 
+    Actors.unregisterSheet("core", ActorSheet);
+    Actors.registerSheet("hackmaster", HMCharacterActorSheet, { makeDefault: true });
+
+    Items.unregisterSheet("core", ItemSheet);
+    Items.registerSheet("hackmaster", HackmasterItemSheet, { makeDefault: true });
+
     registerHandlebarsHelpers();
     preloadHandlebarsTemplates();
-    LOGGER.log("Initialization complete.");
+
+    LOGGER.log("--- Init");
 });
 
 Hooks.once("ready", async() => {

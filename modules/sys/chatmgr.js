@@ -1,10 +1,12 @@
 import LOGGER from "../sys/logger.js";
 
-export default class ChatHandler {
-    constructor(actor) {
+export default class HMChatMgr {
+    constructor(actor=null) {
         this._user = game.user.id;
-        this._actor = actor;
+        if (actor) { this._actor = actor; }
     }
+
+    setActor(actor) { this._actor = actor; }
 
     async genCard(roll, dataset, itemData=null) {
         let cData;

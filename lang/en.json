@@ -73,12 +73,14 @@
         },
 
         "dialog": {
-            "initTitle":     "Choose an Initiative Die",
-            "initBody":      "Please select the appropriate initiative die.",
-            "setinitTitle":  "Set Initiative",
-            "setinitBody":   "Enter a new initiative.",
-            "setWoundTitle": "Inflict Wound",
-            "setWoundBody":  "Wound HP"
+            "initTitle":      "Choose an Initiative Die",
+            "initBody":       "Please select the appropriate initiative die.",
+            "getAttackTitle": ": Declare an Attack",
+            "setinitTitle":   "Set Initiative",
+            "setinitBody":    "Enter a new initiative.",
+            "setWoundTitle":  "Inflict Wound",
+            "setWoundBody":   "Wound HP",
+            "warnMulti":      "Multiple tokens selected. Using <b>"
         },
 
         "atk":  "atk",
@@ -97,6 +99,7 @@
 
         "age":          "Age",
         "armortype":    "Armor Type",
+        "attack":       "Attack",
         "availability": "Availability",
         "carried":      "Carried",
         "class":        "Class",
@@ -121,6 +124,7 @@
         "magic":        "Magic",
         "mastery":      "Mastery",
         "mental":       "Mental",
+        "modifier":     "Modifier",
         "normal":       "Normal",
         "owned":        "Owned",
         "physical":     "Physical",
@@ -140,6 +144,7 @@
         "skills":       "Skills",
         "specific":     "Specific",
         "universal":    "Universal",
+        "weapon":       "Weapon",
         "weight":       "Weight",
         "wound":        "Wound",
 
