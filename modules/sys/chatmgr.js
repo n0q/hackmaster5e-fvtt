@@ -57,7 +57,8 @@ export default class HMChatMgr {
             }
 
             case "dmg": {
-                const title = nameActor + " damages with " + nameWeapon;
+                const shield = data.dmgtype === "shield" ? " shield-" : " ";
+                const title = nameActor + shield + "hits with a " + nameWeapon + ".";
                 return {flavor: title, content: html};
             }
 

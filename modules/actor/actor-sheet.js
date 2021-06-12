@@ -194,15 +194,22 @@ export class HMActorSheet extends ActorSheet {
             const dialogMgr = new HMDialogMgr();
 
             switch (dataset.rollType) {
+                // TODO: Bless this mess.
                 case "combat": {
                     const itemid = this._getItemId(event);
                     const item = this._getOwnedItem(itemid);
+                    const itemData = item.data.data;
 
                     const dialogData = {actor: this.actor, weapons: {weapon: [item.data]}};
 
-                    const atkData = await dialogMgr.getAttack(dialogData);
+                    const dialogResp = await dialogMgr.getDialog(dataset.rollCombat, dialogData);
+                    // dmg rolls
+                    if (dialogResp.dmgtype) {
+                        dataset.dmgtype = dialogResp.dmgtype;
+                        dataset.roll = "@dmg." + dialogResp.dmgtype + " + @stats.dmg.derived.value";
+                    }
                     const rollMgr = new HMRollMgr(this.actor);
-                    const roll = await rollMgr.getRoll(dataset.rollCombat, dataset.roll, item.data.data, atkData.mod);
+                    const roll = await rollMgr.getRoll(dataset.rollCombat, dataset.roll, itemData, dialogResp.mod);
                     const card = await hChat.genCard(roll, dataset, item.data);
                     return await ChatMessage.create(card);
                 }

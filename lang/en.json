@@ -75,7 +75,8 @@
         "dialog": {
             "initTitle":      "Choose an Initiative Die",
             "initBody":       "Please select the appropriate initiative die.",
-            "getAttackTitle": ": Declare an Attack",
+            "getAttackTitle": ": Roll an Attack",
+            "getDamageTitle": ": Roll for Damage",
             "setinitTitle":   "Set Initiative",
             "setinitBody":    "Enter a new initiative.",
             "setWoundTitle":  "Inflict Wound",

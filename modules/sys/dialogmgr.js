@@ -6,7 +6,8 @@ export default class HMDialogMgr {
     async getDialog(nameD, data={}) {
         const name = DOMPurify.sanitize(nameD);
         if (name === 'setWound')  { return this.setWound();      } else
-        if (name === 'getAttack') { return this.getAttack(data); }
+        if (name === 'atk')       { return this.getAttack(data); } else
+        if (name === 'dmg')       { return this.getDamage(data); }
     }
 
     _focusById(id) {
@@ -41,9 +42,10 @@ export default class HMDialogMgr {
                     attack: {
                         label: game.i18n.localize("HM.attack"),
                         callback: (html) => {
+                            const widx = html.find('#weapon-select')[0].value;
                             resolve({
                                 "mod": parseInt(document.getElementById("mod").value || 0),
-                                "weapon": weapons.weapon[html.find('#weapon-select')[0].value]
+                                "weapon": weapons.weapon[widx]
                             })
                         }
                     }
@@ -54,5 +56,42 @@ export default class HMDialogMgr {
         });
     }
 
+    async getDamage(data) {
+        const actor = data.actor;
+        const weapons = data.weapons;
+        return await new Promise(async resolve => {
+            new Dialog({
+                title: actor.name + game.i18n.localize("HM.dialog.getDamageTitle"),
+                content: await renderTemplate("systems/hackmaster5e/templates/dialog/getDamage.hbs", weapons),
+                buttons: {
+                    normal: {
+                        label: game.i18n.localize("HM.normal"),
+                        callback: (html) => {
+                            const widx = html.find('#weapon-select')[0].value;
+                            resolve({
+                                "dmgtype": "normal",
+                                "mod": parseInt(document.getElementById("mod").value || 0),
+                                "weapon": weapons.weapon[widx]
+                            })
+                        }
+                    },
+                    shield: {
+                        label: game.i18n.localize("HM.shield"),
+                        icon: '<i class="fas fa-shield-alt"></i>',
+                        callback: (html) => {
+                            const widx = html.find('#weapon-select')[0].value;
+                            resolve({
+                                "dmgtype": "shield",
+                                "mod": parseInt(document.getElementById("mod").value || 0),
+                                "weapon": weapons.weapon[widx]
+                            })
+                        }
+                    }
+                },
+                default: "normal"
+            }).render(true);
+            this._focusById('mod');
+        });
+    }
 
 }
