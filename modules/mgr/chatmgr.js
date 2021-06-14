@@ -13,7 +13,7 @@ export default class HMChatMgr {
                 cData = await this._createWeaponCard(roll, dataset, dialogResp);
                 break;
             case "skill":
-                cData = await this._createSkillCard(roll, dataset, dialogResp);
+                cData = await this._createSkillCard(roll, dialogResp);
                 break;
             case "save":
                 cData = await this._createSaveCard(roll, dataset, dialogResp);
@@ -90,7 +90,7 @@ export default class HMChatMgr {
         }
     }
 
-    async _createSkillCard(roll, dataset, dialogResp) {
+    async _createSkillCard(roll, dialogResp) {
         const item = dialogResp.context;
         let flavor = item.name;
 
@@ -100,7 +100,7 @@ export default class HMChatMgr {
         else {
             const difficulty = HMTABLES.skill.difficulty;
             for (let key in difficulty) {
-                if (roll.total + difficulty[key] >= 0) continue;
+                if (roll.total + difficulty[key] > 0) continue;
                 const diffRow = game.i18n.localize(key) + " " + game.i18n.localize("HM.skillcheck");
                 content = diffRow + "<p>" + html;
                 break;
