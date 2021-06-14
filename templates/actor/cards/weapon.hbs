@@ -8,19 +8,16 @@
         </header>
         <section>
             <img class="rollable" src="{{findConfigValue "combatImg" "def"}}" height="36" title="Defend"
-                data-roll-type="combat"
-                data-roll-combat="def"
-                data-roll="1d20p + @stats.def.derived.value"
+                data-dialog="def"
+                data-formula="1d20p + @stats.def.derived.value + @resp.mod"
                 data-item-id="{{_id}}">
             <img class="rollable" src="{{findConfigValue "combatImg" "dmg"}}" height="36" title="Damage"
-                data-roll-type="combat"
-                data-roll-combat="dmg"
-                data-roll="@dmg.normal + @stats.dmg.derived.value"
+                data-dialog="dmg"
+                data-formula="@resp.dmg + @stats.dmg.derived.value + @resp.mod"
                 data-item-id="{{_id}}">
             <img class="rollable" src="{{findConfigValue "combatImg" "atk"}}" height="36" title="Attack"
-                data-roll-type="combat"   
-                data-roll-combat="atk"
-                data-roll="1d20p + @stats.atk.derived.value"
+                data-dialog="atk"
+                data-formula="1d20p + @stats.atk.derived.value + @resp.mod"
                 data-item-id="{{_id}}">
         </section>
     </div>

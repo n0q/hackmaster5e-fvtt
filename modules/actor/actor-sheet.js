@@ -4,9 +4,12 @@ import HMRollMgr from "../sys/rollmgr.js";
 
 export class HMActorSheet extends ActorSheet {
 
-  /** @override */
+    /** @override */
   activateListeners(html) {
     super.activateListeners(html);
+
+    // ui elements
+    html.find('.toggle').click(this._onToggle.bind(this));
 
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return;
@@ -39,8 +42,6 @@ export class HMActorSheet extends ActorSheet {
     html.find('.rollable').click(this._onRoll.bind(this));
     html.find('.editable').change(this._onEdit.bind(this));
 
-    // ui elements
-    html.find('.toggle').click(this._onToggle.bind(this));
 
     // Drag events for macros.
     if (this.actor.isOwner) {
@@ -188,31 +189,22 @@ export class HMActorSheet extends ActorSheet {
         event.stopPropagation();
         const element = event.currentTarget;
         const dataset = element.dataset;
+        const actor = this.actor;
 
-        if (dataset.rollType) {
-            const hChat = new HMChatMgr(this.actor);
+        const rollMgr = new HMRollMgr();
+        const chatMgr = new HMChatMgr();
+        if (dataset.dialog) {
             const dialogMgr = new HMDialogMgr();
+            const dialogResp = await dialogMgr.getDialog(actor, dataset);
+            const roll = await rollMgr.getRoll(dataset, dialogResp);
+            const card = await chatMgr.getCard(roll, dataset, dialogResp);
+            return await ChatMessage.create(card);
+        }
+    }
+}
+        /*
 
             switch (dataset.rollType) {
-                // TODO: Bless this mess.
-                case "combat": {
-                    const itemid = this._getItemId(event);
-                    const item = this._getOwnedItem(itemid);
-                    const itemData = item.data.data;
-
-                    const dialogData = {actor: this.actor, weapons: {weapon: [item.data]}};
-
-                    const dialogResp = await dialogMgr.getDialog(dataset.rollCombat, dialogData);
-                    // dmg rolls
-                    if (dialogResp.dmgtype) {
-                        dataset.dmgtype = dialogResp.dmgtype;
-                        dataset.roll = "@dmg." + dialogResp.dmgtype + " + @stats.dmg.derived.value";
-                    }
-                    const rollMgr = new HMRollMgr(this.actor);
-                    const roll = await rollMgr.getRoll(dataset.rollCombat, dataset.roll, itemData, dialogResp.mod);
-                    const card = await hChat.genCard(roll, dataset, item.data);
-                    return await ChatMessage.create(card);
-                }
                 case "skill": {
                     const itemid = this._getItemId(event);
                     const item = this._getOwnedItem(itemid);
@@ -230,6 +222,4 @@ export class HMActorSheet extends ActorSheet {
                 }
             }
         }
-
-    }
-}
+*/
