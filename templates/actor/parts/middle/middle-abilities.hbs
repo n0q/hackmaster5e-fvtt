@@ -2,8 +2,8 @@
     <div class="ability flexrow">
         <h4>{{ability.derived.value}}/{{ability.derived.fvalue}}</h4>
         <label for="data.data.abilities.{{key}}.derived.value" class="resource-label rollable"
-            data-roll-type="ability"
-            data-roll="1d20p + @abilities.{{key}}.derived.value"
+            data-dialog="ability"
+            data-formula="1d20p + @resp.mod @resp.oper @abilities.{{key}}.derived.value"
             data-ability="{{localize (findConfigValue "ability_long" key)}}">
             {{localize (findConfigValue "ability_short" key)}}
         </label>

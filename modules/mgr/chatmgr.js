@@ -116,19 +116,12 @@ export default class HMChatMgr {
         return {flavor: savetype + " " + savename, content: html};
     }
 
-    async _createAbilityCard(data, roll) {
-        const html = await roll.render();
-        const title = this._actor.name + " rolls " + data.ability;
-        return {flavor: title, content: html};
-    }
-
-    static ChatDataSetup(content, title) {
-        const newcontent = title + content;
-        const chatData = {
-            user: game.user.id,
-            content: newcontent,
-            sound: CONFIG.sounds.dice
-        };
-        return chatData;
+    async _createAbilityCard(roll, dataset, dialogResp) {
+        const content = await roll.render();
+        const rolltype = dialogResp.resp.save
+            ? game.i18n.localize("HM.save")
+            : game.i18n.localize("HM.check");
+        const flavor = dialogResp.context.name + ": " + dataset.ability + " " + rolltype;
+        return {flavor, content};
     }
 }

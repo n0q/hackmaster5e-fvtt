@@ -27,6 +27,7 @@ export default function preloadHandlebarsTemplates() {
         "systems/hackmaster5e/templates/actor/parts/skills.hbs",
         "systems/hackmaster5e/templates/item/parts/header-logistics.hbs",
         "systems/hackmaster5e/templates/item/parts/logistics.hbs",
+        "systems/hackmaster5e/templates/dialog/getAbility.hbs",
         "systems/hackmaster5e/templates/dialog/getAttack.hbs",
         "systems/hackmaster5e/templates/dialog/getDamage.hbs",
         "systems/hackmaster5e/templates/dialog/getDefend.hbs",

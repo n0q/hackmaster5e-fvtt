@@ -1,11 +1,12 @@
 export default class HMDialogMgr {
     async getDialog(actor, dataset) {
         const name = dataset.dialog;
-        if (name === 'setWound') { return this.setWound();                     } else
-        if (name === 'atk')      { return this.getAttackDialog(actor, dataset) } else
-        if (name === 'dmg')      { return this.getDamageDialog(actor, dataset) } else
-        if (name === 'def')      { return this.getDefendDialog(actor, dataset) } else
-        if (name === 'skill')    { return this.getSkillDialog(actor, dataset)  }
+        if (name === 'setWound') { return this.setWound();                       } else
+        if (name === 'atk')      { return this.getAttackDialog(actor, dataset)   } else
+        if (name === 'dmg')      { return this.getDamageDialog(actor, dataset)   } else
+        if (name === 'def')      { return this.getDefendDialog(actor, dataset)   } else
+        if (name === 'skill')    { return this.getSkillDialog(actor, dataset)    } else
+        if (name === 'ability')  { return this.getAbilityDialog(actor, dataset)  }
     }
 
     _focusById(id) {
@@ -181,4 +182,43 @@ export default class HMDialogMgr {
         return dialogResp;
     }
 
+    async getAbilityDialog(actor, dataset) {
+        const dialogData = {};
+        const dialogResp = {"caller": actor};
+
+        dialogData.ability = dataset.ability;
+        const template = "systems/hackmaster5e/templates/dialog/getAbility.hbs";
+
+        dialogResp.resp = await new Promise(async resolve => {
+            new Dialog({
+                title: actor.name + ": " + dialogData.ability + " " + game.i18n.localize("HM.roll"),
+                content: await renderTemplate(template, dialogData),
+                buttons: {
+                    save: {
+                        label: game.i18n.localize("HM.dialog.getAbilityButtonL"),
+                        callback: () => {
+                            resolve({
+                                "save": true,
+                                "mod": parseInt(document.getElementById("mod").value || 0)
+                            })
+                        }
+                    },
+                    check: {
+                        label: game.i18n.localize("HM.dialog.getAbilityButtonR"),
+                        callback: () => {
+                            resolve({
+                                "save": false,
+                                "mod": parseInt(document.getElementById("mod").value || 0)
+                            })
+                        }
+                    }
+                },
+                default: "save"
+            }).render(true);
+            this._focusById('mod');
+        });
+        dialogResp.context = actor;
+        dialogResp.resp.oper = dialogResp.resp.save ? "+" : "-";
+        return dialogResp;
+    }
 }
