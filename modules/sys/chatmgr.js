@@ -35,8 +35,8 @@ export default class HMChatMgr {
     }
 
     async _createWeaponCard(roll, dataset, dialogResp) {
-        const actor  = dialogResp.caller;
-        const item = dialogResp.resp.weapon;
+        const actor = dialogResp.caller;
+        const item = dialogResp.context;
 
         const html = await roll.render();
         switch (dataset.dialog) {
@@ -89,9 +89,12 @@ export default class HMChatMgr {
         }
     }
 
-    async _createSkillCard(itemData, roll) {
-        const html = await roll.render();
-        return {flavor: itemData.name, content: html};
+    async _createSkillCard(roll, dataset, dialogResp) {
+        const item = dialogResp.context;
+        let flavor = item.name;
+        if (dialogResp.resp.opposed) flavor += " (Opposed)";
+        const content = await roll.render();
+        return {flavor, content};
     }
 
     async _createSaveCard(dataType, roll) {

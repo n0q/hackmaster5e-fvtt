@@ -202,24 +202,3 @@ export class HMActorSheet extends ActorSheet {
         }
     }
 }
-        /*
-
-            switch (dataset.rollType) {
-                case "skill": {
-                    const itemid = this._getItemId(event);
-                    const item = this._getOwnedItem(itemid);
-                    const roll = await new Roll(dataset.roll, item.data.data);
-                    await roll.evaluate({async: true});
-                    const card = await hChat.genCard(roll, dataset, item.data);
-                    return await ChatMessage.create(card);
-                }
-                case "ability":
-                case "save": {
-                    const roll = new Roll(dataset.roll, this.actor.data.data)
-                    await roll.evaluate({async: true});
-                    const card = await hChat.genCard(roll, dataset);
-                    return await ChatMessage.create(card);
-                }
-            }
-        }
-*/

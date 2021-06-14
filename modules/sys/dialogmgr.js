@@ -4,7 +4,8 @@ export default class HMDialogMgr {
         if (name === 'setWound') { return this.setWound();                     } else
         if (name === 'atk')      { return this.getAttackDialog(actor, dataset) } else
         if (name === 'dmg')      { return this.getDamageDialog(actor, dataset) } else
-        if (name === 'def')      { return this.getDefendDialog(actor, dataset) }
+        if (name === 'def')      { return this.getDefendDialog(actor, dataset) } else
+        if (name === 'skill')    { return this.getSkillDialog(actor, dataset)  }
     }
 
     _focusById(id) {
@@ -40,6 +41,7 @@ export default class HMDialogMgr {
         dialogData.weapons = this.getWeapons(actor, dataset?.itemId);
         const template = "systems/hackmaster5e/templates/dialog/getAttack.hbs";
 
+        let widx = null;
         dialogResp.resp = await new Promise(async resolve => {
             new Dialog({
                 title: actor.name + game.i18n.localize("HM.dialog.getAttackTitle"),
@@ -48,10 +50,9 @@ export default class HMDialogMgr {
                     attack: {
                         label: game.i18n.localize("HM.attack"),
                         callback: (html) => {
-                            const widx = html.find('#weapon-select')[0].value;
+                            widx = html.find('#weapon-select')[0].value;
                             resolve({
                                 "mod": parseInt(document.getElementById("mod").value || 0),
-                                "weapon": dialogData.weapons[widx]
                             })
                         }
                     }
@@ -60,6 +61,7 @@ export default class HMDialogMgr {
             }).render(true);
             this._focusById('mod');
         });
+        dialogResp.context = dialogData.weapons[widx];
         return dialogResp;
     }
 
@@ -70,6 +72,7 @@ export default class HMDialogMgr {
         dialogData.weapons = this.getWeapons(actor, dataset?.itemId);
         const template = "systems/hackmaster5e/templates/dialog/getDamage.hbs";
 
+        let widx = null;
         dialogResp.resp = await new Promise(async resolve => {
             new Dialog({
                 title: actor.name + game.i18n.localize("HM.dialog.getDamageTitle"),
@@ -78,12 +81,11 @@ export default class HMDialogMgr {
                     normal: {
                         label: game.i18n.localize("HM.normal"),
                         callback: (html) => {
-                            const widx = html.find('#weapon-select')[0].value;
+                            widx = html.find('#weapon-select')[0].value;
                             resolve({
                                 "shieldhit": false,
                                 "dmg": dialogData.weapons[widx].data.data.dmg.normal,
-                                "mod": parseInt(document.getElementById("mod").value || 0),
-                                "weapon": dialogData.weapons[widx]
+                                "mod": parseInt(document.getElementById("mod").value || 0)
                             })
                         }
                     },
@@ -91,12 +93,11 @@ export default class HMDialogMgr {
                         label: game.i18n.localize("HM.shield"),
                         icon: '<i class="fas fa-shield-alt"></i>',
                         callback: (html) => {
-                            const widx = html.find('#weapon-select')[0].value;
+                            widx = html.find('#weapon-select')[0].value;
                             resolve({
                                 "shieldhit": true,
                                 "dmg": dialogData.weapons[widx].data.data.dmg.shield,
-                                "mod": parseInt(document.getElementById("mod").value || 0),
-                                "weapon": dialogData.weapons[widx]
+                                "mod": parseInt(document.getElementById("mod").value || 0)
                             })
                         }
                     }
@@ -105,6 +106,7 @@ export default class HMDialogMgr {
             }).render(true);
             this._focusById('mod');
         });
+        dialogResp.context = dialogData.weapons[widx];
         return dialogResp;
     }
 
@@ -115,6 +117,7 @@ export default class HMDialogMgr {
         dialogData.weapons = this.getWeapons(actor, dataset?.itemId);
         const template = "systems/hackmaster5e/templates/dialog/getDefend.hbs";
 
+        let widx = null;
         dialogResp.resp = await new Promise(async resolve => {
             new Dialog({
                 title: actor.name + game.i18n.localize("HM.dialog.getDefendTitle"),
@@ -123,10 +126,9 @@ export default class HMDialogMgr {
                     defend: {
                         label: game.i18n.localize("HM.defend"),
                         callback: (html) => {
-                            const widx = html.find('#weapon-select')[0].value;
+                            widx = html.find('#weapon-select')[0].value;
                             resolve({
-                                "mod": parseInt(document.getElementById("mod").value || 0),
-                                "weapon": dialogData.weapons[widx]
+                                "mod": parseInt(document.getElementById("mod").value || 0)
                             })
                         }
                     }
@@ -135,6 +137,47 @@ export default class HMDialogMgr {
             }).render(true);
             this._focusById('mod');
         });
+        dialogResp.context = dialogData.weapons[widx];
+        return dialogResp;
+    }
+
+    async getSkillDialog(actor, dataset) {
+        const dialogData = {};
+        const dialogResp = {"caller": actor};
+
+        dialogData.skill = actor.items.get(dataset.itemId);
+        const template = "systems/hackmaster5e/templates/dialog/getSkill.hbs";
+
+        dialogResp.resp = await new Promise(async resolve => {
+            new Dialog({
+                title: actor.name + ": " + dialogData.skill.name + game.i18n.localize("HM.dialog.getSkillTitle"),
+                content: await renderTemplate(template, dialogData),
+                buttons: {
+                    standard: {
+                        label: game.i18n.localize("HM.skillcheck"),
+                        callback: () => {
+                            resolve({
+                                "opposed": false,
+                                "mod": parseInt(document.getElementById("mod").value || 0)
+                            })
+                        }
+                    },
+                    opposed: {
+                        label: game.i18n.localize("HM.opposedcheck"),
+                        callback: () => {
+                            resolve({
+                                "opposed": true,
+                                "mod": parseInt(document.getElementById("mod").value || 0)
+                            })
+                        }
+                    }
+                },
+                default: "standard"
+            }).render(true);
+            this._focusById('mod');
+        });
+        dialogResp.context = dialogData.skill;
+        dialogResp.resp.oper = dialogResp.resp.opposed ? "+" : "-";
         return dialogResp;
     }
 

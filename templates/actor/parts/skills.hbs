@@ -6,7 +6,10 @@
                     ({{data.specific.value}})
                 {{/if}}
             </h4>
-            <div class="skill-value rollable" data-roll-type="skill" data-roll="1d100p - @mastery.derived.value">
+            <div class="skill-value rollable"
+                data-dialog="skill"
+                data-formula="1d100p + @resp.mod @resp.oper @mastery.derived.value"
+                data-item-id="{{_id}}">
                 {{data.mastery.derived.value}}
             </div>
             <div class="skill-controls">
@@ -21,7 +24,10 @@
                     ({{data.specific.value}})
                 {{/if}}
             </h4>
-            <div class="skill-value rollable" data-roll-type="skill" data-roll="1d100p - @mastery.derived.value">
+            <div class="skill-value rollable"
+                data-dialog="skill"
+                data-formula="1d100p + @resp.mod @resp.oper @mastery.derived.value"
+                data-item-id="{{_id}}">
                 {{data.mastery.derived.value}}
             </div>
             <div class="skill-controls">

@@ -1,14 +1,11 @@
 export default class HMRollMgr {
     async getRoll(dataset, dialogResp=null) {
-        const dialog = dataset.dialog;
-        if (dialog === "atk") { return await this._weaponRoll(dataset, dialogResp) } else
-        if (dialog === "def") { return await this._weaponRoll(dataset, dialogResp) } else
-        if (dialog === "dmg") { return await this._weaponRoll(dataset, dialogResp) }
+        return await this._stdRoll(dataset, dialogResp);
     }
 
-    async _weaponRoll(dataset, dialogResp=null) {
+    async _stdRoll(dataset, dialogResp=null) {
         let formula = Roll.replaceFormulaData(dataset.formula, dialogResp);
-        const weaponData = dialogResp.resp.weapon.data.data;
-        return await new Roll(formula, weaponData).evaluate({async: true});
+        const data = dialogResp.context.data.data;
+        return await new Roll(formula, data).evaluate({async: true});
     }
 }
