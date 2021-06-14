@@ -2,8 +2,8 @@
     <div class="form-group">
         <label>{{localize "HM.weapon"}}</label>
         <select id="weapon-select">
-            {{#each weapon}}
-            <option value="{{@index}}">{{name}}</option>
+            {{#each weapons}}
+                <option value="{{@index}}">{{name}}</option>
             {{/each}}
         </select>
     </div>

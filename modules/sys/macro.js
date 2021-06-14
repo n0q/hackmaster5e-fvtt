@@ -1,7 +1,7 @@
 import { MACRO_VERS } from "./constants.js";
-import HMDialogMgr from './dialogmgr.js';
-import HMChatMgr from './chatmgr.js';
-import HMRollMgr from "./rollmgr.js";
+import HMDialogMgr from '../mgr/dialogmgr.js';
+import HMChatMgr from '../mgr/chatmgr.js';
+import HMRollMgr from "../mgr/rollmgr.js";
 
 export class HMMacro extends Macro {
     isObsolete(d_vers, d_mid) {

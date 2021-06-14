@@ -1,27 +1,25 @@
 import LOGGER from "../sys/logger.js";
+import { HMTABLES } from "../sys/constants.js";
 
 export default class HMChatMgr {
-    constructor(actor=null) {
-        this._user = game.user.id;
-        if (actor) { this._actor = actor; }
-    }
+    constructor() { this._user = game.user.id }
 
-    setActor(actor) { this._actor = actor; }
-
-    async genCard(roll, dataset, itemData=null) {
+    async getCard(roll, dataset, dialogResp=null) {
         let cData;
-        switch (dataset.rollType) {
-            case "combat":
-                cData = await this._createCombatCard(dataset, roll, itemData);
+        switch (dataset.dialog) {
+            case "atk":
+            case "def":
+            case "dmg":
+                cData = await this._createWeaponCard(roll, dataset, dialogResp);
                 break;
             case "skill":
-                cData = await this._createSkillCard(itemData, roll);
+                cData = await this._createSkillCard(roll, dialogResp);
                 break;
             case "save":
-                cData = await this._createSaveCard(dataset.saveType, roll);
+                cData = await this._createSaveCard(roll, dataset, dialogResp);
                 break;
             case "ability":
-                cData = await this._createAbilityCard(dataset, roll);
+                cData = await this._createAbilityCard(roll, dataset, dialogResp);
                 break;
         }
 
@@ -37,11 +35,12 @@ export default class HMChatMgr {
         return chatData;
     }
 
-    async _createCombatCard(data, roll, itemData) {
-        const nameActor  = this._actor.name;
-        const nameWeapon = itemData.name;
+    async _createWeaponCard(roll, dataset, dialogResp) {
+        const actor = dialogResp.caller;
+        const item = dialogResp.context;
+
         const html = await roll.render();
-        switch (data.rollCombat) {
+        switch (dataset.dialog) {
             case "atk": {
                 const sumDice = getDiceSum(roll);
                 let specialRow = "<p>";
@@ -49,16 +48,16 @@ export default class HMChatMgr {
                 if (sumDice == 19) { specialRow += "<b>Near Perfect!</b>";     } else
                 if (sumDice == 1)  { specialRow += "<b>Potential Fumble!</b>"; }
 
-                const title = nameActor + " attacks with a " + nameWeapon;
+                const title = actor.name + " attacks with a " + item.name + ".";
 
-                const speedRow = "Speed: " + itemData.data.stats.spd.derived.value;
+                const speedRow = "Speed: " + item.data.data.stats.spd.derived.value;
                 const card = speedRow + specialRow + html;
                 return {flavor: title, content: card};
             }
 
             case "dmg": {
-                const shield = data.dmgtype === "shield" ? " shield-" : " ";
-                const title = nameActor + shield + "hits with a " + nameWeapon + ".";
+                const shield = dialogResp.resp.shieldhit ? " shield-" : " ";
+                const title = actor.name + shield + "hits with a " + item.name + ".";
                 return {flavor: title, content: html};
             }
 
@@ -70,10 +69,10 @@ export default class HMChatMgr {
                 if (sumDice == 18) { specialRow += "<b>Superior!</b>";           } else
                 if (sumDice == 1)  { specialRow += "<b>Free Second Attack!</b>"; }
 
-                const title = nameActor + " defends with a " + nameWeapon;
+                const title = actor.name + " defends with a " + item.name + ".";
 
                 const fa_shield = '<i class="fas fa-shield-alt"></i>';
-                const actordr = this._actor.data.data.derived.armor.dr;
+                const actordr = actor.data.data.derived.armor.dr;
                 const drRow   = "DR: " + actordr.value + " + " + fa_shield + actordr.shield.value;
                 const card  = drRow + specialRow + html;
                 return {flavor: title, content: card};
@@ -91,9 +90,23 @@ export default class HMChatMgr {
         }
     }
 
-    async _createSkillCard(itemData, roll) {
+    async _createSkillCard(roll, dialogResp) {
+        const item = dialogResp.context;
+        let flavor = item.name;
+
         const html = await roll.render();
-        return {flavor: itemData.name, content: html};
+        let content = html;
+        if (dialogResp.resp.opposed) flavor += " (Opposed)";
+        else {
+            const difficulty = HMTABLES.skill.difficulty;
+            for (let key in difficulty) {
+                if (roll.total + difficulty[key] > 0) continue;
+                const diffRow = game.i18n.localize(key) + " " + game.i18n.localize("HM.skillcheck");
+                content = diffRow + "<p>" + html;
+                break;
+            }
+        }
+        return {flavor, content};
     }
 
     async _createSaveCard(dataType, roll) {
@@ -103,19 +116,12 @@ export default class HMChatMgr {
         return {flavor: savetype + " " + savename, content: html};
     }
 
-    async _createAbilityCard(data, roll) {
-        const html = await roll.render();
-        const title = this._actor.name + " rolls " + data.ability;
-        return {flavor: title, content: html};
-    }
-
-    static ChatDataSetup(content, title) {
-        const newcontent = title + content;
-        const chatData = {
-            user: game.user.id,
-            content: newcontent,
-            sound: CONFIG.sounds.dice
-        };
-        return chatData;
+    async _createAbilityCard(roll, dataset, dialogResp) {
+        const content = await roll.render();
+        const rolltype = dialogResp.resp.save
+            ? game.i18n.localize("HM.save")
+            : game.i18n.localize("HM.check");
+        const flavor = dialogResp.context.name + ": " + dataset.ability + " " + rolltype;
+        return {flavor, content};
     }
 }
