@@ -9,6 +9,15 @@ export const MACRO_VERS = {
 
 // system rules
 export const HMTABLES = {
+    "skill": {
+        "difficulty": {
+            "HM.verydifficult": 10,
+            "HM.difficult":      0,
+            "HM.average":      -40,
+            "HM.easy":         -80,
+            "HM.trivial":      -90
+        }
+    },
     "weapons": {
         "noprof": {
             "table": {

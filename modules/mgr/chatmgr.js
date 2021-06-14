@@ -1,4 +1,5 @@
 import LOGGER from "../sys/logger.js";
+import { HMTABLES } from "../sys/constants.js";
 
 export default class HMChatMgr {
     constructor() { this._user = game.user.id }
@@ -92,8 +93,19 @@ export default class HMChatMgr {
     async _createSkillCard(roll, dataset, dialogResp) {
         const item = dialogResp.context;
         let flavor = item.name;
+
+        const html = await roll.render();
+        let content = html;
         if (dialogResp.resp.opposed) flavor += " (Opposed)";
-        const content = await roll.render();
+        else {
+            const difficulty = HMTABLES.skill.difficulty;
+            for (let key in difficulty) {
+                if (roll.total + difficulty[key] >= 0) continue;
+                const diffRow = game.i18n.localize(key) + " " + game.i18n.localize("HM.skillcheck");
+                content = diffRow + "<p>" + html;
+                break;
+            }
+        }
         return {flavor, content};
     }
 

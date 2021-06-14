@@ -1,6 +1,6 @@
-import HMDialogMgr from "../sys/dialogmgr.js";
-import HMChatMgr from "../sys/chatmgr.js";
-import HMRollMgr from "../sys/rollmgr.js";
+import HMDialogMgr from "../mgr/dialogmgr.js";
+import HMChatMgr from "../mgr/chatmgr.js";
+import HMRollMgr from "../mgr/rollmgr.js";
 
 export class HMActorSheet extends ActorSheet {
 
