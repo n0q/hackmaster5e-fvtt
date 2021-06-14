@@ -195,7 +195,7 @@ export class HMActorSheet extends ActorSheet {
         const chatMgr = new HMChatMgr();
         if (dataset.dialog) {
             const dialogMgr = new HMDialogMgr();
-            const dialogResp = await dialogMgr.getDialog(actor, dataset);
+            const dialogResp = await dialogMgr.getDialog(dataset, actor);
             const roll = await rollMgr.getRoll(dataset, dialogResp);
             const card = await chatMgr.getCard(roll, dataset, dialogResp);
             return await ChatMessage.create(card);

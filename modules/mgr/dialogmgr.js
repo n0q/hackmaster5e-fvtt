@@ -1,16 +1,16 @@
 export default class HMDialogMgr {
-    async getDialog(actor, dataset) {
+    getDialog(dataset, caller=null) {
         const name = dataset.dialog;
-        if (name === 'setWound') { return this.setWound();                       } else
-        if (name === 'atk')      { return this.getAttackDialog(actor, dataset)   } else
-        if (name === 'dmg')      { return this.getDamageDialog(actor, dataset)   } else
-        if (name === 'def')      { return this.getDefendDialog(actor, dataset)   } else
-        if (name === 'skill')    { return this.getSkillDialog(actor, dataset)    } else
-        if (name === 'ability')  { return this.getAbilityDialog(actor, dataset)  }
+        if (name === 'atk')      { return this.getAttackDialog(dataset, caller)  } else
+        if (name === 'dmg')      { return this.getDamageDialog(dataset, caller)  } else
+        if (name === 'def')      { return this.getDefendDialog(dataset, caller)  } else
+        if (name === 'skill')    { return this.getSkillDialog(dataset, caller)   } else
+        if (name === 'ability')  { return this.getAbilityDialog(dataset, caller) } else
+        if (name === 'wound')    { return this.setWoundDialog(caller)            }
     }
 
     _focusById(id) {
-        return setTimeout(() => {document.getElementById(id).focus()}, 50);
+        return setTimeout(() => { document.getElementById(id).focus() }, 50);
     }
 
     getWeapons(actor, itemId) {
@@ -18,34 +18,40 @@ export default class HMDialogMgr {
         return actor.items.filter((a) => a.type === "weapon");
     }
 
-    async setWound() {
-        return await new Promise(async resolve => {
+    async setWoundDialog(caller) {
+        const dialogResp = {caller};
+        dialogResp.resp = await new Promise(async resolve => {
             new Dialog({
                 title: game.i18n.localize("HM.dialog.setWoundTitle"),
                 content: await renderTemplate("systems/hackmaster5e/templates/dialog/setWound.hbs"),
                 buttons: {
                     wound: {
                         label: game.i18n.localize("HM.dialog.setWoundTitle"),
-                        callback: () => { resolve(parseInt(document.getElementById("hp").value)) }
+                        callback: () => {
+                            resolve({
+                                "value": parseInt(document.getElementById("hp").value)
+                            })
+                        }
                     }
                 },
                 default: "wound"
             }, {width: 175}).render(true);
             this._focusById('hp');
         });
+        return dialogResp;
     }
 
-    async getAttackDialog(actor, dataset) {
+    async getAttackDialog(dataset, caller) {
         const dialogData = {};
-        const dialogResp = {"caller": actor};
+        const dialogResp = {caller};
 
-        dialogData.weapons = this.getWeapons(actor, dataset?.itemId);
+        dialogData.weapons = this.getWeapons(caller, dataset?.itemId);
         const template = "systems/hackmaster5e/templates/dialog/getAttack.hbs";
 
         let widx = null;
         dialogResp.resp = await new Promise(async resolve => {
             new Dialog({
-                title: actor.name + game.i18n.localize("HM.dialog.getAttackTitle"),
+                title: caller.name + game.i18n.localize("HM.dialog.getAttackTitle"),
                 content: await renderTemplate(template, dialogData),
                 buttons: {
                     attack: {
@@ -66,17 +72,17 @@ export default class HMDialogMgr {
         return dialogResp;
     }
 
-    async getDamageDialog(actor, dataset) {
+    async getDamageDialog(dataset, caller) {
         const dialogData = {};
-        const dialogResp = {"caller": actor};
+        const dialogResp = {caller};
 
-        dialogData.weapons = this.getWeapons(actor, dataset?.itemId);
+        dialogData.weapons = this.getWeapons(caller, dataset?.itemId);
         const template = "systems/hackmaster5e/templates/dialog/getDamage.hbs";
 
         let widx = null;
         dialogResp.resp = await new Promise(async resolve => {
             new Dialog({
-                title: actor.name + game.i18n.localize("HM.dialog.getDamageTitle"),
+                title: caller.name + game.i18n.localize("HM.dialog.getDamageTitle"),
                 content: await renderTemplate(template, dialogData),
                 buttons: {
                     normal: {
@@ -111,17 +117,17 @@ export default class HMDialogMgr {
         return dialogResp;
     }
 
-    async getDefendDialog(actor, dataset) {
+    async getDefendDialog(dataset, caller) {
         const dialogData = {};
-        const dialogResp = {"caller": actor};
+        const dialogResp = {caller};
 
-        dialogData.weapons = this.getWeapons(actor, dataset?.itemId);
+        dialogData.weapons = this.getWeapons(caller, dataset?.itemId);
         const template = "systems/hackmaster5e/templates/dialog/getDefend.hbs";
 
         let widx = null;
         dialogResp.resp = await new Promise(async resolve => {
             new Dialog({
-                title: actor.name + game.i18n.localize("HM.dialog.getDefendTitle"),
+                title: caller.name + game.i18n.localize("HM.dialog.getDefendTitle"),
                 content: await renderTemplate(template, dialogData),
                 buttons: {
                     defend: {
@@ -142,16 +148,16 @@ export default class HMDialogMgr {
         return dialogResp;
     }
 
-    async getSkillDialog(actor, dataset) {
+    async getSkillDialog(dataset, caller) {
         const dialogData = {};
-        const dialogResp = {"caller": actor};
+        const dialogResp = {caller};
 
-        dialogData.skill = actor.items.get(dataset.itemId);
+        dialogData.skill = caller.items.get(dataset.itemId);
         const template = "systems/hackmaster5e/templates/dialog/getSkill.hbs";
 
         dialogResp.resp = await new Promise(async resolve => {
             new Dialog({
-                title: actor.name + ": " + dialogData.skill.name + game.i18n.localize("HM.dialog.getSkillTitle"),
+                title: caller.name + ": " + dialogData.skill.name + game.i18n.localize("HM.dialog.getSkillTitle"),
                 content: await renderTemplate(template, dialogData),
                 buttons: {
                     standard: {
@@ -182,16 +188,16 @@ export default class HMDialogMgr {
         return dialogResp;
     }
 
-    async getAbilityDialog(actor, dataset) {
+    async getAbilityDialog(dataset, caller) {
         const dialogData = {};
-        const dialogResp = {"caller": actor};
+        const dialogResp = {caller};
 
         dialogData.ability = dataset.ability;
         const template = "systems/hackmaster5e/templates/dialog/getAbility.hbs";
 
         dialogResp.resp = await new Promise(async resolve => {
             new Dialog({
-                title: actor.name + ": " + dialogData.ability + " " + game.i18n.localize("HM.roll"),
+                title: caller.name + ": " + dialogData.ability + " " + game.i18n.localize("HM.roll"),
                 content: await renderTemplate(template, dialogData),
                 buttons: {
                     save: {
@@ -217,7 +223,7 @@ export default class HMDialogMgr {
             }).render(true);
             this._focusById('mod');
         });
-        dialogResp.context = actor;
+        dialogResp.context = caller;
         dialogResp.resp.oper = dialogResp.resp.save ? "+" : "-";
         return dialogResp;
     }
