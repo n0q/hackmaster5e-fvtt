@@ -5,93 +5,78 @@ import HMRollMgr from "../mgr/rollmgr.js";
 export class HMActorSheet extends ActorSheet {
 
     /** @override */
-  activateListeners(html) {
-    super.activateListeners(html);
+    activateListeners(html) {
+        super.activateListeners(html);
 
-    // ui elements
-    html.find('.toggle').click(this._onToggle.bind(this));
+        // ui elements
+        html.find('.toggle').click(this._onToggle.bind(this));
 
-    // Everything below here is only needed if the sheet is editable
-    if (!this.options.editable) return;
+        if (!this.options.editable) return;
+        // ----------------------------------------------------- //
 
-    // Add Inventory Item
-    html.find('.item-create').click(this._onItemCreate.bind(this));
+        // Add Inventory Item
+        html.find('.item-create').click(this._onItemCreate.bind(this));
 
-    // Update Inventory Item
-    html.find('.item-edit').click(ev => {
-      const li = $(ev.currentTarget).parents(".card");
-      const item = this.actor.items.get(li.data("itemId"));
-      item.sheet.render(true);
-    });
+        // Update Inventory Item
+        html.find('.item-edit').click(ev => {
+            const li = $(ev.currentTarget).parents(".card, .item");
+            const item = this.actor.items.get(li.data("itemId"));
+            item.sheet.render(true);
+        });
 
-    // Delete Inventory Item
-    html.find('.item-delete').click(ev => {
-      const li = $(ev.currentTarget).parents(".card");
-      const item = this.actor.items.get(li.data("itemId"));
-      item.delete();
-      li.slideUp(200, () => this.render(false));
-    });
+        // Delete Inventory Item
+        html.find('.item-delete').click(ev => {
+            const li = $(ev.currentTarget).parents(".card, .item");
+            const item = this.actor.items.get(li.data("itemId"));
+            item.delete();
+            li.slideUp(200, () => this.render(false));
+        });
 
-    // Move Inventory Item
-    html.find('.item-state').click(this._onItemState.bind(this));
+        // Move Inventory Item
+        html.find('.item-state').click(this._onItemState.bind(this));
+        html.find('.spell-state').click(this._onSpellState.bind(this));
 
-    html.find('.spell-state').click(this._onSpellState.bind(this));
+        // Rollable abilities.
+        html.find('.wound').click(this._onEditWound.bind(this));
+        html.find('.rollable').click(this._onRoll.bind(this));
+        html.find('.editable').change(this._onEdit.bind(this));
 
-    // Rollable abilities.
-    html.find('.wound').click(this._onEditWound.bind(this));
-    html.find('.rollable').click(this._onRoll.bind(this));
-    html.find('.editable').change(this._onEdit.bind(this));
-
-
-    // Drag events for macros.
-    if (this.actor.isOwner) {
-      let handler = ev => this._onDragStart(ev);
-      html.find('li.item').each((i, li) => {
-        if (li.classList.contains("inventory-header")) return;
-        li.setAttribute("draggable", true);
-        li.addEventListener("dragstart", handler, false);
-      });
+        // Drag events for macros.
+        if (this.actor.isOwner) {
+            let handler = ev => this._onDragStart(ev);
+            html.find('li.item').each((i, li) => {
+                if (li.classList.contains("inventory-header")) return;
+                li.setAttribute("draggable", true);
+                li.addEventListener("dragstart", handler, false);
+            });
+        }
     }
-  }
 
     // Getters
     _getItemId(event) {
-        let id = $(event.currentTarget).parents(".item").attr("data-item-id");
-        if (typeof id === "undefined") {
-            id = $(event.currentTarget).attr("data-item-id");
-        }
+        let id = $(event.currentTarget).parents(".card, .item").attr("data-item-id");
+        if (typeof id === "undefined") id = $(event.currentTarget).attr("data-item-id");
         return id;
     }
 
     _getOwnedItem(itemId) { return this.actor.items.get(itemId); }
-
     _getObjProp(event) { return $(event.currentTarget).attr("data-item-prop"); }
 
-
-  /**
-   * Handle creating a new Owned Item for the actor using initial data defined in the HTML dataset
-   * @param {Event} event   The originating click event
-   * @private
-   */
-    async _onItemCreate(event) {
-        event.preventDefault();
-        const header = event.currentTarget;
-        // Get the type of item to create.
-        const type = header.dataset.type;
-        // Grab any data associated with this control.
-        const data = duplicate(header.dataset);
-        // Initialize a default name.
+    async _onItemCreate(ev) {
+        ev.preventDefault();
+        const element = ev.currentTarget;
+        const dataset = element.dataset;
+        const type = dataset.type;
         const name = `New ${type.capitalize()}`;
-        // Prepare the item object.
-        const itemData = {
-            name: name,
-            type: type,
-            data: data
-        };
-        // Remove the type from the dataset since it's in the itemData.type prop.
-        delete itemData.data["type"];
 
-        // Finally, create the item!
+        let data;
+        if (dataset.dialog) {
+            const dialogMgr = new HMDialogMgr();
+            const dialogResp = await dialogMgr.getDialog(dataset, this.actor);
+            data = dialogResp.data;
+        }
+
+        const itemData = {name, type, data};
         return await Item.create(itemData, {parent: this.actor});
     }
 
@@ -115,6 +100,7 @@ export class HMActorSheet extends ActorSheet {
         const li = $(ev.currentTarget).parents(".card");
         const item = this.actor.items.get(li.data("itemId"));
         const state = item.data.data.state;
+
         // TODO: This can't possibly stay like this.
         if (state.equipped.checked) { state.equipped.checked = false; } else
         if (state.carried.checked)  { state.carried.checked  = false; } else {
@@ -155,15 +141,15 @@ export class HMActorSheet extends ActorSheet {
         }
     }
 
-    async _onEdit(event) {
-        event.preventDefault();
-        event.stopPropagation();
-        const element = event.currentTarget;
+    async _onEdit(ev) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        const element = ev.currentTarget;
         const dataset = element.dataset;
-        const item    = this._getOwnedItem(this._getItemId(event));
+        const item    = this._getOwnedItem(this._getItemId(ev));
         if (dataset.itemProp) {
             const itemProp = dataset.itemProp;
-            let targetValue = event.target.value;
+            let targetValue = ev.target.value;
             switch (dataset.dtype) {
                 case "Number":
                     targetValue = parseInt(targetValue);
@@ -179,15 +165,10 @@ export class HMActorSheet extends ActorSheet {
         }
     }
 
-   /**
-    * Handle clickable rolls.
-    * @param {Event} event   The originating click event
-    * @private
-    */
-    async _onRoll(event) {
-        event.preventDefault();
-        event.stopPropagation();
-        const element = event.currentTarget;
+    async _onRoll(ev) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        const element = ev.currentTarget;
         const dataset = element.dataset;
         const actor = this.actor;
 

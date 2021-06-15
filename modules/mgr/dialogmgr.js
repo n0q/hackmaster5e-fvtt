@@ -38,6 +38,8 @@ export default class HMDialogMgr {
             }, {width: 175}).render(true);
             this._focusById('hp');
         });
+        const resp = dialogResp.resp.value;
+        dialogResp.data = {hp: {value: resp}, duration: {value: resp}};
         return dialogResp;
     }
 
