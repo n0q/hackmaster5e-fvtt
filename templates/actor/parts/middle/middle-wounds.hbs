@@ -2,7 +2,11 @@
     <label class="item-image">{{localize "HM.wound"}}</label>
     <label class="item-name">{{localize "HM.duration"}}</label>
     <div class="item-controls">
-        <a class="item-control item-create" title="Create item" data-type="wound"><i class="fas fa-plus"></i> New</a>
+        <a class="item-control item-create" title="Create item"
+            data-dialog="wound"
+            data-type="wound">
+            <i class="fas fa-plus"></i> New
+        </a>
     </div>
 </li>
 {{#each actor.wounds}}
