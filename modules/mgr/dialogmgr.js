@@ -6,6 +6,7 @@ export default class HMDialogMgr {
         if (name === 'def')      { return this.getDefendDialog(dataset, caller)  } else
         if (name === 'skill')    { return this.getSkillDialog(dataset, caller)   } else
         if (name === 'ability')  { return this.getAbilityDialog(dataset, caller) } else
+        if (name === 'save')     { return this.getSaveDialog(dataset, caller)    } else
         if (name === 'wound')    { return this.setWoundDialog(caller)            }
     }
 
@@ -40,6 +41,33 @@ export default class HMDialogMgr {
         });
         const resp = dialogResp.resp.value;
         dialogResp.data = {hp: {value: resp}, duration: {value: resp}};
+        return dialogResp;
+    }
+
+    async getSaveDialog(dataset, caller) {
+        const dialogData = {};
+        const dialogResp = {caller};
+
+        const template = "systems/hackmaster5e/templates/dialog/getSave.hbs";
+        dialogResp.resp = await new Promise(async resolve => {
+            new Dialog({
+                title: game.i18n.localize("HM.dialog.getSaveTitle"),
+                content: await renderTemplate(template, dialogData),
+                buttons: {
+                    save: {
+                        label: game.i18n.localize("HM.dialog.getSaveTitle"),
+                        callback: () => {
+                            resolve({
+                                "bonus": parseInt(document.getElementById("bonus").value) || 0
+                            })
+                        }
+                    }
+                },
+                default: "save"
+            }, {width: 175}).render(true);
+            this._focusById('bonus');
+        });
+        dialogResp.context = caller;
         return dialogResp;
     }
 

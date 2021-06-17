@@ -16,7 +16,7 @@ export default class HMChatMgr {
                 cData = await this._createSkillCard(roll, dialogResp);
                 break;
             case "save":
-                cData = await this._createSaveCard(roll, dataset, dialogResp);
+                cData = await this._createSaveCard(roll, dataset);
                 break;
             case "ability":
                 cData = await this._createAbilityCard(roll, dataset, dialogResp);
@@ -109,9 +109,9 @@ export default class HMChatMgr {
         return {flavor, content};
     }
 
-    async _createSaveCard(dataType, roll) {
+    async _createSaveCard(roll, dataset) {
         const html = await roll.render();
-        const savetype = game.i18n.localize("HM.saves." + dataType);
+        const savetype = game.i18n.localize("HM.saves." + dataset.formulaType);
         const savename = game.i18n.localize("HM.save");
         return {flavor: savetype + " " + savename, content: html};
     }
