@@ -9,6 +9,13 @@ export const MACRO_VERS = {
 
 // system rules
 export const HMTABLES = {
+    "save": {
+        "dodge":    { "formula": "1d20p + @saves.dodge.value + @resp.bonus" },
+        "mental":   { "formula": "1d20p + @saves.mental.value + @resp.bonus" },
+        "physical": { "formula": "1d20p + @saves.physical.value + @resp.bonus" },
+        "poison":   { "formula": "1d20p + @abilities.con.derived.value + @resp.bonus" },
+        "top":      { "formula": "1d20 - @saves.top.value - @resp.bonus" }
+    },
     "skill": {
         "difficulty": {
             "HM.verydifficult": 10,

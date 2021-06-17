@@ -107,6 +107,7 @@
         "attack":       "Attack",
         "availability": "Availability",
         "average":      "Average",
+        "bonus":        "Bonus",
         "carried":      "Carried",
         "check":        "Check",
         "class":        "Class",
