@@ -4,8 +4,9 @@
         "templates": {
 
             "base": {
-                "hp": {"mod": {"value": 0}},
-                "sp": {"value": 25, "max": 30}
+                "hp":   {"mod": {"value": 0}},
+                "sp":   {"value": 25, "max": 30},
+                "init": {"value": 0}
             },
 
             "pc": {

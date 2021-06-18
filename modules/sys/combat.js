@@ -44,7 +44,7 @@ export class HMCombat extends Combat {
 
     async rollInitiative(ids, {formula=null, updateTurn=true, messageOptions={}}={}) {
         const initDie = await this._getInitiativeDie();
-        const initFormula = initDie;
+        const initFormula = initDie + game.system.data.initiative;
         const rollData = {formula: initFormula, updateTurn: updateTurn, messageOptions: messageOptions};
         return await super.rollInitiative(ids, rollData);
     }
