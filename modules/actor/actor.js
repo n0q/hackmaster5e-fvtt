@@ -43,6 +43,9 @@ export class HMActor extends Actor {
         return armorDerived;
     }
 
+    // TODO: Refactor.
+    // A lot of the jank here has to do with inefficiently prepping a weapon for use,
+    // while not prepping it for sheet display at all.
     setWeapons(armorDerived) {
         const weapons = this.items.filter((a) => a.type === "weapon");
         const noprof = HMTABLES.weapons.noprof;
@@ -87,12 +90,14 @@ export class HMActor extends Actor {
     }
 
     setSaves(data, levelData) {
+        // TODO: Refactor
         const savesData = data.saves;
+        const statsData = data.stats;
         const constitution = data.abilities.con.derived.value;
-        savesData.dodge.value     = savesData.dodge.mod.value;
-        savesData.mental.value    = savesData.dodge.mod.value;
-        savesData.physical.value  = savesData.dodge.mod.value;
-        savesData.poison.value    = constitution + savesData.poison.mod.value;
+        savesData.dodge.value     = statsData['dodge'][Object.keys(statsData['dodge'])[0]].value;
+        savesData.mental.value    = statsData['mental'][Object.keys(statsData['mental'])[0]].value;
+        savesData.physical.value  = statsData['physical'][Object.keys(statsData['physical'])[0]].value;
+        savesData.poison.value    = constitution;
         savesData.top.value       = Math.floor(constitution / 2);
         savesData.top.limit.value = Math.ceil((0.3 + levelData.top) * data.hp.max);
     }
@@ -127,6 +132,11 @@ export class HMActor extends Actor {
         return levelData;
     }
 
+    setInit(data) {
+        const initData = data.stats.init;
+        data.init.value = Object.values(initData).reduce((a,b) => a.value + b.value);
+    }
+
     _prepareCharacterData(data) {
         this.setAbilities(data);
         const levelData = this.processLevels(data);
@@ -135,5 +145,6 @@ export class HMActor extends Actor {
         this.setCharacterMaxHP(data, levelData);
         this.setCurrentHP(data);
         this.setSaves(data, levelData);
+        this.setInit(data);
     }
 }

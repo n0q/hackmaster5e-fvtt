@@ -1,0 +1,16 @@
+<section>
+    <label class="resource-label">Ability Bonuses</label>
+    <div class="statbonuses">
+        {{#each data.data.stats as |stat skey|}}
+        <section>
+            <label class="resource-label">{{localize (findConfigValue "statbonus" skey)}}</label>
+            {{#each stat}}
+                <div>
+                    <label class="resource-label">{{@key}}</label>
+                    <input type="number" name="data.stats.{{skey}}.{{@key}}.value" value="{{value}}"/>
+                </div>
+            {{/each}}
+        </section>
+        {{/each}}
+    </div>
+</section>

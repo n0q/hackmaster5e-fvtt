@@ -425,6 +425,9 @@
   border: 1px solid #999;
   padding: 5px;
 }
+.hackmaster .base-setup input {
+  width: 2em;
+}
 .hackmaster .base-setup .setup-abilities .row {
   display: flex;
   flex-direction: row;
@@ -434,8 +437,9 @@
   flex-basis: 100%;
   flex: 1;
 }
-.hackmaster .base-setup .setup-abilities input {
-  width: 2em;
+.hackmaster .base-setup .statbonuses {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 }
 .hackmaster .base-combat .row {
   display: flex;

@@ -4,8 +4,9 @@
         "templates": {
 
             "base": {
-                "hp": {"mod": {"value": 0}},
-                "sp": {"value": 25, "max": 30}
+                "hp":   {"mod": {"value": 0}},
+                "sp":   {"value": 25, "max": 30},
+                "init": {"value": 0}
             },
 
             "pc": {
@@ -48,21 +49,18 @@
                 },
 
                 "stats": {
-                    "str": {"dmg":      {"value": 0, "mod": {"value": 0}},
-                            "fos":      {"value": 0, "mod": {"value": 0}}},
-                    "int": {"atk":      {"value": 0, "mod": {"value": 0}}},
-                    "wis": {"init":     {"value": 0, "mod": {"value": 0}},
-                            "def":      {"value": 0, "mod": {"value": 0}},
-                            "mental":   {"value": 0, "mod": {"value": 0}}},
-                    "dex": {"init":     {"value": 0, "mod": {"value": 0}},
-                            "atk":      {"value": 0, "mod": {"value": 0}},
-                            "def":      {"value": 0, "mod": {"value": 0}},
-                            "dodge":    {"value": 0, "mod": {"value": 0}},
-                            "foa":      {"value": 0, "mod": {"value": 0}}},
-                    "con": {"physical": {"value": 0, "mod": {"value": 0}}},
-                    "lks":              {},
-                    "cha": {"turning":  {"value": 0, "mod": {"value": 0}},
-                            "morale":   {"value": 0, "mod": {"value": 0}}}
+                    "atk":      {"dex": {"value": 0, "mod": {"value": 0}},
+                                 "int": {"value": 0, "mod": {"value": 0}}},
+                    "def":      {"dex": {"value": 0, "mod": {"value": 0}},
+                                 "wis": {"value": 0, "mod": {"value": 0}}},
+                    "dmg":      {"str": {"value": 0, "mod": {"value": 0}}},
+                    "init":     {"dex": {"value": 0, "mod": {"value": 0}},
+                                 "int": {"value": 0, "mod": {"value": 0}}},
+                    "dodge":    {"dex": {"value": 0, "mod": {"value": 0}}},
+                    "mental":   {"wis": {"value": 0, "mod": {"value": 0}}},
+                    "physical": {"con": {"value": 0, "mod": {"value": 0}}},
+                    "turning":  {"cha": {"value": 0, "mod": {"value": 0}}},
+                    "morale":   {"cha": {"value": 0, "mod": {"value": 0}}}
                 },
 
                 "saves": {
