@@ -45,6 +45,18 @@
             "large":  "Large"
         },
 
+        "statbonus": {
+            "atk":      "Attack",
+            "def":      "Defense",
+            "dmg":      "Damage",
+            "init":     "Init",
+            "dodge":    "Dodge",
+            "mental":   "Mental",
+            "physical": "Physical",
+            "turning":  "Turning",
+            "morale":   "Morale"
+        },
+
         "avail": {
             "high": "High",
             "med":  "Med",

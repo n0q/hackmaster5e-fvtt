@@ -73,24 +73,24 @@ $actor-portrait-dim: 150px;
     .abilities-mods {
         @include border_rounded;
     }
-
-    .middle-saves {
-    }
-
-    .middle-wounds {
-    }
 }
 
 .base-setup {
     section {
         @include common_border;
     }
+    
+    input {
+        width: 2em;
+    }
+
     .setup-abilities {
         @include flexgrid;
-    
-        input {
-            width: 2em;
-        }
+    }
+
+    .statbonuses {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 

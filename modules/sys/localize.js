@@ -38,6 +38,18 @@ idx.size = {
     large:  "HM.sizeSelect.large"
 },
 
+idx.statbonus = {
+    atk:      "HM.statbonus.atk",
+    def:      "HM.statbonus.def",
+    dmg:      "HM.statbonus.dmg",
+    init:     "HM.statbonus.init",
+    dodge:    "HM.statbonus.dodge",
+    mental:   "HM.statbonus.mental",
+    physical: "HM.statbonus.physical",
+    turning:  "HM.statbonus.turning",
+    morale:   "HM.statbonus.morale"
+},
+
 idx.quality = {
     worthless:     "HM.qualitySelect.worthless",
     poor:          "HM.qualitySelect.poor",
