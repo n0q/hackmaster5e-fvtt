@@ -46,6 +46,7 @@
         },
 
         "statbonus": {
+            "feat":     "Feat",
             "atk":      "Attack",
             "def":      "Defense",
             "dmg":      "Damage",
@@ -71,6 +72,10 @@
         },
 
         "saves": {
+            "fos":      "FoS",
+            "fod":      "FoD",
+            "turning":  "Turning",
+            "morale":   "Morale",
             "dodge":    "Dodge",
             "mental":   "Mental",
             "physical": "Physical",
@@ -92,6 +97,7 @@
             "getAbilityButtonR": "Ability Check",
             "getDamageTitle":    ": Roll for Damage",
             "getDefendTitle":    ": Defend Thyself",
+            "getSaveTitle":      "Save",
             "getSkillTitle":     " Skill Check",
             "setinitTitle":      "Set Initiative",
             "setinitBody":       "Enter a new initiative.",
@@ -133,6 +139,7 @@
         "dodge":        "Dodge",
         "easy":         "Easy",
         "equipped":     "Equipped",
+        "feat":         "Feat",
         "initmod":      "Init Mod",
         "speedmod":     "Speed Mod",
         "movece":       "Move Coeff",

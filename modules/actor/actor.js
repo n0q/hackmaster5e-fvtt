@@ -94,6 +94,10 @@ export class HMActor extends Actor {
         const savesData = data.saves;
         const statsData = data.stats;
         const constitution = data.abilities.con.derived.value;
+        savesData.fos.value       = statsData.feat.str.value;
+        savesData.fod.value       = statsData.feat.dex.value;
+        savesData.turning.value   = statsData['turning'][Object.keys(statsData['turning'])[0]].value;
+        savesData.morale.value    = statsData['morale'][Object.keys(statsData['morale'])[0]].value;
         savesData.dodge.value     = statsData['dodge'][Object.keys(statsData['dodge'])[0]].value;
         savesData.mental.value    = statsData['mental'][Object.keys(statsData['mental'])[0]].value;
         savesData.physical.value  = statsData['physical'][Object.keys(statsData['physical'])[0]].value;

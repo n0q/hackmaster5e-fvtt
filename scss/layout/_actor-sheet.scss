@@ -61,10 +61,10 @@ $actor-portrait-dim: 150px;
     display: grid;
     grid-gap: $actor-gridgap;
     width: inherit;
-    grid-template-columns: 8em 1fr auto 13em;
+    grid-template-columns: 8em auto 1fr auto 13em;
 
     grid-template-areas:
-        "abilities abilities-mods middle-saves middle-wounds";
+        "abilities middle-saves-l abilities-mods middle-saves-r middle-wounds";
     .abilities {
         display: flex;
         flex-direction: column;
