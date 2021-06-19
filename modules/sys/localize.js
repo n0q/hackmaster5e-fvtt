@@ -39,6 +39,7 @@ idx.size = {
 },
 
 idx.statbonus = {
+    feat:     "HM.feat",
     atk:      "HM.statbonus.atk",
     def:      "HM.statbonus.def",
     dmg:      "HM.statbonus.dmg",
@@ -80,7 +81,12 @@ idx.saves = {
     "mental":   "HM.saves.mental",
     "physical": "HM.saves.physical",
     "poison":   "HM.saves.poison",
-    "top":      "HM.saves.top"
+    "top":      "HM.saves.top",
+    "feat":     "HM.feat",
+    "fos":      "HM.saves.fos",
+    "fod":      "HM.saves.fod",
+    "turning":  "HM.saves.turning",
+    "morale":   "HM.saves.morale"
 }
 
 idx.itemTypes = {
@@ -106,11 +112,15 @@ idx.savesImg = {
     "mental":   "icons/skills/wounds/anatomy-organ-brain-pink-red.webp",
     "physical": "icons/skills/wounds/anatomy-bone-joint.webp",
     "poison":   "icons/skills/toxins/poison-bottle-corked-fire-green.webp",
-    "top":      "icons/skills/wounds/injury-face-impact-orange.webp"
+    "top":      "icons/skills/wounds/injury-face-impact-orange.webp",
+    "fos":      "icons/skills/melee/unarmed-punch-fist-yellow-red.webp",
+    "fod":      "icons/skills/movement/figure-running-gray.webp",
+    "turning":  "icons/magic/holy/prayer-hands-glowing-yellow.webp",
+    "morale":   "icons/skills/social/wave-halt-stop.webp"
 }
 
 idx.combatImg = {
-    "atk":      "icons/commodities/treasure/broach-lightning-gold.webp",
+    "atk":      "icons/weapons/swords/greatsword-blue.webp",
     "dmg":      "icons/skills/melee/weapons-crossed-poleaxes-white.webp",
     "def":      "icons/skills/melee/shield-damaged-broken-%20brown.webp"
 }

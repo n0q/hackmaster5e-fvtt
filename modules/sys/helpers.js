@@ -38,17 +38,39 @@ export default function registerHandlebarsHelpers() {
         return "INVALID_LIST";
     });
 
+    // #each.slice(a, b)
+    Handlebars.registerHelper("slice", (context, options) => {
+        const opt = options.hash;
+        const length = context.length
+            ? context.length
+            : Object.keys(context).length;
+        const begin = opt.hasOwnProperty('begin')
+            ? parseInt(opt.begin) || 0
+            : 0;
+        const end = opt.hasOwnProperty('end')
+            ? parseInt(opt.end)
+            : length;
+
+        let ret = "";
+        const data = options.data ? Handlebars.createFrame(options.data) : {};
+        const key = Object.keys(context).slice(begin, end);
+        for (let i=0; i < key.length; i++) {
+            data.key = key[i];
+            ret += options.fn(context[key[i]], {data})
+        }
+        return ret;
+    });
+
     Handlebars.registerHelper("each_split", (context, options) => {
         let delimiter = "</div><div>";
         let slices    = 2;
-
         const ohash = options.hash;
         if (ohash.hasOwnProperty('delimiter')) {delimiter = ohash['delimiter'];}
         if (ohash.hasOwnProperty('slices')) {slices = ohash['slices'];}
 
         let ret = "";
         const midpoint = Math.ceil(context.length / slices);
-        for (var i = 0, j = context.length; i < j; i++) {
+        for (let i = 0, j = context.length; i < j; i++) {
             ret += options.fn(context[i]);
             if ((i + 1) % midpoint === 0) {
                 ret += delimiter;

@@ -56,6 +56,8 @@
                     "dmg":      {"str": {"value": 0, "mod": {"value": 0}}},
                     "init":     {"dex": {"value": 0, "mod": {"value": 0}},
                                  "int": {"value": 0, "mod": {"value": 0}}},
+                    "feat":     {"str": {"value": 0, "mod": {"value": 0}},
+                                 "dex": {"value": 0, "mod": {"value": 0}}},
                     "dodge":    {"dex": {"value": 0, "mod": {"value": 0}}},
                     "mental":   {"wis": {"value": 0, "mod": {"value": 0}}},
                     "physical": {"con": {"value": 0, "mod": {"value": 0}}},
@@ -64,6 +66,10 @@
                 },
 
                 "saves": {
+                    "fos":      {"mod": {"value": 0}},
+                    "fod":      {"mod": {"value": 0}},
+                    "turning":  {"mod": {"value": 0}},
+                    "morale":   {"mod": {"value": 0}},
                     "dodge":    {"mod": {"value": 0}},
                     "mental":   {"mod": {"value": 0}},
                     "physical": {"mod": {"value": 0}},
