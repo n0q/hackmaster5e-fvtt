@@ -13,9 +13,10 @@ export class HackmasterItem extends Item {
       const itemType  = this.data.type;
       const actorData = this.actor ? this.actor.data : null;
 
-      if (itemType === "armor")  { this._prepArmorData(itemData, actorData);  } else
-      if (itemType === "skill")  { this._prepSkillData(itemData, actorData);  } else
-      if (itemType === "weapon") { this._prepWeaponData(itemData, actorData); }
+      if (itemType === "armor")  { this._prepArmorData(itemData, actorData)  } else
+      if (itemType === "cclass") { this._prepCClassData(itemData, actorData) } else
+      if (itemType === "skill")  { this._prepSkillData(itemData, actorData)  } else
+      if (itemType === "weapon") { this._prepWeaponData(itemData, actorData) }
   }
 
   /**
@@ -47,6 +48,19 @@ export class HackmasterItem extends Item {
                 stats[key].derived = {"value": stats[key].value + stats[key].mod.value};
             }
         }
+    }
+
+    async _prepCClassData(data, actorData) {
+        const pTable = data.ptable;
+
+        // ptable initialize
+        if (pTable.length) return;
+        const pData = data._pdata;
+        for (let i = 0; i < 20; i++) pTable.push(deepClone(pData));
+        await this.update({"data.ptable": pTable});
+
+        // ptable sums
+        if (!actorData) return;
     }
 
     // Applying stat bonuses to weapons (rather than armor)

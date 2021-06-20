@@ -4,9 +4,10 @@
         "templates": {
 
             "base": {
-                "hp":   {"mod": {"value": 0}},
-                "sp":   {"value": 25, "max": 30},
-                "init": {"value": 0}
+                "hp":     {"mod": {"value": 0}},
+                "sp":     {"value": 25, "max": 30},
+                "init":   {"value": 0},
+                "cclass": null
             },
 
             "pc": {
@@ -97,9 +98,9 @@
 
     "Item": {
         "types": [
-              "armor",   "character_class",    "item",
-            "feature",              "race",   "skill",
-              "spell",            "weapon",   "wound",
+              "armor",   "cclass",    "item",
+            "feature",     "race",   "skill",
+              "spell",   "weapon",   "wound",
         "proficiency"
         ],
 
@@ -143,15 +144,27 @@
             }
         },
 
-        "character_class": {
+        "cclass": {
             "templates": ["base"],
-            "hp": {
-                "reroll": {"checked": false},
-                "value": null,
-                "hitdie": ""
+            "top_cf": 0.01,
+            "features": {
+                "sp":   {"checked": false},
+                "init": {"checked": false},
+                "atk":  {"checked": false},
+                "spd":  {"checked": false},
+                "spdr": {"checked": false},
+                "spdm": {"checked": false}
             },
-            "top_mod": {"value": 0.01},
-            "_ord": null
+            "ptable": [],
+            "_pdata": {
+                "hp":   {"value": null, "die": null, "reroll": {"checked": false}},
+                "sp":   {"value": null},
+                "init": {"value": null},
+                "atk":  {"value": null},
+                "spd":  {"value": null},
+                "spdr": {"value": null},
+                "spdm": {"value": null}
+            }
         },
 
         "item": {
