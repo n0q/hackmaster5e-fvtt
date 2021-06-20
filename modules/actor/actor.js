@@ -10,6 +10,11 @@ export class HMActor extends Actor {
         if (actorData.type === 'character') this._prepareCharacterData(data);
     }
 
+    setCClass(data) {
+        const actorCClass = this.items.filter((a) => a.type === "cclass");
+        let idPrev = data.cclass ? data.cclass._id : null;
+    }
+
     setAbilities(data) {
         const abilities = data.abilities;
         const actorRace = this.items.find((a) => a.type === "race");

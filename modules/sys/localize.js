@@ -89,6 +89,16 @@ idx.saves = {
     "morale":   "HM.saves.morale"
 }
 
+idx.itemCClass = {
+    "sp":       "HM.spellpoints",
+    "init":     "HM.initbonus",
+    "atk":      "HM.atkbonus",
+    "spd":      "HM.spdbonus",
+    "spdr":     "HM.spdrbonus",
+    "spdm":     "HM.spdmbonus"
+}
+
+
 idx.itemTypes = {
     "armor":    "HM.itemTypes.armor",
     "item":     "HM.itemTypes.item",

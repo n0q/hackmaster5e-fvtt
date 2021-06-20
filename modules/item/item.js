@@ -54,10 +54,12 @@ export class HackmasterItem extends Item {
         const pTable = data.ptable;
 
         // ptable initialize
-        if (pTable.length) return;
-        const pData = data._pdata;
-        for (let i = 0; i < 20; i++) pTable.push(deepClone(pData));
-        await this.update({"data.ptable": pTable});
+        if (Object.entries(pTable).length === 0) {
+            const pData = data._pdata;
+            for (let i = 1; i < 21; i++) pTable[i] = deepClone(pData);
+            if (Object.entries(pTable).length) return;
+            await this.update({"data.ptable": pTable});
+        }
 
         // ptable sums
         if (!actorData) return;

@@ -38,6 +38,8 @@ export default function registerHandlebarsHelpers() {
         return "INVALID_LIST";
     });
 
+    Handlebars.registerHelper("inc", (obj) => { return ++obj });
+
     // #each.slice(a, b)
     Handlebars.registerHelper("slice", (context, options) => {
         const opt = options.hash;

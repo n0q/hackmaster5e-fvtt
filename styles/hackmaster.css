@@ -152,6 +152,15 @@
 .hackmaster .item-form {
   font-family: "Roboto", sans-serif;
 }
+.hackmaster .item-table .row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.hackmaster .item-table .column {
+  flex-basis: 100%;
+  flex: 1;
+}
 .hackmaster .sheet-header {
   flex: 0 0 auto;
   overflow: hidden;

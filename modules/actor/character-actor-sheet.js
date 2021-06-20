@@ -9,7 +9,7 @@ export class HMCharacterActorSheet extends HMActorSheet {
             template: "systems/hackmaster5e/templates/actor/actor-base.hbs",
             width: 820,
             height: 750,
-            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "combat" }]
+            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "setup" }]
         });
     }
 
@@ -49,7 +49,7 @@ export class HMCharacterActorSheet extends HMActorSheet {
         const profs = [];
         const features = [];
         let race = null;
-        const character_classes = [];
+        const cclass = null;
 
         // Iterate through items, allocating to containers
         for (let i of sheetData.items) {
@@ -59,8 +59,13 @@ export class HMCharacterActorSheet extends HMActorSheet {
                     gear.push(i);
                     armors.push(i);
                     break;
-                case "character_class":
-                    character_classes.push(i);
+                case "cclass":
+                    if (cclass) {
+                        const oldId = cclass._id;
+                        const oldClass = this.actor.items.get(oldId);
+                        await oldClass.delete();
+                    }
+                    cclass = i;
                     break;
                 case "item":
                     gear.push(i);
@@ -113,11 +118,6 @@ export class HMCharacterActorSheet extends HMActorSheet {
         actorData.weapons = weapons;
         actorData.profs = profs;
         actorData.race = race;
-        actorData.character_classes = character_classes.sort((a, b) => { return a.data._ord - b.data._ord });
-
-        if (actorData.character_classes) {
-            const cclength = actorData.character_classes.length;
-            actorData.curr_class = actorData.character_classes[cclength -1];
-        }
+        actorData.cclass = cclass;
     }
 }
