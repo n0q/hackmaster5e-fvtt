@@ -49,7 +49,7 @@ export class HMCharacterActorSheet extends HMActorSheet {
         const profs = [];
         const features = [];
         let race = null;
-        const cclass = null;
+        let cclass = null;
 
         // Iterate through items, allocating to containers
         for (let i of sheetData.items) {
@@ -60,11 +60,6 @@ export class HMCharacterActorSheet extends HMActorSheet {
                     armors.push(i);
                     break;
                 case "cclass":
-                    if (cclass) {
-                        const oldId = cclass._id;
-                        const oldClass = this.actor.items.get(oldId);
-                        await oldClass.delete();
-                    }
                     cclass = i;
                     break;
                 case "item":
@@ -87,14 +82,6 @@ export class HMCharacterActorSheet extends HMActorSheet {
                     spells.push(i);
                     break;
                 case "race":
-
-                    // Swap race objects.
-                    // TODO: Is this the best place to make this check?
-                    if (race) {
-                        const oldId = race._id;
-                        const oldRace = this.actor.items.get(oldId);
-                        await oldRace.delete();
-                    }
                     race = i;
                     break;
                 case "weapon":

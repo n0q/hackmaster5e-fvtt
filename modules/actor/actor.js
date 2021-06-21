@@ -10,9 +10,28 @@ export class HMActor extends Actor {
         if (actorData.type === 'character') this._prepareCharacterData(data);
     }
 
-    setCClass(data) {
-        const actorCClass = this.items.filter((a) => a.type === "cclass");
-        let idPrev = data.cclass ? data.cclass._id : null;
+    async setRace(data) {
+        const races = this.items.filter((a) => a.type === "race");
+        if (!races.length) return;
+        const race = races.pop();
+
+        if (races.length) {
+            let oldrace;
+            while (oldrace = races.pop()) await oldrace.delete();
+        }
+    }
+
+    async setCClass(data) {
+        const cclasses = this.items.filter((a) => a.type === "cclass");
+        if (!cclasses.length) return;
+
+        const cclass = cclasses.pop();
+        data.level = cclass.data.data.level;
+
+        if (cclasses.length) {
+            let oldclass;
+            while (oldclass = cclasses.pop()) await oldclass.delete();
+        }
     }
 
     setAbilities(data) {
@@ -147,6 +166,8 @@ export class HMActor extends Actor {
     }
 
     _prepareCharacterData(data) {
+        this.setRace(data);
+        this.setCClass(data);
         this.setAbilities(data);
         const levelData = this.processLevels(data);
         const armorDerived = this.setArmor(data);
