@@ -1,13 +1,13 @@
 <section style="common-border">
     <label class="resource-label">Class</label>
     <ol class="cards-list">
-        {{#each actor.class}}
+        {{#with actor.cclass}}
             <li class="card" data-item-id="{{_id}}">
                 <div class="lid">
                     <header>
                         <label for="{{name}}">
                             <div class="item-image"><img src="{{img}}" title="{{name}}" width="28" height="28"/></div>
-                            <h4 class="item-name">{{data._ord}}. {{name}}</h4>
+                            <h4 class="item-name">{{name}}-{{data.level.value}}</h4>
                         </label>
                     </header>
                     <section>
@@ -18,6 +18,6 @@
                     </section>
                 </div>
             </li>
-        {{/each}}
+        {{/with}}
     </ol>
 </section>

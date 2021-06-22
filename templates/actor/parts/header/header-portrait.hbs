@@ -4,7 +4,7 @@
         <input name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
         <div>
             {{#if actor.race.name}}{{actor.race.name}}{{/if}}
-            {{#if actor.curr_class}}{{actor.curr_class.name}}-{{actor.curr_class.data._ord}}{{/if}}
+            {{#if actor.cclass}}{{actor.cclass.name}}-{{actor.cclass.data.level.value}}{{/if}}
         </div>
     </div>
 </span>
