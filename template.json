@@ -95,10 +95,9 @@
 
     "Item": {
         "types": [
-              "armor",   "cclass",    "item",
-            "feature",     "race",   "skill",
-              "spell",   "weapon",   "wound",
-        "proficiency"
+              "armor",        "cclass",   "feature",   "item",
+              "proficiency",  "race",     "skill",     "spell",
+              "weapon",       "wound"
         ],
 
         "templates": {
@@ -144,7 +143,8 @@
         "cclass": {
             "templates": ["base"],
             "level": {"value": 1},
-            "top_cf": 0.01,
+            "mod": {},
+            "top_cf": {"value": 0.01},
             "features": {
                 "sp":   {"checked": false},
                 "atk":  {"checked": false},

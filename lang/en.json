@@ -152,6 +152,7 @@
         "inventory":    "Inventory",
         "knockback":    "Knockback",
         "language":     "Language",
+        "level":        "Level",
         "literate":     "Literate",
         "magic":        "Magic",
         "mastery":      "Mastery",

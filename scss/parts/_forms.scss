@@ -1,10 +1,51 @@
 .item-form {
-  font-family: $font-primary;
+    font-family: $font-primary;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    input[type="text"],
+    input[type="number"] {
+        width: 3em;
+        min-width: 3em;
+    }
+    
+    input[type="number"] {
+        text-align: right;
+    }
+
+    input:read-only {
+        border: 0;
+        background: none;
+    }
+
+    .sidepanel {
+        .options-block {
+            display: flex;
+            height: auto;
+            flex-direction: column;
+            margin: 5px;
+            padding: 10px;
+            border-radius: 5px;
+            border: solid;
+
+            label { padding-right: 5px; }
+        }
+
+        .options-row-l,
+        .options-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .options-row-l {
+            justify-content: flex-start;
+        }
+    }
+
+    .item-table { @include flexgrid; }
 }
 
-.item-table {
-    @include flexgrid;
-}
 
 .sheet-header {
   flex: 0 0 auto;

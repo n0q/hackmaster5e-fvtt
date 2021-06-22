@@ -53,7 +53,7 @@ export class HackmasterItem extends Item {
     async _prepCClassData(data, actorData) {
         const pTable = data.ptable;
 
-        // ptable initialize
+        // initialize new cclass object ptable
         if (Object.entries(pTable).length === 0) {
             const pData = data._pdata;
             for (let i = 1; i < 21; i++) pTable[i] = deepClone(pData);
@@ -61,8 +61,37 @@ export class HackmasterItem extends Item {
             await this.update({"data.ptable": pTable});
         }
 
-        // ptable sums
+        // calculate hp
         if (!actorData) return;
+        const level = data.level.value;
+        let hp = 0;
+
+        let rerolled = false;
+        let hpStack = [];
+        let i = 0;
+        while (i++ < level) {
+            const reroll = pTable[i].hp.reroll.checked;
+            if (!reroll && rerolled) {
+                hp += Math.max(...hpStack);
+                rerolled = false;
+                hpStack = [];
+            }
+            hpStack.push(parseInt(pTable[i].hp.value) || 0);
+            if (reroll) rerolled = true;
+        }
+        hp += Math.max(...hpStack);
+
+        // grab the level data off the ptable
+        const feature = data.features;
+        const mod = {hp: {value: hp}};
+        for (let i in feature) {
+            mod[i] = feature[i].checked
+                ? {value: pTable[level][i].value || 0}
+                : {value: 0};
+        }
+
+        mod.top = {value: (data.top_cf.value || 0.01) * level};
+        await this.update({"data.mod": mod});
     }
 
     // Applying stat bonuses to weapons (rather than armor)
