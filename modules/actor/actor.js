@@ -10,6 +10,30 @@ export class HMActor extends Actor {
         if (actorData.type === 'character') this._prepareCharacterData(data);
     }
 
+    async setRace(data) {
+        const races = this.items.filter((a) => a.type === "race");
+        if (!races.length) return;
+        const race = races.pop();
+
+        if (races.length) {
+            let oldrace;
+            while (oldrace = races.pop()) await oldrace.delete();
+        }
+    }
+
+    async setCClass(data) {
+        const cclasses = this.items.filter((a) => a.type === "cclass");
+        if (!cclasses.length) return;
+
+        const cclass = cclasses.pop();
+        data.level.value = cclass.data.data.level.value;
+
+        if (cclasses.length) {
+            let oldclass;
+            while (oldclass = cclasses.pop()) await oldclass.delete();
+        }
+    }
+
     setAbilities(data) {
         const abilities = data.abilities;
         const actorRace = this.items.find((a) => a.type === "race");
@@ -74,11 +98,12 @@ export class HMActor extends Actor {
         }
     }
 
-    setCharacterMaxHP(data, levelData) {
+    setCharacterMaxHP(data) {
         const race      = this.items.find((a) => a.type === "race");
         const racial_hp = race ? race.data.data.hp.value : 0;
         const con_hp    = data.abilities.con.derived.value || 0;
-        const level_hp  = levelData.level_hp || 0;
+        const cclass    = this.items.find((a) => a.type === "cclass");
+        const level_hp  = cclass ? cclass.data.data.mod.hp.value : 0;
         data.hp.max     = racial_hp + con_hp + level_hp;
     }
 
@@ -89,51 +114,26 @@ export class HMActor extends Actor {
         data.hp.value = data.hp.max - hp_loss;
     }
 
-    setSaves(data, levelData) {
+    setSaves(data) {
         // TODO: Refactor
+        // actor.js is probably the wrong place to do this. Also SPoT should be constants.js.
+        const cclass    = this.items.find((a) => a.type === "cclass");
+        const leveltop  = cclass ? cclass.data.data.mod.top.value : 0.01;
+
         const savesData = data.saves;
         const statsData = data.stats;
+        const level     = data.level.value;
         const constitution = data.abilities.con.derived.value;
         savesData.fos.value       = statsData.feat.str.value;
         savesData.fod.value       = statsData.feat.dex.value;
-        savesData.turning.value   = statsData['turning'][Object.keys(statsData['turning'])[0]].value;
+        savesData.turning.value   = statsData['turning'][Object.keys(statsData['turning'])[0]].value + level;
         savesData.morale.value    = statsData['morale'][Object.keys(statsData['morale'])[0]].value;
-        savesData.dodge.value     = statsData['dodge'][Object.keys(statsData['dodge'])[0]].value;
-        savesData.mental.value    = statsData['mental'][Object.keys(statsData['mental'])[0]].value;
-        savesData.physical.value  = statsData['physical'][Object.keys(statsData['physical'])[0]].value;
+        savesData.dodge.value     = statsData['dodge'][Object.keys(statsData['dodge'])[0]].value + level;
+        savesData.mental.value    = statsData['mental'][Object.keys(statsData['mental'])[0]].value + level;
+        savesData.physical.value  = statsData['physical'][Object.keys(statsData['physical'])[0]].value + level;
         savesData.poison.value    = constitution;
         savesData.top.value       = Math.floor(constitution / 2);
-        savesData.top.limit.value = Math.ceil((0.3 + levelData.top) * data.hp.max);
-    }
-
-    // TODO: Refactor
-    processLevels() {
-        const dataUpdate = [];
-        const levelData = {level_hp: 0, top: 0.00};
-        const levelObj  = this.items.filter((a) => a.type === "character_class");
-        const levelSort = levelObj.sort((a, b) => { return a.data_ord - b.data._ord });
-        let b_reorder = false;
-
-        let hp_prev = 0;
-        for (let i = 0; i < levelSort.length; i++) {
-            if (levelSort[i].data.data._ord !== i + 1 || b_reorder) {
-                levelSort[i].data.data._ord = i + 1;
-                dataUpdate.push({_id:levelSort[i].id, data:levelSort[i].data.data});
-                b_reorder = true;
-            }
-
-            // Level processing.
-            let top = levelSort[i].data.data.top_mod.value || 0.00;
-            let hp_curr = levelSort[i].data.data.hp.value || 0;
-            let hp_curr_checked = levelSort[i].data.data.hp.reroll.checked;
-            if (hp_curr_checked) hp_curr = Math.max(0, hp_curr - hp_prev);
-
-            levelData.top      += top;
-            levelData.level_hp += hp_curr;
-            hp_prev = hp_curr;
-        }
-        if (dataUpdate.length) this.updateEmbeddedDocuments("Item", dataUpdate);
-        return levelData;
+        savesData.top.limit.value = Math.ceil((0.3 + leveltop) * data.hp.max);
     }
 
     setInit(data) {
@@ -142,13 +142,14 @@ export class HMActor extends Actor {
     }
 
     _prepareCharacterData(data) {
+        this.setRace(data);
+        this.setCClass(data);
         this.setAbilities(data);
-        const levelData = this.processLevels(data);
         const armorDerived = this.setArmor(data);
         this.setWeapons(armorDerived);
-        this.setCharacterMaxHP(data, levelData);
+        this.setCharacterMaxHP(data);
         this.setCurrentHP(data);
-        this.setSaves(data, levelData);
+        this.setSaves(data);
         this.setInit(data);
     }
 }

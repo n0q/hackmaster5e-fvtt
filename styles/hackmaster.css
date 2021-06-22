@@ -151,6 +151,51 @@
 /* Styles limited to hackmaster sheets */
 .hackmaster .item-form {
   font-family: "Roboto", sans-serif;
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+.hackmaster .item-form input[type=text],
+.hackmaster .item-form input[type=number] {
+  width: 3em;
+  min-width: 3em;
+}
+.hackmaster .item-form input[type=number] {
+  text-align: right;
+}
+.hackmaster .item-form input:read-only {
+  border: 0;
+  background: none;
+}
+.hackmaster .item-form .sidepanel .options-block {
+  display: flex;
+  height: auto;
+  flex-direction: column;
+  margin: 5px;
+  padding: 10px;
+  border-radius: 5px;
+  border: solid;
+}
+.hackmaster .item-form .sidepanel .options-block label {
+  padding-right: 5px;
+}
+.hackmaster .item-form .sidepanel .options-row-l,
+.hackmaster .item-form .sidepanel .options-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.hackmaster .item-form .sidepanel .options-row-l {
+  justify-content: flex-start;
+}
+.hackmaster .item-form .item-table .row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.hackmaster .item-form .item-table .column {
+  flex-basis: 100%;
+  flex: 1;
 }
 .hackmaster .sheet-header {
   flex: 0 0 auto;

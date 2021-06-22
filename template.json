@@ -4,15 +4,16 @@
         "templates": {
 
             "base": {
-                "hp":   {"mod": {"value": 0}},
-                "sp":   {"value": 25, "max": 30},
-                "init": {"value": 0}
+                "hp":     {"mod": {"value": 0}},
+                "sp":     {"value": 25, "max": 30},
+                "init":   {"value": 0}
             },
 
             "pc": {
                 "luck":  {"value": 0, "max": 0},
                 "ep":    {"value": 0, "max": 400},
                 "bp":    {"value": 40},
+                "level": {"value": 1},
                 "honor": {"value": 0}
             },
 
@@ -80,12 +81,9 @@
         },
 
         "character": {
-            "templates": ["base", "statblock"],
+            "templates": ["base", "pc", "statblock"],
             "biography": "",
-            "luck":  {"value": 0},
-            "honor": {"value": 0},
-            "fame":  {"value": 0},
-            "ep":    {"value": 0}
+            "fame":  {"value": 0}
         },
 
         "beast": {
@@ -97,10 +95,9 @@
 
     "Item": {
         "types": [
-              "armor",   "character_class",    "item",
-            "feature",              "race",   "skill",
-              "spell",            "weapon",   "wound",
-        "proficiency"
+              "armor",        "cclass",   "feature",   "item",
+              "proficiency",  "race",     "skill",     "spell",
+              "weapon",       "wound"
         ],
 
         "templates": {
@@ -143,15 +140,29 @@
             }
         },
 
-        "character_class": {
+        "cclass": {
             "templates": ["base"],
-            "hp": {
-                "reroll": {"checked": false},
-                "value": null,
-                "hitdie": ""
+            "level": {"value": 1},
+            "mod": {},
+            "top_cf": {"value": 0.01},
+            "features": {
+                "sp":   {"checked": false},
+                "atk":  {"checked": false},
+                "spd":  {"checked": false},
+                "spdm": {"checked": false},
+                "spdr": {"checked": false},
+                "init": {"checked": false}
             },
-            "top_mod": {"value": 0.01},
-            "_ord": null
+            "ptable": {},
+            "_pdata": {
+                "hp":   {"value": null, "die": null, "reroll": {"checked": false}},
+                "sp":   {"value": null},
+                "atk":  {"value": null},
+                "spd":  {"value": null},
+                "spdm": {"value": null},
+                "spdr": {"value": null},
+                "init": {"value": null}
+            }
         },
 
         "item": {

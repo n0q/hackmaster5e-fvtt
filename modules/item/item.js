@@ -13,9 +13,10 @@ export class HackmasterItem extends Item {
       const itemType  = this.data.type;
       const actorData = this.actor ? this.actor.data : null;
 
-      if (itemType === "armor")  { this._prepArmorData(itemData, actorData);  } else
-      if (itemType === "skill")  { this._prepSkillData(itemData, actorData);  } else
-      if (itemType === "weapon") { this._prepWeaponData(itemData, actorData); }
+      if (itemType === "armor")  { this._prepArmorData(itemData, actorData)  } else
+      if (itemType === "cclass") { this._prepCClassData(itemData, actorData) } else
+      if (itemType === "skill")  { this._prepSkillData(itemData, actorData)  } else
+      if (itemType === "weapon") { this._prepWeaponData(itemData, actorData) }
   }
 
   /**
@@ -47,6 +48,58 @@ export class HackmasterItem extends Item {
                 stats[key].derived = {"value": stats[key].value + stats[key].mod.value};
             }
         }
+    }
+
+    async _prepCClassData(data, actorData) {
+        const pTable = data.ptable;
+
+        // initialize new cclass object ptable
+        if (Object.entries(pTable).length === 0) {
+            const pData = data._pdata;
+            for (let i = 1; i < 21; i++) pTable[i] = deepClone(pData);
+            if (Object.entries(pTable).length) return;
+            await this.update({"data.ptable": pTable});
+        }
+
+        // calculate hp
+        if (!actorData) return;
+        const level = data.level.value;
+        let hp = 0;
+
+        let rerolled = false;
+        let hpStack = [];
+        let i = 0;
+        while (i++ < level) {
+            const reroll = pTable[i].hp.reroll.checked;
+
+            // end of a reroll chain
+            if (!reroll && rerolled) {
+                hp += Math.max(...hpStack);
+                rerolled = false;
+                hpStack = [];
+            }
+
+            // there was no reroll chain
+            if (!reroll && !rerolled && hpStack.length === 1) {
+                hp += hpStack.pop();
+            }
+
+            hpStack.push(parseInt(pTable[i].hp.value) || 0);
+            if (reroll) rerolled = true;
+        }
+        hp += Math.max(...hpStack);
+
+        // grab the level data off the ptable
+        const feature = data.features;
+        const mod = {hp: {value: hp}};
+        for (let i in feature) {
+            mod[i] = feature[i].checked
+                ? {value: pTable[level][i].value || 0}
+                : {value: 0};
+        }
+
+        mod.top = {value: (data.top_cf.value || 0.01) * level};
+        await this.update({"data.mod": mod});
     }
 
     // Applying stat bonuses to weapons (rather than armor)

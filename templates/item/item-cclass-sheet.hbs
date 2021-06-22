@@ -1,0 +1,117 @@
+<form class="{{cssClass}}" autocomplete="off">
+    {{> "systems/hackmaster5e/templates/item/parts/header.hbs" }}
+
+    <nav class="sheet-tabs tabs" data-group="primary">
+        <a class="item" data-tab="description">Description</a>
+        <a class="item" data-tab="attributes">Attributes</a>
+        <a class="item" data-tab="config">Config</a>
+    </nav>
+
+    <section class="sheet-body">
+        <div class="tab" data-group="primary" data-tab="description">
+            {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+        </div>
+
+        <div class="tab attributes" data-group="primary" data-tab="attributes">
+            <div class="item-form">
+                <div class="sidepanel">
+                    <div class="options-block">
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.level"}}</label>
+                            <input type="number" name="data.level.value" value="{{data.data.level.value}}" data-dtype="Number"/>
+                        </div>
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.hp"}}</label>
+                            <input type="number" value="{{data.data.mod.hp.value}}" readonly="true">
+                        </div>
+                    </div>
+                </div>
+                <div class="sidepanel">
+                    {{#each data.data.ptable as |level lkey|}}
+                    {{#if (gte ../data.data.level.value lkey)}}
+                    <div class="options-row-l">
+                        <label class="resource-label">{{localize "HM.level"}} {{lkey}}</label>
+                        <input type="text" value="{{level.hp.die}}" readonly="true"/>
+                        <input type="number" name="data.ptable.{{lkey}}.hp.value" value="{{level.hp.value}}" data-dtype="Number"/>
+                        {{#if level.hp.reroll.checked}}(reroll){{/if}}
+                    </div>
+                    {{/if}}
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+
+        <div class="tab" data-group="primary" data-tab="config">
+            <div class="item-form">
+                <div class="sidepanel">
+                    <div class="options-block">
+                        <div class="options-row">
+                            <label>Trauma Bonus</label>
+                            <input type="number" name="data.top_cf.value" value="{{data.data.top_cf.value}}" data-dtype="Float"/>
+                        </div>
+                        {{#each data.data.features as |feature key|}}
+                        <div class="options-row">
+                            <label>{{localize (findConfigValue "itemCClass" key)}}</label>
+                            <input type="checkbox" name="data.features.{{@key}}.checked" {{checked feature.checked}}/>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="item-table">
+                    <div class="row">
+                        <div class="column">Level</div>
+                        <div class="column">HDie</div>
+                        <div class="column">Reroll</div>
+                        {{#if data.data.features.sp.checked}}<div class="column">Spell Points</div>{{/if}}
+                        {{#if data.data.features.atk.checked}}<div class="column">Attack Bonus</div>{{/if}}
+                        {{#if data.data.features.spd.checked}}<div class="column">Speed Bonus</div>{{/if}}
+                        {{#if data.data.features.spdm.checked}}<div class="column">Melee Speed</div>{{/if}}
+                        {{#if data.data.features.spdr.checked}}<div class="column">Ranged Speed</div>{{/if}}
+                        {{#if data.data.features.init.checked}}<div class="column">Init Bonus</div>{{/if}}
+                     </div>
+                    {{#each data.data.ptable as |level lkey|}}
+                    <div class="row">
+                        <div class="column">{{lkey}}</div>
+                        <div class="column">
+                            <input type="text" name="data.ptable.{{lkey}}.hp.die" value="{{level.hp.die}}" data-dtype="String"/>
+                        </div>
+                        <div class="column">
+                            <input type="checkbox" name="data.ptable.{{lkey}}.hp.reroll.checked" {{checked level.hp.reroll.checked}}/>
+                        </div>
+                        {{#if ../data.data.features.sp.checked}}
+                        <div class="column">
+                            <input type="number" name="data.ptable.{{lkey}}.sp.value" value="{{level.sp.value}}" data-dtype="Number"/>
+                        </div>
+                        {{/if}}
+                        {{#if ../data.data.features.atk.checked}}
+                        <div class="column">
+                            <input type="number" name="data.ptable.{{lkey}}.atk.value" value="{{atk.value}}" data-dtype="Number"/>
+                        </div>
+                        {{/if}}
+                        {{#if ../data.data.features.spd.checked}}
+                        <div class="column">
+                            <input type="number" name="data.ptable.{{lkey}}.spd.value" value="{{spd.value}}" data-dtype="Number"/>
+                        </div>
+                        {{/if}}
+                        {{#if ../data.data.features.spdm.checked}}
+                        <div class="column">
+                            <input type="number" name="data.ptable.{{lkey}}.spdm.value" value="{{spdm.value}}" data-dtype="Number"/>
+                        </div>
+                        {{/if}}
+                        {{#if ../data.data.features.spdr.checked}}
+                        <div class="column">
+                            <input type="number" name="data.ptable.{{lkey}}.spdr.value" value="{{spdr.value}}" data-dtype="Number"/>
+                        </div>
+                        {{/if}}
+                        {{#if ../data.data.features.init.checked}}
+                        <div class="column">
+                            <input type="number" name="data.ptable.{{lkey}}.init.value" value="{{init.value}}" data-dtype="Number"/>
+                        </div>
+                        {{/if}}
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </section>
+</form>

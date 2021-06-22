@@ -38,6 +38,13 @@ export default function registerHandlebarsHelpers() {
         return "INVALID_LIST";
     });
 
+    Handlebars.registerHelper("inc", (a)    => { return ++a });
+    Handlebars.registerHelper("dec", (a)    => { return --a });
+    Handlebars.registerHelper("gt",  (a, b) => { return   a >  b });
+    Handlebars.registerHelper("gte", (a, b) => { return   a >= b });
+    Handlebars.registerHelper("lt",  (a, b) => { return   a <  b });
+    Handlebars.registerHelper("lte", (a, b) => { return   a <= b });
+
     // #each.slice(a, b)
     Handlebars.registerHelper("slice", (context, options) => {
         const opt = options.hash;
