@@ -71,11 +71,19 @@ export class HackmasterItem extends Item {
         let i = 0;
         while (i++ < level) {
             const reroll = pTable[i].hp.reroll.checked;
+
+            // end of a reroll chain
             if (!reroll && rerolled) {
                 hp += Math.max(...hpStack);
                 rerolled = false;
                 hpStack = [];
             }
+
+            // there was no reroll chain
+            if (!reroll && !rerolled && hpStack.length === 1) {
+                hp += hpStack.pop();
+            }
+
             hpStack.push(parseInt(pTable[i].hp.value) || 0);
             if (reroll) rerolled = true;
         }
