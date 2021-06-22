@@ -26,7 +26,7 @@ export class HMActor extends Actor {
         if (!cclasses.length) return;
 
         const cclass = cclasses.pop();
-        data.level = cclass.data.data.level;
+        data.level.value = cclass.data.data.level.value;
 
         if (cclasses.length) {
             let oldclass;
@@ -115,16 +115,18 @@ export class HMActor extends Actor {
 
     setSaves(data, levelData) {
         // TODO: Refactor
+        // actor.js is probably the wrong place to do this. Also SPoT should be constants.js.
         const savesData = data.saves;
         const statsData = data.stats;
+        const level     = data.level.value;
         const constitution = data.abilities.con.derived.value;
         savesData.fos.value       = statsData.feat.str.value;
         savesData.fod.value       = statsData.feat.dex.value;
-        savesData.turning.value   = statsData['turning'][Object.keys(statsData['turning'])[0]].value;
+        savesData.turning.value   = statsData['turning'][Object.keys(statsData['turning'])[0]].value + level;
         savesData.morale.value    = statsData['morale'][Object.keys(statsData['morale'])[0]].value;
-        savesData.dodge.value     = statsData['dodge'][Object.keys(statsData['dodge'])[0]].value;
-        savesData.mental.value    = statsData['mental'][Object.keys(statsData['mental'])[0]].value;
-        savesData.physical.value  = statsData['physical'][Object.keys(statsData['physical'])[0]].value;
+        savesData.dodge.value     = statsData['dodge'][Object.keys(statsData['dodge'])[0]].value + level;
+        savesData.mental.value    = statsData['mental'][Object.keys(statsData['mental'])[0]].value + level;
+        savesData.physical.value  = statsData['physical'][Object.keys(statsData['physical'])[0]].value + level;
         savesData.poison.value    = constitution;
         savesData.top.value       = Math.floor(constitution / 2);
         savesData.top.limit.value = Math.ceil((0.3 + levelData.top) * data.hp.max);

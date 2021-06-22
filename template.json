@@ -81,12 +81,9 @@
         },
 
         "character": {
-            "templates": ["base", "statblock"],
+            "templates": ["base", "pc", "statblock"],
             "biography": "",
-            "luck":  {"value": 0},
-            "honor": {"value": 0},
-            "fame":  {"value": 0},
-            "ep":    {"value": 0}
+            "fame":  {"value": 0}
         },
 
         "beast": {
@@ -146,7 +143,7 @@
 
         "cclass": {
             "templates": ["base"],
-            "level": 1,
+            "level": {"value": 1},
             "top_cf": 0.01,
             "features": {
                 "sp":   {"checked": false},
