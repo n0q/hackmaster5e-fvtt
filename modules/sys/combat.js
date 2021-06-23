@@ -60,7 +60,7 @@ export class HMCombatTracker extends CombatTracker {
         if (!combatant.isOwner) return;
 
         let initiative = html.find(".token-initiative");
-        let input = $(`<input class="initiative" style="width: 90%" value="${combatant.initiative}"/>`);
+        let input = $(`<input type="number" class="initiative" value="${combatant.initiative}"/>`);
         initiative.off("dblclick");
         initiative.empty().append(input);
         input.focus().select();

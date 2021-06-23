@@ -516,6 +516,9 @@
 }
 
 /* Styles which override foundry core */
+#combat .initiative {
+  color: #fff;
+}
 #combat .initiative:hover {
   border: 1px solid #ff6400;
   border-radius: 2px;
