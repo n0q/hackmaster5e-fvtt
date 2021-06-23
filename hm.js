@@ -43,12 +43,7 @@ Hooks.once("ready", async() => {
     }
 });
 
-Hooks.on('renderCombatTracker', (chat, html, user) => {
-    if (!html.find("[data-control='nextTurn']").length) return;
-    html.find("[data-control='nextTurn']")[0].remove();
-    html.find("[data-control='previousTurn']")[0].remove();
-    html.find(".active").removeClass("active");
-});
+Hooks.on('renderCombatTracker', HMCombatTracker.renderCombatTracker);
 
 Hooks.on("diceSoNiceRollStart", (messageId, context) => {
     // Add 1 to penetration dice so dsn shows actual die throws.

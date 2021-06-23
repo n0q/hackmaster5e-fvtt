@@ -17,6 +17,7 @@ The roll20 system offers some features I won't get to in 0.1.x, and this will be
 - **The League of Extraordinary FoundryVTT Developers** for their unending patience and assistance.
 - **asacolips** for his excellent Boilerplate system, which provided the initial bones for this one.
 - **[Derg](https://github.com/derg4)** for providing penetration dice code.
+- Uses code adapted from **[Initiative Double Click](https://github.com/League-of-Foundry-Developers/fvtt-initiative-double-click)**
 - Kenzer and Company for granting me permission to undertake this project.
 
 #### Legal

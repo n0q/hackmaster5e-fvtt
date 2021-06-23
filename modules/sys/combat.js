@@ -4,15 +4,6 @@ export class HMCombat extends Combat {
     nextTurn() { return this.nextRound() }
     _sortCombatants(a, b) { return -super._sortCombatants(a, b) }
 
-    async _HM_setInitiative(ids) {
-        const caller = ids.length ? this.combatants.get(ids[0]).actor : null;
-        const dialogMgr = new HMDialogMgr();
-        const dialogResp = await dialogMgr.getDialog({dialog: "setinit"}, caller);
-        const formula = dialogResp.resp.value;
-        const messageOptions = {sound: null, flavor: "Initiative shift"};
-        return this.rollInitiative(ids, {formula, messageOptions});
-    }
-
     async _getInitiativeDie(ids) {
         const caller = ids.length ? this.combatants.get(ids[0]).actor : null;
         const dialogMgr = new HMDialogMgr();
@@ -39,16 +30,49 @@ export class HMCombatTracker extends CombatTracker {
         return opt;
     }
 
-    _getEntryContextOptions() {
-        const context = super._getEntryContextOptions();
-        context.push({
-            name: "Set Initiative",
-            icon: '<i class="fas fa-clock"></i>',
-            callback: li => {
-                const combatant = this.viewed.combatants.get(li.data("combatant-id"));
-                if (combatant) return this.viewed._HM_setInitiative([combatant.id]);
+    static renderCombatTracker(tracker, html, data) {
+        removeTurnControls(html);
+        DoubleclickSetsInitiative(html);
+
+        function removeTurnControls(html) {
+            if (!html.find("[data-control='nextTurn']").length) return;
+            html.find("[data-control='nextTurn']")[0].remove();
+            html.find("[data-control='previousTurn']")[0].remove();
+            html.find(".active").removeClass("active");
+        }
+
+        function DoubleclickSetsInitiative(html) {
+            html.find(".token-initiative").off("dblclick").on("dblclick", HMCombatTracker._onInitiativeDblClick)
+            for (let combatant of html.find("#combat-tracker li.combatant")) {
+                if (combatant.classList.contains("active")) break;
+                combatant.classList.add("turn-done");
             }
-        });
-        return context;
+        }
+    }
+
+    // Adapted from FurnaceCombatQoL
+    static _onInitiativeDblClick(event) {
+        event.stopPropagation();
+        event.preventDefault();
+        let html = $(event.target).closest(".combatant");
+        let cid = html.data("combatant-id");
+        let combatant = game.combat.combatants.get(cid);
+        if (!combatant.isOwner) return;
+
+        let initiative = html.find(".token-initiative");
+        let input = $(`<input class="initiative" style="width: 90%" value="${combatant.initiative}"/>`);
+        initiative.off("dblclick");
+        initiative.empty().append(input);
+        input.focus().select();
+        input.on('change', ev => combatant.update({ _id: cid, initiative: input.val() }));
+        input.on('focusout', ev => game.combats.render());
+    }
+
+    async _onCombatantMouseDown(event) {
+        // HACK: Shorting out mousedown events on token initiative so dblclicks
+        // don't trigger normal mousedown events (panning and sheet renders).
+        let html = $(event.target).closest(".token-initiative");
+        if (html.length) return;
+        super._onCombatantMouseDown(event);
     }
 };
