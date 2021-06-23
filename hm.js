@@ -35,10 +35,11 @@ Hooks.once("init", async() => {
 Hooks.once("ready", async() => {
     // render a sheet to the screen as soon as we enter, for testing purposes.
     if (game.items.contents[0]) {
-    //    game.items.contents[0].sheet.render(true);
+     //   game.items.contents.find((a) => a.type === 'cclass').sheet.render(true);
     }
     if (game.actors.contents[0]) {
-        game.actors.contents[0].sheet.render(true);
+    //  game.actors.contents[0].sheet.render(true);
+//        game.actors.contents[0].items.find((a) => a.type === "cclass").sheet.render(true);
     }
 });
 

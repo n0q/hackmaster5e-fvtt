@@ -29,8 +29,8 @@ export class HMCombat extends Combat {
     async _getInitiativeDie() {
         return await new Promise(async resolve => {
             new Dialog({
-                title: game.i18n.localize("HM.dialog.initTitle"),
-                content: await renderTemplate("systems/hackmaster5e/templates/dialog/getinitdie.hbs"),
+                title: game.i18n.localize("HM.dialog.getInitDieTitle"),
+                content: await renderTemplate("systems/hackmaster5e/templates/dialog/getInitDie.hbs"),
                 buttons: {
                     getdie: {
                         label: "Roll",
@@ -38,7 +38,7 @@ export class HMCombat extends Combat {
                     }
                 },
                 default:"getdie"
-            }).render(true);
+            }, {width: 300}).render(true);
         });
     }
 

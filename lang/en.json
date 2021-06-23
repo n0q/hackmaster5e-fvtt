@@ -90,8 +90,8 @@
         },
 
         "dialog": {
-            "initTitle":         "Choose an Initiative Die",
-            "initBody":          "Please select the appropriate initiative die.",
+            "getInitDieTitle":   "Roll for Initiative",
+            "getInitDieBody":    "Initiative Die",
             "getAttackTitle":    ": Roll an Attack",
             "getAbilityButtonL": "Ability Save",
             "getAbilityButtonR": "Ability Check",

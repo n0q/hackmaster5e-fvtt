@@ -36,7 +36,7 @@ export default function preloadHandlebarsTemplates() {
         "systems/hackmaster5e/templates/dialog/getDefend.hbs",
         "systems/hackmaster5e/templates/dialog/getSave.hbs",
         "systems/hackmaster5e/templates/dialog/getSkill.hbs",
-        "systems/hackmaster5e/templates/dialog/getinitdie.hbs",
+        "systems/hackmaster5e/templates/dialog/getInitDie.hbs",
         "systems/hackmaster5e/templates/dialog/setWound.hbs",
         "systems/hackmaster5e/templates/dialog/setinit.hbs"
     ]);
