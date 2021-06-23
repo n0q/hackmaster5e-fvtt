@@ -1,54 +1,26 @@
+import HMDialogMgr from '../mgr/dialogmgr.js'
+
 export class HMCombat extends Combat {
-    async nextTurn() {
-        console.warn("nextTurn was called, somehow.");
-        return this.nextRound();
-    }
+    nextTurn() { return this.nextRound() }
+    _sortCombatants(a, b) { return -super._sortCombatants(a, b) }
 
-    _sortCombatants(a, b) { return -super._sortCombatants(a, b) };
-
-    async _HM_setInitiative(cid) {
-        const newInit = await new Promise(async resolve => {
-            new Dialog({
-                title: game.i18n.localize("HM.dialog.setinitTitle"),
-                content: await renderTemplate("systems/hackmaster5e/templates/dialog/setinit.hbs"),
-                buttons: {
-                    setinit: {
-                        label: "Set Init",
-                        callback: () => { resolve(document.getElementById("choices").value) }
-                    }
-                },
-                default:"setinit",
-                render: () => { document.getElementById("choices").focus() }
-            }).render(true);
-        });
-        if (!newInit) return newInit;
-        const messageOptions = {sound: null, flavor: "Initiative shift"};
-        return this.rollInitiative(cid, {formula: newInit, messageOptions: messageOptions});
-    }
-
-    async _getInitiativeDie() {
-        return await new Promise(async resolve => {
-            new Dialog({
-                title: game.i18n.localize("HM.dialog.initTitle"),
-                content: await renderTemplate("systems/hackmaster5e/templates/dialog/getinitdie.hbs"),
-                buttons: {
-                    getdie: {
-                        label: "Roll",
-                        callback: () => { resolve(document.getElementById("choices").value) }
-                    }
-                },
-                default:"getdie"
-            }).render(true);
-        });
+    async _getInitiativeDie(ids) {
+        const caller = ids.length ? this.combatants.get(ids[0]).actor : null;
+        const dialogMgr = new HMDialogMgr();
+        const dialogResp = await dialogMgr.getDialog({dialog: "initdie"}, caller);
+        return dialogResp.resp.die;
     }
 
     async rollInitiative(ids, {formula=null, updateTurn=true, messageOptions={}}={}) {
-        const initDie = await this._getInitiativeDie();
-        const initFormula = initDie + game.system.data.initiative;
-        const rollData = {formula: initFormula, updateTurn: updateTurn, messageOptions: messageOptions};
+        let initFormula = formula;
+        if (!initFormula) {
+            const initDie = await this._getInitiativeDie(ids);
+            initFormula = initDie + game.system.data.initiative;
+        }
+
+        const rollData = {formula: initFormula, updateTurn, messageOptions};
         return await super.rollInitiative(ids, rollData);
     }
-
 };
 
 export class HMCombatTracker extends CombatTracker {
@@ -58,16 +30,49 @@ export class HMCombatTracker extends CombatTracker {
         return opt;
     }
 
-    _getEntryContextOptions() {
-        const context = super._getEntryContextOptions();
-        context.push({
-            name: "Set Initiative",
-            icon: '<i class="fas fa-clock"></i>',
-            callback: li => {
-                const combatant = this.viewed.combatants.get(li.data("combatant-id"));
-                if (combatant) return this.viewed._HM_setInitiative([combatant.id]);
+    static renderCombatTracker(tracker, html, data) {
+        removeTurnControls(html);
+        DoubleclickSetsInitiative(html);
+
+        function removeTurnControls(html) {
+            if (!html.find("[data-control='nextTurn']").length) return;
+            html.find("[data-control='nextTurn']")[0].remove();
+            html.find("[data-control='previousTurn']")[0].remove();
+            html.find(".active").removeClass("active");
+        }
+
+        function DoubleclickSetsInitiative(html) {
+            html.find(".token-initiative").off("dblclick").on("dblclick", HMCombatTracker._onInitiativeDblClick)
+            for (let combatant of html.find("#combat-tracker li.combatant")) {
+                if (combatant.classList.contains("active")) break;
+                combatant.classList.add("turn-done");
             }
-        });
-        return context;
+        }
+    }
+
+    // Adapted from FurnaceCombatQoL
+    static _onInitiativeDblClick(event) {
+        event.stopPropagation();
+        event.preventDefault();
+        let html = $(event.target).closest(".combatant");
+        let cid = html.data("combatant-id");
+        let combatant = game.combat.combatants.get(cid);
+        if (!combatant.isOwner) return;
+
+        let initiative = html.find(".token-initiative");
+        let input = $(`<input class="initiative" style="width: 90%" value="${combatant.initiative}"/>`);
+        initiative.off("dblclick");
+        initiative.empty().append(input);
+        input.focus().select();
+        input.on('change', ev => combatant.update({ _id: cid, initiative: input.val() }));
+        input.on('focusout', ev => game.combats.render());
+    }
+
+    async _onCombatantMouseDown(event) {
+        // HACK: Shorting out mousedown events on token initiative so dblclicks
+        // don't trigger normal mousedown events (panning and sheet renders).
+        let html = $(event.target).closest(".token-initiative");
+        if (html.length) return;
+        super._onCombatantMouseDown(event);
     }
 };

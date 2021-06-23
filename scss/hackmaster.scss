@@ -11,12 +11,17 @@
 
 /* Styles limited to hackmaster sheets */
 .hackmaster {
-  @import 'parts/forms';
-  @import 'parts/resource';
-  @import 'parts/tabs';
-  @import 'parts/skills';
-  @import 'parts/cards';
-  @import 'layout/actor-sheet';
-  @import 'cards/combat';
-  @import 'cards/inventory';
+    @import 'parts/forms';
+    @import 'parts/resource';
+    @import 'parts/tabs';
+    @import 'parts/skills';
+    @import 'parts/cards';
+    @import 'layout/actor-sheet';
+    @import 'cards/combat';
+    @import 'cards/inventory';
+}
+
+/* Styles which override foundry core */
+#combat {
+    @import 'overrides/combat';
 }

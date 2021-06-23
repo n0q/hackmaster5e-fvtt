@@ -514,3 +514,9 @@
   grid-template-columns: 1fr 5em 5em;
   column-gap: 2em;
 }
+
+/* Styles which override foundry core */
+#combat .initiative:hover {
+  border: 1px solid #ff6400;
+  border-radius: 2px;
+}

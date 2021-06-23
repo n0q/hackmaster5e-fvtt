@@ -1,13 +1,15 @@
 export default class HMDialogMgr {
     getDialog(dataset, caller=null) {
         const name = dataset.dialog;
-        if (name === 'atk')      { return this.getAttackDialog(dataset, caller)  } else
-        if (name === 'dmg')      { return this.getDamageDialog(dataset, caller)  } else
-        if (name === 'def')      { return this.getDefendDialog(dataset, caller)  } else
-        if (name === 'skill')    { return this.getSkillDialog(dataset, caller)   } else
-        if (name === 'ability')  { return this.getAbilityDialog(dataset, caller) } else
-        if (name === 'save')     { return this.getSaveDialog(dataset, caller)    } else
-        if (name === 'wound')    { return this.setWoundDialog(caller)            }
+        if (name === 'ability') { return this.getAbilityDialog(dataset, caller) } else
+        if (name === 'atk')     { return this.getAttackDialog(dataset, caller)  } else
+        if (name === 'def')     { return this.getDefendDialog(dataset, caller)  } else
+        if (name === 'dmg')     { return this.getDamageDialog(dataset, caller)  } else
+        if (name === 'setinit') { return this.setInitDialog(caller)             } else
+        if (name === 'initdie') { return this.getInitDieDialog(caller)          } else
+        if (name === 'save')    { return this.getSaveDialog(dataset, caller)    } else
+        if (name === 'skill')   { return this.getSkillDialog(dataset, caller)   } else
+        if (name === 'wound')   { return this.setWoundDialog(caller)            }
     }
 
     _focusById(id) {
@@ -17,6 +19,51 @@ export default class HMDialogMgr {
     getWeapons(actor, itemId) {
         if (itemId) return [actor.items.get(itemId)];
         return actor.items.filter((a) => a.type === "weapon");
+    }
+
+    async setInitDialog(caller) {
+        const dialogResp = {caller};
+
+        const template = "systems/hackmaster5e/templates/dialog/setInit.hbs";
+        dialogResp.resp = await new Promise(async resolve => {
+            new Dialog({
+                title: game.i18n.localize("HM.dialog.setInitTitle"),
+                content: await renderTemplate(template),
+                buttons: {
+                    setinit: {
+                        label: "Set Init",
+                        callback: () => {resolve({
+                            "value": document.getElementById("choices").value
+                        })}
+                    }
+                },
+                default:"setinit",
+                render: () => { document.getElementById("choices").focus() }
+            }, {width: 200}).render(true);
+        });
+        return dialogResp;
+    }
+
+    async getInitDieDialog(caller) {
+        const dialogResp = {caller};
+
+        const template = "systems/hackmaster5e/templates/dialog/getInitDie.hbs";
+        dialogResp.resp = await new Promise(async resolve => {
+            new Dialog({
+                title: game.i18n.localize("HM.dialog.getInitDieTitle"),
+                content: await renderTemplate(template),
+                buttons: {
+                    getdie: {
+                        label: "Roll",
+                        callback: () => {resolve({
+                            "die": document.getElementById("choices").value
+                        })}
+                    }
+                },
+                default:"getdie"
+            }, {width: 300}).render(true);
+        });
+        return dialogResp;
     }
 
     async setWoundDialog(caller) {
