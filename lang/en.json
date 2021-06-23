@@ -99,8 +99,8 @@
             "getDefendTitle":    ": Defend Thyself",
             "getSaveTitle":      "Save",
             "getSkillTitle":     " Skill Check",
-            "setinitTitle":      "Set Initiative",
-            "setinitBody":       "Enter a new initiative.",
+            "setInitTitle":      "Set Initiative",
+            "setInitBody":       "New Init",
             "setWoundTitle":     "Inflict Wound",
             "setWoundBody":      "Wound HP",
             "warnMulti":         "Multiple tokens selected. Using <b>"
