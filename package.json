@@ -1,8 +1,12 @@
 {
   "devDependencies": {
-    "dart-sass": "^1.25.0",
+    "@typhonjs-fvtt/eslint-config-foundry.js": "^0.8.0",
+    "eslint-config-airbnb": "^18.2.1",
     "gulp": "^4.0.2",
-    "gulp-dart-sass": "^1.0.2"
+    "gulp-cached": "^1.1.1",
+    "gulp-dart-sass": "^1.0.2",
+    "gulp-eslint": "^6.0.0",
+    "sass": "^1.35.1"
   },
   "dependencies": {
     "dompurify": "^2.2.9"
