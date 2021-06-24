@@ -5,7 +5,6 @@ export default class HMDialogMgr {
         if (name === 'atk')     { return this.getAttackDialog(dataset, caller)  } else
         if (name === 'def')     { return this.getDefendDialog(dataset, caller)  } else
         if (name === 'dmg')     { return this.getDamageDialog(dataset, caller)  } else
-        if (name === 'setinit') { return this.setInitDialog(caller)             } else
         if (name === 'initdie') { return this.getInitDieDialog(caller)          } else
         if (name === 'save')    { return this.getSaveDialog(dataset, caller)    } else
         if (name === 'skill')   { return this.getSkillDialog(dataset, caller)   } else
@@ -19,29 +18,6 @@ export default class HMDialogMgr {
     getWeapons(actor, itemId) {
         if (itemId) return [actor.items.get(itemId)];
         return actor.items.filter((a) => a.type === "weapon");
-    }
-
-    async setInitDialog(caller) {
-        const dialogResp = {caller};
-
-        const template = "systems/hackmaster5e/templates/dialog/setInit.hbs";
-        dialogResp.resp = await new Promise(async resolve => {
-            new Dialog({
-                title: game.i18n.localize("HM.dialog.setInitTitle"),
-                content: await renderTemplate(template),
-                buttons: {
-                    setinit: {
-                        label: "Set Init",
-                        callback: () => {resolve({
-                            "value": document.getElementById("choices").value
-                        })}
-                    }
-                },
-                default:"setinit",
-                render: () => { document.getElementById("choices").focus() }
-            }, {width: 200}).render(true);
-        });
-        return dialogResp;
     }
 
     async getInitDieDialog(caller) {
