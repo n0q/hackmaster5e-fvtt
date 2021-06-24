@@ -106,5 +106,8 @@ dist
 # foundry system lock
 *.lock
 
+# foundry public
+foundry
+
 # style sheets
 *.css
