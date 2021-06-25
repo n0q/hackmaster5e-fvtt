@@ -6,14 +6,12 @@ const eslint = require('gulp-eslint');
 
 gulp.task('sass', function () {
     return gulp.src('./scss/**/*.scss')
-        .pipe(cache('sass'))
         .pipe(sass.sync().on('error', sass.logError))
         .pipe(gulp.dest('./styles'));
 });
 
 gulp.task('lint', function () {
     return gulp.src(['hm.js', './modules/**/*.js'])
-        .pipe(cache('lint'))
         .pipe(eslint())
         .pipe(eslint.format());
 });
