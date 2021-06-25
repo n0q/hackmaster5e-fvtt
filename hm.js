@@ -1,7 +1,7 @@
 import { HMActor } from './modules/actor/actor.js';
 import { HMCharacterActorSheet } from './modules/actor/character-actor-sheet.js';
-import { HackmasterItem } from './modules/item/item.js';
-import { HackmasterItemSheet } from './modules/item/item-sheet.js';
+import { HMItem } from './modules/item/item.js';
+import { HMItemSheet } from './modules/item/item-sheet.js';
 import { HMCombat, HMCombatTracker } from './modules/sys/combat.js';
 import { HMMacro } from './modules/sys/macro.js';
 import LOGGER from './modules/sys/logger.js';
@@ -15,7 +15,7 @@ Hooks.once('init', async() => {
     LOGGER.log('+++ Init');
 
     CONFIG.Actor.documentClass = HMActor;
-    CONFIG.Item.documentClass = HackmasterItem;
+    CONFIG.Item.documentClass = HMItem;
     CONFIG.Combat.documentClass = HMCombat;
     CONFIG.ui.combat = HMCombatTracker;
     CONFIG.Macro.documentClass = HMMacro;
@@ -24,7 +24,7 @@ Hooks.once('init', async() => {
     Actors.registerSheet('hackmaster', HMCharacterActorSheet, { makeDefault: true });
 
     Items.unregisterSheet('core', ItemSheet);
-    Items.registerSheet('hackmaster', HackmasterItemSheet, { makeDefault: true });
+    Items.registerSheet('hackmaster', HMItemSheet, { makeDefault: true });
 
     registerHandlebarsHelpers();
     preloadHandlebarsTemplates();

@@ -2,7 +2,7 @@
  * Extend the basic Item with some very simple modifications.
  * @extends {Item}
  */
-export class HackmasterItem extends Item {
+export class HMItem extends Item {
   /**
    * Augment the basic Item data model with additional dynamic data.
    */
@@ -138,5 +138,28 @@ export class HackmasterItem extends Item {
             if (relevant[key].checked) stack.push(abilities[key].derived.value);
         }
         data.mastery.derived = {'value': Math.min(...stack)};
+    }
+
+    onClick(event) {
+        const itemType = this.type;
+        if (itemType === 'wound') { this.WoundAction(event); }
+    }
+
+    async WoundAction(event) {
+        const element = event.currentTarget;
+        const dataset = element.dataset;
+        const itemData = this.data.data;
+
+        let timer = itemData.timer;
+        let hp = itemData.hp;
+        let treated  = itemData.treated;
+
+        if (dataset.action === 'decTimer') timer.value--;
+        if (dataset.action === 'decHp' || timer.value < 1) {
+            timer.value = --hp.value;
+        }
+
+        if (hp.value < 0) return this.delete();
+        await this.update({'data': {hp, timer, treated}});
     }
 }
