@@ -1,18 +1,18 @@
-import { HMActor } from "./modules/actor/actor.js";
-import { HMCharacterActorSheet } from "./modules/actor/character-actor-sheet.js";
-import { HackmasterItem } from "./modules/item/item.js";
-import { HackmasterItemSheet } from "./modules/item/item-sheet.js";
-import { HMCombat, HMCombatTracker } from "./modules/sys/combat.js";
+import { HMActor } from './modules/actor/actor.js';
+import { HMCharacterActorSheet } from './modules/actor/character-actor-sheet.js';
+import { HackmasterItem } from './modules/item/item.js';
+import { HackmasterItemSheet } from './modules/item/item-sheet.js';
+import { HMCombat, HMCombatTracker } from './modules/sys/combat.js';
 import { HMMacro } from './modules/sys/macro.js';
-import LOGGER from "./modules/sys/logger.js";
+import LOGGER from './modules/sys/logger.js';
 
-import registerHandlebarsHelpers from "./modules/sys/helpers.js";
-import preloadHandlebarsTemplates from "./modules/sys/partials.js";
+import registerHandlebarsHelpers from './modules/sys/helpers.js';
+import preloadHandlebarsTemplates from './modules/sys/partials.js';
 
 import './modules/sys/dice.js';
 
-Hooks.once("init", async() => {
-    LOGGER.log("+++ Init");
+Hooks.once('init', async() => {
+    LOGGER.log('+++ Init');
 
     CONFIG.Actor.documentClass = HMActor;
     CONFIG.Item.documentClass = HackmasterItem;
@@ -20,36 +20,34 @@ Hooks.once("init", async() => {
     CONFIG.ui.combat = HMCombatTracker;
     CONFIG.Macro.documentClass = HMMacro;
 
-    Actors.unregisterSheet("core", ActorSheet);
-    Actors.registerSheet("hackmaster", HMCharacterActorSheet, { makeDefault: true });
+    Actors.unregisterSheet('core', ActorSheet);
+    Actors.registerSheet('hackmaster', HMCharacterActorSheet, { makeDefault: true });
 
-    Items.unregisterSheet("core", ItemSheet);
-    Items.registerSheet("hackmaster", HackmasterItemSheet, { makeDefault: true });
+    Items.unregisterSheet('core', ItemSheet);
+    Items.registerSheet('hackmaster', HackmasterItemSheet, { makeDefault: true });
 
     registerHandlebarsHelpers();
     preloadHandlebarsTemplates();
 
-    LOGGER.log("--- Init");
+    LOGGER.log('--- Init');
 });
 
-Hooks.once("ready", async() => {
+Hooks.once('ready', async() => {
     // render a sheet to the screen as soon as we enter, for testing purposes.
     if (game.items.contents[0]) {
-     //   game.items.contents.find((a) => a.type === 'cclass').sheet.render(true);
     }
     if (game.actors.contents[0]) {
-    //  game.actors.contents[0].sheet.render(true);
-//        game.actors.contents[0].items.find((a) => a.type === "cclass").sheet.render(true);
+        game.actors.contents[0].sheet.render(true);
     }
 });
 
 Hooks.on('renderCombatTracker', HMCombatTracker.renderCombatTracker);
 
-Hooks.on("diceSoNiceRollStart", (messageId, context) => {
+Hooks.on('diceSoNiceRollStart', (messageId, context) => {
     // Add 1 to penetration dice so dsn shows actual die throws.
     const normalize = (roll, r=5) => {
         if (r < 0) {
-            LOGGER.warn("Normalize recursion limit reached.");
+            LOGGER.warn('Normalize recursion limit reached.');
             return;
         }
 
@@ -72,10 +70,10 @@ Hooks.on("diceSoNiceRollStart", (messageId, context) => {
     normalize(context.roll);
 });
 
-Hooks.on("createActor", async (actor) => {
+Hooks.on('createActor', async (actor) => {
     // TODO: Localize skill pack before pushing.
     if (actor.items.size === 0) {
-        const skillPack = game.packs.get("hackmaster5e.skills");
+        const skillPack = game.packs.get('hackmaster5e.skills');
         const skillIndex = await skillPack.getIndex();
         let toAdd = [];
         for (let idx of skillIndex) {
@@ -83,6 +81,6 @@ Hooks.on("createActor", async (actor) => {
             toAdd.push(_.data);
         }
 
-        await actor.createEmbeddedDocuments("Item", toAdd);
+        await actor.createEmbeddedDocuments('Item', toAdd);
      }
 });

@@ -13,10 +13,13 @@ module.exports = {
     },
     'extends': ['airbnb', '@typhonjs-fvtt/eslint-config-foundry.js'],
     'rules': {
+        'import/extensions': 'off',
         'indent': 'off',
         'no-plusplus': 'off',
         'no-multi-spaces': 'off',
         'no-console': ['error', { allow: ['warn', 'error'] }],
-        'no-shadow': ['error', { 'builtinGlobals': true, 'hoist': 'all', 'allow': ['event'] }]
+        'no-shadow': ['error', { 'builtinGlobals': true, 'hoist': 'all', 'allow': ['event'] }],
+        'object-curly-spacing': 'off',
+        'quote-props': 'warn'
     }
 }

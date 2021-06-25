@@ -13,10 +13,10 @@ export class HackmasterItem extends Item {
       const itemType  = this.data.type;
       const actorData = this.actor ? this.actor.data : null;
 
-      if (itemType === "armor")  { this._prepArmorData(itemData, actorData)  } else
-      if (itemType === "cclass") { this._prepCClassData(itemData, actorData) } else
-      if (itemType === "skill")  { this._prepSkillData(itemData, actorData)  } else
-      if (itemType === "weapon") { this._prepWeaponData(itemData, actorData) }
+      if (itemType === 'armor')  { this._prepArmorData(itemData, actorData)  } else
+      if (itemType === 'cclass') { this._prepCClassData(itemData, actorData) } else
+      if (itemType === 'skill')  { this._prepSkillData(itemData, actorData)  } else
+      if (itemType === 'weapon') { this._prepWeaponData(itemData, actorData) }
   }
 
   /**
@@ -45,7 +45,7 @@ export class HackmasterItem extends Item {
         const stats = data.stats;
         for (const key in stats) {
             if (stats.hasOwnProperty(key)) {
-                stats[key].derived = {"value": stats[key].value + stats[key].mod.value};
+                stats[key].derived = {'value': stats[key].value + stats[key].mod.value};
             }
         }
     }
@@ -58,7 +58,7 @@ export class HackmasterItem extends Item {
             const pData = data._pdata;
             for (let i = 1; i < 21; i++) pTable[i] = deepClone(pData);
             if (Object.entries(pTable).length) return;
-            await this.update({"data.ptable": pTable});
+            await this.update({'data.ptable': pTable});
         }
 
         // calculate hp
@@ -99,7 +99,7 @@ export class HackmasterItem extends Item {
         }
 
         mod.top = {value: (data.top_cf.value || 0.01) * level};
-        await this.update({"data.mod": mod});
+        await this.update({'data.mod': mod});
     }
 
     // Applying stat bonuses to weapons (rather than armor)
@@ -115,7 +115,7 @@ export class HackmasterItem extends Item {
                     ? Object.values(bonus[key]).reduce((a,b) => a.value + b.value)
                     : 0;
                 if (statbonus.hasOwnProperty('value')) statbonus = statbonus.value;
-                stats[key].derived = {"value": stats[key].value + stats[key].mod.value + statbonus};
+                stats[key].derived = {'value': stats[key].value + stats[key].mod.value + statbonus};
             }
         }
     }
@@ -137,6 +137,6 @@ export class HackmasterItem extends Item {
         for (let key in relevant) {
             if (relevant[key].checked) stack.push(abilities[key].derived.value);
         }
-        data.mastery.derived = {"value": Math.min(...stack)};
+        data.mastery.derived = {'value': Math.min(...stack)};
     }
 }
