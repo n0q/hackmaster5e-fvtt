@@ -63,7 +63,7 @@ export default class HMDialogMgr {
             this._focusById('hp');
         });
         const resp = dialogResp.resp.value;
-        dialogResp.data = {hp: {value: resp}, duration: {value: resp}};
+        dialogResp.data = {hp: {value: resp}, timer: {value: resp}};
         return dialogResp;
     }
 

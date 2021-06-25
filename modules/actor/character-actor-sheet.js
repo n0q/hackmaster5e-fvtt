@@ -5,11 +5,11 @@ export class HMCharacterActorSheet extends HMActorSheet {
     /** @override */
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
-            classes: ["hackmaster", "sheet", "actor"],
-            template: "systems/hackmaster5e/templates/actor/actor-base.hbs",
+            classes: ['hackmaster', 'sheet', 'actor'],
+            template: 'systems/hackmaster5e/templates/actor/actor-base.hbs',
             width: 820,
             height: 750,
-            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "setup" }]
+            tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'skills' }]
         });
     }
 
@@ -18,7 +18,7 @@ export class HMCharacterActorSheet extends HMActorSheet {
     /** @override */
     getData() {
         const data = super.getData();
-        data.dtypes = ["String", "Number", "Boolean"];
+        data.dtypes = ['String', 'Number', 'Boolean'];
 
         // Prepare items.
         if (this.actor.data.type == 'character') {
@@ -55,40 +55,40 @@ export class HMCharacterActorSheet extends HMActorSheet {
         for (let i of sheetData.items) {
             i.img = i.img || DEFAULT_TOKEN;
             switch(i.type) {
-                case "armor":
+                case 'armor':
                     gear.push(i);
                     armors.push(i);
                     break;
-                case "cclass":
+                case 'cclass':
                     cclass = i;
                     break;
-                case "item":
+                case 'item':
                     gear.push(i);
                     break;
-                case "proficiency":
+                case 'proficiency':
                     profs.push(i);
                     break;
-                case "skill":
+                case 'skill':
                     if (i.data.universal.checked) {
                         uskills.push(i);
                     } else {
                         skills.push(i);
                     }
                     break;
-                case "features":
+                case 'features':
                     features.push(i);
                     break;
-                case "spell":
+                case 'spell':
                     spells.push(i);
                     break;
-                case "race":
+                case 'race':
                     race = i;
                     break;
-                case "weapon":
+                case 'weapon':
                     gear.push(i);
                     weapons.push(i);
                     break;
-                case "wound":
+                case 'wound':
                     wounds.push(i);
                     break;
             }

@@ -1,6 +1,6 @@
-import HMDialogMgr from "../mgr/dialogmgr.js";
-import HMChatMgr from "../mgr/chatmgr.js";
-import HMRollMgr from "../mgr/rollmgr.js";
+import HMDialogMgr from '../mgr/dialogmgr.js';
+import HMChatMgr from '../mgr/chatmgr.js';
+import HMRollMgr from '../mgr/rollmgr.js';
 
 export class HMActorSheet extends ActorSheet {
 
@@ -37,7 +37,7 @@ export class HMActorSheet extends ActorSheet {
         html.find('.spell-state').click(this._onSpellState.bind(this));
 
         // Rollable abilities.
-        html.find('.wound').click(this._onEditWound.bind(this));
+        html.find('.button').click(this._onClick.bind(this));
         html.find('.rollable').click(this._onRoll.bind(this));
         html.find('.editable').change(this._onEdit.bind(this));
 
@@ -119,26 +119,10 @@ export class HMActorSheet extends ActorSheet {
         await this.actor.updateEmbeddedDocuments("Item", [{_id:item.id, data:item.data.data}]);
     }
 
-    async _onEditWound(event) {
+    _onClick(event) {
         event.preventDefault();
-        const element = event.currentTarget;
-        const dataset = element.dataset;
-        const item    = this._getOwnedItem(this._getItemId(event));
-
-        if (dataset.itemProp) {
-            const itemProp = dataset.itemProp;
-            let propValue = getProperty(item.data, itemProp);
-            if (--propValue < 1 && dataset.itemProp === "data.duration.value") {
-                let hpValue = getProperty(item.data, "data.hp.value");
-                hpValue = Math.max(hpValue -1, 0);
-                propValue = hpValue;
-                setProperty(item.data, "data.hp.value", hpValue);
-            }
-            setProperty(item.data, itemProp, propValue);
-
-            // TODO: Update only the altered property.
-            await this.actor.updateEmbeddedDocuments("Item", [{_id:item.id, data:item.data.data}]);
-        }
+        const item = this._getOwnedItem(this._getItemId(event));
+        item.onClick(event);
     }
 
     async _onEdit(ev) {

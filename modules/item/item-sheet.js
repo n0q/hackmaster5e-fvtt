@@ -2,7 +2,7 @@
  * Extend the basic ItemSheet with some very simple modifications
  * @extends {ItemSheet}
  */
-export class HackmasterItemSheet extends ItemSheet {
+export class HMItemSheet extends ItemSheet {
 
   /** @override */
   static get defaultOptions() {
