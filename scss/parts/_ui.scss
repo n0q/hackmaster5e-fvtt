@@ -1,0 +1,16 @@
+.hmstyle {
+    [tablerow] {
+        &:nth-child(2n-1) {
+           background: $cs-light;
+        }
+    }
+
+    .button {
+        text-align: center;
+        margin: 2px 15px;
+        &:hover {
+            font-weight: bold;
+            text-shadow: 0 0 10px red;
+        }
+    }
+}
