@@ -1,5 +1,5 @@
 .hmstyle {
-    [tablerow] {
+    .tablerow {
         &:nth-child(2n-1) {
            background: $cs-light;
         }
