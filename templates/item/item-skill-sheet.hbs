@@ -52,14 +52,16 @@
                 <div class="sidepanel">
                     <div class="options-block">
                         {{#if data.data.language.checked}}
+                        {{#with data.data.language}}
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.verbal"}} {{localize "HM.mastery"}}:</label>
-                            <input type="number" name="data.verbal.value" value="{{data.data.verbal.value}}" data-dtype="Number"/>
+                            <input type="number" name="data.language.verbal.value" value="{{verbal.value}}" data-dtype="Number"/>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.literate"}} {{localize "HM.mastery"}}:</label>
-                            <input type="number" name="data.literate.value" value="{{data.data.literate.value}}" data-dtype="Number"/>
+                            <input type="number" name="data.language.literate.value" value="{{literate.value}}" data-dtype="Number"/>
                         </div>
+                        {{/with}}
                         {{else}}
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.mastery"}}:</label>

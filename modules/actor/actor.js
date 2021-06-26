@@ -173,4 +173,16 @@ export class HMActor extends Actor {
         this.setSaves(data);
         this.setInit(data);
     }
+
+    static async createActor(actor) {
+        if (actor.items.size) return;
+        const skillPack = game.packs.get('hackmaster5e.uskills');
+        const skillIndex = await skillPack.getIndex();
+        const uskills = [];
+        for (const idx of skillIndex) {
+            const skill = await skillPack.getDocument(idx._id);
+            uskills.push(skill.data);
+        }
+        await actor.createEmbeddedDocuments('Item', uskills);
+    }
 }

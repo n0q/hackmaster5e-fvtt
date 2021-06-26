@@ -123,7 +123,7 @@ idx.savesImg = {
     "physical": "icons/skills/wounds/anatomy-bone-joint.webp",
     "poison":   "icons/skills/toxins/poison-bottle-corked-fire-green.webp",
     "top":      "icons/skills/wounds/injury-face-impact-orange.webp",
-    "fos":      "icons/skills/melee/unarmed-punch-fist-yellow-red.webp",
+    "fos":      "icons/magic/control/buff-strength-muscle-damage.webp",
     "fod":      "icons/skills/movement/figure-running-gray.webp",
     "turning":  "icons/magic/holy/prayer-hands-glowing-yellow.webp",
     "morale":   "icons/skills/social/wave-halt-stop.webp"
