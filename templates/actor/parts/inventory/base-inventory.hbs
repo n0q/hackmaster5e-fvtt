@@ -1,10 +1,6 @@
 <ol class="inventory-list">
-    <li class="item flexrow item-header">
-        <div class="item-image"></div>
-        <div class="item-name">Name</div>
-        <div class="item-controls">
-            <a class="item-control item-create" title="Create item" data-type="item"><i class="fas fa-plus"></i> Add item</a>
-        </div>
+    <li class="table-header">
+        <label>Carried: {{actor.data.data.encumb.value}} lbs.</label>
     </li>
     {{#each actor.gear}}
         {{> "systems/hackmaster5e/templates/actor/cards/item.hbs" }}

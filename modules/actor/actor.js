@@ -49,6 +49,26 @@ export class HMActor extends Actor {
         }
     }
 
+    setEncumbrance(data) {
+        let encumb = 0.0;
+        const item = this.items.filter((a) => {
+            const aData = a.data.data;
+            // Proof positive that armor needs a refactor.
+            if (aData.state) {
+                if (a.type             === 'armor'
+                    && aData.armortype !== 'shield'
+                    && aData.state.equipped.checked
+                ) return false;
+                return aData.state.carried.checked;
+            }
+        });
+
+        for (let i=0; i < item.length; i++) {
+            encumb += item[i].data.data.weight.value;
+        }
+        data.encumb.value = encumb;
+    }
+
     setArmor(data) {
         const armors = this.items.filter((a) => a.type === "armor");
         const armorDerived = data.derived.armor;
@@ -146,6 +166,7 @@ export class HMActor extends Actor {
         this.setCClass(data);
         this.setAbilities(data);
         const armorDerived = this.setArmor(data);
+        this.setEncumbrance(data);
         this.setWeapons(armorDerived);
         this.setCharacterMaxHP(data);
         this.setCurrentHP(data);

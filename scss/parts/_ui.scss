@@ -1,5 +1,8 @@
+$shad-red: 0 0 10px red;
+
 .hmstyle {
     .tablerow {
+        margin: 2px 0;
         &:nth-child(2n-1) {
            background: $cs-light;
         }
@@ -7,10 +10,10 @@
 
     .button {
         text-align: center;
-        margin: 2px 15px;
+        margin: 0 15px;
         &:hover {
             font-weight: bold;
-            text-shadow: 0 0 10px red;
+            text-shadow: $shad-red;
         }
     }
 }

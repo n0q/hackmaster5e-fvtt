@@ -6,7 +6,8 @@
             "base": {
                 "hp":     {"mod": {"value": 0}},
                 "sp":     {"value": 25, "max": 30},
-                "init":   {"value": 0}
+                "init":   {"value": 0},
+                "encumb": {"value": 0.0}
             },
 
             "pc": {
