@@ -1,7 +1,6 @@
 import { HMActorSheet } from './actor-sheet.js';
 
 export class HMCharacterActorSheet extends HMActorSheet {
-
     /** @override */
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
@@ -9,7 +8,7 @@ export class HMCharacterActorSheet extends HMActorSheet {
             template: 'systems/hackmaster5e/templates/actor/actor-base.hbs',
             width: 820,
             height: 750,
-            tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'skills' }]
+            tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'inventory' }]
         });
     }
 
@@ -21,7 +20,7 @@ export class HMCharacterActorSheet extends HMActorSheet {
         data.dtypes = ['String', 'Number', 'Boolean'];
 
         // Prepare items.
-        if (this.actor.data.type == 'character') {
+        if (this.actor.data.type === 'character') {
             this._prepareCharacterItems(data);
         }
 
@@ -52,46 +51,25 @@ export class HMCharacterActorSheet extends HMActorSheet {
         let cclass = null;
 
         // Iterate through items, allocating to containers
-        for (let i of sheetData.items) {
+        for (const i of sheetData.items) {
             i.img = i.img || DEFAULT_TOKEN;
-            switch(i.type) {
-                case 'armor':
-                    gear.push(i);
-                    armors.push(i);
-                    break;
-                case 'cclass':
-                    cclass = i;
-                    break;
-                case 'item':
-                    gear.push(i);
-                    break;
-                case 'proficiency':
-                    profs.push(i);
-                    break;
-                case 'skill':
-                    if (i.data.universal.checked) {
-                        uskills.push(i);
-                    } else {
-                        skills.push(i);
-                    }
-                    break;
-                case 'features':
-                    features.push(i);
-                    break;
-                case 'spell':
-                    spells.push(i);
-                    break;
-                case 'race':
-                    race = i;
-                    break;
-                case 'weapon':
-                    gear.push(i);
-                    weapons.push(i);
-                    break;
-                case 'wound':
-                    wounds.push(i);
-                    break;
-            }
+            if (i.type === 'armor') {
+                gear.push(i);
+                armors.push(i);
+            } else
+            if (i.type === 'cclass')      { cclass = i;    } else
+            if (i.type === 'item')        { gear.push(i);  } else
+            if (i.type === 'proficiency') { profs.push(i); } else
+            if (i.type === 'skill') {
+                i.data.universal.checked ? uskills.push(i) : skills.push(i);
+            } else
+            if (i.type === 'spell')  { spells.push(i);     } else
+            if (i.type === 'race')   { race = i;           } else
+            if (i.type === 'weapon') {
+                gear.push(i);
+                weapons.push(i);
+            } else
+            if (i.type === 'wound')  { wounds.push(i);     }
         }
 
         // Assign and return

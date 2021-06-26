@@ -1,4 +1,4 @@
-<li class="item card" data-item-id="{{_id}}">
+<li class="card hmstyle" data-item-id="{{_id}}">
     <div class="lid">
         <header>
             <label for="{{name}}">
@@ -15,7 +15,7 @@
                 <div class="type">
                     {{localize (findConfigValue "itemTypes" type)}}
                 </div>
-                <div class="item-control item-state location">
+                <div class="item-control item-state location button">
                     {{#if data.state.equipped.checked}}{{localize "HM.equipped"}}
                     {{else}}{{#if data.state.carried.checked}}{{localize "HM.carried"}}
                         {{else}}{{localize "HM.owned"}}

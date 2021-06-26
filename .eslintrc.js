@@ -14,6 +14,7 @@ module.exports = {
     'extends': ['airbnb', '@typhonjs-fvtt/eslint-config-foundry.js'],
     'rules': {
         'import/extensions': 'off',
+        'import/newline-after-import': 'off',
         'indent': 'off',
         'no-plusplus': 'off',
         'no-multi-spaces': 'off',

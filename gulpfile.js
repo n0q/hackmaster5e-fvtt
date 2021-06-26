@@ -12,6 +12,7 @@ gulp.task('sass', function () {
 
 gulp.task('lint', function () {
     return gulp.src(['hm.js', './modules/**/*.js'])
+        .pipe(cache('lint'))
         .pipe(eslint())
         .pipe(eslint.format());
 });
