@@ -224,8 +224,9 @@
             "specialty": {"checked": false, "value": null},
             "universal": {"checked": false},
             "tools":     {"checked": false},
-            "verbal":    {"checked": false, "value": 0},
-            "literate":  {"checked": false, "value": 0},
+            "language":  {"checked": false,
+                          "verbal":   {"value": 0},
+                          "literate": {"value": 0}},
             "abilities": {
                 "str": {"checked": false},
                 "int": {"checked": false},

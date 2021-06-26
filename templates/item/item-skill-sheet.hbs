@@ -31,15 +31,9 @@
                             <label class="resource-label">{{localize "HM.specific"}}:</label>
                             <input type="checkbox" name="data.specific.checked" {{checked data.data.specific.checked}}/>
                         </div>
-                    </div>
-                    <div class="options-block">
                         <div class="options-row">
-                            <label class="resource-label">{{localize "HM.verbal"}}:</label>
-                            <input type="checkbox" name="data.verbal.checked" {{checked data.data.verbal.checked}}/>
-                        </div>
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.literate"}}:</label>
-                            <input type="checkbox" name="data.literate.checked" {{checked data.data.literate.checked}}/>
+                            <label class="resource-label">{{localize "HM.language"}}:</label>
+                            <input type="checkbox" name="data.language.checked" {{checked data.data.language.checked}}/>
                         </div>
                     </div>
                 </div>
@@ -57,23 +51,19 @@
                 </div>
                 <div class="sidepanel">
                     <div class="options-block">
-                        {{#if data.data.verbal.checked}}{{else}}
-                        {{#if data.data.literate.checked}}{{else}}
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.mastery"}}:</label>
-                            <input type="number" name="data.mastery.value" value="{{data.data.mastery.value}}" data-dtype="Number"/>
-                        </div>
-                        {{/if}}{{/if}}
-                        {{#if data.data.verbal.checked}}
+                        {{#if data.data.language.checked}}
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.verbal"}} {{localize "HM.mastery"}}:</label>
                             <input type="number" name="data.verbal.value" value="{{data.data.verbal.value}}" data-dtype="Number"/>
                         </div>
-                        {{/if}}
-                        {{#if data.data.literate.checked}}
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.literate"}} {{localize "HM.mastery"}}:</label>
                             <input type="number" name="data.literate.value" value="{{data.data.literate.value}}" data-dtype="Number"/>
+                        </div>
+                        {{else}}
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.mastery"}}:</label>
+                            <input type="number" name="data.mastery.value" value="{{data.data.mastery.value}}" data-dtype="Number"/>
                         </div>
                         {{/if}}
                         {{#if data.data.specific.checked}}
