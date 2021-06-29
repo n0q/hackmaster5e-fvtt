@@ -40,10 +40,15 @@ export default function registerHandlebarsHelpers() {
 
     Handlebars.registerHelper("inc", (a)    => { return ++a });
     Handlebars.registerHelper("dec", (a)    => { return --a });
+    Handlebars.registerHelper("eq",  (a, b) => { return   a == b });
     Handlebars.registerHelper("gt",  (a, b) => { return   a >  b });
     Handlebars.registerHelper("gte", (a, b) => { return   a >= b });
     Handlebars.registerHelper("lt",  (a, b) => { return   a <  b });
     Handlebars.registerHelper("lte", (a, b) => { return   a <= b });
+
+    Handlebars.registerHelper("ishalf", (a, b)   => {
+        return a === Math.floor(b/2);
+    });
 
     // #each.slice(a, b)
     Handlebars.registerHelper("slice", (context, options) => {
@@ -68,21 +73,4 @@ export default function registerHandlebarsHelpers() {
         return ret;
     });
 
-    Handlebars.registerHelper("each_split", (context, options) => {
-        let delimiter = "</div><div>";
-        let slices    = 2;
-        const ohash = options.hash;
-        if (ohash.hasOwnProperty('delimiter')) {delimiter = ohash['delimiter'];}
-        if (ohash.hasOwnProperty('slices')) {slices = ohash['slices'];}
-
-        let ret = "";
-        const midpoint = Math.ceil(context.length / slices);
-        for (let i = 0, j = context.length; i < j; i++) {
-            ret += options.fn(context[i]);
-            if ((i + 1) % midpoint === 0) {
-                ret += delimiter;
-            }
-        }
-        return ret;
-    });
 }

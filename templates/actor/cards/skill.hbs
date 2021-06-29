@@ -1,0 +1,18 @@
+<li class="card hmstyle" data-item-id="{{_id}}">
+    <div class="lid">
+        <header>
+            <label for="{{name}}">
+                <div class="item-image"><img src="{{img}}" title="{{name}}" width="24" height="24"/></div>
+                <h4 class="item-name">{{name}}</h4>
+            </label>
+        </header>
+        <section>
+            <div class="rollable"
+                data-dialog="skill"
+                data-formula="1d100 + @resp.mod @resp.oper @mastery.derived.value"
+                data-item-id="{{_id}}">
+                {{data.mastery.derived.value}}
+            </div>
+        </section>
+    </div>
+</li>

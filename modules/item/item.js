@@ -122,7 +122,10 @@ export class HMItem extends Item {
 
     _prepSkillData(data, actorData) {
         if (!actorData) return;
-        if (!data.universal.checked) return;
+        if (!data.universal.checked || data.mastery.value > 0) {
+            data.mastery.derived = {value: data.mastery.value};
+            return;
+        }
         const abilities = actorData.data.abilities;
         const relevant  = data.abilities;
         const stack = [];

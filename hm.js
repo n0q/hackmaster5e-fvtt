@@ -12,8 +12,6 @@ import preloadHandlebarsTemplates from './modules/sys/partials.js';
 import './modules/sys/dice.js';
 
 Hooks.once('init', async() => {
-    LOGGER.log('+++ Init');
-
     CONFIG.Actor.documentClass = HMActor;
     CONFIG.Item.documentClass = HMItem;
     CONFIG.Combat.documentClass = HMCombat;
@@ -28,8 +26,6 @@ Hooks.once('init', async() => {
 
     registerHandlebarsHelpers();
     preloadHandlebarsTemplates();
-
-    LOGGER.log('--- Init');
 });
 
 Hooks.once('ready', async() => {
