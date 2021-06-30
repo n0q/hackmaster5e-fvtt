@@ -28,8 +28,8 @@
                             <input type="checkbox" name="data.tools.checked" {{checked data.data.tools.checked}}/>
                         </div>
                         <div class="options-row">
-                            <label class="resource-label">{{localize "HM.specific"}}:</label>
-                            <input type="checkbox" name="data.specific.checked" {{checked data.data.specific.checked}}/>
+                            <label class="resource-label">{{localize "HM.specialty"}}:</label>
+                            <input type="checkbox" name="data.specialty.checked" {{checked data.data.specialty.checked}}/>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.language"}}:</label>
@@ -68,10 +68,10 @@
                             <input type="number" name="data.mastery.value" value="{{data.data.mastery.value}}" data-dtype="Number"/>
                         </div>
                         {{/if}}
-                        {{#if data.data.specific.checked}}
+                        {{#if data.data.specialty.checked}}
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.specialty"}}:</label>
-                            <input style="width: 100%;" type="text" name="data.specific.value" value="{{data.data.specific.value}}" data-dtype="String"/>
+                            <input style="width: 100%;" type="text" name="data.specialty.value" value="{{data.data.specialty.value}}" data-dtype="String"/>
                         </div>
                         {{/if}}
                     </div>
