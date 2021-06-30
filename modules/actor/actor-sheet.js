@@ -39,6 +39,10 @@ export class HMActorSheet extends ActorSheet {
         // Rollable abilities.
         html.find('.button').click(this._onClick.bind(this));
         html.find('.rollable').click(this._onRoll.bind(this));
+
+        // HACK: Toggle is overly greedy. This sort of fixes it, but barely.
+        html.find('.editable').click(ev => ev.stopPropagation());
+        html.find('.editable').select(ev => ev.stopPropagation());
         html.find('.editable').change(this._onEdit.bind(this));
 
         // Drag events for macros.
