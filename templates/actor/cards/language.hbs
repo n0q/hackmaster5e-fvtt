@@ -1,4 +1,4 @@
-<li class="card hmstyle" data-item-id="{{_id}}">
+<li class="toggle card hmstyle" data-item-id="{{_id}}">
     <div class="lid">
         <header>
             <label for="{{name}}">
@@ -26,4 +26,29 @@
             </div>
         </section>
     </div>
+    <article class="hide" data-toggle="{{_id}}">
+        <div class="form-group">
+            <label>{{localize "HM.literacy"}}:</label>
+            <input class="editable" type="number" value="{{data.language.literate.value}}"
+                data-item-prop="data.language.literate.value"
+                data-dtype="Number"
+            />
+       </div>
+        <div class="form-group">
+            <label>{{localize "HM.verbal"}}:</label>
+            <input class="editable" type="number" value="{{data.language.verbal.value}}"
+                data-item-prop="data.language.verbal.value"
+                data-dtype="Number"
+            />
+       </div>
+       {{#if data.specialty.checked}}
+       <div class="form-group">
+           <label>{{localize "HM.specialty"}}:</label>
+           <input class="editable" type="text" value="{{data.specialty.value}}"
+               data-item-prop="data.specialty.value"
+               data-dtype="String"
+           />
+       </div>
+       {{/if}}
+    </article>
 </li>
