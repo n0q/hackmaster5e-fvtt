@@ -2,6 +2,7 @@ export default function preloadHandlebarsTemplates() {
     return loadTemplates([
         'systems/hackmaster5e/templates/actor/cards/armor.hbs',
         'systems/hackmaster5e/templates/actor/cards/item.hbs',
+        'systems/hackmaster5e/templates/actor/cards/language.hbs',
         'systems/hackmaster5e/templates/actor/cards/saves.hbs',
         'systems/hackmaster5e/templates/actor/cards/skill.hbs',
         'systems/hackmaster5e/templates/actor/cards/spell.hbs',

@@ -10,5 +10,17 @@
         line-height: 26px;
         padding: 10px;
     }
+
+    section {
+        background: $cs-light;
+        
+        .button {
+            border: 1px solid;
+            border-radius: 2px;
+            width: 1.5em;
+            text-align: right;
+        }
+    }
+
 }
 

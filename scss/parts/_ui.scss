@@ -10,7 +10,7 @@ $shad-red: 0 0 10px red;
 
     .button {
         text-align: center;
-        margin: 0 5px;
+        margin-left: 2px;
         &:hover {
             font-weight: bold;
             text-shadow: $shad-red;
