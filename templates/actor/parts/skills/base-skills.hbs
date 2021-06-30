@@ -1,0 +1,25 @@
+<ol class="skills-list grid-3col">
+    {{#with actor.skills}}
+    <div>
+        <label class="skill-header">Universal Skills</label>
+        {{#each uskills}}
+            {{#if (ishalf @index ../uskills.length)}}</div><div>{{/if}}
+            {{> "systems/hackmaster5e/templates/actor/cards/skill.hbs" }}
+        {{/each}}
+    </div>
+    <div>
+        {{#if skills}}
+        <label class="skill-header">Other Skills</label>
+            {{#each skills}}
+                {{> "systems/hackmaster5e/templates/actor/cards/skill.hbs" }}
+            {{/each}}
+        {{/if}}
+        {{#if langs}}
+        <label class="skill-header">Languages</label>
+            {{#each langs}}
+                {{> "systems/hackmaster5e/templates/actor/cards/language.hbs" }}
+            {{/each}}
+        {{/if}}
+    </div>
+    {{/with}}
+</ol>

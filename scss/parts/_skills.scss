@@ -4,49 +4,23 @@
     padding: 0;
     overflow-y: auto;
 
-    .skills-header {
+    .skill-header {
         font-weight: bold;
+        text-transform: uppercase;
+        line-height: 26px;
+        padding: 10px;
     }
 
-    .skill {
-        height: 30px;
-        line-height: 24px;
-        padding: 3px 0;
-        border-bottom: 1px solid #BBB;
-
-        .skill-image {
-            flex: 0 0 24px;
-            margin-right: 5px;
-        }
-
-        img {
-            display: block;
+    section {
+        background: $cs-light;
+        
+        .button {
+            border: 1px solid;
+            border-radius: 2px;
+            width: 1.5em;
+            text-align: right;
         }
     }
 
-
-    .skill-name {
-        margin: 0;
-        white-space: nowrap;
-        overflow: hidden;
-        min-width: 0;
-    }
-
-    .skill-value {
-        background: grey;
-        margin-right: 2px;
-        flex: 0 1 2em;
-        text-align: right;
-    }
-
-    .skill-controls {
-        flex: 0 1 auto;
-        text-align: right;
-    }
-
-    .skill-column {
-        display: flex;
-        flex-direction: row;
-    }
 }
 

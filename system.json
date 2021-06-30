@@ -14,7 +14,7 @@
         {
             "label": "Universal Skills",
             "entity": "Item",
-            "name": "skills",
+            "name": "uskills",
             "path": "packs/universal-skills.db",
             "system": "hackmaster5e"
         },

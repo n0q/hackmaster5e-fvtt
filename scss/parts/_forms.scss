@@ -1,7 +1,7 @@
 .item-form {
     font-family: $font-primary;
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: auto auto 1fr;
     input[type="text"],
     input[type="number"] {
         width: 3em;

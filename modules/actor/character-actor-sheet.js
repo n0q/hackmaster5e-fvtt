@@ -7,8 +7,8 @@ export class HMCharacterActorSheet extends HMActorSheet {
             classes: ['hackmaster', 'sheet', 'actor'],
             template: 'systems/hackmaster5e/templates/actor/actor-base.hbs',
             width: 820,
-            height: 750,
-            tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'inventory' }]
+            height: 950,
+            tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'skills' }]
         });
     }
 
@@ -41,6 +41,7 @@ export class HMCharacterActorSheet extends HMActorSheet {
         const armors = [];
         const uskills = [];
         const skills = [];
+        const langs = [];
         const gear = [];
         const spells = [];
         const wounds = [];
@@ -61,7 +62,8 @@ export class HMCharacterActorSheet extends HMActorSheet {
             if (i.type === 'item')        { gear.push(i);  } else
             if (i.type === 'proficiency') { profs.push(i); } else
             if (i.type === 'skill') {
-                i.data.universal.checked ? uskills.push(i) : skills.push(i);
+                if (i.data.language.checked) { langs.push(i); } else
+                    i.data.universal.checked ? uskills.push(i) : skills.push(i);
             } else
             if (i.type === 'spell')  { spells.push(i);     } else
             if (i.type === 'race')   { race = i;           } else
@@ -75,8 +77,7 @@ export class HMCharacterActorSheet extends HMActorSheet {
         // Assign and return
         actorData.armors = armors;
         actorData.gear = gear;
-        actorData.skills = skills;
-        actorData.uskills = uskills;
+        actorData.skills = {skills, uskills, langs};
         actorData.features = features;
         actorData.spells = spells;
         actorData.wounds = wounds;

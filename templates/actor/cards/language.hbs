@@ -1,0 +1,54 @@
+<li class="toggle card hmstyle" data-item-id="{{_id}}">
+    <div class="lid">
+        <header>
+            <label for="{{name}}">
+                <div class="item-image"><img src="{{img}}" title="{{name}}" width="24" height="24"/></div>
+                <h4 class="item-name">
+                    {{name}}
+                    {{#if data.specialty.checked}}
+                        {{#if data.specialty.value}}({{data.specialty.value}}){{/if}}
+                    {{/if}}
+                </h4>
+            </label>
+        </header>
+        <section>
+            <div class="rollable button" title="Verbal"
+                data-dialog="skill"
+                data-formula="1d100 + @resp.mod @resp.oper @language.verbal.value"
+                data-item-id="{{_id}}">
+                {{data.language.verbal.value}}
+            </div>
+            <div class="rollable button" title="Literacy"
+                data-dialog="skill"
+                data-formula="1d100 + @resp.mod @resp.oper @language.literate.value"
+                data-item-id="{{_id}}">
+                {{data.language.literate.value}}
+            </div>
+        </section>
+    </div>
+    <article class="hide" data-toggle="{{_id}}">
+        <div class="form-group">
+            <label>{{localize "HM.literacy"}}:</label>
+            <input class="editable" type="number" value="{{data.language.literate.value}}"
+                data-item-prop="data.language.literate.value"
+                data-dtype="Number"
+            />
+       </div>
+        <div class="form-group">
+            <label>{{localize "HM.verbal"}}:</label>
+            <input class="editable" type="number" value="{{data.language.verbal.value}}"
+                data-item-prop="data.language.verbal.value"
+                data-dtype="Number"
+            />
+       </div>
+       {{#if data.specialty.checked}}
+       <div class="form-group">
+           <label>{{localize "HM.specialty"}}:</label>
+           <input class="editable" type="text" value="{{data.specialty.value}}"
+               data-item-prop="data.specialty.value"
+               data-dtype="String"
+           />
+       </div>
+       {{/if}}
+    </article>
+</li>

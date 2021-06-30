@@ -12,8 +12,6 @@ import preloadHandlebarsTemplates from './modules/sys/partials.js';
 import './modules/sys/dice.js';
 
 Hooks.once('init', async() => {
-    LOGGER.log('+++ Init');
-
     CONFIG.Actor.documentClass = HMActor;
     CONFIG.Item.documentClass = HMItem;
     CONFIG.Combat.documentClass = HMCombat;
@@ -28,8 +26,6 @@ Hooks.once('init', async() => {
 
     registerHandlebarsHelpers();
     preloadHandlebarsTemplates();
-
-    LOGGER.log('--- Init');
 });
 
 Hooks.once('ready', async() => {
@@ -41,6 +37,7 @@ Hooks.once('ready', async() => {
     }
 });
 
+Hooks.on('createActor', HMActor.createActor);
 Hooks.on('renderCombatTracker', HMCombatTracker.renderCombatTracker);
 
 Hooks.on('diceSoNiceRollStart', (messageId, context) => {
@@ -68,19 +65,4 @@ Hooks.on('diceSoNiceRollStart', (messageId, context) => {
         }
     };
     normalize(context.roll);
-});
-
-Hooks.on('createActor', async (actor) => {
-    // TODO: Localize skill pack before pushing.
-    if (actor.items.size === 0) {
-        const skillPack = game.packs.get('hackmaster5e.skills');
-        const skillIndex = await skillPack.getIndex();
-        let toAdd = [];
-        for (let idx of skillIndex) {
-            let _ = await skillPack.getDocument(idx._id);
-            toAdd.push(_.data);
-        }
-
-        await actor.createEmbeddedDocuments('Item', toAdd);
-     }
 });

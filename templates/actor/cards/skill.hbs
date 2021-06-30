@@ -1,0 +1,41 @@
+<li class="toggle card hmstyle" data-item-id="{{_id}}">
+    <div class="lid">
+        <header>
+            <label for="{{name}}">
+                <div class="item-image"><img src="{{img}}" title="{{name}}" width="24" height="24"/></div>
+                <h4 class="item-name">
+                    {{name}}
+                    {{#if data.specialty.checked}}
+                        {{#if data.specialty.value}}({{data.specialty.value}}){{/if}}
+                    {{/if}}
+                </h4>
+            </label>
+        </header>
+        <section data-toggle="{{_id}}">
+            <div class="rollable button"
+                data-dialog="skill"
+                data-formula="1d100 + @resp.mod @resp.oper @mastery.derived.value"
+                data-item-id="{{_id}}">
+                {{data.mastery.derived.value}}
+            </div>
+        </section>
+    </div>
+    <article class="hide" data-toggle="{{_id}}">
+        <div class="form-group">
+            <label>{{localize "HM.mastery"}}:</label>
+            <input class="editable" type="number" value="{{data.mastery.value}}"
+                data-item-prop="data.mastery.value"
+                data-dtype="Number"
+            />
+        </div>
+        {{#if data.specialty.checked}}
+        <div class="form-group">
+            <label>{{localize "HM.specialty"}}:</label>
+            <input class="editable" type="text" value="{{data.specialty.value}}"
+                data-item-prop="data.specialty.value"
+                data-dtype="String"
+            />
+        </div>
+        {{/if}}
+    </article>
+</li>

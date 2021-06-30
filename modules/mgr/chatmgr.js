@@ -92,17 +92,21 @@ export default class HMChatMgr {
 
     async _createSkillCard(roll, dialogResp) {
         const item = dialogResp.context;
-        let flavor = item.name;
-
+        const itemData = item.data.data;
         const html = await roll.render();
         let content = html;
-        if (dialogResp.resp.opposed) flavor += " (Opposed)";
+
+        let flavor = item.name;
+        if (itemData.specialty.checked && itemData.specialty.value) {
+            flavor += ' (' + itemData.specialty.value + ')';
+        }
+        if (dialogResp.resp.opposed) flavor += ' (Opposed)';
         else {
             const difficulty = HMTABLES.skill.difficulty;
             for (let key in difficulty) {
                 if (roll.total + difficulty[key] > 0) continue;
-                const diffRow = game.i18n.localize(key) + " " + game.i18n.localize("HM.skillcheck");
-                content = diffRow + "<p>" + html;
+                const diffRow = game.i18n.localize(key) + ' ' + game.i18n.localize('HM.skillcheck');
+                content = diffRow + '<p>' + html;
                 break;
             }
         }
