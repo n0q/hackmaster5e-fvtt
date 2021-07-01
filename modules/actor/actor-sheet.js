@@ -9,7 +9,7 @@ export class HMActorSheet extends ActorSheet {
         super.activateListeners(html);
 
         // ui elements
-        html.find('.toggle').click(this._onToggle.bind(this));
+        html.find('.toggleswitch').click(this._onToggle.bind(this));
 
         if (!this.options.editable) return;
         // ----------------------------------------------------- //
@@ -36,13 +36,9 @@ export class HMActorSheet extends ActorSheet {
         html.find('.item-state').click(this._onItemState.bind(this));
         html.find('.spell-state').click(this._onSpellState.bind(this));
 
-        // Rollable abilities.
+        // Interactables
         html.find('.button').click(this._onClick.bind(this));
         html.find('.rollable').click(this._onRoll.bind(this));
-
-        // HACK: Toggle is overly greedy. This sort of fixes it, but barely.
-        html.find('.editable').click(ev => ev.stopPropagation());
-        html.find('.editable').select(ev => ev.stopPropagation());
         html.find('.editable').change(this._onEdit.bind(this));
 
         // Drag events for macros.
@@ -91,11 +87,8 @@ export class HMActorSheet extends ActorSheet {
     async _onToggle(ev) {
         ev.preventDefault();
         const element = ev.currentTarget;
-        const id      = this._getItemId(ev);
-        const target  = $(element).find("[data-toggle='" + id + "']");
-        for (let i = 0; i < target.length; i++) {
-            $(target[i]).toggleClass("hide");
-        }
+        const target  = $(element).parent().find("[toggle]");
+        $(target).toggleClass("hide");
     }
 
     // Toggle between an item being equipped, carried, or stored.
