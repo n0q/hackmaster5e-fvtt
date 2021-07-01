@@ -1,6 +1,10 @@
 $shad-red: 0 0 10px red;
 
 .hmstyle {
+    img {
+        @include button-border(5px);
+    }
+
     .tablerow {
         margin: 2px 0;
         &:nth-child(2n-1) {

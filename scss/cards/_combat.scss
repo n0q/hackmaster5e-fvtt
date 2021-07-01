@@ -2,13 +2,9 @@
     @extend .cards-list;
     margin: 7px 0; 
 
-//    .card {
-//        grid-template-columns: 60% 1fr; 
-//    }
-
-//    header {
-//        margin-right: 0;
-//    }
+    h4 {
+        padding-left: 2%;
+    }
 
     input {
         margin-top: 1px;

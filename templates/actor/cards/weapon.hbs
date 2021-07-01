@@ -6,20 +6,22 @@
                 <h4 class="card-name">{{name}}</h4>
             </label>
         </header>
-        <section>
-            <img class="rollable" src="{{findConfigValue "combatImg" "def"}}" height="36" title="Defend"
+        {{#if data.state.equipped.checked}}
+        <section class="hmstyle">
+            <img class="rollable button" src="{{findConfigValue "combatImg" "def"}}" height="36" title="Defend"
                 data-dialog="def"
                 data-formula="1d20p + @stats.def.derived.value + @resp.mod"
                 data-item-id="{{_id}}">
-            <img class="rollable" src="{{findConfigValue "combatImg" "dmg"}}" height="36" title="Damage"
+            <img class="rollable button" src="{{findConfigValue "combatImg" "dmg"}}" height="36" title="Damage"
                 data-dialog="dmg"
                 data-formula="@resp.dmg + @stats.dmg.derived.value + @resp.mod"
                 data-item-id="{{_id}}">
-            <img class="rollable" src="{{findConfigValue "combatImg" "atk"}}" height="36" title="Attack"
+            <img class="rollable button" src="{{findConfigValue "combatImg" "atk"}}" height="36" title="Attack"
                 data-dialog="atk"
                 data-formula="1d20p + @stats.atk.derived.value + @resp.mod"
                 data-item-id="{{_id}}">
         </section>
+        {{/if}}
     </div>
     <article class="hide" toggle>
         <div class="details">
