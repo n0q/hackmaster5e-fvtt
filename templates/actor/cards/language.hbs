@@ -1,5 +1,5 @@
-<li class="toggle card hmstyle" data-item-id="{{_id}}">
-    <div class="lid">
+<li class="card hmstyle" data-item-id="{{_id}}">
+    <div class="lid toggleswitch">
         <header>
             <label for="{{name}}">
                 <div class="item-image"><img src="{{img}}" title="{{name}}" width="24" height="24"/></div>
@@ -12,13 +12,13 @@
             </label>
         </header>
         <section>
-            <div class="rollable button" title="Verbal"
+            <div toggle class="rollable button" title="Verbal"
                 data-dialog="skill"
                 data-formula="1d100 + @resp.mod @resp.oper @language.verbal.value"
                 data-item-id="{{_id}}">
                 {{data.language.verbal.value}}
             </div>
-            <div class="rollable button" title="Literacy"
+            <div toggle class="rollable button" title="Literacy"
                 data-dialog="skill"
                 data-formula="1d100 + @resp.mod @resp.oper @language.literate.value"
                 data-item-id="{{_id}}">
@@ -26,7 +26,7 @@
             </div>
         </section>
     </div>
-    <article class="hide" data-toggle="{{_id}}">
+    <article class="hide" toggle>
         <div class="form-group">
             <label>{{localize "HM.literacy"}}:</label>
             <input class="editable" type="number" value="{{data.language.literate.value}}"

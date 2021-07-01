@@ -9,12 +9,15 @@ $shad-red: 0 0 10px red;
     }
 
     .button {
-        @include button-border(5px);
         text-align: center;
         margin-left: 2px;
         &:hover {
             font-weight: bold;
             text-shadow: $shad-red;
         }
+    }
+
+    .imgbutton {
+        @include button-border(5px);
     }
 }

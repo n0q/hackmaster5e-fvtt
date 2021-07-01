@@ -8,15 +8,15 @@
         </header>
         {{#if data.state.equipped.checked}}
         <section>
-            <img class="rollable button" src="{{findConfigValue "combatImg" "def"}}" height="36" title="Defend"
+            <img class="rollable imgbutton" src="{{findConfigValue "combatImg" "def"}}" height="36" title="Defend"
                 data-dialog="def"
                 data-formula="1d20p + @stats.def.derived.value + @resp.mod"
                 data-item-id="{{_id}}">
-            <img class="rollable button" src="{{findConfigValue "combatImg" "dmg"}}" height="36" title="Damage"
+            <img class="rollable imgbutton" src="{{findConfigValue "combatImg" "dmg"}}" height="36" title="Damage"
                 data-dialog="dmg"
                 data-formula="@resp.dmg + @stats.dmg.derived.value + @resp.mod"
                 data-item-id="{{_id}}">
-            <img class="rollable button" src="{{findConfigValue "combatImg" "atk"}}" height="36" title="Attack"
+            <img class="rollable imgbutton" src="{{findConfigValue "combatImg" "atk"}}" height="36" title="Attack"
                 data-dialog="atk"
                 data-formula="1d20p + @stats.atk.derived.value + @resp.mod"
                 data-item-id="{{_id}}">
