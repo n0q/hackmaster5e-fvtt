@@ -1,5 +1,5 @@
-<li class="toggle card hmstyle" data-item-id="{{_id}}">
-    <div class="lid">
+<li class="card hmstyle" data-item-id="{{_id}}">
+    <div class="lid toggleswitch">
         <header>
             <label for="{{name}}">
                 <div class="item-image"><img src="{{img}}" title="{{name}}" width="24" height="24"/></div>
@@ -11,7 +11,7 @@
                 </h4>
             </label>
         </header>
-        <section data-toggle="{{_id}}">
+        <section toggle>
             <div class="rollable button"
                 data-dialog="skill"
                 data-formula="1d100 + @resp.mod @resp.oper @mastery.derived.value"
@@ -20,7 +20,7 @@
             </div>
         </section>
     </div>
-    <article class="hide" data-toggle="{{_id}}">
+    <article class="hide" toggle>
         <div class="form-group">
             <label>{{localize "HM.mastery"}}:</label>
             <input class="editable" type="number" value="{{data.mastery.value}}"
