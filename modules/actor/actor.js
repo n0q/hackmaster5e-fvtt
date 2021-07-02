@@ -108,7 +108,6 @@ export class HMActor extends Actor {
                 return a.type === "proficiency" && a.name === wProf;
             });
 
-            console.warn(this.data.data.stats);
             let j = 0;
             for (const key in stats) {
                 let profValue = 0;
@@ -131,7 +130,6 @@ export class HMActor extends Actor {
                     : 0;
                 if (statValue != statValue) statValue = sData[key]["str"].value;
                 stats[key].stats = {'value': statValue};
-                console.warn(key + " " + statValue);
                 stats[key].derived.value += stats[key].prof.value
                                          +  stats[key].armor.value
                                          +  stats[key].cclass.value;
