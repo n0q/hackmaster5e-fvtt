@@ -1,4 +1,4 @@
-<li class="card">
+<li class="card hmstyle">
     <div class="lid toggleswitch">
         <header>
             <label for="{{name}}">
@@ -6,96 +6,60 @@
                 <h4 class="card-name">{{name}}</h4>
             </label>
         </header>
+        {{#if data.state.equipped.checked}}
         <section>
-            <img class="rollable" src="{{findConfigValue "combatImg" "def"}}" height="36" title="Defend"
+            <img class="rollable imgbutton" src="{{findConfigValue "combatImg" "def"}}" height="36" title="Defend"
                 data-dialog="def"
                 data-formula="1d20p + @stats.def.derived.value + @resp.mod"
                 data-item-id="{{_id}}">
-            <img class="rollable" src="{{findConfigValue "combatImg" "dmg"}}" height="36" title="Damage"
+            <img class="rollable imgbutton" src="{{findConfigValue "combatImg" "dmg"}}" height="36" title="Damage"
                 data-dialog="dmg"
                 data-formula="@resp.dmg + @stats.dmg.derived.value + @resp.mod"
                 data-item-id="{{_id}}">
-            <img class="rollable" src="{{findConfigValue "combatImg" "atk"}}" height="36" title="Attack"
+            <img class="rollable imgbutton" src="{{findConfigValue "combatImg" "atk"}}" height="36" title="Attack"
                 data-dialog="atk"
                 data-formula="1d20p + @stats.atk.derived.value + @resp.mod"
                 data-item-id="{{_id}}">
         </section>
+        {{/if}}
     </div>
-    <article class="hide" toggle>
-        <div class="details">
-            <div class="stats">
-                <div></div>
-                <label class="resource-label">{{localize "HM.atk"}}</label>
-                <label class="resource-label">{{localize "HM.dmg"}}</label>
-                <label class="resource-label">{{localize "HM.def"}}</label>
-                <label class="resource-label">{{localize "HM.spd"}}</label>
+    <section toggle>
+        <div class="splitview">
+            <div>
+                {{localize "HM.reach"}}: {{data.reach.value}}    
             </div>
-        </div>
-        <div class="details">
-            <label>Reach: {{data.reach.value}}</label>
-            <div class="stats">
+            <div class="gridtable">
+                <label></label>
+                {{#each data.stats as |stat key|}}
+                <label class="resource-label">{{key}}</label>
+                {{/each}}
                 <label>Total</label>
-                <input type="number" value="{{data.stats.atk.derived.value}}" readonly="true"/> 
-                <input type="number" value="{{data.stats.dmg.derived.value}}" readonly="true"/> 
-                <input type="number" value="{{data.stats.def.derived.value}}" readonly="true"/> 
-                <input type="number" value="{{data.stats.spd.derived.value}}" readonly="true"/> 
+                {{#each data.stats as |stat key|}}
+                <label>{{stat.derived.value}}</label>
+                {{/each}}
+                <label class="column">Base</label>
+                {{#each data.stats as |stat key|}}
+                <label>{{stat.value}}</label>
+                {{/each}}
+                <label class="column">Spec</label>
+                {{#each data.stats as |stat key|}}
+                <label>{{stat.prof.value}}</label>
+                {{/each}}
+                {{#if data.cclass}}
+                <label class="column">Class</label>
+                {{#each data.stats as |stat key|}}
+                <label>{{stat.cclass.value}}</label>
+                {{/each}}
+                {{/if}}
+                <label class="column">Stats</label>
+                {{#each data.stats as |stat key|}}
+                <label>{{stat.stats.value}}</label>
+                {{/each}}
+                <label class="column">Armor</label>
+                {{#each data.stats as |stat key|}}
+                <label>{{stat.armor.value}}</label>
+                {{/each}}
             </div>
         </div>
-        <div class="details">
-            <label>Damage: {{data.dmg.normal}} + {{data.stats.dmg.derived.value}}</label>
-            <div class="stats">
-                <label>Proficiency</label>
-                <input type="number" value="{{data.stats.atk.prof.value}}" readonly="true"/> 
-                <input type="number" value="{{data.stats.dmg.prof.value}}" readonly="true"/> 
-                <input type="number" value="{{data.stats.def.prof.value}}" readonly="true"/> 
-                <input type="number" value="{{data.stats.spd.prof.value}}" readonly="true"/> 
-            </div>
-        </div>
-        <div class="details">
-            <label></label>
-            <div class="stats">
-                <label>Stats</label>
-                <input type="number" value="{{data.stats.atk.stats.value}}" readonly="true"/> 
-                <input type="number" value="{{data.stats.dmg.stats.value}}" readonly="true"/> 
-                <input type="number" value="{{data.stats.def.stats.value}}" readonly="true"/> 
-                <input type="number" readonly="true"/> 
-            </div>
-        </div>
-        <div class="details">
-            <label>Shield Damage: {{data.dmg.shield}} + {{data.stats.dmg.derived.value}}</label>
-            <div class="stats">
-                <label>Armor</label>
-                <input type="number" value="{{data.stats.atk.armor.value}}" readonly="true"/> 
-                <input type="number" value="{{data.stats.dmg.armor.value}}" readonly="true"/> 
-                <input type="number" value="{{data.stats.def.armor.value}}" readonly="true"/> 
-                <input type="number" value="{{data.stats.spd.armor.value}}" readonly="true"/> 
-            </div>
-        </div>
-        <div class="details">
-            <label>Speed X</label>
-            <div class="stats">
-                <label>Misc</label>
-                <input class="editable" type="number" value="{{data.stats.atk.mod.value}}"
-                    data-item-id="{{_id}}"
-                    data-item-prop="data.stats.atk.mod.value"
-                    data-dtype="Number"
-                />
-                <input class="editable" type="number" value="{{data.stats.dmg.mod.value}}"
-                    data-item-id="{{_id}}"
-                    data-item-prop="data.stats.dmg.mod.value"
-                    data-dtype="Number"
-                />
-                <input class="editable" type="number" value="{{data.stats.def.mod.value}}"
-                    data-item-id="{{_id}}"
-                    data-item-prop="data.stats.def.mod.value"
-                    data-dtype="Number"
-                />
-                <input class="editable" type="number" value="{{data.stats.spd.mod.value}}"
-                    data-item-id="{{_id}}"
-                    data-item-prop="data.stats.spd.mod.value"
-                    data-dtype="Number"
-                />
-            </div>
-        </div>
-    </article>
+    </section>
 </li>

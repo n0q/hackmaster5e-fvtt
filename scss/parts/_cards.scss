@@ -4,6 +4,12 @@
     padding: 0;
     overflow-y: auto;
 
+    input {
+        margin-top: 1px;
+        width: 2em;
+        margin-right: 2px;
+    }
+
     .card-controls {
         text-align: right;
         margin-right: 2px;
@@ -25,37 +31,30 @@
 
     .hide { @include hide; }
 
-    .details {
-        display: flex;
-        flex-direction: row;
-        flex: 1 1 auto;
-        justify-content: space-between;
-        align-items: flex-end;
-        margin-left: 3px;
-        margin-right: 3px;
+    .gridtable {
+        display: inline-grid;
+        grid-template-columns: 1fr repeat(4, 3em);
+        justify-items: end;
+        // HACK
+        background: repeating-linear-gradient($cs-light 0 16px,transparent 16px 32px);
+    }
 
-        .stats {
-            display: flex;
-            flex-direction: row;
-            flex: 1 1 3em;
-            align-items: flex-end;
-            justify-content: flex-end;
-            label {
-                margin-left: 5px;
-                margin-right: 3px;
-            }
-
-            input {
-                margin-left: 5px;
-            }
+    > section {
+        padding: 5px;
+        
+        .splitview {
+            display: grid;
+            grid-template-columns: 1fr auto;
         }
     }
+
+
 
     .lid { 
         display: flex;
         justify-content: space-between;
 
-        section {
+        > section {
             display: flex;
             flex-direction: row-reverse;
             justify-content: flex-end;
@@ -63,12 +62,10 @@
             flex: 0 1 auto;
             border: 0;
             padding: 0;
-        }
-
-        input {
-            margin-top: 1px;
-            width: 2em;
-            margin-right: 2px;
+            img {
+                margin-left: 5px;
+                margin-right: 5px;
+            }
         }
     } 
 
@@ -79,6 +76,7 @@
         margin-right: 10px;
 
         h4 {
+            padding-left: 2px;
             margin-top: 1px;
             margin-bottom: -1px;
         }

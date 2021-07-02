@@ -16,4 +16,8 @@ $shad-red: 0 0 10px red;
             text-shadow: $shad-red;
         }
     }
+
+    .imgbutton {
+        @include button-border(5px);
+    }
 }
