@@ -85,5 +85,9 @@ export class HMCharacterActorSheet extends HMActorSheet {
         actorData.profs = profs;
         actorData.race = race;
         actorData.cclass = cclass;
+
+        for (let i=0; i < actorData.weapons.length; i++) {
+            actorData.weapons[i].data.cclass = actorData.cclass;
+        }
     }
 }

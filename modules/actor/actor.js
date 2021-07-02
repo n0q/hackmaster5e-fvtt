@@ -13,7 +13,7 @@ export class HMActor extends Actor {
     async setRace(data) {
         const races = this.items.filter((a) => a.type === "race");
         if (!races.length) return;
-        const race = races.pop();
+        races.pop();
 
         if (races.length) {
             let oldrace;
@@ -99,21 +99,42 @@ export class HMActor extends Actor {
             const stats  = data.stats;
             const wSkill = data.skill;
             const wProf  = data.proficiency;
+            const sData  = this.data.data.stats;
+
+            const cclass = this.items.find((a) => a.type === 'cclass');
+            const cData = cclass ? cclass.data.data.mod : null;
 
             const prof = this.items.find((a) => {
                 return a.type === "proficiency" && a.name === wProf;
             });
 
+            console.warn(this.data.data.stats);
             let j = 0;
             for (const key in stats) {
                 let profValue = 0;
                 let armorValue = 0;
+                let classValue = 0;
+                let statValue = 0;
                 if (armorDerived[key]) armorValue = armorDerived[key].value;
                 prof ? profValue = prof.data.data[key].value
                      : profValue = noprof.table[wSkill] * noprof.vector[j++];
                 stats[key].prof  = {"value": profValue};
                 stats[key].armor = {"value": armorValue};
-                stats[key].derived.value += stats[key].prof.value + stats[key].armor.value;
+
+                if (cclass) {
+                    classValue = cData?.[key]?.value || 0;
+                }
+                stats[key].cclass = {"value": classValue};
+
+                statValue = sData[key]
+                    ? parseInt(Object.values(sData[key]).reduce((a,b) => a.value + b.value))
+                    : 0;
+                if (statValue != statValue) statValue = sData[key]["str"].value;
+                stats[key].stats = {'value': statValue};
+                console.warn(key + " " + statValue);
+                stats[key].derived.value += stats[key].prof.value
+                                         +  stats[key].armor.value
+                                         +  stats[key].cclass.value;
             }
         }
     }

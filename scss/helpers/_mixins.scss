@@ -11,9 +11,7 @@
   overflow: hidden;
 }
 
-@mixin hide {
-  display: none;
-}
+@mixin hide { display: none !important; }
 
 @mixin border_rounded {
     border: 2px solid;
@@ -33,7 +31,8 @@
     }
 
     .column {
-        flex-basis: 100%;
+        justify-content: flex-end;
+        flex-basis: content;
         flex: 1;
     }
 }
@@ -59,8 +58,6 @@
     -moz-border-radius: #{$_border-radius};
     border-radius: #{$_border-radius};
     &:hover {
-        border: 2px solid;
-        border-radius: #{$_border-radius};
         border-color: $c-orange;
         box-shadow: 0 0 2px $c-orange;
         &:active {
