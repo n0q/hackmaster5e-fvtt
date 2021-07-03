@@ -75,8 +75,10 @@ export class HMActor extends Actor {
         // Remember, we're not zeroing out armorDerived.
         // If we start saving actordata, armorDerived will break.
         for (let i = 0; i <armors.length; i++) {
+            const armorData = armors[i].data.data;
+            if (!armorData.state.equipped.checked) continue;
+
             for (const key in armorDerived) {
-                const armorData = armors[i].data.data;
                 if (armorData.armortype === 'shield' && key === 'dr') {
                    armorDerived[key].shield.value += armorData.stats[key].derived.value;
                    continue;
