@@ -131,8 +131,8 @@ idx.savesImg = {
 
 idx.combatImg = {
     "atk":      "icons/weapons/swords/greatsword-blue.webp",
-    "dmg":      "icons/skills/melee/weapons-crossed-poleaxes-white.webp",
-    "def":      "icons/skills/melee/shield-damaged-broken-%20brown.webp"
+    "dmg":      'icons/skills/melee/strike-sword-blood-red.webp',
+    "def":      'icons/equipment/shield/heater-crystal-blue.webp'
 }
 
 

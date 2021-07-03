@@ -1,14 +1,15 @@
 <ol class="cards-list">
     <label class="resource-label">{{localize "HM.equipped"}}</label>
-    {{#each actor.weapons as |weapon|}}
-        {{#if weapon.data.state.equipped.checked}}
+    {{#each actor.weapons}}
+        {{#if data.state.equipped.checked}}
             {{> "systems/hackmaster5e/templates/actor/cards/weapon.hbs" }}
         {{/if}}
     {{/each}}
+    <br>
     <label class="resource-label">{{localize "HM.unequipped"}}</label>
-    {{#each actor.weapons as |weapon|}}
-        {{#if weapon.data.state.equipped.checked}}{{else}}
-            {{> "systems/hackmaster5e/templates/actor/cards/weapon.hbs" }}
-        {{/if}}
+    {{#each actor.weapons}}
+        {{#if data.state.equipped.checked}}{{else}}
+        {{> "systems/hackmaster5e/templates/actor/cards/weapon.hbs" }}
+    {{/if}}
     {{/each}}
 </ol>

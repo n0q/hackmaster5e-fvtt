@@ -75,8 +75,10 @@ export class HMActor extends Actor {
         // Remember, we're not zeroing out armorDerived.
         // If we start saving actordata, armorDerived will break.
         for (let i = 0; i <armors.length; i++) {
+            const armorData = armors[i].data.data;
+            if (!armorData.state.equipped.checked) continue;
+
             for (const key in armorDerived) {
-                const armorData = armors[i].data.data;
                 if (armorData.armortype === 'shield' && key === 'dr') {
                    armorDerived[key].shield.value += armorData.stats[key].derived.value;
                    continue;
@@ -108,7 +110,6 @@ export class HMActor extends Actor {
                 return a.type === "proficiency" && a.name === wProf;
             });
 
-            console.warn(this.data.data.stats);
             let j = 0;
             for (const key in stats) {
                 let profValue = 0;
@@ -131,7 +132,6 @@ export class HMActor extends Actor {
                     : 0;
                 if (statValue != statValue) statValue = sData[key]["str"].value;
                 stats[key].stats = {'value': statValue};
-                console.warn(key + " " + statValue);
                 stats[key].derived.value += stats[key].prof.value
                                          +  stats[key].armor.value
                                          +  stats[key].cclass.value;
