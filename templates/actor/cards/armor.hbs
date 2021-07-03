@@ -1,4 +1,4 @@
-<li class="card">
+<li class="card hmstyle">
     <div class="lid toggleswitch">
         <header>
             <label for="{{name}}">
@@ -7,54 +7,23 @@
             </label>
         </header>
     </div>
-    <article class="hide" toggle>
-        <div class="details">
+    <section toggle>
+        <div class="splitview">
             <div></div>
-            <div class="stats">
-                <label class="resource-label">{{localize "HM.dr"}}</label>
-                <label class="resource-label">{{localize "HM.def"}}</label>
-                <label class="resource-label">{{localize "HM.init"}}</label>
-                <label class="resource-label">{{localize "HM.spd"}}</label>
+            <div class="gridtable">
+                <label></label>
+                {{#each data.stats as |stat key|}}
+                <label class="resource-label">{{key}}</label>
+                {{/each}}
+                <label>Total</label>
+                {{#each data.stats}}
+                <label>{{derived.value}}</label>
+                {{/each}}
+                <label class="column">Base</label>
+                {{#each data.stats}}
+                <label>{{value}}</label>
+                {{/each}}
             </div>
         </div>
-        <div class="details">
-            <div></div>
-            <div class="stats">
-                <input type="number" value="{{data.stats.dr.derived.value}}" readonly="true"/>
-                <input type="number" value="{{data.stats.def.derived.value}}" readonly="true"/>
-                <input type="number" value="{{data.stats.init.derived.value}}" readonly="true"/>
-                <input type="number" value="{{data.stats.spd.derived.value}}" readonly="true"/>
-            </div>
-        </div>
-        <div class="details">
-            <div></div>
-            <div class="stats">
-                <input type="number" value="{{data.stats.dr.value}}" readonly="true"/>
-                <input type="number" value="{{data.stats.def.value}}" readonly="true"/>
-                <input type="number" value="{{data.stats.init.value}}" readonly="true"/>
-                <input type="number" value="{{data.stats.spd.value}}" readonly="true"/>
-            </div>
-        </div>
-        <div class="details">
-            <div></div>
-            <div class="stats">
-                <input type="number" class="editable" value="{{data.stats.dr.mod.value}}" 
-                    data-item-id="{{_id}}"
-                    data-item-prop="data.stats.dr.mod.value" 
-                    data-dtype="Number"/>
-                <input type="number" class="editable" value="{{data.stats.def.mod.value}}" 
-                    data-item-id="{{_id}}"
-                    data-item-prop="data.stats.def.mod.value" 
-                    data-dtype="Number"/>
-                <input type="number" class="editable" value="{{data.stats.init.mod.value}}" 
-                    data-item-id="{{_id}}"
-                    data-item-prop="data.stats.init.mod.value" 
-                    data-dtype="Number"/>
-                <input type="number" class="editable" value="{{data.stats.spd.mod.value}}" 
-                    data-item-id="{{_id}}"
-                    data-item-prop="data.stats.spd.mod.value" 
-                    data-dtype="Number"/>
-            </div>
-        </div>
-    </article>
+    </section>
 </li>
