@@ -248,7 +248,8 @@
                 "spd": {"value": 0, "mod": {"value": 0}}
             },
             "dmg":     {"normal": "", "shield": ""},
-            "reach":   {"value": 0}
+            "reach":   {"value": 0},
+            "ranged":  {"checked": false}
         },
 
         "wound": {

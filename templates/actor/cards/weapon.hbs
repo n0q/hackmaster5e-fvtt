@@ -16,10 +16,17 @@
                 data-dialog="dmg"
                 data-formula="@resp.dmg + @stats.dmg.derived.value + @resp.mod"
                 data-item-id="{{_id}}">
+            {{#if data.ranged.checked}}
+            <img class="rollable imgbutton" src="{{findConfigValue "combatImg" "ratk"}}" height="36" title="Attack"
+                data-dialog="ratk"
+                data-formula="1d20p + @stats.atk.derived.value + @resp.range + @resp.mod"
+                data-item-id="{{_id}}">
+            {{else}}
             <img class="rollable imgbutton" src="{{findConfigValue "combatImg" "atk"}}" height="36" title="Attack"
                 data-dialog="atk"
                 data-formula="1d20p + @stats.atk.derived.value + @resp.mod"
                 data-item-id="{{_id}}">
+            {{/if}}
         </section>
         {{/if}}
     </div>

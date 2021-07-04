@@ -8,6 +8,7 @@ export default class HMChatMgr {
         let cData;
         switch (dataset.dialog) {
             case "atk":
+            case "ratk":
             case "def":
             case "dmg":
                 cData = await this._createWeaponCard(roll, dataset, dialogResp);
@@ -41,6 +42,21 @@ export default class HMChatMgr {
 
         const html = await roll.render();
         switch (dataset.dialog) {
+            case "ratk": {
+                const sumDice = getDiceSum(roll);
+                let specialRow = "<p>";
+                if (sumDice >= 20) { specialRow += "<b>Critical!</b>";         } else
+                if (sumDice == 19) { specialRow += "<b>Near Perfect!</b>";     } else
+                if (sumDice == 1)  { specialRow += "<b>Potential Fumble!</b>"; }
+
+                const title = actor.name + " attacks with a " + item.name + ".";
+
+                const speedRow = "Speed: " + item.data.data.stats.spd.derived.value;
+                const rangeRow = "<br>" + game.i18n.localize("HM." + dialogResp.resp.rangestr)
+                               + " Range";
+                const card = speedRow + rangeRow + specialRow + html;
+                return {flavor: title, content: card};
+            }
             case "atk": {
                 const sumDice = getDiceSum(roll);
                 let specialRow = "<p>";
