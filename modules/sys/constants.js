@@ -30,6 +30,14 @@ export const HMTABLES = {
         }
     },
     "weapons": {
+        "ranged": {
+            "penalty": {
+                "short":    0,
+                "medium":  -4,
+                "long":    -6,
+                "extreme": -8,
+            }
+        },
         "noprof": {
             "table": {
                 "minimal": -1,

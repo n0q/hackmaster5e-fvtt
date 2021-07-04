@@ -1,14 +1,17 @@
+import { HMTABLES } from '../../modules/sys/constants.js';
+
 export default class HMDialogMgr {
     getDialog(dataset, caller=null) {
         const name = dataset.dialog;
-        if (name === 'ability') { return this.getAbilityDialog(dataset, caller) } else
-        if (name === 'atk')     { return this.getAttackDialog(dataset, caller)  } else
-        if (name === 'def')     { return this.getDefendDialog(dataset, caller)  } else
-        if (name === 'dmg')     { return this.getDamageDialog(dataset, caller)  } else
-        if (name === 'initdie') { return this.getInitDieDialog(caller)          } else
-        if (name === 'save')    { return this.getSaveDialog(dataset, caller)    } else
-        if (name === 'skill')   { return this.getSkillDialog(dataset, caller)   } else
-        if (name === 'wound')   { return this.setWoundDialog(caller)            }
+        if (name === 'ability') { return this.getAbilityDialog(dataset, caller)      } else
+        if (name === 'atk')     { return this.getAttackDialog(dataset, caller)       } else
+        if (name === 'ratk')    { return this.getRangedAttackDialog(dataset, caller) } else
+        if (name === 'def')     { return this.getDefendDialog(dataset, caller)       } else
+        if (name === 'dmg')     { return this.getDamageDialog(dataset, caller)       } else
+        if (name === 'initdie') { return this.getInitDieDialog(caller)               } else
+        if (name === 'save')    { return this.getSaveDialog(dataset, caller)         } else
+        if (name === 'skill')   { return this.getSkillDialog(dataset, caller)        } else
+        if (name === 'wound')   { return this.setWoundDialog(caller)                 }
     }
 
     _focusById(id) {
@@ -113,6 +116,40 @@ export default class HMDialogMgr {
                             widx = html.find('#weapon-select')[0].value;
                             resolve({
                                 "mod": parseInt(document.getElementById("mod").value || 0),
+                            })
+                        }
+                    }
+                },
+                default: "attack"
+            }).render(true);
+            this._focusById('mod');
+        });
+        dialogResp.context = dialogData.weapons[widx];
+        return dialogResp;
+    }
+
+    async getRangedAttackDialog(dataset, caller) {
+        const dialogData = {};
+        const dialogResp = {caller};
+
+        dialogData.weapons = this.getWeapons(caller, dataset?.itemId);
+        const template = "systems/hackmaster5e/templates/dialog/getRangedAttack.hbs";
+
+        const penalty = HMTABLES.weapons.ranged.penalty;
+        let widx = null;
+        dialogResp.resp = await new Promise(async resolve => {
+            new Dialog({
+                title: caller.name + game.i18n.localize("HM.dialog.getAttackTitle"),
+                content: await renderTemplate(template, dialogData),
+                buttons: {
+                    attack: {
+                        label: game.i18n.localize("HM.attack"),
+                        callback: (html) => {
+                            widx = html.find('#weapon-select')[0].value;
+                            resolve({
+                                "mod": parseInt(document.getElementById("mod").value || 0),
+                                "range": penalty[document.getElementById("range").value],
+                                "rangestr": document.getElementById("range").value
                             })
                         }
                     }

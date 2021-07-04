@@ -116,6 +116,13 @@ idx.dice = {
     "1d3":       "d3"
 }
 
+idx.range = {
+    "short":     "Short",
+    "medium":    "Medium (-4)",
+    "long":      "Long (-6)",
+    "extreme":   "Extreme (-8)"
+}
+
 // Images
 idx.savesImg = {
     "dodge":    "icons/skills/movement/feet-winged-boots-brown.webp",
@@ -130,6 +137,7 @@ idx.savesImg = {
 }
 
 idx.combatImg = {
+    "ratk":     'icons/weapons/bows/shortbow-recurve-blue.webp',
     "atk":      "icons/weapons/swords/greatsword-blue.webp",
     "dmg":      'icons/skills/melee/strike-sword-blood-red.webp',
     "def":      'icons/equipment/shield/heater-crystal-blue.webp'
