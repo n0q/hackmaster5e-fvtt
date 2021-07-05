@@ -16,6 +16,7 @@ module.exports = {
         'import/extensions': 'off',
         'import/newline-after-import': 'off',
         'indent': 'off',
+        'key-spacing': 'off',
         'no-plusplus': 'off',
         'no-multi-spaces': 'off',
         'no-console': ['error', { allow: ['warn', 'error'] }],

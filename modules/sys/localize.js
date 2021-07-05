@@ -98,7 +98,6 @@ idx.itemCClass = {
     "spdm":     "HM.spdmbonus"
 }
 
-
 idx.itemTypes = {
     "armor":    "HM.itemTypes.armor",
     "item":     "HM.itemTypes.item",
@@ -137,11 +136,11 @@ idx.savesImg = {
 }
 
 idx.combatImg = {
-    "ratk":     'icons/weapons/bows/shortbow-recurve-blue.webp',
-    "atk":      "icons/weapons/swords/greatsword-blue.webp",
-    "dmg":      'icons/skills/melee/strike-sword-blood-red.webp',
-    "def":      'icons/equipment/shield/heater-crystal-blue.webp'
-}
-
+    atk:      'icons/weapons/swords/greatsword-blue.webp',
+    ratk:     'icons/weapons/bows/shortbow-recurve-blue.webp',
+    dmg:      'icons/skills/melee/strike-sword-blood-red.webp',
+    rdmg:     'icons/weapons/ammunition/arrow-head-war-flight.webp',
+    def:      'icons/equipment/shield/heater-crystal-blue.webp',
+};
 
 export default idx;
