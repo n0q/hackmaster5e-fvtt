@@ -193,6 +193,7 @@
         "init":         "Init",
         "initbonus":    "Init Bonus",
         "initiative":   "Initiative",
+        "innate":       "Innate",
         "inventory":    "Inventory",
         "knockback":    "Knockback",
         "language":     "Language",
@@ -210,6 +211,7 @@
         "poison":       "Poison",
         "quality":      "Quality",
         "quantity":     "Quantity",
+        "qty":          "Qty",
         "tools":        "Tools",
         "treated":      "Treated",
         "top":          "ToP",
@@ -240,7 +242,6 @@
         "weapon":       "Weapon",
         "weight":       "Weight",
         "wound":        "Wound",
-
 
         "raw":          "Raw",
         "racial":       "Racial",

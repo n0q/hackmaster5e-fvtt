@@ -5,28 +5,29 @@
     </label></header>
 </div>
 
-<div class="grid grid-2col">
+<div class="grid grid-3col">
     <div>
         <div class="form-group">
-            <label class="resource-label">{{localize "HM.quantity"}}</label>
+            <label class="resource-label">{{localize "HM.qty"}}</label>
             <input type="number" name="data.quantity.value" value="{{data.data.quantity.value}}" data-dtype="Number"/>
         </div>
+        <div class="form-group">
+            <label class="resource-label">{{localize "HM.avail.high"}}</label>
+            <input type="number" name="data.avail.high.value" value="{{data.data.avail.high.value}}" data-dtype="Number"/>
+        </div>
+    </div><div>
         <div class="form-group">
             <label class="resource-label">{{localize "HM.weight"}}</label>
             <input type="number" name="data.weight.value" value="{{data.data.weight.value}}" data-dtype="Number"/>
         </div>
         <div class="form-group">
-            <label class="resource-label">{{localize "HM.cost"}}</label>
-            <input type="number" name="data.cost.value" value="{{data.data.cost.value}}" data-dtype="Number"/>
+            <label class="resource-label">{{localize "HM.avail.med"}}</label>
+            <input type="number" name="data.avail.med.value" value="{{data.data.avail.med.value}}" data-dtype="Number"/>
         </div>
     </div><div>
         <div class="form-group">
-            <label class="resource-label">{{localize "HM.avail.high"}}</label>
-            <input type="number" name="data.avail.high.value" value="{{data.data.avail.high.value}}" data-dtype="Number"/>
-        </div>
-        <div class="form-group">
-            <label class="resource-label">{{localize "HM.avail.med"}}</label>
-            <input type="number" name="data.avail.med.value" value="{{data.data.avail.med.value}}" data-dtype="Number"/>
+            <label class="resource-label">{{localize "HM.cost"}}</label>
+            <input type="number" name="data.cost.value" value="{{data.data.cost.value}}" data-dtype="Number"/>
         </div>
         <div class="form-group">
             <label class="resource-label">{{localize "HM.avail.low"}}</label>
