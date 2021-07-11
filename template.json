@@ -124,6 +124,8 @@
         "armor": {
             "templates": ["base", "logistics"],
             "armortype": null,
+            "innate": {"checked": false},
+            "proficiency": null,
             "stats": {
                 "dr":    {"value": 0,    "mod": {"value": 0}},
                 "def":   {"value": 0,    "mod": {"value": 0}},
@@ -131,6 +133,7 @@
                 "spd":   {"value": 0,    "mod": {"value": 0}}
             },
             "shield": {
+                "checked": false,
                 "limit": {"value": 0, "mod": {"value": 0}},
                 "save":  {"value": 0, "mod": {"value": 0}},
                 "cover": {

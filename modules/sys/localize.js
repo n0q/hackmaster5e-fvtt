@@ -66,7 +66,6 @@ idx.armortype = {
     "light":  "HM.armorSelect.light",
     "medium": "HM.armorSelect.medium",
     "heavy":  "HM.armorSelect.heavy",
-    "shield": "HM.armorSelect.shield"
 },
 
 idx.weaponskill = {

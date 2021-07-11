@@ -209,6 +209,7 @@
         "owned":        "Owned",
         "physical":     "Physical",
         "poison":       "Poison",
+        "proficiency":  "Proficiency",
         "quality":      "Quality",
         "quantity":     "Quantity",
         "qty":          "Qty",
