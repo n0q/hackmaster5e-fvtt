@@ -3,8 +3,14 @@
     <div>
         <input name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
         <div>
-            {{#if actor.race.name}}{{actor.race.name}}{{/if}}
-            {{#if actor.cclass}}{{actor.cclass.name}}-{{actor.cclass.data.level.value}}{{/if}}
+            {{#if actor.race.data.adj}}
+                {{actor.race.data.adj}}
+            {{else}}
+                {{actor.race.name}}
+            {{/if}}
+            {{#if actor.cclass}}
+                {{actor.cclass.name}}-{{actor.cclass.data.level.value}}
+            {{/if}}
         </div>
     </div>
 </span>
