@@ -121,6 +121,18 @@ idx.range = {
     "extreme":   "Extreme (-8)"
 }
 
+idx.size = {
+    tiny:     'HM.sizeFull.tiny',
+    small:    'HM.sizeFull.small',
+    medium:   'HM.sizeFull.medium',
+    large:    'HM.sizeFull.large',
+    huge:     'HM.sizeFull.huge',
+    gigantic: 'HM.sizeFull.gigantic',
+    enormous: 'HM.sizeFull.enormous',
+    colossal: 'HM.sizeFull.colossal',
+    custom:   'HM.custom',
+};
+
 // Images
 idx.savesImg = {
     "dodge":    "icons/skills/movement/feet-winged-boots-brown.webp",

@@ -1,50 +1,88 @@
 <form class="{{cssClass}}" autocomplete="off">
     {{> "systems/hackmaster5e/templates/item/parts/header.hbs" }}
 
-    {{!-- Sheet Tab Navigation --}}
     <nav class="sheet-tabs tabs" data-group="primary">
         <a class="item" data-tab="description">Description</a>
         <a class="item" data-tab="attributes">Attributes</a>
     </nav>
 
-    {{!-- Sheet Body --}}
     <section class="sheet-body">
-
-        {{!-- Description Tab --}}
         <div class="tab" data-group="primary" data-tab="description">
             {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
         </div>
 
-        {{!-- Attributes Tab --}}
         <div class="tab attributes" data-group="primary" data-tab="attributes">
-            <div class="grid grid-4col">
-                <div class="resource">
-                    <label class="resource-label">{{localize "HM.hp_mod"}}</label>
-                    <input type="number" name="data.hp.value" value="{{data.data.hp.value}}" data-dtype="Number"/>
-                </div>
-                <div class="resource">
-                    <label class="resource-label">{{localize "HM.knockback"}}</label>
-                    <input type="number" name="data.kb.value" value="{{data.data.kb.value}}" data-dtype="Number"/>
-                </div>
-                <div class="resource">
-                    <label class="resource-label">{{localize "HM.reach_mod"}}</label>
-                    <input type="number" name="data.reach.value" value="{{data.data.reach.value}}" data-dtype="Number"/>
-                </div>
-                <div class="resource">
-                    <label class="resource-label">{{localize "HM.defense_mod"}}</label>
-                    <input type="number" name="data.def.value" value="{{data.data.def.value}}" data-dtype="Number"/>
-                </div>
-            </div>
-            <div class="grid grid-2col">
-                {{#each data.data.abilities as |ability key|}}
-                    <div class="ability flexrow">
-                        <input type="text" name="data.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number"/>
-                        <input type="text" name="data.abilities.{{key}}.fvalue" value="{{ability.fvalue}}" data-dtype="Number"/>
-                        <label for="data.mods.abilities.{{key}}.value" class="resource-label">
-                            {{localize (findConfigValue "ability_short" key)}}
-                        </label>
+            <div class="item-form">
+                {{#with data.data}}
+                <div class="sidepanel">
+                    <div class="options-block">
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.hp"}}</label>
+                            <span>
+                                <select class="dropdown" name="data.hp.size"
+                                    data-ref1="size"
+                                    data-ref3="hp"
+                                    data-key="data.hp.value"> 
+                                {{#select hp.size}}{{#each (findConfigObj "size") as |type t|}}
+                                    <option value="{{t}}">{{localize type}}</option>
+                                {{/each}}{{/select}}
+                                </select>
+                                <input type="number" name="data.hp.value" value="{{hp.value}}"
+                                {{#if (neq hp.size "custom")}}readonly{{/if}} data-dtype="Number"/>
+                            </span>
+                        </div>
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.kb"}}</label>
+                            <span>
+                                <select class="dropdown" name="data.kb.size"
+                                    data-ref1="size"
+                                    data-ref3="kb"
+                                    data-key="data.kb.value">
+                                {{#select kb.size}}{{#each (findConfigObj "size") as |type t|}}
+                                    <option value="{{t}}">{{localize type}}</option>
+                                {{/each}}{{/select}}
+                                </select>
+                                <input type="number" name="data.kb.value" value="{{kb.value}}"
+                                {{#if (neq kb.size "custom")}}readonly{{/if}} data-dtype="Number"/>
+                            </span>
+                        </div>
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.reach"}}</label>
+                            <span>
+                                <select class="dropdown" name="data.reach.size"
+                                    data-ref1="size"
+                                    data-ref3="reach"
+                                    data-key="data.reach.value">
+                                {{#select reach.size}}{{#each (findConfigObj "size") as |type t|}}
+                                    <option value="{{t}}">{{localize type}}</option>
+                                {{/each}}{{/select}}
+                                </select>
+                                <input type="number" name="data.reach.value" value="{{reach.value}}"
+                                {{#if (neq reach.size "custom")}}readonly{{/if}} data-dtype="Number"/>
+                            </span>
+                        </div>
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.def"}}</label>
+                            <input type="number" name="data.def.value" value="{{def.value}}" data-dtype="Number"/>
+                        </div>
                     </div>
-                {{/each}}
+                </div>
+                <div class="sidepanel">
+                    <div class="options-block">
+                        {{#each abilities as |ability key|}}
+                        <div class="options-row">
+                            <label for="data.mods.abilities.{{key}}.value" class="resource-label">
+                                {{localize (findConfigValue "ability_short" key)}}
+                            </label>
+                            <span>
+                                <input type="text" name="data.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number"/>
+                                <input type="text" name="data.abilities.{{key}}.fvalue" value="{{ability.fvalue}}" data-dtype="Number"/>
+                            </span>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+                {{/with}}
             </div>
         </div> 
     </section>

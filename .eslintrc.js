@@ -22,6 +22,8 @@ module.exports = {
         'no-console': ['error', { allow: ['warn', 'error'] }],
         'no-shadow': ['error', { 'builtinGlobals': true, 'hoist': 'all', 'allow': ['event'] }],
         'object-curly-spacing': 'off',
-        'quote-props': 'warn'
+        'quotes': 'warn',
+        'quote-props': 'warn',
+        'space-infix-ops': 'off',
     }
 }

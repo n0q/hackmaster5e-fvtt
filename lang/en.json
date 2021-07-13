@@ -107,6 +107,28 @@
             "warnMulti":         "Multiple tokens selected. Using <b>"
         },
 
+        "sizeFull": {
+            "tiny":             "Tiny",
+            "small":            "Small",
+            "medium":           "Medium",
+            "large":            "Large",
+            "huge":             "Huge",
+            "gigantic":         "Gigantic",
+            "enormous":         "Enormous",
+            "colossal":         "Colossal"
+        },
+
+        "sizeAbbr": {
+            "tiny":             "T",
+            "small":            "S",
+            "medium":           "M",
+            "large":            "L",
+            "huge":             "H",
+            "gigantic":         "G",
+            "enormous":         "E",
+            "colossal":         "C"
+        },
+
         "uskill": {
             "acting":            "Acting",
             "animalhusbandry":   "Animal Husbandry",
@@ -153,6 +175,7 @@
 
         "bp": "bp",
         "dr": "dr",
+        "kb": "kb",
         "hp": "hp",
         "sp": "sp",
 
@@ -176,6 +199,7 @@
         "class":        "Class",
         "combat":       "Combat",
         "cost":         "Cost",
+        "custom":       "Custom",
         "drmod":        "DR Mod",
         "defend":       "Defend",
         "defmod":       "Def Mod",

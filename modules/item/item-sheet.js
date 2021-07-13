@@ -1,3 +1,5 @@
+import { HMTABLES } from '../sys/constants.js'
+
 /**
  * Extend the basic ItemSheet with some very simple modifications
  * @extends {ItemSheet}
@@ -17,11 +19,6 @@ export class HMItemSheet extends ItemSheet {
   /** @override */
   get template() {
     const path = "systems/hackmaster5e/templates/item";
-    // Return a single sheet for all item types.
-    // return `${path}/item-sheet.html`;
-
-    // Alternatively, you could use the following return statement to do a
-    // unique item sheet by type, like `weapon-sheet.html`.
     return `${path}/item-${this.item.data.type}-sheet.hbs`;
   }
 
@@ -46,13 +43,27 @@ export class HMItemSheet extends ItemSheet {
 
   /* -------------------------------------------- */
 
-  /** @override */
-  activateListeners(html) {
-    super.activateListeners(html);
+    /** @override */
+    activateListeners(html) {
+        super.activateListeners(html);
+        if (!this.options.editable) return;
 
-    // Everything below here is only needed if the sheet is editable
-    if (!this.options.editable) return;
+        html.find('.dropdown').change(this._onChangeDropdown.bind(this));
+    }
 
-    // Roll handlers, click handlers, etc. would go here.
-  }
+    _onChangeDropdown(ev) {
+        ev.preventDefault();
+        const element = ev.currentTarget;
+        const dataset = element.dataset;
+
+        const ref1    = dataset.ref1;
+        const ref2    = $(element).val();
+        const ref3    = dataset.ref3;
+        if (ref2 === 'custom') return;
+
+        const key     = dataset.key;
+        const value   = HMTABLES[ref1][ref2][ref3];
+        const data    = {[key]: value};
+        return this.item.update(data);
+    }
 }

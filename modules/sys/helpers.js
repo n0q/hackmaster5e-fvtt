@@ -38,13 +38,14 @@ export default function registerHandlebarsHelpers() {
         return "INVALID_LIST";
     });
 
-    Handlebars.registerHelper("inc", (a)    => { return ++a });
-    Handlebars.registerHelper("dec", (a)    => { return --a });
-    Handlebars.registerHelper("eq",  (a, b) => { return   a == b });
-    Handlebars.registerHelper("gt",  (a, b) => { return   a >  b });
-    Handlebars.registerHelper("gte", (a, b) => { return   a >= b });
-    Handlebars.registerHelper("lt",  (a, b) => { return   a <  b });
-    Handlebars.registerHelper("lte", (a, b) => { return   a <= b });
+    Handlebars.registerHelper('inc', (a)    => { return ++a });
+    Handlebars.registerHelper('dec', (a)    => { return --a });
+    Handlebars.registerHelper('eq',  (a, b) => { return   a  == b });
+    Handlebars.registerHelper('neq', (a, b) => { return   a !== b });
+    Handlebars.registerHelper('gt',  (a, b) => { return   a  >  b });
+    Handlebars.registerHelper('gte', (a, b) => { return   a  >= b });
+    Handlebars.registerHelper('lt',  (a, b) => { return   a  <  b });
+    Handlebars.registerHelper('lte', (a, b) => { return   a  <= b });
 
     Handlebars.registerHelper("ishalf", (a, b)   => {
         return a === Math.floor(b/2);

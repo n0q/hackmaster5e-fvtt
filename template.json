@@ -189,9 +189,9 @@
 
         "race": {
             "templates": ["base"],
-            "hp":      {"value": 10},
-            "kb":      {"value": 10},
-            "reach":   {"value": 0},
+            "hp":      {"value": 10, "size": "medium"},
+            "kb":      {"value": 15, "size": "medium"},
+            "reach":   {"value": 0,  "size": "medium"},
             "def":     {"value": 0},
             "abilities": {
                 "str": {"value": 0, "fvalue": 0},
