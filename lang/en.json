@@ -187,6 +187,7 @@
         "long":         "Long",
         "extreme":      "Extreme",
 
+        "adjective":    "Adjective",
         "age":          "Age",
         "armortype":    "Armor Type",
         "attack":       "Attack",

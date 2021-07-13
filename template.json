@@ -189,6 +189,7 @@
 
         "race": {
             "templates": ["base"],
+            "adj": null,
             "hp":      {"value": 10, "size": "medium"},
             "kb":      {"value": 15, "size": "medium"},
             "reach":   {"value": 0,  "size": "medium"},
