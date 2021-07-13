@@ -1,7 +1,5 @@
 <form class="{{cssClass}}" autocomplete="off">
-    <header class="sheet-header">
-        {{> "systems/hackmaster5e/templates/item/parts/header-logistics.hbs" }}
-    </header>
+    {{> "systems/hackmaster5e/templates/item/parts/header-logistics.hbs" }}
 
     <nav class="sheet-tabs tabs" data-group="primary">
         <a class="item" data-tab="description">Description</a>
@@ -14,42 +12,56 @@
         </div>
 
         <div class="tab attributes" data-group="primary" data-tab="attributes">
-            {{> "systems/hackmaster5e/templates/item/parts/logistics.hbs" }}
-            <br>
-            <div class="flex-group-center">
-                <label class="resource-label">{{localize "HM.adjustments"}}</label>
-                <div class="grid-4col">
-                    <div class="resource">
-                        <label class="resource-label">{{localize "HM.dr"}}</label>
-                        <input type="number" name="data.stats.dr.value" value="{{data.data.stats.dr.value}}" data-dtype="Number"/>
-                    </div>
-                    <div class="resource">
-                        <label class="resource-label">{{localize "HM.def"}}</label>
-                        <input type="number" name="data.stats.def.value" value="{{data.data.stats.def.value}}" data-dtype="Number"/>
-                    </div>
-                    <div class="resource">
-                        <label class="resource-label">{{localize "HM.init"}}</label>
-                        <input type="number" name="data.stats.init.value" value="{{data.data.stats.init.value}}" data-dtype="Number"/>
-                    </div>
-                    <div class="resource">
-                        <label class="resource-label">{{localize "HM.speed"}}</label>
-                        <input type="number" name="data.stats.spd.value" value="{{data.data.stats.spd.value}}" data-dtype="Number"/>
+            <div class="item-form">
+                {{#with data.data}} 
+                <div class="sidepanel">
+                    <div class="options-block">
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.dr"}}</label>
+                            <input type="number" name="data.stats.dr.value" value="{{stats.dr.value}}" data-dtype="Number"/>
+                        </div>
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.def"}}</label>
+                            <input type="number" name="data.stats.def.value" value="{{stats.def.value}}" data-dtype="Number"/>
+                        </div>
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.init"}}</label>
+                            <input type="number" name="data.stats.init.value" value="{{stats.init.value}}" data-dtype="Number"/>
+                        </div>
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.speed"}}</label>
+                            <input type="number" name="data.stats.spd.value" value="{{stats.spd.value}}" data-dtype="Number"/>
+                        </div>
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.shield"}}</label>
+                            <input type="checkbox" name="data.shield.checked" {{checked shield.checked}}/>
+                        </div>
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.innate"}}</label>
+                            <input type="checkbox" name="data.innate.checked" {{checked innate.checked}}/>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="grid grid-2col">
-                <div class="resource">
-                    <label class="resource-label">{{localize "HM.armortype"}}</label>
-                    <select name="data.armortype" data-dtype="{{data.armortype}}">
-                        {{#select data.data.armortype}}{{#each (findConfigObj "armortype") as |type t|}}
-                            <option value="{{t}}">{{localize type}}</option>
-                        {{/each}}{{/select}}
-                    </select>
+                <div class="sidepanel">
+                    <div class="options-block">
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.proficiency"}}</label>
+                            <input style="width: 100%;" type="text" name="data.proficiency" value="{{proficiency}}"
+                            data-dtype="String"/>
+                        </div>
+                        {{#if shield.checked}}{{else}}
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.armortype"}}</label>
+                            <select name="data.armortype">
+                                {{#select armortype}}{{#each (findConfigObj "armortype") as |type t|}}
+                                    <option value="{{t}}">{{localize type}}</option>
+                                {{/each}}{{/select}}
+                            </select>
+                        </div>
+                        {{/if}}
+                    </div>
                 </div>
-                <div class="resource">
-                    <label class="resource-label">{{localize "HM.quality"}}</label>
-                    <input type="number" name="data.quality.value" value="{{data.data.quality.value}}" data-dtype="Number"/>
-                </div>
+                {{/with}}
             </div>
         </div> 
     </section>

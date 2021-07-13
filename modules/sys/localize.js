@@ -66,7 +66,6 @@ idx.armortype = {
     "light":  "HM.armorSelect.light",
     "medium": "HM.armorSelect.medium",
     "heavy":  "HM.armorSelect.heavy",
-    "shield": "HM.armorSelect.shield"
 },
 
 idx.weaponskill = {
@@ -98,7 +97,6 @@ idx.itemCClass = {
     "spdm":     "HM.spdmbonus"
 }
 
-
 idx.itemTypes = {
     "armor":    "HM.itemTypes.armor",
     "item":     "HM.itemTypes.item",
@@ -123,6 +121,18 @@ idx.range = {
     "extreme":   "Extreme (-8)"
 }
 
+idx.size = {
+    tiny:     'HM.sizeFull.tiny',
+    small:    'HM.sizeFull.small',
+    medium:   'HM.sizeFull.medium',
+    large:    'HM.sizeFull.large',
+    huge:     'HM.sizeFull.huge',
+    gigantic: 'HM.sizeFull.gigantic',
+    enormous: 'HM.sizeFull.enormous',
+    colossal: 'HM.sizeFull.colossal',
+    custom:   'HM.custom',
+};
+
 // Images
 idx.savesImg = {
     "dodge":    "icons/skills/movement/feet-winged-boots-brown.webp",
@@ -137,11 +147,11 @@ idx.savesImg = {
 }
 
 idx.combatImg = {
-    "ratk":     'icons/weapons/bows/shortbow-recurve-blue.webp',
-    "atk":      "icons/weapons/swords/greatsword-blue.webp",
-    "dmg":      'icons/skills/melee/strike-sword-blood-red.webp',
-    "def":      'icons/equipment/shield/heater-crystal-blue.webp'
-}
-
+    atk:      'icons/weapons/swords/greatsword-blue.webp',
+    ratk:     'icons/weapons/bows/shortbow-recurve-blue.webp',
+    dmg:      'icons/skills/melee/strike-sword-blood-red.webp',
+    rdmg:     'icons/weapons/ammunition/arrow-head-war-flight.webp',
+    def:      'icons/equipment/shield/heater-crystal-blue.webp',
+};
 
 export default idx;

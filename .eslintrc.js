@@ -16,11 +16,14 @@ module.exports = {
         'import/extensions': 'off',
         'import/newline-after-import': 'off',
         'indent': 'off',
+        'key-spacing': 'off',
         'no-plusplus': 'off',
         'no-multi-spaces': 'off',
         'no-console': ['error', { allow: ['warn', 'error'] }],
         'no-shadow': ['error', { 'builtinGlobals': true, 'hoist': 'all', 'allow': ['event'] }],
         'object-curly-spacing': 'off',
-        'quote-props': 'warn'
+        'quotes': 'warn',
+        'quote-props': 'warn',
+        'space-infix-ops': 'off',
     }
 }

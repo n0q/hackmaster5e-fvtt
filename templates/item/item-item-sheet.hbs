@@ -1,7 +1,5 @@
 <form class="{{cssClass}}" autocomplete="off">
-    <header class="sheet-header">
-        {{> "systems/hackmaster5e/templates/item/parts/header-logistics.hbs" }}
-    </header>
+    {{> "systems/hackmaster5e/templates/item/parts/header-logistics.hbs" }}
 
     <nav class="sheet-tabs tabs" data-group="primary">
         <a class="item" data-tab="description">Description</a>
@@ -14,7 +12,6 @@
         </div>
 
         <div class="tab attributes" data-group="primary" data-tab="attributes">
-            {{> "systems/hackmaster5e/templates/item/parts/logistics.hbs" }}
             <li class="item flexrow">
                 <label class="resource-label">{{localize "HM.quality"}}</label>
                 <select name="data.quality" data-dtype="{{data.quality}}">
