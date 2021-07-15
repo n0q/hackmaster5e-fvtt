@@ -244,6 +244,7 @@
         "weapon": {
             "templates": ["base", "logistics"],
             "proficiency": null,
+            "innate": {"checked": false},
             "skill": "",
             "stats": {
                 "atk": {"value": 0, "mod": {"value": 0}},

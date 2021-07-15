@@ -1,5 +1,12 @@
 import { HMActorSheet } from './actor-sheet.js';
 
+function updateSflags(item, sflags) {
+    const flag = sflags;
+    if (item.data.state.innate.checked)   { flag.innate = true;     } else
+    if (item.data.state.equipped.checked) { flag.equipped = true;   } else
+    if (item.data.state.carried.checked)  { flag.unequipped = true; }
+}
+
 export class HMCharacterActorSheet extends HMActorSheet {
     /** @override */
     static get defaultOptions() {
@@ -48,13 +55,22 @@ export class HMCharacterActorSheet extends HMActorSheet {
         const weapons = [];
         const profs = [];
         const features = [];
+
         let race = null;
         let cclass = null;
+
+        const sflags = {
+            combat: {
+                weapon: {innate: false, equipped: false, unequipped: false},
+                armor:  {innate: false, equipped: false, unequipped: false},
+            },
+        };
 
         // Iterate through items, allocating to containers
         for (const i of sheetData.items) {
             i.img = i.img || DEFAULT_TOKEN;
             if (i.type === 'armor') {
+                updateSflags(i, sflags.combat.armor);
                 gear.push(i);
                 armors.push(i);
             } else
@@ -62,12 +78,16 @@ export class HMCharacterActorSheet extends HMActorSheet {
             if (i.type === 'item')        { gear.push(i);  } else
             if (i.type === 'proficiency') { profs.push(i); } else
             if (i.type === 'skill') {
-                if (i.data.language.checked) { langs.push(i); } else
+                if (i.data.language.checked) {
+                    langs.push(i);
+                } else {
                     i.data.universal.checked ? uskills.push(i) : skills.push(i);
+                }
             } else
             if (i.type === 'spell')  { spells.push(i);     } else
             if (i.type === 'race')   { race = i;           } else
             if (i.type === 'weapon') {
+                updateSflags(i, sflags.combat.weapon);
                 gear.push(i);
                 weapons.push(i);
             } else
@@ -85,6 +105,7 @@ export class HMCharacterActorSheet extends HMActorSheet {
         actorData.profs = profs;
         actorData.race = race;
         actorData.cclass = cclass;
+        actorData.sflags = sflags;
 
         for (let i=0; i < actorData.weapons.length; i++) {
             actorData.weapons[i].data.cclass = actorData.cclass;
