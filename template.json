@@ -43,6 +43,13 @@
                             "derived": {"value": 0,  "fvalue": 0}}
                 },
 
+                "body": {
+                    "dr":   {"value": 0, "race": {"value": 0}, "misc": {"value": 0}},
+                    "def":  {"value": 0, "race": {"value": 0}, "misc": {"value": 0}},
+                    "init": {"value": 0, "race": {"value": 0}, "misc": {"value": 0}},
+                    "spd":  {"value": 0, "race": {"value": 0}, "misc": {"value": 0}}
+                },
+
                 "derived": {
                     "armor": {"dr":   {"value": 0, "shield": {"value": 0}}, 
                               "def":  {"value": 0},
@@ -50,33 +57,55 @@
                               "spd":  {"value": 0}}
                 },
 
-                "stats": {
-                    "atk":      {"dex": {"value": 0, "mod": {"value": 0}},
-                                 "int": {"value": 0, "mod": {"value": 0}}},
-                    "def":      {"dex": {"value": 0, "mod": {"value": 0}},
-                                 "wis": {"value": 0, "mod": {"value": 0}}},
-                    "dmg":      {"str": {"value": 0, "mod": {"value": 0}}},
-                    "init":     {"dex": {"value": 0, "mod": {"value": 0}},
-                                 "int": {"value": 0, "mod": {"value": 0}}},
-                    "feat":     {"str": {"value": 0, "mod": {"value": 0}},
-                                 "dex": {"value": 0, "mod": {"value": 0}}},
-                    "dodge":    {"dex": {"value": 0, "mod": {"value": 0}}},
-                    "mental":   {"wis": {"value": 0, "mod": {"value": 0}}},
-                    "physical": {"con": {"value": 0, "mod": {"value": 0}}},
-                    "turning":  {"cha": {"value": 0, "mod": {"value": 0}}},
-                    "morale":   {"cha": {"value": 0, "mod": {"value": 0}}}
+                "bonus": {
+                    "atk":      {"value": 0,
+                         "dex": {"value": 0}, 
+                         "int": {"value": 0},
+                         "mod": {"value": 0}},
+                    "def":      {"value": 0,
+                         "dex": {"value": 0},
+                         "wis": {"value": 0},
+                         "mod": {"value": 0}},
+                    "dmg":      {"value": 0,
+                         "str": {"value": 0},
+                         "mod": {"value": 0}},
+                    "init":     {"value": 0,
+                         "dex": {"value": 0}, 
+                         "wis": {"value": 0},
+                         "mod": {"value": 0}},
+                    "fos":      {"value": 0,
+                         "str": {"value": 0},
+                         "mod": {"value": 0}},
+                    "foa":      {"value": 0,
+                         "dex": {"value": 0},
+                         "mod": {"value": 0}},
+                    "dodge":    {"value": 0,
+                         "dex": {"value": 0},
+                         "mod": {"value": 0}},
+                    "mental":   {"value": 0,
+                         "wis": {"value": 0},
+                         "mod": {"value": 0}},
+                    "physical": {"value": 0,
+                         "con": {"value": 0},
+                         "mod": {"value": 0}},
+                    "turning":  {"value": 0,
+                         "cha": {"value": 0},
+                         "mod": {"value": 0}},
+                    "morale":   {"value": 0,
+                         "cha": {"value": 0},
+                         "mod": {"value": 0}}
                 },
 
                 "saves": {
                     "fos":      {"mod": {"value": 0}},
-                    "fod":      {"mod": {"value": 0}},
+                    "foa":      {"mod": {"value": 0}},
                     "turning":  {"mod": {"value": 0}},
                     "morale":   {"mod": {"value": 0}},
                     "dodge":    {"mod": {"value": 0}},
                     "mental":   {"mod": {"value": 0}},
                     "physical": {"mod": {"value": 0}},
                     "poison":   {"mod": {"value": 0}},
-                    "top":      {"mod": {"value": 0}, "limit": {"value": 0}}
+                    "trauma":   {"mod": {"value": 0}, "limit": {"value": 0}}
                 }
             }
         },
@@ -108,7 +137,8 @@
 
             "logistics": {
                 "state": {"equipped": {"checked": false},
-                          "carried":  {"checked": false}},
+                          "carried":  {"checked": false},
+                          "innate":   {"checked": false}},
                 "quality": null,
                 "quantity": {"value": 1},
                 "weight":   {"value": 0},
@@ -124,7 +154,6 @@
         "armor": {
             "templates": ["base", "logistics"],
             "armortype": null,
-            "innate": {"checked": false},
             "proficiency": null,
             "stats": {
                 "dr":    {"value": 0,    "mod": {"value": 0}},
@@ -244,7 +273,6 @@
         "weapon": {
             "templates": ["base", "logistics"],
             "proficiency": null,
-            "innate": {"checked": false},
             "skill": "",
             "stats": {
                 "atk": {"value": 0, "mod": {"value": 0}},

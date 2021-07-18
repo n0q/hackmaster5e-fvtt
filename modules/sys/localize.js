@@ -76,17 +76,17 @@ idx.weaponskill = {
 }
 
 idx.saves = {
-    "dodge":    "HM.saves.dodge",
-    "mental":   "HM.saves.mental",
-    "physical": "HM.saves.physical",
-    "poison":   "HM.saves.poison",
-    "top":      "HM.saves.top",
-    "feat":     "HM.feat",
-    "fos":      "HM.saves.fos",
-    "fod":      "HM.saves.fod",
-    "turning":  "HM.saves.turning",
-    "morale":   "HM.saves.morale"
-}
+    dodge:    'HM.saves.dodge',
+    mental:   'HM.saves.mental',
+    physical: 'HM.saves.physical',
+    poison:   'HM.saves.poison',
+    trauma:   'HM.saves.trauma',
+    feat:     'HM.feat',
+    fos:      'HM.saves.fos',
+    foa:      'HM.saves.foa',
+    turning:  'HM.saves.turning',
+    morale:   'HM.saves.morale',
+};
 
 idx.itemCClass = {
     "sp":       "HM.spellpoints",
@@ -135,16 +135,16 @@ idx.size = {
 
 // Images
 idx.savesImg = {
-    "dodge":    "icons/skills/movement/feet-winged-boots-brown.webp",
-    "mental":   "icons/skills/wounds/anatomy-organ-brain-pink-red.webp",
-    "physical": "icons/skills/wounds/anatomy-bone-joint.webp",
-    "poison":   "icons/skills/toxins/poison-bottle-corked-fire-green.webp",
-    "top":      "icons/skills/wounds/injury-face-impact-orange.webp",
-    "fos":      "icons/magic/control/buff-strength-muscle-damage.webp",
-    "fod":      "icons/skills/movement/figure-running-gray.webp",
-    "turning":  "icons/magic/holy/prayer-hands-glowing-yellow.webp",
-    "morale":   "icons/skills/social/wave-halt-stop.webp"
-}
+    dodge:    'icons/skills/movement/feet-winged-boots-brown.webp',
+    mental:   'icons/skills/wounds/anatomy-organ-brain-pink-red.webp',
+    physical: 'icons/skills/wounds/anatomy-bone-joint.webp',
+    poison:   'icons/skills/toxins/poison-bottle-corked-fire-green.webp',
+    trauma:   'icons/skills/wounds/injury-face-impact-orange.webp',
+    fos:      'icons/magic/control/buff-strength-muscle-damage.webp',
+    foa:      'icons/skills/movement/figure-running-gray.webp',
+    turning:  'icons/magic/holy/prayer-hands-glowing-yellow.webp',
+    morale:   'icons/skills/social/wave-halt-stop.webp'
+};
 
 idx.combatImg = {
     atk:      'icons/weapons/swords/greatsword-blue.webp',
@@ -152,6 +152,10 @@ idx.combatImg = {
     dmg:      'icons/skills/melee/strike-sword-blood-red.webp',
     rdmg:     'icons/weapons/ammunition/arrow-head-war-flight.webp',
     def:      'icons/equipment/shield/heater-crystal-blue.webp',
+};
+
+idx.defaultImg = {
+    body:       'icons/magic/control/buff-strength-muscle-damage-red.webp',
 };
 
 export default idx;

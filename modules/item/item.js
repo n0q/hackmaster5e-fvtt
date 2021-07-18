@@ -102,21 +102,11 @@ export class HMItem extends Item {
         await this.update({'data.mod': mod});
     }
 
-    // Applying stat bonuses to weapons (rather than armor)
-    // because you roll weapons, but only view armor.
     _prepWeaponData(data, actorData) {
         if (!actorData) return;
-        const bonus = actorData.data.stats;
         const stats = data.stats;
-        // TODO: Refactor
         for (const key in stats) {
-            if (stats.hasOwnProperty(key)) {
-                let statbonus = bonus[key]
-                    ? Object.values(bonus[key]).reduce((a,b) => a.value + b.value)
-                    : 0;
-                if (statbonus.hasOwnProperty('value')) statbonus = statbonus.value;
-                stats[key].derived = {'value': stats[key].value + stats[key].mod.value + statbonus};
-            }
+            stats[key].derived = {'value': stats[key].value + stats[key].mod.value};
         }
     }
 

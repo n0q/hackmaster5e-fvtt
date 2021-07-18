@@ -34,41 +34,42 @@
         </section>
         {{/if}}
     </div>
-    <section class="hide" toggle>
+    <!--    <section class="hide" toggle>-->
+    <section toggle>
         <div class="splitview">
             <div>
                 {{localize "HM.reach"}}: {{data.reach.value}}    
             </div>
             <div class="gridtable">
                 <label></label>
-                {{#each data.stats as |stat key|}}
-                <label class="resource-label">{{key}}</label>
+                {{#each data.stats}}
+                <label class="resource-label">{{@key}}</label>
                 {{/each}}
                 <label>Total</label>
-                {{#each data.stats as |stat key|}}
-                <label>{{stat.derived.value}}</label>
+                {{#each data.stats}}
+                <label>{{derived.value}}</label>
                 {{/each}}
                 <label class="column">Base</label>
-                {{#each data.stats as |stat key|}}
-                <label>{{stat.value}}</label>
+                {{#each data.stats}}
+                <label>{{value}}</label>
                 {{/each}}
                 <label class="column">Spec</label>
-                {{#each data.stats as |stat key|}}
-                <label>{{stat.prof.value}}</label>
+                {{#each data.stats}}
+                <label>{{prof.value}}</label>
                 {{/each}}
                 {{#if data.cclass}}
                 <label class="column">Class</label>
-                {{#each data.stats as |stat key|}}
-                <label>{{stat.cclass.value}}</label>
+                {{#each data.stats}}
+                <label>{{cclass.value}}</label>
                 {{/each}}
                 {{/if}}
                 <label class="column">Stats</label>
-                {{#each data.stats as |stat key|}}
-                <label>{{stat.stats.value}}</label>
+                {{#each data.stats}}
+                <label>{{bonus.value}}</label>
                 {{/each}}
                 <label class="column">Armor</label>
-                {{#each data.stats as |stat key|}}
-                <label>{{stat.armor.value}}</label>
+                {{#each data.stats}}
+                <label>{{armor.value}}</label>
                 {{/each}}
             </div>
         </div>

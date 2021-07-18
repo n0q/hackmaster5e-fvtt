@@ -73,14 +73,14 @@
 
         "saves": {
             "fos":      "FoS",
-            "fod":      "FoD",
+            "foa":      "FoA",
             "turning":  "Turning",
             "morale":   "Morale",
             "dodge":    "Dodge",
             "mental":   "Mental",
             "physical": "Physical",
             "poison":   "Poison",
-            "top":      "ToP"
+            "trauma":   "Trauma"
         },
 
         "itemTypes": {
@@ -195,6 +195,7 @@
         "availability": "Availability",
         "average":      "Average",
         "bonus":        "Bonus",
+        "body":         "Body",
         "carried":      "Carried",
         "check":        "Check",
         "class":        "Class",
@@ -239,6 +240,7 @@
         "quantity":     "Quantity",
         "qty":          "Qty",
         "tools":        "Tools",
+        "trauma":       "Trauma",
         "treated":      "Treated",
         "top":          "ToP",
         "trivial":      "Trivial",

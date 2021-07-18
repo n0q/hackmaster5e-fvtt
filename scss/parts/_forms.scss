@@ -113,3 +113,32 @@
         }
     }
 }
+
+.setup {
+    .bonus {
+        display: grid;
+        grid-template-columns: auto 1fr; 
+        align-items: center;
+        column-gap: 5px;
+        row-gap: 2px;
+
+        >.bonus-row {
+            display: flex;
+            flex-flow: row wrap;
+            flex: 1;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid;
+
+            >.bonus-block {
+                display: grid;
+                grid-template-columns: auto 1fr;
+                align-items: center;
+                column-gap: 2px;
+            }
+        }
+    }
+
+
+
+}

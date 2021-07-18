@@ -11,15 +11,19 @@ export class HMActor extends Actor {
     }
 
     async setRace(data) {
-        const races = this.items.filter((a) => a.type === "race");
+        const races = this.items.filter((a) => a.type === 'race');
         if (!races.length) return;
-        races.pop();
+        const race = races.pop();
 
         if (races.length) {
             let oldrace;
             while (oldrace = races.pop()) await oldrace.delete();
         }
+        const raceData = race.data.data;
+        data.body.def.race.value = raceData.def.value;
     }
+
+
 
     async setCClass(data) {
         const cclasses = this.items.filter((a) => a.type === "cclass");
@@ -47,6 +51,16 @@ export class HMActor extends Actor {
             stat.derived.value  = stat.raw.value  + stat.mod.value  + race.value;
             stat.derived.fvalue = stat.raw.fvalue + stat.mod.fvalue + race.fvalue;
         }
+    }
+
+    async setAbilityBonuses(data) {
+        const bonuses = data.bonus;
+        for (const bonus in bonuses) {
+            const bData = bonuses[bonus];
+            bData.value = 0;
+            bData.value = Object.values(bData).reduce((sum, a) => (sum + (a?.value || 0)));
+        }
+        await this.update({'data.bonus': bonuses});
     }
 
     setEncumbrance(data) {
@@ -102,7 +116,7 @@ export class HMActor extends Actor {
             const stats  = data.stats;
             const wSkill = data.skill;
             const wProf  = data.proficiency;
-            const sData  = this.data.data.stats;
+            const bData  = this.data.data.bonus;
 
             const cclass = this.items.find((a) => a.type === 'cclass');
             const cData = cclass ? cclass.data.data.mod : null;
@@ -115,27 +129,23 @@ export class HMActor extends Actor {
             for (const key in stats) {
                 let profValue = 0;
                 let armorValue = 0;
-                let classValue = 0;
-                let statValue = 0;
                 if (armorDerived[key]) armorValue = armorDerived[key].value;
                 prof ? profValue = prof.data.data[key].value
                      : profValue = noprof.table[wSkill] * noprof.vector[j++];
                 stats[key].prof  = {"value": profValue};
                 stats[key].armor = {"value": armorValue};
 
-                if (cclass) {
-                    classValue = cData?.[key]?.value || 0;
-                }
+                let classValue = 0;
+                if (cclass) classValue = cData?.[key]?.value || 0;
                 stats[key].cclass = {"value": classValue};
 
-                statValue = sData[key]
-                    ? parseInt(Object.values(sData[key]).reduce((a,b) => a.value + b.value))
-                    : 0;
-                if (statValue != statValue) statValue = sData[key]["str"].value;
-                stats[key].stats = {'value': statValue};
+                const bonusValue = bData?.[key]?.value || 0;
+                stats[key].bonus = {'value': bonusValue};
+
                 stats[key].derived.value += stats[key].prof.value
                                          +  stats[key].armor.value
-                                         +  stats[key].cclass.value;
+                                         +  stats[key].cclass.value
+                                         +  stats[key].bonus.value;
             }
         }
     }
@@ -157,36 +167,37 @@ export class HMActor extends Actor {
     }
 
     setSaves(data) {
-        // TODO: Refactor
         // actor.js is probably the wrong place to do this. Also SPoT should be constants.js.
-        const cclass    = this.items.find((a) => a.type === "cclass");
+        const cclass    = this.items.find((a) => a.type === 'cclass');
         const leveltop  = cclass ? cclass.data.data.mod.top.value : 0.01;
 
-        const savesData = data.saves;
-        const statsData = data.stats;
+        const bData = data.bonus;
+        const sData = data.saves;
         const level     = data.level.value;
         const constitution = data.abilities.con.derived.value;
-        savesData.fos.value       = statsData.feat.str.value;
-        savesData.fod.value       = statsData.feat.dex.value;
-        savesData.turning.value   = statsData['turning'][Object.keys(statsData['turning'])[0]].value + level;
-        savesData.morale.value    = statsData['morale'][Object.keys(statsData['morale'])[0]].value;
-        savesData.dodge.value     = statsData['dodge'][Object.keys(statsData['dodge'])[0]].value + level;
-        savesData.mental.value    = statsData['mental'][Object.keys(statsData['mental'])[0]].value + level;
-        savesData.physical.value  = statsData['physical'][Object.keys(statsData['physical'])[0]].value + level;
-        savesData.poison.value    = constitution;
-        savesData.top.value       = Math.floor(constitution / 2);
-        savesData.top.limit.value = Math.ceil((0.3 + leveltop) * data.hp.max);
+
+        sData.fos.value          = bData.fos.value;
+        sData.foa.value          = bData.foa.value;
+        sData.turning.value      = bData.turning.value + level;
+        sData.morale.value       = bData.morale.value;
+        sData.dodge.value        = bData.dodge.value + level;
+        sData.mental.value       = bData.mental.value + level;
+        sData.physical.value     = bData.physical.value + level;
+        sData.poison.value       = constitution;
+        sData.trauma.value       = Math.floor(constitution / 2);
+        sData.trauma.limit.value = Math.ceil((0.3 + leveltop) * data.hp.max);
     }
 
     setInit(data) {
-        const initData = data.stats.init;
-        data.init.value = Object.values(initData).reduce((a,b) => a.value + b.value);
+        const bData = data.bonus;
+        data.init.value = bData.init.value;
     }
 
     _prepareCharacterData(data) {
         this.setRace(data);
         this.setCClass(data);
         this.setAbilities(data);
+        this.setAbilityBonuses(data);
         const armorDerived = this.setArmor(data);
         this.setEncumbrance(data);
         this.setWeapons(armorDerived);
