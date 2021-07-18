@@ -108,7 +108,11 @@ export class HMCharacterActorSheet extends HMActorSheet {
         actorData.sflags = sflags;
 
         for (let i=0; i < actorData.weapons.length; i++) {
-            actorData.weapons[i].data.cclass = actorData.cclass;
+            const wData = actorData.weapons[i].data;
+            wData.cclass = actorData.cclass;
+            for (const stat in wData.stats) {
+                wData.stats[stat].race = actorData.race.data?.[stat] || {value: 0};
+            }
         }
     }
 }

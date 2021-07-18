@@ -108,8 +108,9 @@ export class HMActor extends Actor {
     // A lot of the jank here has to do with inefficiently prepping a weapon for use,
     // while not prepping it for sheet display at all.
     setWeapons(armorDerived) {
-        const weapons = this.items.filter((a) => a.type === "weapon");
-        const noprof = HMTABLES.weapons.noprof;
+        const weapons = this.items.filter((a) => a.type === 'weapon');
+        const race    = this.items.find((a) => a.type === 'race');
+        const noprof  = HMTABLES.weapons.noprof;
 
         for (let i = 0; i < weapons.length; i++) {
             const data   = weapons[i].data.data;
@@ -142,10 +143,13 @@ export class HMActor extends Actor {
                 const bonusValue = bData?.[key]?.value || 0;
                 stats[key].bonus = {'value': bonusValue};
 
+                stats[key].race = race?.data?.data?.[key] || {value: 0};
+
                 stats[key].derived.value += stats[key].prof.value
                                          +  stats[key].armor.value
                                          +  stats[key].cclass.value
-                                         +  stats[key].bonus.value;
+                                         +  stats[key].bonus.value
+                                         +  stats[key].race.value;
             }
         }
     }
