@@ -1,4 +1,4 @@
-<li class="card hmstyle">
+<li class="card hmstyle" data-item-id="{{_id}}">
     <div class="lid toggleswitch">
         <header>
             <label for="{{name}}">
@@ -34,8 +34,7 @@
         </section>
         {{/if}}
     </div>
-    <!--    <section class="hide" toggle>-->
-    <section toggle>
+    <section class="hide" toggle>
         <div class="splitview">
             <div>
                 {{localize "HM.reach"}}: {{data.reach.value}}    
@@ -74,6 +73,13 @@
                 <label class="column">Armor</label>
                 {{#each data.stats}}
                 <label>{{armor.value}}</label>
+                {{/each}}
+                <label class="column">Misc</label>
+                {{#each data.stats}}
+                <input class="editable" type="number" value={{misc.value}}
+                    data-item-prop="data.stats.{{@key}}.misc.value"
+                    data-dtype="Number"
+                />
                 {{/each}}
             </div>
         </div>

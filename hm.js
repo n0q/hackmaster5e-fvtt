@@ -31,6 +31,7 @@ Hooks.once('init', async() => {
 Hooks.once('ready', async() => {
     // render a sheet to the screen as soon as we enter, for testing purposes.
     if (game.items.contents[0]) {
+        //game.items.contents.find((a) => a.name === 'Medium Shield').sheet.render(true);
     }
     if (game.actors.contents[0]) {
         game.actors.contents[0].sheet.render(true);

@@ -119,7 +119,7 @@ export class HMActor extends Actor {
             const wProf  = data.proficiency;
             const bData  = this.data.data.bonus;
 
-            const cclass = this.items.find((a) => a.type === 'cclass');
+            const cclass = this.items.find((a) => a.type === "cclass");
             const cData = cclass ? cclass.data.data.mod : null;
 
             const prof = this.items.find((a) => {
@@ -141,15 +141,18 @@ export class HMActor extends Actor {
                 stats[key].cclass = {"value": classValue};
 
                 const bonusValue = bData?.[key]?.value || 0;
-                stats[key].bonus = {'value': bonusValue};
+                stats[key].bonus = {"value": bonusValue};
 
                 stats[key].race = race?.data?.data?.[key] || {value: 0};
 
-                stats[key].derived.value += stats[key].prof.value
-                                         +  stats[key].armor.value
-                                         +  stats[key].cclass.value
-                                         +  stats[key].bonus.value
-                                         +  stats[key].race.value;
+                stats[key].derived = {value: stats[key].value
+                                           + stats[key].misc.value
+                                           + stats[key].prof.value
+                                           + stats[key].armor.value
+                                           + stats[key].cclass.value
+                                           + stats[key].bonus.value
+                                           + stats[key].race.value
+                }
             }
         }
     }

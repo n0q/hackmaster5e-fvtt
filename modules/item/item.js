@@ -15,8 +15,7 @@ export class HMItem extends Item {
 
       if (itemType === 'armor')  { this._prepArmorData(itemData, actorData)  } else
       if (itemType === 'cclass') { this._prepCClassData(itemData, actorData) } else
-      if (itemType === 'skill')  { this._prepSkillData(itemData, actorData)  } else
-      if (itemType === 'weapon') { this._prepWeaponData(itemData, actorData) }
+      if (itemType === 'skill')  { this._prepSkillData(itemData, actorData)  }
   }
 
   /**
@@ -100,14 +99,6 @@ export class HMItem extends Item {
 
         mod.top = {value: (data.top_cf.value || 0.01) * level};
         await this.update({'data.mod': mod});
-    }
-
-    _prepWeaponData(data, actorData) {
-        if (!actorData) return;
-        const stats = data.stats;
-        for (const key in stats) {
-            stats[key].derived = {'value': stats[key].value + stats[key].mod.value};
-        }
     }
 
     _prepSkillData(data, actorData) {

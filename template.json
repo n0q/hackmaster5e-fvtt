@@ -275,10 +275,10 @@
             "proficiency": null,
             "skill": "",
             "stats": {
-                "atk": {"value": 0, "mod": {"value": 0}},
-                "def": {"value": 0, "mod": {"value": 0}},
-                "dmg": {"value": 0, "mod": {"value": 0}},
-                "spd": {"value": 0, "mod": {"value": 0}}
+                "atk": {"value": 0, "misc": {"value": 0}},
+                "def": {"value": 0, "misc": {"value": 0}},
+                "dmg": {"value": 0, "misc": {"value": 0}},
+                "spd": {"value": 0, "misc": {"value": 0}}
             },
             "dmg":     {"normal": "", "shield": ""},
             "reach":   {"value": 0},
