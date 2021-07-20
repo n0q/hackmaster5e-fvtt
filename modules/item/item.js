@@ -13,9 +13,10 @@ export class HMItem extends Item {
       const itemType  = this.data.type;
       const actorData = this.actor ? this.actor.data : null;
 
-      if (itemType === 'armor')  { this._prepArmorData(itemData, actorData)  } else
-      if (itemType === 'cclass') { this._prepCClassData(itemData, actorData) } else
-      if (itemType === 'skill')  { this._prepSkillData(itemData, actorData)  }
+      if (itemType === "armor")       { this._prepArmorData(itemData, actorData)       } else
+      if (itemType === "cclass")      { this._prepCClassData(itemData, actorData)      } else
+      if (itemType === "proficiency") { this._prepProficiencyData(itemData, actorData) } else
+      if (itemType === "skill")       { this._prepSkillData(itemData, actorData)       }
   }
 
   /**
@@ -99,6 +100,14 @@ export class HMItem extends Item {
 
         mod.top = {value: (data.top_cf.value || 0.01) * level};
         await this.update({'data.mod': mod});
+    }
+
+    // TODO: A user can technically set defense and damage, then
+    // set a weapon to ranged. These values should be culled.
+    _prepProficiencyData(data, actorData) {
+        if (data.mechanical.checked && !data.ranged.checked) {
+            return this.update({"data.mechanical.checked": false});
+        }
     }
 
     _prepSkillData(data, actorData) {

@@ -213,7 +213,11 @@
             "atk": {"value": 0},
             "def": {"value": 0},
             "dmg": {"value": 0},
-            "spd": {"value": 0}
+            "spd": {"value": 0},
+            "skill": null,
+            "weapon":     {"checked": false},
+            "ranged":     {"checked": false},
+            "mechanical": {"checked": false}
         },
 
         "race": {
@@ -273,7 +277,7 @@
         "weapon": {
             "templates": ["base", "logistics"],
             "proficiency": null,
-            "skill": "",
+            "skill": null,
             "stats": {
                 "atk": {"value": 0, "misc": {"value": 0}},
                 "def": {"value": 0, "misc": {"value": 0}},
