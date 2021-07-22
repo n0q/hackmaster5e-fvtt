@@ -7,23 +7,65 @@
 
     <section class="sheet-body">
         <div class="tab attributes" data-group="primary" data-tab="attributes">
-            <div class="grid grid-4col flex-group-center">
-                <div class="resource">
-                    <label class="resource-label">{{localize "HM.atk"}}:</label>
-                    <input type="number" name="data.atk.value" value="{{data.data.atk.value}}" data-dtype="Number"/>
+            <div class="item-form">
+                {{#with data.data}}
+                <div class="sidepanel">
+                    <div class="options-block">
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.weapon"}}</label>
+                            <input type="checkbox" name="data.weapon.checked" {{checked weapon.checked}}/>
+                        </div>
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.skill"}}:</label>
+                            <select name="data.skill" data-dtype="{{skill}}"
+                                {{#if weapon.checked}}{{else}}disabled{{/if}}>
+                                {{#select skill}}{{#each (findConfigObj "weaponskill") as |type t|}}
+                                <option value="{{t}}">{{localize type}}</option>
+                                {{/each}}{{/select}}
+                            </select>
+                        </div>
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.ranged"}}</label>
+                            <input type="checkbox" name="data.ranged.checked"
+                            {{checked ranged.checked}}
+                            {{#if weapon.checked}}{{else}}disabled{{/if}}/>
+                        </div>
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.mechanical"}}</label>
+                            <input type="checkbox" name="data.mechanical.checked"
+                            {{checked mechanical.checked}}
+                            {{#if ranged.checked}}{{else}}disabled{{/if}}/>
+                        </div>
+                    </div>
                 </div>
-                <div class="resource">
-                    <label class="resource-label">{{localize "HM.def"}}:</label>
-                    <input type="number" name="data.def.value" value="{{data.data.def.value}}" data-dtype="Number"/>
+                {{#if weapon.checked}}
+                <div class="sidepanel">
+                    <div class="options-block">
+                        <div class="options-row">
+                            <label class="resource-label" style="width: 6em;">{{localize "HM.attack"}}:</label>
+                            <input type="number" name="data.atk.value" value="{{atk.value}}" data-dtype="Number"/>
+                        </div>
+                        {{#if ranged.checked}}{{else}}
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.defense"}}:</label>
+                            <input type="number" name="data.def.value" value="{{def.value}}"
+                            data-dtype="Number"/>
+                        </div>
+                        {{/if}}
+                        {{#if mechanical.checked}}{{else}}
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.damage"}}:</label>
+                            <input type="number" name="data.dmg.value" value="{{dmg.value}}" data-dtype="Number"/>
+                        </div>
+                        {{/if}}
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.speed"}}:</label>
+                            <input type="number" name="data.spd.value" value="{{spd.value}}" data-dtype="Number"/>
+                        </div>
+                    </div>
                 </div>
-                <div class="resource">
-                    <label class="resource-label">{{localize "HM.dmg"}}:</label>
-                    <input type="number" name="data.dmg.value" value="{{data.data.dmg.value}}" data-dtype="Number"/>
-                </div>
-                <div class="resource">
-                    <label class="resource-label">{{localize "HM.spd"}}:</label>
-                    <input type="number" name="data.spd.value" value="{{data.data.spd.value}}" data-dtype="Number"/>
-                </div>
+                {{/if}}
+                {{/with}}
             </div>
         </div>
     </section>

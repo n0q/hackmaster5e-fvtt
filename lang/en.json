@@ -73,14 +73,14 @@
 
         "saves": {
             "fos":      "FoS",
-            "fod":      "FoD",
+            "foa":      "FoA",
             "turning":  "Turning",
             "morale":   "Morale",
             "dodge":    "Dodge",
             "mental":   "Mental",
             "physical": "Physical",
             "poison":   "Poison",
-            "top":      "ToP"
+            "trauma":   "Trauma"
         },
 
         "itemTypes": {
@@ -195,6 +195,7 @@
         "availability": "Availability",
         "average":      "Average",
         "bonus":        "Bonus",
+        "body":         "Body",
         "carried":      "Carried",
         "check":        "Check",
         "class":        "Class",
@@ -203,6 +204,7 @@
         "custom":       "Custom",
         "drmod":        "DR Mod",
         "defend":       "Defend",
+        "defense":      "Defense",
         "defmod":       "Def Mod",
         "description":  "Description",
         "difficult":    "Difficult",
@@ -227,6 +229,7 @@
         "literate":     "Literate",
         "magic":        "Magic",
         "mastery":      "Mastery",
+        "mechanical":   "Mechanical",
         "mental":       "Mental",
         "modifier":     "Modifier",
         "normal":       "Normal",
@@ -239,11 +242,13 @@
         "quantity":     "Quantity",
         "qty":          "Qty",
         "tools":        "Tools",
+        "trauma":       "Trauma",
         "treated":      "Treated",
         "top":          "ToP",
         "trivial":      "Trivial",
         "reach":        "Reach",
         "race":         "Race",
+        "ranged":       "Ranged",
         "roll":         "Roll",
         "save":         "Save",
         "setup":        "Setup",

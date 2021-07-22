@@ -23,6 +23,7 @@
             height: auto;
             flex-direction: column;
             margin: 5px;
+            margin-bottom: 9px;
             padding: 10px;
             border-radius: 5px;
             border: solid;
@@ -36,6 +37,10 @@
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
+
+            input[type=text] {
+                width: 100%;
+            }
         }
 
         .options-row-l {
@@ -111,4 +116,33 @@
             border: 0;
         }
     }
+}
+
+.setup {
+    .bonus {
+        display: grid;
+        grid-template-columns: auto 1fr; 
+        align-items: center;
+        column-gap: 5px;
+        row-gap: 2px;
+
+        >.bonus-row {
+            display: flex;
+            flex-flow: row wrap;
+            flex: 1;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid;
+
+            >.bonus-block {
+                display: grid;
+                grid-template-columns: auto 1fr;
+                align-items: center;
+                column-gap: 2px;
+            }
+        }
+    }
+
+
+
 }

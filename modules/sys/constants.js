@@ -9,16 +9,16 @@ export const MACRO_VERS = {
 
 // system rules
 export const HMTABLES = {
-    "save": {
-        "fos":      { "formula": "1d20p + @saves.fos.value + @resp.bonus" },
-        "fod":      { "formula": "1d20p + @saves.fod.value + @resp.bonus" },
-        "morale":   { "formula": "1d20p + @saves.morale.value + @resp.bonus" },
-        "turning":  { "formula": "1d20p + @saves.turning.value + @resp.bonus" },
-        "dodge":    { "formula": "1d20p + @saves.dodge.value + @resp.bonus" },
-        "mental":   { "formula": "1d20p + @saves.mental.value + @resp.bonus" },
-        "physical": { "formula": "1d20p + @saves.physical.value + @resp.bonus" },
-        "poison":   { "formula": "1d20p + @abilities.con.derived.value + @resp.bonus" },
-        "top":      { "formula": "1d20  - @saves.top.value - @resp.bonus" }
+    save: {
+        fos:      { formula: '1d20p + @saves.fos.value + @resp.bonus'             },
+        fod:      { formula: '1d20p + @saves.fod.value + @resp.bonus'             },
+        morale:   { formula: '1d20p + @saves.morale.value + @resp.bonus'          },
+        turning:  { formula: '1d20p + @saves.turning.value + @resp.bonus'         },
+        dodge:    { formula: '1d20p + @saves.dodge.value + @resp.bonus'           },
+        mental:   { formula: '1d20p + @saves.mental.value + @resp.bonus'          },
+        physical: { formula: '1d20p + @saves.physical.value + @resp.bonus'        },
+        poison:   { formula: '1d20p + @abilities.con.derived.value + @resp.bonus' },
+        trauma:   { formula: '1d20  - @saves.top.value - @resp.bonus'             },
     },
     'size': {
         'tiny':     {'hp':  0, 'kb':  5, 'reach': -2,  'movecf':  0.33},

@@ -70,7 +70,7 @@
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.adjective"}}</label>
                         </div><div class="options-row">
-                            <input type="text" style="width: 100%;" placeholder="Elven" name="data.adj" value="{{adj}}" data-dtype="String"/>
+                            <input type="text" placeholder="Elven" name="data.adj" value="{{adj}}" data-dtype="String"/>
                         </div>
                     </div>
                 </div>
@@ -82,8 +82,8 @@
                                 {{localize (findConfigValue "ability_short" key)}}
                             </label>
                             <span>
-                                <input type="text" name="data.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number"/>
-                                <input type="text" name="data.abilities.{{key}}.fvalue" value="{{ability.fvalue}}" data-dtype="Number"/>
+                                <input type="number" name="data.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number"/>
+                                <input type="number" name="data.abilities.{{key}}.fvalue" value="{{ability.fvalue}}" data-dtype="Number"/>
                             </span>
                         </div>
                         {{/each}}

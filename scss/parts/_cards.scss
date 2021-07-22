@@ -46,9 +46,17 @@
             display: grid;
             grid-template-columns: 1fr auto;
         }
+
+        input[type=number] {
+            background: transparent;
+            border: 1px solid;
+            padding: 0;
+            margin: 0;
+//            padding-bottom: 7px;
+            height: 16px;
+            text-align: right;
+        }
     }
-
-
 
     .lid { 
         display: flex;

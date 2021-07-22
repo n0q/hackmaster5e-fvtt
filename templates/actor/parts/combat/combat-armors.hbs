@@ -1,15 +1,28 @@
 <ol class="cards-list">
-    <label class="resource-label">{{localize "HM.equipped"}}</label>
-    {{#each actor.armors}}
-        {{#if data.state.equipped.checked}}
-            {{> "systems/hackmaster5e/templates/actor/cards/armor.hbs" }}
-        {{/if}}
-    {{/each}}
+    {{#if actor.sflags.combat.armor.innate}}
+    <label class="resource-label">{{localize "HM.innate"}}</label>
+        {{#each actor.armors}}
+            {{#if data.state.innate.checked}}
+                {{> "systems/hackmaster5e/templates/actor/cards/armor.hbs" }}
+            {{/if}}
+        {{/each}}
     <br>
-    <label class="resource-label">{{localize "HM.unequipped"}}</label>
-    {{#each actor.armors}}
-        {{#if data.state.equipped.checked}}{{else}}
-        {{> "systems/hackmaster5e/templates/actor/cards/armor.hbs" }}
     {{/if}}
-    {{/each}}
+    {{#if actor.sflags.combat.armor.equipped}}
+    <label class="resource-label">{{localize "HM.equipped"}}</label>
+        {{#each actor.armors}}
+            {{#if data.state.equipped.checked}}
+                {{> "systems/hackmaster5e/templates/actor/cards/armor.hbs" }}
+            {{/if}}
+        {{/each}}
+    <br>
+    {{/if}}
+    {{#if actor.sflags.combat.armor.unequipped}}
+    <label class="resource-label">{{localize "HM.unequipped"}}</label>
+        {{#each actor.armors}}
+            {{#if data.state.equipped.checked}}{{else}}
+                {{> "systems/hackmaster5e/templates/actor/cards/armor.hbs" }}
+            {{/if}}
+        {{/each}}
+    {{/if}}
 </ol>

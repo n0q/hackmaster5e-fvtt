@@ -1,4 +1,4 @@
-<li class="card hmstyle">
+<li class="card hmstyle" data-item-id="{{_id}}">
     <div class="lid toggleswitch">
         <header>
             <label for="{{name}}">
@@ -41,34 +41,45 @@
             </div>
             <div class="gridtable">
                 <label></label>
-                {{#each data.stats as |stat key|}}
-                <label class="resource-label">{{key}}</label>
+                {{#each data.stats}}
+                <label class="resource-label">{{@key}}</label>
                 {{/each}}
                 <label>Total</label>
-                {{#each data.stats as |stat key|}}
-                <label>{{stat.derived.value}}</label>
+                {{#each data.stats}}
+                <label>{{derived.value}}</label>
                 {{/each}}
                 <label class="column">Base</label>
-                {{#each data.stats as |stat key|}}
-                <label>{{stat.value}}</label>
+                {{#each data.stats}}
+                <label>{{value}}</label>
                 {{/each}}
                 <label class="column">Spec</label>
-                {{#each data.stats as |stat key|}}
-                <label>{{stat.prof.value}}</label>
+                {{#each data.stats}}
+                <label>{{prof.value}}</label>
                 {{/each}}
                 {{#if data.cclass}}
                 <label class="column">Class</label>
-                {{#each data.stats as |stat key|}}
-                <label>{{stat.cclass.value}}</label>
+                {{#each data.stats}}
+                <label>{{cclass.value}}</label>
                 {{/each}}
                 {{/if}}
                 <label class="column">Stats</label>
-                {{#each data.stats as |stat key|}}
-                <label>{{stat.stats.value}}</label>
+                {{#each data.stats}}
+                <label>{{bonus.value}}</label>
+                {{/each}}
+                <label class="column">Race</label>
+                {{#each data.stats}}
+                <label>{{race.value}}</label>
                 {{/each}}
                 <label class="column">Armor</label>
-                {{#each data.stats as |stat key|}}
-                <label>{{stat.armor.value}}</label>
+                {{#each data.stats}}
+                <label>{{armor.value}}</label>
+                {{/each}}
+                <label class="column">Misc</label>
+                {{#each data.stats}}
+                <input class="editable" type="number" value={{misc.value}}
+                    data-item-prop="data.stats.{{@key}}.misc.value"
+                    data-dtype="Number"
+                />
                 {{/each}}
             </div>
         </div>
