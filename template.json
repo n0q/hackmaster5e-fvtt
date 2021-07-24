@@ -4,8 +4,8 @@
         "templates": {
 
             "base": {
-                "hp":     {"mod": {"value": 0}},
-                "sp":     {"value": 25, "max": 30},
+                "hp":     {            "mod": {"value": 0}},
+                "sp":     {"value": 0, "mod": {"value": 0}},
                 "init":   {"value": 0},
                 "encumb": {"value": 0.0}
             },
@@ -245,7 +245,7 @@
                 "somatic":  {"checked": true},
                 "material": {"checked": true},
                 "catalyst": {"checked": false},
-                "iconic":   {"checked": false}
+                "divine":   {"checked": false}
             },
             "speed":    {"value": null},
             "sp":       {"value": null},

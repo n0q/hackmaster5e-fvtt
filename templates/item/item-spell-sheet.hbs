@@ -1,10 +1,5 @@
 <form class="{{cssClass}}" autocomplete="off">
-    <div class="card">
-        <header><label for="{{name}}">
-            <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" width="64"/>
-            <h1 class="itemname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
-        </label></header>
-    </div>
+    {{> "systems/hackmaster5e/templates/item/parts/header.hbs" }}
 
     <nav class="sheet-tabs tabs" data-group="primary">
         <a class="item" data-tab="description">Description</a>
@@ -17,47 +12,59 @@
         </div>
 
         <div class="tab attributes" data-group="primary" data-tab="attributes">
-            <div class="grid-2col">
-                <div class="flex-group-center">
-                    <div class="grid-3col">
-                        <div class="resource">
-                            <label class="resource-label">Level</label>
-                            <input type="text" name="data.level" value="{{data.data.level}}" maxlength=2 size=2 data-dtype="String"/>
+            <div class="item-form">
+                {{#with data.data}}
+                <div class="sidepanel">
+                    <div class="options-block">
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.level"}}</label>
+                            <input type="text" style="width: 2em;" name="data.level" value="{{level}}" maxlength=2 data-dtype="String"/>
                         </div>
-                        <div class="resource">
-                            <label class="resource-label">SP</label>
-                            <input type="number" name="data.sp.value" value="{{data.data.sp.value}}" maxlength=3 size=3 data-dtype="Number"/>
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.speed"}}</label>
+                            <input type="number" name="data.speed.value" value="{{speed.value}}" data-dtype="Number"/>
                         </div>       
-                        <div class="resource">
-                            <label class="resource-label">Speed</label>
-                            <input type="number" name="data.speed.value" value="{{data.data.speed.value}}" maxlength=4 size=4 data-dtype="Number"/>
-                        </div>       
-                    </div>
-                </div>
-                <div class="flex-group-center">
-                    <div class="grid-5col">
-                        <div class="resource">
-                            <label class="resource-label">V</label>
-                            <input type="checkbox" name="data.component.verbal.checked" {{checked data.data.component.verbal.checked}}/>
-                        </div>
-                        <div class="resource">
-                            <label class="resource-label">S</label>
-                            <input type="checkbox" name="data.component.somatic.checked" {{checked data.data.component.somatic.checked}}/>
-                        </div>
-                        <div class="resource">
-                            <label class="resource-label">M</label>
-                            <input type="checkbox" name="data.component.material.checked" {{checked data.data.component.material.checked}}/>
-                        </div>
-                        <div class="resource">
-                            <label class="resource-label">C</label>
-                            <input type="checkbox" name="data.component.catalyst.checked" {{checked data.data.component.catalyst.checked}}/>
-                        </div>
-                        <div class="resource">
-                            <label class="resource-label">I</label>
-                            <input type="checkbox" name="data.component.iconic.checked" {{checked data.data.component.iconic.checked}}/>
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.prayer"}}</label>
+                            <input type="checkbox" name="data.divine.checked" {{checked divine.checked}}/>
                         </div>
                     </div>
+                    <div class="options-block">
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.verbal"}}</label>
+                            <input type="checkbox" name="data.component.verbal.checked" {{checked component.verbal.checked}}/>
+                        </div>
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.somatic"}}</label>
+                            <input type="checkbox" name="data.component.somatic.checked" {{checked component.somatic.checked}}/>
+                        </div>
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.material"}}</label>
+                            <input type="checkbox" name="data.component.material.checked" {{checked component.material.checked}}/>
+                        </div>
+                        {{#if divine.checked}}
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.catalyst"}}</label>
+                            <input type="checkbox" name="data.component.catalyst.checked" {{checked component.catalyst.checked}}/>
+                        </div>
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.divine"}}</label>
+                            <input type="checkbox" name="data.component.iconic.checked" {{checked component.iconic.checked}}/>
+                        </div>
+                        {{/if}}
+                    </div>
                 </div>
+                {{#if divine.checked}}
+                <div class="sidepanel">
+                    <div class="options-block">
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.patron"}}</label>
+                            <input type="text" name="data.divine.value" value="{{divine.value}}" data-dtype="String"/>
+                        </div>
+                    </div>
+                </div>
+                {{/if}}
+                {{/with}}
             </div>
         </div>
     </section>
