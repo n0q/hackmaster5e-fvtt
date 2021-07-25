@@ -1,0 +1,18 @@
+<form>
+    <div class="form-group">
+        <label>{{localize "HM.spell"}}</label>
+        <select id="spell-select">
+            {{#each spells}}
+                <option value="{{@index}}">{{name}}</option>
+            {{/each}}
+        </select>
+    </div>
+    {{#if divine}}
+        <input id="mod" value=0 type="number" hidden/>
+    {{else}}
+    <div class="form-group">
+        <label>{{localize "HM.schedule"}}</label>
+        <input id="mod" placeholder=0 type="number"/>
+    </div>
+    {{/if}}
+</form>

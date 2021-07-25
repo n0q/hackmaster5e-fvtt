@@ -1,0 +1,20 @@
+{{#with context.data.data}}
+{{localize (findConfigValue "spellLevels" level)}} {{localize "HM.level"}} 
+{{#if divine.checked}}
+    {{localize "HM.clerical"}}
+{{else}}
+    {{localize "HM.arcane"}}
+{{/if}} {{localize "HM.spell"}}<p> 
+{{localize "HM.components"}}: ({{../resp.components}})<p>
+{{#if divine.checked}}
+    {{localize "HM.patron"}}: {{divine.value}}<p>
+{{else}}
+    {{localize "HM.base"}} {{localize "HM.sp"}}: {{../resp.sp.base}} 
+    {{#if prepared.checked}}{{else}}({{localize "HM.unprepared"}}){{/if}}<p>
+    {{#if (gt ../resp.sp.schedule 0)}}
+        {{localize "HM.schedule"}}: {{../resp.sp.schedule}}<p>
+        {{localize "HM.total"}}: {{../resp.sp.value}}<p>
+    {{/if}}
+{{/if}}
+Speed: {{speed.value}}<p>
+{{/with}}

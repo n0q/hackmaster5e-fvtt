@@ -9,6 +9,14 @@ export const MACRO_VERS = {
 
 // system rules
 export const HMTABLES = {
+    "magic": {
+        "sp": {
+            "a":  30,   "j":  40,  "1":  50,  "2": 60,   "3": 70,   "4":  80,
+            "5":  90,   "6": 100,  "7": 110,  "8": 120,  "9": 130, "10": 140,
+           "11": 150,  "12": 160, "13": 170, "14": 180, "15": 190, "16": 200,
+           "17": 210,  "18": 220, "19": 230, "20": 240,
+        }
+    },
     "save": {
         "fos":      { formula: "1d20p + @saves.fos.value + @resp.bonus"             },
         "fod":      { formula: "1d20p + @saves.fod.value + @resp.bonus"             },
