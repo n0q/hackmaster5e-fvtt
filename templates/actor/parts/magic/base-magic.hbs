@@ -1,8 +1,22 @@
 <section class="grid-2col">
-    <div class="magic-prepared">
-        {{> "systems/hackmaster5e/templates/actor/parts/magic/magic-prepared.hbs" }}
+    <div>
+        <label class="resource-label">{{localize "HM.prepared"}} {{localize "HM.spells"}}</label>
+        <ol class="card-list">
+        {{#each actor.spells}}
+            {{#if data.prepared.checked}}
+                {{> "systems/hackmaster5e/templates/actor/cards/spell.hbs" }}
+            {{/if}}
+        {{/each}}
+        </ol>
     </div>
-    <div class="magic-unprepared">
-        {{> "systems/hackmaster5e/templates/actor/parts/magic/magic-unprepared.hbs" }}
+    <div>
+        <ol class="card-list">
+        <label class="resource-label">{{localize "HM.unprepared"}} {{localize "HM.spells"}}</label>
+        {{#each actor.spells}}
+            {{#if data.prepared.checked}}{{else}}
+                {{> "systems/hackmaster5e/templates/actor/cards/spell.hbs" }}
+            {{/if}}
+        {{/each}}
+        </ol>
     </div>
 </section>

@@ -133,6 +133,31 @@ idx.size = {
     custom:   'HM.custom',
 };
 
+idx.spellLevels = {
+    "a":      "HM.spellLevels.a",
+    "j":      "HM.spellLevels.j",
+    "1":      "HM.spellLevels.1",
+    "2":      "HM.spellLevels.2",
+    "3":      "HM.spellLevels.3",
+    "4":      "HM.spellLevels.4",
+    "5":      "HM.spellLevels.5",
+    "6":      "HM.spellLevels.6",
+    "7":      "HM.spellLevels.7",
+    "8":      "HM.spellLevels.8",
+    "9":      "HM.spellLevels.9",
+    "10":     "HM.spellLevels.10",
+    "11":     "HM.spellLevels.11",
+    "12":     "HM.spellLevels.12",
+    "13":     "HM.spellLevels.13",
+    "14":     "HM.spellLevels.14",
+    "15":     "HM.spellLevels.15",
+    "16":     "HM.spellLevels.16",
+    "17":     "HM.spellLevels.17",
+    "18":     "HM.spellLevels.18",
+    "19":     "HM.spellLevels.19",
+    "20":     "HM.spellLevels.20",
+};
+
 // Images
 idx.savesImg = {
     dodge:    'icons/skills/movement/feet-winged-boots-brown.webp',
@@ -147,11 +172,12 @@ idx.savesImg = {
 };
 
 idx.combatImg = {
-    atk:      'icons/weapons/swords/greatsword-blue.webp',
-    ratk:     'icons/weapons/bows/shortbow-recurve-blue.webp',
-    dmg:      'icons/skills/melee/strike-sword-blood-red.webp',
-    rdmg:     'icons/weapons/ammunition/arrow-head-war-flight.webp',
-    def:      'icons/equipment/shield/heater-crystal-blue.webp',
+    "atk":    "icons/weapons/swords/greatsword-blue.webp",
+    "ratk":   "icons/weapons/bows/shortbow-recurve-blue.webp",
+    "dmg":    "icons/skills/melee/strike-sword-blood-red.webp",
+    "rdmg":   "icons/weapons/ammunition/arrow-head-war-flight.webp",
+    "def":    "icons/equipment/shield/heater-crystal-blue.webp",
+    "cast":   "icons/weapons/wands/wand-carved-pink.webp",
 };
 
 idx.defaultImg = {

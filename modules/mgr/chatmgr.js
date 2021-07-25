@@ -13,6 +13,9 @@ export default class HMChatMgr {
             case "dmg":
                 cData = await this._createWeaponCard(roll, dataset, dialogResp);
                 break;
+            case "cast":
+                cData = await this._createSpellCard(dataset, dialogResp);
+                break;
             case "skill":
                 cData = await this._createSkillCard(roll, dialogResp);
                 break;
@@ -25,14 +28,18 @@ export default class HMChatMgr {
         }
 
         const chatData = {
-            roll: roll,
-            rollMode: game.settings.get("core", "rollMode"),
-            type: CONST.CHAT_MESSAGE_TYPES.ROLL,
-            user: this._user,
-            flavor: cData.flavor,
+            user:    this._user,
+            flavor:  cData.flavor,
             content: cData.content,
-            sound: CONFIG.sounds.dice
+            type:    CONST.CHAT_MESSAGE_TYPES.IC,
         };
+
+        if (roll) {
+            chatData.roll     = roll;
+            chatData.rollMode = game.settings.get("core", "rollMode");
+            chatData.type     = CONST.CHAT_MESSAGE_TYPES.ROLL;
+            chatData.sound    = CONFIG.sounds.dice;
+        }
         return chatData;
     }
 
@@ -126,6 +133,39 @@ export default class HMChatMgr {
                 break;
             }
         }
+        return {flavor, content};
+    }
+
+    async _createSpellCard(dataset, dialogResp) {
+        const actor = dialogResp.caller;
+        const item = dialogResp.context;
+        const data = item.data.data;
+        const flavor = actor.name + " casts " + item.name + ".";
+
+        // Spell Components
+        const components = [];
+        if (data.component.verbal.checked)   components.push("V");
+        if (data.component.somatic.checked)  components.push("S");
+        if (data.component.material.checked) components.push("M");
+        if (data.component.catalyst.checked) components.push("C");
+        if (data.component.divine.checked)   components.push("DI");
+        dialogResp.resp['components'] = components.join(', ');
+
+        if (data.divine.checked) {
+            await item.update({"data.prepared.checked": false});
+        } else {
+            // Spell Point Calculation
+            let base = HMTABLES.magic.sp[data.level];
+            if (!data.prepared.checked) base *= 2;
+            const schedule = Math.max(0, dialogResp.resp.mod || 0);
+            const sum = base + schedule;
+            dialogResp.resp['sp'] = {value: sum, base, schedule};
+            const spNew = actor.data.data.sp.value - sum;
+            await actor.update({"data.sp.value": spNew});
+        }
+
+        const template = "systems/hackmaster5e/templates/chat/spell.hbs";
+        const content = await renderTemplate(template, dialogResp);
         return {flavor, content};
     }
 

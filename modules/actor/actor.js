@@ -1,7 +1,6 @@
 import { HMTABLES } from '../sys/constants.js';
 
 export class HMActor extends Actor {
-
     prepareData() {
         super.prepareData();
         const actorData = this.data;
@@ -22,8 +21,6 @@ export class HMActor extends Actor {
         const raceData = race.data.data;
         data.body.def.race.value = raceData.def.value;
     }
-
-
 
     async setCClass(data) {
         const cclasses = this.items.filter((a) => a.type === "cclass");
@@ -173,6 +170,13 @@ export class HMActor extends Actor {
         data.hp.value = data.hp.max - hp_loss;
     }
 
+    setCharacterMaxSP(data) {
+        const cclass = this.items.find((a) => a.type === "cclass");
+        data.sp.max = data.sp.mod.value;
+        if (cclass) data.sp.max += cclass.data.data.mod.sp.value;
+        return this.update({"data.sp.max": data.sp.max});
+    }
+
     setSaves(data) {
         // actor.js is probably the wrong place to do this. Also SPoT should be constants.js.
         const cclass    = this.items.find((a) => a.type === 'cclass');
@@ -209,6 +213,7 @@ export class HMActor extends Actor {
         this.setEncumbrance(data);
         this.setWeapons(armorDerived);
         this.setCharacterMaxHP(data);
+        this.setCharacterMaxSP(data);
         this.setCurrentHP(data);
         this.setSaves(data);
         this.setInit(data);

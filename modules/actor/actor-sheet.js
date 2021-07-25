@@ -153,14 +153,19 @@ export class HMActorSheet extends ActorSheet {
         const dataset = element.dataset;
         const actor = this.actor;
 
-        const rollMgr = new HMRollMgr();
-        const chatMgr = new HMChatMgr();
         if (dataset.dialog) {
             const dialogMgr = new HMDialogMgr();
             const dialogResp = await dialogMgr.getDialog(dataset, actor);
-            const roll = await rollMgr.getRoll(dataset, dialogResp);
-            const card = await chatMgr.getCard(roll, dataset, dialogResp);
-            return await ChatMessage.create(card);
+
+        let roll = null;
+        if (dataset.formula || dataset.formulaType) {
+            const rollMgr = new HMRollMgr();
+            roll = await rollMgr.getRoll(dataset, dialogResp);
+        }
+
+        const chatMgr = new HMChatMgr();
+        const card = await chatMgr.getCard(roll, dataset, dialogResp);
+        return await ChatMessage.create(card);
         }
     }
 }

@@ -1,8 +1,9 @@
-<li class="item card" data-item-id="{{_id}}">
+<li class="item card hmstyle" data-item-id="{{_id}}">
     <div class="lid">
         <header>
             <label for="{{name}}">
-                <div class="item-image"><img src="{{img}}" title="{{name}}" width="28" height="28"/></div>
+                <img src="{{img}}" title="{{name}}" width="28" height="28"/>
+                <label class="spell-level resource-label">{{data.level}}</label>
                 <h4 class="item-name">{{name}}</h4>
             </label>
         </header>
@@ -12,6 +13,10 @@
                 <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
                 <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
             </div>
+            <img class="rollable imgbutton" src="{{findConfigValue "combatImg" "cast"}}" height=20 title="Cast"
+                data-dialog="cast"
+                data-item-divine={{data.divine.checked}}
+                data-item-id="{{_id}}">
         </section>
     </div>
 </li>

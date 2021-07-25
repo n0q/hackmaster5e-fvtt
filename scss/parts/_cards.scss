@@ -22,7 +22,7 @@
 }
     
 .card {
-    border: $card_border solid #BBB;
+    border: $card_border solid $c-grey;
     border-top-left-radius: $card-border-radius; 
     border-bottom-left-radius: $card-border-radius; 
     display: flex;
@@ -52,7 +52,6 @@
             border: 1px solid;
             padding: 0;
             margin: 0;
-//            padding-bottom: 7px;
             height: 16px;
             text-align: right;
         }
@@ -100,6 +99,13 @@
             display: flex;
             align-items: center;
             flex-direction: row;
+
+            .spell-level {
+                flex: 0 0 28px;
+                justify-content: center;
+                height: 100%;
+                border-right: $card_border solid $c-grey;
+            }
         }
     }
 }
