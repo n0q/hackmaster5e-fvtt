@@ -323,6 +323,6 @@
     },
 
     "COMBAT": {
-        "Round":       "Second"
+        "Round":       "Action Count:"
     }
 }
