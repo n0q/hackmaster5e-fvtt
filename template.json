@@ -4,7 +4,7 @@
         "templates": {
 
             "base": {
-                "hp":     {            "mod": {"value": 0}},
+                "hp":     {"value": 0, "mod": {"value": 0}},
                 "sp":     {"value": 0, "mod": {"value": 0}},
                 "init":   {"value": 0},
                 "encumb": {"value": 0.0}
@@ -14,7 +14,6 @@
                 "luck":  {"value": 0, "max": 0},
                 "ep":    {"value": 0, "max": 400},
                 "bp":    {"value": 40},
-                "level": {"value": 1},
                 "honor": {"value": 0}
             },
 
@@ -113,7 +112,8 @@
         "character": {
             "templates": ["base", "pc", "statblock"],
             "biography": "",
-            "fame":  {"value": 0}
+            "fame":  {"value": 0},
+            "level": {"value": 1}
         },
 
         "beast": {

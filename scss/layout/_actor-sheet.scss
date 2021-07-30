@@ -1,54 +1,39 @@
 $actor-gridgap: 4px;
+$actor-portrait-dim: 150px;
 
 .actor-sheet {
     display: grid;
     grid-gap: $actor-gridgap;
     width: $gwidth;
     grid-template-rows: repeat(3, min-content);
-    grid-template-columns: auto;
-    grid-template-areas:
-        "sheet-header"
-        "sheet-abilities"
-        "sheet-tabs"
-        "sheet-body";
-}
 
-$actor-portrait-dim: 150px;
-.sheet-header {
-    display: flex;
-    flex: 0 0 auto;
-        direction: row;
-        wrap: wrap;
-    overflow: hidden;
-    justify-content: flex-start;
-    margin-bottom: 10px;
-    align-content: start;
+    >header {
+        display: grid;
+        grid-template-columns: 1fr 40%;
+        column-gap: 10px;
+        overflow: hidden;
+        margin-bottom: 10px;
 
-    .header-portrait {
-        flex: 0 1 auto;
-    }
+        #header-portrait {
+            img {
+                flex: 0 0 $actor-portrait-dim;
+                width: $actor-portrait-dim;
+                height: $actor-portrait-dim;
+                min-height: $actor-portrait-dim;
+                margin-right: 10px;
+            }
+        }
 
-    .header-stats {
-        flex: 1 0 auto;
-    }
-
-    .profile-img {
-        flex: 0 0 100px;
-        width: $actor-portrait-dim;
-        height: $actor-portrait-dim;
-        min-height: $actor-portrait-dim;
-        margin-right: 10px;
-    }
-
-    h1.charname {
-        height: 50px;
-        padding: 0px;
-        margin: 5px 0;
-        border-bottom: 0;
-        input {
-            width: 60%;
-            height: 100%;
-            margin: 0;
+        #header-stats {
+            $stat-boxes: 3;
+            display: grid;
+            grid-template-columns: repeat($stat-boxes, 1fr);
+            img {
+                border: unset;
+                grid-column: 1 / span $stat-boxes;
+                height: auto;
+                padding: 0;
+            }
         }
     }
 }
@@ -93,4 +78,3 @@ $actor-portrait-dim: 150px;
 .base-combat {
     @include flexgrid;
 }
-

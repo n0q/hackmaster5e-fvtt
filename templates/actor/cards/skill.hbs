@@ -1,9 +1,10 @@
 <li class="card hmstyle" data-item-id="{{_id}}">
-    <div class="lid toggleswitch">
+    <!--<summary class="toggleswitch">-->
+    <summary class="toggleswitch">
         <header>
             <label for="{{name}}">
-                <div class="item-image"><img src="{{img}}" title="{{name}}" width="24" height="24"/></div>
-                <h4 class="item-name">
+                <img src="{{img}}" title="{{name}}" width="24" height="24"/>
+                <h4>
                     {{name}}
                     {{#if data.specialty.checked}}
                         {{#if data.specialty.value}}({{data.specialty.value}}){{/if}}
@@ -19,7 +20,7 @@
                 {{data.mastery.derived.value}}
             </div>
         </section>
-    </div>
+    </summary>
     <article class="hide" toggle>
         <div class="form-group">
             <label>{{localize "HM.mastery"}}:</label>

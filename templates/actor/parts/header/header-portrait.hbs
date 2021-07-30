@@ -1,7 +1,7 @@
 <span class="flexrow">
-    <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
+    <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
     <div>
-        <input name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
+        <input style="width: 100%;" name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
         <div>
             {{#if actor.race.data.adj}}
                 {{actor.race.data.adj}}
