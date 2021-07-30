@@ -28,6 +28,11 @@ $actor-portrait-dim: 150px;
             $stat-boxes: 3;
             display: grid;
             grid-template-columns: repeat($stat-boxes, 1fr);
+
+            >.bp-skip {
+                grid-column: 2;
+            }
+
             img {
                 border: unset;
                 grid-column: 1 / span $stat-boxes;

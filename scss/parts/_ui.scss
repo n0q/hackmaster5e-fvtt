@@ -31,6 +31,7 @@
     input {
         border: none;
         background: none;
+        box-shadow: unset;
         text-align: center;
         height: $font-primary-size;
         &:hover {
