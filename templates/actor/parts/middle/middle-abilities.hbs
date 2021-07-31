@@ -1,6 +1,11 @@
 {{#each data.data.abilities as |ability key|}}
-    <div class="ability flexrow">
-        <h4>{{ability.derived.value}}/{{ability.derived.fvalue}}</h4>
+    <div class="ability">
+        <span>
+            {{ability.derived.value}}
+            <span class="unit-dlm"></span>
+            {{pad ability.derived.fvalue}}
+            <span class="unit-pct"></span>
+        </span>
         <label for="data.data.abilities.{{key}}.derived.value" class="resource-label rollable"
             data-dialog="ability"
             data-formula="1d20p + @resp.mod @resp.oper @abilities.{{key}}.derived.value"

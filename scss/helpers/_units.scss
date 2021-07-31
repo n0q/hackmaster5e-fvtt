@@ -1,0 +1,14 @@
+.unit-dlm {
+    font-size: 18px;
+    &:before {
+        content: "/";
+    }
+}
+
+.unit-pct {
+    font-size: 10px;
+    margin-left: -5px;
+    &:before {
+        content: "%";
+    }
+}

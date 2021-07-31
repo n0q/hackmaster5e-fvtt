@@ -1,5 +1,7 @@
 $actor-gridgap: 4px;
 $actor-portrait-dim: 150px;
+$actor-saves-dim: 18%;
+$actor-logo-dim: 40%;
 
 .actor-sheet {
     display: grid;
@@ -9,7 +11,7 @@ $actor-portrait-dim: 150px;
 
     >header {
         display: grid;
-        grid-template-columns: 1fr 40%;
+        grid-template-columns: 1fr $actor-logo-dim;
         column-gap: 10px;
         overflow: hidden;
         margin-bottom: 10px;
@@ -47,17 +49,30 @@ $actor-portrait-dim: 150px;
     display: grid;
     grid-gap: $actor-gridgap;
     width: inherit;
-    grid-template-columns: 8em auto 1fr auto 13em;
-
+    grid-template-columns: $actor-portrait-dim $actor-saves-dim 1fr $actor-saves-dim 22%;
     grid-template-areas:
         "abilities middle-saves-l abilities-mods middle-saves-r middle-wounds";
+
     .abilities {
         display: flex;
         flex-direction: column;
     }
 
-    .abilities-mods {
-        @include border_rounded;
+    .ability {
+        display: grid;
+        grid-template-columns: 60% 40%;
+        align-items: end;
+        column-gap: 10px;
+
+        >span {
+            text-align: end;
+            font-size: 22px;
+        }
+
+        >label {
+            text-align: start;
+            padding-bottom: 2px;
+        }
     }
 }
 
