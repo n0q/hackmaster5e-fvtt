@@ -20,6 +20,32 @@
             "cha": "Charisma"
         },
 
+        "alignmentShort": {
+            "lg":   "LG",
+            "ng":   "NG",
+            "cg":   "CG",
+            "ln":   "LN",
+            "tn":   "TN",
+            "cn":   "CN",
+            "le":   "LE",
+            "ne":   "NE",
+            "ce":   "CE",
+            "non":  null
+        },
+
+        "alignment": {
+            "lg":   "Lawful Good",
+            "ng":   "Neutral Good",
+            "cg":   "Chaotic Good",
+            "ln":   "Lawful Neutral",
+            "tn":   "True Neutral",
+            "cn":   "Chaotic Neutral",
+            "le":   "Lawful Evil",
+            "ne":   "Neutral Evil",
+            "ce":   "Chaotic Evil",
+            "non":  "Non"
+        },
+
         "qualitySelect": {
             "worthless":     "Worthless",
             "poor":          "Poor",
@@ -80,7 +106,8 @@
             "mental":   "Mental",
             "physical": "Physical",
             "poison":   "Poison",
-            "trauma":   "Trauma"
+            "trauma":   "Trauma",
+            "fatigue":  "Fatigue"
         },
 
         "itemTypes": {
