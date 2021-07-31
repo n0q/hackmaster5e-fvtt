@@ -94,7 +94,12 @@ export class HMCharacterActorSheet extends HMActorSheet {
             if (i.type === 'wound')  { wounds.push(i);     }
         }
 
-        // Assign and return
+        // Sort
+        skills.sort((a, b) => {return a.name > b.name ? 1 : -1;});
+        uskills.sort((a, b) => {return a.name > b.name ? 1 : -1;});
+        langs.sort((a, b) => {return a.name > b.name ? 1 : -1;});
+
+        // Assign
         actorData.armors = armors;
         actorData.gear = gear;
         actorData.skills = {skills, uskills, langs};
