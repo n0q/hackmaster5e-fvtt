@@ -30,6 +30,7 @@ $actor-logo-dim: 40%;
             $stat-boxes: 3;
             display: grid;
             grid-template-columns: repeat($stat-boxes, 1fr);
+            position: relative;
 
             >.bp-skip {
                 grid-column: 2;
@@ -41,6 +42,13 @@ $actor-logo-dim: 40%;
                 height: auto;
                 padding: 0;
             }
+
+            .logo-corner {
+                position: absolute;
+                top: 48px;
+                right: 0px;
+                font-size: 8px;
+            }
         }
     }
 }
@@ -51,7 +59,7 @@ $actor-logo-dim: 40%;
     width: inherit;
     grid-template-columns: $actor-portrait-dim $actor-saves-dim 1fr $actor-saves-dim 22%;
     grid-template-areas:
-        "abilities middle-saves-l abilities-mods middle-saves-r middle-wounds";
+        "abilities middle-saves-l middle-stats middle-saves-r middle-wounds";
 
     .abilities {
         display: flex;
@@ -73,6 +81,26 @@ $actor-logo-dim: 40%;
             text-align: start;
             padding-bottom: 2px;
         }
+    }
+}
+
+.middle-stats {
+    display: grid;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    row-gap: $actor-gridgap;
+    grid-template-rows: repeat(5, 1fr);
+    >.honor { grid-row: 1 / span 2; }
+    >.fame { grid-row: 3 / span 2; }
+
+    >.widget {
+        border: 2px solid;
+        border-radius: 5px;
+        display: grid;
+//        grid-template-areas: title score
+                              
+
+
     }
 }
 

@@ -1,5 +1,6 @@
 .unit-dlm {
     font-size: 18px;
+    font-style: normal;
     &:before {
         content: "/";
     }
@@ -7,6 +8,7 @@
 
 .unit-pct {
     font-size: 10px;
+    font-style: normal;
     margin-left: -5px;
     &:before {
         content: "%";
