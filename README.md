@@ -2,6 +2,8 @@
 
 Hackmaster for Foundry. Here be dragons. Here be a LOT of dragons. Truth be told, it's dragons all the way down. Seriously I hope you like dragons.
 
+NOTE: This project has been on hiatus for the last couple of months due a mixture of RL obligation and simply needing a break. It's not dead by any stretch. Hoping to return to active development very soon.
+
 ----
 ## Roadmap
 Against all odds, this is venturing close to being a functional product. I am beginning to run out of missing essentials, though it's still greatly inadvisable to run a game with this system. Chunks of the character sheet are still missing, some calculations are wrong or lazy, and the initiative system has some issues to work out.
