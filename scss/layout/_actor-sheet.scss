@@ -14,7 +14,9 @@ $actor-logo-dim: 40%;
         grid-template-columns: 1fr $actor-logo-dim;
         column-gap: 10px;
         overflow: hidden;
-        margin-bottom: 10px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #AAA;
+        margin-bottom: 5px;
 
         #header-portrait {
             img {
@@ -27,18 +29,12 @@ $actor-logo-dim: 40%;
         }
 
         #header-stats {
-            $stat-boxes: 3;
             display: grid;
-            grid-template-columns: repeat($stat-boxes, 1fr);
+            grid-template-rows: repeat(2, 1fr);
             position: relative;
-
-            >.bp-skip {
-                grid-column: 2;
-            }
 
             img {
                 border: unset;
-                grid-column: 1 / span $stat-boxes;
                 height: auto;
                 padding: 0;
             }
@@ -48,6 +44,12 @@ $actor-logo-dim: 40%;
                 top: 48px;
                 right: 0px;
                 font-size: 8px;
+            }
+
+            >section {
+                flex: 0 0;
+                display: flex;
+                flex-flow: row-reverse nowrap;
             }
         }
     }
@@ -60,6 +62,13 @@ $actor-logo-dim: 40%;
     grid-template-columns: $actor-portrait-dim $actor-saves-dim 1fr $actor-saves-dim 22%;
     grid-template-areas:
         "abilities middle-saves-l middle-stats middle-saves-r middle-wounds";
+    
+    .middle-wounds {
+        margin-top: 3px;
+        margin-bottom: 7px;
+        padding: 2px;
+        border: 2px solid $c-grey;
+    }
 
     .abilities {
         display: flex;
@@ -97,7 +106,7 @@ $actor-logo-dim: 40%;
         border: 2px solid;
         border-radius: 5px;
         display: grid;
-//        grid-template-areas: title score
+//      grid-template-areas: title score
                               
 
 
