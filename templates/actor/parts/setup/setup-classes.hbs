@@ -3,7 +3,7 @@
     <ol class="cards-list">
         {{#with actor.cclass}}
             <li class="card" data-item-id="{{_id}}">
-                <div class="lid">
+                <summary>
                     <header>
                         <label for="{{name}}">
                             <div class="item-image"><img src="{{img}}" title="{{name}}" width="28" height="28"/></div>
@@ -16,7 +16,7 @@
                             <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
                         </div>
                     </section>
-                </div>
+                </summary>
             </li>
         {{/with}}
     </ol>

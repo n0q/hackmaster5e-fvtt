@@ -9,12 +9,9 @@
 {{#if divine.checked}}
     {{localize "HM.patron"}}: {{divine.value}}<p>
 {{else}}
-    {{localize "HM.base"}} {{localize "HM.sp"}}: {{../resp.sp.base}} 
-    {{#if prepared.checked}}{{else}}({{localize "HM.unprepared"}}){{/if}}<p>
-    {{#if (gt ../resp.sp.schedule 0)}}
-        {{localize "HM.schedule"}}: {{../resp.sp.schedule}}<p>
-        {{localize "HM.total"}}: {{../resp.sp.value}}<p>
-    {{/if}}
+    {{localize "HM.sp"}}: {{../resp.sp.base}} 
+    {{#if (gt ../resp.sp.schedule 0)}} + {{../resp.sp.schedule}}{{/if}}
+    <p>
 {{/if}}
 Speed: {{speed.value}}<p>
 {{/with}}

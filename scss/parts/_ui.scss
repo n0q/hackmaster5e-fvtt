@@ -1,5 +1,3 @@
-$shad-red: 0 0 10px red;
-
 .hmstyle {
     .tablerow {
         margin: 2px 0;
@@ -12,8 +10,7 @@ $shad-red: 0 0 10px red;
         text-align: center;
         margin-left: 2px;
         &:hover {
-            font-weight: bold;
-            text-shadow: $shad-red;
+            @include text-glow;
         }
     }
 
@@ -21,3 +18,36 @@ $shad-red: 0 0 10px red;
         @include button-border(5px);
     }
 }
+
+.fraction {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid;
+    border-radius: 5px;
+    margin: 2px;
+    margin-bottom: auto;
+
+    input {
+        border: none;
+        background: none;
+        box-shadow: unset;
+        text-align: center;
+        height: $font-primary-size;
+        &:hover {
+            @include text-glow;
+        }
+    }
+
+    label {
+        text-align: center;
+        width: 5em;
+    }
+
+    >.divisor {
+        width: 80%;
+        height: 3px;
+        background: black;
+    }
+}
+

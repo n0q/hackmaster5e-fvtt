@@ -1,16 +1,30 @@
-<div class="resource flex-group-center">
-    <label for="data.hp.value" class="resource-label">{{localize "HM.hp"}}</label>
-    <div class="resource-content flexrow flex-center flex-between">
-        <input type="text" name="data.hp.value" value="{{data.data.hp.value}}" data-dtype="Number"/>
-        <span> / </span>
-        <input type="text" name="data.hp.max" value="{{data.data.hp.max}}" data-dtype="Number"/>
-    </div>
-</div>
-<div class="resource flex-group-center">
-    <label for="data.sp.value" class="resource-label">{{localize "HM.sp"}}</label>
-    <div class="resource-content flexrow flex-center flex-between">
-        <input type="number" name="data.sp.value" value="{{data.data.sp.value}}" data-dtype="Number"/>
-        <span> / </span>
-        <input type="number" name="data.sp.max" value="{{data.data.sp.max}}" data-dtype="Number"/>
-    </div>
-</div>
+<img src="systems/hackmaster5e/styles/assets/logo_gs_txt.png">
+<i class="logo-corner far fa-registered"></i>
+{{#with data.data}}
+<section>
+    <figure class="fraction">
+        <label for="data.ep.value" class="resource-label">{{localize "HM.ep"}}</label>
+        <input type="number" name="data.ep.value" value="{{ep.value}}" onwheel="this.blur()" data-dtype="Number"/>
+        <div class="divisor"></div>
+        <input type="number" name="data.ep.max" value="{{ep.max}}" data-dtype="Number"/>
+    </figure>
+    <figure class="fraction">
+        <label for="data.hp.value" class="resource-label">{{localize "HM.hp"}}</label>
+        <label for="data.hp.value">{{hp.value}}</label>
+        <div class="divisor"></div>
+        <label for="data.hp.max">{{hp.max}}</label>
+    </figure>
+    <figure class="fraction">
+        <label for="data.sp.value" class="resource-label">{{localize "HM.sp"}}</label>
+        <input type="number" name="data.sp.value" value="{{sp.value}}" onwheel="this.blur()" data-dtype="Number"/>
+        <div class="divisor"></div>
+        <label for="data.sp.max">{{sp.max}}</label>
+    </figure>
+    <figure class="fraction">
+        <label for="data.luck.value" class="resource-label">{{localize "HM.luck"}}</label>
+        <input type="number" name="data.luck.value" value="{{luck.value}}" onwheel="this.blur()" data-dtype="Number"/>
+        <div class="divisor"></div>
+        <input type="number" name="data.luck.max" value="{{luck.max}}" data-dtype="Number"/>
+    </figure>
+</section>
+{{/with}}

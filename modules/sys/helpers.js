@@ -51,6 +51,12 @@ export default function registerHandlebarsHelpers() {
         return a === Math.floor(b/2);
     });
 
+    Handlebars.registerHelper("pad", (a) => {
+        let num = a.toString();
+        while (num.length < 2) num = "0" + num;
+        return num;
+    });
+
     // #each.slice(a, b)
     Handlebars.registerHelper("slice", (context, options) => {
         const opt = options.hash;

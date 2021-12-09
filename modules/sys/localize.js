@@ -22,21 +22,34 @@ idx.ability_long = {
 },
 
 idx.ability = {
-    str: "HM.str",
-    int: "HM.int",
-    wis: "HM.wis",
-    dex: "HM.dex",
-    con: "HM.con",
-    lks: "HM.lks",
-    cha: "HM.cha"
-},
+    "str": "HM.str",
+    "int": "HM.int",
+    "wis": "HM.wis",
+    "dex": "HM.dex",
+    "con": "HM.con",
+    "lks": "HM.lks",
+    "cha": "HM.cha"
+};
+
+idx.alignment = {
+    "lg":   "HM.alignment.lg",
+    "ng":   "HM.alignment.ng",
+    "cg":   "HM.alignment.cg",
+    "ln":   "HM.alignment.ln",
+    "tn":   "HM.alignment.tn",
+    "cn":   "HM.alignment.cn",
+    "le":   "HM.alignment.le",
+    "ne":   "HM.alignment.ne",
+    "ce":   "HM.alignment.ce",
+    "non":  "HM.alignment.non",
+};
 
 idx.size = {
-    tiny:   "HM.sizeSelect.tiny",
-    small:  "HM.sizeSelect.small",
-    medium: "HM.sizeSelect.medium",
-    large:  "HM.sizeSelect.large"
-},
+    "tiny":   "HM.sizeSelect.tiny",
+    "small":  "HM.sizeSelect.small",
+    "medium": "HM.sizeSelect.medium",
+    "large":  "HM.sizeSelect.large"
+};
 
 idx.statbonus = {
     feat:     "HM.feat",
@@ -76,16 +89,17 @@ idx.weaponskill = {
 }
 
 idx.saves = {
-    dodge:    'HM.saves.dodge',
-    mental:   'HM.saves.mental',
-    physical: 'HM.saves.physical',
-    poison:   'HM.saves.poison',
-    trauma:   'HM.saves.trauma',
-    feat:     'HM.feat',
-    fos:      'HM.saves.fos',
-    foa:      'HM.saves.foa',
-    turning:  'HM.saves.turning',
-    morale:   'HM.saves.morale',
+    "dodge":    "HM.saves.dodge",
+    "mental":   "HM.saves.mental",
+    "physical": "HM.saves.physical",
+    "poison":   "HM.saves.poison",
+    "trauma":   "HM.saves.trauma",
+    "feat":     "HM.feat",
+    "fos":      "HM.saves.fos",
+    "foa":      "HM.saves.foa",
+    "turning":  "HM.saves.turning",
+    "morale":   "HM.saves.morale",
+    "fatigue":  "HM.saves.fatigue",
 };
 
 idx.itemCClass = {
@@ -103,7 +117,6 @@ idx.itemTypes = {
     "weapon":   "HM.itemTypes.weapon"
 }
 
-// Dialog
 idx.dice = {
     "1d20":      "d20",
     "1d12":      "d12",
@@ -122,15 +135,15 @@ idx.range = {
 }
 
 idx.size = {
-    tiny:     'HM.sizeFull.tiny',
-    small:    'HM.sizeFull.small',
-    medium:   'HM.sizeFull.medium',
-    large:    'HM.sizeFull.large',
-    huge:     'HM.sizeFull.huge',
-    gigantic: 'HM.sizeFull.gigantic',
-    enormous: 'HM.sizeFull.enormous',
-    colossal: 'HM.sizeFull.colossal',
-    custom:   'HM.custom',
+    "tiny":     "HM.sizeFull.tiny",
+    "small":    "HM.sizeFull.small",
+    "medium":   "HM.sizeFull.medium",
+    "large":    "HM.sizeFull.large",
+    "huge":     "HM.sizeFull.huge",
+    "gigantic": "HM.sizeFull.gigantic",
+    "enormous": "HM.sizeFull.enormous",
+    "colossal": "HM.sizeFull.colossal",
+    "custom":   "HM.custom",
 };
 
 idx.spellLevels = {
@@ -160,15 +173,16 @@ idx.spellLevels = {
 
 // Images
 idx.savesImg = {
-    dodge:    'icons/skills/movement/feet-winged-boots-brown.webp',
-    mental:   'icons/skills/wounds/anatomy-organ-brain-pink-red.webp',
-    physical: 'icons/skills/wounds/anatomy-bone-joint.webp',
-    poison:   'icons/skills/toxins/poison-bottle-corked-fire-green.webp',
-    trauma:   'icons/skills/wounds/injury-face-impact-orange.webp',
-    fos:      'icons/magic/control/buff-strength-muscle-damage.webp',
-    foa:      'icons/skills/movement/figure-running-gray.webp',
-    turning:  'icons/magic/holy/prayer-hands-glowing-yellow.webp',
-    morale:   'icons/skills/social/wave-halt-stop.webp'
+    "dodge":    "icons/skills/movement/feet-winged-boots-brown.webp",
+    "mental":   "icons/skills/wounds/anatomy-organ-brain-pink-red.webp",
+    "physical": "icons/skills/wounds/anatomy-bone-joint.webp",
+    "poison":   "icons/skills/toxins/poison-bottle-corked-fire-green.webp",
+    "trauma":   "icons/skills/wounds/injury-face-impact-orange.webp",
+    "fos":      "icons/magic/control/buff-strength-muscle-damage.webp",
+    "foa":      "icons/skills/movement/figure-running-gray.webp",
+    "turning":  "icons/magic/holy/prayer-hands-glowing-yellow.webp",
+    "morale":   "icons/skills/social/wave-halt-stop.webp",
+    "fatigue":  "icons/magic/symbols/question-stone-yellow.webp",
 };
 
 idx.combatImg = {
@@ -181,7 +195,7 @@ idx.combatImg = {
 };
 
 idx.defaultImg = {
-    body:       'icons/magic/control/buff-strength-muscle-damage-red.webp',
+    body:     "icons/magic/control/buff-strength-muscle-damage-red.webp",
 };
 
 export default idx;

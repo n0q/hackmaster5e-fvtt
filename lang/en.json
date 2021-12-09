@@ -20,6 +20,32 @@
             "cha": "Charisma"
         },
 
+        "alignmentShort": {
+            "lg":   "LG",
+            "ng":   "NG",
+            "cg":   "CG",
+            "ln":   "LN",
+            "tn":   "TN",
+            "cn":   "CN",
+            "le":   "LE",
+            "ne":   "NE",
+            "ce":   "CE",
+            "non":  null
+        },
+
+        "alignment": {
+            "lg":   "Lawful Good",
+            "ng":   "Neutral Good",
+            "cg":   "Chaotic Good",
+            "ln":   "Lawful Neutral",
+            "tn":   "True Neutral",
+            "cn":   "Chaotic Neutral",
+            "le":   "Lawful Evil",
+            "ne":   "Neutral Evil",
+            "ce":   "Chaotic Evil",
+            "non":  "Non"
+        },
+
         "qualitySelect": {
             "worthless":     "Worthless",
             "poor":          "Poor",
@@ -80,7 +106,8 @@
             "mental":   "Mental",
             "physical": "Physical",
             "poison":   "Poison",
-            "trauma":   "Trauma"
+            "trauma":   "Trauma",
+            "fatigue":  "Fatigue"
         },
 
         "itemTypes": {
@@ -201,6 +228,7 @@
 
         "bp": "BP",
         "dr": "DR",
+        "ep": "EP",
         "kb": "KB",
         "hp": "HP",
         "sp": "SP",
@@ -246,7 +274,9 @@
         "duration":     "Duration",
         "easy":         "Easy",
         "equipped":     "Equipped",
+        "fame":         "Fame",
         "feat":         "Feat",
+        "honor":        "Honor",
         "initmod":      "Init Mod",
         "speedmod":     "Speed Mod",
         "movece":       "Move Coeff",
@@ -260,6 +290,7 @@
         "level":        "Level",
         "literacy":     "Literacy",
         "literate":     "Literate",
+        "luck":         "Luck",
         "magic":        "Magic",
         "mastery":      "Mastery",
         "material":     "Material",
@@ -323,6 +354,6 @@
     },
 
     "COMBAT": {
-        "Round":       "Second"
+        "Round":       "Action Count:"
     }
 }
