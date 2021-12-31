@@ -354,6 +354,6 @@
     },
 
     "COMBAT": {
-        "Round":       "Action Count:"
+        "Round":       "Count:"
     }
 }

@@ -62,7 +62,7 @@ export default class HMDialogMgr {
                         label: game.i18n.localize("HM.dialog.setWoundTitle"),
                         callback: () => {
                             resolve({
-                                "value": parseInt(document.getElementById("hp").value)
+                                "value": parseInt(document.getElementById("hp").value || 0)
                             })
                         }
                     }
