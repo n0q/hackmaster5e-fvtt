@@ -161,6 +161,7 @@ export class HMActor extends Actor {
         const cclass    = this.items.find((a) => a.type === "cclass");
         const level_hp  = cclass ? cclass.data.data.mod.hp.value : 0;
         data.hp.max     = racial_hp + con_hp + level_hp;
+        return this.update({"data.hp.max": data.hp.max});
     }
 
     setCurrentHP(data) {
@@ -168,6 +169,7 @@ export class HMActor extends Actor {
         let hp_loss = 0;
         Object.keys(wounds).forEach( (a) => hp_loss += wounds[a].data.data.hp.value);
         data.hp.value = data.hp.max - hp_loss;
+        return this.update({"data.hp.value": data.hp.value});
     }
 
     setCharacterMaxSP(data) {
