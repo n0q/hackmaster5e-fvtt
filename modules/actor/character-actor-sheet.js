@@ -95,9 +95,13 @@ export class HMCharacterActorSheet extends HMActorSheet {
         }
 
         // Sort
-        skills.sort((a, b) => {return a.name > b.name ? 1 : -1;});
-        uskills.sort((a, b) => {return a.name > b.name ? 1 : -1;});
-        langs.sort((a, b) => {return a.name > b.name ? 1 : -1;});
+        function skillsort(a, b) {
+            return a.name + (a.data.specialty.value || "") > b.name + (b.data.specialty.value || "") ? 1 : -1;
+        }
+
+        skills.sort(skillsort);
+        uskills.sort(skillsort);
+        langs.sort(skillsort);
 
         // Assign
         actorData.armors = armors;
