@@ -26,18 +26,24 @@
                         </div>
                     </div>
                 </div>
-                <div class="sidepanel">
-                    {{#each data.data.ptable as |level lkey|}}
-                    {{#if (gte ../data.data.level.value lkey)}}
-                    <div class="options-row-l">
-                        <label class="resource-label">{{localize "HM.level"}} {{lkey}}</label>
-                        <input type="text" value="{{level.hp.die}}" readonly="true"/>
-                        <input type="number" name="data.ptable.{{lkey}}.hp.value" value="{{level.hp.value}}" data-dtype="Number"/>
-                        {{#if level.hp.reroll.checked}}(reroll){{/if}}
+                <figure class="table2">
+                    <div class="wrapper">
+                        <label class="resource-label">{{localize "HM.level"}}</label>
+                        <label class="resource-label">{{localize "HM.die"}}</label>
+                        <label class="resource-label">{{localize "HM.hp"}}</label>
+                        <label></label>
+                        {{#each data.data.ptable as |level lkey|}}
+                        {{#if (gte ../data.data.level.value lkey)}}
+                        <div class="row">
+                            <label>{{lkey}}</label>
+                            <label>{{level.hp.die}}</label>
+                            <input type="number" name="data.ptable.{{lkey}}.hp.value" value="{{level.hp.value}}" data-dtype="Number"/>
+                            <label>{{#if level.hp.reroll.checked}}(reroll){{/if}}</label>
+                        </div>
+                        {{/if}}
+                        {{/each}}
                     </div>
-                    {{/if}}
-                    {{/each}}
-                </div>
+                </figure>
             </div>
         </div>
 
