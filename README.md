@@ -4,7 +4,7 @@ Hackmaster for Foundry. Here be dragons. Here be a LOT of dragons. Truth be told
 
 ----
 ## Roadmap
-Against all odds, this is venturing close to being a functional product. I am beginning to run out of missing essentials, though it's still greatly inadvisable to run a game with this system. Chunks of the character sheet are still missing, some calculations are wrong or lazy, and the initiative system has some issues to work out.
+Against all odds, this is venturing close to being a functional product. I am beginning to run out of missing essentials, though it's still greatly inadvisable to run a game with this system. The main thing missing now is sheets for NPCs. I'm practically at the mvp stage and I'm hoping for an initial release soon, pending tests.
 
 ##### 0.1.x:  Operation: Minimally Viable Product.
 Just gets something out the door that you could theoretically play Hackmaster with. It won't be a convenient experience, but it should be doable, and markedly better than going without.
