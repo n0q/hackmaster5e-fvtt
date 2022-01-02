@@ -12,10 +12,17 @@
     "styles": ["styles/hackmaster.css"],
     "packs": [
         {
-            "label": "Universal Skills",
+            "label": "Skills, Universal",
             "entity": "Item",
             "name": "uskills",
             "path": "packs/universal-skills.db",
+            "system": "hackmaster5e"
+        },
+        {
+            "label": "Skills, Basic",
+            "entity": "Item",
+            "name": "hmbskills",
+            "path": "packs/skills-basic.db",
             "system": "hackmaster5e"
         },
         {
