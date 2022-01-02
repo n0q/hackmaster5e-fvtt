@@ -67,6 +67,20 @@
     }
 }
 
+@mixin table2 ($_num_cols) {
+    .wrapper {
+        display: grid;
+        grid-template-columns: repeat($_num_cols, auto);
+        max-width: 800px;
+        column-gap: 10px;
+        align-items: end;
+    }
+
+    .row {
+        display: contents;
+    } 
+}
+
 @mixin text-glow {
     font-weight: bold;
     text-shadow: $shad-red;

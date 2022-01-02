@@ -17,6 +17,8 @@
         background: none;
     }
 
+    @include table2(4);
+
     .sidepanel {
         .options-block {
             display: flex;
