@@ -3,12 +3,13 @@
  * @extends {Item}
  */
 export class HMItem extends Item {
+
   /**
    * Augment the basic Item data model with additional dynamic data.
    */
+
   prepareData() {
       super.prepareData();
-
       const itemData  = this.data.data;
       const itemType  = this.data.type;
       const actorData = this.actor ? this.actor.data : null;
@@ -145,14 +146,31 @@ export class HMItem extends Item {
 
         let timer = itemData.timer;
         let hp = itemData.hp;
+        let dirty = false;
         let treated  = itemData.treated;
 
         if (dataset.action === 'decTimer') timer.value--;
         if (dataset.action === 'decHp' || timer.value < 1) {
             timer.value = --hp.value;
+            dirty = true;
         }
 
         if (hp.value < 0) return this.delete();
         await this.update({'data': {hp, timer, treated}});
+        if (dirty && this.parent) {
+            this.parent.modifyTokenAttribute('data.hp.value');
+        }
+    }
+
+    static async createItem(item) {
+        if (item.type === 'wound' && item.parent) {
+            item.parent.modifyTokenAttribute('data.hp.value');
+        }
+    }
+
+    static async deleteItem(item) {
+        if (item.type === 'wound' && item.parent) {
+            item.parent.modifyTokenAttribute('data.hp.value');
+        }
     }
 }

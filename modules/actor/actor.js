@@ -1,12 +1,11 @@
 import { HMTABLES } from '../sys/constants.js';
 
 export class HMActor extends Actor {
-    prepareData() {
-        super.prepareData();
+    prepareDerivedData() {
         const actorData = this.data;
         const data = actorData.data;
 
-        if (actorData.type === 'character') this._prepareCharacterData(data);
+        if (actorData.type === 'character') { this._prepareCharacterData(data); }
     }
 
     async setRace(data) {
@@ -153,20 +152,19 @@ export class HMActor extends Actor {
         }
     }
 
-    setCharacterMaxHP(data) {
+    setCharacterHP(data) {
         const race      = this.items.find((a) => a.type === "race");
         const racial_hp = race ? race.data.data.hp.value : 0;
         const con_hp    = data.abilities.con.derived.value || 0;
         const cclass    = this.items.find((a) => a.type === "cclass");
         const level_hp  = cclass ? cclass.data.data.mod.hp.value : 0;
-        data.hp.max     = racial_hp + con_hp + level_hp;
-    }
 
-    setCurrentHP(data) {
-        const wounds = this.items.filter((a) => a.type === "wound");
-        let hp_loss = 0;
-        Object.keys(wounds).forEach( (a) => hp_loss += wounds[a].data.data.hp.value);
-        data.hp.value = data.hp.max - hp_loss;
+        const max       = racial_hp + con_hp + level_hp;
+        const wounds    = this.items.filter((a) => a.type === "wound");
+
+        let value = max;
+        Object.keys(wounds).forEach( (a) => value -= wounds[a].data.data.hp.value);
+        data.hp = {max, value};
     }
 
     setCharacterMaxSP(data) {
@@ -210,9 +208,8 @@ export class HMActor extends Actor {
         const armorDerived = this.setArmor(data);
         this.setEncumbrance(data);
         this.setWeapons(armorDerived);
-        this.setCharacterMaxHP(data);
+        this.setCharacterHP(data);
         this.setCharacterMaxSP(data);
-        this.setCurrentHP(data);
         this.setSaves(data);
         this.setInit(data);
     }
