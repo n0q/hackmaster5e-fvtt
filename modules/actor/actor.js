@@ -44,8 +44,9 @@ export class HMActor extends Actor {
                 race.value  = actorRace.data.data.abilities[i].value;
                 race.fvalue = actorRace.data.data.abilities[i].fvalue;
             }
-            stat.derived.value  = stat.raw.value  + stat.mod.value  + race.value;
-            stat.derived.fvalue = stat.raw.fvalue + stat.mod.fvalue + race.fvalue;
+            let value  = stat.raw.value  + stat.mod.value  + race.value;
+            let fvalue = stat.raw.fvalue + stat.mod.fvalue + race.fvalue;
+            stat.derived = {value, fvalue};
         }
     }
 
@@ -180,7 +181,7 @@ export class HMActor extends Actor {
 
         const bData = data.bonus;
         const sData = data.saves;
-        const level     = data.level.value;
+        const level = data.level.value;
         const constitution = data.abilities.con.derived.value;
 
         sData.fos.value          = bData.fos.value;

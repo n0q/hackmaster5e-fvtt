@@ -19,27 +19,20 @@
 
             "statblock": {
                 "abilities": {
-                    "str": {"raw":     {"value": 10, "fvalue": 0}, 
-                            "mod":     {"value": 0,  "fvalue": 0},
-                            "derived": {"value": 0,  "fvalue": 0}},
-                    "int": {"raw":     {"value": 10, "fvalue": 0}, 
-                            "mod":     {"value": 0,  "fvalue": 0},
-                            "derived": {"value": 0,  "fvalue": 0}},
-                    "wis": {"raw":     {"value": 10, "fvalue": 0}, 
-                            "mod":     {"value": 0,  "fvalue": 0},
-                            "derived": {"value": 0,  "fvalue": 0}},
-                    "dex": {"raw":     {"value": 10, "fvalue": 0}, 
-                            "mod":     {"value": 0,  "fvalue": 0},
-                            "derived": {"value": 0,  "fvalue": 0}},
-                    "con": {"raw":     {"value": 10, "fvalue": 0}, 
-                            "mod":     {"value": 0,  "fvalue": 0},
-                            "derived": {"value": 0,  "fvalue": 0}},
-                    "lks": {"raw":     {"value": 10, "fvalue": 0}, 
-                            "mod":     {"value": 0,  "fvalue": 0},
-                            "derived": {"value": 0,  "fvalue": 0}},
-                    "cha": {"raw":     {"value": 10, "fvalue": 0}, 
-                            "mod":     {"value": 0,  "fvalue": 0},
-                            "derived": {"value": 0,  "fvalue": 0}}
+                    "str": {"raw": {"value": 10, "fvalue": 0}, 
+                            "mod": {"value": 0,  "fvalue": 0}},
+                    "int": {"raw": {"value": 10, "fvalue": 0}, 
+                            "mod": {"value": 0,  "fvalue": 0}},
+                    "wis": {"raw": {"value": 10, "fvalue": 0}, 
+                            "mod": {"value": 0,  "fvalue": 0}},
+                    "dex": {"raw": {"value": 10, "fvalue": 0}, 
+                            "mod": {"value": 0,  "fvalue": 0}},
+                    "con": {"raw": {"value": 10, "fvalue": 0}, 
+                            "mod": {"value": 0,  "fvalue": 0}},
+                    "lks": {"raw": {"value": 10, "fvalue": 0}, 
+                            "mod": {"value": 0,  "fvalue": 0}},
+                    "cha": {"raw": {"value": 10, "fvalue": 0}, 
+                            "mod": {"value": 0,  "fvalue": 0}}
                 },
 
                 "body": {
