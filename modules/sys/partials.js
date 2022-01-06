@@ -33,6 +33,7 @@ export default function preloadHandlebarsTemplates() {
 
         "systems/hackmaster5e/templates/chat/spell.hbs",
 
+        "systems/hackmaster5e/templates/item/parts/description.hbs",
         "systems/hackmaster5e/templates/item/parts/header-logistics.hbs",
         "systems/hackmaster5e/templates/item/parts/header.hbs",
 
