@@ -123,7 +123,7 @@ export class HMItem extends Item {
 
         // HACK: Need derived abilities to set uskill minimums,
         // but they're usually called after items are done.
-        if (abilities.str.derived.value === 0) {
+        if (typeof abilities.str.derived === 'undefined') {
             const actor = this.actor;
             actor.setAbilities(actorData.data);
         }
