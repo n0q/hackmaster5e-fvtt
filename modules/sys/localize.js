@@ -147,8 +147,6 @@ idx.size = {
 };
 
 idx.spellLevels = {
-    "a":      "HM.spellLevels.a",
-    "j":      "HM.spellLevels.j",
     "1":      "HM.spellLevels.1",
     "2":      "HM.spellLevels.2",
     "3":      "HM.spellLevels.3",
@@ -169,6 +167,8 @@ idx.spellLevels = {
     "18":     "HM.spellLevels.18",
     "19":     "HM.spellLevels.19",
     "20":     "HM.spellLevels.20",
+    "21":     "HM.spellLevels.21",
+    "22":     "HM.spellLevels.22",
 };
 
 // Images

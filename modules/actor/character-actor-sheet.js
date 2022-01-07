@@ -15,7 +15,8 @@ export class HMCharacterActorSheet extends HMActorSheet {
             template: 'systems/hackmaster5e/templates/actor/actor-base.hbs',
             width: 820,
             height: 970,
-            tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'skills' }]
+//            tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'skills' }]
+            tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'magic' }]
         });
     }
 
@@ -123,5 +124,13 @@ export class HMCharacterActorSheet extends HMActorSheet {
                 wData.stats[stat].race = actorData.race.data?.[stat] || {value: 0};
             }
         }
+
+        const slevels = [];
+            for (let i=0; i < actorData.spells.length; i++) {
+                const level = actorData.spells[i].data.level;
+                if (!slevels.includes(level)) { slevels.push(level) }
+            }
+        actorData.slevels = slevels.sort();
+
     }
 }
