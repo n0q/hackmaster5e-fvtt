@@ -15,8 +15,7 @@ export class HMCharacterActorSheet extends HMActorSheet {
             template: 'systems/hackmaster5e/templates/actor/actor-base.hbs',
             width: 820,
             height: 970,
-//            tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'skills' }]
-            tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'magic' }]
+            tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'skills' }]
         });
     }
 
