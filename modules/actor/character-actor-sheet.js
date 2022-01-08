@@ -126,8 +126,8 @@ export class HMCharacterActorSheet extends HMActorSheet {
 
         const slevels = [];
             for (let i=0; i < actorData.spells.length; i++) {
-                const level = actorData.spells[i].data.level;
-                if (!slevels.includes(level)) { slevels.push(level) }
+                const lidx = Number(actorData.spells[i].data.lidx);
+                if (!slevels.includes(lidx)) { slevels.push(lidx) }
             }
         actorData.slevels = slevels.sort();
 

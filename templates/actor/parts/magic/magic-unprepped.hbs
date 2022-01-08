@@ -1,12 +1,12 @@
 <ol class="card-list">
-    <label class="resource-label">{{localize "HM.unprepared"}} {{localize "HM.spells"}}</label>
+    <label class="resource-label">{{localize "HM.spelllibrary"}}</label>
     <select name="data.cslevel">
         {{#select actor.data.data.cslevel}}{{#each actor.slevels as |slevel|}}
         <option value="{{slevel}}">{{localize (concat "HM.spellLevels." slevel)}}</option>
         {{/each}}{{/select}}
     </select>
     {{#each actor.spells}}
-    {{#if (eq data.level ../actor.data.data.cslevel)}}
+    {{#if (eq data.lidx ../actor.data.data.cslevel)}}
         {{> "systems/hackmaster5e/templates/actor/cards/spell.hbs" }}
     {{/if}}
     {{/each}}
