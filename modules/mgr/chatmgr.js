@@ -156,8 +156,8 @@ export default class HMChatMgr {
             await item.update({"data.prepped": prepped});
         } else {
             // Spell Point Calculation
-            let base = HMTABLES.magic.sp[data.level];
-            if (!data.prepared.checked) base *= 2;
+            let base = 20 + 10 * data.lidx;
+            if (data.prepped < 1) { base *= 2; }
             const schedule = Math.max(0, dialogResp.resp.mod || 0);
             const sum = base + schedule;
             dialogResp.resp['sp'] = {value: sum, base, schedule};
