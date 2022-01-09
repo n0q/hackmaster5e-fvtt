@@ -123,5 +123,17 @@ export class HMCharacterActorSheet extends HMActorSheet {
                 wData.stats[stat].race = actorData.race.data?.[stat] || {value: 0};
             }
         }
+
+        const slevels = [];
+            for (let i=0; i < actorData.spells.length; i++) {
+                const lidx = Number(actorData.spells[i].data.lidx);
+                if (!slevels.includes(lidx)) { slevels.push(lidx) }
+            }
+
+        actorData.slevels = slevels.sort();
+
+        // HACK: If sheet has only one spell level, the controls are locked.
+        let cslevel = Number(actorData.data.data.cslevel);
+        if (slevels.length && !slevels.includes(cslevel)) { actorData.data.data.cslevel = actorData.slevels[0]; }
     }
 }

@@ -6,6 +6,7 @@ export default function preloadHandlebarsTemplates() {
         "systems/hackmaster5e/templates/actor/cards/saves.hbs",
         "systems/hackmaster5e/templates/actor/cards/skill.hbs",
         "systems/hackmaster5e/templates/actor/cards/spell.hbs",
+        "systems/hackmaster5e/templates/actor/cards/prepped-spell.hbs",
         "systems/hackmaster5e/templates/actor/cards/weapon.hbs",
 
         "systems/hackmaster5e/templates/actor/parts/middle/base-middle.hbs",
@@ -22,7 +23,9 @@ export default function preloadHandlebarsTemplates() {
         "systems/hackmaster5e/templates/actor/parts/header/header-stats.hbs",
         "systems/hackmaster5e/templates/actor/parts/header/header-portrait.hbs",
         "systems/hackmaster5e/templates/actor/parts/inventory/base-inventory.hbs",
-        "systems/hackmaster5e/templates/actor/parts/magic/base-magic.hbs",
+        "systems/hackmaster5e/templates/actor/parts/spells/base-spells.hbs",
+        "systems/hackmaster5e/templates/actor/parts/spells/spells-prepped.hbs",
+        "systems/hackmaster5e/templates/actor/parts/spells/spells-library.hbs",
         "systems/hackmaster5e/templates/actor/parts/setup/base-setup.hbs",
         "systems/hackmaster5e/templates/actor/parts/setup/setup-abilities.hbs",
         "systems/hackmaster5e/templates/actor/parts/setup/setup-classes.hbs",

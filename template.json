@@ -233,7 +233,8 @@
 
         "spell": {
             "templates": ["base"],
-            "divine": {"checked": false, "value": ""},
+            "divine": {"checked": false},
+            "domain": "",
             "component": {
                 "verbal":   {"checked": true},
                 "somatic":  {"checked": true},
@@ -243,8 +244,8 @@
             },
             "speed":    {"value": null},
             "sp":       {"value": null},
-            "prepared": {"checked": false},
-            "level": ""       
+            "prepped": 0,
+            "lidx": 3
         },
 
         "skill": {

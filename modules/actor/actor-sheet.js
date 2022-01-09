@@ -34,7 +34,9 @@ export class HMActorSheet extends ActorSheet {
 
         // Move Inventory Item
         html.find('.item-state').click(this._onItemState.bind(this));
-        html.find('.spell-state').click(this._onSpellState.bind(this));
+
+        // Spell Prep
+        html.find('.spell-prep').click(this._onSpellPrep.bind(this));
 
         // Interactables
         html.find('.button').click(this._onClick.bind(this));
@@ -107,12 +109,17 @@ export class HMActorSheet extends ActorSheet {
         await this.actor.updateEmbeddedDocuments("Item", [{_id:item.id, data:item.data.data}]);
     }
 
-    async _onSpellState(ev) {
+    async _onSpellPrep(ev) {
         ev.preventDefault();
+        const element = ev.currentTarget;
+        const dataset = element.dataset;
         const li = $(ev.currentTarget).parents(".card");
         const item = this.actor.items.get(li.data("itemId"));
-        const prepped = item.data.data.prepared;
-        prepped.checked = !prepped.checked;
+
+        let prepped = item.data.data.prepped || 0;
+        dataset.itemPrepare ? prepped++ : prepped--;
+
+        item.data.data.prepped = prepped;
         await this.actor.updateEmbeddedDocuments("Item", [{_id:item.id, data:item.data.data}]);
     }
 
