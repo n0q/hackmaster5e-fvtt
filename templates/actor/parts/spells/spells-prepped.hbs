@@ -1,0 +1,8 @@
+<label class="resource-label">{{localize "HM.prepared"}} {{localize "HM.spells"}}</label>
+<ol class="card-list">
+{{#each actor.spells}}
+    {{#repeat data.prepped}}
+        {{> "systems/hackmaster5e/templates/actor/cards/prepped-spell.hbs" }}
+    {{/repeat}}
+{{/each}}
+</ol>

@@ -152,7 +152,8 @@ export default class HMChatMgr {
         dialogResp.resp['components'] = components.join(', ');
 
         if (data.divine.checked) {
-            await item.update({"data.prepared.checked": false});
+            const prepped = Math.max(data.prepped - 1, 0);
+            await item.update({"data.prepped": prepped});
         } else {
             // Spell Point Calculation
             let base = HMTABLES.magic.sp[data.level];

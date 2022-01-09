@@ -57,6 +57,21 @@ export default function registerHandlebarsHelpers() {
         return num;
     });
 
+    Handlebars.registerHelper("repeat", function (count, opts) {
+        let str = "";
+
+        if (count) {
+            for (let i = 0; i < count; i++) {
+                const data = {index: i};
+                str += opts.fn(this, data);
+            }
+        } else {
+            str = opts.inverse(this);
+        }
+
+        return str;
+    });
+
     // #each.slice(a, b)
     Handlebars.registerHelper("slice", (context, options) => {
         const opt = options.hash;
