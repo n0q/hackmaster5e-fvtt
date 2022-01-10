@@ -5,6 +5,7 @@ import { HMItemSheet } from './modules/item/item-sheet.js';
 import { HMCombat, HMCombatTracker } from './modules/sys/combat.js';
 import { HMMacro } from './modules/sys/macro.js';
 import LOGGER from './modules/sys/logger.js';
+import { MODULE_ID } from './modules/sys/constants.js';
 
 import registerHandlebarsHelpers from './modules/sys/helpers.js';
 import preloadHandlebarsTemplates from './modules/sys/partials.js';
@@ -28,13 +29,16 @@ Hooks.once('init', async() => {
     preloadHandlebarsTemplates();
 });
 
+Hooks.once('devModeReady', ({ registerPackageDebugFlag }) => {
+    registerPackageDebugFlag(MODULE_ID);
+});
+
 Hooks.once('ready', async() => {
-    // render a sheet to the screen as soon as we enter, for testing purposes.
-    if (game.items.contents[0]) {
-        game.items.contents.find((a) => a.name === 'test').sheet.render(true);
-    }
-    if (game.actors.contents[0]) {
-        game.actors.contents.find((a) => a.name === 'test').sheet.render(true);
+    if (game.modules.get('_dev-mode')?.api?.getPackageDebugValue(MODULE_ID)) {
+        const tItem = game.items.contents.find((a) => a.name === 'test');
+        if (tItem) { tItem.sheet.render(true); }
+        const tActor = game.actors.contents.find((a) => a.name === 'test');
+        if (tActor) { tActor.sheet.render(true); }
     }
 });
 
