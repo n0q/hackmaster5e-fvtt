@@ -13,21 +13,21 @@
     "packs": [
         {
             "label": "Skills, Universal",
-            "entity": "Item",
+            "type": "Item",
             "name": "uskills",
             "path": "packs/universal-skills.db",
             "system": "hackmaster5e"
         },
         {
             "label": "Skills, Basic",
-            "entity": "Item",
+            "type": "Item",
             "name": "hmbskills",
             "path": "packs/skills-basic.db",
             "system": "hackmaster5e"
         },
         {
             "label": "Combat Macros",
-            "entity": "Macro",
+            "type": "Macro",
             "name": "combat_macros",
             "path": "packs/combat-macros.db",
             "system": "hackmaster5e"

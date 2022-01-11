@@ -1,4 +1,4 @@
-export const SYSTEM_NAME = "hackmaster5e";
+export const MODULE_ID = "hackmaster5e";
 
 export const MACRO_VERS = {
     "getAttack": 1,

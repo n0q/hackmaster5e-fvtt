@@ -53,6 +53,7 @@
  }
 
 @mixin button-border ($_border-radius) {
+    background: black;
     border: 2px solid;
     -webkit-border-radius: #{$_border-radius};
     -moz-border-radius: #{$_border-radius};

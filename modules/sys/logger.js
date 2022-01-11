@@ -1,27 +1,33 @@
 /* eslint no-console:0 */
 /* global game */
+import { MODULE_ID } from './constants.js';
+
 export default class LOGGER {
+    static _dmode() {
+        return game.modules.get('_dev-mode')?.api?.getPackageDebugValue(MODULE_ID);
+    }
+
     static log(msg) {
-        console.log(`Hackmaster  | ${msg}`);
+        if (this._dmode()) { console.log(`${MODULE_ID} | ${msg}`); }
     }
 
     static debug(msg) {
-        console.debug(`Hackmaster  | ${msg}`);
+        if (this._dmode()) { console.debug(`${MODULE_ID} | ${msg}`); }
     }
 
     static debugObject(obj) {
-        console.debug(obj);
+        if (this._dmode()) { console.debug(`${MODULE_ID} | ${obj}`); }
     }
 
     static warn(msg) {
-        console.warn(`Hackmaster  | ${msg}`);
+        if (this._dmode()) { console.warn(`${MODULE_ID} | ${msg}`); }
     }
 
     static trace(msg) {
-        console.log(`Hackmaster  | Trace: ${msg}`);
+        if (this._dmode()) { console.log(`${MODULE_ID} | Trace: ${msg}`); }
     }
 
     static error(msg) {
-        console.error(`Hackmaster  | ${msg}`);
+        if (this._dmode()) { console.error(`${MODULE_ID} | ${msg}`); }
     }
 }
