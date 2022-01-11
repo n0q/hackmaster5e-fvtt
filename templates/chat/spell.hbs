@@ -7,7 +7,7 @@
 {{/if}} {{localize "HM.spell"}}<p> 
 {{localize "HM.components"}}: ({{../resp.components}})<p>
 {{#if divine.checked}}
-    {{localize "HM.patron"}}: {{divine.value}}<p>
+    {{localize "HM.patron"}}: {{domain}}<p>
 {{else}}
     {{localize "HM.sp"}}: {{../resp.sp.base}} 
     {{#if (gt ../resp.sp.schedule 0)}} + {{../resp.sp.schedule}}{{/if}}
