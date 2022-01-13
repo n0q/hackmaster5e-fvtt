@@ -1,25 +1,18 @@
+/* eslint object-curly-newline:0 */
 export const MODULE_ID = "hackmaster5e";
 
 export const MACRO_VERS = {
     "getAttack": 1,
     "getDamage": 1,
     "getDefend": 1,
-    "setWound": 1
-}
+    "setWound":  1,
+};
 
 // system rules
 export const HMTABLES = {
-    "magic": {
-        "sp": {
-            "a":  30,   "j":  40,  "1":  50,  "2": 60,   "3": 70,   "4":  80,
-            "5":  90,   "6": 100,  "7": 110,  "8": 120,  "9": 130, "10": 140,
-           "11": 150,  "12": 160, "13": 170, "14": 180, "15": 190, "16": 200,
-           "17": 210,  "18": 220, "19": 230, "20": 240,
-        }
-    },
     "save": {
         "fos":      { formula: "1d20p + @saves.fos.value + @resp.bonus"             },
-        "foa":      { formula: "1d20p + @saves.fod.value + @resp.bonus"             },
+        "foa":      { formula: "1d20p + @saves.foa.value + @resp.bonus"             },
         "morale":   { formula: "1d20p + @saves.morale.value + @resp.bonus"          },
         "turning":  { formula: "1d20p + @saves.turning.value + @resp.bonus"         },
         "dodge":    { formula: "1d20p + @saves.dodge.value + @resp.bonus"           },
@@ -44,8 +37,8 @@ export const HMTABLES = {
             "HM.difficult":      0,
             "HM.average":      -40,
             "HM.easy":         -80,
-            "HM.trivial":      -90
-        }
+            "HM.trivial":      -90,
+        },
     },
     "weapons": {
         "ranged": {
@@ -54,16 +47,16 @@ export const HMTABLES = {
                 "medium":  -4,
                 "long":    -6,
                 "extreme": -8,
-            }
+            },
         },
         "noprof": {
             "table": {
                 "minimal": -1,
                 "low":     -2,
                 "medium":  -4,
-                "high":    -6
+                "high":    -6,
             },
-            "vector": [1, 1, 1, -1]
-        }
-    }
+            "vector": [1, 1, 1, -1],
+        },
+    },
 };
