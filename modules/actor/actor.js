@@ -221,6 +221,10 @@ export class HMActor extends Actor {
         const uskills = [];
         for (const idx of skillIndex) {
             const skill = await skillPack.getDocument(idx._id);
+            const translated = game.i18n.localize(skill.data.name);
+            if (translated != '') {
+                skill.data.name = translated;
+            }
             uskills.push(skill.data);
         }
         await actor.createEmbeddedDocuments('Item', uskills);
