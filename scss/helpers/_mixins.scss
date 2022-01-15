@@ -68,18 +68,23 @@
     }
 }
 
-@mixin table2 ($_num_cols) {
-    .wrapper {
-        display: grid;
-        grid-template-columns: repeat($_num_cols, auto);
-        max-width: 800px;
-        column-gap: 10px;
-        align-items: end;
-    }
+@mixin table-basic {
+    table {
+        table-layout: fixed;
+        width: auto;
+        border-collapse: collapse;
+        border: none;
+        th, td { padding: 2px; }
 
-    .row {
-        display: contents;
-    } 
+        tr:nth-child(even) {
+            background-color: $cs-light;
+        }
+
+        input[type=number] {
+            height: 16px;
+            text-align: right;
+        }
+    }
 }
 
 @mixin text-glow {
