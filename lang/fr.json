@@ -1,4 +1,4 @@
-{
+ï»¿{
     "HM": {
         "ability_short": {
             "str": "FOR",
@@ -14,7 +14,7 @@
             "str": "Force",
             "int": "Intelligence",
             "wis": "Sagesse",
-            "dex": "Dexterité",
+            "dex": "DexteritÃ©",
             "con": "Constitution",
             "lks": "Apparence",
             "cha": "Charisme"
@@ -49,7 +49,7 @@
         "qualitySelect": {
             "worthless":     "Sans valeur",
             "poor":          "Pauvre",
-            "shoddy":        "Médiocre",
+            "shoddy":        "MÃ©diocre",
             "average":       "Moyenne",
             "professional":  "Professionnelle",
             "extraordinary": "Extraordinare",
@@ -58,7 +58,7 @@
 
         "armorSelect": {
             "none":   "Aucune",
-            "light":  "Légère",
+            "light":  "LÃ©gÃ¨re",
             "medium": "Moyenne",
             "heavy":  "Lourde",
             "shield": "Bouclier"
@@ -74,7 +74,7 @@
         "statbonus": {
             "feat":     "Don",
             "atk":      "Attaque",
-            "def":      "Défense",
+            "def":      "DÃ©fense",
             "dmg":      "Dommage",
             "init":     "Initiative",
             "dodge":    "Esquive",
@@ -208,15 +208,15 @@
         },
 
         "uskill": {
-            "acting":            "Jouer un rôle",
+            "acting":            "Jouer un rÃ´le",
             "animalhusbandry":   "Elevage",
-            "animalmimicry":     "Mimétisme animalier",
+            "animalmimicry":     "MimÃ©tisme animalier",
             "boating":           "Nautisme",
             "cartography":       "Cartographie",
             "climbingrapelling": "Escalade/Rappel",
             "currentaffairs":    "Affaires Courantes",
             "diplomacy":         "Diplomacie",
-            "disguise":          "D&eacute;guiser",
+            "disguise":          "DÃ©guiser",
             "distraction":       "Distraction",
             "escapeartist":      "Evasion",
             "firebuilding":      "Fire Building",
@@ -231,15 +231,15 @@
             "oration":           "Discourir",
             "persuasion":        "Persuasion",
             "pickpocket":        "Pick Pocket",
-            "readinglips":       "Lire sur les Lèvres",
+            "readinglips":       "Lire sur les LÃ¨vres",
             "recruiting":        "Recruter",
-            "resistpersuasion":  "Résister à la Persuasion",
+            "resistpersuasion":  "RÃ©sister Ã  la Persuasion",
             "ropeuse":           "Utilisation des cordes",
             "salesmanship":      "Marchandage",
             "scrutiny":          "Scruter",
-            "seduction":         "Art de la Séduction",
+            "seduction":         "Art de la SÃ©duction",
             "skilledliar":       "Art du mensonge",
-            "sneaking":          "Discrétion",
+            "sneaking":          "DiscrÃ©tion",
             "survival":          "Survie",
             "torture":           "Torture",
             "tracking":          "Pister"
