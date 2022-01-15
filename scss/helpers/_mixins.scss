@@ -74,10 +74,13 @@
         width: auto;
         border-collapse: collapse;
         border: none;
-        th, td { padding: 2px; }
+        th {
+            padding: 2px;
+        }
 
-        tr:nth-child(even) {
-            background-color: $cs-light;
+        td {
+            padding: 2px;
+            text-align: right
         }
 
         input[type=number] {

@@ -166,7 +166,6 @@ export class HMActor extends Actor {
         this.setAbilityBonuses(data);
         this.setCClass(data);
   //    const armorDerived = this.setArmor(data);
-        console.warn(data);
         this.setEncumbrance(data);
         this.setCharacterHP(data);
         this.setCharacterMaxSP(data);

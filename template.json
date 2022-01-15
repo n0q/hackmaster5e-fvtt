@@ -234,11 +234,9 @@
             "templates": ["base", "logistics"],
             "proficiency": null,
             "skill": null,
-            "stats": {
-                "atk": {"value": 0, "misc": {"value": 0}},
-                "def": {"value": 0, "misc": {"value": 0}},
-                "dmg": {"value": 0, "misc": {"value": 0}},
-                "spd": {"value": 0, "misc": {"value": 0}}
+            "bonus": {
+                "total": {"atk": 0, "def": 0, "dmg": 0, "spd": 0},
+                "misc":  {"atk": 0, "def": 0, "dmg": 0, "spd": 0}
             },
             "dmg":     {"normal": "", "shield": ""},
             "reach":   {"value": 0},

@@ -10,7 +10,7 @@
         <section>
             <img class="rollable imgbutton" src="{{findConfigValue "combatImg" "def"}}" height="36" title="Defend"
                 data-dialog="def"
-                data-formula="1d20p + @stats.def.derived.value + @resp.mod"
+                data-formula="1d20p + @bonus.total.def + @resp.mod"
                 data-item-id="{{_id}}">
             {{#if data.ranged.checked}}
             <img class="rollable imgbutton" src="{{findConfigValue "combatImg" "rdmg"}}" height="36" title="Ranged Damage"
@@ -18,17 +18,17 @@
             <img class="rollable imgbutton" src="{{findConfigValue "combatImg" "dmg"}}" height="36" title="Damage"
             {{/if}}
                 data-dialog="dmg"
-                data-formula="@resp.dmg + @stats.dmg.derived.value + @resp.mod"
+                data-formula="@resp.dmg + @bonus.total.dmg + @resp.mod"
                 data-item-id="{{_id}}">
             {{#if data.ranged.checked}}
             <img class="rollable imgbutton" src="{{findConfigValue "combatImg" "ratk"}}" height="36" title="Ranged Attack"
                 data-dialog="ratk"
-                data-formula="1d20p + @stats.atk.derived.value + @resp.range + @resp.mod"
+                data-formula="1d20p + @bonus.total.atk + @resp.range + @resp.mod"
                 data-item-id="{{_id}}">
             {{else}}
             <img class="rollable imgbutton" src="{{findConfigValue "combatImg" "atk"}}" height="36" title="Attack"
                 data-dialog="atk"
-                data-formula="1d20p + @stats.atk.derived.value + @resp.mod"
+                data-formula="1d20p + @bonus.total.atk + @resp.mod"
                 data-item-id="{{_id}}">
             {{/if}}
         </section>
@@ -39,49 +39,32 @@
             <div>
                 {{localize "HM.reach"}}: {{data.reach.value}}    
             </div>
-            <div class="gridtable">
-                <label></label>
-                {{#each data.stats}}
-                <label class="resource-label">{{@key}}</label>
-                {{/each}}
-                <label>Total</label>
-                {{#each data.stats}}
-                <label>{{derived.value}}</label>
-                {{/each}}
-                <label class="column">Base</label>
-                {{#each data.stats}}
-                <label>{{value}}</label>
-                {{/each}}
-                <label class="column">Spec</label>
-                {{#each data.stats}}
-                <label>{{prof.value}}</label>
-                {{/each}}
-                {{#if data.cclass}}
-                <label class="column">Class</label>
-                {{#each data.stats}}
-                <label>{{cclass.value}}</label>
-                {{/each}}
-                {{/if}}
-                <label class="column">Stats</label>
-                {{#each data.stats}}
-                <label>{{bonus.value}}</label>
-                {{/each}}
-                <label class="column">Race</label>
-                {{#each data.stats}}
-                <label>{{race.value}}</label>
-                {{/each}}
-                <label class="column">Armor</label>
-                {{#each data.stats}}
-                <label>{{armor.value}}</label>
-                {{/each}}
-                <label class="column">Misc</label>
-                {{#each data.stats}}
-                <input class="editable" type="number" value={{misc.value}}
-                    data-item-prop="data.stats.{{@key}}.misc.value"
-                    data-dtype="Number"
-                />
-                {{/each}}
-            </div>
+            <table class="table-basic">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        {{#each data.bonus.total}}
+                        <th scope="col"><label class="resource-label">{{@key}}</label></th>
+                        {{/each}}
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each data.bonus}}
+                    <tr>
+                        <th scope="row"><label class="resource-label">{{@key}}</label></td>
+                        {{#each this}}{{#if (eq 'misc' @../key)}}
+                        <td>
+                            <input class="editable" type="number" value={{this}}
+                                data-item-prop="data.bonus.misc.{{@key}}"
+                                data-dtype="Number" />
+                        </td>
+                        {{else}}
+                        <td>{{this}}</td>
+                        {{/if}}{{/each}}
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
         </div>
     </section>
 </li>

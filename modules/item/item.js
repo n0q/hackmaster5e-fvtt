@@ -129,41 +129,51 @@ export class HMItem extends Item {
         data.mastery.derived = {'value': Math.min(...stack)};
     }
 
-    // TODO: Refactor. At this point, the real issue is satisfying the weapon card.
-    // Fix that, and this function can probably be a bit easier on the eyes.
     _prepWeaponData(itemData, actorData) {
         if (!actorData) return;
-        const armorDerived = this.actor.setArmor(actorData.data);
-        const stats        = itemData.stats;
-        const race         = actorData.items.find((a) => a.type === 'race');
-        const noprof       = HMTABLES.weapons.noprof;
-        const wSkill       = itemData.skill;
-        const prof         = actorData.items.find((a) => {
+
+        const armor     = {};
+        const armorData = this.actor.setArmor(actorData.data);
+
+        const stats     = {};
+        const bonus     = itemData.bonus;
+        const bonusData = actorData.data.bonus;
+
+        const spec      = {};
+        const profTable = HMTABLES.weapons.noprof;
+        const wSkill    = itemData.skill;
+        const profItem  = actorData.items.find((a) => {
             return a.type === "proficiency" && a.name === itemData.proficiency;
         });
 
-        const bonusData = actorData.data.bonus;
-        const cclass = actorData.items.find((a) => a.type === "cclass");
-        const cData = cclass ? cclass.data.data.mod : null;
+        const cclass     = {};
+        const cclassItem = actorData.items.find((a) => a.type === "cclass");
+        const cData      = cclassItem ? cclassItem.data.data.mod : null;
+
+        const race       = {};
+        const raceItem   = actorData.items.find((a) => a.type === 'race');
 
         let j = 0;
-        for (let key in stats) {
-            console.warn(key);
-            const profBonus = prof ? prof.data.data[key].value
-                                   : noprof.table[wSkill] * noprof.vector[j++];
-            stats[key].prof = {value: profBonus};
-            if (cclass) { stats[key].cclass = {value: cData[key]?.value || 0} };
-            stats[key].bonus = {value: bonusData[key] || 0};
-            stats[key].race = {value: race ? race.data.data?.[key]?.value || 0 : 0};
-            stats[key].armor = {value: armorDerived[key] ? armorDerived[key].value || 0 : 0 };
-            stats[key].derived = {value: stats[key].value
-                                       + stats[key].prof.value
-                                       + stats[key].cclass.value
-                                       + stats[key].bonus.value
-                                       + stats[key].race.value
-                                       + stats[key].armor.value
-                                       + stats[key].misc.value
-            };
+        for (let key in bonus.total) {
+            const profBonus = profItem ? profItem.data.data[key].value
+                                       : profTable.table[wSkill] * profTable.vector[j++];
+            spec[key]   = profBonus || 0;
+            cclass[key] = cData?.[key]?.value || 0;
+            race[key]   = raceItem ? raceItem.data.data?.[key]?.value || 0 : 0;
+            stats[key]  = bonusData[key] || 0;
+            armor[key]  = armorData[key] ? armorData[key].value || 0 : 0;
+        }
+
+        if (!Object.values(stats).every( a => a === 0)) { bonus.stats = stats; }
+        if (!Object.values(spec).every( a => a === 0)) { bonus.spec = spec; }
+        if (!Object.values(cclass).every( a => a === 0)) { bonus.class = cclass; }
+        if (!Object.values(race).every( a => a === 0)) { bonus.race = race; }
+        if (!Object.values(armor).every( a => a === 0)) { bonus.armor = armor; }
+
+        for (let key in bonus.total) {
+            let sum = -bonus.total[key];
+            for (let state in bonus) { sum += bonus[state][key]; }
+            bonus.total[key] = sum;
         }
     }
 
