@@ -52,7 +52,7 @@ export class HMActor extends Actor {
 
     setAbilityBonuses(data) {
         const aData = data.abilities;
-        const bonus = {};
+        const bonus = {'sheet': {}};
 
         for (let statName in aData) {
             const clamp = HMTABLES.abilitymods.clamp[statName];
@@ -61,13 +61,13 @@ export class HMActor extends Actor {
 
             const sidx = Math.floor((statAdj - clamp.min) / clamp.step);
             const bonusTable = HMTABLES.abilitymods[statName][sidx];
+            bonus.sheet[statName] = bonusTable;
             for (const key in bonusTable) {
                 if (bonusTable.hasOwnProperty(key)) {
                     bonus[key] = (bonus?.[key] || 0) + bonusTable[key];
                 }
             }
         }
-        console.warn(bonus);
         data.bonus = bonus;
     }
 
