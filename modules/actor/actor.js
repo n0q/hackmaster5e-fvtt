@@ -62,7 +62,7 @@ export class HMActor extends Actor {
             const sidx = Math.floor((statAdj - clamp.min) / clamp.step);
             const bonusTable = HMTABLES.abilitymods[statName][sidx];
             bonus.sheet[statName] = bonusTable;
-            for (const key in bonusTable) {
+            for (let key in bonusTable) {
                 if (bonusTable.hasOwnProperty(key)) {
                     bonus[key] = (bonus?.[key] || 0) + bonusTable[key];
                 }
@@ -110,59 +110,6 @@ export class HMActor extends Actor {
             }
         }
         return armorDerived;
-    }
-
-    // TODO: Refactor.
-    // A lot of the jank here has to do with inefficiently prepping a weapon for use,
-    // while not prepping it for sheet display at all.
-    setWeapons(armorDerived) {
-        const weapons = this.items.filter((a) => a.type === 'weapon');
-        const race    = this.items.find((a) => a.type === 'race');
-        const noprof  = HMTABLES.weapons.noprof;
-
-        for (let i = 0; i < weapons.length; i++) {
-            const data   = weapons[i].data.data;
-            const stats  = data.stats;
-            const wSkill = data.skill;
-            const wProf  = data.proficiency;
-            const bData  = this.data.data.bonus;
-
-            const cclass = this.items.find((a) => a.type === "cclass");
-            const cData = cclass ? cclass.data.data.mod : null;
-
-            const prof = this.items.find((a) => {
-                return a.type === "proficiency" && a.name === wProf;
-            });
-
-            let j = 0;
-            for (const key in stats) {
-                let profValue = 0;
-                let armorValue = 0;
-                if (armorDerived[key]) armorValue = armorDerived[key].value;
-                prof ? profValue = prof.data.data[key].value
-                     : profValue = noprof.table[wSkill] * noprof.vector[j++];
-                stats[key].prof  = {"value": profValue};
-                stats[key].armor = {"value": armorValue};
-
-                let classValue = 0;
-                if (cclass) classValue = cData?.[key]?.value || 0;
-                stats[key].cclass = {"value": classValue};
-
-                const bonusValue = bData?.[key]?.value || 0;
-                stats[key].bonus = {"value": bonusValue};
-
-                stats[key].race = race?.data?.data?.[key] || {value: 0};
-
-                stats[key].derived = {value: stats[key].value
-                                           + stats[key].misc.value
-                                           + stats[key].prof.value
-                                           + stats[key].armor.value
-                                           + stats[key].cclass.value
-                                           + stats[key].bonus.value
-                                           + stats[key].race.value
-                }
-            }
-        }
     }
 
     setCharacterHP(data) {
@@ -218,9 +165,9 @@ export class HMActor extends Actor {
         this.setAbilities(data);
         this.setAbilityBonuses(data);
         this.setCClass(data);
-        const armorDerived = this.setArmor(data);
+  //    const armorDerived = this.setArmor(data);
+        console.warn(data);
         this.setEncumbrance(data);
-        this.setWeapons(armorDerived);
         this.setCharacterHP(data);
         this.setCharacterMaxSP(data);
         this.setSaves(data);

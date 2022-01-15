@@ -1,23 +1,25 @@
-/**
- * Extend the basic Item with some very simple modifications.
- * @extends {Item}
- */
+import { HMTABLES } from '../sys/constants.js';
+
 export class HMItem extends Item {
-
-  /**
-   * Augment the basic Item data model with additional dynamic data.
-   */
-
-  prepareData() {
-      super.prepareData();
+  prepareDerivedData() {
+      super.prepareDerivedData();
       const itemData  = this.data.data;
       const itemType  = this.data.type;
       const actorData = this.actor ? this.actor.data : null;
 
+      // HACK: Need derived abilities/bonuses, which are usually called after items are done.
+      if (actorData && typeof actorData.data.abilities.str.derived === 'undefined') {
+          const actor = this.actor;
+          actor.setRace(actorData.data);
+          actor.setAbilities(actorData.data);
+          actor.setAbilityBonuses(actorData.data);
+      }
+
       if (itemType === "armor")       { this._prepArmorData(itemData, actorData)       } else
       if (itemType === "cclass")      { this._prepCClassData(itemData, actorData)      } else
       if (itemType === "proficiency") { this._prepProficiencyData(itemData, actorData) } else
-      if (itemType === "skill")       { this._prepSkillData(itemData, actorData)       }
+      if (itemType === "skill")       { this._prepSkillData(itemData, actorData)       } else
+      if (itemType === "weapon")      { this._prepWeaponData(itemData, actorData)      }
   }
 
   /**
@@ -121,17 +123,48 @@ export class HMItem extends Item {
         const relevant  = data.abilities;
         const stack = [];
 
-        // HACK: Need derived abilities to set uskill minimums,
-        // but they're usually called after items are done.
-        if (typeof abilities.str.derived === 'undefined') {
-            const actor = this.actor;
-            actor.setAbilities(actorData.data);
-        }
-
         for (let key in relevant) {
             if (relevant[key].checked) stack.push(abilities[key].derived.value);
         }
         data.mastery.derived = {'value': Math.min(...stack)};
+    }
+
+    // TODO: Refactor. At this point, the real issue is satisfying the weapon card.
+    // Fix that, and this function can probably be a bit easier on the eyes.
+    _prepWeaponData(itemData, actorData) {
+        if (!actorData) return;
+        const armorDerived = this.actor.setArmor(actorData.data);
+        const stats        = itemData.stats;
+        const race         = actorData.items.find((a) => a.type === 'race');
+        const noprof       = HMTABLES.weapons.noprof;
+        const wSkill       = itemData.skill;
+        const prof         = actorData.items.find((a) => {
+            return a.type === "proficiency" && a.name === itemData.proficiency;
+        });
+
+        const bonusData = actorData.data.bonus;
+        const cclass = actorData.items.find((a) => a.type === "cclass");
+        const cData = cclass ? cclass.data.data.mod : null;
+
+        let j = 0;
+        for (let key in stats) {
+            console.warn(key);
+            const profBonus = prof ? prof.data.data[key].value
+                                   : noprof.table[wSkill] * noprof.vector[j++];
+            stats[key].prof = {value: profBonus};
+            if (cclass) { stats[key].cclass = {value: cData[key]?.value || 0} };
+            stats[key].bonus = {value: bonusData[key] || 0};
+            stats[key].race = {value: race ? race.data.data?.[key]?.value || 0 : 0};
+            stats[key].armor = {value: armorDerived[key] ? armorDerived[key].value || 0 : 0 };
+            stats[key].derived = {value: stats[key].value
+                                       + stats[key].prof.value
+                                       + stats[key].cclass.value
+                                       + stats[key].bonus.value
+                                       + stats[key].race.value
+                                       + stats[key].armor.value
+                                       + stats[key].misc.value
+            };
+        }
     }
 
     onClick(event) {
