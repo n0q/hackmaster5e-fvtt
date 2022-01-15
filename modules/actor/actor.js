@@ -68,6 +68,7 @@ export class HMActor extends Actor {
                 }
             }
         }
+        data.abilities.cha.derived.value += (bonus.chamod || 0);
         data.bonus = bonus;
     }
 
