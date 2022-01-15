@@ -50,13 +50,25 @@ export class HMActor extends Actor {
         }
     }
 
-    async setAbilityBonuses(data) {
-        const bonuses = data.bonus;
-        for (const bonus in bonuses) {
-            const bData = bonuses[bonus];
-            bData.value = 0;
-            bData.value = Object.values(bData).reduce((sum, a) => (sum + (a?.value || 0)));
+    setAbilityBonuses(data) {
+        const aData = data.abilities;
+        const bonus = {};
+
+        for (let statName in aData) {
+            const clamp = HMTABLES.abilitymods.clamp[statName];
+            const statDerived = aData[statName].derived.value + aData[statName].derived.fvalue / 100;
+            const statAdj = Math.clamped(statDerived, clamp.min, clamp.max);
+
+            const sidx = Math.floor((statAdj - clamp.min) / clamp.step);
+            const bonusTable = HMTABLES.abilitymods[statName][sidx];
+            for (const key in bonusTable) {
+                if (bonusTable.hasOwnProperty(key)) {
+                    bonus[key] = (bonus?.[key] || 0) + bonusTable[key];
+                }
+            }
         }
+        console.warn(bonus);
+        data.bonus = bonus;
     }
 
     setEncumbrance(data) {
@@ -183,13 +195,13 @@ export class HMActor extends Actor {
         const level = data.level.value;
         const constitution = data.abilities.con.derived.value;
 
-        sData.fos.value          = bData.fos.value;
-        sData.foa.value          = bData.foa.value;
-        sData.turning.value      = bData.turning.value + level;
-        sData.morale.value       = bData.morale.value;
-        sData.dodge.value        = bData.dodge.value + level;
-        sData.mental.value       = bData.mental.value + level;
-        sData.physical.value     = bData.physical.value + level;
+        sData.fos.value          = bData.fos;
+        sData.foa.value          = bData.foa;
+        sData.turning.value      = bData.turning; + level;
+        sData.morale.value       = bData.morale;
+        sData.dodge.value        = bData.dodge + level;
+        sData.mental.value       = bData.mental + level;
+        sData.physical.value     = bData.physical + level;
         sData.poison.value       = constitution;
         sData.trauma.value       = Math.floor(constitution / 2);
         sData.trauma.limit.value = Math.ceil((0.3 + leveltop) * data.hp.max);
@@ -197,7 +209,7 @@ export class HMActor extends Actor {
 
     setInit(data) {
         const bData = data.bonus;
-        data.init.value = bData.init.value;
+        data.init.value = bData.init;
     }
 
     _prepareCharacterData(data) {
