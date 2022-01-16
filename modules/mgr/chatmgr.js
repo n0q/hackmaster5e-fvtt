@@ -119,7 +119,7 @@ export default class HMChatMgr {
         const html = await roll.render();
         let content = html;
 
-        let flavor = item.name;
+        let flavor = game.i18n.localize(item.name);
         if (itemData.specialty.checked && itemData.specialty.value) {
             flavor += ' (' + itemData.specialty.value + ')';
         }
