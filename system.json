@@ -1,4 +1,4 @@
-﻿{
+{
     "name": "hackmaster5e",
     "title": "Hackmaster",
     "description": "Unofficial system for Hackmaster, 5th edition.",
@@ -42,7 +42,7 @@
         {
           "lang": "fr",
           "name": "Français",
-          "path": "fr.json"
+          "path": "lang/fr.json"
         }
     ],
     "gridDistance": 5,
