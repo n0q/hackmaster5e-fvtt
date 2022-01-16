@@ -286,7 +286,7 @@ export default class HMDialogMgr {
 
         dialogResp.resp = await new Promise(async resolve => {
             new Dialog({
-                title: caller.name + ": " + dialogData.skill.name + game.i18n.localize("HM.dialog.getSkillTitle"),
+                title: caller.name + ": " + game.i18n.localize(dialogData.skill.name) + game.i18n.localize("HM.dialog.getSkillTitle"),
                 content: await renderTemplate(template, dialogData),
                 buttons: {
                     standard: {
