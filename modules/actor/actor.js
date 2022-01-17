@@ -64,10 +64,10 @@ export class HMActor extends Actor {
             for (let key in bonusTable) {
                 if (bonusTable.hasOwnProperty(key)) {
                     bonus[key] = (bonus?.[key] || 0) + bonusTable[key];
+                    if (key === 'chamod') { data.abilities.cha.derived.value += (bonus.chamod || 0); }
                 }
             }
         }
-        data.abilities.cha.derived.value += (bonus.chamod || 0);
         data.bonus = bonus;
     }
 
