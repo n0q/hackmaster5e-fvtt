@@ -42,15 +42,16 @@ export class HMItem extends Item {
     });
   }
 
-    // Adjust for mod value.
-    _prepArmorData(data, actorData) {
+    _prepArmorData(itemData, actorData) {
         if (!actorData) return;
-        const stats = data.stats;
-        for (const key in stats) {
-            if (stats.hasOwnProperty(key)) {
-                stats[key].derived = {'value': stats[key].value + stats[key].mod.value};
-            }
+        const bonus = itemData.bonus;
+
+        for (let key in bonus.total) {
+            let sum = -bonus.total[key];
+            for (let state in bonus) { sum += bonus[state][key]; }
+            bonus.total[key] = sum;
         }
+        itemData.processed = true;
     }
 
     async _prepCClassData(data, actorData) {
@@ -132,8 +133,20 @@ export class HMItem extends Item {
     _prepWeaponData(itemData, actorData) {
         if (!actorData) return;
 
-        const armor     = {};
-        const armorData = this.actor.setArmor(actorData.data);
+        const armors   = [];
+        const shields  = [];
+        const armor    = {};
+        const shield   = {};
+        const defItems = actorData.items.filter((a) => a.type === 'armor' &&
+                                                       a.data.data.state.equipped.checked);
+
+        // Splitting armor and shields for now, so we can manage stances later.
+        for (let i = 0; i < defItems.length; i++) {
+            const defItem = defItems[i];
+            const defData = defItem.data.data;
+            if (!defData.processed) { defItem._prepArmorData(defData, actorData); }
+            defData.shield.checked ? shields.push(defItem) : armors.push(defItem);
+        }
 
         const stats     = {};
         const bonus     = itemData.bonus;
@@ -161,14 +174,23 @@ export class HMItem extends Item {
             cclass[key] = cData?.[key]?.value || 0;
             race[key]   = raceItem ? raceItem.data.data?.[key]?.value || 0 : 0;
             stats[key]  = bonusData[key] || 0;
-            armor[key]  = armorData[key] ? armorData[key].value || 0 : 0;
-        }
 
+            // Explicitly allowing multiple armor/shields because we don't support accesories yet.
+            for (let i = 0; i < armors.length; i++)  {
+                const armorData = armors[i].data.data.bonus.total;
+                armor[key] = (armor[key] || 0) + (armorData[key] || 0);
+            }
+            for (let i = 0; i < shields.length; i++)  {
+                const shieldData = shields[i].data.data.bonus.total;
+                shield[key] = (shield[key] || 0) + (shieldData[key] || 0);
+            }
+        }
         if (!Object.values(stats).every( a => a === 0)) { bonus.stats = stats; }
         if (!Object.values(spec).every( a => a === 0)) { bonus.spec = spec; }
         if (!Object.values(cclass).every( a => a === 0)) { bonus.class = cclass; }
         if (!Object.values(race).every( a => a === 0)) { bonus.race = race; }
         if (!Object.values(armor).every( a => a === 0)) { bonus.armor = armor; }
+        if (!Object.values(shield).every( a => a === 0)) { bonus.shield = shield; }
 
         for (let key in bonus.total) {
             let sum = -bonus.total[key];

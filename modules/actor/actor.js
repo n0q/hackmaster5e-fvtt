@@ -18,7 +18,6 @@ export class HMActor extends Actor {
             while (oldrace = races.pop()) await oldrace.delete();
         }
         const raceData = race.data.data;
-        data.body.def.race.value = raceData.def.value;
     }
 
     async setCClass(data) {
@@ -92,26 +91,6 @@ export class HMActor extends Actor {
         data.encumb.value = encumb;
     }
 
-    setArmor(data) {
-        const armors = this.items.filter((a) => a.type === "armor");
-        const armorDerived = data.derived.armor;
-        // Remember, we're not zeroing out armorDerived.
-        // If we start saving actordata, armorDerived will break.
-        for (let i = 0; i <armors.length; i++) {
-            const armorData = armors[i].data.data;
-            if (!armorData.state.equipped.checked) continue;
-
-            for (const key in armorDerived) {
-                if (armorData.shield.checked && key === 'dr') {
-                   armorDerived[key].shield.value += armorData.stats[key].derived.value;
-                   continue;
-                }
-                armorDerived[key].value += armorData.stats[key].derived.value;
-            }
-        }
-        return armorDerived;
-    }
-
     setCharacterHP(data) {
         const race      = this.items.find((a) => a.type === "race");
         const racial_hp = race ? race.data.data.hp.value : 0;
@@ -145,7 +124,7 @@ export class HMActor extends Actor {
 
         sData.fos.value          = bData.fos;
         sData.foa.value          = bData.foa;
-        sData.turning.value      = bData.turning; + level;
+        sData.turning.value      = bData.turning + level;
         sData.morale.value       = bData.morale;
         sData.dodge.value        = bData.dodge + level;
         sData.mental.value       = bData.mental + level;
@@ -165,12 +144,25 @@ export class HMActor extends Actor {
         this.setAbilities(data);
         this.setAbilityBonuses(data);
         this.setCClass(data);
-  //    const armorDerived = this.setArmor(data);
         this.setEncumbrance(data);
         this.setCharacterHP(data);
         this.setCharacterMaxSP(data);
         this.setSaves(data);
         this.setInit(data);
+    }
+
+    getArmor() {
+        let armor = 0;
+        let shield = 0;
+        const defItems = this.items.filter((a) => a.type === 'armor' &&
+                                                  a.data.data.state.equipped.checked);
+
+        for (let i = 0; i < defItems.length; i++) {
+            const defData = defItems[i].data.data;
+            defData.shield.checked ? shield += defData.bonus.total.dr
+                                   : armor  += defData.bonus.total.dr;
+        }
+        return {armor, shield};
     }
 
     static async createActor(actor) {
