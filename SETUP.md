@@ -18,7 +18,7 @@ As I'm relatively new to javascript, my toolchain is simple and straight forward
 ```
 6. Install the needed npm modules by going to your `hackmaster5e-fvtt` directory and typing: `npm ci`
 7. Build the initial style sheet: `gulp sass`
-8. Create a symlink/shortcut from your `hackmaster5e-fvtt` repo to `Data/system/hackmaste5e`
+8. Create a symlink/shortcut from your `hackmaster5e-fvtt` repo to `Data/system/hackmaster5e`
 9. From within the foundry program, check that hackmaster shows up on your systems list. Make sure to **lock** your hackmaster system, or your environment will be blown away the next time you update your systems.
 
 Keep `gulp` running on its default task while you work so it can spit out eslint warnings (which I'm still ignoring) and rebuild the style sheet if you touch the scss files. Contributions should be pushed to dev.
