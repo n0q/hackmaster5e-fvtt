@@ -13,6 +13,7 @@ export class HMItem extends Item {
           actor.setRace(actorData.data);
           actor.setAbilities(actorData.data);
           actor.setAbilityBonuses(actorData.data);
+          actor.setBonusTotal(actorData.data);
       }
 
       if (itemType === "armor")       { this._prepArmorData(itemData, actorData)       } else
@@ -148,9 +149,10 @@ export class HMItem extends Item {
             defData.shield.checked ? shields.push(defItem) : armors.push(defItem);
         }
 
-        const stats     = {};
         const bonus     = itemData.bonus;
-        const bonusData = actorData.data.bonus;
+
+        const stats     = {};
+        const bonusData = actorData.data.bonus.total;
 
         const spec      = {};
         const profTable = HMTABLES.weapons.noprof;

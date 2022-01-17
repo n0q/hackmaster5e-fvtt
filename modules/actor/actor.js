@@ -137,12 +137,12 @@ export class HMActor extends Actor {
 
     setBonusTotal(data) {
         const bonus = data.bonus;
-        const total = bonus.total;
+        const total = {};
         for (let row in bonus) {
             if (row === 'total') { continue; }
             for (let key in bonus[row]) { total[key] = (total?.[key] || 0) + bonus[row][key]; }
         }
-        console.warn(bonus);
+        bonus.total = total;
         return total;
     }
 

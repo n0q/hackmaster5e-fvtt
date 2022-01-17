@@ -6,7 +6,7 @@
             "base": {
                 "sp":     {"value": 0, "mod": {"value": 0}},
                 "encumb": {"value": 0.0},
-                "bonus":  {"total": {},"misc": {}}
+                "bonus":  {"total": {}, "misc": {}}
             },
 
             "pc": {
@@ -33,7 +33,6 @@
                     "cha": {"raw": {"value": 10, "fvalue": 0}, 
                             "mod": {"value": 0,  "fvalue": 0}}
                 }
-
             }
         },
 
@@ -42,20 +41,14 @@
             "biography": "",
             "fame":  {"value": 0, "bracket": null},
             "level": {"value": 1}
-        },
-
-        "beast": {
-            "templates": ["base", "statblock"],
-            "hp": {"max": {"value": null}, "formula": ""},
-            "biography": ""
         }
     },
 
     "Item": {
         "types": [
-              "armor",        "cclass",   "feature",   "item",
-              "proficiency",  "race",     "skill",     "spell",
-              "weapon",       "wound"
+              "armor",        "cclass",   "item",
+              "proficiency",  "race",     "skill",
+              "spell",        "weapon",   "wound"
         ],
 
         "templates": {
@@ -122,10 +115,6 @@
                 "checked": false,
                 "capacity": 0
             }
-        },
-
-        "feature": {
-            "templates": ["base"]
         },
 
         "proficiency": {

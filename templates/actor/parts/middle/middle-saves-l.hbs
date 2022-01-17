@@ -1,5 +1,5 @@
 <ol class="cards-list">
-    {{#slice actor.data.data.saves end=4}}
+    {{#each actor.saves.left}}
         {{> "systems/hackmaster5e/templates/actor/cards/saves.hbs" }}
-    {{/slice}}
+    {{/each}}
 </ol>

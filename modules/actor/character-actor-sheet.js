@@ -26,21 +26,13 @@ export class HMCharacterActorSheet extends HMActorSheet {
         const data = super.getData();
         data.dtypes = ['String', 'Number', 'Boolean'];
 
-        // Prepare items.
         if (this.actor.data.type === 'character') {
             this._prepareCharacterItems(data);
+            this._prepareCharacterSheet(data);
         }
-
         return data;
     }
 
-  /**
-   * Organize and classify Items for Character sheets.
-   *
-   * @param {Object} actorData The actor to prepare.
-   *
-   * @return {undefined}
-   */
     async _prepareCharacterItems(sheetData) {
         const actorData = sheetData.actor;
 
@@ -135,5 +127,14 @@ export class HMCharacterActorSheet extends HMActorSheet {
         // HACK: If sheet has only one spell level, the controls are locked.
         let cslevel = Number(actorData.data.data.cslevel);
         if (slevels.length && !slevels.includes(cslevel)) { actorData.data.data.cslevel = actorData.slevels[0]; }
+    }
+
+    _prepareCharacterSheet(sheetData) {
+        const actorData = sheetData.actor;
+
+        // Saves
+        const left = ['fos', 'foa', 'turning', 'morale'];
+        const right = ['dodge', 'mental', 'physical', 'poison', 'trauma'];
+        actorData.saves = {left, right};
     }
 }
