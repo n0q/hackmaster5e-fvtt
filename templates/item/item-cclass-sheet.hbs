@@ -26,24 +26,28 @@
                         </div>
                     </div>
                 </div>
-                <figure class="table2">
-                    <div class="wrapper">
-                        <label class="resource-label">{{localize "HM.level"}}</label>
-                        <label class="resource-label">{{localize "HM.die"}}</label>
-                        <label class="resource-label">{{localize "HM.hp"}}</label>
-                        <label></label>
+                <table class="table-basic">
+                    <thead>
+                        <tr>
+                            <th scope="col"><label class="resource-label">{{localize "HM.level"}}</label></th>
+                            <th scope="col"><label class="resource-label">{{localize "HM.die"}}</label></th>
+                            <th scope="col"><label class="resource-label">{{localize "HM.hp"}}</label></th>
+                            <th scope="col"></th>
+                        <tr>
+                    </thead>
+                    <tbody>
                         {{#each data.data.ptable as |level lkey|}}
                         {{#if (gte ../data.data.level.value lkey)}}
-                        <div class="row">
-                            <label>{{lkey}}</label>
-                            <label>{{level.hp.die}}</label>
-                            <input type="number" name="data.ptable.{{lkey}}.hp.value" value="{{level.hp.value}}" data-dtype="Number"/>
-                            <label>{{#if level.hp.reroll.checked}}(reroll){{/if}}</label>
-                        </div>
+                        <tr>
+                            <td>{{lkey}}</td>
+                            <td>{{level.hp.die}}</td>
+                            <td><input type="number" name="data.ptable.{{lkey}}.hp.value" value="{{level.hp.value}}" data-dtype="Number"/></td>
+                            <td>{{#if level.hp.reroll.checked}}(reroll){{/if}}</td>
+                        </tr>
                         {{/if}}
                         {{/each}}
-                    </div>
-                </figure>
+                    </tbody>
+                </table>
             </div>
         </div>
 

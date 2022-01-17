@@ -35,59 +35,6 @@
                             "mod": {"value": 0,  "fvalue": 0}}
                 },
 
-                "body": {
-                    "dr":   {"value": 0, "race": {"value": 0}, "misc": {"value": 0}},
-                    "def":  {"value": 0, "race": {"value": 0}, "misc": {"value": 0}},
-                    "init": {"value": 0, "race": {"value": 0}, "misc": {"value": 0}},
-                    "spd":  {"value": 0, "race": {"value": 0}, "misc": {"value": 0}}
-                },
-
-                "derived": {
-                    "armor": {"dr":   {"value": 0, "shield": {"value": 0}}, 
-                              "def":  {"value": 0},
-                              "init": {"value": 0},
-                              "spd":  {"value": 0}}
-                },
-
-                "bonus": {
-                    "atk":      {"value": 0,
-                         "dex": {"value": 0}, 
-                         "int": {"value": 0},
-                         "mod": {"value": 0}},
-                    "def":      {"value": 0,
-                         "dex": {"value": 0},
-                         "wis": {"value": 0},
-                         "mod": {"value": 0}},
-                    "dmg":      {"value": 0,
-                         "str": {"value": 0},
-                         "mod": {"value": 0}},
-                    "init":     {"value": 0,
-                         "dex": {"value": 0}, 
-                         "wis": {"value": 0},
-                         "mod": {"value": 0}},
-                    "fos":      {"value": 0,
-                         "str": {"value": 0},
-                         "mod": {"value": 0}},
-                    "foa":      {"value": 0,
-                         "dex": {"value": 0},
-                         "mod": {"value": 0}},
-                    "dodge":    {"value": 0,
-                         "dex": {"value": 0},
-                         "mod": {"value": 0}},
-                    "mental":   {"value": 0,
-                         "wis": {"value": 0},
-                         "mod": {"value": 0}},
-                    "physical": {"value": 0,
-                         "con": {"value": 0},
-                         "mod": {"value": 0}},
-                    "turning":  {"value": 0,
-                         "cha": {"value": 0},
-                         "mod": {"value": 0}},
-                    "morale":   {"value": 0,
-                         "cha": {"value": 0},
-                         "mod": {"value": 0}}
-                },
-
                 "saves": {
                     "fos":      {"mod": {"value": 0}},
                     "foa":      {"mod": {"value": 0}},
@@ -149,21 +96,12 @@
             "templates": ["base", "logistics"],
             "armortype": null,
             "proficiency": null,
-            "stats": {
-                "dr":    {"value": 0,    "mod": {"value": 0}},
-                "def":   {"value": 0,    "mod": {"value": 0}},
-                "init":  {"value": 0,    "mod": {"value": 0}},
-                "spd":   {"value": 0,    "mod": {"value": 0}}
+            "bonus": {
+                "total": {"dr": 0, "def": 0, "init": 0, "spd": 0},
+                "base":  {"dr": 0, "def": 0, "init": 0, "spd": 0},
+                "misc":  {"dr": 0, "def": 0, "init": 0, "spd": 0}
             },
-            "shield": {
-                "checked": false,
-                "limit": {"value": 0, "mod": {"value": 0}},
-                "save":  {"value": 0, "mod": {"value": 0}},
-                "cover": {
-                    "passive": {"value": 0, "mod": {"value": 0}},
-                    "active":  {"value": 0, "mod": {"value": 0}}
-                }
-            }
+            "shield": {"checked": false}
         },
 
         "cclass": {
@@ -273,11 +211,10 @@
             "templates": ["base", "logistics"],
             "proficiency": null,
             "skill": null,
-            "stats": {
-                "atk": {"value": 0, "misc": {"value": 0}},
-                "def": {"value": 0, "misc": {"value": 0}},
-                "dmg": {"value": 0, "misc": {"value": 0}},
-                "spd": {"value": 0, "misc": {"value": 0}}
+            "bonus": {
+                "total": {"atk": 0, "def": 0, "dmg": 0, "spd": 0},
+                "base":  {"atk": 0, "def": 0, "dmg": 0, "spd": 0},
+                "misc":  {"atk": 0, "def": 0, "dmg": 0, "spd": 0}
             },
             "dmg":     {"normal": "", "shield": ""},
             "reach":   {"value": 0},

@@ -1,67 +1,67 @@
 <label class="resource-label">Ability Bonuses</label>
 <section class="bonus">
-    {{#with data.data.bonus}}
+    {{#with data.data.bonus.sheet}}
     <label class="resource-label">str</label>
     <div class="bonus-row">
         <div class="bonus-block">
             <label>Dmg<br>Mod.</label>
-            <input type="number" name="data.bonus.dmg.str.value" value="{{dmg.str.value}}" data-dtype="Number"/>
+            <label class="resource-label"> {{str.dmg}}</label>
         </div>
         <div class="bonus-block">
             <label>Feat<br>of Str.</label>
-            <input type="number" name="data.bonus.fos.str.value" value="{{fos.str.value}}" data-dtype="Number"/>
+            <label class="resource-label"> {{str.fos}}</label>
         </div>
     </div>
     <label class="resource-label">int</label>
     <div class="bonus-row">
         <div class="bonus-block">
             <label>Attack<br>Mod.</label>
-            <input type="number" name="data.bonus.atk.int.value" value="{{atk.int.value}}" data-dtype="Number"/>
+            <label class="resource-label"> {{int.atk}}</label>
         </div>
     </div>
     <label class="resource-label">wis</label>
     <div class="bonus-row">
         <div class="bonus-block">
             <label>Init<br>Mod.</label>
-            <input type="number" name="data.bonus.init.wis.value" value="{{init.wis.value}}" data-dtype="Number"/>
+            <label class="resource-label"> {{wis.init}}</label>
         </div>
         <div class="bonus-block">
             <label>Defense<br>Mod.</label>
-            <input type="number" name="data.bonus.def.wis.value" value="{{def.wis.value}}" data-dtype="Number"/>
+            <label class="resource-label"> {{wis.def}}</label>
         </div>
         <div class="bonus-block">
             <label>Mental<br>Save</label>
-            <input type="number" name="data.bonus.mental.wis.value" value="{{mental.wis.value}}" data-dtype="Number"/>
+            <label class="resource-label"> {{wis.mental}}</label>
         </div>
     </div>
     <label class="resource-label">dex</label>
     <div class="bonus-row">
         <div class="bonus-block">
             <label>Init<br>Mod.</label>
-            <input type="number" name="data.bonus.init.dex.value" value="{{init.dex.value}}" data-dtype="Number"/>
+            <label class="resource-label"> {{dex.init}}</label>
         </div>
         <div class="bonus-block">
             <label>Attack<br>Mod.</label>
-            <input type="number" name="data.bonus.atk.dex.value" value="{{atk.dex.value}}" data-dtype="Number"/>
+            <label class="resource-label"> {{dex.atk}}</label>
         </div>
         <div class="bonus-block">
             <label>Def<br>Mod.</label>
-            <input type="number" name="data.bonus.def.dex.value" value="{{def.dex.value}}" data-dtype="Number"/>
+            <label class="resource-label"> {{dex.def}}</label>
         </div>
         <div class="bonus-block">
             <label>Dodge<br>Save</label>
-            <input type="number" name="data.bonus.dodge.dex.value" value="{{dodge.dex.value}}" data-dtype="Number"/>
+            <label class="resource-label"> {{dex.dodge}}</label>
         </div>
         <div class="bonus-block">
             <label>Feat<br>of Agi.</label>
-            <input type="number" name="data.bonus.foa.dex.value" value="{{foa.dex.value}}" data-dtype="Number"/>
+            <label class="resource-label"> {{dex.foa}}</label>
         </div>
     </div>
     <label class="resource-label">con</label>
     <div class="bonus-row">
         <div class="bonus-block">
             <label>Physical<br>Save</label>
-            <input type="number" name="data.bonus.physical.con.value" value="{{physical.con.value}}" data-dtype="Number"/>
+            <label class="resource-label"> {{con.physical}}</label>
         </div>
     </div>
     <label class="resource-label">lks</label>
@@ -70,11 +70,11 @@
     <div class="bonus-row">
         <div class="bonus-block">
             <label>Turning<br>Mod.</label>
-            <input type="number" name="data.bonus.turning.cha.value" value="{{turning.cha.value}}" data-dtype="Number"/>
+            <label class="resource-label"> {{cha.turning}}</label>
         </div>
         <div class="bonus-block">
             <label>Morale<br>Mod.</label>
-            <input type="number" name="data.bonus.morale.cha.value" value="{{morale.cha.value}}" data-dtype="Number"/>
+            <label class="resource-label"> {{cha.morale}}</label>
         </div>
     </div>
     {{/with}}

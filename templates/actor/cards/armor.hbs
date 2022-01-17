@@ -1,4 +1,4 @@
-<li class="card hmstyle">
+<li class="card hmstyle" data-item-id="{{_id}}">
     <summary class="toggleswitch">
         <header>
             <label for="{{name}}">
@@ -10,20 +10,32 @@
     <section class="hide" toggle>
         <div class="splitview">
             <div></div>
-            <div class="gridtable">
-                <label></label>
-                {{#each data.stats as |stat key|}}
-                <label class="resource-label">{{key}}</label>
-                {{/each}}
-                <label>Total</label>
-                {{#each data.stats}}
-                <label>{{derived.value}}</label>
-                {{/each}}
-                <label class="column">Base</label>
-                {{#each data.stats}}
-                <label>{{value}}</label>
-                {{/each}}
-            </div>
+            <table class="table-basic">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        {{#each data.bonus.total}}
+                        <th scope="col"><label class="resource-label">{{@key}}</label></th>
+                        {{/each}}
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each data.bonus}}
+                    <tr>
+                        <th scope="row"><label class="resource-label">{{@key}}</label></td>
+                        {{#each this}}{{#if (eq 'misc' @../key)}}
+                        <td>
+                            <input class="editable" type="number" value={{this}}
+                                data-item-prop="data.bonus.misc.{{@key}}"
+                                data-dtype="Number" />
+                        </td>
+                        {{else}}
+                        <td>{{this}}</td>
+                        {{/if}}{{/each}}
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
         </div>
     </section>
 </li>
