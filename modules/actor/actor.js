@@ -51,7 +51,10 @@ export class HMActor extends Actor {
 
     setAbilityBonuses(data) {
         const aData = data.abilities;
-        const bonus = {'sheet': {}};
+        const bonus = data.bonus;
+
+        const stats        = {};
+        const abilityBonus = {};
 
         for (let statName in aData) {
             const clamp = HMTABLES.abilitymods.clamp[statName];
@@ -60,15 +63,17 @@ export class HMActor extends Actor {
 
             const sidx = Math.floor((statAdj - clamp.min) / clamp.step);
             const bonusTable = HMTABLES.abilitymods[statName][sidx];
-            bonus.sheet[statName] = bonusTable;
+            abilityBonus[statName] = bonusTable;
             for (let key in bonusTable) {
                 if (bonusTable.hasOwnProperty(key)) {
-                    bonus[key] = (bonus?.[key] || 0) + bonusTable[key];
+                    stats[key] = (stats?.[key] || 0) + bonusTable[key];
                     if (key === 'chamod') { data.abilities.cha.derived.value += (bonus.chamod || 0); }
                 }
             }
         }
-        data.bonus = bonus;
+        data.bonus.stats = stats;
+        data.hmsheet ? data.hmsheet.bonus = abilityBonus
+                     : data.hmsheet = {'bonus': abilityBonus};
     }
 
     setEncumbrance(data) {
@@ -113,30 +118,32 @@ export class HMActor extends Actor {
     }
 
     setSaves(data) {
-        // actor.js is probably the wrong place to do this. Also SPoT should be constants.js.
-        const cclass    = this.items.find((a) => a.type === 'cclass');
-        const leveltop  = cclass ? cclass.data.data.mod.top.value : 0.01;
+        const bonus  = data.bonus;
+        const stats  = bonus?.stats ? bonus.stats : {};
+        const cclass = bonus?.class ? bonus.class : {};
+        const level  = data.level.value;
+        const con    = data.abilities.con.derived.value;
 
-        const bData = data.bonus;
-        const sData = data.saves;
-        const level = data.level.value;
-        const constitution = data.abilities.con.derived.value;
+        cclass.turning  = level;
+        cclass.dodge    = level;
+        cclass.mental   = level;
+        cclass.physical = level;
+        stats.poison    = con;
+        stats.trauma    = Math.floor(con / 2);
 
-        sData.fos.value          = bData.fos;
-        sData.foa.value          = bData.foa;
-        sData.turning.value      = bData.turning + level;
-        sData.morale.value       = bData.morale;
-        sData.dodge.value        = bData.dodge + level;
-        sData.mental.value       = bData.mental + level;
-        sData.physical.value     = bData.physical + level;
-        sData.poison.value       = constitution;
-        sData.trauma.value       = Math.floor(constitution / 2);
-        sData.trauma.limit.value = Math.ceil((0.3 + leveltop) * data.hp.max);
+        bonus.class = cclass;
+        bonus.stats = stats;
     }
 
-    setInit(data) {
-        const bData = data.bonus;
-        data.init.value = bData.init;
+    setBonusTotal(data) {
+        const bonus = data.bonus;
+        const total = bonus.total;
+        for (let row in bonus) {
+            if (row === 'total') { continue; }
+            for (let key in bonus[row]) { total[key] = (total?.[key] || 0) + bonus[row][key]; }
+        }
+        console.warn(bonus);
+        return total;
     }
 
     _prepareCharacterData(data) {
@@ -148,7 +155,7 @@ export class HMActor extends Actor {
         this.setCharacterHP(data);
         this.setCharacterMaxSP(data);
         this.setSaves(data);
-        this.setInit(data);
+        this.setBonusTotal(data);
     }
 
     getArmor() {

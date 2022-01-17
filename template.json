@@ -1,13 +1,12 @@
 {
     "Actor": {
-        "types": ["character", "beast"],
+        "types": ["character"],
         "templates": {
 
             "base": {
                 "sp":     {"value": 0, "mod": {"value": 0}},
-                "init":   {"value": 0},
                 "encumb": {"value": 0.0},
-                "alignment": null
+                "bonus":  {"total": {},"misc": {}}
             },
 
             "pc": {
@@ -33,20 +32,8 @@
                             "mod": {"value": 0,  "fvalue": 0}},
                     "cha": {"raw": {"value": 10, "fvalue": 0}, 
                             "mod": {"value": 0,  "fvalue": 0}}
-                },
-
-                "saves": {
-                    "fos":      {"mod": {"value": 0}},
-                    "foa":      {"mod": {"value": 0}},
-                    "turning":  {"mod": {"value": 0}},
-                    "morale":   {"mod": {"value": 0}},
-                    "fatigue":  {"mod": {"value": 0}},
-                    "dodge":    {"mod": {"value": 0}},
-                    "mental":   {"mod": {"value": 0}},
-                    "physical": {"mod": {"value": 0}},
-                    "poison":   {"mod": {"value": 0}},
-                    "trauma":   {"mod": {"value": 0}, "limit": {"value": 0}}
                 }
+
             }
         },
 

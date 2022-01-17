@@ -47,7 +47,7 @@
     ],
     "gridDistance": 5,
     "gridUnits": "ft",
-    "initiative": "+ @init.value",
+    "initiative": "+ @bonus.total.init",
     "primaryTokenAttribute": "hp",
     "flags": { "allowBugReporter": true },
     "bugs": "https://github.com/n0q/hackmaster5e-fvtt/issues",
