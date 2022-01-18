@@ -135,7 +135,7 @@
             "warnMulti":         "Multiple tokens selected. Using <b>"
         },
 
-        "sizeFull": {
+        "scaleFull": {
             "tiny":             "Tiny",
             "small":            "Small",
             "medium":           "Medium",

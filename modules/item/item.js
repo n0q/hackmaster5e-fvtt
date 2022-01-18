@@ -23,25 +23,20 @@ export class HMItem extends Item {
       if (itemType === "weapon")      { this._prepWeaponData(itemData, actorData)      }
   }
 
-  /**
-   * Handle clickable rolls.
-   * @param {Event} event   The originating click event
-   * @private
-   */
-  async roll() {
-    // Basic template rendering data
-    const token = this.actor.token;
-    const item = this.data;
-    const actorData = this.actor ? this.actor.data.data : {};
-    const itemData = item.data;
+    async roll() {
+        // Basic template rendering data
+        const token = this.actor.token;
+        const item = this.data;
+        const actorData = this.actor ? this.actor.data.data : {};
+        const itemData = item.data;
 
-    let roll = new Roll('d20+@abilities.str.mod', actorData);
-    let label = `Rolling ${item.name}`;
-    roll.roll().toMessage({
-      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      flavor: label
-    });
-  }
+        let roll = new Roll('d20+@abilities.str.mod', actorData);
+        let label = `Rolling ${item.name}`;
+        roll.roll().toMessage({
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            flavor: label
+        });
+    }
 
     _prepArmorData(itemData, actorData) {
         if (!actorData) return;
@@ -152,7 +147,9 @@ export class HMItem extends Item {
         const bonus     = itemData.bonus;
 
         const stats     = {};
-        const bonusData = actorData.data.bonus.total;
+        const race      = {};
+        const statsData = actorData.data.bonus.stats;
+        const raceData  = actorData.data.bonus.race;
 
         const spec      = {};
         const profTable = HMTABLES.weapons.noprof;
@@ -165,17 +162,14 @@ export class HMItem extends Item {
         const cclassItem = actorData.items.find((a) => a.type === "cclass");
         const cData      = cclassItem ? cclassItem.data.data.mod : null;
 
-        const race       = {};
-        const raceItem   = actorData.items.find((a) => a.type === 'race');
-
         let j = 0;
         for (let key in bonus.total) {
             const profBonus = profItem ? profItem.data.data[key].value
                                        : profTable.table[wSkill] * profTable.vector[j++];
             spec[key]   = profBonus || 0;
             cclass[key] = cData?.[key]?.value || 0;
-            race[key]   = raceItem ? raceItem.data.data?.[key]?.value || 0 : 0;
-            stats[key]  = bonusData[key] || 0;
+            race[key]   = raceData[key] || 0;
+            stats[key]  = statsData[key] || 0;
 
             // Explicitly allowing multiple armor/shields because we don't support accesories yet.
             for (let i = 0; i < armors.length; i++)  {

@@ -51,9 +51,9 @@
 
     "Item": {
         "types": [
-              "armor",        "cclass",   "item",
-              "proficiency",  "race",     "skill",
-              "spell",        "weapon",   "wound"
+            "armor",        "cclass",   "item",
+            "proficiency",  "race",     "skill",
+            "spell",        "weapon",   "wound"
         ],
 
         "templates": {
@@ -136,10 +136,8 @@
         "race": {
             "templates": ["base"],
             "adj": null,
-            "hp":      {"value": 10, "size": "medium"},
-            "kb":      {"value": 15, "size": "medium"},
-            "reach":   {"value": 0,  "size": "medium"},
-            "def":     {"value": 0},
+            "scale": {"hp": 3,  "kb": 3,  "reach": 3},
+            "bonus": {"hp": 10, "kb": 15, "reach": 0}, 
             "abilities": {
                 "str": {"value": 0, "fvalue": 0},
                 "int": {"value": 0, "fvalue": 0},

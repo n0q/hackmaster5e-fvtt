@@ -12,12 +12,12 @@ export class HMActor extends Actor {
         const races = this.items.filter((a) => a.type === 'race');
         if (!races.length) return;
         const race = races.pop();
+        data.bonus.race = race.data.data.bonus;
 
         if (races.length) {
             let oldrace;
             while (oldrace = races.pop()) await oldrace.delete();
         }
-        const raceData = race.data.data;
     }
 
     async setCClass(data) {
@@ -35,6 +35,10 @@ export class HMActor extends Actor {
 
     setAbilities(data) {
         const abilities = data.abilities;
+
+        const race = this.items.find((a) => a.type === 'race');
+        if (race) { abilities.race = race.data.data.abilities };
+
         const total = {};
         for (let stat in abilities.base) {
             let value = 0;
@@ -72,6 +76,7 @@ export class HMActor extends Actor {
                 }
             }
         }
+        stats.hp = aData.con.value;
         data.bonus.stats = stats;
         data.hmsheet ? data.hmsheet.bonus = abilityBonus
                      : data.hmsheet = {'bonus': abilityBonus};
@@ -98,13 +103,11 @@ export class HMActor extends Actor {
     }
 
     setCharacterHP(data) {
-        const race      = this.items.find((a) => a.type === "race");
-        const racial_hp = race ? race.data.data.hp.value : 0;
-        const con_hp    = data.abilities.total.con.value || 0;
+        const bonus_hp  = data.bonus.total?.hp || 0;
         const cclass    = this.items.find((a) => a.type === "cclass");
         const level_hp  = cclass ? cclass.data.data.mod.hp.value : 0;
 
-        const max       = racial_hp + con_hp + level_hp;
+        const max       = bonus_hp + level_hp;
         const wounds    = this.items.filter((a) => a.type === "wound");
 
         let value = max;

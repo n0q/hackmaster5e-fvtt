@@ -19,51 +19,51 @@
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.hp"}}</label>
                             <span>
-                                <select class="dropdown" name="data.hp.size"
-                                    data-ref1="size"
+                                <select class="dropdown" name="data.scale.hp"
+                                    data-ref1="scale"
                                     data-ref3="hp"
-                                    data-key="data.hp.value"> 
-                                {{#select hp.size}}{{#each (findConfigObj "size") as |type t|}}
+                                    data-key="data.bonus.hp"> 
+                                {{#select scale.hp}}{{#each (findConfigObj "scale") as |type t|}}
                                     <option value="{{t}}">{{localize type}}</option>
                                 {{/each}}{{/select}}
                                 </select>
-                                <input type="number" name="data.hp.value" value="{{hp.value}}"
-                                {{#if (neq hp.size "custom")}}readonly{{/if}} data-dtype="Number"/>
+                                <input type="number" name="data.bonus.hp" value="{{bonus.hp}}"
+                                {{#if (neq scale.hp '0')}}readonly{{/if}} data-dtype="Number"/>
                             </span>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.kb"}}</label>
                             <span>
-                                <select class="dropdown" name="data.kb.size"
-                                    data-ref1="size"
+                                <select class="dropdown" name="data.scale.kb"
+                                    data-ref1="scale"
                                     data-ref3="kb"
-                                    data-key="data.kb.value">
-                                {{#select kb.size}}{{#each (findConfigObj "size") as |type t|}}
+                                    data-key="data.bonus.kb"> 
+                                {{#select scale.kb}}{{#each (findConfigObj "scale") as |type t|}}
                                     <option value="{{t}}">{{localize type}}</option>
                                 {{/each}}{{/select}}
                                 </select>
-                                <input type="number" name="data.kb.value" value="{{kb.value}}"
-                                {{#if (neq kb.size "custom")}}readonly{{/if}} data-dtype="Number"/>
+                                <input type="number" name="data.bonus.kb" value="{{bonus.kb}}"
+                                {{#if (neq scale.kb 0)}}readonly{{/if}} data-dtype="Number"/>
                             </span>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.reach"}}</label>
                             <span>
-                                <select class="dropdown" name="data.reach.size"
-                                    data-ref1="size"
+                                <select class="dropdown" name="data.scale.reach"
+                                    data-ref1="scale"
                                     data-ref3="reach"
-                                    data-key="data.reach.value">
-                                {{#select reach.size}}{{#each (findConfigObj "size") as |type t|}}
+                                    data-key="data.bonus.reach"> 
+                                {{#select scale.reach}}{{#each (findConfigObj "scale") as |type t|}}
                                     <option value="{{t}}">{{localize type}}</option>
                                 {{/each}}{{/select}}
                                 </select>
-                                <input type="number" name="data.reach.value" value="{{reach.value}}"
-                                {{#if (neq reach.size "custom")}}readonly{{/if}} data-dtype="Number"/>
+                                <input type="number" name="data.bonus.reach" value="{{bonus.reach}}"
+                                {{#if (neq scale.reach 0)}}readonly{{/if}} data-dtype="Number"/>
                             </span>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.def"}}</label>
-                            <input type="number" name="data.def.value" value="{{def.value}}" data-dtype="Number"/>
+                            <input type="number" name="data.bonus.def" value="{{bonus.def}}" placeholder=0 data-dtype="Number"/>
                         </div>
                     </div>
                     <div class="options-block">
@@ -83,7 +83,9 @@
                             </label>
                             <span>
                                 <input type="number" name="data.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number"/>
+                                <label class="resource-label">/</label>
                                 <input type="number" name="data.abilities.{{key}}.fvalue" value="{{ability.fvalue}}" data-dtype="Number"/>
+                                <label class="resource-label">%</label>
                             </span>
                         </div>
                         {{/each}}
