@@ -8,7 +8,7 @@ export class HMItem extends Item {
       const actorData = this.actor ? this.actor.data : null;
 
       // HACK: Need derived abilities/bonuses, which are usually called after items are done.
-      if (actorData && typeof actorData.data.abilities.str.derived === 'undefined') {
+      if (actorData && !actorData.data.abilities.total) {
           const actor = this.actor;
           actor.setRace(actorData.data);
           actor.setAbilities(actorData.data);
@@ -121,12 +121,12 @@ export class HMItem extends Item {
             data.mastery.derived = {value: data.mastery.value};
             return;
         }
-        const abilities = actorData.data.abilities;
+        const abilities = actorData.data.abilities.total;
         const relevant  = data.abilities;
         const stack = [];
 
         for (let key in relevant) {
-            if (relevant[key].checked) stack.push(abilities[key].derived.value);
+            if (relevant[key].checked) stack.push(abilities[key].value);
         }
         data.mastery.derived = {'value': Math.min(...stack)};
     }

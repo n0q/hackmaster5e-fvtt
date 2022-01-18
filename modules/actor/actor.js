@@ -35,22 +35,22 @@ export class HMActor extends Actor {
 
     setAbilities(data) {
         const abilities = data.abilities;
-        const actorRace = this.items.find((a) => a.type === "race");
-        for (let i in abilities) {
-            const stat = abilities[i];
-            let race = {"value": 0, "fvalue": 0};
-            if (actorRace) {
-                race.value  = actorRace.data.data.abilities[i].value;
-                race.fvalue = actorRace.data.data.abilities[i].fvalue;
+        const total = {};
+        for (let stat in abilities.base) {
+            let value = 0;
+            let fvalue = 0;
+            for (let row in abilities) {
+                if (row === 'total') { continue; };
+                value  += abilities[row][stat].value;
+                fvalue += abilities[row][stat].fvalue;
             }
-            let value  = stat.raw.value  + stat.mod.value  + race.value;
-            let fvalue = stat.raw.fvalue + stat.mod.fvalue + race.fvalue;
-            stat.derived = {value, fvalue};
+            total[stat] = {value, fvalue};
         }
+        abilities.total = total;
     }
 
     setAbilityBonuses(data) {
-        const aData = data.abilities;
+        const aData = data.abilities.total;
         const bonus = data.bonus;
 
         const stats        = {};
@@ -58,7 +58,7 @@ export class HMActor extends Actor {
 
         for (let statName in aData) {
             const clamp = HMTABLES.abilitymods.clamp[statName];
-            const statDerived = aData[statName].derived.value + aData[statName].derived.fvalue / 100;
+            const statDerived = aData[statName].value + aData[statName].fvalue / 100;
             const statAdj = Math.clamped(statDerived, clamp.min, clamp.max);
 
             const sidx = Math.floor((statAdj - clamp.min) / clamp.step);
@@ -67,7 +67,8 @@ export class HMActor extends Actor {
             for (let key in bonusTable) {
                 if (bonusTable.hasOwnProperty(key)) {
                     stats[key] = (stats?.[key] || 0) + bonusTable[key];
-                    if (key === 'chamod') { data.abilities.cha.derived.value += (bonus.chamod || 0); }
+                    // HACK
+                    if (key === 'chamod') { aData.cha.value += (bonus.chamod || 0); }
                 }
             }
         }
@@ -99,7 +100,7 @@ export class HMActor extends Actor {
     setCharacterHP(data) {
         const race      = this.items.find((a) => a.type === "race");
         const racial_hp = race ? race.data.data.hp.value : 0;
-        const con_hp    = data.abilities.con.derived.value || 0;
+        const con_hp    = data.abilities.total.con.value || 0;
         const cclass    = this.items.find((a) => a.type === "cclass");
         const level_hp  = cclass ? cclass.data.data.mod.hp.value : 0;
 
@@ -122,7 +123,7 @@ export class HMActor extends Actor {
         const stats  = bonus?.stats ? bonus.stats : {};
         const cclass = bonus?.class ? bonus.class : {};
         const level  = data.level.value;
-        const con    = data.abilities.con.derived.value;
+        const con    = data.abilities.total.con.value;
 
         cclass.turning  = level;
         cclass.dodge    = level;
