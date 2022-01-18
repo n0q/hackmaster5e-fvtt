@@ -8,7 +8,7 @@ export class HMItem extends Item {
       const actorData = this.actor ? this.actor.data : null;
 
       // HACK: Need derived abilities/bonuses, which are usually called after items are done.
-      if (actorData && !actorData.data.abilities.total) {
+      if (actorData && !actorData.data.abilities.stats) {
           const actor = this.actor;
           actor.setRace(actorData.data);
           actor.setAbilities(actorData.data);
@@ -168,8 +168,8 @@ export class HMItem extends Item {
                                        : profTable.table[wSkill] * profTable.vector[j++];
             spec[key]   = profBonus || 0;
             cclass[key] = cData?.[key]?.value || 0;
-            race[key]   = raceData[key] || 0;
-            stats[key]  = statsData[key] || 0;
+            race[key]   = raceData?.[key] || 0;
+            stats[key]  = statsData?.[key] || 0;
 
             // Explicitly allowing multiple armor/shields because we don't support accesories yet.
             for (let i = 0; i < armors.length; i++)  {
