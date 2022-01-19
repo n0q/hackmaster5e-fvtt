@@ -21,11 +21,12 @@ export class HMActor extends Actor {
     }
 
     async setCClass(data) {
-        const cclasses = this.items.filter((a) => a.type === "cclass");
+        const cclasses = this.items.filter((a) => a.type === 'cclass');
         if (!cclasses.length) return;
 
         const cclass = cclasses.pop();
-        data.level.value = cclass.data.data.level.value;
+        data.level.value = cclass.data.data.level;
+        data.bonus.class = cclass.data.data.bonus;
 
         if (cclasses.length) {
             let oldclass;
@@ -103,22 +104,15 @@ export class HMActor extends Actor {
     }
 
     setCharacterHP(data) {
-        const bonus_hp  = data.bonus.total?.hp || 0;
-        const cclass    = this.items.find((a) => a.type === "cclass");
-        const level_hp  = cclass ? cclass.data.data.mod.hp.value : 0;
-
-        const max       = bonus_hp + level_hp;
-        const wounds    = this.items.filter((a) => a.type === "wound");
-
+        const max    = data.bonus.total?.hp || 0;
+        const wounds = this.items.filter((a) => a.type === 'wound');
         let value = max;
         Object.keys(wounds).forEach( (a) => value -= wounds[a].data.data.hp.value);
         data.hp = {max, value};
     }
 
     setCharacterMaxSP(data) {
-        const cclass = this.items.find((a) => a.type === "cclass");
-        data.sp.max = data.sp.mod.value;
-        if (cclass) data.sp.max += cclass.data.data.mod.sp.value;
+        data.sp.max = data.bonus.total?.sp || 0;
     }
 
     setSaves(data) {

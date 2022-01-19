@@ -8,9 +8,11 @@ export class HMItem extends Item {
       const actorData = this.actor ? this.actor.data : null;
 
       // HACK: Need derived abilities/bonuses, which are usually called after items are done.
+      // TODO: Utilize all three function calls inside prepareData() to break dependency hell.
       if (actorData && !actorData.data.abilities.stats) {
           const actor = this.actor;
           actor.setRace(actorData.data);
+          actor.setCClass(actorData.data);
           actor.setAbilities(actorData.data);
           actor.setAbilityBonuses(actorData.data);
           actor.setBonusTotal(actorData.data);
@@ -55,7 +57,7 @@ export class HMItem extends Item {
 
         // initialize new cclass object ptable
         if (Object.entries(pTable).length === 0) {
-            const pData = data._pdata;
+            const pData = HMTABLES.skill._pData;
             for (let i = 1; i < 21; i++) pTable[i] = deepClone(pData);
             if (Object.entries(pTable).length) return;
             await this.update({'data.ptable': pTable});
@@ -63,14 +65,14 @@ export class HMItem extends Item {
 
         // calculate hp
         if (!actorData) return;
-        const level = data.level.value;
+        const level = data.level;
         let hp = 0;
 
         let rerolled = false;
         let hpStack = [];
         let i = 0;
         while (i++ < level) {
-            const reroll = pTable[i].hp.reroll.checked;
+            const reroll = pTable[i].hp.reroll;
 
             // end of a reroll chain
             if (!reroll && rerolled) {
@@ -88,18 +90,16 @@ export class HMItem extends Item {
             if (reroll) rerolled = true;
         }
         hp += Math.max(...hpStack);
+        const bonus = { hp };
 
         // grab the level data off the ptable
         const feature = data.features;
-        const mod = {hp: {value: hp}};
         for (let i in feature) {
-            mod[i] = feature[i].checked
-                ? {value: pTable[level][i].value || 0}
-                : {value: 0};
+            bonus[i] = feature[i] ? pTable[level][i].value || 0 : 0;
         }
 
-        mod.top = {value: (data.top_cf.value || 0.01) * level};
-        await this.update({'data.mod': mod});
+        bonus.top = (data.top_cf || 0.01) * level;
+        await this.update({'data.bonus': bonus});
     }
 
     // TODO: A user can technically set defense and damage, then
@@ -146,8 +146,10 @@ export class HMItem extends Item {
 
         const bonus     = itemData.bonus;
 
-        const stats     = {};
+        const cclass    = {};
         const race      = {};
+        const stats     = {};
+        const classData = actorData.data.bonus.class;
         const statsData = actorData.data.bonus.stats;
         const raceData  = actorData.data.bonus.race;
 
@@ -158,16 +160,12 @@ export class HMItem extends Item {
             return a.type === "proficiency" && a.name === itemData.proficiency;
         });
 
-        const cclass     = {};
-        const cclassItem = actorData.items.find((a) => a.type === "cclass");
-        const cData      = cclassItem ? cclassItem.data.data.mod : null;
-
         let j = 0;
         for (let key in bonus.total) {
             const profBonus = profItem ? profItem.data.data[key].value
                                        : profTable.table[wSkill] * profTable.vector[j++];
             spec[key]   = profBonus || 0;
-            cclass[key] = cData?.[key]?.value || 0;
+            cclass[key] = classData?.[key] || 0;
             race[key]   = raceData?.[key] || 0;
             stats[key]  = statsData?.[key] || 0;
 

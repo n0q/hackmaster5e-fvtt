@@ -236,7 +236,16 @@ export const HMTABLES = {
         7: {"hp": 35, "kb": 40, "reach":  5,  "movecf":  6.00},
         8: {"hp": 70, "kb": 75, "reach":  12, "movecf": 13.00},
     },
-    "skill": {
+    'skill': {
+        '_pData': {
+            'hp': {value: null, die: null, reroll: false},
+            'sp': {value: null},
+            'atk': {value: null},
+            'spd': {value: null},
+            'spdm': {value: null},
+            'spdr': {value: null},
+            'init': {value: null},
+        },
         "difficulty": {
             "HM.verydifficult": 10,
             "HM.difficult":      0,

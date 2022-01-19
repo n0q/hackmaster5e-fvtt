@@ -91,27 +91,17 @@
 
         "cclass": {
             "templates": ["base"],
-            "level": {"value": 1},
-            "mod": {},
-            "top_cf": {"value": 0.01},
+            "level": 1,
+            "bonus": null,
+            "top_cf": 0.01,
             "features": {
-                "sp":   {"checked": false},
-                "atk":  {"checked": false},
-                "spd":  {"checked": false},
-                "spdm": {"checked": false},
-                "spdr": {"checked": false},
-                "init": {"checked": false}
-            },
-            "ptable": {},
-            "_pdata": {
-                "hp":   {"value": null, "die": null, "reroll": {"checked": false}},
-                "sp":   {"value": null},
-                "atk":  {"value": null},
-                "spd":  {"value": null},
-                "spdm": {"value": null},
-                "spdr": {"value": null},
-                "init": {"value": null}
-            }
+                "sp":   false,
+                "atk":  false,
+                "spd":  false,
+                "spdm": false,
+                "spdr": false,
+                "init": false},
+            "ptable": {}
         },
 
         "item": {
