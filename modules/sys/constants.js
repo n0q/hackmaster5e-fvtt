@@ -5,7 +5,7 @@ export const MACRO_VERS = {
     "getAttack": 2,
     "getDamage": 2,
     "getDefend": 2,
-    "setWound":  1,
+    "setWound":  2,
 };
 
 // system rules
