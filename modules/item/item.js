@@ -7,22 +7,11 @@ export class HMItem extends Item {
       const itemType  = this.data.type;
       const actorData = this.actor ? this.actor.data : null;
 
-      // HACK: Need derived abilities/bonuses, which are usually called after items are done.
-      // TODO: Utilize all three function calls inside prepareData() to break dependency hell.
-      if (actorData && !actorData.data.abilities.stats) {
-          const actor = this.actor;
-          actor.setRace(actorData.data);
-          actor.setCClass(actorData.data);
-          actor.setAbilities(actorData.data);
-          actor.setAbilityBonuses(actorData.data);
-          actor.setBonusTotal(actorData.data);
-      }
-
-      if (itemType === "armor")       { this._prepArmorData(itemData, actorData)       } else
-      if (itemType === "cclass")      { this._prepCClassData(itemData, actorData)      } else
-      if (itemType === "proficiency") { this._prepProficiencyData(itemData, actorData) } else
-      if (itemType === "skill")       { this._prepSkillData(itemData, actorData)       } else
-      if (itemType === "weapon")      { this._prepWeaponData(itemData, actorData)      }
+      if (itemType === 'armor')       { this._prepArmorData(itemData, actorData)       } else
+      if (itemType === 'cclass')      { this._prepCClassData(itemData, actorData)      } else
+      if (itemType === 'proficiency') { this._prepProficiencyData(itemData, actorData) } else
+      if (itemType === 'skill')       { this._prepSkillData(itemData, actorData)       } else
+      if (itemType === 'weapon')      { this._prepWeaponData(itemData, actorData)      }
   }
 
     async roll() {
@@ -98,6 +87,11 @@ export class HMItem extends Item {
             bonus[i] = feature[i] ? pTable[level][i].value || 0 : 0;
         }
 
+        // Saves
+        bonus.turning  = level;
+        bonus.dodge    = level;
+        bonus.mental   = level;
+        bonus.physical = level;
         bonus.top = (data.top_cf || 0.01) * level;
         await this.update({'data.bonus': bonus});
     }

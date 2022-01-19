@@ -1,18 +1,39 @@
 import { HMTABLES } from '../sys/constants.js';
 
 export class HMActor extends Actor {
-    prepareDerivedData() {
+    prepareBaseData() {
+        super.prepareBaseData();
         const actorData = this.data;
-        const data = actorData.data;
+        const { data } = actorData;
 
-        if (actorData.type === 'character') { this._prepareCharacterData(data); }
+        if (actorData.type === 'character') {
+            this.setRace(data);
+            this.setCClass(data);
+            this.setAbilities(data);
+            this.setAbilityBonuses(data);
+            this.setBonusTotal(data);
+        }
+    }
+
+    prepareDerivedData() {
+        super.prepareDerivedData();
+        const actorData = this.data;
+        const { data } = actorData;
+
+        if (actorData.type === 'character') {
+            this.setEncumbrance(data);
+            this.setCharacterHP(data);
+            this.setCharacterMaxSP(data);
+        }
     }
 
     async setRace(data) {
         const races = this.items.filter((a) => a.type === 'race');
         if (!races.length) return;
         const race = races.pop();
-        data.bonus.race = race.data.data.bonus;
+
+        data.bonus.race     = race.data.data.bonus;
+        data.abilities.race = race.data.data.abilities;
 
         if (races.length) {
             let oldrace;
@@ -35,10 +56,7 @@ export class HMActor extends Actor {
     }
 
     setAbilities(data) {
-        const abilities = data.abilities;
-
-        const race = this.items.find((a) => a.type === 'race');
-        if (race) { abilities.race = race.data.data.abilities };
+        const { abilities } = data;
 
         const total = {};
         for (let stat in abilities.base) {
@@ -61,7 +79,7 @@ export class HMActor extends Actor {
         const stats        = {};
         const abilityBonus = {};
 
-        for (let statName in aData) {
+        for (const statName in aData) {
             const clamp = HMTABLES.abilitymods.clamp[statName];
             const statDerived = aData[statName].value + aData[statName].fvalue / 100;
             const statAdj = Math.clamped(statDerived, clamp.min, clamp.max);
@@ -72,12 +90,15 @@ export class HMActor extends Actor {
             for (let key in bonusTable) {
                 if (bonusTable.hasOwnProperty(key)) {
                     stats[key] = (stats?.[key] || 0) + bonusTable[key];
-                    // HACK
                     if (key === 'chamod') { aData.cha.value += (bonus.chamod || 0); }
                 }
             }
         }
-        stats.hp = aData.con.value;
+
+        stats.hp     = aData.con.value;
+        stats.poison = aData.con.value;
+        stats.trauma = Math.floor(aData.con.value / 2);
+
         data.bonus.stats = stats;
         data.hmsheet ? data.hmsheet.bonus = abilityBonus
                      : data.hmsheet = {'bonus': abilityBonus};
@@ -87,7 +108,7 @@ export class HMActor extends Actor {
         let encumb = 0.0;
         const item = this.items.filter((a) => {
             const aData = a.data.data;
-            // Proof positive that armor needs a refactor.
+            // TODO: Inventory management
             if (aData.state) {
                 if (a.type             === 'armor'
                     && aData.armortype !== 'shield'
@@ -107,7 +128,7 @@ export class HMActor extends Actor {
         const max    = data.bonus.total?.hp || 0;
         const wounds = this.items.filter((a) => a.type === 'wound');
         let value = max;
-        Object.keys(wounds).forEach( (a) => value -= wounds[a].data.data.hp.value);
+        Object.keys(wounds).forEach((a) => value -= wounds[a].data.data.hp.value);
         data.hp = {max, value};
     }
 
@@ -115,45 +136,15 @@ export class HMActor extends Actor {
         data.sp.max = data.bonus.total?.sp || 0;
     }
 
-    setSaves(data) {
-        const bonus  = data.bonus;
-        const stats  = bonus?.stats ? bonus.stats : {};
-        const cclass = bonus?.class ? bonus.class : {};
-        const level  = data.level.value;
-        const con    = data.abilities.total.con.value;
-
-        cclass.turning  = level;
-        cclass.dodge    = level;
-        cclass.mental   = level;
-        cclass.physical = level;
-        stats.poison    = con;
-        stats.trauma    = Math.floor(con / 2);
-
-        bonus.class = cclass;
-        bonus.stats = stats;
-    }
-
     setBonusTotal(data) {
-        const bonus = data.bonus;
+        const { bonus } = data;
         const total = {};
-        for (let row in bonus) {
+        for (const row in bonus) {
             if (row === 'total') { continue; }
-            for (let key in bonus[row]) { total[key] = (total?.[key] || 0) + bonus[row][key]; }
+            for (const key in bonus[row]) { total[key] = (total?.[key] || 0) + bonus[row][key]; }
         }
         bonus.total = total;
         return total;
-    }
-
-    _prepareCharacterData(data) {
-        this.setRace(data);
-        this.setAbilities(data);
-        this.setAbilityBonuses(data);
-        this.setCClass(data);
-        this.setEncumbrance(data);
-        this.setCharacterHP(data);
-        this.setCharacterMaxSP(data);
-        this.setSaves(data);
-        this.setBonusTotal(data);
     }
 
     getArmor() {
