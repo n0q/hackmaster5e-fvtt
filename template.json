@@ -191,9 +191,9 @@
         },
 
         "wound": {
-            "hp":      {"value": null},
-            "timer":   {"value": null},
-            "treated": {"checked": false}
+            "hp":      null,
+            "timer":   null,
+            "treated": false
         }
     }
 }

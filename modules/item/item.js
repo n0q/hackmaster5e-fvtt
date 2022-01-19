@@ -197,33 +197,32 @@ export class HMItem extends Item {
         const dataset = element.dataset;
         const itemData = this.data.data;
 
-        let timer = itemData.timer;
-        let hp = itemData.hp;
+        let {hp, timer, treated} = itemData;
         let dirty = false;
-        let treated  = itemData.treated;
 
-        if (dataset.action === 'decTimer') timer.value--;
-        if (dataset.action === 'decHp' || timer.value < 1) {
-            timer.value = --hp.value;
+        if (dataset.action === 'decTimer') timer--;
+        if (dataset.action === 'decHp' || timer < 1) {
+            timer = --hp;
             dirty = true;
         }
 
-        if (hp.value < 0) return this.delete();
+        if (hp < 0) return this.delete();
         await this.update({'data': {hp, timer, treated}});
         if (dirty && this.parent) {
-            this.parent.modifyTokenAttribute('data.hp.value');
+            this.parent.modifyTokenAttribute('data.hp');
         }
     }
 
+    // Workaround until foundry issue 6508 is resolved.
     static async createItem(item) {
         if (item.type === 'wound' && item.parent) {
-            item.parent.modifyTokenAttribute('data.hp.value');
+            item.parent.modifyTokenAttribute('data.hp');
         }
     }
 
     static async deleteItem(item) {
         if (item.type === 'wound' && item.parent) {
-            item.parent.modifyTokenAttribute('data.hp.value');
+            item.parent.modifyTokenAttribute('data.hp');
         }
     }
 }

@@ -128,7 +128,7 @@ export class HMActor extends Actor {
         const max    = data.bonus.total?.hp || 0;
         const wounds = this.items.filter((a) => a.type === 'wound');
         let value = max;
-        Object.keys(wounds).forEach((a) => value -= wounds[a].data.data.hp.value);
+        Object.keys(wounds).forEach((a) => value -= wounds[a].data.data.hp);
         data.hp = {max, value};
     }
 
