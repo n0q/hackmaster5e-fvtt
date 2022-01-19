@@ -113,10 +113,7 @@
         },
 
         "proficiency": {
-            "atk": {"value": 0},
-            "def": {"value": 0},
-            "dmg": {"value": 0},
-            "spd": {"value": 0},
+            "bonus": {"atk": 0, "def": 0, "dmg": 0, "spd": 0},
             "skill": null,
             "weapon":     {"checked": false},
             "ranged":     {"checked": false},

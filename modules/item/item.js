@@ -100,7 +100,7 @@ export class HMItem extends Item {
     // set a weapon to ranged. These values should be culled.
     _prepProficiencyData(data, actorData) {
         if (data.mechanical.checked && !data.ranged.checked) {
-            return this.update({"data.mechanical.checked": false});
+            return this.update({'data.mechanical.checked': false});
         }
     }
 
@@ -156,7 +156,7 @@ export class HMItem extends Item {
 
         let j = 0;
         for (let key in bonus.total) {
-            const profBonus = profItem ? profItem.data.data[key].value
+            const profBonus = profItem ? profItem.data.data.bonus?.[key] || 0
                                        : profTable.table[wSkill] * profTable.vector[j++];
             spec[key]   = profBonus || 0;
             cclass[key] = classData?.[key] || 0;
