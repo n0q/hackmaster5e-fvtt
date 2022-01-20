@@ -43,73 +43,75 @@ export default class HMChatMgr {
         return chatData;
     }
 
+    getDiceSum(roll) {
+        let sum = 0;
+        for (let i = 0; i < roll.terms.length; i++) {
+            for (let j = 0; j < roll.terms[i]?.results?.length; j++) {
+                sum += roll.terms[i].results[j].result;
+            }
+        }
+        return sum;
+    }
+
     async _createWeaponCard(roll, dataset, dialogResp) {
         const actor = dialogResp.caller;
         const item = dialogResp.context;
 
         const html = await roll.render();
         switch (dataset.dialog) {
-            case "ratk": {
-                const sumDice = getDiceSum(roll);
-                let specialRow = "<p>";
-                if (sumDice >= 20) { specialRow += "<b>Critical!</b>";         } else
-                if (sumDice == 19) { specialRow += "<b>Near Perfect!</b>";     } else
-                if (sumDice == 1)  { specialRow += "<b>Potential Fumble!</b>"; }
+            case 'ratk': {
+                const sumDice = this.getDiceSum(roll);
+                let specialRow = '<p>';
+                if (sumDice >=  20) { specialRow += '<b>Critical!</b>';         } else
+                if (sumDice === 19) { specialRow += '<b>Near Perfect!</b>';     } else
+                if (sumDice === 1)  { specialRow += '<b>Potential Fumble!</b>'; }
 
-                const title = actor.name + " attacks with a " + item.name + ".";
+                const title = `${actor.name} attacks with a ${item.name}.`;
 
-                const speedRow = "Speed: " + item.data.data.stats.spd.derived.value;
-                const rangeRow = "<br>" + game.i18n.localize("HM." + dialogResp.resp.rangestr)
-                               + " Range";
+                const speedRow = `${game.i18n.localize('HM.speed')}: ${item.data.data.bonus.total.spd}`;
+                const rangeRow = `<br> ${game.i18n.localize('HM.' + dialogResp.resp.rangestr)}`
+                               + ` ${game.i18n.localize('HM.range')}`;
                 const card = speedRow + rangeRow + specialRow + html;
                 return {flavor: title, content: card};
             }
-            case "atk": {
-                const sumDice = getDiceSum(roll);
-                let specialRow = "<p>";
-                if (sumDice >= 20) { specialRow += "<b>Critical!</b>";         } else
-                if (sumDice == 19) { specialRow += "<b>Near Perfect!</b>";     } else
-                if (sumDice == 1)  { specialRow += "<b>Potential Fumble!</b>"; }
 
-                const title = actor.name + " attacks with a " + item.name + ".";
+            case 'atk': {
+                const sumDice = this.getDiceSum(roll);
+                let specialRow = '<p>';
+                if (sumDice >=  20) { specialRow += '<b>Critical!</b>';         } else
+                if (sumDice === 19) { specialRow += '<b>Near Perfect!</b>';     } else
+                if (sumDice === 1)  { specialRow += '<b>Potential Fumble!</b>'; }
 
-                const speedRow = "Speed: " + item.data.data.stats.spd.derived.value;
+                const title = `${actor.name} attacks with a ${item.name}.`;
+
+                const speedRow = `${game.i18n.localize('HM.speed')}: ${item.data.data.bonus.total.spd}`;
                 const card = speedRow + specialRow + html;
                 return {flavor: title, content: card};
             }
 
-            case "dmg": {
-                const shield = dialogResp.resp.shieldhit ? " shield-" : " ";
-                const title = actor.name + shield + "hits with a " + item.name + ".";
+            case 'dmg': {
+                const shield = dialogResp.resp.shieldhit ? ' shield-' : '';
+                const title = `${actor.name} ${shield}hits with a ${item.name}.`;
                 return {flavor: title, content: html};
             }
 
-            case "def": {
-                const sumDice = getDiceSum(roll);
-                let specialRow = "<p>";
-                if (sumDice >= 20) { specialRow += "<b>Perfect!</b>";            } else
-                if (sumDice == 19) { specialRow += "<b>Near Perfect!</b>";       } else
-                if (sumDice == 18) { specialRow += "<b>Superior!</b>";           } else
-                if (sumDice == 1)  { specialRow += "<b>Free Second Attack!</b>"; }
+            case 'def': {
+                const sumDice = this.getDiceSum(roll);
+                let specialRow = '<p>';
+                if (sumDice >=  20) { specialRow += '<b>Perfect!</b>';            } else
+                if (sumDice === 19) { specialRow += '<b>Near Perfect!</b>';       } else
+                if (sumDice === 18) { specialRow += '<b>Superior!</b>';           } else
+                if (sumDice === 1)  { specialRow += '<b>Free Second Attack!</b>'; }
 
-                const title = actor.name + " defends with a " + item.name + ".";
+                const title = `${actor.name} defends with a ${item.name}.`;
 
-                const fa_shield = '<i class="fas fa-shield-alt"></i>';
+                const faShield = '<i class="fas fa-shield-alt"></i>';
                 const dr = actor.getArmor();
-                const drRow = "DR: " + dr.armor + " + " + fa_shield + dr.shield;
+                const drRow = `DR: ${dr.armor} + ${faShield}${dr.shield}`;
                 const card  = drRow + specialRow + html;
                 return {flavor: title, content: card};
             }
-        }
-
-        function getDiceSum(roll) {
-            let sum = 0;
-            for (let i = 0; i < roll.terms.length; i++) {
-                for (let j = 0; j < roll.terms[i]?.results?.length; j++) {
-                    sum += roll.terms[i].results[j].result;
-                }
-            }
-            return sum;
+            default:
         }
     }
 

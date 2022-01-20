@@ -165,9 +165,9 @@
                 "base":  {"atk": 0, "def": 0, "dmg": 0, "spd": 0},
                 "misc":  {"atk": 0, "def": 0, "dmg": 0, "spd": 0}
             },
-            "dmg":     {"normal": "", "shield": ""},
-            "reach":   {"value": 0},
-            "ranged":  {"checked": false}
+            "dmg":    {"normal": "", "shield": ""},
+            "reach":  0,
+            "ranged": {"checked": false}
         },
 
         "wound": {
