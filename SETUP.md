@@ -1,6 +1,6 @@
 # Contributing
 
-This project is still in the "excuse our dust" stages. I'm refactoring stuff and still setting up the core experience, so viable contributions are slim pickings for now. Still, it's not a bad idea for me to detail setup for documentation purposes.
+This project is still in the "core functionality" stages, so viable contributions are slim pickings for now. Still, it's not a bad idea for me to detail setup for documentation purposes.
 
 As I'm relatively new to javascript, my toolchain is simple and straight forward. I don't believe you should have trouble getting this to go, but let me know if there are any snags. I use linux and vim and I'm not entirely sure what the right way to go about things would be in other environments, so I'll try my best to provide system agnostic instructions.
 
@@ -21,4 +21,4 @@ As I'm relatively new to javascript, my toolchain is simple and straight forward
 8. Create a symlink/shortcut from your `hackmaster5e-fvtt` repo to `Data/system/hackmaster5e`
 9. From within the foundry program, check that hackmaster shows up on your systems list. Make sure to **lock** your hackmaster system, or your environment will be blown away the next time you update your systems.
 
-Keep `gulp` running on its default task while you work so it can spit out eslint warnings (which I'm still ignoring) and rebuild the style sheet if you touch the scss files. Contributions should be pushed to dev.
+Keep `gulp` running on its default task while you work so it can spit out eslint warnings and rebuild the style sheet if you touch the scss files. Contributions should be pushed to dev.
