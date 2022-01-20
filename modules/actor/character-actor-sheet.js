@@ -2,9 +2,8 @@ import { HMActorSheet } from './actor-sheet.js';
 
 function updateSflags(item, sflags) {
     const flag = sflags;
-    if (item.data.state.innate.checked)   { flag.innate = true;     } else
-    if (item.data.state.equipped.checked) { flag.equipped = true;   } else
-    if (item.data.state.carried.checked)  { flag.unequipped = true; }
+    if (item.data.state.equipped) { flag.equipped = true;   } else
+    if (item.data.state.carried)  { flag.unequipped = true; }
 }
 
 export class HMCharacterActorSheet extends HMActorSheet {

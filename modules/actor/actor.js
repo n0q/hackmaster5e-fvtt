@@ -111,14 +111,14 @@ export class HMActor extends Actor {
             if (aData.state) {
                 if (a.type             === 'armor'
                     && aData.armortype !== 'shield'
-                    && aData.state.equipped.checked
+                    && aData.state.equipped
                 ) return false;
-                return aData.state.carried.checked;
+                return aData.state.carried;
             }
         });
 
         for (let i=0; i < item.length; i++) {
-            encumb += item[i].data.data.weight.value;
+            encumb += item[i].data.data.weight;
         }
         data.encumb = encumb;
     }
@@ -150,7 +150,7 @@ export class HMActor extends Actor {
         let armor = 0;
         let shield = 0;
         const defItems = this.items.filter((a) => a.type === 'armor' &&
-                                                  a.data.data.state.equipped.checked);
+                                                  a.data.data.state.equipped);
 
         for (let i = 0; i < defItems.length; i++) {
             const defData = defItems[i].data.data;

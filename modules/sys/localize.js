@@ -64,14 +64,14 @@ idx.statbonus = {
     morale:   "HM.statbonus.morale"
 },
 
-idx.quality = {
-    worthless:     "HM.qualitySelect.worthless",
-    poor:          "HM.qualitySelect.poor",
-    shoddy:        "HM.qualitySelect.shoddy",
-    average:       "HM.qualitySelect.average",
-    professional:  "HM.qualitySelect.professional",
-    extraordinary: "HM.qualitySelect.extraordinary",
-    superlative:   "HM.qualitySelect.superlative"
+idx.qidx = {
+    0:       'HM.qualitySelect.worthless',
+    1:       'HM.qualitySelect.poor',
+    2:       'HM.qualitySelect.shoddy',
+    3:       'HM.qualitySelect.average',
+    4:       'HM.qualitySelect.professional',
+    5:       'HM.qualitySelect.extraordinary',
+    6:       'HM.qualitySelect.superlative'
 }
 
 idx.armortype = {

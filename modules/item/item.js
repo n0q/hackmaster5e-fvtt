@@ -134,7 +134,7 @@ export class HMItem extends Item {
         const armor    = {};
         const shield   = {};
         const defItems = actorData.items.filter((a) => a.type === 'armor' &&
-                                                       a.data.data.state.equipped.checked);
+                                                       a.data.data.state.equipped);
 
         // Splitting armor and shields for now, so we can manage stances later.
         for (let i = 0; i < defItems.length; i++) {

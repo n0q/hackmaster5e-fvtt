@@ -55,24 +55,16 @@
                 "description": ""
             },
 
-            "logistics": {
-                "state": {"equipped": {"checked": false},
-                          "carried":  {"checked": false},
-                          "innate":   {"checked": false}},
-                "quality": null,
-                "quantity": {"value": 1},
-                "weight":   {"value": 0},
-                "cost":     {"value": 0},
-                "avail": {
-                    "high": {"value": 0},
-                    "med":  {"value": 0},
-                    "low":  {"value": 0}
-                }
+            "thing": {
+                "state": {"equipped": false, "carried": false},
+                "weight": 0,
+                "price": null,
+                "avail": {"high": 0, "med": 0, "low": 0}
             }
         },
 
         "armor": {
-            "templates": ["base", "logistics"],
+            "templates": ["base", "thing"],
             "armortype": null,
             "proficiency": null,
             "bonus": {
@@ -99,11 +91,9 @@
         },
 
         "item": {
-            "templates": ["base", "logistics"],
-            "container": {
-                "checked": false,
-                "capacity": 0
-            }
+            "templates": ["base", "thing"],
+            "qidx": 3,
+            "qty":  1
         },
 
         "proficiency": {
@@ -167,7 +157,7 @@
         },
 
         "weapon": {
-            "templates": ["base", "logistics"],
+            "templates": ["base", "thing"],
             "proficiency": null,
             "skill": null,
             "bonus": {
