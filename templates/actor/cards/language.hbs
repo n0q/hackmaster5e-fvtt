@@ -14,15 +14,15 @@
         <section>
             <div toggle class="rollable button" title="Verbal"
                 data-dialog="skill"
-                data-formula="1d100 + @resp.mod @resp.oper @language.verbal.value"
+                data-formula="1d100 + @resp.mod @resp.oper @bonus.total.verbal"
                 data-item-id="{{_id}}">
-                {{data.language.verbal.value}}
+                {{data.bonus.total.verbal}}
             </div>
             <div toggle class="rollable button" title="Literacy"
                 data-dialog="skill"
-                data-formula="1d100 + @resp.mod @resp.oper @language.literate.value"
+                data-formula="1d100 + @resp.mod @resp.oper @bonus.total.literacy"
                 data-item-id="{{_id}}">
-                {{data.language.literate.value}}
+                {{data.bonus.total.literacy}}
             </div>
             <div class="hide item-controls" toggle>
                 <a class="item-control item-delete" title="Remove Skill"><i class="fas fa-trash"></i></a>
@@ -32,15 +32,15 @@
     <article class="hide" toggle>
         <div class="form-group">
             <label>{{localize "HM.literacy"}}:</label>
-            <input class="editable" type="number" value="{{data.language.literate.value}}"
-                data-item-prop="data.language.literate.value"
+            <input class="editable" type="number" value="{{data.bonus.mastery.literacy}}"
+                data-item-prop="data.bonus.mastery.literacy"
                 data-dtype="Number"
             />
        </div>
         <div class="form-group">
             <label>{{localize "HM.verbal"}}:</label>
-            <input class="editable" type="number" value="{{data.language.verbal.value}}"
-                data-item-prop="data.language.verbal.value"
+            <input class="editable" type="number" value="{{data.bonus.mastery.verbal}}"
+                data-item-prop="data.bonus.mastery.verbal"
                 data-dtype="Number"
             />
        </div>

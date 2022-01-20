@@ -17,15 +17,15 @@
                     <div class="options-block">
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.bp"}}:</label>
-                            <input type="number" name="data.bp.value" value="{{data.data.bp.value}}" data-dtype="Number"/>
+                            <input type="number" name="data.bp" value="{{data.data.bp}}" data-dtype="Number"/>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.universal"}}:</label>
-                            <input type="checkbox" name="data.universal.checked" {{checked data.data.universal.checked}}/>
+                            <input type="checkbox" name="data.universal" {{checked data.data.universal}}/>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.tools"}}:</label>
-                            <input type="checkbox" name="data.tools.checked" {{checked data.data.tools.checked}}/>
+                            <input type="checkbox" name="data.tools" {{checked data.data.tools}}/>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.specialty"}}:</label>
@@ -33,39 +33,37 @@
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.language"}}:</label>
-                            <input type="checkbox" name="data.language.checked" {{checked data.data.language.checked}}/>
+                            <input type="checkbox" name="data.language" {{checked data.data.language}}/>
                         </div>
                     </div>
                 </div>
                 <div class="sidepanel">
                     <div class="options-block">
-                        {{#each data.data.abilities as |ability key|}}
+                        {{#each data.data.relevant as |ability key|}}
                         <div class="options-row">
                             <label class="resource-label">
                                 {{localize (findConfigValue "ability_short" key)}}
                             </label>
-                            <input type="checkbox" name="data.abilities.{{key}}.checked" {{checked ability.checked}}/>
+                            <input type="checkbox" name="data.relevant.{{key}}" {{checked ability}}/>
                         </div>
                         {{/each}}
                     </div>
                 </div>
                 <div class="sidepanel">
                     <div class="options-block">
-                        {{#if data.data.language.checked}}
-                        {{#with data.data.language}}
+                        {{#if data.data.language}}
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.verbal"}} {{localize "HM.mastery"}}:</label>
-                            <input type="number" name="data.language.verbal.value" value="{{verbal.value}}" data-dtype="Number"/>
+                            <input type="number" name="data.bonus.mastery.verbal" value="{{data.data.bonus.mastery.verbal}}" data-dtype="Number"/>
                         </div>
                         <div class="options-row">
-                            <label class="resource-label">{{localize "HM.literate"}} {{localize "HM.mastery"}}:</label>
-                            <input type="number" name="data.language.literate.value" value="{{literate.value}}" data-dtype="Number"/>
+                            <label class="resource-label">{{localize "HM.literacy"}} {{localize "HM.mastery"}}:</label>
+                            <input type="number" name="data.bonus.mastery.literacy" value="{{data.data.bonus.mastery.literacy}}" data-dtype="Number"/>
                         </div>
-                        {{/with}}
                         {{else}}
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.mastery"}}:</label>
-                            <input type="number" name="data.mastery.value" value="{{data.data.mastery.value}}" data-dtype="Number"/>
+                            <input type="number" name="data.bonus.mastery.value" value="{{data.data.bonus.mastery.value}}" data-dtype="Number"/>
                         </div>
                         {{/if}}
                         {{#if data.data.specialty.checked}}

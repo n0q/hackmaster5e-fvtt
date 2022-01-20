@@ -135,7 +135,7 @@
             "warnMulti":         "Multiple tokens selected. Using <b>"
         },
 
-        "sizeFull": {
+        "scaleFull": {
             "tiny":             "Minuscule",
             "small":            "Petite",
             "medium":           "Moyenne",
@@ -285,7 +285,6 @@
         "clerical":     "Clerical",
         "combat":       "Combat",
         "components":   "Composants",
-        "cost":         "Coût",
         "custom":       "Custom",
         "die":          "Die",
         "drmod":        "DR Mod",
@@ -331,6 +330,7 @@
         "poison":       "Poison",
         "prayer":       "Prayer",
         "prepared":     "Prepared",
+        "price":        "Price",
         "proficiency":  "Proficiency",
         "quality":      "Qualité",
         "quantity":     "Quantité",
@@ -342,6 +342,7 @@
         "trivial":      "Trivial",
         "reach":        "Portée",
         "race":         "Race",
+        "range":        "Range",
         "ranged":       "Ranged",
         "reroll":       "Reroll",
         "roll":         "Roll",

@@ -1,29 +1,32 @@
 <div class="setup-abilities">
-    <div class="row">
-        <label class="resource-label column">{{localize "HM.raw"}}</label> 
-        <label class="resource-label column">{{localize "HM.racial"}}</label> 
-        <label class="resource-label column">{{localize "HM.misc"}}</label> 
-    </div>
-    {{#each data.data.abilities as |ability key|}}
-        <div class="row">
-            <div class="ability column">
-                <input type="number" name="data.abilities.{{key}}.raw.value" value="{{ability.raw.value}}" data-dtype="Number"/>
-                <input type="number" name="data.abilities.{{key}}.raw.fvalue" value="{{ability.raw.fvalue}}" data-dtype="Number"/>
-                <label for="data.data.abilities.{{key}}.value" class="resource-label">
-                {{localize (findConfigValue "ability_short" key)}}    
-            </div>
-            <div class="ability column">
-                {{#with (lookup ../actor.race.data.abilities key)}}
-                    <span class="resource-label">+</span>
-                    <input type="number" value="{{value}}" readonly="true"/>
-                    <input type="number" value="{{fvalue}}" readonly="true"/>
-                {{/with}}
-            </div>
-            <div class="ability column">
-                <span class="resource-label">+</span>
-                <input type="number" name="data.abilities.{{key}}.mod.value" value="{{ability.mod.value}}" data-dtype="Number"/>
-                <input type="number" name="data.abilities.{{key}}.mod.fvalue" value="{{ability.mod.fvalue}}" data-dtype="Number"/>
-            </div>
-        </div>
+    <table class="table-basic">
+        <thead>
+{{#each data.data.abilities as |rowObj rowKey|}}
+            <th scope="col"></th>
+            <th scope="col">
+                <label class="resource-label column">{{localize (concat "HM." rowKey)}}</label> 
+            </th>
+{{/each}}
+        </thead>
+        <tbody>
+{{#each data.data.abilities.total as |statObj statKey|}}            
+            <tr>
+                <th scope="row">
+                    <label class="resource-label">{{@statKey}}</label> 
+                </th>
+    {{#each ../data.data.abilities as |rowObj rowKey|}}
+        {{#if (gt @index 0)}}
+        <td><label class="resource-label">{{#if (eq @index 1)}}={{else}}+{{/if}}</label></td>
+        {{/if}}
+        <td>
+            <input type="number" name="data.abilities.{{rowKey}}.{{statKey}}.value" title="data.abilities.{{rowKey}}.{{statKey}}.value" 
+                value="{{lookup (lookup rowObj statKey) 'value'}}" {{#if (eq rowKey "total")}} readonly="true"{{/if}} data-dtype="Number"/>
+            <label class="resource-label">/</label>
+            <input type="number" name="data.abilities.{{rowKey}}.{{statKey}}.fvalue" title="data.abilities.{{rowKey}}.{{statKey}}.fvalue"
+                value="{{lookup (lookup rowObj statKey) 'fvalue'}}" {{#if (eq rowKey "total")}} readonly="true"{{/if}} data-dtype="Number"/>
+        </td>
     {{/each}}
+{{/each}}
+        </tbody>
+    </table>
 </div>

@@ -43,24 +43,24 @@
                     <div class="options-block">
                         <div class="options-row">
                             <label class="resource-label" style="width: 6em;">{{localize "HM.attack"}}:</label>
-                            <input type="number" name="data.atk.value" value="{{atk.value}}" data-dtype="Number"/>
+                            <input type="number" name="data.bonus.atk" value="{{bonus.atk}}" data-dtype="Number"/>
                         </div>
                         {{#if ranged.checked}}{{else}}
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.defense"}}:</label>
-                            <input type="number" name="data.def.value" value="{{def.value}}"
+                            <input type="number" name="data.bonus.def" value="{{bonus.def}}"
                             data-dtype="Number"/>
                         </div>
                         {{/if}}
                         {{#if mechanical.checked}}{{else}}
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.damage"}}:</label>
-                            <input type="number" name="data.dmg.value" value="{{dmg.value}}" data-dtype="Number"/>
+                            <input type="number" name="data.bonus.dmg" value="{{bonus.dmg}}" data-dtype="Number"/>
                         </div>
                         {{/if}}
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.speed"}}:</label>
-                            <input type="number" name="data.spd.value" value="{{spd.value}}" data-dtype="Number"/>
+                            <input type="number" name="data.bonus.spd" value="{{bonus.spd}}" data-dtype="Number"/>
                         </div>
                     </div>
                 </div>

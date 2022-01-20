@@ -11,9 +11,9 @@
             {{> "systems/hackmaster5e/templates/item/parts/description.hbs" }}
         </div>
 
+{{#with data.data}}
         <div class="tab attributes" data-group="primary" data-tab="attributes">
             <div class="item-form">
-                {{#with data.data}}
                 <div class="sidepanel">
                     <div class="options-block">
                         <div class="options-row">
@@ -26,50 +26,40 @@
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.speed"}}</label>
-                            <input type="number" name="data.speed.value" value="{{speed.value}}" data-dtype="Number"/>
+                            <input type="number" name="data.speed" value="{{speed}}" data-dtype="Number"/>
                         </div>       
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.prayer"}}</label>
-                            <input type="checkbox" name="data.divine.checked" {{checked divine.checked}}/>
+                            <input type="checkbox" name="data.divine" {{checked divine}}/>
                         </div>
                     </div>
                     <div class="options-block">
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.verbal"}}</label>
-                            <input type="checkbox" name="data.component.verbal.checked" {{checked component.verbal.checked}}/>
+                            <input type="checkbox" name="data.component.verbal" {{checked component.verbal}}/>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.somatic"}}</label>
-                            <input type="checkbox" name="data.component.somatic.checked" {{checked component.somatic.checked}}/>
+                            <input type="checkbox" name="data.component.somatic" {{checked component.somatic}}/>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.material"}}</label>
-                            <input type="checkbox" name="data.component.material.checked" {{checked component.material.checked}}/>
+                            <input type="checkbox" name="data.component.material" {{checked component.material}}/>
                         </div>
-                        {{#if divine.checked}}
+    {{#if divine}}
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.catalyst"}}</label>
-                            <input type="checkbox" name="data.component.catalyst.checked" {{checked component.catalyst.checked}}/>
+                            <input type="checkbox" name="data.component.catalyst" {{checked component.catalyst}}/>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.divine"}}</label>
-                            <input type="checkbox" name="data.component.iconic.checked" {{checked component.iconic.checked}}/>
+                            <input type="checkbox" name="data.component.divine" {{checked component.divine}}/>
                         </div>
-                        {{/if}}
+    {{/if}}
                     </div>
                 </div>
-                {{#if divine.checked}}
-                <div class="sidepanel">
-                    <div class="options-block">
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.patron"}}</label>
-                            <input type="text" name="data.domain" value="{{domain}}" data-dtype="String"/>
-                        </div>
-                    </div>
-                </div>
-                {{/if}}
-                {{/with}}
             </div>
         </div>
+{{/with}}
     </section>
 </form>

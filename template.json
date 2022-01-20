@@ -1,74 +1,53 @@
 {
     "Actor": {
-        "types": ["character", "beast"],
+        "types": ["character"],
         "templates": {
-
             "base": {
-                "sp":     {"value": 0, "mod": {"value": 0}},
-                "init":   {"value": 0},
-                "encumb": {"value": 0.0},
-                "alignment": null
+                "biography": "",
+                "sp":     {"value": 0},
+                "bonus":  {"total": {}, "misc": {}}
             },
 
             "pc": {
                 "luck":  {"value": 0, "max": 0},
                 "ep":    {"value": 0, "max": 400},
-                "bp":    {"value": 40},
-                "honor": {"value": 0, "bracket": null}
-            },
-
-            "statblock": {
+                "honor": {"value": 0, "bracket": null},
                 "abilities": {
-                    "str": {"raw": {"value": 10, "fvalue": 0}, 
-                            "mod": {"value": 0,  "fvalue": 0}},
-                    "int": {"raw": {"value": 10, "fvalue": 0}, 
-                            "mod": {"value": 0,  "fvalue": 0}},
-                    "wis": {"raw": {"value": 10, "fvalue": 0}, 
-                            "mod": {"value": 0,  "fvalue": 0}},
-                    "dex": {"raw": {"value": 10, "fvalue": 0}, 
-                            "mod": {"value": 0,  "fvalue": 0}},
-                    "con": {"raw": {"value": 10, "fvalue": 0}, 
-                            "mod": {"value": 0,  "fvalue": 0}},
-                    "lks": {"raw": {"value": 10, "fvalue": 0}, 
-                            "mod": {"value": 0,  "fvalue": 0}},
-                    "cha": {"raw": {"value": 10, "fvalue": 0}, 
-                            "mod": {"value": 0,  "fvalue": 0}}
-                },
-
-                "saves": {
-                    "fos":      {"mod": {"value": 0}},
-                    "foa":      {"mod": {"value": 0}},
-                    "turning":  {"mod": {"value": 0}},
-                    "morale":   {"mod": {"value": 0}},
-                    "fatigue":  {"mod": {"value": 0}},
-                    "dodge":    {"mod": {"value": 0}},
-                    "mental":   {"mod": {"value": 0}},
-                    "physical": {"mod": {"value": 0}},
-                    "poison":   {"mod": {"value": 0}},
-                    "trauma":   {"mod": {"value": 0}, "limit": {"value": 0}}
+                    "total": null,
+                    "base": {
+                        "str": {"value": 10, "fvalue": 0},
+                        "int": {"value": 10, "fvalue": 0},
+                        "wis": {"value": 10, "fvalue": 0},
+                        "dex": {"value": 10, "fvalue": 0},
+                        "con": {"value": 10, "fvalue": 0},
+                        "lks": {"value": 10, "fvalue": 0},
+                        "cha": {"value": 10, "fvalue": 0}
+                    },
+                    "misc": {
+                        "str": {"value": 0,  "fvalue": 0},
+                        "int": {"value": 0,  "fvalue": 0},
+                        "wis": {"value": 0,  "fvalue": 0},
+                        "dex": {"value": 0,  "fvalue": 0},
+                        "con": {"value": 0,  "fvalue": 0},
+                        "lks": {"value": 0,  "fvalue": 0},
+                        "cha": {"value": 0,  "fvalue": 0}
+                    }
                 }
             }
         },
 
         "character": {
-            "templates": ["base", "pc", "statblock"],
-            "biography": "",
+            "templates": ["base", "pc"],
             "fame":  {"value": 0, "bracket": null},
             "level": {"value": 1}
-        },
-
-        "beast": {
-            "templates": ["base", "statblock"],
-            "hp": {"max": {"value": null}, "formula": ""},
-            "biography": ""
         }
     },
 
     "Item": {
         "types": [
-              "armor",        "cclass",   "feature",   "item",
-              "proficiency",  "race",     "skill",     "spell",
-              "weapon",       "wound"
+            "armor",        "cclass",   "item",
+            "proficiency",  "race",     "skill",
+            "spell",        "weapon",   "wound"
         ],
 
         "templates": {
@@ -76,24 +55,16 @@
                 "description": ""
             },
 
-            "logistics": {
-                "state": {"equipped": {"checked": false},
-                          "carried":  {"checked": false},
-                          "innate":   {"checked": false}},
-                "quality": null,
-                "quantity": {"value": 1},
-                "weight":   {"value": 0},
-                "cost":     {"value": 0},
-                "avail": {
-                    "high": {"value": 0},
-                    "med":  {"value": 0},
-                    "low":  {"value": 0}
-                }
+            "thing": {
+                "state": {"equipped": false, "carried": false},
+                "weight": 0,
+                "price": null,
+                "avail": {"high": 0, "med": 0, "low": 0}
             }
         },
 
         "armor": {
-            "templates": ["base", "logistics"],
+            "templates": ["base", "thing"],
             "armortype": null,
             "proficiency": null,
             "bonus": {
@@ -106,46 +77,27 @@
 
         "cclass": {
             "templates": ["base"],
-            "level": {"value": 1},
-            "mod": {},
-            "top_cf": {"value": 0.01},
+            "level": 1,
+            "bonus": null,
+            "top_cf": 0.01,
             "features": {
-                "sp":   {"checked": false},
-                "atk":  {"checked": false},
-                "spd":  {"checked": false},
-                "spdm": {"checked": false},
-                "spdr": {"checked": false},
-                "init": {"checked": false}
-            },
-            "ptable": {},
-            "_pdata": {
-                "hp":   {"value": null, "die": null, "reroll": {"checked": false}},
-                "sp":   {"value": null},
-                "atk":  {"value": null},
-                "spd":  {"value": null},
-                "spdm": {"value": null},
-                "spdr": {"value": null},
-                "init": {"value": null}
-            }
+                "sp":   false,
+                "atk":  false,
+                "spd":  false,
+                "spdm": false,
+                "spdr": false,
+                "init": false},
+            "ptable": {}
         },
 
         "item": {
-            "templates": ["base", "logistics"],
-            "container": {
-                "checked": false,
-                "capacity": 0
-            }
-        },
-
-        "feature": {
-            "templates": ["base"]
+            "templates": ["base", "thing"],
+            "qidx": 3,
+            "qty":  1
         },
 
         "proficiency": {
-            "atk": {"value": 0},
-            "def": {"value": 0},
-            "dmg": {"value": 0},
-            "spd": {"value": 0},
+            "bonus": {"atk": 0, "def": 0, "dmg": 0, "spd": 0},
             "skill": null,
             "weapon":     {"checked": false},
             "ranged":     {"checked": false},
@@ -155,10 +107,8 @@
         "race": {
             "templates": ["base"],
             "adj": null,
-            "hp":      {"value": 10, "size": "medium"},
-            "kb":      {"value": 15, "size": "medium"},
-            "reach":   {"value": 0,  "size": "medium"},
-            "def":     {"value": 0},
+            "scale": {"hp": 3,  "kb": 3,  "reach": 3},
+            "bonus": {"hp": 10, "kb": 15, "reach": 0}, 
             "abilities": {
                 "str": {"value": 0, "fvalue": 0},
                 "int": {"value": 0, "fvalue": 0},
@@ -171,44 +121,43 @@
 
         "spell": {
             "templates": ["base"],
-            "divine": {"checked": false},
-            "domain": "",
+            "divine": false,
             "component": {
-                "verbal":   {"checked": true},
-                "somatic":  {"checked": true},
-                "material": {"checked": true},
-                "catalyst": {"checked": false},
-                "divine":   {"checked": false}
+                "verbal":   true,
+                "somatic":  true,
+                "material": true,
+                "catalyst": false,
+                "divine":   false
             },
-            "speed":    {"value": null},
-            "sp":       {"value": null},
+            "speed":   0,
             "prepped": 0,
-            "lidx": 3
+            "lidx":    2
         },
 
         "skill": {
             "templates": ["base"],
-            "mastery":   {"value": 0},
-            "bp":        {"value": null},
+            "bonus": {
+                "total":   {"value": 0, "literacy": 0, "verbal": 0},
+                "mastery": {"value": 0, "literacy": 0, "verbal": 0}
+            },
+            "bp": 0,
             "specialty": {"checked": false, "value": null},
-            "universal": {"checked": false},
-            "tools":     {"checked": false},
-            "language":  {"checked": false,
-                          "verbal":   {"value": 0},
-                          "literate": {"value": 0}},
-            "abilities": {
-                "str": {"checked": false},
-                "int": {"checked": false},
-                "wis": {"checked": false},
-                "dex": {"checked": false},
-                "con": {"checked": false},
-                "lks": {"checked": false},
-                "cha": {"checked": false}
+            "universal": false,
+            "tools": false,
+            "language": false,
+            "relevant": {
+                "str": false,
+                "int": false,
+                "wis": false,
+                "dex": false,
+                "con": false,
+                "lks": false,
+                "cha": false
             }
         },
 
         "weapon": {
-            "templates": ["base", "logistics"],
+            "templates": ["base", "thing"],
             "proficiency": null,
             "skill": null,
             "bonus": {
@@ -216,15 +165,15 @@
                 "base":  {"atk": 0, "def": 0, "dmg": 0, "spd": 0},
                 "misc":  {"atk": 0, "def": 0, "dmg": 0, "spd": 0}
             },
-            "dmg":     {"normal": "", "shield": ""},
-            "reach":   {"value": 0},
-            "ranged":  {"checked": false}
+            "dmg":    {"normal": "", "shield": ""},
+            "reach":  0,
+            "ranged": {"checked": false}
         },
 
         "wound": {
-            "hp":      {"value": null},
-            "timer":   {"value": null},
-            "treated": {"checked": false}
+            "hp":      null,
+            "timer":   null,
+            "treated": false
         }
     }
 }
