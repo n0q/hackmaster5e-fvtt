@@ -74,7 +74,6 @@ export class HMActor extends Actor {
 
     setAbilityBonuses(data) {
         const aData = data.abilities.total;
-        const bonus = data.bonus;
 
         const stats        = {};
         const abilityBonus = {};
@@ -87,10 +86,10 @@ export class HMActor extends Actor {
             const sidx = Math.floor((statAdj - clamp.min) / clamp.step);
             const bonusTable = HMTABLES.abilitymods[statName][sidx];
             abilityBonus[statName] = bonusTable;
-            for (let key in bonusTable) {
+            for (const key in bonusTable) {
                 if (bonusTable.hasOwnProperty(key)) {
                     stats[key] = (stats?.[key] || 0) + bonusTable[key];
-                    if (key === 'chamod') { aData.cha.value += (bonus.chamod || 0); }
+                    if (key === 'chamod') { aData.cha.value += stats[key] || 0; }
                 }
             }
         }
@@ -121,7 +120,7 @@ export class HMActor extends Actor {
         for (let i=0; i < item.length; i++) {
             encumb += item[i].data.data.weight.value;
         }
-        data.encumb.value = encumb;
+        data.encumb = encumb;
     }
 
     setCharacterHP(data) {

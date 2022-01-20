@@ -2,21 +2,16 @@
     "Actor": {
         "types": ["character"],
         "templates": {
-
             "base": {
-                "sp":     {"value": 0, "mod": {"value": 0}},
-                "encumb": {"value": 0.0},
+                "biography": "",
+                "sp":     {"value": 0},
                 "bonus":  {"total": {}, "misc": {}}
             },
 
             "pc": {
                 "luck":  {"value": 0, "max": 0},
                 "ep":    {"value": 0, "max": 400},
-                "bp":    {"value": 40},
-                "honor": {"value": 0, "bracket": null}
-            },
-
-            "statblock": {
+                "honor": {"value": 0, "bracket": null},
                 "abilities": {
                     "total": null,
                     "base": {
@@ -42,8 +37,7 @@
         },
 
         "character": {
-            "templates": ["base", "pc", "statblock"],
-            "biography": "",
+            "templates": ["base", "pc"],
             "fame":  {"value": 0, "bracket": null},
             "level": {"value": 1}
         }
