@@ -1,15 +1,15 @@
 {{#with context.data.data}}
 {{localize (findConfigValue "spellLevels" lidx)}} {{localize "HM.level"}} 
-{{#if divine.checked}}
+{{#if divine}}
     {{localize "HM.clerical"}}
 {{else}}
     {{localize "HM.arcane"}}
 {{/if}} {{localize "HM.spell"}}<p> 
 {{localize "HM.components"}}: ({{../resp.components}})<p>
-{{#if divine.checked}}{{else}}
+{{#if divine}}{{else}}
     {{localize "HM.sp"}}: {{../resp.sp.base}} 
     {{#if (gt ../resp.sp.schedule 0)}} + {{../resp.sp.schedule}}{{/if}}
     <p>
 {{/if}}
-Speed: {{speed.value}}<p>
+{{localize "HM.speed"}}: {{speed}}<p>
 {{/with}}

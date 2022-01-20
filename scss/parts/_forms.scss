@@ -17,7 +17,7 @@
         background: none;
     }
 
-    @include table2(4);
+    @include table-basic;
 
     .sidepanel {
         .options-block {

@@ -117,7 +117,7 @@ $actor-logo-dim: 40%;
     }
 
     .setup-abilities {
-        @include flexgrid;
+      @include table-basic;
     }
 
     .statbonuses {

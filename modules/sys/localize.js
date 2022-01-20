@@ -64,14 +64,14 @@ idx.statbonus = {
     morale:   "HM.statbonus.morale"
 },
 
-idx.quality = {
-    worthless:     "HM.qualitySelect.worthless",
-    poor:          "HM.qualitySelect.poor",
-    shoddy:        "HM.qualitySelect.shoddy",
-    average:       "HM.qualitySelect.average",
-    professional:  "HM.qualitySelect.professional",
-    extraordinary: "HM.qualitySelect.extraordinary",
-    superlative:   "HM.qualitySelect.superlative"
+idx.qidx = {
+    0:       'HM.qualitySelect.worthless',
+    1:       'HM.qualitySelect.poor',
+    2:       'HM.qualitySelect.shoddy',
+    3:       'HM.qualitySelect.average',
+    4:       'HM.qualitySelect.professional',
+    5:       'HM.qualitySelect.extraordinary',
+    6:       'HM.qualitySelect.superlative'
 }
 
 idx.armortype = {
@@ -134,16 +134,16 @@ idx.range = {
     "extreme":   "Extreme (-8)"
 }
 
-idx.size = {
-    "tiny":     "HM.sizeFull.tiny",
-    "small":    "HM.sizeFull.small",
-    "medium":   "HM.sizeFull.medium",
-    "large":    "HM.sizeFull.large",
-    "huge":     "HM.sizeFull.huge",
-    "gigantic": "HM.sizeFull.gigantic",
-    "enormous": "HM.sizeFull.enormous",
-    "colossal": "HM.sizeFull.colossal",
-    "custom":   "HM.custom",
+idx.scale = {
+    0:        "HM.custom",
+    1:        "HM.scaleFull.tiny",
+    2:        "HM.scaleFull.small",
+    3:        "HM.scaleFull.medium",
+    4:        "HM.scaleFull.large",
+    5:        "HM.scaleFull.huge",
+    6:        "HM.scaleFull.gigantic",
+    7:        "HM.scaleFull.enormous",
+    8:        "HM.scaleFull.colossal"
 };
 
 idx.spellLevels = {

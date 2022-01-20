@@ -38,6 +38,11 @@ export default function registerHandlebarsHelpers() {
         return "INVALID_LIST";
     });
 
+    Handlebars.registerHelper("findBonus", (arg1, opts) => {
+        const bonus = opts.data.root.actor.data.data.bonus;
+        return getProperty(bonus, arg1);
+    });
+
     Handlebars.registerHelper('inc', (a)    => { return ++a });
     Handlebars.registerHelper('dec', (a)    => { return --a });
     Handlebars.registerHelper('eq',  (a, b) => { return   a  == b });

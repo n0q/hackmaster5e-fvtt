@@ -2,9 +2,8 @@ import { HMActorSheet } from './actor-sheet.js';
 
 function updateSflags(item, sflags) {
     const flag = sflags;
-    if (item.data.state.innate.checked)   { flag.innate = true;     } else
-    if (item.data.state.equipped.checked) { flag.equipped = true;   } else
-    if (item.data.state.carried.checked)  { flag.unequipped = true; }
+    if (item.data.state.equipped) { flag.equipped = true;   } else
+    if (item.data.state.carried)  { flag.unequipped = true; }
 }
 
 export class HMCharacterActorSheet extends HMActorSheet {
@@ -26,21 +25,13 @@ export class HMCharacterActorSheet extends HMActorSheet {
         const data = super.getData();
         data.dtypes = ['String', 'Number', 'Boolean'];
 
-        // Prepare items.
         if (this.actor.data.type === 'character') {
             this._prepareCharacterItems(data);
+            this._prepareCharacterSheet(data);
         }
-
         return data;
     }
 
-  /**
-   * Organize and classify Items for Character sheets.
-   *
-   * @param {Object} actorData The actor to prepare.
-   *
-   * @return {undefined}
-   */
     async _prepareCharacterItems(sheetData) {
         const actorData = sheetData.actor;
 
@@ -78,10 +69,10 @@ export class HMCharacterActorSheet extends HMActorSheet {
             if (i.type === 'item')        { gear.push(i);  } else
             if (i.type === 'proficiency') { profs.push(i); } else
             if (i.type === 'skill') {
-                if (i.data.language.checked) {
+                if (i.data.language) {
                     langs.push(i);
                 } else {
-                    i.data.universal.checked ? uskills.push(i) : skills.push(i);
+                    i.data.universal ? uskills.push(i) : skills.push(i);
                 }
             } else
             if (i.type === 'spell')  { spells.push(i);     } else
@@ -135,5 +126,14 @@ export class HMCharacterActorSheet extends HMActorSheet {
         // HACK: If sheet has only one spell level, the controls are locked.
         let cslevel = Number(actorData.data.data.cslevel);
         if (slevels.length && !slevels.includes(cslevel)) { actorData.data.data.cslevel = actorData.slevels[0]; }
+    }
+
+    _prepareCharacterSheet(sheetData) {
+        const actorData = sheetData.actor;
+
+        // Saves
+        const left = ['fos', 'foa', 'turning', 'morale'];
+        const right = ['dodge', 'mental', 'physical', 'poison', 'trauma'];
+        actorData.saves = {left, right};
     }
 }

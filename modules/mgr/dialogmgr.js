@@ -55,24 +55,24 @@ export default class HMDialogMgr {
         const dialogResp = {caller};
         dialogResp.resp = await new Promise(async resolve => {
             new Dialog({
-                title: game.i18n.localize("HM.dialog.setWoundTitle"),
-                content: await renderTemplate("systems/hackmaster5e/templates/dialog/setWound.hbs"),
+                title: game.i18n.localize('HM.dialog.setWoundTitle'),
+                content: await renderTemplate('systems/hackmaster5e/templates/dialog/setWound.hbs'),
                 buttons: {
                     wound: {
-                        label: game.i18n.localize("HM.dialog.setWoundTitle"),
+                        label: game.i18n.localize('HM.dialog.setWoundTitle'),
                         callback: () => {
                             resolve({
-                                "value": parseInt(document.getElementById("hp").value || 0)
+                                'value': parseInt(document.getElementById('hp').value || 0)
                             })
                         }
                     }
                 },
-                default: "wound"
+                default: 'wound'
             }, {width: 175}).render(true);
             this._focusById('hp');
         });
         const resp = dialogResp.resp.value;
-        dialogResp.data = {hp: {value: resp}, timer: {value: resp}};
+        dialogResp.data = {hp: resp, timer: resp};
         return dialogResp;
     }
 

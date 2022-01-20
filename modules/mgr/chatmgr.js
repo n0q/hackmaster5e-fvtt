@@ -43,73 +43,75 @@ export default class HMChatMgr {
         return chatData;
     }
 
+    getDiceSum(roll) {
+        let sum = 0;
+        for (let i = 0; i < roll.terms.length; i++) {
+            for (let j = 0; j < roll.terms[i]?.results?.length; j++) {
+                sum += roll.terms[i].results[j].result;
+            }
+        }
+        return sum;
+    }
+
     async _createWeaponCard(roll, dataset, dialogResp) {
         const actor = dialogResp.caller;
         const item = dialogResp.context;
 
         const html = await roll.render();
         switch (dataset.dialog) {
-            case "ratk": {
-                const sumDice = getDiceSum(roll);
-                let specialRow = "<p>";
-                if (sumDice >= 20) { specialRow += "<b>Critical!</b>";         } else
-                if (sumDice == 19) { specialRow += "<b>Near Perfect!</b>";     } else
-                if (sumDice == 1)  { specialRow += "<b>Potential Fumble!</b>"; }
+            case 'ratk': {
+                const sumDice = this.getDiceSum(roll);
+                let specialRow = '<p>';
+                if (sumDice >=  20) { specialRow += '<b>Critical!</b>';         } else
+                if (sumDice === 19) { specialRow += '<b>Near Perfect!</b>';     } else
+                if (sumDice === 1)  { specialRow += '<b>Potential Fumble!</b>'; }
 
-                const title = actor.name + " attacks with a " + item.name + ".";
+                const title = `${actor.name} attacks with a ${item.name}.`;
 
-                const speedRow = "Speed: " + item.data.data.stats.spd.derived.value;
-                const rangeRow = "<br>" + game.i18n.localize("HM." + dialogResp.resp.rangestr)
-                               + " Range";
+                const speedRow = `${game.i18n.localize('HM.speed')}: ${item.data.data.bonus.total.spd}`;
+                const rangeRow = `<br> ${game.i18n.localize('HM.' + dialogResp.resp.rangestr)}`
+                               + ` ${game.i18n.localize('HM.range')}`;
                 const card = speedRow + rangeRow + specialRow + html;
                 return {flavor: title, content: card};
             }
-            case "atk": {
-                const sumDice = getDiceSum(roll);
-                let specialRow = "<p>";
-                if (sumDice >= 20) { specialRow += "<b>Critical!</b>";         } else
-                if (sumDice == 19) { specialRow += "<b>Near Perfect!</b>";     } else
-                if (sumDice == 1)  { specialRow += "<b>Potential Fumble!</b>"; }
 
-                const title = actor.name + " attacks with a " + item.name + ".";
+            case 'atk': {
+                const sumDice = this.getDiceSum(roll);
+                let specialRow = '<p>';
+                if (sumDice >=  20) { specialRow += '<b>Critical!</b>';         } else
+                if (sumDice === 19) { specialRow += '<b>Near Perfect!</b>';     } else
+                if (sumDice === 1)  { specialRow += '<b>Potential Fumble!</b>'; }
 
-                const speedRow = "Speed: " + item.data.data.stats.spd.derived.value;
+                const title = `${actor.name} attacks with a ${item.name}.`;
+
+                const speedRow = `${game.i18n.localize('HM.speed')}: ${item.data.data.bonus.total.spd}`;
                 const card = speedRow + specialRow + html;
                 return {flavor: title, content: card};
             }
 
-            case "dmg": {
-                const shield = dialogResp.resp.shieldhit ? " shield-" : " ";
-                const title = actor.name + shield + "hits with a " + item.name + ".";
+            case 'dmg': {
+                const shield = dialogResp.resp.shieldhit ? ' shield-' : '';
+                const title = `${actor.name} ${shield}hits with a ${item.name}.`;
                 return {flavor: title, content: html};
             }
 
-            case "def": {
-                const sumDice = getDiceSum(roll);
-                let specialRow = "<p>";
-                if (sumDice >= 20) { specialRow += "<b>Perfect!</b>";            } else
-                if (sumDice == 19) { specialRow += "<b>Near Perfect!</b>";       } else
-                if (sumDice == 18) { specialRow += "<b>Superior!</b>";           } else
-                if (sumDice == 1)  { specialRow += "<b>Free Second Attack!</b>"; }
+            case 'def': {
+                const sumDice = this.getDiceSum(roll);
+                let specialRow = '<p>';
+                if (sumDice >=  20) { specialRow += '<b>Perfect!</b>';            } else
+                if (sumDice === 19) { specialRow += '<b>Near Perfect!</b>';       } else
+                if (sumDice === 18) { specialRow += '<b>Superior!</b>';           } else
+                if (sumDice === 1)  { specialRow += '<b>Free Second Attack!</b>'; }
 
-                const title = actor.name + " defends with a " + item.name + ".";
+                const title = `${actor.name} defends with a ${item.name}.`;
 
-                const fa_shield = '<i class="fas fa-shield-alt"></i>';
-                const actordr = actor.data.data.derived.armor.dr;
-                const drRow   = "DR: " + actordr.value + " + " + fa_shield + actordr.shield.value;
+                const faShield = '<i class="fas fa-shield-alt"></i>';
+                const dr = actor.getArmor();
+                const drRow = `DR: ${dr.armor} + ${faShield}${dr.shield}`;
                 const card  = drRow + specialRow + html;
                 return {flavor: title, content: card};
             }
-        }
-
-        function getDiceSum(roll) {
-            let sum = 0;
-            for (let i = 0; i < roll.terms.length; i++) {
-                for (let j = 0; j < roll.terms[i]?.results?.length; j++) {
-                    sum += roll.terms[i].results[j].result;
-                }
-            }
-            return sum;
+            default:
         }
     }
 
@@ -126,7 +128,7 @@ export default class HMChatMgr {
         if (dialogResp.resp.opposed) flavor += ' (Opposed)';
         else {
             const difficulty = HMTABLES.skill.difficulty;
-            for (let key in difficulty) {
+            for (const key in difficulty) {
                 if (roll.total + difficulty[key] > 0) continue;
                 const diffRow = game.i18n.localize(key) + ' ' + game.i18n.localize('HM.skillcheck');
                 content = diffRow + '<p>' + html;
@@ -137,23 +139,23 @@ export default class HMChatMgr {
     }
 
     async _createSpellCard(dataset, dialogResp) {
-        const actor = dialogResp.caller;
-        const item = dialogResp.context;
-        const data = item.data.data;
-        const flavor = actor.name + " casts " + item.name + ".";
+        const actor    = dialogResp.caller;
+        const item     = dialogResp.context;
+        const { data } = item.data;
+        const flavor   = actor.name + ' casts ' + item.name + '.';
 
         // Spell Components
         const components = [];
-        if (data.component.verbal.checked)   components.push("V");
-        if (data.component.somatic.checked)  components.push("S");
-        if (data.component.material.checked) components.push("M");
-        if (data.component.catalyst.checked) components.push("C");
-        if (data.component.divine.checked)   components.push("DI");
+        if (data.component.verbal)    { components.push('V');  }
+        if (data.component.somatic)   { components.push('S');  }
+        if (data.component.material)  { components.push('M');  }
+        if (data.component.catalyst)  { components.push('C');  }
+        if (data.component.divine)    { components.push('DI'); }
         dialogResp.resp['components'] = components.join(', ');
 
-        if (data.divine.checked) {
+        if (data.divine) {
             const prepped = Math.max(data.prepped - 1, 0);
-            await item.update({"data.prepped": prepped});
+            await item.update({'data.prepped': prepped});
         } else {
             // Spell Point Calculation
             let base = 30 + 10 * data.lidx;
@@ -162,10 +164,10 @@ export default class HMChatMgr {
             const sum = base + schedule;
             dialogResp.resp['sp'] = {value: sum, base, schedule};
             const spNew = actor.data.data.sp.value - sum;
-            await actor.update({"data.sp.value": spNew});
+            await actor.update({'data.sp.value': spNew});
         }
 
-        const template = "systems/hackmaster5e/templates/chat/spell.hbs";
+        const template = 'systems/hackmaster5e/templates/chat/spell.hbs';
         const content = await renderTemplate(template, dialogResp);
         return {flavor, content};
     }

@@ -16,14 +16,14 @@
                     {{localize (findConfigValue "itemTypes" type)}}
                 </div>
                 <div class="item-control item-state location button">
-                    {{#if data.state.equipped.checked}}{{localize "HM.equipped"}}
-                    {{else}}{{#if data.state.carried.checked}}{{localize "HM.carried"}}
+                    {{#if data.state.equipped}}{{localize "HM.equipped"}}
+                    {{else}}{{#if data.state.carried}}{{localize "HM.carried"}}
                         {{else}}{{localize "HM.owned"}}
                         {{/if}}
                     {{/if}}
                 </div>
                 <div class="weight">
-                    {{numberFormat data.weight.value decimals=1}} lbs.
+                    {{numberFormat data.weight decimals=1}} lbs.
                 </div>
             </div>
         </section>

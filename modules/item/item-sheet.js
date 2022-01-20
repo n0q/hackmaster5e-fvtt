@@ -59,7 +59,7 @@ export class HMItemSheet extends ItemSheet {
         const ref1    = dataset.ref1;
         const ref2    = $(element).val();
         const ref3    = dataset.ref3;
-        if (ref2 === 'custom') return;
+        if (ref2 === '0') { return; }
 
         const key     = dataset.key;
         const value   = HMTABLES[ref1][ref2][ref3];

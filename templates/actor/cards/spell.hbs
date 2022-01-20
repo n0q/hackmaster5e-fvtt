@@ -15,10 +15,10 @@
             <img class="imgbutton spell-prep" src="{{findConfigValue "combatImg" "prep"}}" height=20 title="Prepare"
                 data-item-prepare=true
                 data-item-id="{{_id}}">
-            {{#if data.divine.checked}}{{else}}
+            {{#if data.divine}}{{else}}
             <img class="rollable imgbutton" src="{{findConfigValue "combatImg" "cast"}}" height=20 title="Cast"
                 data-dialog="cast"
-                data-item-divine={{data.divine.checked}}
+                data-item-divine={{data.divine}}
                 data-item-id="{{_id}}">
             {{/if}}
         </section>

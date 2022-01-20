@@ -9,29 +9,33 @@
     <div>
         <div class="form-group">
             <label class="resource-label">{{localize "HM.qty"}}</label>
-            <input type="number" name="data.quantity.value" value="{{data.data.quantity.value}}" data-dtype="Number"/>
+{{#if (eq item.type "item")}}
+            <input type="number" name="data.qty" value="{{data.data.qty}}" data-dtype="Number"/>
+{{else}}
+            <input type="number" readonly value="1"/>
+{{/if}}
         </div>
         <div class="form-group">
             <label class="resource-label">{{localize "HM.avail.high"}}</label>
-            <input type="number" name="data.avail.high.value" value="{{data.data.avail.high.value}}" data-dtype="Number"/>
+            <input type="number" name="data.avail.high" value="{{data.data.avail.high}}" data-dtype="Number"/>
         </div>
     </div><div>
         <div class="form-group">
             <label class="resource-label">{{localize "HM.weight"}}</label>
-            <input type="number" name="data.weight.value" value="{{data.data.weight.value}}" data-dtype="Number"/>
+            <input type="number" name="data.weight" value="{{data.data.weight}}" data-dtype="Number"/>
         </div>
         <div class="form-group">
             <label class="resource-label">{{localize "HM.avail.med"}}</label>
-            <input type="number" name="data.avail.med.value" value="{{data.data.avail.med.value}}" data-dtype="Number"/>
+            <input type="number" name="data.avail.med" value="{{data.data.avail.med}}" data-dtype="Number"/>
         </div>
     </div><div>
         <div class="form-group">
-            <label class="resource-label">{{localize "HM.cost"}}</label>
-            <input type="number" name="data.cost.value" value="{{data.data.cost.value}}" data-dtype="Number"/>
+            <label class="resource-label">{{localize "HM.price"}}</label>
+            <input type="text" name="data.price" value="{{data.data.price}}" data-dtype="String"/>
         </div>
         <div class="form-group">
             <label class="resource-label">{{localize "HM.avail.low"}}</label>
-            <input type="number" name="data.avail.low.value" value="{{data.data.avail.low.value}}" data-dtype="Number"/>
+            <input type="number" name="data.avail.low" value="{{data.data.avail.low}}" data-dtype="Number"/>
         </div>
     </div>
 </div>

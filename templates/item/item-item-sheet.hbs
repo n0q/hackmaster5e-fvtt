@@ -11,21 +11,21 @@
             {{> "systems/hackmaster5e/templates/item/parts/description.hbs" }}
         </div>
 
+{{#with data.data}}
         <div class="tab attributes" data-group="primary" data-tab="attributes">
             <div class="item-form">
-                {{#with data.data}}
                 <div class="sidepanel">
                     <div class="options-block">
                         <label class="resource-label">{{localize "HM.quality"}}</label>
-                        <select name="data.quality" data-dtype="{{quality}}">
-                        {{#select quality}}{{#each (findConfigObj "quality") as |type t|}}
+                        <select name="data.qidx" data-dtype="{{qidx}}">
+                        {{#select qidx}}{{#each (findConfigObj "qidx") as |type t|}}
                             <option value="{{t}}">{{localize type}}</option>
                         {{/each}}{{/select}}
                         </select>
                     </div>
                 </div>
-                {{/with}}
             </div>
         </div> 
+{{/with}}
     </section>
 </form>

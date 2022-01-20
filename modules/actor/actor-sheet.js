@@ -96,31 +96,31 @@ export class HMActorSheet extends ActorSheet {
     // Toggle between an item being equipped, carried, or stored.
     async _onItemState(ev) {
         ev.preventDefault();
-        const li = $(ev.currentTarget).parents(".card");
-        const item = this.actor.items.get(li.data("itemId"));
-        const state = item.data.data.state;
+        const li = $(ev.currentTarget).parents('.card');
+        const item = this.actor.items.get(li.data('itemId'));
+        const { state } = item.data.data;
 
         // TODO: This can't possibly stay like this.
-        if (state.equipped.checked) { state.equipped.checked = false; } else
-        if (state.carried.checked)  { state.carried.checked  = false; } else {
-            state.equipped.checked = true;
-            state.carried.checked = true;
+        if (state.equipped) { state.equipped = false; } else
+        if (state.carried)  { state.carried  = false; } else {
+            state.equipped = true;
+            state.carried  = true;
         }
-        await this.actor.updateEmbeddedDocuments("Item", [{_id:item.id, data:item.data.data}]);
+        await this.actor.updateEmbeddedDocuments('Item', [{_id:item.id, data:item.data.data}]);
     }
 
     async _onSpellPrep(ev) {
         ev.preventDefault();
-        const element = ev.currentTarget;
-        const dataset = element.dataset;
-        const li = $(ev.currentTarget).parents(".card");
-        const item = this.actor.items.get(li.data("itemId"));
+        const element     = ev.currentTarget;
+        const { dataset } = element;
+        const li = $(ev.currentTarget).parents('.card');
+        const item = this.actor.items.get(li.data('itemId'));
 
-        let prepped = item.data.data.prepped || 0;
+        let { prepped } = item.data.data || 0;
         dataset.itemPrepare ? prepped++ : prepped--;
 
         item.data.data.prepped = prepped;
-        await this.actor.updateEmbeddedDocuments("Item", [{_id:item.id, data:item.data.data}]);
+        await this.actor.updateEmbeddedDocuments('Item', [{_id:item.id, data:item.data.data}]);
     }
 
     _onClick(event) {
