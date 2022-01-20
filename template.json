@@ -154,22 +154,23 @@
 
         "skill": {
             "templates": ["base"],
-            "mastery":   {"value": 0},
-            "bp":        {"value": null},
+            "bonus": {
+                "total":   {"value": 0, "literacy": 0, "verbal": 0},
+                "mastery": {"value": 0, "literacy": 0, "verbal": 0}
+            },
+            "bp": 0,
             "specialty": {"checked": false, "value": null},
-            "universal": {"checked": false},
-            "tools":     {"checked": false},
-            "language":  {"checked": false,
-                          "verbal":   {"value": 0},
-                          "literate": {"value": 0}},
-            "abilities": {
-                "str": {"checked": false},
-                "int": {"checked": false},
-                "wis": {"checked": false},
-                "dex": {"checked": false},
-                "con": {"checked": false},
-                "lks": {"checked": false},
-                "cha": {"checked": false}
+            "universal": false,
+            "tools": false,
+            "language": false,
+            "relevant": {
+                "str": false,
+                "int": false,
+                "wis": false,
+                "dex": false,
+                "con": false,
+                "lks": false,
+                "cha": false
             }
         },
 

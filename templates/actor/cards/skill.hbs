@@ -1,5 +1,4 @@
 <li class="card hmstyle" data-item-id="{{_id}}">
-    <!--<summary class="toggleswitch">-->
     <summary class="toggleswitch">
         <header>
             <label for="{{name}}">
@@ -15,9 +14,9 @@
         <section>
             <div toggle class="rollable button"
                 data-dialog="skill"
-                data-formula="1d100 + @resp.mod @resp.oper @mastery.derived.value"
+                data-formula="1d100 + @resp.mod @resp.oper @bonus.total.value"
                 data-item-id="{{_id}}">
-                {{data.mastery.derived.value}}
+                {{data.bonus.total.value}}
             </div>
             <div class="hide item-controls" toggle>
                 <a class="item-control item-delete" title="Remove Skill"><i class="fas fa-trash"></i></a>
@@ -27,8 +26,8 @@
     <article class="hide" toggle>
         <div class="form-group">
             <label>{{localize "HM.mastery"}}:</label>
-            <input class="editable" type="number" value="{{data.mastery.value}}"
-                data-item-prop="data.mastery.value"
+            <input class="editable" type="number" value="{{data.bonus.mastery.value}}"
+                data-item-prop="data.bonus.mastery.value"
                 data-dtype="Number"
             />
         </div>

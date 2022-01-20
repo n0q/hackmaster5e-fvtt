@@ -106,18 +106,24 @@ export class HMItem extends Item {
 
     _prepSkillData(data, actorData) {
         if (!actorData) return;
-        if (!data.universal.checked || data.mastery.value > 0) {
-            data.mastery.derived = {value: data.mastery.value};
-            return;
-        }
-        const abilities = actorData.data.abilities.total;
-        const relevant  = data.abilities;
-        const stack = [];
 
-        for (let key in relevant) {
-            if (relevant[key].checked) stack.push(abilities[key].value);
+        const { bonus, relevant } = data;
+        if (data.universal && bonus.mastery.value === 0) {
+            const abilities = actorData.data.abilities.total;
+            const stack = [];
+
+            for (const key in relevant) {
+                if (relevant[key]) stack.push(abilities[key].value);
+            }
+            const value = Math.min(...stack);
+            bonus.stats = {value, 'literacy': value, 'verbal': value};
+        } else { delete bonus.stats; }
+
+        for (const key in bonus.total) {
+            let sum = -bonus.total[key];
+            for (const state in bonus) { sum += (bonus[state][key] || 0); }
+            bonus.total[key] = sum;
         }
-        data.mastery.derived = {'value': Math.min(...stack)};
     }
 
     _prepWeaponData(itemData, actorData) {

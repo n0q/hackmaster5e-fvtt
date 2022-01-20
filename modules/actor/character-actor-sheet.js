@@ -70,10 +70,10 @@ export class HMCharacterActorSheet extends HMActorSheet {
             if (i.type === 'item')        { gear.push(i);  } else
             if (i.type === 'proficiency') { profs.push(i); } else
             if (i.type === 'skill') {
-                if (i.data.language.checked) {
+                if (i.data.language) {
                     langs.push(i);
                 } else {
-                    i.data.universal.checked ? uskills.push(i) : skills.push(i);
+                    i.data.universal ? uskills.push(i) : skills.push(i);
                 }
             } else
             if (i.type === 'spell')  { spells.push(i);     } else
