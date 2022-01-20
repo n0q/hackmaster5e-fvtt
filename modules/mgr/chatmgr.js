@@ -126,7 +126,7 @@ export default class HMChatMgr {
         if (dialogResp.resp.opposed) flavor += ' (Opposed)';
         else {
             const difficulty = HMTABLES.skill.difficulty;
-            for (let key in difficulty) {
+            for (const key in difficulty) {
                 if (roll.total + difficulty[key] > 0) continue;
                 const diffRow = game.i18n.localize(key) + ' ' + game.i18n.localize('HM.skillcheck');
                 content = diffRow + '<p>' + html;
@@ -137,23 +137,23 @@ export default class HMChatMgr {
     }
 
     async _createSpellCard(dataset, dialogResp) {
-        const actor = dialogResp.caller;
-        const item = dialogResp.context;
-        const data = item.data.data;
-        const flavor = actor.name + " casts " + item.name + ".";
+        const actor    = dialogResp.caller;
+        const item     = dialogResp.context;
+        const { data } = item.data;
+        const flavor   = actor.name + ' casts ' + item.name + '.';
 
         // Spell Components
         const components = [];
-        if (data.component.verbal.checked)   components.push("V");
-        if (data.component.somatic.checked)  components.push("S");
-        if (data.component.material.checked) components.push("M");
-        if (data.component.catalyst.checked) components.push("C");
-        if (data.component.divine.checked)   components.push("DI");
+        if (data.component.verbal)    { components.push('V');  }
+        if (data.component.somatic)   { components.push('S');  }
+        if (data.component.material)  { components.push('M');  }
+        if (data.component.catalyst)  { components.push('C');  }
+        if (data.component.divine)    { components.push('DI'); }
         dialogResp.resp['components'] = components.join(', ');
 
-        if (data.divine.checked) {
+        if (data.divine) {
             const prepped = Math.max(data.prepped - 1, 0);
-            await item.update({"data.prepped": prepped});
+            await item.update({'data.prepped': prepped});
         } else {
             // Spell Point Calculation
             let base = 30 + 10 * data.lidx;
@@ -162,10 +162,10 @@ export default class HMChatMgr {
             const sum = base + schedule;
             dialogResp.resp['sp'] = {value: sum, base, schedule};
             const spNew = actor.data.data.sp.value - sum;
-            await actor.update({"data.sp.value": spNew});
+            await actor.update({'data.sp.value': spNew});
         }
 
-        const template = "systems/hackmaster5e/templates/chat/spell.hbs";
+        const template = 'systems/hackmaster5e/templates/chat/spell.hbs';
         const content = await renderTemplate(template, dialogResp);
         return {flavor, content};
     }

@@ -111,16 +111,16 @@ export class HMActorSheet extends ActorSheet {
 
     async _onSpellPrep(ev) {
         ev.preventDefault();
-        const element = ev.currentTarget;
-        const dataset = element.dataset;
-        const li = $(ev.currentTarget).parents(".card");
-        const item = this.actor.items.get(li.data("itemId"));
+        const element     = ev.currentTarget;
+        const { dataset } = element;
+        const li = $(ev.currentTarget).parents('.card');
+        const item = this.actor.items.get(li.data('itemId'));
 
-        let prepped = item.data.data.prepped || 0;
+        let { prepped } = item.data.data || 0;
         dataset.itemPrepare ? prepped++ : prepped--;
 
         item.data.data.prepped = prepped;
-        await this.actor.updateEmbeddedDocuments("Item", [{_id:item.id, data:item.data.data}]);
+        await this.actor.updateEmbeddedDocuments('Item', [{_id:item.id, data:item.data.data}]);
     }
 
     _onClick(event) {

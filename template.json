@@ -131,19 +131,17 @@
 
         "spell": {
             "templates": ["base"],
-            "divine": {"checked": false},
-            "domain": "",
+            "divine": false,
             "component": {
-                "verbal":   {"checked": true},
-                "somatic":  {"checked": true},
-                "material": {"checked": true},
-                "catalyst": {"checked": false},
-                "divine":   {"checked": false}
+                "verbal":   true,
+                "somatic":  true,
+                "material": true,
+                "catalyst": false,
+                "divine":   false
             },
-            "speed":    {"value": null},
-            "sp":       {"value": null},
+            "speed":   0,
             "prepped": 0,
-            "lidx": 3
+            "lidx":    2
         },
 
         "skill": {
