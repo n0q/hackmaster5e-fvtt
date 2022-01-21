@@ -1,13 +1,15 @@
-import HMDialogMgr from '../mgr/dialogmgr.js'
+/* eslint max-classes-per-file: ['error', 2] */
+import HMDialogMgr from '../mgr/dialogmgr.js';
 
 export class HMCombat extends Combat {
-    nextTurn() { return this.nextRound() }
-    _sortCombatants(a, b) { return -super._sortCombatants(a, b) }
+    nextTurn() { return this.nextRound(); }
+
+    _sortCombatants(a, b) { return -super._sortCombatants(a, b); }
 
     async _getInitiativeDie(ids) {
         const caller = ids.length ? this.combatants.get(ids[0]).actor : null;
         const dialogMgr = new HMDialogMgr();
-        const dialogResp = await dialogMgr.getDialog({dialog: "initdie"}, caller);
+        const dialogResp = await dialogMgr.getDialog({dialog: 'initdie'}, caller);
         return dialogResp.resp.die;
     }
 
@@ -15,13 +17,13 @@ export class HMCombat extends Combat {
         let initFormula = formula;
         if (!initFormula) {
             const initDie = await this._getInitiativeDie(ids);
-            initFormula = initDie + game.system.data.initiative;
+            initFormula = `${initDie} + ${game.system.data.initiative}`;
         }
 
         const rollData = {formula: initFormula, updateTurn, messageOptions};
-        return await super.rollInitiative(ids, rollData);
+        return super.rollInitiative(ids, rollData);
     }
-};
+}
 
 export class HMCombatTracker extends CombatTracker {
     static get defaultOptions() {

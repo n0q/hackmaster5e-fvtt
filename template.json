@@ -4,7 +4,8 @@
         "templates": {
             "base": {
                 "biography": "",
-                "sp":     {"value": 0},
+                "hp":     {"value": 0, "max": 0},
+                "sp":     {"value": 0, "max": 0},
                 "bonus":  {"total": {}, "misc": {}}
             },
 

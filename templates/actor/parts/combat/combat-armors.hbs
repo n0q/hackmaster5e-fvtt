@@ -11,7 +11,7 @@
 {{#if actor.sflags.combat.armor.unequipped}}
     <label class="resource-label">{{localize "HM.unequipped"}}</label>
     {{#each actor.armors}}
-        {{#if data.state.equipped.checked}}{{else}}
+        {{#if data.state.equipped}}{{else}}
             {{> "systems/hackmaster5e/templates/actor/cards/armor.hbs" }}
         {{/if}}
     {{/each}}

@@ -40,14 +40,14 @@
             "path": "lang/en.json"
         },
         {
-          "lang": "fr",
-          "name": "Français",
-          "path": "lang/fr.json"
+            "lang": "fr",
+            "name": "Français",
+            "path": "lang/fr.json"
         }
     ],
     "gridDistance": 5,
     "gridUnits": "ft",
-    "initiative": "+ @bonus.total.init",
+    "initiative": "@bonus.total.init",
     "primaryTokenAttribute": "hp",
     "flags": { "allowBugReporter": true },
     "bugs": "https://github.com/n0q/hackmaster5e-fvtt/issues",
