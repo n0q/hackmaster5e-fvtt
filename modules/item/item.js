@@ -1,44 +1,34 @@
 import { HMTABLES } from '../sys/constants.js';
 
 export class HMItem extends Item {
-  prepareDerivedData() {
-      super.prepareDerivedData();
-      const itemData  = this.data.data;
-      const itemType  = this.data.type;
-      const actorData = this.actor ? this.actor.data : null;
+    prepareBaseData() {
+        super.prepareBaseData();
+        const {data, type} = this.data;
+        const actorData = this.actor ? this.actor.data : null;
 
-      if (itemType === 'armor')       { this._prepArmorData(itemData, actorData)       } else
-      if (itemType === 'cclass')      { this._prepCClassData(itemData, actorData)      } else
-      if (itemType === 'proficiency') { this._prepProficiencyData(itemData, actorData) } else
-      if (itemType === 'skill')       { this._prepSkillData(itemData, actorData)       } else
-      if (itemType === 'weapon')      { this._prepWeaponData(itemData, actorData)      }
-  }
-
-    async roll() {
-        // Basic template rendering data
-        const token = this.actor.token;
-        const item = this.data;
-        const actorData = this.actor ? this.actor.data.data : {};
-        const itemData = item.data;
-
-        let roll = new Roll('d20+@abilities.str.mod', actorData);
-        let label = `Rolling ${item.name}`;
-        roll.roll().toMessage({
-            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-            flavor: label
-        });
+        if (type === 'armor')       { this._prepArmorData();                      } else
+        if (type === 'cclass')      { this._prepCClassData(data, actorData);      } else
+        if (type === 'proficiency') { this._prepProficiencyData(data, actorData); }
     }
 
-    _prepArmorData(itemData, actorData) {
-        if (!actorData) return;
-        const bonus = itemData.bonus;
+    prepareDerivedData() {
+        super.prepareDerivedData();
+        const {data, type} = this.data;
+        const actorData = this.actor ? this.actor.data : null;
 
-        for (let key in bonus.total) {
+        if (type === 'skill')  { this._prepSkillData(data, actorData);  } else
+        if (type === 'weapon') { this._prepWeaponData(data, actorData); }
+    }
+
+    _prepArmorData() {
+        if (!this.actor) { return; }
+        const {bonus} = this.data.data;
+
+        for (const key in bonus.total) {
             let sum = -bonus.total[key];
-            for (let state in bonus) { sum += bonus[state][key]; }
+            for (const row in bonus) { sum += bonus[row][key]; }
             bonus.total[key] = sum;
         }
-        itemData.processed = true;
     }
 
     async _prepCClassData(data, actorData) {
@@ -140,7 +130,8 @@ export class HMItem extends Item {
         for (let i = 0; i < defItems.length; i++) {
             const defItem = defItems[i];
             const defData = defItem.data.data;
-            if (!defData.processed) { defItem._prepArmorData(defData, actorData); }
+            // Without having finer control over prepData order, we must foce a prep here.
+            defItem.prepareData();
             defData.shield.checked ? shields.push(defItem) : armors.push(defItem);
         }
 
