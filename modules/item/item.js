@@ -6,7 +6,7 @@ export class HMItem extends Item {
         const {data, type} = this.data;
         const actorData = this.actor ? this.actor.data : null;
 
-        if (type === 'armor')       { this._prepArmorData();                      }
+        if (type === 'armor')       { this._prepArmorData();                      } else
         if (type === 'cclass')      { this._prepCClassData(data, actorData);      } else
         if (type === 'proficiency') { this._prepProficiencyData(data, actorData); }
     }
@@ -16,8 +16,8 @@ export class HMItem extends Item {
         const {data, type} = this.data;
         const actorData = this.actor ? this.actor.data : null;
 
-        if (type === 'skill')       { this._prepSkillData(data, actorData);       } else
-        if (type === 'weapon')      { this._prepWeaponData(data, actorData);      }
+        if (type === 'skill')  { this._prepSkillData(data, actorData);  } else
+        if (type === 'weapon') { this._prepWeaponData(data, actorData); }
     }
 
     _prepArmorData() {
