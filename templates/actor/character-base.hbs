@@ -1,0 +1,44 @@
+<form class="{{cssClass}} flexcol actor-sheet" autocomplete="off">
+    <header>
+        {{> "systems/hackmaster5e/templates/actor/parts/header/base-header.hbs"}}
+    </header>
+
+    <section class="sheet-middle">
+        {{> "systems/hackmaster5e/templates/actor/parts/middle/base-middle.hbs"}}
+    </section>
+
+    <nav class="sheet-tabs tabs" data-group="primary">
+        <a class="item" data-tab="skills">{{localize "HM.skills"}}</a>
+        <a class="item" data-tab="combat">{{localize "HM.combat"}}</a>
+        <a class="item" data-tab="spells">{{localize "HM.spells"}}</a>
+        <a class="item" data-tab="description">{{localize "HM.description"}}</a>
+        <a class="item" data-tab="inventory">{{localize "HM.inventory"}}</a>
+        <a class="item" data-tab="setup">{{localize "HM.setup"}}</a>
+    </nav>
+
+    <section class="sheet-body">
+        <div class="tab skills" data-group="primary" data-tab="skills">
+            {{> "systems/hackmaster5e/templates/actor/parts/skills/base-skills.hbs"}}
+        </div>
+
+        <div class="tab base-combat" data-group="primary" data-tab="combat">
+            {{> "systems/hackmaster5e/templates/actor/parts/combat/base-combat.hbs"}}
+        </div>
+
+        <div class="tab spells" data-group="primary" data-tab="spells">
+            {{> "systems/hackmaster5e/templates/actor/parts/spells/base-spells.hbs"}}
+        </div>
+
+        <div class="tab biography" data-group="primary" data-tab="description">
+            {{> "systems/hackmaster5e/templates/actor/parts/biography.hbs"}}
+        </div>
+
+        <div class="tab items" data-group="primary" data-tab="inventory">
+            {{> "systems/hackmaster5e/templates/actor/parts/inventory/base-inventory.hbs"}}
+        </div>
+
+        <div class="tab base-setup" data-group="primary" data-tab="setup">
+            {{> "systems/hackmaster5e/templates/actor/parts/setup/base-setup.hbs"}}
+        </div>
+    </section>
+</form>

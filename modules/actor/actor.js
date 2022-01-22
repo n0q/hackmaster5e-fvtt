@@ -11,8 +11,8 @@ export class HMActor extends Actor {
             this.setCClass(data);
             this.setAbilities(data);
             this.setAbilityBonuses(data);
-            this.setBonusTotal(data);
         }
+        this.setBonusTotal(data);
     }
 
     prepareDerivedData() {
@@ -46,7 +46,6 @@ export class HMActor extends Actor {
         if (!cclasses.length) return;
 
         const cclass = cclasses.pop();
-        data.level.value = cclass.data.data.level;
         data.bonus.class = cclass.data.data.bonus;
 
         if (cclasses.length) {

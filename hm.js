@@ -1,5 +1,5 @@
 import { HMActor } from './modules/actor/actor.js';
-import { HMCharacterActorSheet } from './modules/actor/character-actor-sheet.js';
+import { HMActorSheet } from './modules/actor/actor-sheet.js';
 import { HMItem } from './modules/item/item.js';
 import { HMItemSheet } from './modules/item/item-sheet.js';
 import { HMCombat, HMCombatTracker } from './modules/sys/combat.js';
@@ -20,7 +20,7 @@ Hooks.once('init', async() => {
     CONFIG.Macro.documentClass = HMMacro;
 
     Actors.unregisterSheet('core', ActorSheet);
-    Actors.registerSheet('hackmaster', HMCharacterActorSheet, { makeDefault: true });
+    Actors.registerSheet('hackmaster', HMActorSheet, { makeDefault: true });
 
     Items.unregisterSheet('core', ItemSheet);
     Items.registerSheet('hackmaster', HMItemSheet, { makeDefault: true });

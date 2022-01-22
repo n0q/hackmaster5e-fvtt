@@ -1,46 +1,47 @@
 {
     "Actor": {
-        "types": ["character"],
+        "types": ["character", "beast"],
         "templates": {
             "base": {
                 "biography": "",
-                "hp":     {"value": 0, "max": 0},
                 "sp":     {"value": 0, "max": 0},
                 "bonus":  {"total": {}, "misc": {}}
-            },
-
-            "pc": {
-                "luck":  {"value": 0, "max": 0},
-                "ep":    {"value": 0, "max": 400},
-                "honor": {"value": 0, "bracket": null},
-                "abilities": {
-                    "total": null,
-                    "base": {
-                        "str": {"value": 10, "fvalue": 0},
-                        "int": {"value": 10, "fvalue": 0},
-                        "wis": {"value": 10, "fvalue": 0},
-                        "dex": {"value": 10, "fvalue": 0},
-                        "con": {"value": 10, "fvalue": 0},
-                        "lks": {"value": 10, "fvalue": 0},
-                        "cha": {"value": 10, "fvalue": 0}
-                    },
-                    "misc": {
-                        "str": {"value": 0,  "fvalue": 0},
-                        "int": {"value": 0,  "fvalue": 0},
-                        "wis": {"value": 0,  "fvalue": 0},
-                        "dex": {"value": 0,  "fvalue": 0},
-                        "con": {"value": 0,  "fvalue": 0},
-                        "lks": {"value": 0,  "fvalue": 0},
-                        "cha": {"value": 0,  "fvalue": 0}
-                    }
-                }
             }
         },
 
         "character": {
-            "templates": ["base", "pc"],
+            "templates": ["base"],
+            "hp":    {"value": 0, "max": 0},
+            "luck":  {"value": 0, "max": 0},
+            "ep":    {"value": 0, "max": 400},
+            "honor": {"value": 0, "bracket": null},
             "fame":  {"value": 0, "bracket": null},
-            "level": {"value": 1}
+            "abilities": {
+                "total": null,
+                "base": {
+                    "str": {"value": 10, "fvalue": 0},
+                    "int": {"value": 10, "fvalue": 0},
+                    "wis": {"value": 10, "fvalue": 0},
+                    "dex": {"value": 10, "fvalue": 0},
+                    "con": {"value": 10, "fvalue": 0},
+                    "lks": {"value": 10, "fvalue": 0},
+                    "cha": {"value": 10, "fvalue": 0}
+                },
+                "misc": {
+                    "str": {"value": 0,  "fvalue": 0},
+                    "int": {"value": 0,  "fvalue": 0},
+                    "wis": {"value": 0,  "fvalue": 0},
+                    "dex": {"value": 0,  "fvalue": 0},
+                    "con": {"value": 0,  "fvalue": 0},
+                    "lks": {"value": 0,  "fvalue": 0},
+                    "cha": {"value": 0,  "fvalue": 0}
+                }
+            }
+        },
+
+        "beast": {
+            "templates": ["base"],
+            "hp": {"value": 0, "max": null, "formula": null}
         }
     },
 
