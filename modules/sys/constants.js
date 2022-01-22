@@ -215,16 +215,17 @@ export const HMTABLES = {
             21: { "turning": 12, "morale":  6 },
         },
     },
-    "save": {
-        "fos":      { formula: "1d20p + @bonus.total.fos       + @resp.bonus" },
-        "foa":      { formula: "1d20p + @bonus.total.foa       + @resp.bonus" },
-        "morale":   { formula: "1d20p + @bonus.total.morale    + @resp.bonus" },
-        "turning":  { formula: "1d20p + @bonus.total.turning   + @resp.bonus" },
-        "dodge":    { formula: "1d20p + @bonus.total.dodge     + @resp.bonus" },
-        "mental":   { formula: "1d20p + @bonus.total.mental    + @resp.bonus" },
-        "physical": { formula: "1d20p + @bonus.total.physical  + @resp.bonus" },
-        "poison":   { formula: "1d20p + @abilities.con.derived + @resp.bonus" },
-        "trauma":   { formula: "1d20  - @bonus.total.trauma    - @resp.bonus" },
+    'save': {
+        'dodge':    { formula: '1d20p + @bonus.total.dodge     + @resp.bonus' },
+        'foa':      { formula: '1d20p + @bonus.total.foa       + @resp.bonus' },
+        'fos':      { formula: '1d20p + @bonus.total.fos       + @resp.bonus' },
+        'mental':   { formula: '1d20p + @bonus.total.mental    + @resp.bonus' },
+        'morale':   { formula: '1d20p + @bonus.total.morale    + @resp.bonus' },
+        'physical': { formula: '1d20p + @bonus.total.physical  + @resp.bonus' },
+        'poison':   { formula: '1d20p + @abilities.con.derived + @resp.bonus' },
+        'tenacity': { formula: '1d20p + @bonus.total.tenacity  + @resp.bonus' },
+        'trauma':   { formula: '1d20  - @bonus.total.trauma    - @resp.bonus' },
+        'turning':  { formula: '1d20p + @bonus.total.turning   + @resp.bonus' },
     },
     "scale": {
         1: {"hp":  0, "kb":  5, "reach": -2,  "movecf":  0.33},
@@ -254,23 +255,31 @@ export const HMTABLES = {
             "HM.trivial":      -90,
         },
     },
-    "weapons": {
-        "ranged": {
-            "penalty": {
-                "short":    0,
-                "medium":  -4,
-                "long":    -6,
-                "extreme": -8,
+    'tenacity': {
+        0: {'save':  0, 'trigger':  null},
+        1: {'save':  2, 'trigger': 0.500},
+        2: {'save':  1, 'trigger': 0.400},
+        3: {'save':  0, 'trigger': 0.250},
+        4: {'save': -4, 'trigger': 0.200},
+        5: {'save': -8, 'trigger': 0.001}
+    },
+    'weapons': {
+        'ranged': {
+            'penalty': {
+                'short':    0,
+                'medium':  -4,
+                'long':    -6,
+                'extreme': -8,
             },
         },
-        "noprof": {
-            "table": {
-                "minimal": -1,
-                "low":     -2,
-                "medium":  -4,
-                "high":    -6,
+        'noprof': {
+            'table': {
+                'minimal': -1,
+                'low':     -2,
+                'medium':  -4,
+                'high':    -6,
             },
-            "vector": [1, 1, 1, -1],
+            'vector': [1, 1, 1, -1],
         },
     },
 };

@@ -22,9 +22,11 @@ export class HMActor extends Actor {
 
         if (actorData.type === 'character') {
             this.setEncumbrance(data);
-            this.setCharacterHP(data);
+            this.setCharacterHP();
             this.setCharacterMaxSP(data);
+            return;
         }
+        this.setBeastHP();
     }
 
     async setRace(data) {
@@ -122,12 +124,22 @@ export class HMActor extends Actor {
         data.encumb = encumb;
     }
 
-    setCharacterHP(data) {
+    setCharacterHP() {
+        const {data} = this.data;
         const max    = data.bonus.total?.hp || 0;
         const wounds = this.items.filter((a) => a.type === 'wound');
         let value = max;
         Object.keys(wounds).forEach((a) => value -= wounds[a].data.data.hp);
         data.hp = {max, value};
+    }
+
+    setBeastHP() {
+        const {data} = this.data;
+        const {max}  = data.hp;
+        const wounds = this.items.filter((a) => a.type === 'wound');
+        let value = max;
+        Object.keys(wounds).forEach((a) => value -= wounds[a].data.data.hp);
+        data.hp.value = value;
     }
 
     setCharacterMaxSP(data) {
@@ -173,5 +185,23 @@ export class HMActor extends Actor {
             uskills.push(skill.data);
         }
         await actor.createEmbeddedDocuments('Item', uskills);
+    }
+
+    // Populate hp.max for beast tokens.
+    static async createToken(token, _options, userId) {
+        const {actor} = token;
+        if (actor.type !== 'beast'
+            || actor.data.data.hp.max
+            || userId !== game.user.id) { return; }
+
+        const {hp} = actor.data.data;
+        const {formula} = hp;
+        if (Roll.validate(formula)) {
+            const r = new Roll(formula);
+            await r.evaluate({'async': true});
+            hp.value = r.total;
+            hp.max = r.total;
+            await actor.update({'data.hp': hp});
+        }
     }
 }
