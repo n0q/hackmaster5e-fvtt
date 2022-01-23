@@ -3,27 +3,10 @@ import { HMTABLES } from '../sys/constants.js';
 export class HMActor extends Actor {
     prepareBaseData() {
         super.prepareBaseData();
-        const actorData = this.data;
-        const { data } = actorData;
-
-        if (actorData.type === 'character') {
-            this.setRace(data);
-            this.setCClass(data);
-            this.setAbilities(data);
-            this.setAbilityBonuses();
-        }
-        this.setExtras();
-        this.setBonusTotal();
     }
 
     prepareDerivedData() {
         super.prepareDerivedData();
-        const actorData = this.data;
-        const { data } = actorData;
-
-        if (actorData.type === 'character') {
-            this.setEncumbrance(data);
-        }
         this.setHP();
     }
 
@@ -54,75 +37,6 @@ export class HMActor extends Actor {
         }
     }
 
-    setAbilities(data) {
-        const { abilities } = data;
-
-        const total = {};
-        for (let stat in abilities.base) {
-            let value = 0;
-            let fvalue = 0;
-            for (let row in abilities) {
-                if (row === 'total') { continue; };
-                value  += abilities[row][stat].value;
-                fvalue += abilities[row][stat].fvalue;
-            }
-            total[stat] = {value, fvalue};
-        }
-        abilities.total = total;
-    }
-
-    setAbilityBonuses() {
-        const {data} = this.data;
-        const aData  = data.abilities.total;
-
-        const stats        = {};
-        const abilityBonus = {};
-
-        for (const statName in aData) {
-            const clamp = HMTABLES.abilitymods.clamp[statName];
-            const statDerived = aData[statName].value + aData[statName].fvalue / 100;
-            const statAdj = Math.clamped(statDerived, clamp.min, clamp.max);
-
-            const sidx = Math.floor((statAdj - clamp.min) / clamp.step);
-            const bonusTable = HMTABLES.abilitymods[statName][sidx];
-            abilityBonus[statName] = bonusTable;
-            for (const key in bonusTable) {
-                if (bonusTable.hasOwnProperty(key)) {
-                    stats[key] = (stats?.[key] || 0) + bonusTable[key];
-                    if (key === 'chamod') { aData.cha.value += stats[key] || 0; }
-                }
-            }
-        }
-
-        stats.hp     = aData.con.value;
-        stats.poison = aData.con.value;
-        stats.trauma = Math.floor(aData.con.value / 2);
-
-        data.bonus.stats = stats;
-        data.hmsheet ? data.hmsheet.bonus = abilityBonus
-                     : data.hmsheet = {'bonus': abilityBonus};
-    }
-
-    setEncumbrance(data) {
-        let encumb = 0.0;
-        const item = this.items.filter((a) => {
-            const aData = a.data.data;
-            // TODO: Inventory management
-            if (aData.state) {
-                if (a.type             === 'armor'
-                    && aData.armortype !== 'shield'
-                    && aData.state.equipped
-                ) return false;
-                return aData.state.carried;
-            }
-        });
-
-        for (let i=0; i < item.length; i++) {
-            encumb += item[i].data.data.weight;
-        }
-        data.encumb = encumb;
-    }
-
     setHP() {
         const {data, type} = this.data;
         const max = type === 'character' ? data.bonus.total?.hp || 0
@@ -138,36 +52,25 @@ export class HMActor extends Actor {
         data.hp = {max, value, top};
     }
 
-    setExtras() {
-        const {data, type} = this.data;
-
-        if (type === 'character') {
-            data.sp.max = data.bonus.total?.sp || 0;
-        } else if (type === 'beast') {
-            // HACK: Assumes no other source of trauma save.
-            data.bonus.misc.poison = data.bonus.misc.trauma * 2;
-        }
-    }
-
     setBonusTotal() {
         const {bonus} = this.data.data;
         const total = {};
 
-        for (const row in bonus) {
-            if (row === 'total') { continue; }
+        for (const vector in bonus) {
+            if (vector === 'total') { continue; }
 
             // Dereference indexed key/val pairs;
-            if (bonus[row]._idx) {
-                const idx = bonus[row]._idx;
+            if (bonus[vector]._idx) {
+                const idx = bonus[vector]._idx;
                 for (const idxKey in idx) {
                     const idxValue = idx[idxKey];
                     const table    = HMTABLES[idxKey][idxValue];
-                    bonus[row]     = Object.assign(bonus[row], table);
+                    bonus[vector]     = Object.assign(bonus[vector], table);
                 }
             }
 
-            for (const key in bonus[row]) {
-                const value = bonus[row][key];
+            for (const key in bonus[vector]) {
+                const value = bonus[vector][key];
                 if (key !== '_idx' && value !== null) {
                     total[key] = (total?.[key] || 0) + value;
                 }

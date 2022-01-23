@@ -1,5 +1,7 @@
 import { HMActor } from './modules/actor/actor.js';
-import { HMActorSheet } from './modules/actor/actor-sheet.js';
+import { HMActorFactory } from './modules/actor/actor-factory.js';
+import { HMBeastActorSheet } from './modules/actor/beast-actor-sheet.js';
+import { HMCharacterActorSheet } from './modules/actor/character-actor-sheet.js';
 import { HMItem } from './modules/item/item.js';
 import { HMItemSheet } from './modules/item/item-sheet.js';
 import { HMCombat, HMCombatTracker } from './modules/sys/combat.js';
@@ -7,20 +9,22 @@ import { HMMacro } from './modules/sys/macro.js';
 import LOGGER from './modules/sys/logger.js';
 import { MODULE_ID } from './modules/sys/constants.js';
 
+
 import registerHandlebarsHelpers from './modules/sys/helpers.js';
 import preloadHandlebarsTemplates from './modules/sys/partials.js';
 
 import './modules/sys/dice.js';
 
 Hooks.once('init', async() => {
-    CONFIG.Actor.documentClass = HMActor;
+    CONFIG.Actor.documentClass = HMActorFactory;
     CONFIG.Item.documentClass = HMItem;
     CONFIG.Combat.documentClass = HMCombat;
     CONFIG.ui.combat = HMCombatTracker;
     CONFIG.Macro.documentClass = HMMacro;
 
     Actors.unregisterSheet('core', ActorSheet);
-    Actors.registerSheet('hackmaster', HMActorSheet, { makeDefault: true });
+    Actors.registerSheet('hackmaster', HMCharacterActorSheet, {types: ['character'], makeDefault:true});
+    Actors.registerSheet('hackmaster', HMBeastActorSheet, {types: ['beast'], makeDefault:true});
 
     Items.unregisterSheet('core', ItemSheet);
     Items.registerSheet('hackmaster', HMItemSheet, { makeDefault: true });
