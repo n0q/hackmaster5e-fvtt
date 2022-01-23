@@ -56,6 +56,7 @@ $actor-logo-dim: 40%;
     }
 }
 
+.sheet-middle-b,
 .sheet-middle {
     display: grid;
     grid-gap: $actor-gridgap;
@@ -93,10 +94,16 @@ $actor-logo-dim: 40%;
     }
 }
 
+.sheet-middle-b {
+    grid-template-columns: $actor-saves-dim 1fr $actor-saves-dim 22%;
+    grid-template-areas:
+        "middle-saves-l middle-stats middle-saves-r middle-wounds";
+}
+
 .middle-stats {
     display: grid;
-    row-gap: $actor-gridgap;
     grid-template-rows: repeat(5, 1fr);
+
     >.honor { grid-row: 1 / span 2; }
     >.fame { grid-row: 3 / span 2; }
 

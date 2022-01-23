@@ -222,7 +222,7 @@ export const HMTABLES = {
         'mental':   { formula: '1d20p + @bonus.total.mental    + @resp.bonus' },
         'morale':   { formula: '1d20p + @bonus.total.morale    + @resp.bonus' },
         'physical': { formula: '1d20p + @bonus.total.physical  + @resp.bonus' },
-        'poison':   { formula: '1d20p + @abilities.con.derived + @resp.bonus' },
+        'poison':   { formula: '1d20p + @bonus.total.poison    + @resp.bonus' },
         'tenacity': { formula: '1d20p + @bonus.total.tenacity  + @resp.bonus' },
         'trauma':   { formula: '1d20  - @bonus.total.trauma    - @resp.bonus' },
         'turning':  { formula: '1d20p + @bonus.total.turning   + @resp.bonus' },
@@ -239,10 +239,10 @@ export const HMTABLES = {
     },
     'skill': {
         '_pData': {
-            'hp': {value: null, die: null, reroll: false},
-            'sp': {value: null},
-            'atk': {value: null},
-            'spd': {value: null},
+            'hp':   {value: null, die: null, reroll: false},
+            'sp':   {value: null},
+            'atk':  {value: null},
+            'spd':  {value: null},
             'spdm': {value: null},
             'spdr': {value: null},
             'init': {value: null},
@@ -256,13 +256,14 @@ export const HMTABLES = {
         },
     },
     'tenacity': {
-        0: {'tenacity':  null, 'tenacityth':  null},
-        1: {'tenacity':  2, 'tenacityth': 0.500},
-        2: {'tenacity':  1, 'tenacityth': 0.400},
-        3: {'tenacity':  0, 'tenacityth': 0.250},
-        4: {'tenacity': -4, 'tenacityth': 0.200},
-        5: {'tenacity': -8, 'tenacityth': 0.001}
+        0: {'tenacity':  null, 'tenacityCf':  null},
+        1: {'tenacity':  2,    'tenacityCf': 0.500},
+        2: {'tenacity':  1,    'tenacityCf': 0.400},
+        3: {'tenacity':  0,    'tenacityCf': 0.250},
+        4: {'tenacity': -4,    'tenacityCf': 0.200},
+        5: {'tenacity': -8,    'tenacityCf': 0.001},
     },
+    'top': {'character': 0.3, 'beast': 0.4},
     'weapons': {
         'ranged': {
             'penalty': {

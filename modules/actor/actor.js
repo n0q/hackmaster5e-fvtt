@@ -10,8 +10,9 @@ export class HMActor extends Actor {
             this.setRace(data);
             this.setCClass(data);
             this.setAbilities(data);
-            this.setAbilityBonuses(data);
+            this.setAbilityBonuses();
         }
+        this.setExtras();
         this.setBonusTotal();
     }
 
@@ -22,11 +23,8 @@ export class HMActor extends Actor {
 
         if (actorData.type === 'character') {
             this.setEncumbrance(data);
-            this.setCharacterHP();
-            this.setCharacterMaxSP(data);
-            return;
         }
-        this.setBeastHP();
+        this.setHP();
     }
 
     async setRace(data) {
@@ -73,8 +71,9 @@ export class HMActor extends Actor {
         abilities.total = total;
     }
 
-    setAbilityBonuses(data) {
-        const aData = data.abilities.total;
+    setAbilityBonuses() {
+        const {data} = this.data;
+        const aData  = data.abilities.total;
 
         const stats        = {};
         const abilityBonus = {};
@@ -124,26 +123,30 @@ export class HMActor extends Actor {
         data.encumb = encumb;
     }
 
-    setCharacterHP() {
-        const {data} = this.data;
-        const max    = data.bonus.total?.hp || 0;
-        const wounds = this.items.filter((a) => a.type === 'wound');
+    setHP() {
+        const {data, type} = this.data;
+        const max = type === 'character' ? data.bonus.total?.hp || 0
+                                         : data.hp.max || 0;
+        if (max === 0) { return; }
+
         let value = max;
+        const wounds = this.items.filter((a) => a.type === 'wound');
         Object.keys(wounds).forEach((a) => value -= wounds[a].data.data.hp);
-        data.hp = {max, value};
+
+        const topCf = HMTABLES.top[type] + (data.bonus.total.top || 0);
+        const top   = Math.ceil(max * topCf);
+        data.hp = {max, value, top};
     }
 
-    setBeastHP() {
-        const {data} = this.data;
-        const {max}  = data.hp;
-        const wounds = this.items.filter((a) => a.type === 'wound');
-        let value = max;
-        Object.keys(wounds).forEach((a) => value -= wounds[a].data.data.hp);
-        data.hp.value = value;
-    }
+    setExtras() {
+        const {data, type} = this.data;
 
-    setCharacterMaxSP(data) {
-        data.sp.max = data.bonus.total?.sp || 0;
+        if (type === 'character') {
+            data.sp.max = data.bonus.total?.sp || 0;
+        } else if (type === 'beast') {
+            // HACK: Assumes no other source of trauma save.
+            data.bonus.misc.poison = data.bonus.misc.trauma * 2;
+        }
     }
 
     setBonusTotal() {
@@ -173,11 +176,11 @@ export class HMActor extends Actor {
         bonus.total = total;
     }
 
-    getArmor() {
-        let armor = 0;
+    get drObj() {
+        let armor  = this.data.data.bonus.total?.dr || 0;
         let shield = 0;
-        const defItems = this.items.filter((a) => a.type === 'armor' &&
-                                                  a.data.data.state.equipped);
+        const defItems = this.items.filter((a) => a.type === 'armor'
+                                               && a.data.data.state.equipped);
 
         for (let i = 0; i < defItems.length; i++) {
             const defData = defItems[i].data.data;

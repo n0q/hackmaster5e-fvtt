@@ -144,9 +144,11 @@ export class HMItem extends Item {
         const {bonus}   = itemData;
 
         const cclass    = {};
+        const misc      = {};
         const race      = {};
         const stats     = {};
         const classData = actorData.data.bonus.class;
+        const miscData  = actorData.data.bonus.misc;
         const statsData = actorData.data.bonus.stats;
         const raceData  = actorData.data.bonus.race;
 
@@ -163,6 +165,7 @@ export class HMItem extends Item {
                                        : profTable.table[wSkill] * profTable.vector[j++];
             spec[key]   = profBonus || 0;
             cclass[key] = classData?.[key] || 0;
+            misc[key]   = miscData?.[key] || 0;
             race[key]   = raceData?.[key] || 0;
             stats[key]  = statsData?.[key] || 0;
 
@@ -180,6 +183,7 @@ export class HMItem extends Item {
         // TODO: Build a new data.data.bonus rather than clean the old one.
         Object.values(armor).every((a) => a === 0)  ? delete bonus.armor  : bonus.armor  = armor;
         Object.values(shield).every((a) => a === 0) ? delete bonus.shield : bonus.shield = shield;
+        Object.values(misc).every((a) => a === 0)   ? delete bonus.misc   : bonus.misc   = misc;
 
         if (isCharacter) {
             Object.values(stats).every((a) => a === 0)  ? delete bonus.stats : bonus.stats = stats;

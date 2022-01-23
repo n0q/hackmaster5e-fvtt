@@ -4,8 +4,8 @@
         "templates": {
             "base": {
                 "biography": "",
-                "sp":     {"value": 0, "max": 0},
-                "bonus":  {"total": {}, "misc": {}}
+                "sp":    {"value": 0, "max": 0},
+                "bonus": {"total": {}, "misc": {}}
             }
         },
 
@@ -72,7 +72,7 @@
             "bonus": {
                 "total": {"dr": 0, "def": 0, "init": 0, "spd": 0},
                 "base":  {"dr": 0, "def": 0, "init": 0, "spd": 0},
-                "misc":  {"dr": 0, "def": 0, "init": 0, "spd": 0}
+                "mod":   {"dr": 0, "def": 0, "init": 0, "spd": 0}
             },
             "shield": {"checked": false}
         },
@@ -165,7 +165,7 @@
             "bonus": {
                 "total": {"atk": 0, "def": 0, "dmg": 0, "spd": 0},
                 "base":  {"atk": 0, "def": 0, "dmg": 0, "spd": 0},
-                "misc":  {"atk": 0, "def": 0, "dmg": 0, "spd": 0}
+                "mod":   {"atk": 0, "def": 0, "dmg": 0, "spd": 0}
             },
             "dmg":    {"normal": "", "shield": ""},
             "reach":  0,
