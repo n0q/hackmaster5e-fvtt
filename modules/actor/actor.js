@@ -12,7 +12,7 @@ export class HMActor extends Actor {
             this.setAbilities(data);
             this.setAbilityBonuses(data);
         }
-        this.setBonusTotal(data);
+        this.setBonusTotal();
     }
 
     prepareDerivedData() {
@@ -146,15 +146,31 @@ export class HMActor extends Actor {
         data.sp.max = data.bonus.total?.sp || 0;
     }
 
-    setBonusTotal(data) {
-        const { bonus } = data;
+    setBonusTotal() {
+        const {bonus} = this.data.data;
         const total = {};
+
         for (const row in bonus) {
             if (row === 'total') { continue; }
-            for (const key in bonus[row]) { total[key] = (total?.[key] || 0) + bonus[row][key]; }
+
+            // Dereference indexed key/val pairs;
+            if (bonus[row]._idx) {
+                const idx = bonus[row]._idx;
+                for (const idxKey in idx) {
+                    const idxValue = idx[idxKey];
+                    const table    = HMTABLES[idxKey][idxValue];
+                    bonus[row]     = Object.assign(bonus[row], table);
+                }
+            }
+
+            for (const key in bonus[row]) {
+                const value = bonus[row][key];
+                if (key !== '_idx' && value !== null) {
+                    total[key] = (total?.[key] || 0) + value;
+                }
+            }
         }
         bonus.total = total;
-        return total;
     }
 
     getArmor() {

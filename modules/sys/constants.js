@@ -256,12 +256,12 @@ export const HMTABLES = {
         },
     },
     'tenacity': {
-        0: {'save':  0, 'trigger':  null},
-        1: {'save':  2, 'trigger': 0.500},
-        2: {'save':  1, 'trigger': 0.400},
-        3: {'save':  0, 'trigger': 0.250},
-        4: {'save': -4, 'trigger': 0.200},
-        5: {'save': -8, 'trigger': 0.001}
+        0: {'tenacity':  null, 'tenacityth':  null},
+        1: {'tenacity':  2, 'tenacityth': 0.500},
+        2: {'tenacity':  1, 'tenacityth': 0.400},
+        3: {'tenacity':  0, 'tenacityth': 0.250},
+        4: {'tenacity': -4, 'tenacityth': 0.200},
+        5: {'tenacity': -8, 'tenacityth': 0.001}
     },
     'weapons': {
         'ranged': {
