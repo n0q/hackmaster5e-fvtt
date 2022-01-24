@@ -48,7 +48,26 @@ export class HMItemSheet extends ItemSheet {
         super.activateListeners(html);
         if (!this.options.editable) return;
 
+        html.find('.editable').change(this._onEdit.bind(this));
         html.find('.dropdown').change(this._onChangeDropdown.bind(this));
+    }
+
+    async _onEdit(ev) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        const {dataset} = ev.currentTarget;
+        const {item}    = this;
+
+        if (dataset.itemProp) {
+            const {itemProp, dtype} = dataset;
+            let targetValue = ev.target.value;
+            if (dtype === 'Number') { targetValue = parseInt(targetValue, 10); } else
+            if (dtype === 'Float')  { targetValue = parseFloat(targetValue);   }
+
+            setProperty(item.data, itemProp, targetValue);
+            await this.item.update({data:item.data.data});
+            this.render(true);
+        }
     }
 
     _onChangeDropdown(ev) {

@@ -10,7 +10,6 @@
         <div class="tab" data-group="primary" data-tab="description">
             {{> "systems/hackmaster5e/templates/item/parts/description.hbs" }}
         </div>
-
         <div class="tab attributes" data-group="primary" data-tab="attributes">
             <div class="item-form">
                 {{#with data.data}}
@@ -18,11 +17,13 @@
                     <div class="options-block">
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.speed"}}</label>
-                            <input type="number" name="data.bonus.base.spd" value="{{bonus.base.spd}}" data-dtype="Number"/>
+                            <input type="number" class="editable" value={{bonus.base.spd}}
+                                data-item-prop="data.bonus.base.spd"
+                                data-dtype="Number"/>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.reach"}}</label>
-                            <input type="number" name="data.reach" value="{{reach}}" data-dtype="Number"/>
+                            <input type="number" name="data.reach" value="{{reach}}">
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.skill"}}:</label>
@@ -31,6 +32,12 @@
                                 <option value="{{t}}">{{localize type}}</option>
                                 {{/each}}{{/select}}
                             </select>
+                        </div>
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.quality"}}</label>
+                            <input type="number" class="editable" value="{{qn}}"
+                                data-item-prop="data.qn"
+                                data-dtype="Number"/>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.ranged"}}</label>

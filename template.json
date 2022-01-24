@@ -74,6 +74,7 @@
                 "base":  {"dr": 0, "def": 0, "init": 0, "spd": 0},
                 "mod":   {"dr": 0, "def": 0, "init": 0, "spd": 0}
             },
+            "qn": 0,
             "shield": {"checked": false}
         },
 
@@ -168,6 +169,7 @@
                 "mod":   {"atk": 0, "def": 0, "dmg": 0, "spd": 0}
             },
             "dmg":    {"normal": "", "shield": ""},
+            "qn": 0,
             "reach":  0,
             "ranged": {"checked": false}
         },

@@ -19,10 +19,19 @@ export class HMItem extends Item {
         if (type === 'weapon') { this._prepWeaponData(); }
     }
 
+    get quality() {
+        const {data} = this.data;
+        const qKey = data?.ranged?.checked ? 'ranged' : this.type;
+        const {bonus, qn} = data;
+        const values = HMTABLES.quality[qKey].map((a) => a * qn);
+        const keys = Object.keys(bonus.total);
+        return Object.fromEntries(keys.map((_, i) => [keys[i], values[i]]));
+    }
+
     _prepArmorData() {
         if (!this.actor) { return; }
-        const {bonus} = this.data.data;
-
+        const {bonus, qn} = this.data.data;
+        qn ? bonus.qual = this.quality : delete bonus.qual;
         for (const key in bonus.total) {
             let sum = -bonus.total[key];
             for (const row in bonus) { sum += bonus[row][key]; }
@@ -128,6 +137,7 @@ export class HMItem extends Item {
         const actorData   = this.actor.data;
         const itemData    = this.data.data;
 
+        const {ranged}    = itemData
         const isCharacter = actorData.type === 'character';
         const armors      = [];
         const shields     = [];
@@ -146,7 +156,7 @@ export class HMItem extends Item {
         }
 
         const {bonus}   = itemData;
-
+        const qual      = this.quality;
         const cclass    = {};
         const misc      = {};
         const race      = {};
@@ -184,7 +194,11 @@ export class HMItem extends Item {
             }
         }
 
+        // TODO: Provide flag to use strength damage or not.
+        if (ranged.checked) { stats.dmg = 0; }
+
         // TODO: Build a new data.data.bonus rather than clean the old one.
+        Object.values(qual).every((a) => a === 0)   ? delete bonus.qual   : bonus.qual   = qual;
         Object.values(armor).every((a) => a === 0)  ? delete bonus.armor  : bonus.armor  = armor;
         Object.values(shield).every((a) => a === 0) ? delete bonus.shield : bonus.shield = shield;
         Object.values(misc).every((a) => a === 0)   ? delete bonus.misc   : bonus.misc   = misc;
