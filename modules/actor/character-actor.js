@@ -4,18 +4,16 @@ import { HMTABLES } from '../sys/constants.js';
 export class HMCharacterActor extends HMActor {
     prepareBaseData() {
         super.prepareBaseData();
-        const {data} = this.data.data;
-
-        this.setRace(data);
-        this.setCClass(data);
+        this.setRace();
+        this.setCClass();
         this.setAbilities();
         this.setAbilityBonuses();
-        this.setExtras();
         this.setBonusTotal();
     }
 
     prepareDerivedData() {
         super.prepareDerivedData();
+        this.setExtras();
         this.setEncumbrance();
     }
 

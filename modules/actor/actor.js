@@ -10,7 +10,8 @@ export class HMActor extends Actor {
         this.setHP();
     }
 
-    async setRace(data) {
+    async setRace() {
+        const {data} = this.data;
         const races = this.items.filter((a) => a.type === 'race');
         if (!races.length) return;
         const race = races.pop();
@@ -24,7 +25,8 @@ export class HMActor extends Actor {
         }
     }
 
-    async setCClass(data) {
+    async setCClass() {
+        const {data} = this.data;
         const cclasses = this.items.filter((a) => a.type === 'cclass');
         if (!cclasses.length) return;
 
@@ -60,7 +62,7 @@ export class HMActor extends Actor {
             if (vector === 'total') { continue; }
 
             // Dereference indexed key/val pairs;
-            if (bonus[vector]._idx) {
+            if (bonus[vector]?._idx) {
                 const idx = bonus[vector]._idx;
                 for (const idxKey in idx) {
                     const idxValue = idx[idxKey];
@@ -94,16 +96,16 @@ export class HMActor extends Actor {
     }
 
     static async createActor(actor) {
-        if (actor.items.size) return;
+        if (actor.items.size || actor.data.type === 'beast') { return; }
+
         const skillPack = game.packs.get('hackmaster5e.uskills');
         const skillIndex = await skillPack.getIndex();
         const uskills = [];
+
         for (const idx of skillIndex) {
             const skill = await skillPack.getDocument(idx._id);
             const translated = game.i18n.localize(skill.data.name);
-            if (translated != '') {
-                skill.data.name = translated;
-            }
+            if (translated !== '') { skill.data.name = translated; }
             uskills.push(skill.data);
         }
         await actor.createEmbeddedDocuments('Item', uskills);

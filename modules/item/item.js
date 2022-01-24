@@ -42,8 +42,12 @@ export class HMItem extends Item {
         }
 
         // calculate hp
-        if (!actorData) return;
-        const level = data.level;
+        if (!actorData) { return; }
+        const level = (data.level || 0);
+        if (level < 1) {
+            delete actorData.data.bonus.class;
+            return;
+        }
         let hp = 0;
 
         let rerolled = false;
