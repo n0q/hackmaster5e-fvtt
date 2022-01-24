@@ -215,6 +215,11 @@ export const HMTABLES = {
             21: { "turning": 12, "morale":  6 },
         },
     },
+    'quality': {
+        'armor':  [1, 1, 0, 0],
+        'weapon': [1, 0, 1, 0],
+        'ranged': [1, 0, 0, 0],
+    },
     'save': {
         'dodge':    { formula: '1d20p + @bonus.total.dodge     + @resp.bonus' },
         'foa':      { formula: '1d20p + @bonus.total.foa       + @resp.bonus' },
