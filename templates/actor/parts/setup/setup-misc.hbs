@@ -1,0 +1,64 @@
+{{#with data.data}}
+<div class="setup-abilities">
+    <table class="table-basic">
+        <tbody>
+            <tr>
+    {{#if (eq ../actor.type 'beast')}}
+                <th scope="row"><label class="resource-label">{{localize "HM.saves.tenacity"}}</label></th>
+                <td>
+                    <select name="data.bonus.misc._idx.tenacity" data-dtype="Number">
+        {{#select bonus.misc._idx.tenacity}}{{#each (findConfigObj "tenacity") as |type t|}}
+                        <option value="{{t}}">{{localize type}}</option>
+        {{/each}}{{/select}}
+                    </select>
+                </td>
+                <th scope="row"><label class="resource-label">HP FORMULA</label></th>
+                <td><input type="text" style="width: 6em;" name="data.hp.formula" value="{{hp.formula}}" data-dtype="String"/></td>
+            </tr><tr>
+                <th scope="row"><label class="resource-label">{{localize "HM.saves.will"}}</label></th>
+                <td><input type="number" name="data.bonus.misc.will" value="{{bonus.misc.will}}" data-dtype="Number"/></td>
+    {{else}}
+                <th scope="row"><label class="resource-label">{{localize "HM.statbonus.morale"}}</label></th>
+                <td><input type="number" name="data.bonus.misc.morale" value="{{bonus.misc.morale}}" data-dtype="Number"/></td>
+                <th scope="row"><label class="resource-label">{{localize "HM.bonus"}} {{localize "HM.hp"}}</label></th>
+                <td><input type="number" name="data.bonus.misc.hp" value="{{bonus.misc.hp}}" data-dtype="Number"/></td>
+            </tr><tr>
+                <th scope="row"><label class="resource-label">{{localize "HM.saves.turning"}}</label></th>
+                <td><input type="number" name="data.bonus.misc.turning" value="{{bonus.misc.turning}}" data-dtype="Number"/></td>
+    {{/if}}
+                <th scope="row"><label class="resource-label">{{localize "HM.saves.physical"}}</label> </th>
+                <td><input type="number" name="data.bonus.misc.physical" value="{{bonus.misc.physical}}" data-dtype="Number"/></td>
+            </tr><tr>
+                <th scope="row"><label class="resource-label">Feat of Str</label></th>
+                <td><input type="number" name="data.bonus.misc.fos" value="{{bonus.misc.fos}}" data-dtype="Number"/></td>
+                <th scope="row"><label class="resource-label">{{localize "HM.saves.mental"}}</label></th>
+                <td><input type="number" name="data.bonus.misc.mental" value="{{bonus.misc.mental}}" data-dtype="Number"/></td>
+            </tr><tr>
+                <th scope="row"><label class="resource-label">Feat of Agi</label> </th>
+                <td><input type="number" name="data.bonus.misc.foa" value="{{bonus.misc.foa}}" data-dtype="Number"/></td>
+                <th scope="row"><label class="resource-label">{{localize "HM.saves.dodge"}}</label></th>
+                <td><input type="number" name="data.bonus.misc.dodge" value="{{bonus.misc.dodge}}" data-dtype="Number"/></td>
+            </tr><tr>
+                <th scope="row"><label class="resource-label">{{localize "HM.statbonus.atk"}}</label></th>
+                <td><input type="number" name="data.bonus.misc.atk" value="{{bonus.misc.atk}}" data-dtype="Number"/></td>
+                <th scope="row"><label class="resource-label">{{localize "HM.statbonus.def"}}</label></th>
+                <td><input type="number" name="data.bonus.misc.def" value="{{bonus.misc.def}}" data-dtype="Number"/></td>
+            </tr><tr>
+                <th scope="row"><label class="resource-label">{{localize "HM.statbonus.dmg"}}</label></th>
+                <td><input type="number" name="data.bonus.misc.dmg" value="{{bonus.misc.dmg}}" data-dtype="Number"/></td>
+                <th scope="row"><label class="resource-label">{{localize "HM.statbonus.spd"}}</label></th>
+                <td><input type="number" name="data.bonus.misc.spd" value="{{bonus.misc.spd}}" data-dtype="Number"/></td>
+            </tr><tr>
+                <th scope="row"><label class="resource-label">{{localize "HM.statbonus.init"}}</label></th>
+                <td><input type="number" name="data.bonus.misc.init" value="{{bonus.misc.init}}" data-dtype="Number"/></td>
+                <th scope="row"><label class="resource-label">{{localize "HM.dr"}}</label></th>
+                <td><input type="number" name="data.bonus.misc.dr" value="{{bonus.misc.dr}}" data-dtype="Number"/></td>
+            </tr><tr>
+                <th scope="row"><label class="resource-label">{{localize "HM.saves.trauma"}}</label></th>
+                <td><input type="number" name="data.bonus.misc.trauma" value="{{bonus.misc.trauma}}" data-dtype="Number"/></td>
+                <td colspan="2"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{{/with}}

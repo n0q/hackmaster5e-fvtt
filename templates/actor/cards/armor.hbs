@@ -23,10 +23,10 @@
                     {{#each data.bonus}}
                     <tr>
                         <th scope="row"><label class="resource-label">{{@key}}</label></td>
-                        {{#each this}}{{#if (eq 'misc' @../key)}}
+                        {{#each this}}{{#if (eq 'mod' @../key)}}
                         <td>
                             <input class="editable" type="number" value={{this}}
-                                data-item-prop="data.bonus.misc.{{@key}}"
+                                data-item-prop="data.bonus.mod.{{@key}}"
                                 data-dtype="Number" />
                         </td>
                         {{else}}

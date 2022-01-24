@@ -1,6 +1,5 @@
+{{#if (findBonus (concat 'total.' this)) includeZero=true}}
 <li class="card">
-    {{#with @root.data.data.bonus.total}}
-    {{/with}}
     <summary>
         <header>
             <label for="{{this}}">
@@ -16,3 +15,4 @@
         </div>
     </summary>
 </li>
+{{/if}}

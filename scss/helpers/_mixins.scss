@@ -83,6 +83,11 @@
             text-align: right
         }
 
+        select {
+            height: 16px;
+        }
+
+        input[type=text], 
         input[type=number] {
             height: 16px;
             text-align: right;

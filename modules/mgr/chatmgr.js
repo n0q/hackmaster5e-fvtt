@@ -106,7 +106,7 @@ export default class HMChatMgr {
                 const title = `${actor.name} defends with a ${item.name}.`;
 
                 const faShield = '<i class="fas fa-shield-alt"></i>';
-                const dr = actor.getArmor();
+                const dr = actor.drObj;
                 const drRow = `DR: ${dr.armor} + ${faShield}${dr.shield}`;
                 const card  = drRow + specialRow + html;
                 return {flavor: title, content: card};

@@ -1,4 +1,6 @@
 import { HMActor } from './modules/actor/actor.js';
+import { HMActorFactory } from './modules/actor/actor-factory.js';
+import { HMBeastActorSheet } from './modules/actor/beast-actor-sheet.js';
 import { HMCharacterActorSheet } from './modules/actor/character-actor-sheet.js';
 import { HMItem } from './modules/item/item.js';
 import { HMItemSheet } from './modules/item/item-sheet.js';
@@ -13,14 +15,15 @@ import preloadHandlebarsTemplates from './modules/sys/partials.js';
 import './modules/sys/dice.js';
 
 Hooks.once('init', async() => {
-    CONFIG.Actor.documentClass = HMActor;
+    CONFIG.Actor.documentClass = HMActorFactory;
     CONFIG.Item.documentClass = HMItem;
     CONFIG.Combat.documentClass = HMCombat;
     CONFIG.ui.combat = HMCombatTracker;
     CONFIG.Macro.documentClass = HMMacro;
 
     Actors.unregisterSheet('core', ActorSheet);
-    Actors.registerSheet('hackmaster', HMCharacterActorSheet, { makeDefault: true });
+    Actors.registerSheet('hackmaster', HMCharacterActorSheet, {types: ['character'], makeDefault:true});
+    Actors.registerSheet('hackmaster', HMBeastActorSheet, {types: ['beast'], makeDefault:true});
 
     Items.unregisterSheet('core', ItemSheet);
     Items.registerSheet('hackmaster', HMItemSheet, { makeDefault: true });
@@ -46,6 +49,7 @@ Hooks.on('createActor', HMActor.createActor);
 Hooks.on('renderCombatTracker', HMCombatTracker.renderCombatTracker);
 Hooks.on('createItem', HMItem.createItem);
 Hooks.on('deleteItem', HMItem.deleteItem);
+Hooks.on('createToken', HMActor.createToken);
 
 Hooks.on('diceSoNiceRollStart', (messageId, context) => {
     // Add 1 to penetration dice so dsn shows actual die throws.

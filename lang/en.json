@@ -77,6 +77,7 @@
             "def":      "Defense",
             "dmg":      "Damage",
             "init":     "Init",
+            "spd":      "Speed",
             "dodge":    "Dodge",
             "mental":   "Mental",
             "physical": "Physical",
@@ -98,8 +99,8 @@
         },
 
         "saves": {
-            "fos":      "FoS",
-            "foa":      "FoA",
+            "fos":      "Strength",
+            "foa":      "Agility",
             "turning":  "Turning",
             "morale":   "Morale",
             "dodge":    "Dodge",
@@ -107,7 +108,9 @@
             "physical": "Physical",
             "poison":   "Poison",
             "trauma":   "Trauma",
-            "fatigue":  "Fatigue"
+            "fatigue":  "Fatigue",
+            "tenacity": "Tenacity",
+            "will":     "Will"
         },
 
         "itemTypes": {
@@ -205,6 +208,15 @@
             "gigantic":         "G",
             "enormous":         "E",
             "colossal":         "C"
+        },
+
+        "tenacitySelect": {
+            "none":             "None",
+            "fearless":         "Fearless",
+            "brave":            "Brave",
+            "steady":           "Steady",
+            "nervous":          "Nervous",
+            "cowardly":         "Cowardly"
         },
 
         "uskill": {
@@ -335,6 +347,7 @@
         "quality":      "Quality",
         "quantity":     "Quantity",
         "qty":          "Qty",
+        "tenacity":     "Tenacity",
         "tools":        "Tools",
         "trauma":       "Trauma",
         "treated":      "Treated",

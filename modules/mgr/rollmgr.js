@@ -8,7 +8,7 @@ export default class HMRollMgr {
 
     async _stdRoll(dataset, dialogResp=null) {
         let formula = Roll.replaceFormulaData(dataset.formula, dialogResp);
-        const data = dialogResp.context.data.data;
+        const data = dialogResp ? dialogResp.context.data.data : null;
         return await new Roll(formula, data).evaluate({async: true});
     }
 

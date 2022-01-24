@@ -2,7 +2,123 @@ import HMDialogMgr from '../mgr/dialogmgr.js';
 import HMChatMgr from '../mgr/chatmgr.js';
 import HMRollMgr from '../mgr/rollmgr.js';
 
+function updateSflags(item, sflags) {
+    const flag = sflags;
+    if (item.data.state.equipped) { flag.equipped = true;   } else
+    if (item.data.state.carried)  { flag.unequipped = true; }
+}
+
 export class HMActorSheet extends ActorSheet {
+    /** @override */
+    get template() {
+        const path = 'systems/hackmaster5e/templates/actor';
+        return `${path}/${this.actor.data.type}-base.hbs`;
+    }
+
+    /** @override */
+    getData() {
+        const data = super.getData();
+        data.dtypes = ['String', 'Number', 'Boolean'];
+
+        this._prepareBaseItems(data);
+        this._HMprepareSheet(data);
+        return data;
+    }
+
+    _prepareBaseItems(sheetData) {
+        const actorData = sheetData.actor;
+        const uskills = [];
+        const skills = [];
+        const langs = [];
+        const wounds = [];
+        const armors = [];
+        const gear = [];
+        const spells = [];
+        const weapons = [];
+
+        const sflags = {
+            'combat': {
+                'weapon': {'equipped': false, 'unequipped': false},
+                'armor':  {'equipped': false, 'unequipped': false},
+            },
+        };
+
+        for (const i of sheetData.items) {
+            i.img = i.img || DEFAULT_TOKEN;
+
+            if (i.type === 'skill') {
+                if (i.data.language) { langs.push(i); } else {
+                    i.data.universal ? uskills.push(i) : skills.push(i);
+                }
+            } else
+            if (i.type === 'armor') {
+                updateSflags(i, sflags.combat.armor);
+                gear.push(i);
+                armors.push(i);
+            } else
+            if (i.type === 'weapon') {
+                updateSflags(i, sflags.combat.weapon);
+                gear.push(i);
+                weapons.push(i);
+            } else
+            if (i.type === 'wound')  { wounds.push(i); } else
+            if (i.type === 'item')   { gear.push(i);   } else
+            if (i.type === 'spell')  { spells.push(i); }
+        }
+
+        // Sort
+        function skillsort(a, b) {
+            return a.name + (a.data.specialty.value || '') > b.name + (b.data.specialty.value || '') ? 1 : -1;
+        }
+
+        skills.sort(skillsort);
+        uskills.sort(skillsort);
+        langs.sort(skillsort);
+
+        actorData.skills = {skills, uskills, langs};
+        actorData.wounds = wounds;
+        actorData.armors = armors;
+        actorData.gear = gear;
+        actorData.spells = spells;
+        actorData.weapons = weapons;
+        actorData.sflags = sflags;
+
+        const slevels = [];
+            for (let i=0; i < actorData.spells.length; i++) {
+                const lidx = Number(actorData.spells[i].data.lidx);
+                if (!slevels.includes(lidx)) { slevels.push(lidx); }
+            }
+
+        actorData.slevels = slevels.sort();
+
+        // HACK: If sheet has only one spell level, the controls are locked.
+        const cslevel = Number(actorData.data.data.cslevel);
+        if (slevels.length && !slevels.includes(cslevel)) {
+            actorData.data.data.cslevel = actorData.slevels[0];
+        }
+    }
+
+    async _prepareCharacterItems(sheetData) {
+        const actorData = sheetData.actor;
+
+        // Initialize containers.
+        const profs = [];
+        let race = null;
+        let cclass = null;
+
+        // Iterate through items, allocating to containers
+        for (const i of sheetData.items) {
+            i.img = i.img || DEFAULT_TOKEN;
+            if (i.type === 'cclass')      { cclass = i;    } else
+            if (i.type === 'proficiency') { profs.push(i); } else
+            if (i.type === 'race')        { race = i;      }
+        }
+
+        // Assign
+        actorData.cclass = cclass;
+        actorData.profs = profs;
+        actorData.race = race;
+    }
 
     /** @override */
     activateListeners(html) {
