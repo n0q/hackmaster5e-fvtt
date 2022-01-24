@@ -10,16 +10,6 @@ function updateSflags(item, sflags) {
 
 export class HMActorSheet extends ActorSheet {
     /** @override */
-    static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
-            classes: ['hackmaster', 'sheet', 'actor'],
-            width: 820,
-            height: 970,
-            tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'skills' }]
-        });
-    }
-
-    /** @override */
     get template() {
         const path = 'systems/hackmaster5e/templates/actor';
         return `${path}/${this.actor.data.type}-base.hbs`;
@@ -31,14 +21,7 @@ export class HMActorSheet extends ActorSheet {
         data.dtypes = ['String', 'Number', 'Boolean'];
 
         this._prepareBaseItems(data);
-
-        if (this.actor.data.type === 'character') {
-            this._prepareCharacterItems(data);
-            this._prepareCharacterSheet(data);
-            return data;
-        }
-
-        this._prepareBeastSheet(data);
+        this._HMprepareSheet(data);
         return data;
     }
 
@@ -137,23 +120,6 @@ export class HMActorSheet extends ActorSheet {
         actorData.race = race;
     }
 
-    _prepareCharacterSheet(sheetData) {
-        const actorData = sheetData.actor;
-
-        // Saves
-        const left = ['fos', 'foa', 'turning', 'morale'];
-        const right = ['physical', 'mental', 'dodge', 'poison', 'trauma'];
-        actorData.saves = {left, right};
-    }
-
-    _prepareBeastSheet(sheetData) {
-        const actorData = sheetData.actor;
-
-        // Saves
-        const left = ['fos', 'foa', 'tenacity', 'will'];
-        const right = ['physical', 'mental', 'dodge', 'poison', 'trauma'];
-        actorData.saves = {left, right};
-    }
     /** @override */
     activateListeners(html) {
         super.activateListeners(html);

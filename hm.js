@@ -9,7 +9,6 @@ import { HMMacro } from './modules/sys/macro.js';
 import LOGGER from './modules/sys/logger.js';
 import { MODULE_ID } from './modules/sys/constants.js';
 
-
 import registerHandlebarsHelpers from './modules/sys/helpers.js';
 import preloadHandlebarsTemplates from './modules/sys/partials.js';
 

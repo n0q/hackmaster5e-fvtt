@@ -10,4 +10,21 @@ export class HMCharacterActorSheet extends HMActorSheet {
             tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'skills' }]
         });
     }
+
+    /** @override */
+    getData() {
+        const data = super.getData();
+
+        this._prepareCharacterItems(data);
+        return data;
+    }
+
+    _HMprepareSheet(sheetData) {
+        const actorData = sheetData.actor;
+
+        // Saves
+        const left = ['fos', 'foa', 'turning', 'morale'];
+        const right = ['physical', 'mental', 'dodge', 'poison', 'trauma'];
+        actorData.saves = {left, right};
+    }
 }
