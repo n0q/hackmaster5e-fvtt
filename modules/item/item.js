@@ -1,12 +1,20 @@
 import { HMTABLES } from '../sys/constants.js';
 
 export class HMItem extends Item {
-    prepareBaseData() {
+    /** @override */
+    prepareData(options={}) {
+        this.data.reset();
+        this.prepareBaseData(options);
+        super.prepareEmbeddedDocuments();
+        this.prepareDerivedData();
+    }
+
+    prepareBaseData(options={}) {
         super.prepareBaseData();
         const {data, type} = this.data;
         const actorData = this.actor ? this.actor.data : null;
 
-        if (type === 'armor')       { this._prepArmorData();                      } else
+        if (type === 'armor')       { this._prepArmorData(options);               } else
         if (type === 'cclass')      { this._prepCClassData(data, actorData);      } else
         if (type === 'proficiency') { this._prepProficiencyData(data, actorData); }
     }
@@ -28,14 +36,29 @@ export class HMItem extends Item {
         return Object.fromEntries(keys.map((_, i) => [keys[i], values[i]]));
     }
 
-    _prepArmorData() {
-        if (!this.actor) { return; }
-        const {bonus, qn} = this.data.data;
+    _prepArmorData({setBonus=true}={}) {
+        if (!this.actor?.data) { return; }
+        const {bonus, shield, qn} = this.data.data;
         qn ? bonus.qual = this.quality : delete bonus.qual;
         for (const key in bonus.total) {
             let sum = -bonus.total[key];
             for (const row in bonus) { sum += bonus[row][key]; }
             bonus.total[key] = sum;
+        }
+
+        // Populate armor and shield vectors on actor.
+        if (setBonus) {
+            const actorBonus = this.actor.data.data.bonus;
+            const aVector = actorBonus?.armor || {};
+            const sVector = actorBonus?.shield || {};
+            const sum = shield.checked ? sVector : aVector;
+
+            Object.keys(bonus.total).forEach((key) => {
+                sum[key] = (sum[key] || 0) + bonus.total[key];
+            });
+
+            shield.checked ? actorBonus.shield = sum
+                           : actorBonus.armor =  sum;
         }
     }
 
@@ -151,7 +174,7 @@ export class HMItem extends Item {
             const defItem = defItems[i];
             const defData = defItem.data.data;
             // Without having finer control over prepData order, we must force a prep here.
-            defItem.prepareData();
+            defItem.prepareData({setBonus: false});
             defData.shield.checked ? shields.push(defItem) : armors.push(defItem);
         }
 

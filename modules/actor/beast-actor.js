@@ -9,6 +9,7 @@ export class HMBeastActor extends HMActor {
 
     prepareDerivedData() {
         super.prepareDerivedData();
+        this.setBonusTotal();
         this.setHP();
     }
 

@@ -3,11 +3,18 @@ import { HMTABLES } from '../sys/constants.js';
 export class HMActor extends Actor {
     prepareBaseData() {
         super.prepareBaseData();
+        this.resetBonus();
     }
 
     prepareDerivedData() {
         super.prepareDerivedData();
         this.setHP();
+    }
+
+    resetBonus() {
+        const {data} = this.data;
+        const {misc} = data.bonus;
+        data.bonus   = {'total': {}, misc};
     }
 
     async setRace() {
@@ -82,16 +89,9 @@ export class HMActor extends Actor {
     }
 
     get drObj() {
-        let armor  = this.data.data.bonus.total?.dr || 0;
-        let shield = 0;
-        const defItems = this.items.filter((a) => a.type === 'armor'
-                                               && a.data.data.state.equipped);
-
-        for (let i = 0; i < defItems.length; i++) {
-            const defData = defItems[i].data.data;
-            defData.shield.checked ? shield += defData.bonus.total.dr
-                                   : armor  += defData.bonus.total.dr;
-        }
+        const {bonus} = this.data.data;
+        const shield  = bonus.shield?.dr || 0;
+        const armor   = (bonus.total?.dr || 0) - shield;
         return {armor, shield};
     }
 
