@@ -13,6 +13,7 @@ export class HMCharacterActor extends HMActor {
 
     prepareDerivedData() {
         super.prepareDerivedData();
+        this.setBonusTotal();
         this.setExtras();
         this.setEncumbrance();
     }

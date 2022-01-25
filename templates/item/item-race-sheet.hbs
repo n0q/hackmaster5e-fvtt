@@ -19,10 +19,7 @@
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.hp"}}</label>
                             <span>
-                                <select class="dropdown" name="data.scale.hp"
-                                    data-ref1="scale"
-                                    data-ref3="hp"
-                                    data-key="data.bonus.hp"> 
+                                <select name="data.scale.hp">
                                 {{#select scale.hp}}{{#each (findConfigObj "scale") as |type t|}}
                                     <option value="{{t}}">{{localize type}}</option>
                                 {{/each}}{{/select}}
@@ -34,10 +31,7 @@
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.kb"}}</label>
                             <span>
-                                <select class="dropdown" name="data.scale.kb"
-                                    data-ref1="scale"
-                                    data-ref3="kb"
-                                    data-key="data.bonus.kb"> 
+                                <select name="data.scale.kb">
                                 {{#select scale.kb}}{{#each (findConfigObj "scale") as |type t|}}
                                     <option value="{{t}}">{{localize type}}</option>
                                 {{/each}}{{/select}}
@@ -49,10 +43,7 @@
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.reach"}}</label>
                             <span>
-                                <select class="dropdown" name="data.scale.reach"
-                                    data-ref1="scale"
-                                    data-ref3="reach"
-                                    data-key="data.bonus.reach"> 
+                                <select name="data.scale.reach">
                                 {{#select scale.reach}}{{#each (findConfigObj "scale") as |type t|}}
                                     <option value="{{t}}">{{localize type}}</option>
                                 {{/each}}{{/select}}

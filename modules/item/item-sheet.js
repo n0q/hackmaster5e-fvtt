@@ -49,7 +49,6 @@ export class HMItemSheet extends ItemSheet {
         if (!this.options.editable) return;
 
         html.find('.editable').change(this._onEdit.bind(this));
-        html.find('.dropdown').change(this._onChangeDropdown.bind(this));
     }
 
     async _onEdit(ev) {
@@ -68,21 +67,5 @@ export class HMItemSheet extends ItemSheet {
             await this.item.update({data:item.data.data});
             this.render(true);
         }
-    }
-
-    _onChangeDropdown(ev) {
-        ev.preventDefault();
-        const element = ev.currentTarget;
-        const dataset = element.dataset;
-
-        const ref1    = dataset.ref1;
-        const ref2    = $(element).val();
-        const ref3    = dataset.ref3;
-        if (ref2 === '0') { return; }
-
-        const key     = dataset.key;
-        const value   = HMTABLES[ref1][ref2][ref3];
-        const data    = {[key]: value};
-        return this.item.update(data);
     }
 }
