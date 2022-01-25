@@ -43,14 +43,7 @@ export default function registerHandlebarsHelpers() {
         return getProperty(bonus, arg1);
     });
 
-    Handlebars.registerHelper('inc', (a)    => { return ++a });
-    Handlebars.registerHelper('dec', (a)    => { return --a });
-    Handlebars.registerHelper('eq',  (a, b) => { return   a  == b });
-    Handlebars.registerHelper('neq', (a, b) => { return   a !== b });
-    Handlebars.registerHelper('gt',  (a, b) => { return   a  >  b });
-    Handlebars.registerHelper('gte', (a, b) => { return   a  >= b });
-    Handlebars.registerHelper('lt',  (a, b) => { return   a  <  b });
-    Handlebars.registerHelper('lte', (a, b) => { return   a  <= b });
+    Handlebars.registerHelper('eq', (a, b) => { return a == b });
 
     Handlebars.registerHelper("ishalf", (a, b)   => {
         return a === Math.floor(b/2);
@@ -76,28 +69,4 @@ export default function registerHandlebarsHelpers() {
 
         return str;
     });
-
-    // #each.slice(a, b)
-    Handlebars.registerHelper("slice", (context, options) => {
-        const opt = options.hash;
-        const length = context.length
-            ? context.length
-            : Object.keys(context).length;
-        const begin = opt.hasOwnProperty('begin')
-            ? parseInt(opt.begin) || 0
-            : 0;
-        const end = opt.hasOwnProperty('end')
-            ? parseInt(opt.end)
-            : length;
-
-        let ret = "";
-        const data = options.data ? Handlebars.createFrame(options.data) : {};
-        const key = Object.keys(context).slice(begin, end);
-        for (let i=0; i < key.length; i++) {
-            data.key = key[i];
-            ret += options.fn(context[key[i]], {data})
-        }
-        return ret;
-    });
-
 }

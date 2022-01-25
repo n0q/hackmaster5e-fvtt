@@ -1,5 +1,9 @@
 import { HMTABLES } from '../sys/constants.js';
 
+// Remember: Items may not alter Actors under any circumstances.
+// You will create a free fire shooting gallery if you do this, and
+// we are making Hackmaster, not Aces & Eights.
+
 export class HMItem extends Item {
     /** @override */
     prepareData(options={}) {
@@ -9,21 +13,22 @@ export class HMItem extends Item {
         this.prepareDerivedData();
     }
 
+    /** @override */
     prepareBaseData(options={}) {
         super.prepareBaseData();
-        const {data, type} = this.data;
-        const actorData = this.actor ? this.actor.data : null;
 
-        if (type === 'armor')       { this._prepArmorData(options);               } else
-        if (type === 'cclass')      { this._prepCClassData(data, actorData);      } else
-        if (type === 'race')        { this._prepRace();                           } else
-        if (type === 'proficiency') { this._prepProficiencyData(data, actorData); }
+        const {type} = this.data;
+        if (type === 'armor')       { this._prepArmorData(options); } else
+        if (type === 'cclass')      { this._prepCClassData();       } else
+        if (type === 'race')        { this._prepRace();             } else
+        if (type === 'proficiency') { this._prepProficiencyData();  }
     }
 
+    /** @override */
     prepareDerivedData() {
         super.prepareDerivedData();
-        const {type} = this.data;
 
+        const {type} = this.data;
         if (type === 'skill')  { this._prepSkillData();  } else
         if (type === 'weapon') { this._prepWeaponData(); }
     }
@@ -74,31 +79,33 @@ export class HMItem extends Item {
         }
     }
 
-    async _prepCClassData(data, actorData) {
+    async _prepCClassData() {
+        const {data} = this.data;
         const pTable = data.ptable;
 
         // initialize new cclass object ptable
         if (Object.entries(pTable).length === 0) {
-            const pData = HMTABLES.skill._pData;
+            const {pData} = HMTABLES.skill;
             for (let i = 1; i < 21; i++) pTable[i] = deepClone(pData);
             if (Object.entries(pTable).length) return;
             await this.update({'data.ptable': pTable});
         }
 
+        if (!this.actor?.data) { return; }
+
         // calculate hp
-        if (!actorData) { return; }
-        const level = (data.level || 0);
+        const level = Math.clamped((data.level || 0), 0, 20);
         if (level < 1) {
-            delete actorData.data.bonus.class;
+            delete data.bonus;
             return;
         }
-        let hp = 0;
 
+        let hp = 0;
         let rerolled = false;
         let hpStack = [];
         let i = 0;
         while (i++ < level) {
-            const reroll = pTable[i].hp.reroll;
+            const {reroll} = pTable[i].hp;
 
             // end of a reroll chain
             if (!reroll && rerolled) {
@@ -115,27 +122,29 @@ export class HMItem extends Item {
             hpStack.push(parseInt(pTable[i].hp.value, 10) || 0);
             if (reroll) rerolled = true;
         }
-        hp += Math.max(...hpStack);
-        const bonus = { hp };
+
+        const bonus = {
+            'hp':       hp + Math.max(...hpStack),
+            'turning':  level,
+            'dodge':    level,
+            'mental':   level,
+            'physical': level,
+            'top':      (data.top_cf || 0.01) * level,
+        };
 
         // grab the level data off the ptable
-        const feature = data.features;
-        for (const j in feature) {
-            bonus[j] = feature[j] ? pTable[level][j].value || 0 : 0;
-        }
+        const {features} = data;
+        Object.keys(features).forEach((idx) => {
+            bonus[idx] = features[idx] ? pTable[level][idx].value || 0 : 0;
+        });
 
-        // Saves
-        bonus.turning  = level;
-        bonus.dodge    = level;
-        bonus.mental   = level;
-        bonus.physical = level;
-        bonus.top = (data.top_cf || 0.01) * level;
-        await this.update({'data.bonus': bonus});
+        data.bonus = bonus;
     }
 
     // TODO: A user can technically set defense and damage, then
     // set a weapon to ranged. These values should be culled.
-    _prepProficiencyData(data, actorData) {
+    _prepProficiencyData() {
+        const {data} = this.data;
         if (data.mechanical.checked && !data.ranged.checked) {
             return this.update({'data.mechanical.checked': false});
         }
@@ -172,7 +181,7 @@ export class HMItem extends Item {
         const actorData   = this.actor.data;
         const itemData    = this.data.data;
 
-        const {ranged}    = itemData
+        const {ranged}    = itemData;
         const isCharacter = actorData.type === 'character';
         const armors      = [];
         const shields     = [];
