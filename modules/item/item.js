@@ -16,6 +16,7 @@ export class HMItem extends Item {
 
         if (type === 'armor')       { this._prepArmorData(options);               } else
         if (type === 'cclass')      { this._prepCClassData(data, actorData);      } else
+        if (type === 'race')        { this._prepRace();                           } else
         if (type === 'proficiency') { this._prepProficiencyData(data, actorData); }
     }
 
@@ -34,6 +35,17 @@ export class HMItem extends Item {
         const values = HMTABLES.quality[qKey].map((a) => a * qn);
         const keys = Object.keys(bonus.total);
         return Object.fromEntries(keys.map((_, i) => [keys[i], values[i]]));
+    }
+
+    _prepRace() {
+        const {data} = this.data;
+        const {bonus, scale} = data;
+
+        const scaleTable = HMTABLES.scale;
+        Object.keys(scale).forEach((key) => {
+            const idx = data.scale[key];
+            if (idx > 0) { bonus[key] = scaleTable[idx][key]; }
+        });
     }
 
     _prepArmorData({setBonus=true}={}) {

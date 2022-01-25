@@ -232,15 +232,15 @@ export const HMTABLES = {
         'trauma':   { formula: '1d20  - @bonus.total.trauma    - @resp.bonus' },
         'turning':  { formula: '1d20p + @bonus.total.turning   + @resp.bonus' },
     },
-    "scale": {
-        1: {"hp":  0, "kb":  5, "reach": -2,  "movecf":  0.33},
-        2: {"hp":  5, "kb": 10, "reach": -1,  "movecf":  0.50},
-        3: {"hp": 10, "kb": 15, "reach":  0,  "movecf":  1.00},
-        4: {"hp": 15, "kb": 20, "reach":  1,  "movecf":  2.00},
-        5: {"hp": 20, "kb": 25, "reach":  2,  "movecf":  3.00},
-        6: {"hp": 25, "kb": 30, "reach":  3,  "movecf":  4.00},
-        7: {"hp": 35, "kb": 40, "reach":  5,  "movecf":  6.00},
-        8: {"hp": 70, "kb": 75, "reach":  12, "movecf": 13.00},
+    'scale': {
+        1: {'hp':  0, 'kb':  5, 'reach': -2,  'movecf':  0.33},
+        2: {'hp':  5, 'kb': 10, 'reach': -1,  'movecf':  0.50},
+        3: {'hp': 10, 'kb': 15, 'reach':  0,  'movecf':  1.00},
+        4: {'hp': 15, 'kb': 20, 'reach':  1,  'movecf':  2.00},
+        5: {'hp': 20, 'kb': 25, 'reach':  2,  'movecf':  3.00},
+        6: {'hp': 25, 'kb': 30, 'reach':  3,  'movecf':  4.00},
+        7: {'hp': 35, 'kb': 40, 'reach':  5,  'movecf':  6.00},
+        8: {'hp': 70, 'kb': 75, 'reach':  12, 'movecf': 13.00},
     },
     'skill': {
         '_pData': {
