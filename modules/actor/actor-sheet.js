@@ -91,9 +91,8 @@ export class HMActorSheet extends ActorSheet {
 
         actorData.slevels = slevels.sort();
 
-        // HACK: If sheet has only one spell level, the controls are locked.
-        const cslevel = Number(actorData.data.data.cslevel);
-        if (slevels.length && !slevels.includes(cslevel)) {
+        // If sheet has only one spell level, the controls are locked.
+        if (slevels.length == 1) {
             actorData.data.data.cslevel = actorData.slevels[0];
         }
     }
