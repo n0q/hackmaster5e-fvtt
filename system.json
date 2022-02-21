@@ -5,7 +5,7 @@
     "url": null,
     "version": null,
     "minimumCoreVersion": "0.8.7",
-    "compatibleCoreVersion": "9.245",
+    "compatibleCoreVersion": "9.249",
     "templateVersion": 1,
     "author": "n0qtrnL#2610",
     "esmodules": ["node_modules/dompurify/dist/purify.js", "hm.js"],

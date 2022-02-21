@@ -2,12 +2,14 @@
 <i class="logo-corner far fa-registered"></i>
 {{#with data.data}}
 <section>
+    {{#if (eq ../actor.type 'character')}}
     <figure class="fraction">
         <label for="data.ep.value" class="resource-label">{{localize "HM.ep"}}</label>
         <input type="number" name="data.ep.value" value="{{ep.value}}" onwheel="this.blur()" data-dtype="Number"/>
         <div class="divisor"></div>
         <input type="number" name="data.ep.max" value="{{ep.max}}" data-dtype="Number"/>
     </figure>
+    {{/if}}
     <figure class="fraction">
         <label for="data.hp.value" class="resource-label">{{localize "HM.hp"}}</label>
         <label for="data.hp.value">{{hp.value}}</label>
@@ -20,11 +22,13 @@
         <div class="divisor"></div>
         <label for="data.sp.max">{{sp.max}}</label>
     </figure>
+    {{#if (eq ../actor.type 'character')}}
     <figure class="fraction">
         <label for="data.luck.value" class="resource-label">{{localize "HM.luck"}}</label>
         <input type="number" name="data.luck.value" value="{{luck.value}}" onwheel="this.blur()" data-dtype="Number"/>
         <div class="divisor"></div>
         <input type="number" name="data.luck.max" value="{{luck.max}}" data-dtype="Number"/>
     </figure>
+    {{/if}}
 </section>
 {{/with}}
