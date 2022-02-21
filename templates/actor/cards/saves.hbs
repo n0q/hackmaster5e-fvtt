@@ -1,4 +1,4 @@
-{{#if (findBonus (concat 'total.' this)) includeZero=true}}
+{{#if (findBonus 'total' this) includeZero=true}}
 <li class="card">
     <summary>
         <header>
@@ -8,7 +8,7 @@
             </label>
         </header>
         <div class="statblock">
-            <input class="rollable" type="number" value="{{findBonus (concat 'total.' this)}}" readonly="true"
+            <input class="rollable" type="number" value="{{findBonus 'total' this}}" readonly="true"
                 data-dialog="save"
                 data-formula-type="{{this}}"
             />
