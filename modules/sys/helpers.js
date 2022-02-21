@@ -38,9 +38,10 @@ export default function registerHandlebarsHelpers() {
         return "INVALID_LIST";
     });
 
-    Handlebars.registerHelper("findBonus", (arg1, opts) => {
-        const bonus = opts.data.root.actor.data.data.bonus;
-        return getProperty(bonus, arg1);
+    Handlebars.registerHelper('findBonus', (arg1, arg2, opts) => {
+        const {bonus} = opts.data.root.actor.data.data;
+        const vector = bonus[arg1];
+        return getProperty(vector, arg2);
     });
 
     Handlebars.registerHelper('eq', (a, b) => { return a == b });
