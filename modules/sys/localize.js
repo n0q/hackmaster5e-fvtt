@@ -1,4 +1,4 @@
-const idx = {};
+export const idx = {};
 
 // Localization
 idx.ability_short = {
@@ -209,6 +209,7 @@ idx.combatImg = {
 };
 
 idx.defaultImg = {
+    'item': 'icons/magic/symbols/question-stone-yellow.webp',
     'body': 'icons/magic/control/buff-strength-muscle-damage-red.webp',
 };
 

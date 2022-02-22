@@ -14,8 +14,11 @@ export class HMBeastActor extends HMActor {
     }
 
     setExtras() {
-        const {data} = this.data;
-        data.bonus.misc.poison = (data.bonus.misc.trauma || 0) * 2;
+        if (this.data.data.bonus.stats === undefined) {
+            this.data.data.bonus.stats = {};
+        }
+        const {misc, stats} = this.data.data.bonus;
+        stats.poison = (misc.trauma || 0) * 2;
     }
 
     setHP() {

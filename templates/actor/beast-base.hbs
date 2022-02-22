@@ -8,8 +8,7 @@
     </section>
 
     <nav class="sheet-tabs tabs" data-group="primary">
-        <a class="item" data-tab="skills">{{localize "HM.skills"}}</a>
-        <a class="item" data-tab="combat">{{localize "HM.combat"}}</a>
+        <a class="item" data-tab="overview">{{localize "HM.overview"}}</a>
         <a class="item" data-tab="spells">{{localize "HM.spells"}}</a>
         <a class="item" data-tab="description">{{localize "HM.description"}}</a>
         <a class="item" data-tab="inventory">{{localize "HM.inventory"}}</a>
@@ -17,12 +16,8 @@
     </nav>
 
     <section class="sheet-body">
-        <div class="tab skills" data-group="primary" data-tab="skills">
-            {{> "systems/hackmaster5e/templates/actor/parts/skills/base-skills.hbs"}}
-        </div>
-
-        <div class="tab base-combat" data-group="primary" data-tab="combat">
-            {{> "systems/hackmaster5e/templates/actor/parts/combat/base-combat.hbs"}}
+        <div class="tab overview" data-group="primary" data-tab="overview">
+            {{> "systems/hackmaster5e/templates/actor/parts/overview/base-overview.hbs"}}
         </div>
 
         <div class="tab spells" data-group="primary" data-tab="spells">
@@ -38,7 +33,7 @@
         </div>
 
         <div class="tab base-setup" data-group="primary" data-tab="setup">
-            {{> "systems/hackmaster5e/templates/actor/parts/setup/base-setup_b.hbs"}}
+            {{> "systems/hackmaster5e/templates/actor/parts/setup/beast-base-setup.hbs"}}
         </div>
     </section>
 </form>

@@ -1,0 +1,20 @@
+{{#with actor.skills}}
+<div class="skills-list">
+    {{#if skills}}
+    <label class="skill-header">{{localize "HM.skills"}}</label>
+    <div class="grid-2col">
+        {{#each skills}}
+            {{> "systems/hackmaster5e/templates/actor/cards/skill.hbs" }}
+        {{/each}}
+    </div>
+    {{/if}}
+    {{#if langs}}
+    <label class="skill-header">{{localize "HM.languages"}}</label>
+    <div class="grid-2col">
+        {{#each langs}}
+            {{> "systems/hackmaster5e/templates/actor/cards/language.hbs" }}
+        {{/each}}
+    </div>
+    {{/if}}
+</div>
+{{/with}}

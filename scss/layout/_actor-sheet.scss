@@ -14,14 +14,19 @@ $character-width: 820px;
         grid-template-areas:
             "middle-saves-l middle-stats middle-saves-r middle-wounds";
         }
-}
 
-#character-sheet {
-    width: $character-width;
+    >header {
+        .header-stats {
+            .logo-corner {
+                top: 25%;
+            }
+        }
+    }
 }
 
 .actor-sheet {
     display: grid;
+    width: $character-width;
     grid-gap: $actor-gridgap;
     grid-template-rows: repeat(4, min-content);
 
