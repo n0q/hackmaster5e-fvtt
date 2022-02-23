@@ -1,35 +1,56 @@
 $actor-gridgap: 4px;
 $actor-portrait-dim: 150px;
-$actor-saves-dim: 18%;
+$actor-saves-dim: 150px;
+$actor-wounds-dim: 180px;
 $actor-logo-dim: 40%;
+$beast-width: 620px;
+$character-width: 820px;
+
+#beast-sheet {
+    width: $beast-width;
+
+    .sheet-middle {
+        grid-template-columns: $actor-saves-dim 1fr $actor-saves-dim $actor-wounds-dim;
+        grid-template-areas:
+            "middle-saves-l middle-stats middle-saves-r middle-wounds";
+        }
+
+    >header {
+        .header-stats {
+            .logo-corner {
+                top: 25%;
+            }
+        }
+    }
+}
 
 .actor-sheet {
     display: grid;
+    width: $character-width;
     grid-gap: $actor-gridgap;
-    width: $gwidth;
-    grid-template-rows: repeat(3, min-content);
+    grid-template-rows: repeat(4, min-content);
 
     >header {
         display: grid;
         grid-template-columns: 1fr $actor-logo-dim;
-        column-gap: 10px;
+        column-gap: $padding-md;
         overflow: hidden;
-        padding-bottom: 5px;
+        padding-bottom: $padding-sm;
         border-bottom: 1px solid #AAA;
-        margin-bottom: 5px;
+        margin-bottom: $padding-sm;
 
-        #header-portrait {
+        .header-portrait {
             img {
                 flex: 0 0 $actor-portrait-dim;
                 max-width: $actor-portrait-dim;
                 max-height: $actor-portrait-dim;
                 object-fit: cover;
                 object-position: 50% 0;
-                margin-right: 10px;
+                margin-right: $padding-md;
             }
         }
 
-        #header-stats {
+        .header-stats {
             display: grid;
             grid-template-rows: repeat(2, 1fr);
             position: relative;
@@ -56,12 +77,11 @@ $actor-logo-dim: 40%;
     }
 }
 
-.sheet-middle-b,
 .sheet-middle {
     display: grid;
     grid-gap: $actor-gridgap;
     width: inherit;
-    grid-template-columns: $actor-portrait-dim $actor-saves-dim 1fr $actor-saves-dim 22%;
+    grid-template-columns: $actor-portrait-dim $actor-saves-dim 1fr $actor-saves-dim $actor-wounds-dim;
     grid-template-areas:
         "abilities middle-saves-l middle-stats middle-saves-r middle-wounds";
     
@@ -94,26 +114,6 @@ $actor-logo-dim: 40%;
     }
 }
 
-.sheet-middle-b {
-    grid-template-columns: $actor-saves-dim 1fr $actor-saves-dim 22%;
-    grid-template-areas:
-        "middle-saves-l middle-stats middle-saves-r middle-wounds";
-}
-
-.middle-stats {
-    display: grid;
-    grid-template-rows: repeat(5, 1fr);
-
-    >.honor { grid-row: 1 / span 2; }
-    >.fame { grid-row: 3 / span 2; }
-
-    >.widget {
-        border: 2px solid;
-        border-radius: 5px;
-        display: grid;
-    }
-}
-
 .base-setup {
     section {
         @include common_border;
@@ -136,3 +136,4 @@ $actor-logo-dim: 40%;
 .base-combat {
     @include flexgrid;
 }
+

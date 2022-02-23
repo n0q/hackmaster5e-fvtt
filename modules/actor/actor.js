@@ -36,9 +36,11 @@ export class HMActor extends Actor {
         const {data} = this.data;
         const cclasses = this.items.filter((a) => a.type === 'cclass');
         if (!cclasses.length) return;
-
         const cclass = cclasses.pop();
-        data.bonus.class = cclass.data.data.bonus;
+
+        cclass._prepCClassData();
+        const objData = cclass.data.data;
+        if (objData.level > 0) { data.bonus.class = objData.bonus; }
 
         if (cclasses.length) {
             let oldclass;

@@ -1,7 +1,9 @@
+{{#if (eq actor.type 'character')}}
 <section class="abilities">
     {{> "systems/hackmaster5e/templates/actor/parts/middle/middle-abilities.hbs"}} 
 </section>
 
+{{/if}}
 <section class="middle-saves">
     {{> "systems/hackmaster5e/templates/actor/parts/middle/middle-saves-l.hbs"}} 
 </section>

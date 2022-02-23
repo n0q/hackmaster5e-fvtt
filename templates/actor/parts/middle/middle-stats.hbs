@@ -1,4 +1,5 @@
 {{#with data.data}}
+{{#if (eq ../actor.type 'character')}}
 <figure class="fraction">
     <label for="data.honor.value" class="resource-label">{{localize "HM.honor"}}</label>
     <input type="number" name="data.honor.value" value="{{honor.value}}" onwheel="this.blur()" data-dtype="Number"/>
@@ -7,4 +8,17 @@
     <label for="data.fame.value" class="resource-label">{{localize "HM.fame"}}</label>
     <input type="number" name="data.fame.value" value="{{fame.value}}" onwheel="this.blur()" data-dtype="Number"/>
 </figure>
+{{/if}}
+{{#if hp.tenacity}}
+<figure class="fraction">
+    <label for="data.hp.tenacity" class="resource-label">{{localize "HM.tenacity"}}</label>
+    {{hp.tenacity}} 
+</figure>
+{{/if}}
+{{#if hp.top}}
+<figure class="fraction">
+    <label for="data.fame.value" class="resource-label">{{localize "HM.top"}}</label>
+    {{hp.top}} 
+</figure>
+{{/if}}
 {{/with}}

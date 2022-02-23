@@ -25,7 +25,7 @@
                                 {{/each}}{{/select}}
                                 </select>
                                 <input type="number" name="data.bonus.hp" value="{{bonus.hp}}"
-                                {{#if (neq scale.hp '0')}}readonly{{/if}} data-dtype="Number"/>
+                                {{#if (ne scale.hp '0')}}readonly{{/if}} data-dtype="Number"/>
                             </span>
                         </div>
                         <div class="options-row">
@@ -37,7 +37,7 @@
                                 {{/each}}{{/select}}
                                 </select>
                                 <input type="number" name="data.bonus.kb" value="{{bonus.kb}}"
-                                {{#if (neq scale.kb 0)}}readonly{{/if}} data-dtype="Number"/>
+                                {{#if (ne scale.kb '0')}}readonly{{/if}} data-dtype="Number"/>
                             </span>
                         </div>
                         <div class="options-row">
@@ -49,7 +49,7 @@
                                 {{/each}}{{/select}}
                                 </select>
                                 <input type="number" name="data.bonus.reach" value="{{bonus.reach}}"
-                                {{#if (neq scale.reach 0)}}readonly{{/if}} data-dtype="Number"/>
+                                {{#if (ne scale.reach '0')}}readonly{{/if}} data-dtype="Number"/>
                             </span>
                         </div>
                         <div class="options-row">

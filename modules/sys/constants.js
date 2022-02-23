@@ -243,7 +243,7 @@ export const HMTABLES = {
         8: {'hp': 70, 'kb': 75, 'reach':  12, 'movecf': 13.00},
     },
     'skill': {
-        '_pData': {
+        'pData': {
             'hp':   {value: null, die: null, reroll: false},
             'sp':   {value: null},
             'atk':  {value: null},

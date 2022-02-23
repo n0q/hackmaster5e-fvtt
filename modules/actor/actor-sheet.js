@@ -1,6 +1,7 @@
 import HMDialogMgr from '../mgr/dialogmgr.js';
 import HMChatMgr from '../mgr/chatmgr.js';
 import HMRollMgr from '../mgr/rollmgr.js';
+import { idx } from '../sys/localize.js';
 
 function updateSflags(item, sflags) {
     const flag = sflags;
@@ -25,6 +26,7 @@ export class HMActorSheet extends ActorSheet {
         return data;
     }
 
+    // TODO: This function is a mess and needs a refactor.
     _prepareBaseItems(sheetData) {
         const actorData = sheetData.actor;
         const uskills = [];
@@ -43,12 +45,15 @@ export class HMActorSheet extends ActorSheet {
             },
         };
 
+        const DEFAULT_TOKEN = idx.defaultImg.item;
         for (const i of sheetData.items) {
             i.img = i.img || DEFAULT_TOKEN;
 
             if (i.type === 'skill') {
                 if (i.data.language) { langs.push(i); } else {
-                    i.data.universal ? uskills.push(i) : skills.push(i);
+                    if (actorData.type === 'character') {
+                        i.data.universal ? uskills.push(i) : skills.push(i);
+                    } else { skills.push(i); }
                 }
             } else
             if (i.type === 'armor') {
@@ -72,10 +77,15 @@ export class HMActorSheet extends ActorSheet {
         }
 
         skills.sort(skillsort);
-        uskills.sort(skillsort);
         langs.sort(skillsort);
 
-        actorData.skills = {skills, uskills, langs};
+        if (actorData.type === 'character') {
+            uskills.sort(skillsort);
+            actorData.skills = {skills, uskills, langs};
+        } else {
+            actorData.skills = {skills, langs};
+        }
+
         actorData.wounds = wounds;
         actorData.armors = armors;
         actorData.gear = gear;
@@ -91,9 +101,8 @@ export class HMActorSheet extends ActorSheet {
 
         actorData.slevels = slevels.sort();
 
-        // HACK: If sheet has only one spell level, the controls are locked.
-        const cslevel = Number(actorData.data.data.cslevel);
-        if (slevels.length && !slevels.includes(cslevel)) {
+        // If sheet has only one spell level, the controls are locked.
+        if (slevels.length == 1) {
             actorData.data.data.cslevel = actorData.slevels[0];
         }
     }
