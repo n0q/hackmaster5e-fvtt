@@ -64,7 +64,8 @@ export class HMItem extends Item {
         }
 
         // Populate armor and shield vectors on actor.
-        if (setBonus) {
+        // TODO: Items should never do this to actors.
+        if (setBonus && this.data.data.state.equipped) {
             const actorBonus = this.actor.data.data.bonus;
             const aVector = actorBonus?.armor || {};
             const sVector = actorBonus?.shield || {};
@@ -268,35 +269,15 @@ export class HMItem extends Item {
 
     async WoundAction(event) {
         const element = event.currentTarget;
-        const dataset = element.dataset;
+        const {dataset} = element;
         const itemData = this.data.data;
 
         let {hp, timer, treated} = itemData;
-        let dirty = false;
 
         if (dataset.action === 'decTimer') timer--;
-        if (dataset.action === 'decHp' || timer < 1) {
-            timer = --hp;
-            dirty = true;
-        }
+        if (dataset.action === 'decHp' || timer < 1) timer = --hp;
 
         if (hp < 0) return this.delete();
         await this.update({'data': {hp, timer, treated}});
-        if (dirty && this.parent) {
-            this.parent.modifyTokenAttribute('data.hp');
-        }
-    }
-
-    // Workaround until foundry issue 6508 is resolved.
-    static async createItem(item) {
-        if (item.type === 'wound' && item.parent) {
-            item.parent.modifyTokenAttribute('data.hp');
-        }
-    }
-
-    static async deleteItem(item) {
-        if (item.type === 'wound' && item.parent) {
-            item.parent.modifyTokenAttribute('data.hp');
-        }
     }
 }
