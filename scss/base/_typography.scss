@@ -1,12 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Martel:wght@400;800&family=Roboto:wght@300;400;500&display=swap');
 
-// @font-face {
-//     font-family: 'Empire Crown';
-//     font-style: normal;
-//     font-weight: 400;
-//     src: local(''), url('../fonts/empirecrown.ttf')
-// }
+@font-face {
+    font-family: 'Korinan';
+    font-style: normal;
+    font-weight: normal;
+    src: local(''), url('../styles/fonts/korinan.woff2') format('woff2');
+}
 
-$font-primary: 'Roboto', sans-serif;
+@font-face {
+  font-family: 'Gentium';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1.6;
+  word-spacing: 0.5px; 
+  letter-spacing: 0.6px;
+  src: local(''), url('../styles/fonts/GenBkBasR.woff2') format('woff2');
+}
+
+$font-primary: 'Korinan', 'Gentium', 'Roboto', serif;
 $font-primary-size: 16px;
-$font-secondary: 'Roboto', sans-serif;
+$font-primary: 'Korinan', 'Gentium', 'Roboto', serif;
