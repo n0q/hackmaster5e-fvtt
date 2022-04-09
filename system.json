@@ -12,10 +12,17 @@
     "styles": ["styles/hackmaster.css"],
     "packs": [
         {
-            "label": "Skills, Universal",
+            "label": "Classes, Basic",
             "type": "Item",
-            "name": "uskills",
-            "path": "packs/universal-skills.db",
+            "name": "hmbclasses",
+            "path": "packs/classes-basic.db",
+            "system": "hackmaster5e"
+        },
+        {
+            "label": "Races, Basic",
+            "type": "Item",
+            "name": "hmbraces",
+            "path": "packs/races-basic.db",
             "system": "hackmaster5e"
         },
         {
@@ -23,6 +30,13 @@
             "type": "Item",
             "name": "hmbskills",
             "path": "packs/skills-basic.db",
+            "system": "hackmaster5e"
+        },
+        {
+            "label": "Skills, Universal",
+            "type": "Item",
+            "name": "uskills",
+            "path": "packs/skills-universal.db",
             "system": "hackmaster5e"
         },
         {
