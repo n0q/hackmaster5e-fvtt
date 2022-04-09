@@ -46,8 +46,8 @@ Hooks.once('ready', async() => {
 });
 
 Hooks.on('createActor', HMActor.createActor);
-Hooks.on('renderCombatTracker', HMCombatTracker.renderCombatTracker);
 Hooks.on('createToken', HMActor.createToken);
+Hooks.on('renderCombatTracker', HMCombatTracker.renderCombatTracker);
 
 Hooks.on('diceSoNiceRollStart', (_messageId, context) => {
     // Add 1 to penetration dice so dsn shows actual die throws.
