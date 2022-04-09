@@ -50,9 +50,9 @@ export default function registerHandlebarsHelpers() {
         return a === Math.floor(b/2);
     });
 
-    Handlebars.registerHelper("pad", (a) => {
-        let num = a.toString();
-        while (num.length < 2) num = "0" + num;
+    Handlebars.registerHelper('pad', (arg1) => {
+        let num = (arg1 || 0).toString();
+        while (num.length < 2) num = `0${num}`;
         return num;
     });
 

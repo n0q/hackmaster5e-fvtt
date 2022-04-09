@@ -40,6 +40,7 @@ $character-width: 820px;
         margin-bottom: $padding-sm;
 
         .header-portrait {
+            font-size: 1.25em;
             img {
                 flex: 0 0 $actor-portrait-dim;
                 max-width: $actor-portrait-dim;
@@ -47,6 +48,11 @@ $character-width: 820px;
                 object-fit: cover;
                 object-position: 50% 0;
                 margin-right: $padding-md;
+            }
+
+            .name {
+                width: 100%; 
+                font-size: 1.5rem;
             }
         }
 
@@ -124,7 +130,7 @@ $character-width: 820px;
     }
 
     .setup-abilities {
-      @include table-basic;
+        @include table-basic;
     }
 
     .statbonuses {

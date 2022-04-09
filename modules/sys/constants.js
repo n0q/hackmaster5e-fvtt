@@ -288,4 +288,8 @@ export const HMTABLES = {
             'vector': [1, 1, 1, -1],
         },
     },
+    'weight': (bmi, height) => {
+        const weight = (bmi * height ** 2) / 703;
+        return Math.floor(weight);
+    },
 };

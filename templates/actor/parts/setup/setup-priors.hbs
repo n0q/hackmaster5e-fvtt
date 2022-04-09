@@ -1,0 +1,46 @@
+<section class="setup-abilities" style="common-border">
+{{#with data.data.priors}}
+    <label class="resource-label">Priors and Particulars</label>
+    <table class="table-basic">
+        <tr>
+            <th scope="row">{{localize "HM.age"}}</th>
+            <td><input type="number" style="width: 3em;" name="data.priors.age" value="{{age}}" data-dtype="Number"/></td>
+            <th scope="row">{{localize "HM.alignment"}}</th>
+            <td>
+                <select name="data.priors.alignment" data-dtype="String">
+    {{#select alignment}}{{#each (findConfigObj "alignment") as |type t|}}
+                    <option value="{{t}}">{{localize type}}</option>
+    {{/each}}{{/select}}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">{{localize "HM.bmi"}}</th>
+            <td><input type="number" style="width: 3em;" name="data.priors.bmi" value="{{bmi}}" data-dtype="Number"/></td>
+            <th scope="row">{{localize "HM.height"}}</th>
+            <td><input type="number" style="width: 3em;" name="data.priors.height" value="{{height}}" data-dtype="Number"/></td>
+        </tr>
+        <tr>
+            <th scope="row">{{localize "HM.sex"}}</th>
+            <td><input type="text" style="width: 6em;" name="data.priors.sex" value="{{sex}}" data-dtype="String"/></td>
+            <th scope="row">{{localize "HM.hair"}}</th>
+            <td><input type="text" style="width: 6em;" name="data.priors.hair" value="{{hair}}" data-dtype="String"/></td>
+        </tr>
+        <tr>
+            <th scope="row">{{localize "HM.handedness"}}</th>
+            <td>
+                <select name="data.priors.handedness" data-dtype="String">
+    {{#select handedness}}{{#each (findConfigObj "handedness") as |type t|}}
+                    <option value="{{t}}">{{localize type}}</option>
+    {{/each}}{{/select}}
+                </select>
+            </td>
+            <th scope="row">{{localize "HM.eyes"}}</th>
+            <td><input type="text" style="width: 6em;" name="data.priors.eyes" value="{{eyes}}" data-dtype="String"/></td>
+        </tr>
+        <tr>
+            <th scope="row">{{localize "HM.deity"}}</th>
+            <td colspan="2"><input type="text" style="width: 100%;" name="data.priors.gawd" value="{{gawd}}" data-dtype="String"/></td>
+    </table>
+{{/with}}
+</section>

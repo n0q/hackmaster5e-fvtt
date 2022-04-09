@@ -32,17 +32,23 @@ idx.ability = {
 };
 
 idx.alignment = {
-    'lg':  'HM.alignment.lg',
-    'ng':  'HM.alignment.ng',
-    'cg':  'HM.alignment.cg',
-    'ln':  'HM.alignment.ln',
-    'tn':  'HM.alignment.tn',
-    'cn':  'HM.alignment.cn',
-    'le':  'HM.alignment.le',
-    'ne':  'HM.alignment.ne',
-    'ce':  'HM.alignment.ce',
-    'non': 'HM.alignment.non',
+    'lg':  'HM.alignmentSelect.lg',
+    'ng':  'HM.alignmentSelect.ng',
+    'cg':  'HM.alignmentSelect.cg',
+    'ln':  'HM.alignmentSelect.ln',
+    'tn':  'HM.alignmentSelect.tn',
+    'cn':  'HM.alignmentSelect.cn',
+    'le':  'HM.alignmentSelect.le',
+    'ne':  'HM.alignmentSelect.ne',
+    'ce':  'HM.alignmentSelect.ce',
+    'non': 'HM.alignmentSelect.non',
 };
+
+idx.handedness = {
+    'right':        'HM.handednessSelect.right',
+    'left':         'HM.handednessSelect.left',
+    'ambidextrous': 'HM.handednessSelect.ambidextrous',
+}
 
 idx.size = {
     'tiny':   'HM.sizeSelect.tiny',

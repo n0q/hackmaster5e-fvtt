@@ -1,32 +1,41 @@
-<div class="setup-abilities">
-    <table class="table-basic">
-        <thead>
+<section style="common-border">
+    <label class="resource-label">Abilities</label>
+    <div class="setup-abilities">
+        <table class="table-basic">
+            <thead>
 {{#each data.data.abilities as |rowObj rowKey|}}
-            <th scope="col"></th>
-            <th scope="col">
-                <label class="resource-label column">{{localize (concat "HM." rowKey)}}</label> 
-            </th>
-{{/each}}
-        </thead>
-        <tbody>
-{{#each data.data.abilities.total as |statObj statKey|}}            
-            <tr>
-                <th scope="row">
-                    <label class="resource-label">{{@statKey}}</label> 
+                <th scope="col"></th>
+                <th scope="col">
+                    <label class="resource-label column">{{localize (concat "HM." rowKey)}}</label> 
                 </th>
+{{/each}}
+            </thead>
+            <tbody>
+{{#each data.data.abilities.total as |statObj statKey|}}            
+                <tr>
+                    <th scope="row">
+                        <label class="resource-label">{{@statKey}}</label> 
+                    </th>
     {{#each ../data.data.abilities as |rowObj rowKey|}}
         {{#if (gt @index 0)}}
-        <td><label class="resource-label">{{#if (eq @index 1)}}={{else}}+{{/if}}</label></td>
+            <td><label class="resource-label">{{#if (eq @index 1)}}={{else}}+{{/if}}</label></td>
         {{/if}}
-        <td>
-            <input type="number" name="data.abilities.{{rowKey}}.{{statKey}}.value" title="data.abilities.{{rowKey}}.{{statKey}}.value" 
-                value="{{lookup (lookup rowObj statKey) 'value'}}" {{#if (eq rowKey "total")}} readonly="true"{{/if}} data-dtype="Number"/>
-            <label class="resource-label">/</label>
-            <input type="number" name="data.abilities.{{rowKey}}.{{statKey}}.fvalue" title="data.abilities.{{rowKey}}.{{statKey}}.fvalue"
-                value="{{lookup (lookup rowObj statKey) 'fvalue'}}" {{#if (eq rowKey "total")}} readonly="true"{{/if}} data-dtype="Number"/>
-        </td>
+            <td>
+            {{#if (or (eq rowKey "total") (eq rowKey "race"))}}
+                {{lookup (lookup rowObj statKey) 'value'}}
+                    <label class="resource-label">/</label>
+                {{pad (lookup (lookup rowObj statKey) 'fvalue')}}
+            {{else}}
+                <input type="text" name="data.abilities.{{rowKey}}.{{statKey}}.value" title="data.abilities.{{rowKey}}.{{statKey}}.value" 
+                    value="{{lookup (lookup rowObj statKey) 'value'}}" maxlength=2 data-dtype="Number"/>
+                <label class="resource-label">/</label>
+                <input type="text" name="data.abilities.{{rowKey}}.{{statKey}}.fvalue" title="data.abilities.{{rowKey}}.{{statKey}}.fvalue"
+                    value="{{pad (lookup (lookup rowObj statKey) 'fvalue')}}" maxlength=2 data-dtype="Number"/>
+            {{/if}}
+            </td>
     {{/each}}
 {{/each}}
-        </tbody>
-    </table>
-</div>
+            </tbody>
+        </table>
+    </div>
+</section>
