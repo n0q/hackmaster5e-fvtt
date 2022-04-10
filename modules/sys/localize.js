@@ -9,7 +9,7 @@ idx.ability_short = {
     'con': 'HM.ability_short.con',
     'lks': 'HM.ability_short.lks',
     'cha': 'HM.ability_short.cha',
-},
+};
 
 idx.ability_long = {
     'str': 'HM.ability.str',
@@ -19,7 +19,7 @@ idx.ability_long = {
     'con': 'HM.ability.con',
     'lks': 'HM.ability.lks',
     'cha': 'HM.ability.cha',
-},
+};
 
 idx.ability = {
     'str': 'HM.str',
@@ -32,16 +32,22 @@ idx.ability = {
 };
 
 idx.alignment = {
-    'lg':  'HM.alignment.lg',
-    'ng':  'HM.alignment.ng',
-    'cg':  'HM.alignment.cg',
-    'ln':  'HM.alignment.ln',
-    'tn':  'HM.alignment.tn',
-    'cn':  'HM.alignment.cn',
-    'le':  'HM.alignment.le',
-    'ne':  'HM.alignment.ne',
-    'ce':  'HM.alignment.ce',
-    'non': 'HM.alignment.non',
+    'lg':  'HM.alignmentSelect.lg',
+    'ng':  'HM.alignmentSelect.ng',
+    'cg':  'HM.alignmentSelect.cg',
+    'ln':  'HM.alignmentSelect.ln',
+    'tn':  'HM.alignmentSelect.tn',
+    'cn':  'HM.alignmentSelect.cn',
+    'le':  'HM.alignmentSelect.le',
+    'ne':  'HM.alignmentSelect.ne',
+    'ce':  'HM.alignmentSelect.ce',
+    'non': 'HM.alignmentSelect.non',
+};
+
+idx.handedness = {
+    'right':        'HM.handednessSelect.right',
+    'left':         'HM.handednessSelect.left',
+    'ambidextrous': 'HM.handednessSelect.ambidextrous',
 };
 
 idx.size = {
@@ -62,7 +68,7 @@ idx.statbonus = {
     'physical': 'HM.statbonus.physical',
     'turning':  'HM.statbonus.turning',
     'morale':   'HM.statbonus.morale',
-},
+};
 
 idx.qidx = {
     0: 'HM.qualitySelect.worthless',
@@ -72,7 +78,7 @@ idx.qidx = {
     4: 'HM.qualitySelect.professional',
     5: 'HM.qualitySelect.extraordinary',
     6: 'HM.qualitySelect.superlative',
-}
+};
 
 idx.tenacity = {
     0: 'HM.tenacitySelect.none',
@@ -81,21 +87,27 @@ idx.tenacity = {
     3: 'HM.tenacitySelect.steady',
     4: 'HM.tenacitySelect.nervous',
     5: 'HM.tenacitySelect.cowardly',
-}
+};
 
 idx.armortype = {
     'none':   'HM.armorSelect.none',
     'light':  'HM.armorSelect.light',
     'medium': 'HM.armorSelect.medium',
     'heavy':  'HM.armorSelect.heavy',
-},
+};
+
+idx.physdmgtype = {
+    'crushing':   'HM.physDmgSelect.crushing',
+    'hacking':    'HM.physDmgSelect.hacking',
+    'puncturing': 'HM.physDmgSelect.puncturing',
+};
 
 idx.weaponskill = {
     'minimal': 'HM.weaponskillSelect.minimal',
     'low':     'HM.weaponskillSelect.low',
     'medium':  'HM.weaponskillSelect.medium',
     'high':    'HM.weaponskillSelect.high',
-}
+};
 
 idx.saves = {
     'dodge':    'HM.saves.dodge',
@@ -119,13 +131,13 @@ idx.itemCClass = {
     'spd':  'HM.spdbonus',
     'spdr': 'HM.spdrbonus',
     'spdm': 'HM.spdmbonus',
-}
+};
 
 idx.itemTypes = {
     'armor':  'HM.itemTypes.armor',
     'item':   'HM.itemTypes.item',
     'weapon': 'HM.itemTypes.weapon',
-}
+};
 
 idx.dice = {
     '1d20': 'd20',
@@ -134,15 +146,15 @@ idx.dice = {
     '1d8':  'd8',
     '1d6':  'd6',
     '1d4':  'd4',
-    '1d3':  'd3'
-}
+    '1d3':  'd3',
+};
 
 idx.range = {
     'short':   'Short',
     'medium':  'Medium (-4)',
     'long':    'Long (-6)',
     'extreme': 'Extreme (-8)',
-}
+};
 
 idx.scale = {
     0: 'HM.custom',

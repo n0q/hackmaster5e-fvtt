@@ -1,4 +1,5 @@
 import { HMActorSheet } from './actor-sheet.js';
+import { HMTABLES } from '../sys/constants.js';
 
 export class HMCharacterActorSheet extends HMActorSheet {
     /** @override */
@@ -7,7 +8,7 @@ export class HMCharacterActorSheet extends HMActorSheet {
             classes: ['hackmaster', 'sheet', 'actor'],
             width: 840,
             height: 960,
-            tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'skills' }]
+            tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'skills' }],
         });
     }
 
@@ -21,6 +22,9 @@ export class HMCharacterActorSheet extends HMActorSheet {
 
     _HMprepareSheet(sheetData) {
         const actorData = sheetData.actor;
+
+        const {priors} = actorData.data.data;
+        priors.weight = HMTABLES.weight(priors.bmi || 0, priors.height || 0);
 
         // Saves
         const left = ['fos', 'foa', 'turning', 'morale'];

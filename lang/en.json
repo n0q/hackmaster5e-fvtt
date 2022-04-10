@@ -30,10 +30,10 @@
             "le":   "LE",
             "ne":   "NE",
             "ce":   "CE",
-            "non":  null
+            "non":  ""
         },
 
-        "alignment": {
+        "alignmentSelect": {
             "lg":   "Lawful Good",
             "ng":   "Neutral Good",
             "cg":   "Chaotic Good",
@@ -44,6 +44,18 @@
             "ne":   "Neutral Evil",
             "ce":   "Chaotic Evil",
             "non":  "Non"
+        },
+
+        "handednessSelect": {
+            "right":        "Right",
+            "left":         "Left",
+            "ambidextrous": "Ambidextrous"
+        },
+
+        "physDmgSelect": {
+            "crushing":     "Crushing",
+            "hacking":      "Hacking",
+            "puncturing":   "Puncturing"
         },
 
         "qualitySelect": {
@@ -280,6 +292,8 @@
 
         "adjective":    "Adjective",
         "age":          "Age",
+        "alignment":    "Alignment",
+        "annointed":    "Annointed",
         "arcane":       "Arcane",
         "armortype":    "Armor Type",
         "attack":       "Attack",
@@ -289,6 +303,7 @@
         "base":         "Base",
         "bonus":        "Bonus",
         "body":         "Body",
+        "bmi":          "BMI",
         "carried":      "Carried",
         "cast":         "Cast",
         "catalyst":     "Catalyst",
@@ -304,6 +319,7 @@
         "defend":       "Defend",
         "defense":      "Defense",
         "defmod":       "Def Mod",
+        "deity":        "Deity",
         "description":  "Description",
         "difficult":    "Difficult",
         "divine":       "Divine",
@@ -311,8 +327,12 @@
         "duration":     "Duration",
         "easy":         "Easy",
         "equipped":     "Equipped",
+        "eyes":         "Eyes",
         "fame":         "Fame",
         "feat":         "Feat",
+        "hair":         "Hair",
+        "handedness":   "Handedness",
+        "height":       "Height",
         "honor":        "Honor",
         "initmod":      "Init Mod",
         "speedmod":     "Speed Mod",
@@ -364,6 +384,7 @@
         "save":         "Save",
         "schedule":     "Schedule",
         "setup":        "Setup",
+        "sex":          "Sex",
         "size":         "Size",
         "shield":       "Shield",
         "speed":        "Speed",
@@ -383,6 +404,7 @@
         "standard":     "Standard",
         "timer":        "Timer",
         "total":        "Total",
+        "type":         "Type",
         "unequipped":   "Unequipped",
         "unprepared":   "Unprepared",
         "universal":    "Universal",

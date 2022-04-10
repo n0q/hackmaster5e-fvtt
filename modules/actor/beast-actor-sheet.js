@@ -7,7 +7,7 @@ export class HMBeastActorSheet extends HMActorSheet {
             classes: ['hackmaster', 'sheet', 'actor'],
             width: 640,
             height: 800,
-            tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'overview' }]
+            tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'overview' }],
         });
     }
 

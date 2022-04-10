@@ -23,6 +23,11 @@
 }
 
 /* Styles which override foundry core */
+
+:root {
+    --font-primary: 'Korinan', 'Gentium', 'Roboto', serif;
+}
+
 #combat {
     @import 'overrides/combat';
 }

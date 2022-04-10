@@ -6,11 +6,26 @@
                 "biography": "",
                 "sp":    {"value": 0, "max": 0},
                 "bonus": {"total": {}, "misc": {}}
+            },
+
+            "priors": {
+                "priors": {
+                    "alignment": "non",
+                    "age": null,
+                    "bmi": null,
+                    "height": null,
+                    "handedness": "right",
+                    "sex": null,
+                    "hair": null,
+                    "eyes": null,
+                    "gawd": null,
+                    "annointed": false
+                }
             }
         },
 
         "character": {
-            "templates": ["base"],
+            "templates": ["base", "priors"],
             "hp":    {"value": 0, "max": 0},
             "luck":  {"value": 0, "max": 0},
             "ep":    {"value": 0, "max": 400},
@@ -162,13 +177,14 @@
         "weapon": {
             "templates": ["base", "thing"],
             "proficiency": null,
+            "scale": 3,
             "skill": null,
             "bonus": {
                 "total": {"atk": 0, "def": 0, "dmg": 0, "spd": 0},
                 "base":  {"atk": 0, "def": 0, "dmg": 0, "spd": 0},
                 "mod":   {"atk": 0, "def": 0, "dmg": 0, "spd": 0}
             },
-            "dmg":    {"normal": "", "shield": ""},
+            "dmg":    {"normal": "", "shield": "", "type": "hacking"},
             "qn": 0,
             "reach":  0,
             "ranged": {"checked": false}

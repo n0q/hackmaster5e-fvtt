@@ -1,16 +1,55 @@
+{{#with actor}}
 <span class="flexrow">
-    <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
+    <img src="{{img}}" data-edit="img" title="{{name}}"/>
     <div>
-        <input style="width: 100%;" name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
+        <input class="name" name="name" type="text" value="{{name}}" placeholder="Name"/>
+    {{#if (eq type 'character')}}
         <div>
-            {{#if actor.race.data.adj}}
-                {{actor.race.data.adj}}
-            {{else}}
-                {{actor.race.name}}
+        {{localize (concat 'HM.alignmentShort.' data.data.priors.alignment)}}
+        {{#if race.data.adj}}
+            {{race.data.adj}}
+        {{else}}
+            {{race.name}}
+        {{/if}}
+        {{#if cclass}}
+            {{cclass.name}}-{{cclass.data.level}}
+        {{/if}}
+        </div>
+        {{#with data.data.priors}}
+        <div>
+            {{#if height}}
+            <label class="bold-label">{{localize 'HM.height'}}</label>: {{height}} cm,
             {{/if}}
-            {{#if actor.cclass}}
-                {{actor.cclass.name}}-{{actor.cclass.data.level}}
+            {{#if weight}}
+            <label class="bold-label">{{localize 'HM.weight'}}</label>: {{weight}} lbs,
+            {{/if}}
+            {{#if age}}
+            <label class="bold-label">{{localize 'HM.age'}}</label>: {{age}}
             {{/if}}
         </div>
+        <div>
+            {{#if sex}}
+            <label class="bold-label">{{localize 'HM.sex'}}</label>: {{sex}},
+            {{/if}}
+            {{#if handedness}}
+            <label class="bold-label">{{localize 'HM.handedness'}}</label>: {{localize (concat 'HM.handednessSelect.' handedness)}}
+            {{/if}}
+        </div>
+        <div>
+            {{#if hair}}
+            <label class="bold-label">{{localize 'HM.hair'}}</label>: {{hair}},
+            {{/if}}
+            {{#if eyes}}
+            <label class="bold-label">{{localize 'HM.eyes'}}</label>: {{eyes}}
+            {{/if}}
+        </div>
+        <div>
+            {{#if gawd}}
+            <label class="bold-label">{{localize 'HM.deity'}}</label>: {{gawd}}
+            {{/if}}
+        </div>
+        {{/with}}
+    {{/if}}
     </div>
 </span>
+{{/with}}

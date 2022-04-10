@@ -1,6 +1,22 @@
 <section style="common-border">
-    <label class="resource-label">Class</label>
-    <ol class="cards-list">
+    <label class="resource-label">Race/Class</label>
+        {{#with actor.race}}
+            <li class="card" data-item-id="{{_id}}">
+                <summary>
+                    <header>
+                        <label for="{{name}}">
+                            <div class="item-image"><img src="{{img}}" title="{{name}}" width="28" height="28"/></div>
+                            <h4 class="item-name">{{name}}</h4>
+                        </label>
+                    </header>
+                    <section>
+                        <div class="card-controls">
+                            <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                        </div>
+                    </section>
+                </summary>
+            </li>
+        {{/with}}
         {{#with actor.cclass}}
             <li class="card" data-item-id="{{_id}}">
                 <summary>
@@ -19,5 +35,4 @@
                 </summary>
             </li>
         {{/with}}
-    </ol>
 </section>

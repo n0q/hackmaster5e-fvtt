@@ -3,7 +3,7 @@
         <header>
             <label for="{{name}}">
                 <img src="{{img}}" title="{{name}}" height="48"/>
-                <h4 class="card-name">{{name}}</h4>
+                <h4 class="card-name" style="font-size: 16px;">{{name}}</h4>
             </label>
         </header>
         {{#if data.state.equipped}}
@@ -37,7 +37,7 @@
     <section class="hide" toggle>
         <div class="splitview">
             <div>
-                {{localize "HM.reach"}}: {{data.reach}}    
+                {{localize "HM.reach"}}: {{data.adjReach}}    
             </div>
             <table class="table-basic">
                 <thead>
