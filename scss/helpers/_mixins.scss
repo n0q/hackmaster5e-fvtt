@@ -92,6 +92,11 @@
             height: 16px;
             text-align: right;
         }
+
+        input[type=text] {
+            &[data-dtype="Number"] { width: 2em; }
+            &[data-dtype="String"] { width: 6em; }
+        }
     }
 }
 
