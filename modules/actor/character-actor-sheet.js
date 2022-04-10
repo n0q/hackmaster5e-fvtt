@@ -8,7 +8,7 @@ export class HMCharacterActorSheet extends HMActorSheet {
             classes: ['hackmaster', 'sheet', 'actor'],
             width: 840,
             height: 960,
-//            tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'skills' }]
+//            tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'skills' }],
             tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'setup' }],
         });
     }
@@ -25,7 +25,7 @@ export class HMCharacterActorSheet extends HMActorSheet {
         const actorData = sheetData.actor;
 
         const {priors} = actorData.data.data;
-        priors.weight = HMTABLES.weight( priors.bmi || 0, priors.height || 0);
+        priors.weight = HMTABLES.weight(priors.bmi || 0, priors.height || 0);
 
         // Saves
         const left = ['fos', 'foa', 'turning', 'morale'];

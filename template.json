@@ -177,13 +177,14 @@
         "weapon": {
             "templates": ["base", "thing"],
             "proficiency": null,
+            "scale": 3,
             "skill": null,
             "bonus": {
                 "total": {"atk": 0, "def": 0, "dmg": 0, "spd": 0},
                 "base":  {"atk": 0, "def": 0, "dmg": 0, "spd": 0},
                 "mod":   {"atk": 0, "def": 0, "dmg": 0, "spd": 0}
             },
-            "dmg":    {"normal": "", "shield": ""},
+            "dmg":    {"normal": "", "shield": "", "type": "hacking"},
             "qn": 0,
             "reach":  0,
             "ranged": {"checked": false}

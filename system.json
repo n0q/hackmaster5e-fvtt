@@ -12,10 +12,31 @@
     "styles": ["styles/hackmaster.css"],
     "packs": [
         {
+            "label": "Armors, Basic",
+            "type": "Item",
+            "name": "hmbarmors",
+            "path": "packs/armors-basic.db",
+            "system": "hackmaster5e"
+        },
+        {
+            "label": "Gear, Basic",
+            "type": "Item",
+            "name": "hmbgear",
+            "path": "packs/gear-basic.db",
+            "system": "hackmaster5e"
+        },
+        {
             "label": "Classes, Basic",
             "type": "Item",
             "name": "hmbclasses",
             "path": "packs/classes-basic.db",
+            "system": "hackmaster5e"
+        },
+        {
+            "label": "Proficiencies, Basic",
+            "type": "Item",
+            "name": "hmbproficiencies",
+            "path": "packs/proficiencies-basic.db",
             "system": "hackmaster5e"
         },
         {
@@ -37,6 +58,13 @@
             "type": "Item",
             "name": "uskills",
             "path": "packs/skills-universal.db",
+            "system": "hackmaster5e"
+        },
+        {
+            "label": "Weapons, Basic",
+            "type": "Item",
+            "name": "hmbweapons",
+            "path": "packs/weapons-basic.db",
             "system": "hackmaster5e"
         },
         {

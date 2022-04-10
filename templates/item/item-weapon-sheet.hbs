@@ -27,9 +27,19 @@
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.skill"}}:</label>
-                            <select name="data.skill" data-dtype="{{skill}}">
+                            <select name="data.skill" style="width: 6em;" data-dtype="{{skill}}">
                                 {{#select skill}}{{#each (findConfigObj "weaponskill") as |type t|}}
                                 <option value="{{t}}">{{localize type}}</option>
+                                {{/each}}{{/select}}
+                            </select>
+                        </div>
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.size"}}:</label>
+                            <select name="data.scale" style="width: 6em;" data-dtype="{{scale}}">
+                                {{#select scale}}{{#each (findConfigObj "scale") as |type t|}}
+                                    {{#if (gt t 0)}}
+                                <option value="{{t}}">{{localize type}}</option>
+                                    {{/if}}
                                 {{/each}}{{/select}}
                             </select>
                         </div>
@@ -48,8 +58,12 @@
                 <div class="sidepanel">
                     <div class="options-block">
                         <div class="options-row">
-                            <label class="resource-label">{{localize "HM.proficiency"}}</label>
-                            <input type="text" style="width: 12em;" name="data.proficiency" value="{{proficiency}}" data-dtype="String"/>
+                            <label class="resource-label">{{localize "HM.damage"}} {{localize "HM.type"}}:</label>
+                            <select name="data.dmg.type" data-dtype="{{dmg.type}}">
+                                {{#select dmg.type}}{{#each (findConfigObj "physdmgtype") as |type t|}}
+                                <option value="{{t}}">{{localize type}}</option>
+                                {{/each}}{{/select}}
+                            </select>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.normal"}} {{localize "HM.dmg"}}</label>
@@ -58,6 +72,10 @@
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.shield"}} {{localize "HM.dmg"}}</label>
                             <input type="text" style="width: 12em;" name="data.dmg.shield" value="{{dmg.shield}}" data-dtype="String"/>
+                        </div>
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.proficiency"}}</label>
+                            <input type="text" style="width: 12em;" name="data.proficiency" value="{{proficiency}}" data-dtype="String"/>
                         </div>
                     </div>
                 </div>

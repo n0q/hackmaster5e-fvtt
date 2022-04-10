@@ -52,6 +52,12 @@
             "ambidextrous": "Ambidextrous"
         },
 
+        "physDmgSelect": {
+            "crushing":     "Crushing",
+            "hacking":      "Hacking",
+            "puncturing":   "Puncturing"
+        },
+
         "qualitySelect": {
             "worthless":     "Worthless",
             "poor":          "Poor",
@@ -398,6 +404,7 @@
         "standard":     "Standard",
         "timer":        "Timer",
         "total":        "Total",
+        "type":         "Type",
         "unequipped":   "Unequipped",
         "unprepared":   "Unprepared",
         "universal":    "Universal",
