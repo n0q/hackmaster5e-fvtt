@@ -41,7 +41,13 @@ export class HMItem extends Item {
         const keys = Object.keys(bonus.total);
         return Object.fromEntries(keys.map((_, i) => [keys[i], values[i]]));
     }
-
+/*
+    get adjReach() {
+        const {reach} = this.data.data;
+        const offset = this.parent.data.data.bonus.total.reach || 0;
+        return reach + offset;
+    }
+*/
     _prepRace() {
         const {data} = this.data;
         const {bonus, scale} = data;
@@ -191,6 +197,11 @@ export class HMItem extends Item {
         const defItems    = actorData.items.filter((a) => a.type === 'armor'
                                                        && a.data.data.state.equipped);
 
+        // HACK: This belongs in item-sheet.js, which needs a refactor.
+        const {reach} = this.data.data;
+        const offset = this.parent.data.data.bonus.total.reach || 0;
+        itemData.adjReach = Math.max(reach + offset, 0) || 0;
+
         // Splitting armor and shields for now, so we can manage stances later.
         for (let i = 0; i < defItems.length; i++) {
             const defItem = defItems[i];
@@ -239,8 +250,13 @@ export class HMItem extends Item {
             }
         }
 
-        // TODO: Provide flag to use strength damage or not.
-        if (ranged.checked) { stats.dmg = 0; }
+        if (ranged.checked) {
+            // TODO: Provide flag to use strength damage or not.
+            stats.dmg = 0;
+            cclass.spd = Math.min(cclass.spd, classData?.spdr || cclass.spd);
+        } else {
+            cclass.spd = Math.min(cclass.spd, classData?.spdm || cclass.spd);
+        }
 
         // TODO: Build a new data.data.bonus rather than clean the old one.
         Object.values(qual).every((a) => a === 0)   ? delete bonus.qual   : bonus.qual   = qual;
