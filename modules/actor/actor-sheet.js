@@ -73,7 +73,8 @@ export class HMActorSheet extends ActorSheet {
 
         // Sort
         function skillsort(a, b) {
-            return a.name + (a.data.specialty.value || '') > b.name + (b.data.specialty.value || '') ? 1 : -1;
+            return `${game.i18n.localize(a.name)} ${a.data.specialty.value || ''}` >
+                   `${game.i18n.localize(b.name)} ${b.data.specialty.value || ''}` ? 1 : -1;
         }
 
         skills.sort(skillsort);

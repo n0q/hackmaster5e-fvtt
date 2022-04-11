@@ -20,6 +20,16 @@
             "cha": "Charisma"
         },
 
+        "abilityLong": {
+            "strength":     "Strength",
+            "intelligence": "Intelligence",
+            "wisdom":       "Wisdom",
+            "dexterity":    "Dexterity",
+            "constitution": "Constitution",
+            "looks":        "Looks",
+            "charisma":     "Charisma"
+        },
+
         "alignmentShort": {
             "lg":   "LG",
             "ng":   "NG",
@@ -301,6 +311,7 @@
         "availability": "Availability",
         "average":      "Average",
         "base":         "Base",
+        "blocked":      "Blocked",
         "bonus":        "Bonus",
         "body":         "Body",
         "bmi":          "BMI",
@@ -336,6 +347,7 @@
         "honor":        "Honor",
         "initmod":      "Init Mod",
         "speedmod":     "Speed Mod",
+        "success":      "Success",
         "movece":       "Move Coeff",
         "init":         "Init",
         "initbonus":    "Init Bonus",
@@ -353,10 +365,11 @@
         "mastery":      "Mastery",
         "material":     "Material",
         "mechanical":   "Mechanical",
+        "melee":        "Melee",
         "mental":       "Mental",
         "modifier":     "Modifier",
         "normal":       "Normal",
-        "opposedcheck": "Opposed Check",
+        "opposed":      "Opposed",
         "overview":     "Overview",
         "owned":        "Owned",
         "patron":       "Patron",

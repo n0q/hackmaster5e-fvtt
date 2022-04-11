@@ -1,18 +1,18 @@
-import { HMTABLES } from "../../modules/sys/constants.js";
+import { HMTABLES } from '../../modules/sys/constants.js';
 
 export default class HMDialogMgr {
     getDialog(dataset, caller=null) {
         const name = dataset.dialog;
-        if (name === "ability") { return this.getAbilityDialog(dataset, caller)      } else
-        if (name === "atk")     { return this.getAttackDialog(dataset, caller)       } else
-        if (name === "cast")    { return this.getCastDialog(dataset, caller)         } else
-        if (name === "ratk")    { return this.getRangedAttackDialog(dataset, caller) } else
-        if (name === "def")     { return this.getDefendDialog(dataset, caller)       } else
-        if (name === "dmg")     { return this.getDamageDialog(dataset, caller)       } else
-        if (name === "initdie") { return this.getInitDieDialog(caller)               } else
-        if (name === "save")    { return this.getSaveDialog(dataset, caller)         } else
-        if (name === "skill")   { return this.getSkillDialog(dataset, caller)        } else
-        if (name === "wound")   { return this.setWoundDialog(caller)                 }
+        if (name === 'ability') { return this.getAbilityDialog(dataset, caller)      } else
+        if (name === 'atk')     { return this.getAttackDialog(dataset, caller)       } else
+        if (name === 'cast')    { return this.getCastDialog(dataset, caller)         } else
+        if (name === 'ratk')    { return this.getRangedAttackDialog(dataset, caller) } else
+        if (name === 'def')     { return this.getDefendDialog(dataset, caller)       } else
+        if (name === 'dmg')     { return this.getDamageDialog(dataset, caller)       } else
+        if (name === 'initdie') { return this.getInitDieDialog(caller)               } else
+        if (name === 'save')    { return this.getSaveDialog(dataset, caller)         } else
+        if (name === 'skill')   { return this.getSkillDialog(dataset, caller)        } else
+        if (name === 'wound')   { return this.setWoundDialog(caller)                 }
     }
 
     _focusById(id) {
@@ -21,31 +21,31 @@ export default class HMDialogMgr {
 
     getWeapons(actor, itemId) {
         if (itemId) return [actor.items.get(itemId)];
-        return actor.items.filter((a) => a.type === "weapon");
+        return actor.items.filter((a) => a.type === 'weapon');
     }
 
     getSpells(actor, itemId) {
         if (itemId) return [actor.items.get(itemId)];
-        return actor.items.filter((a) => a.type === "spell");
+        return actor.items.filter((a) => a.type === 'spell');
     }
 
     async getInitDieDialog(caller) {
         const dialogResp = {caller};
 
-        const template = "systems/hackmaster5e/templates/dialog/getInitDie.hbs";
+        const template = 'systems/hackmaster5e/templates/dialog/getInitDie.hbs';
         dialogResp.resp = await new Promise(async resolve => {
             new Dialog({
-                title: game.i18n.localize("HM.dialog.getInitDieTitle"),
+                title: game.i18n.localize('HM.dialog.getInitDieTitle'),
                 content: await renderTemplate(template),
                 buttons: {
                     getdie: {
-                        label: "Roll",
+                        label: 'Roll',
                         callback: () => {resolve({
-                            "die": document.getElementById("choices").value
+                            'die': document.getElementById('choices').value
                         })}
                     }
                 },
-                default:"getdie"
+                default:'getdie'
             }, {width: 300}).render(true);
         });
         return dialogResp;
@@ -282,38 +282,39 @@ export default class HMDialogMgr {
         const dialogResp = {caller};
 
         dialogData.skill = caller.items.get(dataset.itemId);
-        const template = "systems/hackmaster5e/templates/dialog/getSkill.hbs";
+        const template = 'systems/hackmaster5e/templates/dialog/getSkill.hbs';
 
+        const title = `${caller.name}: ${game.i18n.localize(dialogData.skill.name)}${game.i18n.localize('HM.dialog.getSkillTitle')}`;
         dialogResp.resp = await new Promise(async resolve => {
             new Dialog({
-                title: caller.name + ": " + game.i18n.localize(dialogData.skill.name) + game.i18n.localize("HM.dialog.getSkillTitle"),
+                title,
                 content: await renderTemplate(template, dialogData),
                 buttons: {
                     standard: {
-                        label: game.i18n.localize("HM.skillcheck"),
+                        label: game.i18n.localize('HM.skillcheck'),
                         callback: () => {
                             resolve({
-                                "opposed": false,
-                                "mod": parseInt(document.getElementById("mod").value || 0)
-                            })
-                        }
+                                'opposed': false,
+                                'mod': parseInt(document.getElementById('mod').value || 0, 10),
+                            });
+                        },
                     },
                     opposed: {
-                        label: game.i18n.localize("HM.opposedcheck"),
+                        label: `${game.i18n.localize('HM.opposed')} ${game.i18n.localize('HM.check')}`,
                         callback: () => {
                             resolve({
-                                "opposed": true,
-                                "mod": parseInt(document.getElementById("mod").value || 0)
-                            })
-                        }
-                    }
+                                'opposed': true,
+                                'mod': parseInt(document.getElementById("mod").value || 0, 10),
+                            });
+                        },
+                    },
                 },
-                default: "standard"
+                default: 'standard',
             }).render(true);
             this._focusById('mod');
         });
         dialogResp.context = dialogData.skill;
-        dialogResp.resp.oper = dialogResp.resp.opposed ? "+" : "-";
+        dialogResp.resp.oper = dialogResp.resp.opposed ? '+' : '-';
         return dialogResp;
     }
 

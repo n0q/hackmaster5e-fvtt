@@ -18,9 +18,11 @@
                 data-item-id="{{_id}}">
                 {{data.bonus.total.value}}
             </div>
+            {{#unless data.universal}}
             <div class="hide item-controls" toggle>
                 <a class="item-control item-delete" title="Remove Skill"><i class="fas fa-trash"></i></a>
             </div>
+            {{/unless}}
         </section>
     </summary>
     <article class="hide" toggle>

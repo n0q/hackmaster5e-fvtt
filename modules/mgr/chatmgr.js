@@ -1,42 +1,44 @@
-import LOGGER from "../sys/logger.js";
-import { HMTABLES } from "../sys/constants.js";
+import { HMTABLES } from '../sys/constants.js';
 
 export default class HMChatMgr {
-    constructor() { this._user = game.user.id }
+    constructor() { this._user = game.user.id; }
 
     async getCard(roll, dataset, dialogResp=null) {
         let cData;
         switch (dataset.dialog) {
-            case "atk":
-            case "ratk":
-            case "def":
-            case "dmg":
+            case 'atk':
+            case 'ratk':
+            case 'def':
+            case 'dmg':
                 cData = await this._createWeaponCard(roll, dataset, dialogResp);
                 break;
-            case "cast":
+            case 'cast':
                 cData = await this._createSpellCard(dataset, dialogResp);
                 break;
-            case "skill":
+            case 'skill':
                 cData = await this._createSkillCard(roll, dialogResp);
                 break;
-            case "save":
+            case 'save':
                 cData = await this._createSaveCard(roll, dataset);
                 break;
-            case "ability":
-                cData = await this._createAbilityCard(roll, dataset, dialogResp);
+            case 'ability':
+                cData = dialogResp.resp.save
+                    ? await this._createSaveCard(roll, dataset)
+                    : await this._createAbilityCard(roll, dataset);
                 break;
+            default:
         }
 
         const chatData = {
             user:    this._user,
-            flavor:  cData.flavor,
+            flavor:  dialogResp.caller.name,
             content: cData.content,
             type:    CONST.CHAT_MESSAGE_TYPES.IC,
         };
 
         if (roll) {
             chatData.roll     = roll;
-            chatData.rollMode = game.settings.get("core", "rollMode");
+            chatData.rollMode = game.settings.get('core', 'rollMode');
             chatData.type     = CONST.CHAT_MESSAGE_TYPES.ROLL;
             chatData.sound    = CONFIG.sounds.dice;
         }
@@ -54,62 +56,90 @@ export default class HMChatMgr {
     }
 
     async _createWeaponCard(roll, dataset, dialogResp) {
-        const actor = dialogResp.caller;
+        const {caller} = dialogResp;
         const item = dialogResp.context;
 
-        const html = await roll.render();
         switch (dataset.dialog) {
             case 'ratk': {
+                const flavor = `${game.i18n.localize('HM.ranged')}
+                                ${game.i18n.localize('HM.attack')}
+                                ${game.i18n.localize('HM.roll')}`;
+                let content = await roll.render({flavor});
+
+                const weaponRow = `${game.i18n.localize('HM.weapon')}:
+                                <b>${item.name}</b>`;
+                const speedRow  = `${game.i18n.localize('HM.speed')}:
+                                <b>${item.data.data.bonus.total.spd}</b>`;
+                const rangeRow  = `${game.i18n.localize('HM.range')}:
+                                <b>${game.i18n.localize(`HM.${dialogResp.resp.rangestr}`)}</b>`;
+
+                let specialRow = '';
                 const sumDice = this.getDiceSum(roll);
-                let specialRow = '<p>';
                 if (sumDice >=  20) { specialRow += '<b>Critical!</b>';         } else
                 if (sumDice === 19) { specialRow += '<b>Near Perfect!</b>';     } else
                 if (sumDice === 1)  { specialRow += '<b>Potential Fumble!</b>'; }
 
-                const title = `${actor.name} attacks with a ${item.name}.`;
-
-                const speedRow = `${game.i18n.localize('HM.speed')}: ${item.data.data.bonus.total.spd}`;
-                const rangeRow = `<br> ${game.i18n.localize('HM.' + dialogResp.resp.rangestr)}`
-                               + ` ${game.i18n.localize('HM.range')}`;
-                const card = speedRow + rangeRow + specialRow + html;
-                return {flavor: title, content: card};
+                content = `${weaponRow}<br>${speedRow}<br>${rangeRow}<br>${specialRow}<br>${content}`;
+                return {content};
             }
 
             case 'atk': {
+                const flavor = `${game.i18n.localize('HM.melee')}
+                                ${game.i18n.localize('HM.attack')}
+                                ${game.i18n.localize('HM.roll')}`;
+                let content = await roll.render({flavor});
+
+                const weaponRow = `${game.i18n.localize('HM.weapon')}:
+                                <b>${item.name}</b>`;
+                const speedRow  = `${game.i18n.localize('HM.speed')}:
+                                <b>${item.data.data.bonus.total.spd}</b>`;
+
+                let specialRow = '';
                 const sumDice = this.getDiceSum(roll);
-                let specialRow = '<p>';
                 if (sumDice >=  20) { specialRow += '<b>Critical!</b>';         } else
                 if (sumDice === 19) { specialRow += '<b>Near Perfect!</b>';     } else
                 if (sumDice === 1)  { specialRow += '<b>Potential Fumble!</b>'; }
 
-                const title = `${actor.name} attacks with a ${item.name}.`;
-
-                const speedRow = `${game.i18n.localize('HM.speed')}: ${item.data.data.bonus.total.spd}`;
-                const card = speedRow + specialRow + html;
-                return {flavor: title, content: card};
+                content = `${weaponRow}<br>${speedRow}<br>${specialRow}<br>${content}`;
+                return {content};
             }
 
             case 'dmg': {
-                const shield = dialogResp.resp.shieldhit ? ' shield-' : '';
-                const title = `${actor.name} ${shield}hits with a ${item.name}.`;
-                return {flavor: title, content: html};
+                let flavor =    `${game.i18n.localize('HM.damage')}
+                                 ${game.i18n.localize('HM.roll')}`;
+                if (dialogResp.resp.shieldhit) {
+                    flavor += ` (${game.i18n.localize('HM.blocked')})`;
+                }
+
+                let content = await roll.render({flavor});
+
+                const weaponRow = `${game.i18n.localize('HM.weapon')}:
+                                <b>${item.name}</b>`;
+
+                content = `${weaponRow}<p>${content}`;
+                return {content};
             }
 
             case 'def': {
+                const flavor = `${game.i18n.localize('HM.defense')}
+                                ${game.i18n.localize('HM.roll')}`;
+                let content = await roll.render({flavor});
+
+                const weaponRow = `${game.i18n.localize('HM.weapon')}:
+                                <b>${item.name}</b>`;
+
+                let specialRow = '';
                 const sumDice = this.getDiceSum(roll);
-                let specialRow = '<p>';
                 if (sumDice >=  20) { specialRow += '<b>Perfect!</b>';            } else
                 if (sumDice === 19) { specialRow += '<b>Near Perfect!</b>';       } else
                 if (sumDice === 18) { specialRow += '<b>Superior!</b>';           } else
                 if (sumDice === 1)  { specialRow += '<b>Free Second Attack!</b>'; }
 
-                const title = `${actor.name} defends with a ${item.name}.`;
-
                 const faShield = '<i class="fas fa-shield-alt"></i>';
-                const dr = actor.drObj;
-                const drRow = `DR: ${dr.armor} + ${faShield}${dr.shield}`;
-                const card  = drRow + specialRow + html;
-                return {flavor: title, content: card};
+                const dr = caller.drObj;
+                const drRow = `DR: <b>${dr.armor} + ${faShield}${dr.shield}</b>`;
+                content = `${weaponRow}<br>${drRow}<br>${specialRow}<br>${content}`;
+                return {content};
             }
             default:
         }
@@ -117,41 +147,41 @@ export default class HMChatMgr {
 
     async _createSkillCard(roll, dialogResp) {
         const item = dialogResp.context;
-        const itemData = item.data.data;
-        const html = await roll.render();
-        let content = html;
+        const {data} = item.data;
 
-        let flavor = game.i18n.localize(item.name);
-        if (itemData.specialty.checked && itemData.specialty.value) {
-            flavor += ' (' + itemData.specialty.value + ')';
+        let skillname = game.i18n.localize(item.name);
+        if (data.specialty.checked && data.specialty.value) {
+            skillname += ` (${data.specialty.value})`;
         }
-        if (dialogResp.resp.opposed) flavor += ' (Opposed)';
-        else {
-            const difficulty = HMTABLES.skill.difficulty;
+
+        let flavor = `${skillname} ${game.i18n.localize('HM.skillcheck')}`;
+        if (dialogResp.resp.opposed) flavor = `${game.i18n.localize('HM.opposed')} ${flavor}`;
+        let content = await roll.render({flavor});
+
+        if (!dialogResp.resp.opposed) {
+            const {difficulty} = HMTABLES.skill;
             for (const key in difficulty) {
                 if (roll.total + difficulty[key] > 0) continue;
-                const diffRow = game.i18n.localize(key) + ' ' + game.i18n.localize('HM.skillcheck');
-                content = diffRow + '<p>' + html;
+                content = `${game.i18n.localize(key)} ${game.i18n.localize('HM.success')} <p>${content}`;
                 break;
             }
         }
-        return {flavor, content};
+        return {content};
     }
 
-    async _createSpellCard(dataset, dialogResp) {
-        const actor    = dialogResp.caller;
+    async _createSpellCard(_dataset, dialogResp) {
+        const {caller} = dialogResp;
         const item     = dialogResp.context;
-        const { data } = item.data;
-        const flavor   = actor.name + ' casts ' + item.name + '.';
+        const {data}   = item.data;
 
         // Spell Components
         const components = [];
-        if (data.component.verbal)    { components.push('V');  }
-        if (data.component.somatic)   { components.push('S');  }
-        if (data.component.material)  { components.push('M');  }
-        if (data.component.catalyst)  { components.push('C');  }
-        if (data.component.divine)    { components.push('DI'); }
-        dialogResp.resp['components'] = components.join(', ');
+        if (data.component.verbal)   { components.push('V');  }
+        if (data.component.somatic)  { components.push('S');  }
+        if (data.component.material) { components.push('M');  }
+        if (data.component.catalyst) { components.push('C');  }
+        if (data.component.divine)   { components.push('DI'); }
+        dialogResp.resp.components = components.join(', ');
 
         if (data.divine) {
             const prepped = Math.max(data.prepped - 1, 0);
@@ -162,29 +192,32 @@ export default class HMChatMgr {
             if (data.prepped < 1) { base *= 2; }
             const schedule = Math.max(0, dialogResp.resp.mod || 0);
             const sum = base + schedule;
-            dialogResp.resp['sp'] = {value: sum, base, schedule};
-            const spNew = actor.data.data.sp.value - sum;
-            await actor.update({'data.sp.value': spNew});
+            dialogResp.resp.sp = {value: sum, base, schedule};
+            const spNew = caller.data.data.sp.value - sum;
+            await caller.update({'data.sp.value': spNew});
         }
 
         const template = 'systems/hackmaster5e/templates/chat/spell.hbs';
         const content = await renderTemplate(template, dialogResp);
-        return {flavor, content};
+        return {content};
     }
 
     async _createSaveCard(roll, dataset) {
-        const html = await roll.render();
-        const savetype = game.i18n.localize("HM.saves." + dataset.formulaType);
-        const savename = game.i18n.localize("HM.save");
-        return {flavor: savetype + " " + savename, content: html};
+        let saveType = (dataset.formulaType === 'fos' || dataset.formulaType === 'foa') ? 'Feat of ' : '';
+        if (dataset.ability) {
+            saveType = game.i18n.localize(`HM.abilityLong.${dataset.ability.toLowerCase()}`);
+        } else {
+            saveType += game.i18n.localize(`HM.saves.${dataset.formulaType}`);
+        }
+        const flavor = `${saveType} ${game.i18n.localize('HM.save')}`;
+        const content = await roll.render({flavor});
+        return {content};
     }
 
-    async _createAbilityCard(roll, dataset, dialogResp) {
-        const content = await roll.render();
-        const rolltype = dialogResp.resp.save
-            ? game.i18n.localize("HM.save")
-            : game.i18n.localize("HM.check");
-        const flavor = dialogResp.context.name + ": " + dataset.ability + " " + rolltype;
-        return {flavor, content};
+    async _createAbilityCard(roll, dataset) {
+        const saveType = game.i18n.localize(`HM.abilityLong.${dataset.ability.toLowerCase()}`);
+        const flavor = `${saveType} ${game.i18n.localize('HM.check')}`;
+        const content = await roll.render({flavor});
+        return {content};
     }
 }
