@@ -1,8 +1,8 @@
-<li class="card hmstyle" data-item-id="{{_id}}">
-    <summary class="toggleswitch">
+<li class='card hmstyle' data-item-id='{{_id}}'>
+    <summary class='toggleswitch'>
         <header>
-            <label for="{{name}}">
-                <img src="{{img}}" title="{{name}}" width="24" height="24"/>
+            <label for='{{name}}'>
+                <img src='{{img}}' title='{{name}}' width='24' height='24'/>
                 <h4>
                     {{localize name}}
                     {{#if data.specialty.checked}}
@@ -12,35 +12,70 @@
             </label>
         </header>
         <section>
-            <div toggle class="rollable button"
-                data-dialog="skill"
-                data-formula="1d100 + @resp.mod @resp.oper @bonus.total.value"
-                data-item-id="{{_id}}">
+        {{#if data.language}}
+           <div toggle class='rollable button' title='Verbal'
+                   data-dialog='skill'
+                   data-skill-type='language'
+                   data-formula='1d100 + @resp.mod @resp.oper @bonus.total.verbal'
+                   data-item-id='{{_id}}'>
+                   {{data.bonus.total.verbal}}
+               </div>
+               {{#if data.bonus.total.literacy}}
+            <div toggle class='rollable button' title='Literacy'
+                   data-dialog='skill'
+                   data-skill-type='literacy'
+                   data-formula='1d100 + @resp.mod @resp.oper @bonus.total.literacy'
+                   data-item-id='{{_id}}'>
+                   {{data.bonus.total.literacy}}
+               </div>
+               {{/if}}
+        {{else}}
+            <div toggle class='rollable button'
+                data-dialog='skill'
+                data-skill-type='skill'
+                data-formula='1d100 + @resp.mod @resp.oper @bonus.total.value'
+                data-item-id='{{_id}}'>
                 {{data.bonus.total.value}}
             </div>
-            {{#unless data.universal}}
-            <div class="hide item-controls" toggle>
-                <a class="item-control item-delete" title="Remove Skill"><i class="fas fa-trash"></i></a>
+        {{/if}}
+        {{#unless data.universal}}
+            <div class='hide item-controls' toggle>
+                <a class='item-control item-delete' title='Remove Skill'><i class='fas fa-trash'></i></a>
             </div>
-            {{/unless}}
+        {{/unless}}
         </section>
     </summary>
-    <article class="hide" toggle>
-        <div class="form-group">
-            <label>{{localize "HM.mastery"}}:</label>
-            <input class="editable" type="number" value="{{data.bonus.mastery.value}}"
-                data-item-prop="data.bonus.mastery.value"
-                data-dtype="Number"
+    <article class='hide' toggle>
+    {{#if data.language}}
+        <div class='form-group'>
+            <label>{{localize 'HM.verbal'}}:</label>
+            <input class='editable' type='number' value='{{data.bonus.mastery.verbal}}'
+                data-item-prop='data.bonus.mastery.verbal'
+                data-dtype='Number'
+            />
+            <label>{{localize 'HM.literacy'}}:</label>
+            <input class='editable' type='number' value='{{data.bonus.mastery.literacy}}'
+                data-item-prop='data.bonus.mastery.literacy'
+                data-dtype='Number'
             />
         </div>
-        {{#if data.specialty.checked}}
-        <div class="form-group">
-            <label>{{localize "HM.specialty"}}:</label>
-            <input class="editable" type="text" value="{{data.specialty.value}}"
-                data-item-prop="data.specialty.value"
-                data-dtype="String"
+    {{else}}
+        <div class='form-group'>
+            <label>{{localize 'HM.mastery'}}:</label>
+            <input class='editable' type='number' value='{{data.bonus.mastery.value}}'
+                data-item-prop='data.bonus.mastery.value'
+                data-dtype='Number'
             />
         </div>
-        {{/if}}
+    {{/if}}
+    {{#if data.specialty.checked}}
+        <div class='form-group'>
+            <label>{{localize 'HM.specialty'}}:</label>
+            <input class='editable' type='text' value='{{data.specialty.value}}'
+                data-item-prop='data.specialty.value'
+                data-dtype='String'
+            />
+        </div>
+    {{/if}}
     </article>
 </li>

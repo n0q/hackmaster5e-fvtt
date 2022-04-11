@@ -16,7 +16,7 @@ export default class HMChatMgr {
                 cData = await this._createSpellCard(dataset, dialogResp);
                 break;
             case 'skill':
-                cData = await this._createSkillCard(roll, dialogResp);
+                cData = await this._createSkillCard(roll, dataset, dialogResp);
                 break;
             case 'save':
                 cData = await this._createSaveCard(roll, dataset);
@@ -145,16 +145,20 @@ export default class HMChatMgr {
         }
     }
 
-    async _createSkillCard(roll, dialogResp) {
+    async _createSkillCard(roll, dataset, dialogResp) {
         const item = dialogResp.context;
         const {data} = item.data;
+        const {skillType} = dataset;
 
         let skillname = game.i18n.localize(item.name);
         if (data.specialty.checked && data.specialty.value) {
             skillname += ` (${data.specialty.value})`;
         }
 
-        let flavor = `${skillname} ${game.i18n.localize('HM.skillcheck')}`;
+        let flavor = `${skillname}
+                      ${game.i18n.localize(`HM.${skillType}`)}
+                      ${game.i18n.localize('HM.check')}`;
+
         if (dialogResp.resp.opposed) flavor = `${game.i18n.localize('HM.opposed')} ${flavor}`;
         let content = await roll.render({flavor});
 
