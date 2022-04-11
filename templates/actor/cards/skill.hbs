@@ -38,24 +38,22 @@
                 {{data.bonus.total.value}}
             </div>
         {{/if}}
-        {{#unless data.universal}}
             <div class='hide item-controls' toggle>
                 <a class='item-control item-delete' title='Remove Skill'><i class='fas fa-trash'></i></a>
             </div>
-        {{/unless}}
         </section>
     </summary>
     <article class='hide' toggle>
     {{#if data.language}}
         <div class='form-group'>
-            <label>{{localize 'HM.verbal'}}:</label>
-            <input class='editable' type='number' value='{{data.bonus.mastery.verbal}}'
-                data-item-prop='data.bonus.mastery.verbal'
-                data-dtype='Number'
-            />
             <label>{{localize 'HM.literacy'}}:</label>
             <input class='editable' type='number' value='{{data.bonus.mastery.literacy}}'
                 data-item-prop='data.bonus.mastery.literacy'
+                data-dtype='Number'
+            />
+            <label>{{localize 'HM.verbal'}}:</label>
+            <input class='editable' type='number' value='{{data.bonus.mastery.verbal}}'
+                data-item-prop='data.bonus.mastery.verbal'
                 data-dtype='Number'
             />
         </div>

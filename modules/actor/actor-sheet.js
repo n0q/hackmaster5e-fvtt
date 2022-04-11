@@ -1,3 +1,4 @@
+/* global $ */
 import HMDialogMgr from '../mgr/dialogmgr.js';
 import HMChatMgr from '../mgr/chatmgr.js';
 import HMRollMgr from '../mgr/rollmgr.js';
@@ -150,12 +151,22 @@ export class HMActorSheet extends ActorSheet {
             item.sheet.render(true);
         });
 
-        // Delete Inventory Item
-        html.find('.item-delete').click(ev => {
-            const li = $(ev.currentTarget).parents(".card, .item");
-            const item = this.actor.items.get(li.data("itemId"));
-            item.delete();
-            li.slideUp(200, () => this.render(false));
+        // Delete Item
+        html.find('.item-delete').click((ev) => {
+            const li = $(ev.currentTarget).parents('.card, .item');
+            const item = this.actor.items.get(li.data('itemId'));
+            const title = `${game.i18n.localize('HM.confirmation')}: ${item.name}`;
+            const content = `<p>${game.i18n.localize('HM.dialog.deleteBody')} <b>${item.name}</b>?</p>`;
+
+            Dialog.confirm({
+                title,
+                content,
+                yes: () => {
+                    item.delete();
+                    li.slideUp(200, () => this.render(false));
+                },
+                defaultYes: false,
+            });
         });
 
         // Move Inventory Item
