@@ -19,6 +19,13 @@
             "system": "hackmaster5e"
         },
         {
+            "label": "Classes, Basic",
+            "type": "Item",
+            "name": "hmbclasses",
+            "path": "packs/classes-basic.db",
+            "system": "hackmaster5e"
+        },
+        {
             "label": "Gear, Basic",
             "type": "Item",
             "name": "hmbgear",
@@ -26,10 +33,17 @@
             "system": "hackmaster5e"
         },
         {
-            "label": "Classes, Basic",
+            "label": "Innate Weapons, Basic",
             "type": "Item",
-            "name": "hmbclasses",
-            "path": "packs/classes-basic.db",
+            "name": "hmbinnate",
+            "path": "packs/innate-weapons-basic.db",
+            "system": "hackmaster5e"
+        },
+        {
+            "label": "Mage Spells, Basic",
+            "type": "Item",
+            "name": "hmbarcane",
+            "path": "packs/mage-spells-basic.db",
             "system": "hackmaster5e"
         },
         {

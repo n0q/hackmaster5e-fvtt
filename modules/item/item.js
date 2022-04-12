@@ -206,6 +206,7 @@ export class HMItem extends Item {
         const defItems    = actorData.items.filter((a) => a.type === 'armor'
                                                        && a.invstate === 'equipped');
 
+        if (itemData.innate) itemData.state = 3;
         // HACK: This belongs in item-sheet.js, which needs a refactor.
         const {reach} = this.data.data;
         const offset = this.parent.data.data.bonus.total.reach || 0;
