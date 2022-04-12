@@ -73,7 +73,7 @@
             },
 
             "thing": {
-                "state": {"equipped": false, "carried": false},
+                "state": 0,
                 "weight": 0,
                 "price": null,
                 "avail": {"high": 0, "med": 0, "low": 0}
@@ -176,6 +176,7 @@
 
         "weapon": {
             "templates": ["base", "thing"],
+            "innate": false,
             "proficiency": null,
             "scale": 3,
             "skill": null,

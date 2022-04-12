@@ -70,6 +70,13 @@ idx.statbonus = {
     'morale':   'HM.statbonus.morale',
 };
 
+idx.thingState = {
+    0: 'HM.thingState.owned',
+    1: 'HM.thingState.carried',
+    2: 'HM.thingState.equipped',
+    3: 'HM.thingState.innate',
+};
+
 idx.qidx = {
     0: 'HM.qualitySelect.worthless',
     1: 'HM.qualitySelect.poor',

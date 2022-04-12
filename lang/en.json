@@ -20,6 +20,16 @@
             "cha": "Charisma"
         },
 
+        "abilityLong": {
+            "strength":     "Strength",
+            "intelligence": "Intelligence",
+            "wisdom":       "Wisdom",
+            "dexterity":    "Dexterity",
+            "constitution": "Constitution",
+            "looks":        "Looks",
+            "charisma":     "Charisma"
+        },
+
         "alignmentShort": {
             "lg":   "LG",
             "ng":   "NG",
@@ -132,6 +142,7 @@
         },
 
         "dialog": {
+            "deleteBody":        "Really delete",
             "getInitDieTitle":   "Roll for Initiative",
             "getInitDieBody":    "Initiative Die",
             "getAttackTitle":    ": Roll an Attack",
@@ -231,6 +242,13 @@
             "cowardly":         "Cowardly"
         },
 
+        "thingState": {
+            "owned":            "Owned",
+            "carried":          "Carried",
+            "equipped":         "Equipped",
+            "innate":           "Innate"
+        },
+
         "uskill": {
             "acting":            "Acting",
             "animalhusbandry":   "Animal Husbandry",
@@ -301,6 +319,7 @@
         "availability": "Availability",
         "average":      "Average",
         "base":         "Base",
+        "blocked":      "Blocked",
         "bonus":        "Bonus",
         "body":         "Body",
         "bmi":          "BMI",
@@ -310,6 +329,7 @@
         "check":        "Check",
         "class":        "Class",
         "clerical":     "Clerical",
+        "confirmation": "Confirmation",
         "combat":       "Combat",
         "components":   "Components",
         "custom":       "Custom",
@@ -326,7 +346,7 @@
         "dodge":        "Dodge",
         "duration":     "Duration",
         "easy":         "Easy",
-        "equipped":     "Equipped",
+        "effective":    "Effective",
         "eyes":         "Eyes",
         "fame":         "Fame",
         "feat":         "Feat",
@@ -336,6 +356,7 @@
         "honor":        "Honor",
         "initmod":      "Init Mod",
         "speedmod":     "Speed Mod",
+        "success":      "Success",
         "movece":       "Move Coeff",
         "init":         "Init",
         "initbonus":    "Init Bonus",
@@ -353,12 +374,12 @@
         "mastery":      "Mastery",
         "material":     "Material",
         "mechanical":   "Mechanical",
+        "melee":        "Melee",
         "mental":       "Mental",
         "modifier":     "Modifier",
         "normal":       "Normal",
-        "opposedcheck": "Opposed Check",
+        "opposed":      "Opposed",
         "overview":     "Overview",
-        "owned":        "Owned",
         "patron":       "Patron",
         "physical":     "Physical",
         "poison":       "Poison",

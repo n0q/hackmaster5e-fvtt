@@ -1,24 +1,22 @@
-import { HMTABLES } from '../sys/constants.js'
-
 /**
  * Extend the basic ItemSheet with some very simple modifications
  * @extends {ItemSheet}
  */
 export class HMItemSheet extends ItemSheet {
-
   /** @override */
-  static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
-      classes: ["hackmaster", "sheet", "item"],
-      width: 520,
-      height: 480,
-      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "attributes" }]
-    });
-  }
+    static get defaultOptions() {
+        return mergeObject(super.defaultOptions, {
+            classes: ['hackmaster', 'sheet', 'item'],
+            width: 520,
+            height: 480,
+            //tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'description' }],
+            tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'attributes' }],
+        });
+    }
 
   /** @override */
   get template() {
-    const path = "systems/hackmaster5e/templates/item";
+    const path = 'systems/hackmaster5e/templates/item';
     return `${path}/item-${this.item.data.type}-sheet.hbs`;
   }
 
@@ -34,11 +32,11 @@ export class HMItemSheet extends ItemSheet {
 
   /** @override */
   setPosition(options = {}) {
-    const position = super.setPosition(options);
-    const sheetBody = this.element.find(".sheet-body");
-    const bodyHeight = position.height - 192;
-    sheetBody.css("height", bodyHeight);
-    return position;
+      const position = super.setPosition(options);
+      const sheetBody = this.element.find('.sheet-body');
+      const bodyHeight = position.height - 192;
+      sheetBody.css('height', bodyHeight);
+      return position;
   }
 
   /* -------------------------------------------- */

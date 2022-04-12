@@ -35,7 +35,7 @@
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.size"}}:</label>
-                            <select name="data.scale" style="width: 6em;" data-dtype="{{scale}}">
+                            <select name="data.scale" {{#if innate}}disabled{{/if}} style="width: 6em;" data-dtype="{{scale}}">
                                 {{#select scale}}{{#each (findConfigObj "scale") as |type t|}}
                                     {{#if (gt t 0)}}
                                 <option value="{{t}}">{{localize type}}</option>
@@ -52,6 +52,10 @@
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.ranged"}}</label>
                             <input type="checkbox" name="data.ranged.checked" {{checked ranged.checked}}/>
+                        </div>
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.innate"}}</label>
+                            <input type="checkbox" name="data.innate" {{checked innate}}/>
                         </div>
                     </div>
                 </div>

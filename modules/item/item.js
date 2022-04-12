@@ -17,6 +17,9 @@ export class HMItem extends Item {
     prepareBaseData(options={}) {
         super.prepareBaseData();
 
+        // HACK: This will suffice for now.
+        if (typeof this.data.data?.state === 'object') this._shittyMigrate();
+
         const {type} = this.data;
         if (type === 'armor')       { this._prepArmorData(options); } else
         if (type === 'cclass')      { this._prepCClassData();       } else
@@ -33,6 +36,11 @@ export class HMItem extends Item {
         if (type === 'weapon') { this._prepWeaponData(); }
     }
 
+    // TODO: When we do migration for real, ensure typeof data.state === 'integer'
+    async _shittyMigrate() {
+        await this.update({'data.state': 0});
+    }
+
     get quality() {
         const {data} = this.data;
         const qKey = data?.ranged?.checked ? 'ranged' : this.type;
@@ -41,13 +49,14 @@ export class HMItem extends Item {
         const keys = Object.keys(bonus.total);
         return Object.fromEntries(keys.map((_, i) => [keys[i], values[i]]));
     }
-/*
-    get adjReach() {
-        const {reach} = this.data.data;
-        const offset = this.parent.data.data.bonus.total.reach || 0;
-        return reach + offset;
+
+    // HACK: Temporary measure until future inventory overhaul.
+    get invstate() {
+        // TODO: Migrate
+        const state = parseInt(this.data.data.state, 10) || 0;
+        return HMTABLES.itemstate[state];
     }
-*/
+
     _prepRace() {
         const {data} = this.data;
         const {bonus, scale} = data;
@@ -71,7 +80,7 @@ export class HMItem extends Item {
 
         // Populate armor and shield vectors on actor.
         // TODO: Items should never do this to actors.
-        if (setBonus && this.data.data.state.equipped) {
+        if (setBonus && this.invstate === 'equipped') {
             const actorBonus = this.actor.data.data.bonus;
             const aVector = actorBonus?.armor || {};
             const sVector = actorBonus?.shield || {};
@@ -82,7 +91,7 @@ export class HMItem extends Item {
             });
 
             shield.checked ? actorBonus.shield = sum
-                           : actorBonus.armor =  sum;
+                           : actorBonus.armor  = sum;
         }
     }
 
@@ -195,7 +204,7 @@ export class HMItem extends Item {
         const armor       = {};
         const shield      = {};
         const defItems    = actorData.items.filter((a) => a.type === 'armor'
-                                                       && a.data.data.state.equipped);
+                                                       && a.invstate === 'equipped');
 
         // HACK: This belongs in item-sheet.js, which needs a refactor.
         const {reach} = this.data.data;

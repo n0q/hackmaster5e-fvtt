@@ -6,7 +6,7 @@
                 <h4 class="card-name" style="font-size: 16px;">{{name}}</h4>
             </label>
         </header>
-        {{#if data.state.equipped}}
+        {{#if (eq data.state 2)}}
         <section>
             <img class="rollable imgbutton" src="{{findConfigValue "combatImg" "def"}}" height="36" title="Defend"
                 data-dialog="def"

@@ -292,4 +292,10 @@ export const HMTABLES = {
         const weight = (bmi * height ** 2) / 703;
         return Math.floor(weight);
     },
+    'itemstate': {
+        0: 'owned',
+        1: 'carried',
+        2: 'equipped',
+        3: 'innate',
+    },
 };
