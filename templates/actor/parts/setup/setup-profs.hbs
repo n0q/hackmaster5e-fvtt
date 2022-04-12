@@ -1,23 +1,8 @@
-<section style="common-border">
-    <label class="resource-label">Proficiencies and Specializations</label>
-    <ol class="cards-list">
+<section style='common-border'>
+    <label class='resource-label'>Proficiencies and Specializations</label>
+    <ol class='cards-list'>
         {{#each actor.profs}}
-            <li class="card" data-item-id="{{_id}}">
-                <summary>
-                    <header>
-                        <label>
-                            <div class="item-image"><img src="{{img}}" title="{{name}}" width="28" height="28"/></div>
-                            <h4 class="item-name">{{name}}</h4>
-                        </label>
-                    </header>
-                    <section>
-                        <div class="card-controls">
-                            <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-                            <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
-                        </div>
-                    </section>
-                </summary>
-            </li>
+            {{> 'systems/hackmaster5e/templates/actor/cards/proficiency.hbs' }}
         {{/each}}
     </ol>
 </section>

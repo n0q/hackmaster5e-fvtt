@@ -26,6 +26,13 @@
             "system": "hackmaster5e"
         },
         {
+            "label": "Clerical Spells, Basic",
+            "type": "Item",
+            "name": "hmbdivine",
+            "path": "packs/clerical-spells-basic.db",
+            "system": "hackmaster5e"
+        },
+        {
             "label": "Gear, Basic",
             "type": "Item",
             "name": "hmbgear",
