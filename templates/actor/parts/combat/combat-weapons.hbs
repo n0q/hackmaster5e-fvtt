@@ -6,11 +6,17 @@
         {{/each}}
     <br>
     {{/if}}
+    {{#if actor.weapons.innate.length}}
+    <label class='resource-label'>{{localize 'HM.thingState.innate'}}</label>
+        {{#each actor.weapons.innate}}
+            {{> 'systems/hackmaster5e/templates/actor/cards/weapon.hbs' }}
+        {{/each}}
+    <br>
+    {{/if}}
     {{#if actor.weapons.carried.length}}
     <label class='resource-label'>{{localize 'HM.thingState.carried'}}</label>
         {{#each actor.weapons.carried}}
             {{> 'systems/hackmaster5e/templates/actor/cards/weapon.hbs' }}
         {{/each}}
-    <br>
     {{/if}}
 </ol>

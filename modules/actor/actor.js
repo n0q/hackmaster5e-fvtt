@@ -102,15 +102,23 @@ export class HMActor extends Actor {
 
         const skillPack = game.packs.get('hackmaster5e.uskills');
         const skillIndex = await skillPack.getIndex();
-        const uskills = [];
+        const itemList = [];
 
+        /* eslint no-await-in-loop: 0 */
         for (const idx of skillIndex) {
             const skill = await skillPack.getDocument(idx._id);
             const translated = game.i18n.localize(skill.data.name);
             if (translated !== '') { skill.data.name = translated; }
-            uskills.push(skill.data);
+            itemList.push(skill.data);
         }
-        await actor.createEmbeddedDocuments('Item', uskills);
+
+        const innatePack = game.packs.get('hackmaster5e.hmbinnate');
+        const innateIndex = await innatePack.getIndex();
+        const id = innateIndex.getName('Unarmed')._id;
+        const unarmed = await innatePack.getDocument(id);
+        itemList.push(unarmed.data);
+
+        await actor.createEmbeddedDocuments('Item', itemList);
     }
 
     // Populate hp.max for beast tokens.
