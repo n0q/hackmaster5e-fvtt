@@ -6,6 +6,7 @@ export default function preloadHandlebarsTemplates() {
         'systems/hackmaster5e/templates/actor/cards/skill.hbs',
         'systems/hackmaster5e/templates/actor/cards/spell.hbs',
         'systems/hackmaster5e/templates/actor/cards/prepped-spell.hbs',
+        'systems/hackmaster5e/templates/actor/cards/proficiency.hbs',
         'systems/hackmaster5e/templates/actor/cards/weapon.hbs',
 
         'systems/hackmaster5e/templates/actor/parts/middle/base-middle.hbs',
