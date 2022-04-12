@@ -68,23 +68,40 @@ export class HMCharacterActor extends HMActor {
     }
 
     setEncumbrance() {
-        let encumb = 0.0;
         const item = this.items.filter((a) => {
-            const aData = a.data.data;
-            // TODO: Inventory management
-            if (aData.state) {
-                if (a.type             === 'armor'
-                    && aData.armortype !== 'shield'
-                    && aData.state.equipped
-                ) return false;
-                return aData.state.carried;
-            }
+            const {data} = a.data;
+            if (!('state' in data)) return false;
+            return true;
         });
 
+        let carried = 0.0;
+        let armor = 0.0;
         for (let i=0; i < item.length; i++) {
-            encumb += item[i].data.data.weight;
+            const {invstate} = item[i];
+            const {data, type} = item[i].data;
+            const load = data.weight * (Math.max(data?.qty, 1) || 1);
+            switch (invstate) {
+                case 'innate': break;
+
+                case 'equipped': {
+                    if (type === 'armor' && !data?.shield?.checked) {
+                        armor += load;
+                    }
+                }
+                // Falls through
+
+                case 'carried': {
+                    carried += load;
+                    break;
+                }
+                default:
+            }
         }
-        this.data.data.encumb = encumb;
+
+        const effective = carried - armor;
+        const {priors} = this.data.data;
+        const total = carried + HMTABLES.weight(priors.bmi, priors.height) || 0.0;
+        this.data.data.encumb = {carried, effective, total};
     }
 
     setExtras() {

@@ -3,12 +3,7 @@ import HMDialogMgr from '../mgr/dialogmgr.js';
 import HMChatMgr from '../mgr/chatmgr.js';
 import HMRollMgr from '../mgr/rollmgr.js';
 import { idx } from '../sys/localize.js';
-
-function updateSflags(item, sflags) {
-    const flag = sflags;
-    if (item.data.state.equipped) { flag.equipped = true;   } else
-    if (item.data.state.carried)  { flag.unequipped = true; }
-}
+import { HMTABLES } from '../sys/constants.js';
 
 export class HMActorSheet extends ActorSheet {
     /** @override */
@@ -34,10 +29,19 @@ export class HMActorSheet extends ActorSheet {
         const skills = [];
         const langs = [];
         const wounds = [];
-        const armors = [];
         const gear = [];
         const spells = [];
-        const weapons = [];
+        const armors = {
+            'owned':    [],
+            'carried':  [],
+            'equipped': [],
+        };
+        const weapons = {
+            'owned':    [],
+            'carried':  [],
+            'equipped': [],
+            'innate':   [],
+        };
 
         const sflags = {
             'combat': {
@@ -58,14 +62,14 @@ export class HMActorSheet extends ActorSheet {
                 }
             } else
             if (i.type === 'armor') {
-                updateSflags(i, sflags.combat.armor);
                 gear.push(i);
-                armors.push(i);
+                const state = HMTABLES.itemstate[(i.data.state)];
+                armors[state].push(i);
             } else
             if (i.type === 'weapon') {
-                updateSflags(i, sflags.combat.weapon);
                 gear.push(i);
-                weapons.push(i);
+                const state = HMTABLES.itemstate[(i.data.state)];
+                weapons[state].push(i);
             } else
             if (i.type === 'wound')  { wounds.push(i); } else
             if (i.type === 'item')   { gear.push(i);   } else
@@ -235,15 +239,9 @@ export class HMActorSheet extends ActorSheet {
         ev.preventDefault();
         const li = $(ev.currentTarget).parents('.card');
         const item = this.actor.items.get(li.data('itemId'));
-        const { state } = item.data.data;
-
-        // TODO: This can't possibly stay like this.
-        if (state.equipped) { state.equipped = false; } else
-        if (state.carried)  { state.carried  = false; } else {
-            state.equipped = true;
-            state.carried  = true;
-        }
-        await this.actor.updateEmbeddedDocuments('Item', [{_id:item.id, data:item.data.data}]);
+        const { data } = item.data;
+        data.state = (++data.state || 0) % 3;
+        await this.actor.updateEmbeddedDocuments('Item', [{_id:item.id, data}]);
     }
 
     async _onSpellPrep(ev) {

@@ -1,8 +1,12 @@
-<ol class="inventory-list">
-    <li class="table-header">
-        <label>Carried: {{actor.data.data.encumb}} lbs.</label>
+<ol class='inventory-list'>
+    <li class='table-header'>
+    {{#with actor.data.data.encumb}}
+    <label>{{localize 'HM.total'}}: <b>{{total}} lbs.</b></label>
+    <label style='padding-left: 2em;'>{{localize 'HM.carried'}}: <b>{{carried}} lbs.</b></label>
+    <label style='padding-left: 2em;'>{{localize 'HM.effective'}}: <b>{{effective}} lbs.</b></label>
+    {{/with}}
     </li>
     {{#each actor.gear}}
-        {{> "systems/hackmaster5e/templates/actor/cards/item.hbs" }}
+        {{> 'systems/hackmaster5e/templates/actor/cards/item.hbs' }}
     {{/each}}
 </ol>

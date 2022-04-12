@@ -242,6 +242,13 @@
             "cowardly":         "Cowardly"
         },
 
+        "thingState": {
+            "owned":            "Owned",
+            "carried":          "Carried",
+            "equipped":         "Equipped",
+            "innate":           "Innate"
+        },
+
         "uskill": {
             "acting":            "Acting",
             "animalhusbandry":   "Animal Husbandry",
@@ -339,7 +346,7 @@
         "dodge":        "Dodge",
         "duration":     "Duration",
         "easy":         "Easy",
-        "equipped":     "Equipped",
+        "effective":    "Effective",
         "eyes":         "Eyes",
         "fame":         "Fame",
         "feat":         "Feat",
@@ -373,7 +380,6 @@
         "normal":       "Normal",
         "opposed":      "Opposed",
         "overview":     "Overview",
-        "owned":        "Owned",
         "patron":       "Patron",
         "physical":     "Physical",
         "poison":       "Poison",

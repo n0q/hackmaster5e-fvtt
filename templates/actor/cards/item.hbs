@@ -1,30 +1,29 @@
-<li class="card hmstyle" data-item-id="{{_id}}">
+<li class='card hmstyle' data-item-id='{{_id}}'>
     <summary>
         <header>
-            <label for="{{name}}">
-                <div class="item-image"><img src="{{img}}" title="{{name}}" width="28" height="28"/></div>
-                <h4 class="item-name">{{name}}</h4>
+            <label for='{{name}}'>
+                <div class='item-image'><img src='{{img}}' title='{{name}}' width='28' height='28'/></div>
+                <h4 class='item-name'>{{name}}</h4>
             </label>
         </header>
         <section>
-            <div class="card-controls">
-                <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-                <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+            <div class='card-controls'>
+                <a class='item-control item-edit' title='Edit Item'><i class='fas fa-edit'></i></a>
+                <a class='item-control item-delete' title='Delete Item'><i class='fas fa-trash'></i></a>
             </div>
-            <div class="inventory-details">
-                <div class="type">
-                    {{localize (findConfigValue "itemTypes" type)}}
+            <div class='inventory-details'>
+                <span>
+                    {{localize (findConfigValue 'itemTypes' type)}}
+                </span>
+                <div class='item-control item-state location button'>
+                    {{localize (findConfigValue 'thingState' data.state)}}
                 </div>
-                <div class="item-control item-state location button">
-                    {{#if data.state.equipped}}{{localize "HM.equipped"}}
-                    {{else}}{{#if data.state.carried}}{{localize "HM.carried"}}
-                        {{else}}{{localize "HM.owned"}}
-                        {{/if}}
-                    {{/if}}
+                <div>
+                    {{#if (eq type 'item')}}{{data.qty}}x{{/if}}
                 </div>
-                <div class="weight">
+                <span>
                     {{numberFormat data.weight decimals=1}} lbs.
-                </div>
+                </span>
             </div>
         </section>
     </summary>
