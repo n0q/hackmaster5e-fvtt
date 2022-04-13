@@ -1,0 +1,18 @@
+<ol class='bio'>
+    <section class='traits'>
+        <label class='resource-label'>{{localize 'HM.quirks'}}/{{localize 'HM.talents'}}</label>
+        {{editor content=data.data.bio.quirks target="data.bio.quirks" button=true owner=owner editable=editable}}
+    </section>
+    <section class='wealth'>
+        <label class='resource-label'>{{localize 'HM.wealth'}}</label>
+        {{editor content=data.data.bio.wealth target="data.bio.wealth" button=true owner=owner editable=editable}}
+    </section>
+    <section class='history'>
+        <label class='resource-label'>{{localize 'HM.history'}}</label>
+        {{editor content=data.data.bio.history target="data.bio.history" button=true owner=owner editable=editable}}
+    </section>
+    <section class='family'>
+        <label class='resource-label'>{{localize 'HM.family'}}</label>
+        {{editor content=data.data.bio.family target="data.bio.family" button=true owner=owner editable=editable}}
+    </section>
+</ol>
