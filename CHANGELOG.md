@@ -4,6 +4,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.2.1] - 2022-04-13
+### Fixed
+- Beast sheet formatting.
+
+### Added
+- Functional biography section.
+
 ## [0.2.0] - 2022-04-12
 ### Added
 - Initial release.

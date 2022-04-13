@@ -14,7 +14,7 @@
         <label for="data.hp.value" class="resource-label">{{localize "HM.hp"}}</label>
         <label for="data.hp.value">{{hp.value}}</label>
         <div class="divisor"></div>
-        <label for="data.hp.max">{{hp.max}}</label>
+        <label for="data.hp.max">{{#if hp.max}}{{hp.max}}{{else}}0{{/if}}</label>
     </figure>
     <figure class="fraction">
         <label for="data.sp.value" class="resource-label">{{localize "HM.sp"}}</label>
