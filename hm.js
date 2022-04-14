@@ -20,6 +20,7 @@ Hooks.once('init', async() => {
     CONFIG.Combat.documentClass = HMCombat;
     CONFIG.ui.combat = HMCombatTracker;
     CONFIG.Macro.documentClass = HMMacro;
+    CONFIG.canvasTextStyle._fontFamily = 'Gentium';
 
     Actors.unregisterSheet('core', ActorSheet);
     Actors.registerSheet('hackmaster', HMCharacterActorSheet, {types: ['character'], makeDefault:true});
