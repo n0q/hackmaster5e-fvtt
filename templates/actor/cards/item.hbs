@@ -18,12 +18,10 @@
                 <div class='item-control item-state location button'>
                     {{localize (findConfigValue 'thingState' data.state)}}
                 </div>
-                <div>
-                    {{#if (eq type 'item')}}{{data.qty}}x{{/if}}
-                </div>
-                <span>
-                    {{numberFormat data.weight decimals=1}} lbs.
-                </span>
+                {{#unless data.innate}}
+                <div>{{#if (eq type 'item')}}{{data.qty}}x{{/if}}</div>
+                <span>{{numberFormat data.weight decimals=2}} lbs.</span>
+                {{/unless}}
             </div>
         </section>
     </summary>

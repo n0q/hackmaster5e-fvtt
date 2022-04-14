@@ -96,7 +96,7 @@ $character-width: 820px;
         padding: 2px;
         border: 2px solid $c-grey;
         >section {
-            height: calc (11em + $padding-md + $padding-sm);
+            height: 10.5em;
             overflow-y: auto;
         }
     }
