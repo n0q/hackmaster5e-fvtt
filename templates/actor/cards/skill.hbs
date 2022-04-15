@@ -16,7 +16,7 @@
            <div toggle class='rollable button' title='Verbal'
                    data-dialog='skill'
                    data-skill-type='language'
-                   data-formula='1d100 + @resp.mod @resp.oper @bonus.total.verbal'
+                   data-formula='d100 @resp.oper (@resp.bonus + @bonus.total.verbal)'
                    data-item-id='{{_id}}'>
                    {{data.bonus.total.verbal}}
                </div>
@@ -24,7 +24,7 @@
             <div toggle class='rollable button' title='Literacy'
                    data-dialog='skill'
                    data-skill-type='literacy'
-                   data-formula='1d100 + @resp.mod @resp.oper @bonus.total.literacy'
+                   data-formula='d100 @resp.oper (@resp.bonus + @bonus.total.literacy)'
                    data-item-id='{{_id}}'>
                    {{data.bonus.total.literacy}}
                </div>
@@ -33,7 +33,7 @@
             <div toggle class='rollable button'
                 data-dialog='skill'
                 data-skill-type='skill'
-                data-formula='1d100 + @resp.mod @resp.oper @bonus.total.value'
+                data-formula='d100 @resp.oper (@resp.bonus + @bonus.total.value)'
                 data-item-id='{{_id}}'>
                 {{data.bonus.total.value}}
             </div>

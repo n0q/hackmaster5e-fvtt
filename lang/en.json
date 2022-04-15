@@ -160,6 +160,7 @@
             "getDefendTitle":    ": Defend Thyself",
             "getSaveTitle":      "Save",
             "getSkillTitle":     " Skill Check",
+            "rollMode":          "Roll Mode",
             "setInitTitle":      "Set Initiative",
             "setInitBody":       "New Init",
             "setWoundTitle":     "Inflict Wound",

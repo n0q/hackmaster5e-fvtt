@@ -38,7 +38,7 @@ export class HMChatMgr {
 
         if (roll) {
             chatData.roll     = roll;
-            chatData.rollMode = game.settings.get('core', 'rollMode');
+            chatData.rollMode = cData.rollMode ? cData.rollMode : game.settings.get('core', 'rollMode');
             chatData.type     = CONST.CHAT_MESSAGE_TYPES.ROLL;
             chatData.sound    = CONFIG.sounds.dice;
         }
@@ -149,6 +149,7 @@ export class HMChatMgr {
         const item = dialogResp.context;
         const {data} = item.data;
         const {skillType} = dataset;
+        const {rollMode} = dialogResp.resp;
 
         let skillname = game.i18n.localize(item.name);
         if (data.specialty.checked && data.specialty.value) {
@@ -170,7 +171,7 @@ export class HMChatMgr {
                 break;
             }
         }
-        return {content};
+        return {content, rollMode};
     }
 
     async _createSpellCard(_dataset, dialogResp) {
