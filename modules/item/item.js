@@ -350,9 +350,10 @@ export class HMItem extends Item {
 
         const dialogDataset = {
             dialog: 'skill',
-            formula: 'd100 + @resp.mod @resp.oper @bonus.total.value',
+            formula: 'd100 @resp.oper (@resp.bonus + @bonus.total.value)',
             skillType: 'skill',
             itemId: callers[0].context.id,
+            callers: callers.length,
         };
 
         const dialogMgr  = new HMDialogMgr();

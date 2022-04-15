@@ -1,22 +1,22 @@
-import { HMTABLES } from '../../modules/sys/constants.js';
+import { HMTABLES } from '../sys/constants.js';
 
 export class HMDialogMgr {
     getDialog(dataset, caller=null) {
         const name = dataset.dialog;
-        if (name === 'ability') { return this.getAbilityDialog(dataset, caller)      } else
-        if (name === 'atk')     { return this.getAttackDialog(dataset, caller)       } else
-        if (name === 'cast')    { return this.getCastDialog(dataset, caller)         } else
-        if (name === 'ratk')    { return this.getRangedAttackDialog(dataset, caller) } else
-        if (name === 'def')     { return this.getDefendDialog(dataset, caller)       } else
-        if (name === 'dmg')     { return this.getDamageDialog(dataset, caller)       } else
-        if (name === 'initdie') { return this.getInitDieDialog(caller)               } else
-        if (name === 'save')    { return this.getSaveDialog(dataset, caller)         } else
-        if (name === 'skill')   { return this.getSkillDialog(dataset, caller)        } else
-        if (name === 'wound')   { return this.setWoundDialog(caller)                 }
+        if (name === 'ability') return this.getAbilityDialog(dataset, caller);
+        if (name === 'atk')     return this.getAttackDialog(dataset, caller);
+        if (name === 'cast')    return this.getCastDialog(dataset, caller);
+        if (name === 'ratk')    return this.getRangedAttackDialog(dataset, caller);
+        if (name === 'def')     return this.getDefendDialog(dataset, caller);
+        if (name === 'dmg')     return this.getDamageDialog(dataset, caller);
+        if (name === 'initdie') return this.getInitDieDialog(caller);
+        if (name === 'save')    return this.getSaveDialog(dataset, caller);
+        if (name === 'skill')   return this.getSkillDialog(dataset, caller);
+        if (name === 'wound')   return this.setWoundDialog(caller);
     }
 
     _focusById(id) {
-        return setTimeout(() => { document.getElementById(id).focus() }, 50);
+        return setTimeout(() => { document.getElementById(id).focus(); }, 50);
     }
 
     getWeapons(actor, itemId) {
@@ -40,7 +40,7 @@ export class HMDialogMgr {
                 buttons: {
                     getdie: {
                         label: 'Roll',
-                        callback: () => {resolve({
+                        callback: () => { resolve({
                             'die': document.getElementById('choices').value
                         })}
                     }
@@ -278,13 +278,20 @@ export class HMDialogMgr {
     }
 
     async getSkillDialog(dataset, caller) {
-        const dialogData = {};
         const dialogResp = {caller};
+        const dialogData = {
+            rollModes: CONFIG.Dice.rollModes,
+            rollMode: game.settings.get('core', 'rollMode'),
+        };
 
         dialogData.skill = caller.items.get(dataset.itemId);
         const template = 'systems/hackmaster5e/templates/dialog/getSkill.hbs';
 
-        const title = `${caller.name}: ${game.i18n.localize(dialogData.skill.name)}${game.i18n.localize('HM.dialog.getSkillTitle')}`;
+        const titlePre = dataset.callers > 1 ? `${dataset.callers}` : `${caller.name}:`;
+        const titlePost = dataset.callers > 1
+            ? game.i18n.localize('HM.dialog.getSkillTitle2')
+            : game.i18n.localize('HM.dialog.getSkillTitle1');
+        const title = `${titlePre} ${game.i18n.localize(dialogData.skill.name)} ${titlePost}`;
         dialogResp.resp = await new Promise(async resolve => {
             new Dialog({
                 title,
@@ -295,7 +302,8 @@ export class HMDialogMgr {
                         callback: () => {
                             resolve({
                                 'opposed': false,
-                                'mod': parseInt(document.getElementById('mod').value || 0, 10),
+                                'bonus': parseInt(document.getElementById('bonus').value || 0, 10),
+                                'rollMode': document.getElementById('rollMode').value,
                             });
                         },
                     },
@@ -304,14 +312,15 @@ export class HMDialogMgr {
                         callback: () => {
                             resolve({
                                 'opposed': true,
-                                'mod': parseInt(document.getElementById("mod").value || 0, 10),
+                                'bonus': parseInt(document.getElementById('bonus').value || 0, 10),
+                                'rollMode': document.getElementById('rollMode').value,
                             });
                         },
                     },
                 },
                 default: 'standard',
             }).render(true);
-            this._focusById('mod');
+            this._focusById('bonus');
         });
         dialogResp.context = dialogData.skill;
         dialogResp.resp.oper = dialogResp.resp.opposed ? '+' : '-';

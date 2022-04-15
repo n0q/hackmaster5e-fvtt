@@ -1,6 +1,8 @@
 <form>
     <div class="form-group">
-        <label>{{localize "HM.modifier"}}</label>
-        <input id="mod" placeholder=0 type="number"/>
+        <label>{{localize "HM.bonus"}}</label>
+        <input id="bonus" placeholder=0 type="number"/>
     </div>
+    <hr>
+    {{> 'systems/hackmaster5e/templates/dialog/parts/getRollMode.hbs'}}
 </form>
