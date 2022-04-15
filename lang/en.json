@@ -1,5 +1,11 @@
 {
     "HM": {
+        "sys": {
+            "folders": {
+                "skillmacro": "System Skill Macros"
+            }
+        },
+
         "ability_short": {
             "str": "STR",
             "int": "INT",

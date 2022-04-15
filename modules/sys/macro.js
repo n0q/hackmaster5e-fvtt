@@ -1,7 +1,41 @@
-import { MACRO_VERS } from "./constants.js";
-import HMDialogMgr from '../mgr/dialogmgr.js';
-import HMChatMgr from '../mgr/chatmgr.js';
-import HMRollMgr from "../mgr/rollmgr.js";
+import { MODULE_ID } from './constants.js';
+import { MACRO_VERS } from './constants.js';
+import { HMItem } from '../item/item.js';
+import { HMDialogMgr } from '../mgr/dialogmgr.js';
+import { HMChatMgr } from '../mgr/chatmgr.js';
+import { HMRollMgr } from '../mgr/rollmgr.js';
+
+/* global DOMPurify */
+async function createSkillMacro(itemData, slot) {
+    if (!game || !game.macros) return;
+
+    const {name, img} = itemData;
+    const {specialty} = itemData.data;
+    const args = {skillName: DOMPurify.sanitize(name)};
+    if (specialty.checked) args.specialty = DOMPurify.sanitize(specialty.value);
+    const fullName = HMItem.specname(itemData);
+
+    const command = `game.${MODULE_ID}.HMItem.rollSkill(${JSON.stringify(args)});`;
+    let macro = game.macros.contents.find((a) => a.name === fullName);
+    if (!macro) {
+
+        // This needs a better home.
+        const folderName = game.i18n.localize('HM.sys.folders.skillmacro');
+        let f = game.folders.find((a) => a.type === 'Macro' && a.name === folderName);
+        if (!f) f = await Folder.create({type: 'Macro', name: folderName, parent: null});
+
+        macro = await Macro.create({
+            folder: f.id,
+            name: fullName,
+            permission: {default: CONST.DOCUMENT_PERMISSION_LEVELS.LIMITED},
+            type: 'script',
+            img,
+            command,
+        }, { renderSheet: false });
+    }
+
+    if (macro) game.user?.assignHotbarMacro(macro, slot);
+}
 
 export class HMMacro extends Macro {
     isObsolete(d_vers, d_mid) {
@@ -31,8 +65,13 @@ export class HMMacro extends Macro {
 
         const actor=actors[0];
         if (actors.length > 1) {
-            ui.notifications.warn(game.i18n.localize("HM.dialog.warnMulti") + actor.name + "</b>.");
+            ui.notifications.warn(`${game.i18n.localize('HM.dialog.warnMulti')} ${actor.name}</b>.`);
         }
         return actor;
+    }
+
+    static async hotbarDrop(_bar, data, slot) {
+        if (data.type === 'Macro') return;
+        if (data.data.type === 'skill') { createSkillMacro(data.data, slot); }
     }
 }

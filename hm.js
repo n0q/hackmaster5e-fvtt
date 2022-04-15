@@ -15,6 +15,7 @@ import preloadHandlebarsTemplates from './modules/sys/partials.js';
 import './modules/sys/dice.js';
 
 Hooks.once('init', async() => {
+    game[MODULE_ID] = { HMActor, HMItem };
     CONFIG.Actor.documentClass = HMActorFactory;
     CONFIG.Item.documentClass = HMItem;
     CONFIG.Combat.documentClass = HMCombat;
@@ -49,7 +50,7 @@ Hooks.once('ready', async() => {
 Hooks.on('createActor', HMActor.createActor);
 Hooks.on('createToken', HMActor.createToken);
 Hooks.on('renderCombatTracker', HMCombatTracker.renderCombatTracker);
-
+Hooks.on('hotbarDrop', HMMacro.hotbarDrop);
 Hooks.on('diceSoNiceRollStart', (_messageId, context) => {
     // Add 1 to penetration dice so dsn shows actual die throws.
     const normalize = (roll, r=5) => {
