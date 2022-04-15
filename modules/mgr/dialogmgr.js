@@ -1,6 +1,6 @@
 import { HMTABLES } from '../../modules/sys/constants.js';
 
-export default class HMDialogMgr {
+export class HMDialogMgr {
     getDialog(dataset, caller=null) {
         const name = dataset.dialog;
         if (name === 'ability') { return this.getAbilityDialog(dataset, caller)      } else

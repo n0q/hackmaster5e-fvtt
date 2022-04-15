@@ -1,6 +1,6 @@
 import { HMTABLES } from '../sys/constants.js';
 
-export default class HMChatMgr {
+export class HMChatMgr {
     constructor() { this._user = game.user.id; }
 
     async getCard(roll, dataset, dialogResp=null) {
