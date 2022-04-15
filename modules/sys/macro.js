@@ -19,10 +19,8 @@ async function createSkillMacro(itemData, slot) {
     let macro = game.macros.contents.find((a) => a.name === fullName);
     if (!macro) {
 
-        // This needs a better home.
         const folderName = game.i18n.localize('HM.sys.folders.skillmacro');
-        let f = game.folders.find((a) => a.type === 'Macro' && a.name === folderName);
-        if (!f) f = await Folder.create({type: 'Macro', name: folderName, parent: null});
+        const f = game.folders.find((a) => a.type === 'Macro' && a.name === folderName);
 
         macro = await Macro.create({
             folder: f.id,

@@ -45,6 +45,11 @@ Hooks.once('ready', async() => {
         const tActor = game.actors.contents.find((a) => a.name === 'test');
         if (tActor) { tActor.sheet.render(true); }
     }
+
+    if (!game.user.isGM) return;
+    const folderName = game.i18n.localize('HM.sys.folders.skillmacro');
+    let f = game.folders.find((a) => a.type === 'Macro' && a.name === folderName);
+    if (!f) f = await Folder.create({type: 'Macro', name: folderName, parent: null});
 });
 
 Hooks.on('createActor', HMActor.createActor);
