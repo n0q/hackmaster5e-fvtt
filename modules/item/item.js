@@ -353,6 +353,7 @@ export class HMItem extends Item {
             formula: 'd100 @resp.oper (@resp.bonus + @bonus.total.value)',
             skillType: 'skill',
             itemId: callers[0].context.id,
+            callers: callers.length,
         };
 
         const dialogMgr  = new HMDialogMgr();

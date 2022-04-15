@@ -287,7 +287,11 @@ export class HMDialogMgr {
         dialogData.skill = caller.items.get(dataset.itemId);
         const template = 'systems/hackmaster5e/templates/dialog/getSkill.hbs';
 
-        const title = `${caller.name}: ${game.i18n.localize(dialogData.skill.name)}${game.i18n.localize('HM.dialog.getSkillTitle')}`;
+        const titlePre = dataset.callers > 1 ? `${dataset.callers}` : `${caller.name}:`;
+        const titlePost = dataset.callers > 1
+            ? game.i18n.localize('HM.dialog.getSkillTitle2')
+            : game.i18n.localize('HM.dialog.getSkillTitle1');
+        const title = `${titlePre} ${game.i18n.localize(dialogData.skill.name)} ${titlePost}`;
         dialogResp.resp = await new Promise(async resolve => {
             new Dialog({
                 title,
@@ -308,7 +312,7 @@ export class HMDialogMgr {
                         callback: () => {
                             resolve({
                                 'opposed': true,
-                                'bonus': parseInt(document.getElementById("bonus").value || 0, 10),
+                                'bonus': parseInt(document.getElementById('bonus').value || 0, 10),
                                 'rollMode': document.getElementById('rollMode').value,
                             });
                         },
