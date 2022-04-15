@@ -1,6 +1,6 @@
 import { HMTABLES } from '../sys/constants.js';
 
-export default class HMRollMgr {
+export class HMRollMgr {
     async getRoll(dataset, dialogResp=null) {
         if (dataset?.formulaType) dataset.formula = this._getFormula(dataset);
         return await this._stdRoll(dataset, dialogResp);

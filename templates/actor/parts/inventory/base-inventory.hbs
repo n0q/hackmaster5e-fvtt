@@ -1,12 +1,27 @@
 <ol class='inventory-list'>
     <li class='table-header'>
     {{#with actor.data.data.encumb}}
-    <label>{{localize 'HM.scale'}} {{localize 'HM.weight'}}: <b>{{total}} lbs.</b></label>
-    <label style='padding-left: 4.2em;'>{{localize 'HM.carried'}} {{localize 'HM.load'}}: <b>{{carried}} lbs.</b></label>
-    <label style='padding-left: 4.2em;'>{{localize 'HM.effective'}} {{localize 'HM.encumbrance'}}: <b>{{effective}} lbs.</b></label>
+    <label>
+        {{localize 'HM.scale'}} {{localize 'HM.weight'}}:
+        <b>{{numberFormat total decimals=2}} lbs.</b>
+    </label>
+    <label style='padding-left: 4.2em;'>
+        {{localize 'HM.carried'}} {{localize 'HM.load'}}:
+        <b>{{numberFormat carried decimals=2}} lbs.</b>
+    </label>
+    <label style='padding-left: 4.2em;'>
+        {{localize 'HM.effective'}} {{localize 'HM.encumbrance'}}:
+        <b>{{numberFormat effective decimals=2}} lbs.</b>
+    </label>
     {{/with}}
     </li>
     {{#each actor.gear}}
+        {{#unless data.innate}}
+            {{> 'systems/hackmaster5e/templates/actor/cards/item.hbs' }}
+        {{/unless}}
+    {{/each}}
+    <hr>
+    {{#each actor.weapons.innate}}
         {{> 'systems/hackmaster5e/templates/actor/cards/item.hbs' }}
     {{/each}}
 </ol>

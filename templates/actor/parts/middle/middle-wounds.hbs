@@ -1,23 +1,23 @@
-<li class="item flexrow item-header">
-    <label class="item-image">{{localize "HM.wound"}}</label>
-    <label class="item-name">{{localize "HM.duration"}}</label>
-    <div class="item-controls">
-        <a class="item-control item-create" title="Create item"
-            data-dialog="wound"
-            data-type="wound">
-            <i class="fas fa-plus"></i> New
+<li class='flexrow item-header'>
+    <label class='item-image'>{{localize 'HM.wound'}}</label>
+    <label class='item-name'>{{localize 'HM.duration'}}</label>
+    <div class='item-controls'>
+        <a class='item-control item-create' title='Create item'
+            data-dialog='wound'
+            data-type='wound'>
+            <i class='fas fa-plus'></i> New
         </a>
     </div>
 </li>
-<div class="hmstyle">
+<section class='hmstyle'>
 {{#each actor.wounds}}
-    <li class="item flexrow tablerow" data-item-id="{{_id}}">
-        <label class="button" data-action="decHp">{{data.hp}}</label>
-        <label class="button" data-action="decTimer">{{data.timer}}</label>
-        <div class="item-controls">
-            <a class="item-control item-edit" title="Edit Wound"><i class="fas fa-edit"></i></a>
-            <a class="item-control item-delete" title="Delete Wound"><i class="fas fa-trash"></i></a>
+    <li class='item flexrow tablerow' data-item-id='{{_id}}'>
+        <label class='button' data-action='decHp'>{{data.hp}}</label>
+        <label class='button' data-action='decTimer'>{{data.timer}}</label>
+        <div class='item-controls'>
+            <a class='item-control item-edit' title='Edit Wound'><i class='fas fa-edit'></i></a>
+            <a class='item-control item-delete' title='Delete Wound'><i class='fas fa-trash'></i></a>
         </div>
     </li>
 {{/each}}
-</div>
+</section>

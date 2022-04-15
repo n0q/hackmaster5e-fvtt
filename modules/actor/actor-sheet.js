@@ -1,7 +1,7 @@
 /* global $ */
-import HMDialogMgr from '../mgr/dialogmgr.js';
-import HMChatMgr from '../mgr/chatmgr.js';
-import HMRollMgr from '../mgr/rollmgr.js';
+import { HMDialogMgr } from '../mgr/dialogmgr.js';
+import { HMChatMgr } from '../mgr/chatmgr.js';
+import { HMRollMgr } from '../mgr/rollmgr.js';
 import { idx } from '../sys/localize.js';
 import { HMTABLES } from '../sys/constants.js';
 

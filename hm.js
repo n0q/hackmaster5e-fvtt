@@ -15,11 +15,13 @@ import preloadHandlebarsTemplates from './modules/sys/partials.js';
 import './modules/sys/dice.js';
 
 Hooks.once('init', async() => {
+    game[MODULE_ID] = { HMActor, HMItem };
     CONFIG.Actor.documentClass = HMActorFactory;
     CONFIG.Item.documentClass = HMItem;
     CONFIG.Combat.documentClass = HMCombat;
     CONFIG.ui.combat = HMCombatTracker;
     CONFIG.Macro.documentClass = HMMacro;
+    CONFIG.canvasTextStyle._fontFamily = 'Gentium';
 
     Actors.unregisterSheet('core', ActorSheet);
     Actors.registerSheet('hackmaster', HMCharacterActorSheet, {types: ['character'], makeDefault:true});
@@ -43,12 +45,17 @@ Hooks.once('ready', async() => {
         const tActor = game.actors.contents.find((a) => a.name === 'test');
         if (tActor) { tActor.sheet.render(true); }
     }
+
+    if (!game.user.isGM) return;
+    const folderName = game.i18n.localize('HM.sys.folders.skillmacro');
+    let f = game.folders.find((a) => a.type === 'Macro' && a.name === folderName);
+    if (!f) f = await Folder.create({type: 'Macro', name: folderName, parent: null});
 });
 
 Hooks.on('createActor', HMActor.createActor);
 Hooks.on('createToken', HMActor.createToken);
 Hooks.on('renderCombatTracker', HMCombatTracker.renderCombatTracker);
-
+Hooks.on('hotbarDrop', HMMacro.hotbarDrop);
 Hooks.on('diceSoNiceRollStart', (_messageId, context) => {
     // Add 1 to penetration dice so dsn shows actual die throws.
     const normalize = (roll, r=5) => {

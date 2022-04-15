@@ -1,5 +1,5 @@
 /* eslint max-classes-per-file: ['error', 2] */
-import HMDialogMgr from '../mgr/dialogmgr.js';
+import { HMDialogMgr } from '../mgr/dialogmgr.js';
 
 export class HMCombat extends Combat {
     nextTurn() { return this.nextRound(); }

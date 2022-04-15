@@ -95,6 +95,10 @@ $character-width: 820px;
         margin-top: 3px;
         padding: 2px;
         border: 2px solid $c-grey;
+        >section {
+            height: 24ex;
+            overflow-y: auto;
+        }
     }
 
     .abilities {

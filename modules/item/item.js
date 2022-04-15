@@ -1,4 +1,7 @@
 import { HMTABLES } from '../sys/constants.js';
+import { HMChatMgr } from '../mgr/chatmgr.js';
+import { HMDialogMgr } from '../mgr/dialogmgr.js';
+import { HMRollMgr } from '../mgr/rollmgr.js';
 
 // Remember: Items may not alter Actors under any circumstances.
 // You will create a free fire shooting gallery if you do this, and
@@ -21,10 +24,11 @@ export class HMItem extends Item {
         if (typeof this.data.data?.state === 'object') this._shittyMigrate();
 
         const {type} = this.data;
-        if (type === 'armor')       { this._prepArmorData(options); } else
         if (type === 'cclass')      { this._prepCClassData();       } else
         if (type === 'race')        { this._prepRace();             } else
         if (type === 'proficiency') { this._prepProficiencyData();  }
+        if (type === 'item')        { this._prepItemData();         } else
+        if (type === 'armor')       { this._prepArmorData(options); }
     }
 
     /** @override */
@@ -50,6 +54,11 @@ export class HMItem extends Item {
         return Object.fromEntries(keys.map((_, i) => [keys[i], values[i]]));
     }
 
+    // HACK: Seriously, now.
+    get specname() {
+       return HMItem.specname(this.data);
+    }
+
     // HACK: Temporary measure until future inventory overhaul.
     get invstate() {
         // TODO: Migrate
@@ -68,8 +77,18 @@ export class HMItem extends Item {
         });
     }
 
+    async _prepItemData() {
+        if (!this.actor?.data) return;
+
+        const {qty} = this.data.data;
+        if (Number.isInteger(qty) && qty > 0) return;
+        const newqty = Math.max(1, parseInt(qty, 10)) || 1;
+        this.update({'data.qty': newqty});
+    }
+
     _prepArmorData({setBonus=true}={}) {
-        if (!this.actor?.data) { return; }
+        if (!this.actor?.data) return;
+
         const {bonus, shield, qn} = this.data.data;
         qn ? bonus.qual = this.quality : delete bonus.qual;
         for (const key in bonus.total) {
@@ -305,5 +324,61 @@ export class HMItem extends Item {
 
         if (hp < 0) return this.delete();
         await this.update({'data': {hp, timer, treated}});
+    }
+
+    // TODO: Refactor. This is propagation of the mess in actor-sheet.js
+    static async rollSkill({skillName, specialty=null}) {
+        const actors = canvas.tokens.controlled.map((token) => token.actor);
+        const callers = [];
+        Object.values(actors).forEach(async (actor) => {
+            let context;
+            if (specialty) {
+                console.warn(specialty);
+            context = actor.items.find((a) => a.type === 'skill'
+                    && skillName === a.name
+                    && specialty === a.data.data?.specialty?.value);
+            } else {
+                context = actor.items.find((a) => a.type === 'skill'
+                    && skillName === a.name
+                    && !a.data.data?.specialty?.value);
+            }
+            if (!context) return;
+            callers.push({caller: actor, context});
+        });
+
+        if (!callers.length) return;
+
+        const dialogDataset = {
+            dialog: 'skill',
+            formula: 'd100 + @resp.mod @resp.oper @bonus.total.value',
+            skillType: 'skill',
+            itemId: callers[0].context.id,
+        };
+
+        const dialogMgr  = new HMDialogMgr();
+        const dialogResp = await dialogMgr.getDialog(dialogDataset, callers[0].caller);
+
+        Object.values(callers).forEach(async (caller) => {
+            const resp = caller;
+            resp.resp = dialogResp.resp;
+            const dataset = dialogDataset;
+            dataset.itemId = resp.context.id;
+
+            const rollMgr  = new HMRollMgr();
+            const roll     = await rollMgr.getRoll(dataset, resp);
+            const chatMgr  = new HMChatMgr();
+            const card     = await chatMgr.getCard(roll, dataset, resp);
+            await ChatMessage.create(card);
+        });
+    }
+
+    static specname(data) {
+        const skillName = game.i18n.localize(data.name);
+        if (data.type !== 'skill') return skillName;
+        const {specialty} = data.data;
+        if (specialty.checked && specialty.value.length) {
+            return `${skillName} (${specialty.value})`;
+        }
+        return skillName;
     }
 }

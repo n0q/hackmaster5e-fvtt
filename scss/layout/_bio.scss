@@ -2,12 +2,14 @@
     display: grid;
     grid-template-columns: repeat(2,1fr);
     grid-template-rows: 12em 20em;
-    row-gap: 10px;
+    column-gap: $padding-sm;
+    row-gap: $padding-md;
 }
 
 .beast-bio {
     display: grid;
     grid-template-columns: repeat(2,1fr);
     grid-template-rows: 12em 10em;
-    row-gap: 10px;
+    column-gap: $padding-sm;
+    row-gap: $padding-md;
 }
