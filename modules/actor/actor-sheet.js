@@ -29,7 +29,11 @@ export class HMActorSheet extends ActorSheet {
         const skills = [];
         const langs = [];
         const wounds = [];
-        const gear = [];
+        const gear = {
+            'weapons': [],
+            'armors':  [],
+            'items':   [],
+        };
         const spells = [];
         const armors = {
             'owned':    [],
@@ -41,13 +45,6 @@ export class HMActorSheet extends ActorSheet {
             'carried':  [],
             'equipped': [],
             'innate':   [],
-        };
-
-        const sflags = {
-            'combat': {
-                'weapon': {'equipped': false, 'unequipped': false},
-                'armor':  {'equipped': false, 'unequipped': false},
-            },
         };
 
         const DEFAULT_TOKEN = idx.defaultImg.item;
@@ -62,24 +59,29 @@ export class HMActorSheet extends ActorSheet {
                 }
             } else
             if (i.type === 'armor') {
-                gear.push(i);
+                gear.armors.push(i);
                 const state = HMTABLES.itemstate[(i.data.state)];
                 armors[state].push(i);
             } else
             if (i.type === 'weapon') {
-                gear.push(i);
+                gear.weapons.push(i);
                 const state = HMTABLES.itemstate[(i.data.state)];
                 weapons[state].push(i);
             } else
-            if (i.type === 'wound')  { wounds.push(i); } else
-            if (i.type === 'item')   { gear.push(i);   } else
-            if (i.type === 'spell')  { spells.push(i); }
+            if (i.type === 'wound')  { wounds.push(i);     } else
+            if (i.type === 'item')   { gear.items.push(i); } else
+            if (i.type === 'spell')  { spells.push(i);     }
         }
 
         // Sort
         function skillsort(a, b) {
-            return `${game.i18n.localize(a.name)} ${a.data.specialty.value || ''}` >
-                   `${game.i18n.localize(b.name)} ${b.data.specialty.value || ''}` ? 1 : -1;
+            return `${game.i18n.localize(a.name)} ${a.data.specialty.value || ''}`
+                 > `${game.i18n.localize(b.name)} ${b.data.specialty.value || ''}` ? 1 : -1;
+        }
+
+        function spellsort(a, b) {
+            return Number(a.data.lidx) > Number(b.data.lidx)
+                || a.name > b.name ? 1 : -1;
         }
 
         skills.sort(skillsort);
@@ -95,9 +97,8 @@ export class HMActorSheet extends ActorSheet {
         actorData.wounds = wounds;
         actorData.armors = armors;
         actorData.gear = gear;
-        actorData.spells = spells;
+        actorData.spells = spells.sort(spellsort);
         actorData.weapons = weapons;
-        actorData.sflags = sflags;
 
         const slevels = [];
             for (let i=0; i < actorData.spells.length; i++) {

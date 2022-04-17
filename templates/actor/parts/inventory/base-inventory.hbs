@@ -15,10 +15,16 @@
     </label>
     {{/with}}
     </li>
-    {{#each actor.gear}}
+    {{#each actor.gear.weapons}}
         {{#unless data.innate}}
             {{> 'systems/hackmaster5e/templates/actor/cards/item.hbs' }}
         {{/unless}}
+    {{/each}}
+    {{#each actor.gear.armors}}
+        {{> 'systems/hackmaster5e/templates/actor/cards/item.hbs' }}
+    {{/each}}
+    {{#each actor.gear.items}}
+        {{> 'systems/hackmaster5e/templates/actor/cards/item.hbs' }}
     {{/each}}
     <hr>
     {{#each actor.weapons.innate}}
