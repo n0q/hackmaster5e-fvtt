@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Fixed
 - Beasts no longer break if they have a language object.
 - Beasts receive bonus spellpoints as they should.
+- Attack macro offers range args if attacker has any ranged weapons.
 
 ## [0.2.2] - 2022-04-15
 ### Added

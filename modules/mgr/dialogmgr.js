@@ -1,4 +1,4 @@
-import { HMTABLES } from '../sys/constants.js';
+import { HMTABLES, HMCONST } from '../sys/constants.js';
 
 export class HMDialogMgr {
     getDialog(dataset, caller=null) {
@@ -6,7 +6,7 @@ export class HMDialogMgr {
         if (name === 'ability') return this.getAbilityDialog(dataset, caller);
         if (name === 'atk')     return this.getAttackDialog(dataset, caller);
         if (name === 'cast')    return this.getCastDialog(dataset, caller);
-        if (name === 'ratk')    return this.getRangedAttackDialog(dataset, caller);
+        if (name === 'ratk')    return this.getAttackDialog(dataset, caller);
         if (name === 'def')     return this.getDefendDialog(dataset, caller);
         if (name === 'dmg')     return this.getDamageDialog(dataset, caller);
         if (name === 'initdie') return this.getInitDieDialog(caller);
@@ -20,8 +20,21 @@ export class HMDialogMgr {
     }
 
     getWeapons(actor, itemId) {
-        if (itemId) return [actor.items.get(itemId)];
-        return actor.items.filter((a) => a.type === 'weapon');
+        let weapons = [];
+        if (itemId) {
+            weapons.push(actor.items.get(itemId));
+        } else {
+            weapons = actor.items.filter(
+                (a) => a.type === 'weapon'
+                && HMCONST.ITEM_STATE.EQUIPPED <= a.data.data.state
+            )
+        }
+
+        let ranged = false;
+        weapons.forEach((weapon) => {
+            if (weapon.data.data.ranged.checked) ranged = true;
+        });
+        return {weapons, ranged};
     }
 
     getSpells(actor, itemId) {
@@ -104,29 +117,30 @@ export class HMDialogMgr {
     }
 
     async getAttackDialog(dataset, caller) {
-        const dialogData = {};
         const dialogResp = {caller};
+        const dialogData = this.getWeapons(caller, dataset?.itemId);
+        const template = 'systems/hackmaster5e/templates/dialog/getAttack.hbs';
 
-        dialogData.weapons = this.getWeapons(caller, dataset?.itemId);
-        const template = "systems/hackmaster5e/templates/dialog/getAttack.hbs";
-
+        const penalty = HMTABLES.weapons.ranged.penalty;
         let widx = null;
         dialogResp.resp = await new Promise(async resolve => {
             new Dialog({
-                title: caller.name + game.i18n.localize("HM.dialog.getAttackTitle"),
+                title: caller.name + game.i18n.localize('HM.dialog.getAttackTitle'),
                 content: await renderTemplate(template, dialogData),
                 buttons: {
                     attack: {
-                        label: game.i18n.localize("HM.attack"),
+                        label: game.i18n.localize('HM.attack'),
                         callback: (html) => {
                             widx = html.find('#weapon-select')[0].value;
                             resolve({
-                                "mod": parseInt(document.getElementById("mod").value || 0),
+                                'mod': parseInt(document.getElementById('mod').value, 10) || 0,
+                                'range': penalty[document.getElementById('range').value],
+                                'rangestr': document.getElementById('range').value
                             })
                         }
                     }
                 },
-                default: "attack"
+                default: 'attack'
             }).render(true);
             this._focusById('mod');
         });
@@ -140,26 +154,26 @@ export class HMDialogMgr {
 
         dialogData.spells = this.getSpells(caller, dataset?.itemId);
         dialogData.divine = dataset.itemDivine === 'true' ? true : false;
-        const template = "systems/hackmaster5e/templates/dialog/getCast.hbs";
+        const template = 'systems/hackmaster5e/templates/dialog/getCast.hbs';
 
         let sidx = null;
         dialogResp.resp = await new Promise(async resolve => {
             new Dialog({
-                title: game.i18n.localize("HM.dialog.getCastTitle"),
+                title: game.i18n.localize('HM.dialog.getCastTitle'),
                 content: await renderTemplate(template, dialogData),
                 buttons: {
                     cast: {
-                        label: game.i18n.localize("HM.cast"),
+                        label: game.i18n.localize('HM.cast'),
                         icon: '<i class="fas fa-magic"></i>',
                         callback: (html) => {
                             sidx = html.find('#spell-select')[0].value;
                             resolve({
-                                "mod": parseInt(document.getElementById("mod").value || 0),
+                                'mod': parseInt(document.getElementById('mod').value || 0, 10),
                             })
                         }
                     }
                 },
-                default: "cast"
+                default: 'cast'
             }).render(true);
             this._focusById('mod');
         });
@@ -167,78 +181,42 @@ export class HMDialogMgr {
         return dialogResp;
     }
 
-    async getRangedAttackDialog(dataset, caller) {
-        const dialogData = {};
-        const dialogResp = {caller};
-
-        dialogData.weapons = this.getWeapons(caller, dataset?.itemId);
-        const template = "systems/hackmaster5e/templates/dialog/getRangedAttack.hbs";
-
-        const penalty = HMTABLES.weapons.ranged.penalty;
-        let widx = null;
-        dialogResp.resp = await new Promise(async resolve => {
-            new Dialog({
-                title: caller.name + game.i18n.localize("HM.dialog.getAttackTitle"),
-                content: await renderTemplate(template, dialogData),
-                buttons: {
-                    attack: {
-                        label: game.i18n.localize("HM.attack"),
-                        callback: (html) => {
-                            widx = html.find('#weapon-select')[0].value;
-                            resolve({
-                                "mod": parseInt(document.getElementById("mod").value || 0),
-                                "range": penalty[document.getElementById("range").value],
-                                "rangestr": document.getElementById("range").value
-                            })
-                        }
-                    }
-                },
-                default: "attack"
-            }).render(true);
-            this._focusById('mod');
-        });
-        dialogResp.context = dialogData.weapons[widx];
-        return dialogResp;
-    }
-
     async getDamageDialog(dataset, caller) {
-        const dialogData = {};
         const dialogResp = {caller};
-
-        dialogData.weapons = this.getWeapons(caller, dataset?.itemId);
-        const template = "systems/hackmaster5e/templates/dialog/getDamage.hbs";
+        const dialogData = this.getWeapons(caller, dataset?.itemId);
+        const template = 'systems/hackmaster5e/templates/dialog/getDamage.hbs';
 
         let widx = null;
         dialogResp.resp = await new Promise(async resolve => {
             new Dialog({
-                title: caller.name + game.i18n.localize("HM.dialog.getDamageTitle"),
+                title: caller.name + game.i18n.localize('HM.dialog.getDamageTitle'),
                 content: await renderTemplate(template, dialogData),
                 buttons: {
                     normal: {
-                        label: game.i18n.localize("HM.normal"),
+                        label: game.i18n.localize('HM.normal'),
                         callback: (html) => {
                             widx = html.find('#weapon-select')[0].value;
                             resolve({
-                                "shieldhit": false,
-                                "dmg": dialogData.weapons[widx].data.data.dmg.normal,
-                                "mod": parseInt(document.getElementById("mod").value || 0)
+                                'shieldhit': false,
+                                'dmg': dialogData.weapons[widx].data.data.dmg.normal,
+                                'mod': parseInt(document.getElementById('mod').value || 0, 10)
                             })
                         }
                     },
                     shield: {
-                        label: game.i18n.localize("HM.shield"),
+                        label: game.i18n.localize('HM.shield'),
                         icon: '<i class="fas fa-shield-alt"></i>',
                         callback: (html) => {
                             widx = html.find('#weapon-select')[0].value;
                             resolve({
-                                "shieldhit": true,
-                                "dmg": dialogData.weapons[widx].data.data.dmg.shield,
-                                "mod": parseInt(document.getElementById("mod").value || 0)
+                                'shieldhit': true,
+                                'dmg': dialogData.weapons[widx].data.data.dmg.shield,
+                                'mod': parseInt(document.getElementById('mod').value || 0, 10)
                             })
                         }
                     }
                 },
-                default: "normal"
+                default: 'normal'
             }).render(true);
             this._focusById('mod');
         });
@@ -247,29 +225,27 @@ export class HMDialogMgr {
     }
 
     async getDefendDialog(dataset, caller) {
-        const dialogData = {};
         const dialogResp = {caller};
-
-        dialogData.weapons = this.getWeapons(caller, dataset?.itemId);
-        const template = "systems/hackmaster5e/templates/dialog/getDefend.hbs";
+        const dialogData = this.getWeapons(caller, dataset?.itemId);
+        const template = 'systems/hackmaster5e/templates/dialog/getDefend.hbs';
 
         let widx = null;
         dialogResp.resp = await new Promise(async resolve => {
             new Dialog({
-                title: caller.name + game.i18n.localize("HM.dialog.getDefendTitle"),
+                title: caller.name + game.i18n.localize('HM.dialog.getDefendTitle'),
                 content: await renderTemplate(template, dialogData),
                 buttons: {
                     defend: {
-                        label: game.i18n.localize("HM.defend"),
+                        label: game.i18n.localize('HM.defend'),
                         callback: (html) => {
                             widx = html.find('#weapon-select')[0].value;
                             resolve({
-                                "mod": parseInt(document.getElementById("mod").value || 0)
+                                'mod': parseInt(document.getElementById('mod').value || 0, 10)
                             })
                         }
                     }
                 },
-                default: "defend"
+                default: 'defend'
             }).render(true);
             this._focusById('mod');
         });

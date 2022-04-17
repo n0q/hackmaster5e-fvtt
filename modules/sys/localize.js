@@ -156,6 +156,7 @@ idx.dice = {
     '1d3':  'd3',
 };
 
+// TODO: This table is backwards. Values should be keys, keys, should be localized.
 idx.range = {
     'short':   'Short',
     'medium':  'Medium (-4)',
