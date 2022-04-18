@@ -3,7 +3,7 @@ import { HMDialogMgr } from '../mgr/dialogmgr.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMRollMgr } from '../mgr/rollmgr.js';
 import { idx } from '../sys/localize.js';
-import { HMTABLES } from '../sys/constants.js';
+import { HMTABLES, HMCONST } from '../sys/constants.js';
 
 export class HMActorSheet extends ActorSheet {
     /** @override */
@@ -307,7 +307,7 @@ export class HMActorSheet extends ActorSheet {
         }
 
         const chatMgr = new HMChatMgr();
-        const card = await chatMgr.getCard(roll, dataset, dialogResp);
+        const card = await chatMgr.getCard({roll, dataset, dialogResp});
         return await ChatMessage.create(card);
         }
     }

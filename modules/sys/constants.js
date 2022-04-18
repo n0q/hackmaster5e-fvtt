@@ -321,6 +321,10 @@ export const HMTABLES = {
 
 // TODO: ITEM_STATE and itemstate are the same table.
 export const HMCONST = {
+    'CARD_TYPE': {
+        'ROLL': 0,
+        'ALERT': 1,
+    },
     'ITEM_STATE': {
         'OWNED': 0,
         'CARRIED': 1,

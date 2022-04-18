@@ -1,4 +1,4 @@
-import { HMTABLES } from '../sys/constants.js';
+import { HMTABLES, HMCONST } from '../sys/constants.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
 import { HMRollMgr } from '../mgr/rollmgr.js';
@@ -126,7 +126,7 @@ export class HMItem extends Item {
             await this.update({'data.ptable': pTable});
         }
 
-        if (!this.actor?.data) { return; }
+        if (!this.actor?.data) return;
 
         // calculate hp
         const level = Math.clamped((data.level || 0), 0, 20);
@@ -368,7 +368,8 @@ export class HMItem extends Item {
             const rollMgr  = new HMRollMgr();
             const roll     = await rollMgr.getRoll(dataset, resp);
             const chatMgr  = new HMChatMgr();
-            const card     = await chatMgr.getCard(roll, dataset, resp);
+            const cardtype = HMCONST.CARD_TYPE.ROLL;
+            const card     = await chatMgr.getCard({cardtype, roll, dataset, resp});
             await ChatMessage.create(card);
         });
     }
@@ -381,5 +382,21 @@ export class HMItem extends Item {
             return `${skillName} (${specialty.value})`;
         }
         return skillName;
+    }
+
+    static async createItem(item, _options, userId) {
+        if (game.user.id !== userId) return;
+        const {parent, type} = item;
+        if (type !== 'wound') return;
+
+        const {top} = parent.data.data.hp;
+        const wound = item.data.data.hp;
+        if (!top || top >= wound) return;
+
+        const chatmgr = new HMChatMgr();
+        const cardtype = HMCONST.CARD_TYPE.ALERT;
+        const dataset = {context: item, top, wound};
+        const card = await chatmgr.getCard({cardtype, dataset});
+        await ChatMessage.create(card);
     }
 }

@@ -169,6 +169,10 @@
             "warnMulti":         "Multiple tokens selected. Using <b>"
         },
 
+        "chatCard": {
+            "toplimit": "Damage exceeds Threshold of Pain limit!"
+        },
+
         "scaleFull": {
             "tiny":             "Tiny",
             "small":            "Small",
@@ -318,6 +322,7 @@
 
         "adjective":    "Adjective",
         "age":          "Age",
+        "alert":        "Alert",
         "alignment":    "Alignment",
         "annointed":    "Annointed",
         "arcane":       "Arcane",

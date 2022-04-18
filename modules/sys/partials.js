@@ -39,6 +39,7 @@ export default function preloadHandlebarsTemplates() {
         'systems/hackmaster5e/templates/actor/parts/setup/setup-statbonuses.hbs',
         'systems/hackmaster5e/templates/actor/parts/skills/base-skills.hbs',
 
+        'systems/hackmaster5e/templates/chat/top.hbs',
         'systems/hackmaster5e/templates/chat/spell.hbs',
 
         'systems/hackmaster5e/templates/item/parts/description.hbs',
