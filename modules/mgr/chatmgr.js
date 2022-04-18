@@ -3,7 +3,7 @@ import { HMTABLES, HMCONST } from '../sys/constants.js';
 export class HMChatMgr {
     constructor() { this._user = game.user.id; }
 
-    async getCard({cardtype=HMCONST.CARD_TYPE.ROLL, roll, dataset, dialogResp=null}) {
+    async getCard({cardtype=HMCONST.CARD_TYPE.ROLL, roll, dataset, dialogResp=null, options}) {
         let cData;
         if (cardtype === HMCONST.CARD_TYPE.ROLL) {
             switch (dataset.dialog) {
@@ -47,7 +47,7 @@ export class HMChatMgr {
             chatData.sound    = CONFIG.sounds.dice;
         }
 
-        return chatData;
+        return {...chatData, ...options};
     }
 
     getDiceSum(roll) {
@@ -206,7 +206,7 @@ export class HMChatMgr {
             const spNew = caller.data.data.sp.value - sum;
             await caller.update({'data.sp.value': spNew});
         }
-console.warn(dialogResp);
+
         const template = 'systems/hackmaster5e/templates/chat/spell.hbs';
         const content = await renderTemplate(template, dialogResp);
         return {content};

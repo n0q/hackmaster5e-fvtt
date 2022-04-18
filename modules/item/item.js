@@ -398,5 +398,20 @@ export class HMItem extends Item {
         const dataset = {context: item, top, wound};
         const card = await chatmgr.getCard({cardtype, dataset});
         await ChatMessage.create(card);
+
+        // Auto-roll for beasts.
+        if (parent.type === 'beast') {
+            dataset.dialog = 'save';
+            dataset.formulaType = 'trauma';
+
+            const rollMgr = new HMRollMgr();
+            const dialogResp = {caller: parent};
+            const roll = await rollMgr.getRoll(dataset, {context: parent});
+
+            const rollMode = 'gmroll';
+            const options = {rollMode};
+            const topcard = await chatmgr.getCard({dataset, roll, dialogResp, options});
+            await ChatMessage.create(topcard);
+        }
     }
 }
