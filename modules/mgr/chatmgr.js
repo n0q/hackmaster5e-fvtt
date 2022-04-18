@@ -1,39 +1,43 @@
-import { HMTABLES } from '../sys/constants.js';
+import { HMTABLES, HMCONST } from '../sys/constants.js';
 
 export class HMChatMgr {
     constructor() { this._user = game.user.id; }
 
-    async getCard(roll, dataset, dialogResp=null) {
+    async getCard({cardtype=HMCONST.CARD_TYPE.ROLL, roll, dataset, dialogResp=null, options}) {
         let cData;
-        switch (dataset.dialog) {
-            case 'atk':
-            case 'ratk':
-            case 'def':
-            case 'dmg':
-                cData = await this._createWeaponCard(roll, dataset, dialogResp);
-                break;
-            case 'cast':
-                cData = await this._createSpellCard(dataset, dialogResp);
-                break;
-            case 'skill':
-                cData = await this._createSkillCard(roll, dataset, dialogResp);
-                break;
-            case 'save':
-                cData = await this._createSaveCard(roll, dataset);
-                break;
-            case 'ability':
-                cData = dialogResp.resp.save
-                    ? await this._createSaveCard(roll, dataset)
-                    : await this._createAbilityCard(roll, dataset);
-                break;
-            default:
+        if (cardtype === HMCONST.CARD_TYPE.ROLL) {
+            switch (dataset.dialog) {
+                case 'atk':
+                case 'ratk':
+                case 'def':
+                case 'dmg':
+                    cData = await this._createWeaponCard(roll, dataset, dialogResp);
+                    break;
+                case 'cast':
+                    cData = await this._createSpellCard(dataset, dialogResp);
+                    break;
+                case 'skill':
+                    cData = await this._createSkillCard(roll, dataset, dialogResp);
+                    break;
+                case 'save':
+                    cData = await this._createSaveCard(roll, dataset);
+                    break;
+                case 'ability':
+                    cData = dialogResp.resp.save
+                        ? await this._createSaveCard(roll, dataset)
+                        : await this._createAbilityCard(roll, dataset);
+                    break;
+                default:
+            }
+        } else if (cardtype === HMCONST.CARD_TYPE.ALERT) {
+            cData = await createToPAlert(dataset);
         }
 
         const chatData = {
             user:    this._user,
-            flavor:  dialogResp.caller.name,
+            flavor:  cData?.flavor || dialogResp?.caller?.name,
             content: cData.content,
-            type:    CONST.CHAT_MESSAGE_TYPES.IC,
+            type:    CONST.CHAT_MESSAGE_TYPES.OTHER,
         };
 
         if (roll) {
@@ -42,7 +46,8 @@ export class HMChatMgr {
             chatData.type     = CONST.CHAT_MESSAGE_TYPES.ROLL;
             chatData.sound    = CONFIG.sounds.dice;
         }
-        return chatData;
+
+        return {...chatData, ...options};
     }
 
     getDiceSum(roll) {
@@ -75,9 +80,9 @@ export class HMChatMgr {
 
                 let specialRow = '';
                 const sumDice = this.getDiceSum(roll);
-                if (sumDice >=  20) { specialRow += '<b>Critical!</b>';         } else
-                if (sumDice === 19) { specialRow += '<b>Near Perfect!</b>';     } else
-                if (sumDice === 1)  { specialRow += '<b>Potential Fumble!</b>'; }
+                if (sumDice >=  20) { specialRow += '<b>Critical!</b>';        } else
+                if (sumDice === 19) { specialRow += '<b>Near Perfect</b>';     } else
+                if (sumDice === 1)  { specialRow += '<b>Potential Fumble</b>'; }
 
                 content = `${weaponRow}<br>${speedRow}<br>${rangeRow}<br>${specialRow}<br>${content}`;
                 return {content};
@@ -96,9 +101,9 @@ export class HMChatMgr {
 
                 let specialRow = '';
                 const sumDice = this.getDiceSum(roll);
-                if (sumDice >=  20) { specialRow += '<b>Critical!</b>';         } else
-                if (sumDice === 19) { specialRow += '<b>Near Perfect!</b>';     } else
-                if (sumDice === 1)  { specialRow += '<b>Potential Fumble!</b>'; }
+                if (sumDice >=  20) { specialRow += '<b>Critical!</b>';        } else
+                if (sumDice === 19) { specialRow += '<b>Near Perfect</b>';     } else
+                if (sumDice === 1)  { specialRow += '<b>Potential Fumble</b>'; }
 
                 content = `${weaponRow}<br>${speedRow}<br>${specialRow}<br>${content}`;
                 return {content};
@@ -130,10 +135,10 @@ export class HMChatMgr {
 
                 let specialRow = '';
                 const sumDice = this.getDiceSum(roll);
-                if (sumDice >=  20) { specialRow += '<b>Perfect!</b>';            } else
-                if (sumDice === 19) { specialRow += '<b>Near Perfect!</b>';       } else
-                if (sumDice === 18) { specialRow += '<b>Superior!</b>';           } else
-                if (sumDice === 1)  { specialRow += '<b>Free Second Attack!</b>'; }
+                if (sumDice >=  20) { specialRow += '<b>Perfect!</b>';     } else
+                if (sumDice === 19) { specialRow += '<b>Near Perfect</b>'; } else
+                if (sumDice === 18) { specialRow += '<b>Superior</b>';     } else
+                if (sumDice === 1)  { specialRow += '<b>Fumble</b>';       }
 
                 const faShield = '<i class="fas fa-shield-alt"></i>';
                 const dr = caller.drObj;
@@ -225,4 +230,11 @@ export class HMChatMgr {
         const content = await roll.render({flavor});
         return {content};
     }
+}
+
+async function createToPAlert(dataset) {
+    const template = 'systems/hackmaster5e/templates/chat/top.hbs';
+    const content = await renderTemplate(template, dataset);
+    const flavor = dataset.context.parent.name;
+    return {content, flavor};
 }

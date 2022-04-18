@@ -3,14 +3,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+
+## [0.2.3] - 2022-04-18
+### Added
+- Alert when new wound damage exceeds ToP.
+- Automatic (private) trauma rolls for beast actors.
+- Compendium items.
+### Changed
+- Defense results on a nat 1 were misleading.
+### Fixed
+- Beasts no longer break if they have a language object.
+- Beasts receive bonus spellpoints as they should.
+- Attack macro offers range args if attacker has any ranged weapons.
+- Smarter inventory and spell sorting.
+
 ## [0.2.2] - 2022-04-15
 ### Added
 - Skill macros.
 - rollMode query in skill dialogs.
+- Compendium items.
 ### Changed
 - Switched canvas font to Gentium Book.
 - Added scroll bar to wound list.
-- Added to compendiums.
 - Removed skill mods in favor of skill bonuses. Positive is good, regardless of the type of roll.
 
 ## [0.2.1] - 2022-04-13

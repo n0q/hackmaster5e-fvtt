@@ -3,13 +3,13 @@ import { HMActor } from './actor.js';
 export class HMBeastActor extends HMActor {
     prepareBaseData() {
         super.prepareBaseData();
-        this.setExtras();
         this.setBonusTotal();
     }
 
     prepareDerivedData() {
         super.prepareDerivedData();
         this.setBonusTotal();
+        this.setExtras();
         this.setHP();
     }
 
@@ -19,6 +19,7 @@ export class HMBeastActor extends HMActor {
         }
         const {misc, stats} = this.data.data.bonus;
         stats.poison = (misc.trauma || 0) * 2;
+        this.data.data.sp.max = this.data.data.bonus.total?.sp || 0;
     }
 
     setHP() {

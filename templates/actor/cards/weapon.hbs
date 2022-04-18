@@ -1,62 +1,62 @@
-<li class="card hmstyle" data-item-id="{{_id}}">
-    <summary class="toggleswitch">
+<li class='card hmstyle' data-item-id='{{_id}}'>
+    <summary class='toggleswitch'>
         <header>
-            <label for="{{name}}">
-                <img src="{{img}}" title="{{name}}" height="48"/>
-                <h4 class="card-name" style="font-size: 16px;">{{name}}</h4>
+            <label for='{{name}}'>
+                <img src='{{img}}' title='{{name}}' height='48'/>
+                <h4 class='card-name' style='font-size: 16px;'>{{name}}</h4>
             </label>
         </header>
         {{#if (gt data.state 1)}}
         <section>
-            <img class="rollable imgbutton" src="{{findConfigValue "combatImg" "def"}}" height="36" title="Defend"
-                data-dialog="def"
-                data-formula="1d20p + @bonus.total.def + @resp.mod"
-                data-item-id="{{_id}}">
+            <img class='rollable imgbutton' src='{{findConfigValue 'combatImg' 'def'}}' height='36' title='Defend'
+                data-dialog='def'
+                data-formula-type='standard'
+                data-item-id='{{_id}}'>
             {{#if data.ranged.checked}}
-            <img class="rollable imgbutton" src="{{findConfigValue "combatImg" "rdmg"}}" height="36" title="Ranged Damage"
+            <img class='rollable imgbutton' src='{{findConfigValue 'combatImg' 'rdmg'}}' height='36' title='Ranged Damage'
             {{else}}
-            <img class="rollable imgbutton" src="{{findConfigValue "combatImg" "dmg"}}" height="36" title="Damage"
+            <img class='rollable imgbutton' src='{{findConfigValue 'combatImg' 'dmg'}}' height='36' title='Damage'
             {{/if}}
-                data-dialog="dmg"
-                data-formula="@resp.dmg + @bonus.total.dmg + @resp.mod"
-                data-item-id="{{_id}}">
+                data-dialog='dmg'
+                data-formula-type='standard'
+                data-item-id='{{_id}}'>
             {{#if data.ranged.checked}}
-            <img class="rollable imgbutton" src="{{findConfigValue "combatImg" "ratk"}}" height="36" title="Ranged Attack"
-                data-dialog="ratk"
-                data-formula="1d20p + @bonus.total.atk + @resp.range + @resp.mod"
-                data-item-id="{{_id}}">
+            <img class='rollable imgbutton' src='{{findConfigValue 'combatImg' 'ratk'}}' height='36' title='Ranged Attack'
+                data-dialog='ratk'
+                data-formula-type='standard'
+                data-item-id='{{_id}}'>
             {{else}}
-            <img class="rollable imgbutton" src="{{findConfigValue "combatImg" "atk"}}" height="36" title="Attack"
-                data-dialog="atk"
-                data-formula="1d20p + @bonus.total.atk + @resp.mod"
-                data-item-id="{{_id}}">
+            <img class='rollable imgbutton' src='{{findConfigValue 'combatImg' 'atk'}}' height='36' title='Attack'
+                data-dialog='atk'
+                data-formula-type='standard'
+                data-item-id='{{_id}}'>
             {{/if}}
         </section>
         {{/if}}
     </summary>
-    <section class="hide" toggle>
-        <div class="splitview">
+    <section class='hide' toggle>
+        <div class='splitview'>
             <div>
-                {{localize "HM.reach"}}: {{data.adjReach}}    
+                {{localize 'HM.reach'}}: {{data.adjReach}}    
             </div>
-            <table class="table-basic">
+            <table class='table-basic'>
                 <thead>
                     <tr>
-                        <th scope="col"></th>
+                        <th scope='col'></th>
                         {{#each data.bonus.total}}
-                        <th scope="col"><label class="resource-label">{{@key}}</label></th>
+                        <th scope='col'><label class='resource-label'>{{@key}}</label></th>
                         {{/each}}
                     </tr>
                 </thead>
                 <tbody>
                     {{#each data.bonus}}
                     <tr>
-                        <th scope="row"><label class="resource-label">{{@key}}</label></td>
+                        <th scope='row'><label class='resource-label'>{{@key}}</label></td>
                         {{#each this}}{{#if (eq 'mod' @../key)}}
                         <td>
-                            <input class="editable" type="number" value={{this}}
-                                data-item-prop="data.bonus.mod.{{@key}}"
-                                data-dtype="Number" />
+                            <input class='editable' type='number' value={{this}}
+                                data-item-prop='data.bonus.mod.{{@key}}'
+                                data-dtype='Number' />
                         </td>
                         {{else}}
                         <td>{{this}}</td>
