@@ -24,6 +24,7 @@ export default function preloadHandlebarsTemplates() {
         'systems/hackmaster5e/templates/actor/parts/header/header-stats.hbs',
         'systems/hackmaster5e/templates/actor/parts/header/header-portrait.hbs',
         'systems/hackmaster5e/templates/actor/parts/inventory/base-inventory.hbs',
+        'systems/hackmaster5e/templates/actor/parts/inventory/beast-inventory.hbs',
         'systems/hackmaster5e/templates/actor/parts/overview/base-overview.hbs',
         'systems/hackmaster5e/templates/actor/parts/overview/overview-skills.hbs',
         'systems/hackmaster5e/templates/actor/parts/spells/base-spells.hbs',
