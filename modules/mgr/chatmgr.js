@@ -14,9 +14,11 @@ function getDiceSum(roll) {
 async function saveExtendedTrauma(content, roll) {
     const rolls = [roll];
     let exContent = content;
-    const context = { 'duration': Math.max(roll.total * 5, 0),
-                       'special': 'HM.success',
-                       'forever': false };
+    const context = {
+        'duration': Math.max(roll.total * 5, 0),
+        'special': 'HM.passed',
+        'forever': false,
+    };
 
     if (roll.total > 1) {
         context.unit    = 'HM.seconds';

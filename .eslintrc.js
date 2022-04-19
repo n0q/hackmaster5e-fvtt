@@ -25,7 +25,7 @@ module.exports = {
         'no-shadow': ['error', { 'builtinGlobals': true, 'hoist': 'all', 'allow': ['event'] }],
         'no-underscore-dangle': 'off',
         'no-unused-expressions': ['error', { 'allowTernary': true }],
-        'object-curly-newline': ['error', { 'ObjectExpression': 'never' }],
+        'object-curly-newline': 'off',
         'object-curly-spacing': 'off',
         'quotes': ['warn', 'single'],
         'quote-props': 'off',
