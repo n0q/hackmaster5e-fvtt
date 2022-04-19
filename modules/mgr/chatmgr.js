@@ -1,4 +1,5 @@
 import { HMTABLES, HMCONST } from '../sys/constants.js';
+/* global PoolTerm */
 
 function getDiceSum(roll) {
     let sum = 0;
@@ -10,53 +11,55 @@ function getDiceSum(roll) {
     return sum;
 }
 
-// Gross.
 async function saveExtendedTrauma(content, roll) {
-    if (roll.total < 1) {
-        return `<b>${game.i18n.localize('HM.success')}</b><br>${content}`;
-    }
+    const rolls = [roll];
+    let exContent = content;
+    const context = { 'duration': Math.max(roll.total * 5, 0),
+                       'special': 'HM.success',
+                       'forever': false };
 
-    let newcontent = content;
-    let duration = Math.max(roll.total * 5, 0);
-    let unit    = game.i18n.localize('HM.seconds');
-    let status  = game.i18n.localize('HM.incapacitated');
-    let special = game.i18n.localize('HM.failed');
-    let comaForever = false;
-    let label;
+    if (roll.total > 1) {
+        context.unit    = 'HM.seconds';
+        context.status  = 'HM.incapacitated';
+        context.special = 'HM.failed';
 
-    if (getDiceSum(roll) === 20) {
-        const critRoll = await new Roll('5d6p').evaluate({async: true});
-        let flavor = `${game.i18n.localize('HM.knockout')} ${game.i18n.localize('HM.duration')}`;
-        newcontent += `<br> ${await critRoll.render({flavor})}`;
-        duration = critRoll.total;
-        unit = game.i18n.localize('HM.minutes');
-        status = game.i18n.localize('HM.knockedout');
-        special = game.i18n.localize('HM.critical');
-        const comaRoll = await new Roll('d20').evaluate({async: true});
-        flavor = `${game.i18n.localize('HM.comatose')} ${game.i18n.localize('HM.check')}`;
-        newcontent += `<br> ${await comaRoll.render({flavor})}`;
+        if (getDiceSum(roll) === 20) {
+            let newroll = await new Roll('5d6p').evaluate({async: true});
+            rolls.push(newroll);
+            let flavor = `${game.i18n.localize('HM.knockout')} ${game.i18n.localize('HM.duration')}`;
+            exContent += `<br> ${await newroll.render({flavor})}`;
+            context.duration = newroll.total;
+            context.unit     = 'HM.minutes';
+            context.status   = 'HM.knockedout';
+            context.special  = 'HM.critical';
 
-        if (comaRoll.total === 20) {
-            special = `${game.i18n.localize('HM.double')} ${game.i18n.localize('HM.critical')}`;
-            const coma2Roll = await new Roll('d20').evaluate({async: true});
-            flavor = `${game.i18n.localize('HM.comatose')} ${game.i18n.localize('HM.duration')}`;
-            newcontent += `<br> ${await coma2Roll.render({flavor})}`;
-            duration = coma2Roll.total;
-            unit = 'HM.days';
-            status = 'HM.comatose';
-            if (coma2Roll.total === 20) comaForever = true;
+            newroll = await new Roll('d20').evaluate({async: true});
+            rolls.push(newroll);
+            flavor = `${game.i18n.localize('HM.comatose')} ${game.i18n.localize('HM.check')}`;
+            exContent += `<br> ${await newroll.render({flavor})}`;
+
+            if (newroll.total === 20) {
+                context.duration = newroll.total;
+                context.unit     = 'HM.days';
+                context.status   = 'HM.comatose';
+                context.special  = 'HM.doublecritical';
+
+                newroll = await new Roll('d20').evaluate({async: true});
+                rolls.push(newroll);
+                flavor = `${game.i18n.localize('HM.comatose')} ${game.i18n.localize('HM.duration')}`;
+                exContent += `<br> ${await newroll.render({flavor})}`;
+                if (newroll.total === 20) {
+                    context.forever = true;
+                    context.special = 'HM.goodbye';
+                    context.unit    = 'HM.indefinitely';
+                }
+            }
         }
     }
 
-    if (comaForever) {
-        label = `<b>Goodbye</b>
-                 <br>${game.i18n.localize(status)}
-                 <u>${game.i18n.localize('HM.indefinitely')}</u>.`;
-    } else {
-        label = `<b>${game.i18n.localize(special)}</b><br><i>${game.i18n.localize(status)}</i> for
-                 <b>${duration}</b> ${game.i18n.localize(unit).toLowerCase()}.`;
-    }
-    return label + newcontent;
+    const template = 'systems/hackmaster5e/templates/chat/trauma.hbs';
+    const label = await renderTemplate(template, context);
+    return {content: label + exContent, rolls};
 }
 
 async function createSaveCard(roll, dataset) {
@@ -68,8 +71,14 @@ async function createSaveCard(roll, dataset) {
     }
     const flavor = `${saveType} ${game.i18n.localize('HM.save')}`;
     let content = await roll.render({flavor});
-    if (dataset.formulaType === 'trauma') content = await saveExtendedTrauma(content, roll);
-    return {content};
+
+    if (dataset.formulaType === 'trauma') {
+        const extended = await saveExtendedTrauma(content, roll);
+        content = extended.content;
+        const pool = PoolTerm.fromRolls(extended.rolls);
+        roll = Roll.fromTerms([pool]);
+    }
+    return {content, roll};
 }
 
 async function createAbilityCard(roll, dataset) {
@@ -123,11 +132,11 @@ export class HMChatMgr {
             user:    this._user,
             flavor:  cData?.flavor || dialogResp?.caller?.name,
             content: cData.content,
-            type:    CONST.CHAT_MESSAGE_TYPES.OTHER,
+            type:    CONST.CHAT_MESSAGE_TYPES.IC,
         };
 
         if (roll) {
-            chatData.roll     = roll;
+            chatData.roll     = cData?.roll || roll;
             chatData.rollMode = cData.rollMode ? cData.rollMode : game.settings.get('core', 'rollMode');
             chatData.type     = CONST.CHAT_MESSAGE_TYPES.ROLL;
             chatData.sound    = CONFIG.sounds.dice;
