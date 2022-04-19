@@ -229,16 +229,16 @@ export const HMTABLES = {
             'standard': 'd20p + @bonus.total.atk + @resp.range + @resp.mod',
         },
         'save': {
-            'dodge':    'd20p + @bonus.total.dodge    + @resp.bonus',
-            'foa':      'd20p + @bonus.total.foa      + @resp.bonus',
-            'fos':      'd20p + @bonus.total.fos      + @resp.bonus',
-            'mental':   'd20p + @bonus.total.mental   + @resp.bonus',
-            'morale':   'd20p + @bonus.total.morale   + @resp.bonus',
-            'physical': 'd20p + @bonus.total.physical + @resp.bonus',
-            'poison':   'd20p + @bonus.total.poison   + @resp.bonus',
-            'tenacity': 'd20p + @bonus.total.tenacity + @resp.bonus',
-            'trauma':   'd20  - @bonus.total.trauma   - @resp.bonus',
-            'turning':  'd20p + @bonus.total.turning  + @resp.bonus',
+            'dodge':    'd20p +  @bonus.total.dodge    + @resp.bonus',
+            'foa':      'd20p +  @bonus.total.foa      + @resp.bonus',
+            'fos':      'd20p +  @bonus.total.fos      + @resp.bonus',
+            'mental':   'd20p +  @bonus.total.mental   + @resp.bonus',
+            'morale':   'd20p +  @bonus.total.morale   + @resp.bonus',
+            'physical': 'd20p +  @bonus.total.physical + @resp.bonus',
+            'poison':   'd20p +  @bonus.total.poison   + @resp.bonus',
+            'tenacity': 'd20p +  @bonus.total.tenacity + @resp.bonus',
+            'trauma':   'd20  - (@bonus.total.trauma   + @resp.bonus)',
+            'turning':  'd20p +  @bonus.total.turning  + @resp.bonus',
         },
         'skill': {
             'skill':    'd100 @resp.oper (@resp.bonus + @bonus.total.value)',
@@ -322,13 +322,13 @@ export const HMTABLES = {
 // TODO: ITEM_STATE and itemstate are the same table.
 export const HMCONST = {
     'CARD_TYPE': {
-        'ROLL': 0,
+        'ROLL':  0,
         'ALERT': 1,
     },
     'ITEM_STATE': {
-        'OWNED': 0,
-        'CARRIED': 1,
+        'OWNED':    0,
+        'CARRIED':  1,
         'EQUIPPED': 2,
-        'INNATE': 3,
+        'INNATE':   3,
     },
 };
