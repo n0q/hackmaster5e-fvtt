@@ -20,7 +20,7 @@ async function saveExtendedTrauma(content, roll) {
         'forever': false,
     };
 
-    if (roll.total > 1) {
+    if (roll.total > 0) {
         context.unit    = 'HM.seconds';
         context.status  = 'HM.incapacitated';
         context.special = 'HM.failed';
@@ -64,7 +64,8 @@ async function saveExtendedTrauma(content, roll) {
     return {content: label + exContent, rolls};
 }
 
-async function createSaveCard(roll, dataset) {
+async function createSaveCard(roll, dataset, dialogResp) {
+    const {rollMode} = dialogResp.resp;
     let saveType = (dataset.formulaType === 'fos' || dataset.formulaType === 'foa') ? 'Feat of ' : '';
     if (dataset.ability) {
         saveType = game.i18n.localize(`HM.abilityLong.${dataset.ability.toLowerCase()}`);
@@ -80,7 +81,7 @@ async function createSaveCard(roll, dataset) {
         const pool = PoolTerm.fromRolls(extended.rolls);
         roll = Roll.fromTerms([pool]);
     }
-    return {content, roll};
+    return {content, roll, rollMode};
 }
 
 async function createAbilityCard(roll, dataset) {
@@ -117,11 +118,11 @@ export class HMChatMgr {
                     cData = await this._createSkillCard(roll, dataset, dialogResp);
                     break;
                 case 'save':
-                    cData = await createSaveCard(roll, dataset);
+                    cData = await createSaveCard(roll, dataset, dialogResp);
                     break;
                 case 'ability':
                     cData = dialogResp.resp.save
-                        ? await createSaveCard(roll, dataset)
+                        ? await createSaveCard(roll, dataset, dialogResp)
                         : await createAbilityCard(roll, dataset);
                     break;
                 default:

@@ -1,5 +1,12 @@
 import { HMTABLES, HMCONST } from '../sys/constants.js';
 
+function getDialogData() {
+    return {
+        rollModes: CONFIG.Dice.rollModes,
+        rollMode: game.settings.get('core', 'rollMode'),
+    };
+}
+
 export class HMDialogMgr {
     getDialog(dataset, caller=null) {
         const name = dataset.dialog;
@@ -90,26 +97,27 @@ export class HMDialogMgr {
     }
 
     async getSaveDialog(dataset, caller) {
-        const dialogData = {};
+        const dialogData = getDialogData();
         const dialogResp = {caller};
 
-        const template = "systems/hackmaster5e/templates/dialog/getSave.hbs";
-        dialogResp.resp = await new Promise(async resolve => {
+        const template = 'systems/hackmaster5e/templates/dialog/getSave.hbs';
+        dialogResp.resp = await new Promise(async (resolve) => {
             new Dialog({
-                title: game.i18n.localize("HM.dialog.getSaveTitle"),
+                title: game.i18n.localize('HM.dialog.getSaveTitle'),
                 content: await renderTemplate(template, dialogData),
                 buttons: {
                     save: {
-                        label: game.i18n.localize("HM.dialog.getSaveTitle"),
+                        label: game.i18n.localize('HM.dialog.getSaveTitle'),
                         callback: () => {
                             resolve({
-                                "bonus": parseInt(document.getElementById("bonus").value) || 0
-                            })
-                        }
-                    }
+                                'bonus': parseInt(document.getElementById('bonus').value || 0, 10),
+                                'rollMode': document.getElementById('rollMode').value,
+                            });
+                        },
+                    },
                 },
-                default: "save"
-            }, {width: 175}).render(true);
+                default: 'save',
+            }).render(true);
             this._focusById('bonus');
         });
         dialogResp.context = caller;
@@ -255,11 +263,7 @@ export class HMDialogMgr {
 
     async getSkillDialog(dataset, caller) {
         const dialogResp = {caller};
-        const dialogData = {
-            rollModes: CONFIG.Dice.rollModes,
-            rollMode: game.settings.get('core', 'rollMode'),
-        };
-
+        const dialogData = getDialogData();
         dialogData.skill = caller.items.get(dataset.itemId);
         const template = 'systems/hackmaster5e/templates/dialog/getSkill.hbs';
 

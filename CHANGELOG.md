@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 ### Added
 - Added results to trauma save.
+- rollMode query in save dialogs.
 
 ## [0.2.3] - 2022-04-18
 ### Added

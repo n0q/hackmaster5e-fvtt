@@ -3,6 +3,6 @@
 <i>{{localize status}}</i> <u>{{localize unit}}</u>.
 {{else}}
     {{#if (gt duration 0)}}
-<i>{{localize status}}</i> for <b>{{duration}}</b> {{localize unit}}.
+    <i>{{localize status}}</i> {{toLowerCase (localize 'HM.for')}} <b>{{duration}}</b> {{localize unit}}.
     {{/if}}
 {{/if}}
