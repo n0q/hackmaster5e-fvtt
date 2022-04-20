@@ -8,18 +8,23 @@ export class HMBeastActor extends HMActor {
 
     prepareDerivedData() {
         super.prepareDerivedData();
-        this.setBonusTotal();
         this.setExtras();
+        this.setBonusTotal();
+        this.setSP();
         this.setHP();
     }
 
     setExtras() {
-        if (this.data.data.bonus.stats === undefined) {
-            this.data.data.bonus.stats = {};
-        }
+        const {bonus} = this.data.data;
+        if (bonus.stats === undefined) bonus.stats = {};
         const {misc, stats} = this.data.data.bonus;
         stats.poison = (misc.trauma || 0) * 2;
-        this.data.data.sp.max = this.data.data.bonus.total?.sp || 0;
+    }
+
+    setSP() {
+        const {bonus, sp} = this.data.data;
+        if (bonus.stats === undefined) bonus.stats = {};
+        sp.max = bonus.total?.sp || 0;
     }
 
     setHP() {
@@ -27,6 +32,6 @@ export class HMBeastActor extends HMActor {
         const {bonus, hp} = this.data.data;
         const tenacity = Math.ceil(hp.max * bonus.total.tenacityCf || 0);
         delete hp.tenacity;
-        if (tenacity > 0) { hp.tenacity = tenacity; }
+        if (tenacity > 0) hp.tenacity = tenacity;
     }
 }
