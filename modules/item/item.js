@@ -407,10 +407,9 @@ export class HMItem extends Item {
             const rollMgr = new HMRollMgr();
             const dialogResp = {caller: parent};
             const roll = await rollMgr.getRoll(dataset, {context: parent});
-
             const rollMode = 'gmroll';
-            const options = {rollMode};
-            const topcard = await chatmgr.getCard({dataset, roll, dialogResp, options});
+            dialogResp.resp = {rollMode};
+            const topcard = await chatmgr.getCard({dataset, roll, dialogResp});
             await ChatMessage.create(topcard);
         }
     }
