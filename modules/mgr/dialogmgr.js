@@ -50,23 +50,34 @@ export class HMDialogMgr {
     }
 
     async getInitDieDialog(caller) {
+        const dialogData = getDialogData();
         const dialogResp = {caller};
 
         const template = 'systems/hackmaster5e/templates/dialog/getInitDie.hbs';
-        dialogResp.resp = await new Promise(async resolve => {
+        dialogResp.resp = await new Promise(async (resolve) => {
             new Dialog({
                 title: game.i18n.localize('HM.dialog.getInitDieTitle'),
-                content: await renderTemplate(template),
+                content: await renderTemplate(template, dialogData),
                 buttons: {
                     getdie: {
                         label: 'Roll',
-                        callback: () => { resolve({
-                            'die': document.getElementById('choices').value
-                        })}
-                    }
+                        callback: () => {
+                            resolve({
+                                'die': document.getElementById('choices').value,
+                            });
+                        },
+                    },
+                    start: {
+                        label: 'Set to One',
+                        callback: () => {
+                            resolve({
+                                'die': false,
+                            });
+                        },
+                    },
                 },
-                default:'getdie'
-            }, {width: 300}).render(true);
+                default: 'getdie',
+            }, {width: 400}).render(true);
         });
         return dialogResp;
     }
