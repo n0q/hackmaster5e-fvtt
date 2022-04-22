@@ -328,23 +328,38 @@ export class HMItem extends Item {
 
     // TODO: This needs a refactor, but it's too soon to do so. We should
     // give this a second look after combat variants are introduced.
-    static async rollAttack({weapon, callerToken}={}) {
-        const token = callerToken ? callerToken : canvas.tokens.controlled[0];
-        if (!token) return;
+    static async rollAttack({weapon, caller}={}) {
+        let actor;
+        let token;
+        if (!caller) {
+            [token] = canvas.tokens.controlled;
+            actor   = token.actor;
+        } else if (caller.isToken) {
+            actor   = caller;
+            token   = caller.token;
+        } else {
+            actor = caller;
+        }
+        if (!token && !actor) return;
 
-        const opt = {};
-        const {active}     = game.combats;
-        const {round}      = active;
-        const combatant    = active.getCombatantByToken(token.id);
-        const {initiative} = combatant;
-        opt.isCombatant    = combatant?.id && initiative && round;
+        const opt = {isCombatant: false};
+        const comData = {};
+        const {active} = game.combats;
+        if (active) {
+            comData.round = active.round;
+            comData.combatant = token
+                ? active.getCombatantByToken(token.id)
+                : active.getCombatantByActor(actor.id);
+            comData.initiative = comData.combatant?.initiative;
+            opt.isCombatant    = Number.isInteger(comData.initiative) && comData.round > 0;
+        }
 
         const dialog = 'atk';
         const formulaType = 'standard';
         const dataset = {dialog, formulaType, itemId: weapon};
 
         const dialogMgr = new HMDialogMgr();
-        const dialogResp = await dialogMgr.getDialog(dataset, token.actor, opt);
+        const dialogResp = await dialogMgr.getDialog(dataset, actor, opt);
 
         const ranged = dialogResp.context.data.data.ranged.checked;
         if (ranged) dataset.dialog ='ratk';
@@ -354,8 +369,10 @@ export class HMItem extends Item {
 
         if (dialogResp.resp.advance) {
             const {spd} = dialogResp.context.data.data.bonus.total;
-            const newInit = initiative > round ? initiative + spd : round + spd;
-            active.setInitiative(combatant.id, newInit);
+            const newInit = comData.initiative > comData.round
+                ? comData.initiative + spd
+                : comData.round + spd;
+            active.setInitiative(comData.combatant.id, newInit);
         }
 
         const chatMgr = new HMChatMgr();
