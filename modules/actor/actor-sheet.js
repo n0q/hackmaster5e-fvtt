@@ -296,10 +296,10 @@ export class HMActorSheet extends ActorSheet {
         ev.stopPropagation();
         const element = ev.currentTarget;
         const {dataset} = element;
-        const {actor, token} = this;
+        const {actor} = this;
 
         if (dataset.dialog === 'atk' || dataset.dialog === 'ratk') {
-            return HMItem.rollAttack({weapon: dataset.itemId, callerToken: token});
+            return HMItem.rollAttack({weapon: dataset.itemId, caller: actor});
         }
 
         if (dataset.dialog) {
