@@ -19,4 +19,10 @@
         <label>{{localize 'HM.modifier'}}</label>
         <input id='mod' placeholder=0 type='number'/>
     </div>
+    {{#if inCombat}}
+    <div class='form-group'>
+        <label>{{localize 'HM.dialog.advCombatTracker'}}</label>
+        <input type='checkbox' id='advance_tracker' checked>
+    </div>
+    {{/if}}
 </form>

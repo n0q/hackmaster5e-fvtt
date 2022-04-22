@@ -148,6 +148,7 @@
         },
 
         "dialog": {
+            "advCombatTracker":  "Advance Combat Tracker",
             "deleteBody":        "Really delete",
             "getInitDieTitle":   "Roll for Initiative",
             "getInitDieBody":    "Initiative Die",

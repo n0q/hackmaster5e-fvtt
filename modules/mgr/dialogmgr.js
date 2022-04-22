@@ -7,11 +7,35 @@ function getDialogData() {
     };
 }
 
+function getWeapons(actor, itemId) {
+    let weaponList = [];
+    if (itemId) {
+        weaponList.push(actor.items.get(itemId));
+    } else {
+        weaponList = actor.items.filter(
+            (a) => a.type === 'weapon'
+            && HMCONST.ITEM_STATE.EQUIPPED <= a.data.data.state,
+        );
+    }
+
+    function wsort(a, b) {
+        return a.name > b.name || a.data.data.state > b.data.data.state ? 1 : -1;
+    }
+
+    let ranged = false;
+    weaponList.forEach((weapon) => {
+        if (weapon.data.data.ranged.checked) ranged = true;
+    });
+
+    const weapons = weaponList.sort(wsort);
+    return {weapons, ranged};
+}
+
 export class HMDialogMgr {
-    getDialog(dataset, caller=null) {
+    getDialog(dataset, caller=null, opt={}) {
         const name = dataset.dialog;
         if (name === 'ability') return this.getAbilityDialog(dataset, caller);
-        if (name === 'atk')     return this.getAttackDialog(dataset, caller);
+        if (name === 'atk')     return this.getAttackDialog(dataset, caller, opt);
         if (name === 'cast')    return this.getCastDialog(dataset, caller);
         if (name === 'ratk')    return this.getAttackDialog(dataset, caller);
         if (name === 'def')     return this.getDefendDialog(dataset, caller);
@@ -24,24 +48,6 @@ export class HMDialogMgr {
 
     _focusById(id) {
         return setTimeout(() => { document.getElementById(id).focus(); }, 50);
-    }
-
-    getWeapons(actor, itemId) {
-        let weapons = [];
-        if (itemId) {
-            weapons.push(actor.items.get(itemId));
-        } else {
-            weapons = actor.items.filter(
-                (a) => a.type === 'weapon'
-                && HMCONST.ITEM_STATE.EQUIPPED <= a.data.data.state
-            )
-        }
-
-        let ranged = false;
-        weapons.forEach((weapon) => {
-            if (weapon.data.data.ranged.checked) ranged = true;
-        });
-        return {weapons, ranged};
     }
 
     getSpells(actor, itemId) {
@@ -135,14 +141,16 @@ export class HMDialogMgr {
         return dialogResp;
     }
 
-    async getAttackDialog(dataset, caller) {
+    async getAttackDialog(dataset, caller, opt) {
         const dialogResp = {caller};
-        const dialogData = this.getWeapons(caller, dataset?.itemId);
+        const dialogData = getWeapons(caller, dataset?.itemId);
+        if (opt.isCombatant) dialogData.inCombat = true;
+
         const template = 'systems/hackmaster5e/templates/dialog/getAttack.hbs';
 
-        const penalty = HMTABLES.weapons.ranged.penalty;
+        const {penalty} = HMTABLES.weapons.ranged;
         let widx = null;
-        dialogResp.resp = await new Promise(async resolve => {
+        dialogResp.resp = await new Promise(async (resolve) => {
             new Dialog({
                 title: caller.name + game.i18n.localize('HM.dialog.getAttackTitle'),
                 content: await renderTemplate(template, dialogData),
@@ -152,14 +160,15 @@ export class HMDialogMgr {
                         callback: (html) => {
                             widx = html.find('#weapon-select')[0].value;
                             resolve({
+                                'advance': document.getElementById('advance_tracker')?.checked || false,
                                 'mod': parseInt(document.getElementById('mod').value, 10) || 0,
                                 'range': penalty[document.getElementById('range').value],
-                                'rangestr': document.getElementById('range').value
-                            })
-                        }
-                    }
+                                'rangestr': document.getElementById('range').value,
+                            });
+                        },
+                    },
                 },
-                default: 'attack'
+                default: 'attack',
             }).render(true);
             this._focusById('mod');
         });
@@ -202,7 +211,7 @@ export class HMDialogMgr {
 
     async getDamageDialog(dataset, caller) {
         const dialogResp = {caller};
-        const dialogData = this.getWeapons(caller, dataset?.itemId);
+        const dialogData = getWeapons(caller, dataset?.itemId);
         const template = 'systems/hackmaster5e/templates/dialog/getDamage.hbs';
 
         let widx = null;
@@ -245,7 +254,7 @@ export class HMDialogMgr {
 
     async getDefendDialog(dataset, caller) {
         const dialogResp = {caller};
-        const dialogData = this.getWeapons(caller, dataset?.itemId);
+        const dialogData = getWeapons(caller, dataset?.itemId);
         const template = 'systems/hackmaster5e/templates/dialog/getDefend.hbs';
 
         let widx = null;

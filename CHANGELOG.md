@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Added results to trauma save.
 - rollMode query in save dialogs.
 - Compendium items.
+- Combat tracker will allow you to choose an init of 1 instead of rolling.
+- Attacks can auto-advance init table.
+### Changed
+- Removed button property from innate weapons on inventory list.
 ### Fixed
 - Beasts receive poison save from trauma save.
 

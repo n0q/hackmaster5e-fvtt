@@ -76,11 +76,11 @@ export class HMCombatTracker extends CombatTracker {
         input.on('focusout', ev => game.combats.render());
     }
 
+    // Shorting out mousedown events on token initiative so dblclicks
+    // don't trigger normal mousedown events (panning and sheet renders).
     async _onCombatantMouseDown(event) {
-        // HACK: Shorting out mousedown events on token initiative so dblclicks
-        // don't trigger normal mousedown events (panning and sheet renders).
-        let html = $(event.target).closest(".token-initiative");
+        const html = $(event.target).closest('.token-initiative');
         if (html.length) return;
         super._onCombatantMouseDown(event);
     }
-};
+}

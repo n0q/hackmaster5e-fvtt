@@ -2,7 +2,7 @@
 export const MODULE_ID = 'hackmaster5e';
 
 export const MACRO_VERS = {
-    'getAttack': 3,
+    'getAttack': 4,
     'getDamage': 3,
     'getDefend': 3,
     'setWound':  2,

@@ -1,7 +1,9 @@
 /* global $ */
+import { HMItem } from '../item/item.js';
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMRollMgr } from '../mgr/rollmgr.js';
+import { HMCombat } from '../sys/combat.js';
 import { idx } from '../sys/localize.js';
 import { HMTABLES, HMCONST } from '../sys/constants.js';
 
@@ -293,22 +295,26 @@ export class HMActorSheet extends ActorSheet {
         ev.preventDefault();
         ev.stopPropagation();
         const element = ev.currentTarget;
-        const dataset = element.dataset;
-        const actor = this.actor;
+        const {dataset} = element;
+        const {actor, token} = this;
+
+        if (dataset.dialog === 'atk' || dataset.dialog === 'ratk') {
+            return HMItem.rollAttack({weapon: dataset.itemId, callerToken: token});
+        }
 
         if (dataset.dialog) {
             const dialogMgr = new HMDialogMgr();
             const dialogResp = await dialogMgr.getDialog(dataset, actor);
 
-        let roll = null;
-        if (dataset.formula || dataset.formulaType) {
-            const rollMgr = new HMRollMgr();
-            roll = await rollMgr.getRoll(dataset, dialogResp);
-        }
+            let roll = null;
+            if (dataset.formula || dataset.formulaType) {
+                const rollMgr = new HMRollMgr();
+                roll = await rollMgr.getRoll(dataset, dialogResp);
+            }
 
-        const chatMgr = new HMChatMgr();
-        const card = await chatMgr.getCard({roll, dataset, dialogResp});
-        return await ChatMessage.create(card);
+            const chatMgr = new HMChatMgr();
+            const card = await chatMgr.getCard({roll, dataset, dialogResp});
+            return ChatMessage.create(card);
         }
     }
 }
