@@ -21,4 +21,10 @@
     {{hp.top}} 
 </figure>
 {{/if}}
+{{#if bonus.total.init includeZero=true}}
+<figure class='fraction' style='width: auto;'>
+    <label for='data.bonus.total.init' class='resource-label'>{{localize 'HM.init'}}</label>
+    {{bonus.total.init}}
+</figure>
+{{/if}}
 {{/with}}
