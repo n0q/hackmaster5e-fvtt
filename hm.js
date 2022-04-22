@@ -3,6 +3,7 @@ import { HMActorFactory } from './modules/actor/actor-factory.js';
 import { HMBeastActorSheet } from './modules/actor/beast-actor-sheet.js';
 import { HMCharacterActorSheet } from './modules/actor/character-actor-sheet.js';
 import { HMItem } from './modules/item/item.js';
+import { HMItemFactory } from './modules/item/item-factory.js';
 import { HMItemSheet } from './modules/item/item-sheet.js';
 import { HMCombat, HMCombatTracker } from './modules/sys/combat.js';
 import { HMMacro } from './modules/sys/macro.js';
@@ -14,10 +15,10 @@ import preloadHandlebarsTemplates from './modules/sys/partials.js';
 
 import './modules/sys/dice.js';
 
-Hooks.once('init', async() => {
+Hooks.once('init', async () => {
     game[MODULE_ID] = { HMActor, HMItem };
     CONFIG.Actor.documentClass = HMActorFactory;
-    CONFIG.Item.documentClass = HMItem;
+    CONFIG.Item.documentClass = HMItemFactory;
     CONFIG.Combat.documentClass = HMCombat;
     CONFIG.ui.combat = HMCombatTracker;
     CONFIG.Macro.documentClass = HMMacro;
@@ -38,7 +39,7 @@ Hooks.once('devModeReady', ({ registerPackageDebugFlag }) => {
     registerPackageDebugFlag(MODULE_ID);
 });
 
-Hooks.once('ready', async() => {
+Hooks.once('ready', async () => {
     if (game.modules.get('_dev-mode')?.api?.getPackageDebugValue(MODULE_ID)) {
         const tItem = game.items.contents.find((a) => a.name === 'test');
         if (tItem) { tItem.sheet.render(true); }

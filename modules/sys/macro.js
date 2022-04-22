@@ -1,5 +1,4 @@
-import { MODULE_ID } from './constants.js';
-import { MACRO_VERS } from './constants.js';
+import { MODULE_ID, MACRO_VERS } from './constants.js';
 import { HMItem } from '../item/item.js';
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
