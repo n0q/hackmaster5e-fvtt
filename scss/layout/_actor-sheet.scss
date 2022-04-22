@@ -87,6 +87,7 @@ $character-width: 820px;
     display: grid;
     grid-gap: $actor-gridgap;
     width: inherit;
+    padding-right: $padding-sm;
     grid-template-columns: $actor-portrait-dim $actor-saves-dim 1fr $actor-saves-dim $actor-wounds-dim;
     grid-template-areas:
         "abilities middle-saves-l middle-stats middle-saves-r middle-wounds";
@@ -97,7 +98,7 @@ $character-width: 820px;
         border: 2px solid $c-grey;
         >section {
             height: 24ex;
-            overflow-y: auto;
+            overflow-y: overlay;
         }
     }
 
@@ -147,3 +148,7 @@ $character-width: 820px;
     @include flexgrid;
 }
 
+.scrollable {
+    overflow-y: overlay;
+    padding-right: 1.5%;
+}

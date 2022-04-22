@@ -1,3 +1,4 @@
+/* global $ */
 /* eslint max-classes-per-file: ['error', 2] */
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
 
@@ -17,7 +18,12 @@ export class HMCombat extends Combat {
         let initFormula = formula;
         if (!initFormula) {
             const initDie = await this._getInitiativeDie(ids);
-            initFormula = `${initDie} + ${game.system.data.initiative}`;
+            if (initDie) {
+                initFormula = `${initDie} + ${game.system.data.initiative}`;
+            } else {
+                initFormula = '1';
+                messageOptions.sound = null;
+            }
         }
 
         const rollData = {formula: initFormula, updateTurn, messageOptions};
@@ -44,10 +50,10 @@ export class HMCombatTracker extends CombatTracker {
         }
 
         function DoubleclickSetsInitiative(html) {
-            html.find(".token-initiative").off("dblclick").on("dblclick", HMCombatTracker._onInitiativeDblClick)
-            for (let combatant of html.find("#combat-tracker li.combatant")) {
-                if (combatant.classList.contains("active")) break;
-                combatant.classList.add("turn-done");
+            html.find('.token-initiative').off('dblclick').on('dblclick', HMCombatTracker._onInitiativeDblClick);
+            for (let combatant of html.find('#combat-tracker li.combatant')) {
+                if (combatant.classList.contains('active')) break;
+                combatant.classList.add('turn-done');
             }
         }
     }
@@ -70,11 +76,11 @@ export class HMCombatTracker extends CombatTracker {
         input.on('focusout', ev => game.combats.render());
     }
 
+    // Shorting out mousedown events on token initiative so dblclicks
+    // don't trigger normal mousedown events (panning and sheet renders).
     async _onCombatantMouseDown(event) {
-        // HACK: Shorting out mousedown events on token initiative so dblclicks
-        // don't trigger normal mousedown events (panning and sheet renders).
-        let html = $(event.target).closest(".token-initiative");
+        const html = $(event.target).closest('.token-initiative');
         if (html.length) return;
         super._onCombatantMouseDown(event);
     }
-};
+}

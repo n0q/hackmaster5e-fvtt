@@ -15,7 +15,7 @@
                 <span>
                     {{localize (findConfigValue 'itemTypes' type)}}
                 </span>
-                <div class='item-control item-state location button'>
+                <div class='item-control item-state location {{#unless (eq data.state 3)}}button{{/unless}}'>
                     {{localize (findConfigValue 'thingState' data.state)}}
                 </div>
                 {{#unless data.innate}}

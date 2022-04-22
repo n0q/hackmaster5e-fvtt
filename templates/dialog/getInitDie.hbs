@@ -1,9 +1,9 @@
 <form>
-    <div class="form-group">
-        <label>{{localize "HM.dialog.getInitDieBody"}}</label>
-        <select name="data.quality" id="choices">
-            {{#select "1d12"}}{{#each (findConfigObj "dice") as |type t|}}
-            <option value="{{t}}">{{type}}</option>
+    <div class='form-group'>
+        <label>{{localize 'HM.dialog.getInitDieBody'}}</label>
+        <select name='data.quality' id='choices'>
+            {{#select '1d12'}}{{#each (findConfigObj 'dice') as |type t|}}
+            <option value='{{t}}'>{{type}}</option>
             {{/each}}{{/select}}
         </select>
     </div>

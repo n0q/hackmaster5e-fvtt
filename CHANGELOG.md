@@ -3,6 +3,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+## [0.2.4] - 2022-04-21
+### Added
+- Skills and inventory now scroll.
+- Added results to trauma save.
+- rollMode query in save dialogs.
+- Compendium items.
+- Combat tracker will allow you to choose an init of 1 instead of rolling.
+- Attacks can auto-advance init table.
+### Changed
+- Removed button property from innate weapons on inventory list.
+### Fixed
+- Beasts receive poison save from trauma save.
 
 ## [0.2.3] - 2022-04-18
 ### Added

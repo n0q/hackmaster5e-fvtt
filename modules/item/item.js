@@ -225,7 +225,7 @@ export class HMItem extends Item {
         const defItems    = actorData.items.filter((a) => a.type === 'armor'
                                                        && a.invstate === 'equipped');
 
-        if (itemData.innate) itemData.state = 3;
+        if (itemData.innate) itemData.state = HMCONST.ITEM_STATE.INNATE;
         // HACK: This belongs in item-sheet.js, which needs a refactor.
         const {reach} = this.data.data;
         const offset = this.parent.data.data.bonus.total.reach || 0;
@@ -326,7 +326,43 @@ export class HMItem extends Item {
         await this.update({'data': {hp, timer, treated}});
     }
 
-    // TODO: Refactor. This is propagation of the mess in actor-sheet.js
+    // TODO: This needs a refactor, but it's too soon to do so. We should
+    // give this a second look after combat variants are introduced.
+    static async rollAttack({weapon, callerToken}={}) {
+        const token = callerToken ? callerToken : canvas.tokens.controlled[0];
+        if (!token) return;
+
+        const opt = {};
+        const {active}     = game.combats;
+        const {round}      = active;
+        const combatant    = active.getCombatantByToken(token.id);
+        const {initiative} = combatant;
+        opt.isCombatant    = combatant?.id && initiative && round;
+
+        const dialog = 'atk';
+        const formulaType = 'standard';
+        const dataset = {dialog, formulaType, itemId: weapon};
+
+        const dialogMgr = new HMDialogMgr();
+        const dialogResp = await dialogMgr.getDialog(dataset, token.actor, opt);
+
+        const ranged = dialogResp.context.data.data.ranged.checked;
+        if (ranged) dataset.dialog ='ratk';
+
+        const rollMgr = new HMRollMgr();
+        const roll = await rollMgr.getRoll(dataset, dialogResp);
+
+        if (dialogResp.resp.advance) {
+            const {spd} = dialogResp.context.data.data.bonus.total;
+            const newInit = initiative > round ? initiative + spd : round + spd;
+            active.setInitiative(combatant.id, newInit);
+        }
+
+        const chatMgr = new HMChatMgr();
+        const card = await chatMgr.getCard({roll, dataset, dialogResp});
+        await ChatMessage.create(card);
+    }
+
     static async rollSkill({skillName, specialty=null}) {
         const actors = canvas.tokens.controlled.map((token) => token.actor);
         const callers = [];
@@ -407,10 +443,9 @@ export class HMItem extends Item {
             const rollMgr = new HMRollMgr();
             const dialogResp = {caller: parent};
             const roll = await rollMgr.getRoll(dataset, {context: parent});
-
             const rollMode = 'gmroll';
-            const options = {rollMode};
-            const topcard = await chatmgr.getCard({dataset, roll, dialogResp, options});
+            dialogResp.resp = {rollMode};
+            const topcard = await chatmgr.getCard({dataset, roll, dialogResp});
             await ChatMessage.create(topcard);
         }
     }

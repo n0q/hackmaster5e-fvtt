@@ -1,0 +1,8 @@
+<b>{{localize special}}</b><br>
+{{#if forever}}
+<i>{{localize status}}</i> <u>{{localize unit}}</u>.
+{{else}}
+    {{#if (gt duration 0)}}
+    <i>{{localize status}}</i> {{toLowerCase (localize 'HM.for')}} <b>{{duration}}</b> {{toLowerCase (localize unit)}}.
+    {{/if}}
+{{/if}}
