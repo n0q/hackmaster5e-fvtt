@@ -3,12 +3,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
-## [0.2.4a] - 2022-04-22
-### Fixed
-- Non-token actors are able to attack, again.
-- system.json wrong media type.
-
-## [0.2.4] - 2022-04-21
+## [0.2.5] - 2022-04-22
 ### Added
 - Skills and inventory now scroll.
 - Added results to trauma save.
@@ -20,6 +15,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Removed button property from innate weapons on inventory list.
 ### Fixed
 - Beasts receive poison save from trauma save.
+- Non-token actors are able to attack, again.
+- system.json wrong media type.
 
 ## [0.2.3] - 2022-04-18
 ### Added
