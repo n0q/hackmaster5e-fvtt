@@ -1,19 +1,15 @@
-export class AttackApplication extends Application {
+import { HMPrompt } from './prompt.js';
+
+export class AttackPrompt extends HMPrompt {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
-            classes: ['form', 'dialog'],
-            popOut: true,
-            minimizable: false,
             template: 'systems/hackmaster5e/templates/dialog/getAttack.hbs',
             id: 'attackApplication',
-            width: 400,
         });
     }
 
     constructor(dialogData, options) {
-        super();
-        mergeObject(this.options, options);
-        this.dialogData = dialogData;
+        super(dialogData, options);
         mergeObject(this.dialogData, {
             ranged: dialogData.weapons[0].data.data.ranged.checked,
             widx: 0,
@@ -22,17 +18,9 @@ export class AttackApplication extends Application {
         });
     }
 
-    getData() {
-        return this.dialogData;
-    }
-
     activateListeners(html) {
         super.activateListeners(html);
-
-        html.ready(() => {
-            html.find('#bonus-input').focus();
-        });
-
+        this.update();
         html.submit('#submit', (ev) => {
             ev.preventDefault();
             ev.stopPropagation();

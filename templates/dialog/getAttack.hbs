@@ -4,7 +4,7 @@
         <select name='widx' id='weapon-select'>
             {{#select widx}}{{#each weapons}}
                 <option value='{{@index}}'>{{name}}</option>
-                {{/each}}{{/select}}
+            {{/each}}{{/select}}
         </select>
     </div>
     <div class='form-group'>
@@ -16,7 +16,7 @@
         {{else}}<label>&nbsp</label><label>&nbsp</label>
         {{/if}}
         <label>{{localize 'HM.bonus'}}</label>
-        <input name='bonus' id='bonus-input' value='{{bonus}}' placeholder=0 type='number'/>
+        <input name='bonus' id='bonus-input' value='{{bonus}}' class='focus' placeholder=0 type='number'/>
     </div>
     {{#if inCombat}}
     <div class='form-group'>

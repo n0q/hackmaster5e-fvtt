@@ -1,5 +1,5 @@
 import { HMCONST } from '../sys/constants.js';
-import { AttackApplication } from '../apps/attack.js'
+import { AttackPrompt } from '../apps/attack.js'
 
 function getDialogData() {
     return {
@@ -35,7 +35,7 @@ async function getAttackDialog(dataset, caller, opt) {
     const title = `${caller.name}: ${game.i18n.localize('HM.dialog.getAttackTitle')}`;
     dialogResp.resp = await new Promise((resolve) => {
         const options = {resolve, title};
-        new AttackApplication(dialogData, options).render(true);
+        new AttackPrompt(dialogData, options).render(true);
     });
 
     dialogResp.context = dialogData.weapons[dialogResp.resp.widx];
