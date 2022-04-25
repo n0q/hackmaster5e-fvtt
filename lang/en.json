@@ -126,6 +126,13 @@
             "high":     "High"
         },
 
+        "rangeSelect": {
+            "short":    "Short",
+            "medium":   "Medium",
+            "long":     "Long",
+            "extreme":  "Extreme"
+        },
+
         "saves": {
             "fos":      "Strength",
             "foa":      "Agility",
@@ -148,11 +155,11 @@
         },
 
         "dialog": {
-            "advCombatTracker":  "Advance Combat Tracker",
+            "advCombatTracker":  "Advance clock by",
             "deleteBody":        "Really delete",
             "getInitDieTitle":   "Roll for Initiative",
             "getInitDieBody":    "Initiative Die",
-            "getAttackTitle":    ": Roll an Attack",
+            "getAttackTitle":    "Roll an Attack",
             "getAttackRangeBody":"Range",
             "getAbilityButtonL": "Ability Save",
             "getAbilityButtonR": "Ability Check",
@@ -316,11 +323,6 @@
 
         "hp_mod":       "HP mod",
         "reach_mod":    "reach mod",
-
-        "short":        "Short",
-        "medium":       "Medium",
-        "long":         "Long",
-        "extreme":      "Extreme",
 
         "adjective":    "Adjective",
         "age":          "Age",

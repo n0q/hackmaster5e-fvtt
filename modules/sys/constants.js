@@ -217,7 +217,7 @@ export const HMTABLES = {
     },
     'formula': {
         'atk': {
-            'standard': 'd20p + @bonus.total.atk + @resp.mod',
+            'standard': 'd20p + @bonus.total.atk + @resp.bonus',
         },
         'dmg': {
             'standard': '@resp.dmg + @bonus.total.dmg + @resp.mod',
@@ -226,7 +226,7 @@ export const HMTABLES = {
             'standard': 'd20p + @bonus.total.def + @resp.mod',
         },
         'ratk': {
-            'standard': 'd20p + @bonus.total.atk + @resp.range + @resp.mod',
+            'standard': 'd20p + @bonus.total.atk - @resp.range + @resp.bonus',
         },
         'save': {
             'dodge':    'd20p +  @bonus.total.dodge    + @resp.bonus',

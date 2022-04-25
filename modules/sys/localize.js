@@ -1,6 +1,6 @@
 export const idx = {};
 
-// Localization
+// Dictionaries
 idx.ability_short = {
     'str': 'HM.ability_short.str',
     'int': 'HM.ability_short.int',
@@ -156,12 +156,11 @@ idx.dice = {
     '1d3':  'd3',
 };
 
-// TODO: This table is backwards. Values should be keys, keys, should be localized.
 idx.range = {
-    'short':   'Short',
-    'medium':  'Medium (-4)',
-    'long':    'Long (-6)',
-    'extreme': 'Extreme (-8)',
+    0: 'HM.rangeSelect.short',
+    4: 'HM.rangeSelect.medium',
+    6: 'HM.rangeSelect.long',
+    8: 'HM.rangeSelect.extreme',
 };
 
 idx.scale = {

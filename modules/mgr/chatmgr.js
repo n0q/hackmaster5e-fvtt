@@ -1,4 +1,6 @@
 import { HMTABLES, HMCONST } from '../sys/constants.js';
+import { idx } from '../sys/localize.js';
+
 /* global PoolTerm */
 
 function getDiceSum(roll) {
@@ -164,7 +166,7 @@ export class HMChatMgr {
                 const speedRow  = `${game.i18n.localize('HM.speed')}:
                                 <b>${item.data.data.bonus.total.spd}</b>`;
                 const rangeRow  = `${game.i18n.localize('HM.range')}:
-                                <b>${game.i18n.localize(`HM.${dialogResp.resp.rangestr}`)}</b>`;
+                                <b>${game.i18n.localize(idx.range[dialogResp.resp.range])}</b>`;
 
                 let specialRow = '';
                 const sumDice = getDiceSum(roll);
