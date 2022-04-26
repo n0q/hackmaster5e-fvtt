@@ -18,51 +18,24 @@ export class AttackPrompt extends HMPrompt {
         });
     }
 
+    update(options) {
+        const {weapons, widx} = this.dialogData;
+        const {ranged} = weapons[widx].data.data;
+        this.dialogData.ranged = ranged.checked;
+        super.update(options);
+    }
+
+    get dialogResp() {
+        const dialogResp = {
+            widx: this.dialogData.widx,
+            range: Number(this.dialogData.range),
+            bonus: parseInt(this.dialogData.bonus, 10) || 0,
+            advance: Boolean(this.dialogData.advance),
+        };
+        return dialogResp;
+    }
+
     activateListeners(html) {
         super.activateListeners(html);
-        this.update();
-        html.submit('#submit', (ev) => {
-            ev.preventDefault();
-            ev.stopPropagation();
-            this.object = {
-                widx: this.dialogData.widx,
-                range: Number(this.dialogData.range),
-                bonus: parseInt(this.dialogData.bonus, 10) || 0,
-                advance: Boolean(this.dialogData.advance),
-            };
-            this.options.resolve(this.object);
-            this.close();
-        });
-
-        html.on('change', '#advance_tracker', async (ev) => {
-            ev.preventDefault();
-            ev.stopPropagation();
-            const advance = ev.target.checked;
-            this.dialogData.advance = advance;
-        });
-
-        html.on('change', '#weapon-select', async (ev) => {
-            ev.preventDefault();
-            ev.stopPropagation();
-            const widx = ev.target.value;
-            const {ranged} = this.dialogData.weapons[widx].data.data;
-            this.dialogData.widx = widx;
-            this.dialogData.ranged = ranged.checked;
-            this.render();
-        });
-
-        html.on('change', '#range-select', async (ev) => {
-            ev.preventDefault();
-            ev.stopPropagation();
-            const range = ev.target.value;
-            this.dialogData.range = range;
-        });
-
-        html.on('change', '#bonus-input', async (ev) => {
-            ev.preventDefault();
-            ev.stopPropagation();
-            const bonus = ev.target.value;
-            this.dialogData.bonus = bonus;
-        });
     }
 }

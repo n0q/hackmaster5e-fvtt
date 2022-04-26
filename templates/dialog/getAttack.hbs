@@ -1,7 +1,7 @@
 <form>
     <div class='form-group'>
         <label>{{localize 'HM.weapon'}}</label>
-        <select name='widx' id='weapon-select'>
+        <select name='widx' class='bind' data-prop='widx' data-render=true>
             {{#select widx}}{{#each weapons}}
                 <option value='{{@index}}'>{{name}}</option>
             {{/each}}{{/select}}
@@ -10,13 +10,13 @@
     <div class='form-group'>
         {{#if ranged}}
         <label>{{localize 'HM.dialog.getAttackRangeBody'}}</label>
-        <select name='range' id='range-select'>
+        <select name='range' class='bind' data-prop='range' data-render=true>
         {{selectOptions (findConfigObj 'range') selected=range localize=true}}
         </select>
         {{else}}<label>&nbsp</label><label>&nbsp</label>
         {{/if}}
         <label>{{localize 'HM.bonus'}}</label>
-        <input name='bonus' id='bonus-input' value='{{bonus}}' class='focus' placeholder=0 type='number'/>
+        <input name='bonus' value='{{bonus}}' class='focus bind' data-prop='bonus' placeholder=0 type='number'/>
     </div>
     {{#if inCombat}}
     <div class='form-group'>
@@ -27,11 +27,11 @@
             {{/with}}
             {{toLowerCase (localize 'HM.seconds')}}?
         </label>
-        <input type='checkbox' id='advance_tracker' {{checked advance}}>
+        <input type='checkbox' class='bind' data-prop='advance' {{checked advance}}>
     </div>
     {{/if}}
     <div class='dialog-buttons'>
-        <button type='submit' id='attack' class='dialog-button normal default' data-button='attack'>
+        <button type='submit' id='attack' class='dialog-button normal default' data-button='attack' data-render=false>
             {{localize 'HM.attack'}}
         </button>
     </div>
