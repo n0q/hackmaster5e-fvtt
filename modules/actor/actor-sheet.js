@@ -1,11 +1,9 @@
 /* global $ */
-import { HMItem } from '../item/item.js';
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMRollMgr } from '../mgr/rollmgr.js';
-import { HMCombat } from '../sys/combat.js';
 import { idx } from '../sys/localize.js';
-import { HMTABLES, HMCONST } from '../sys/constants.js';
+import { HMTABLES, MODULE_ID } from '../sys/constants.js';
 
 export class HMActorSheet extends ActorSheet {
     /** @override */
@@ -299,7 +297,7 @@ export class HMActorSheet extends ActorSheet {
         const {actor} = this;
 
         if (dataset.dialog === 'atk' || dataset.dialog === 'ratk') {
-            return HMItem.rollAttack({weapon: dataset.itemId, caller: actor});
+            return game[MODULE_ID].HMWeaponItem.rollAttack({weapon: dataset.itemId, caller: actor});
         }
 
         if (dataset.dialog) {

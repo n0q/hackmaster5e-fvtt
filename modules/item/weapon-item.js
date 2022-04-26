@@ -1,5 +1,8 @@
 import { HMTABLES, HMCONST } from '../sys/constants.js';
 import { HMItem } from './item.js';
+import { HMChatMgr } from '../mgr/chatmgr.js';
+import { HMDialogMgr } from '../mgr/dialogmgr.js';
+import { HMRollMgr } from '../mgr/rollmgr.js';
 
 export class HMWeaponItem extends HMItem {
     prepareBaseData() {
@@ -105,5 +108,59 @@ export class HMWeaponItem extends HMItem {
             for (const state in bonus) { sum += bonus[state][key]; }
             bonus.total[key] = sum;
         }
+    }
+
+    // TODO: This needs a refactor, but it's too soon to do so. We should
+    // give this a second look after combat variants are introduced.
+    static async rollAttack({weapon, caller}={}) {
+        let actor;
+        let token;
+        if (!caller) {
+            [token] = canvas.tokens.controlled;
+            actor   = token.actor;
+        } else if (caller.isToken) {
+            actor   = caller;
+            token   = caller.token;
+        } else {
+            actor = caller;
+        }
+        if (!token && !actor) return;
+
+        const opt = {isCombatant: false};
+        const comData = {};
+        const {active} = game.combats;
+        if (active) {
+            comData.round = active.round;
+            comData.combatant = token
+                ? active.getCombatantByToken(token.id)
+                : active.getCombatantByActor(actor.id);
+            comData.initiative = comData.combatant?.initiative;
+            opt.isCombatant    = Number.isInteger(comData.initiative) && comData.round > 0;
+        }
+
+        const dialog = 'atk';
+        const formulaType = 'standard';
+        const dataset = {dialog, formulaType, itemId: weapon};
+
+        const dialogMgr = new HMDialogMgr();
+        const dialogResp = await dialogMgr.getDialog(dataset, actor, opt);
+
+        const ranged = dialogResp.context.data.data.ranged.checked;
+        if (ranged) dataset.dialog ='ratk';
+
+        const rollMgr = new HMRollMgr();
+        const roll = await rollMgr.getRoll(dataset, dialogResp);
+
+        if (dialogResp.resp.advance) {
+            const {spd} = dialogResp.context.data.data.bonus.total;
+            const newInit = comData.initiative > comData.round
+                ? comData.initiative + spd
+                : comData.round + spd;
+            active.setInitiative(comData.combatant.id, newInit);
+        }
+
+        const chatMgr = new HMChatMgr();
+        const card = await chatMgr.getCard({roll, dataset, dialogResp});
+        await ChatMessage.create(card);
     }
 }
