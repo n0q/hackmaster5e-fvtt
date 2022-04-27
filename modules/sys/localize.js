@@ -131,6 +131,15 @@ idx.saves = {
     'will':     'HM.saves.will',
 };
 
+idx.skillLevel = {
+    'auto':          'HM.auto',
+    'trivial':       'HM.skillDiffSelect.trivial',
+    'easy':          'HM.skillDiffSelect.easy',
+    'average':       'HM.skillDiffSelect.average',
+    'difficult':     'HM.skillDiffSelect.difficult',
+    'verydifficult': 'HM.skillDiffSelect.verydifficult',
+};
+
 idx.itemCClass = {
     'sp':   'HM.spellpoints',
     'init': 'HM.initbonus',

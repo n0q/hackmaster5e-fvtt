@@ -2,12 +2,18 @@ import { HMTABLES } from '../sys/constants.js';
 
 export class HMRollMgr {
     async getRoll(dataset, dialogResp=null) {
+        if (dialogResp?.resp?.formulaType) {
+            dataset.formulaType = dialogResp.resp.formulaType;
+        }
+
         if (dataset?.formulaType) dataset.formula = this._getFormula(dataset);
         return this._stdRoll(dataset, dialogResp);
     }
 
+    // TODO: Refactor.
     async _stdRoll(dataset, dialogResp=null) {
-        let formula = Roll.replaceFormulaData(dataset.formula, dialogResp);
+        const resp = dialogResp ? dialogResp : dataset.resp;
+        const formula = Roll.replaceFormulaData(dataset.formula, resp);
         const data = dialogResp ? dialogResp.context.data.data : null;
         return new Roll(formula, data).evaluate({async: true});
     }

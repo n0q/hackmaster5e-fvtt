@@ -74,49 +74,51 @@ export class HMItem extends Item {
         await this.update({'data': {hp, timer, treated}});
     }
 
-    static async rollSkill({skillName, specialty=null}) {
-        const actors = canvas.tokens.controlled.map((token) => token.actor);
+    // TODO: The first half of this function could be a lot neater.
+    static async rollSkill({skillName, specialty=null, caller, itemId}) {
         const callers = [];
-        Object.values(actors).forEach(async (actor) => {
-            let context;
-            if (specialty) {
-                console.warn(specialty);
-            context = actor.items.find((a) => a.type === 'skill'
-                    && skillName === a.name
-                    && specialty === a.data.data?.specialty?.value);
-            } else {
+        if (caller) {
+            callers.push({caller, context: caller.items.get(itemId)});
+        } else {
+            const actors = canvas.tokens.controlled.map((token) => token.actor);
+            Object.values(actors).forEach(async (actor) => {
+                let context;
+                if (specialty) {
+                    console.warn(specialty);
                 context = actor.items.find((a) => a.type === 'skill'
-                    && skillName === a.name
-                    && !a.data.data?.specialty?.value);
-            }
-            if (!context) return;
-            callers.push({caller: actor, context});
-        });
-
+                        && skillName === a.name
+                        && specialty === a.data.data?.specialty?.value);
+                } else {
+                    context = actor.items.find((a) => a.type === 'skill'
+                        && skillName === a.name
+                        && !a.data.data?.specialty?.value);
+                }
+                if (!context) return;
+                callers.push({caller: actor, context});
+            });
+        }
         if (!callers.length) return;
 
         const dialogDataset = {
-            dialog: 'skill',
-            formula: HMTABLES.formula.skill.skill,
-            skillType: 'skill',
-            itemId: callers[0].context.id,
+            dialog:  'skill',
+            itemId:  callers[0].context.id,
             callers: callers.length,
         };
 
-        const dialogMgr  = new HMDialogMgr();
+        const dialogMgr = new HMDialogMgr();
         const dialogResp = await dialogMgr.getDialog(dialogDataset, callers[0].caller);
 
-        Object.values(callers).forEach(async (caller) => {
-            const resp = caller;
-            resp.resp = dialogResp.resp;
-            const dataset = dialogDataset;
-            dataset.itemId = resp.context.id;
-
-            const rollMgr  = new HMRollMgr();
-            const roll     = await rollMgr.getRoll(dataset, resp);
-            const chatMgr  = new HMChatMgr();
-            const cardtype = HMCONST.CARD_TYPE.ROLL;
-            const card     = await chatMgr.getCard({cardtype, roll, dataset, resp});
+        Object.values(callers).forEach(async (callerObj) => {
+            const rollMgr = new HMRollMgr();
+            const chatMgr = new HMChatMgr();
+            const dataset = {
+                dialog: 'skill',
+                context: callerObj.context,
+                caller:  callerObj.caller,
+                resp:    dialogResp.resp,
+            };
+            dataset.roll = await rollMgr.getRoll(dataset, dataset);
+            const card = await chatMgr.getCard({dataset});
             await ChatMessage.create(card);
         });
     }

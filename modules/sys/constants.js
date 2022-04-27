@@ -241,9 +241,10 @@ export const HMTABLES = {
             'turning':  'd20p +  @bonus.total.turning  + @resp.bonus',
         },
         'skill': {
-            'skill':    'd100 @resp.oper (@resp.bonus + @bonus.total.value)',
-            'language': 'd100 @resp.oper (@resp.bonus + @bonus.total.verbal)',
-            'literacy': 'd100 @resp.oper (@resp.bonus + @bonus.total.literacy)',
+            'skill':    'd100 - (@resp.bonus + @bonus.total.value)',
+            'opposed':  'd100 + (@resp.bonus + @bonus.total.value)',
+            'language': 'd100 - (@resp.bonus + @bonus.total.verbal)',
+            'literacy': 'd100 - (@resp.bonus + @bonus.total.literacy)',
         },
     },
     'quality': {
@@ -272,11 +273,11 @@ export const HMTABLES = {
             'init': {value: null},
         },
         'difficulty': {
-            'HM.verydifficult': 10,
-            'HM.difficult':      0,
-            'HM.average':      -40,
-            'HM.easy':         -80,
-            'HM.trivial':      -90,
+            'verydifficult': 10,
+            'difficult':      0,
+            'average':      -40,
+            'easy':         -80,
+            'trivial':      -90,
         },
     },
     'tenacity': {

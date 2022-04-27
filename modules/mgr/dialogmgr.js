@@ -1,5 +1,6 @@
 import { HMCONST } from '../sys/constants.js';
-import { AttackPrompt } from '../apps/attack.js'
+import { AttackPrompt } from '../apps/attack.js';
+import { SkillPrompt } from '../apps/skill.js';
 
 function getDialogData() {
     return {
@@ -42,6 +43,24 @@ async function getAttackDialog(dataset, caller, opt) {
     return dialogResp;
 }
 
+async function getSkillDialog(dataset, caller) {
+    const dialogResp = {caller};
+    const dialogData = getDialogData();
+    dialogData.skill = caller.items.get(dataset.itemId);
+
+    const titlePre = dataset.callers > 1 ? `${dataset.callers}` : `${caller.name}:`;
+    const titlePost = dataset.callers > 1
+        ? game.i18n.localize('HM.dialog.getSkillTitle2')
+        : game.i18n.localize('HM.dialog.getSkillTitle1');
+    const title = `${titlePre} ${game.i18n.localize(dialogData.skill.name)} ${titlePost}`;
+    dialogResp.resp = await new Promise((resolve) => {
+        const options = {resolve, title};
+        new SkillPrompt(dialogData, options).render(true);
+    });
+    dialogResp.context = dialogData.skill;
+    return dialogResp;
+}
+
 export class HMDialogMgr {
     getDialog(dataset, caller=null, opt={}) {
         const name = dataset.dialog;
@@ -53,7 +72,7 @@ export class HMDialogMgr {
         if (name === 'dmg')     return this.getDamageDialog(dataset, caller);
         if (name === 'initdie') return this.getInitDieDialog(caller);
         if (name === 'save')    return this.getSaveDialog(dataset, caller);
-        if (name === 'skill')   return this.getSkillDialog(dataset, caller);
+        if (name === 'skill')   return      getSkillDialog(dataset, caller);
         if (name === 'wound')   return this.setWoundDialog(caller);
     }
 
@@ -254,52 +273,6 @@ export class HMDialogMgr {
             this._focusById('mod');
         });
         dialogResp.context = dialogData.weapons[widx];
-        return dialogResp;
-    }
-
-    async getSkillDialog(dataset, caller) {
-        const dialogResp = {caller};
-        const dialogData = getDialogData();
-        dialogData.skill = caller.items.get(dataset.itemId);
-        const template = 'systems/hackmaster5e/templates/dialog/getSkill.hbs';
-
-        const titlePre = dataset.callers > 1 ? `${dataset.callers}` : `${caller.name}:`;
-        const titlePost = dataset.callers > 1
-            ? game.i18n.localize('HM.dialog.getSkillTitle2')
-            : game.i18n.localize('HM.dialog.getSkillTitle1');
-        const title = `${titlePre} ${game.i18n.localize(dialogData.skill.name)} ${titlePost}`;
-        dialogResp.resp = await new Promise(async resolve => {
-            new Dialog({
-                title,
-                content: await renderTemplate(template, dialogData),
-                buttons: {
-                    standard: {
-                        label: game.i18n.localize('HM.skillcheck'),
-                        callback: () => {
-                            resolve({
-                                'opposed': false,
-                                'bonus': parseInt(document.getElementById('bonus').value || 0, 10),
-                                'rollMode': document.getElementById('rollMode').value,
-                            });
-                        },
-                    },
-                    opposed: {
-                        label: `${game.i18n.localize('HM.opposed')} ${game.i18n.localize('HM.check')}`,
-                        callback: () => {
-                            resolve({
-                                'opposed': true,
-                                'bonus': parseInt(document.getElementById('bonus').value || 0, 10),
-                                'rollMode': document.getElementById('rollMode').value,
-                            });
-                        },
-                    },
-                },
-                default: 'standard',
-            }).render(true);
-            this._focusById('bonus');
-        });
-        dialogResp.context = dialogData.skill;
-        dialogResp.resp.oper = dialogResp.resp.opposed ? '+' : '-';
         return dialogResp;
     }
 

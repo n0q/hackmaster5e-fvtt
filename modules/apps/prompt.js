@@ -32,9 +32,12 @@ export class HMPrompt extends Application {
         super.activateListeners(html);
         html.ready(() => html.find('.focus').focus());
 
-        html.submit('#submit', (ev) => {
+        html.on('click', '.dialog-button', (ev) => {
             ev.preventDefault();
             ev.stopPropagation();
+            const {dataset} = ev.currentTarget;
+            const {prop, value} = dataset;
+            this.dialogData[prop] = value;
             this.update({render: false});
             this.options.resolve(this.dialogResp);
             this.close();

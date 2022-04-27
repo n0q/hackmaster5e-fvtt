@@ -4,7 +4,7 @@ export class AttackPrompt extends HMPrompt {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             template: 'systems/hackmaster5e/templates/dialog/getAttack.hbs',
-            id: 'attackApplication',
+            id: 'attackPrompt',
         });
     }
 
