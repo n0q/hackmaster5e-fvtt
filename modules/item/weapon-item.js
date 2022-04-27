@@ -103,11 +103,13 @@ export class HMWeaponItem extends HMItem {
             Object.values(spec).every((a) => a === 0)   ? delete bonus.spec  : bonus.spec  = spec;
         }
 
-        for (const key in bonus.total) {
+        Object.keys(bonus.total).forEach((key) => {
             let sum = -bonus.total[key];
             for (const state in bonus) { sum += bonus[state][key]; }
             bonus.total[key] = sum;
-        }
+        });
+        const {maxspd} = HMTABLES.weapons.scale[itemData.scale]
+        bonus.total.spd = Math.max(maxspd, bonus.total.spd);
     }
 
     // TODO: This needs a refactor, but it's too soon to do so. We should

@@ -17,7 +17,7 @@ export class HMClassItem extends HMItem {
 
         // initialize new cclass object ptable
         if (Object.entries(pTable).length === 0) {
-            const {pData} = HMTABLES.skill;
+            const {pData} = HMTABLES.cclass;
             for (let i = 1; i < 21; i++) pTable[i] = deepClone(pData);
             if (Object.entries(pTable).length) return;
             await this.update({'data.ptable': pTable});

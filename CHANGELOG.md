@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Language hotbar macros.
 ### Changed
 - Attack dialogs now specify weapon speed and only offer range mods for ranged weapons.
+- Minimum weapon speed by size category is respected.
 
 ## [0.2.5] - 2022-04-22
 ### Added

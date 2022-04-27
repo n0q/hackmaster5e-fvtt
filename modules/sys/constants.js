@@ -215,6 +215,17 @@ export const HMTABLES = {
             21: { 'turning': 12, 'morale':  6 },
         },
     },
+    'cclass': {
+        'pData': {
+            'hp':   {value: null, die: null, reroll: false},
+            'sp':   {value: null},
+            'atk':  {value: null},
+            'spd':  {value: null},
+            'spdm': {value: null},
+            'spdr': {value: null},
+            'init': {value: null},
+        },
+    },
     'formula': {
         'atk': {
             'standard': 'd20p + @bonus.total.atk + @resp.bonus',
@@ -263,15 +274,6 @@ export const HMTABLES = {
         8: {'hp': 70, 'kb': 75, 'reach':  12, 'movecf': 13.00},
     },
     'skill': {
-        'pData': {
-            'hp':   {value: null, die: null, reroll: false},
-            'sp':   {value: null},
-            'atk':  {value: null},
-            'spd':  {value: null},
-            'spdm': {value: null},
-            'spdr': {value: null},
-            'init': {value: null},
-        },
         'difficulty': {
             'verydifficult': 10,
             'difficult':      0,
@@ -290,6 +292,16 @@ export const HMTABLES = {
     },
     'top': {'character': 0.3, 'beast': 0.4},
     'weapons': {
+        'scale': {
+            1: {'maxspd': 1},
+            2: {'maxspd': 2},
+            3: {'maxspd': 3},
+            4: {'maxspd': 4},
+            5: {'maxspd': 5},
+            6: {'maxspd': 6},
+            7: {'maxspd': 8},
+            8: {'maxspd': 15},
+        },
         'ranged': {
             'penalty': {
                 'short':    0,
