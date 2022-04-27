@@ -215,9 +215,20 @@ export const HMTABLES = {
             21: { 'turning': 12, 'morale':  6 },
         },
     },
+    'cclass': {
+        'pData': {
+            'hp':   {value: null, die: null, reroll: false},
+            'sp':   {value: null},
+            'atk':  {value: null},
+            'spd':  {value: null},
+            'spdm': {value: null},
+            'spdr': {value: null},
+            'init': {value: null},
+        },
+    },
     'formula': {
         'atk': {
-            'standard': 'd20p + @bonus.total.atk + @resp.mod',
+            'standard': 'd20p + @bonus.total.atk + @resp.bonus',
         },
         'dmg': {
             'standard': '@resp.dmg + @bonus.total.dmg + @resp.mod',
@@ -226,7 +237,7 @@ export const HMTABLES = {
             'standard': 'd20p + @bonus.total.def + @resp.mod',
         },
         'ratk': {
-            'standard': 'd20p + @bonus.total.atk + @resp.range + @resp.mod',
+            'standard': 'd20p + @bonus.total.atk - @resp.range + @resp.bonus',
         },
         'save': {
             'dodge':    'd20p +  @bonus.total.dodge    + @resp.bonus',
@@ -241,9 +252,10 @@ export const HMTABLES = {
             'turning':  'd20p +  @bonus.total.turning  + @resp.bonus',
         },
         'skill': {
-            'skill':    'd100 @resp.oper (@resp.bonus + @bonus.total.value)',
-            'language': 'd100 @resp.oper (@resp.bonus + @bonus.total.verbal)',
-            'literacy': 'd100 @resp.oper (@resp.bonus + @bonus.total.literacy)',
+            'skill':    'd100 - (@resp.bonus + @bonus.total.value)',
+            'opposed':  'd100 + (@resp.bonus + @bonus.total.value)',
+            'language': 'd100 - (@resp.bonus + @bonus.total.verbal)',
+            'literacy': 'd100 - (@resp.bonus + @bonus.total.literacy)',
         },
     },
     'quality': {
@@ -262,21 +274,12 @@ export const HMTABLES = {
         8: {'hp': 70, 'kb': 75, 'reach':  12, 'movecf': 13.00},
     },
     'skill': {
-        'pData': {
-            'hp':   {value: null, die: null, reroll: false},
-            'sp':   {value: null},
-            'atk':  {value: null},
-            'spd':  {value: null},
-            'spdm': {value: null},
-            'spdr': {value: null},
-            'init': {value: null},
-        },
         'difficulty': {
-            'HM.verydifficult': 10,
-            'HM.difficult':      0,
-            'HM.average':      -40,
-            'HM.easy':         -80,
-            'HM.trivial':      -90,
+            'verydifficult': 10,
+            'difficult':      0,
+            'average':      -40,
+            'easy':         -80,
+            'trivial':      -90,
         },
     },
     'tenacity': {
@@ -289,6 +292,16 @@ export const HMTABLES = {
     },
     'top': {'character': 0.3, 'beast': 0.4},
     'weapons': {
+        'scale': {
+            1: {'maxspd': 1},
+            2: {'maxspd': 2},
+            3: {'maxspd': 3},
+            4: {'maxspd': 4},
+            5: {'maxspd': 5},
+            6: {'maxspd': 6},
+            7: {'maxspd': 8},
+            8: {'maxspd': 15},
+        },
         'ranged': {
             'penalty': {
                 'short':    0,

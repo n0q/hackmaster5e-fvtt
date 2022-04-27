@@ -1,4 +1,6 @@
-import { HMTABLES, HMCONST } from '../sys/constants.js';
+import { HMCONST } from '../sys/constants.js';
+import { AttackPrompt } from '../apps/attack.js';
+import { SkillPrompt } from '../apps/skill.js';
 
 function getDialogData() {
     return {
@@ -22,27 +24,55 @@ function getWeapons(actor, itemId) {
         return a.name > b.name || a.data.data.state > b.data.data.state ? 1 : -1;
     }
 
-    let ranged = false;
-    weaponList.forEach((weapon) => {
-        if (weapon.data.data.ranged.checked) ranged = true;
+    const weapons = weaponList.sort(wsort);
+    return {weapons};
+}
+
+async function getAttackDialog(dataset, caller, opt) {
+    const dialogResp = {caller};
+    const dialogData = getWeapons(caller, dataset?.itemId);
+    if (opt.isCombatant) dialogData.inCombat = true;
+
+    const title = `${caller.name}: ${game.i18n.localize('HM.dialog.getAttackTitle')}`;
+    dialogResp.resp = await new Promise((resolve) => {
+        const options = {resolve, title};
+        new AttackPrompt(dialogData, options).render(true);
     });
 
-    const weapons = weaponList.sort(wsort);
-    return {weapons, ranged};
+    dialogResp.context = dialogData.weapons[dialogResp.resp.widx];
+    return dialogResp;
+}
+
+async function getSkillDialog(dataset, caller) {
+    const dialogResp = {caller};
+    const dialogData = getDialogData();
+    dialogData.skill = caller.items.get(dataset.itemId);
+
+    const titlePre = dataset.callers > 1 ? `${dataset.callers}` : `${caller.name}:`;
+    const titlePost = dataset.callers > 1
+        ? game.i18n.localize('HM.dialog.getSkillTitle2')
+        : game.i18n.localize('HM.dialog.getSkillTitle1');
+    const title = `${titlePre} ${game.i18n.localize(dialogData.skill.name)} ${titlePost}`;
+    dialogResp.resp = await new Promise((resolve) => {
+        const options = {resolve, title};
+        new SkillPrompt(dialogData, options).render(true);
+    });
+    dialogResp.context = dialogData.skill;
+    return dialogResp;
 }
 
 export class HMDialogMgr {
     getDialog(dataset, caller=null, opt={}) {
         const name = dataset.dialog;
         if (name === 'ability') return this.getAbilityDialog(dataset, caller);
-        if (name === 'atk')     return this.getAttackDialog(dataset, caller, opt);
+        if (name === 'atk')     return      getAttackDialog(dataset, caller, opt);
         if (name === 'cast')    return this.getCastDialog(dataset, caller);
-        if (name === 'ratk')    return this.getAttackDialog(dataset, caller);
+        if (name === 'ratk')    return      getAttackDialog(dataset, caller);
         if (name === 'def')     return this.getDefendDialog(dataset, caller);
         if (name === 'dmg')     return this.getDamageDialog(dataset, caller);
         if (name === 'initdie') return this.getInitDieDialog(caller);
         if (name === 'save')    return this.getSaveDialog(dataset, caller);
-        if (name === 'skill')   return this.getSkillDialog(dataset, caller);
+        if (name === 'skill')   return      getSkillDialog(dataset, caller);
         if (name === 'wound')   return this.setWoundDialog(caller);
     }
 
@@ -138,41 +168,6 @@ export class HMDialogMgr {
             this._focusById('bonus');
         });
         dialogResp.context = caller;
-        return dialogResp;
-    }
-
-    async getAttackDialog(dataset, caller, opt) {
-        const dialogResp = {caller};
-        const dialogData = getWeapons(caller, dataset?.itemId);
-        if (opt.isCombatant) dialogData.inCombat = true;
-
-        const template = 'systems/hackmaster5e/templates/dialog/getAttack.hbs';
-
-        const {penalty} = HMTABLES.weapons.ranged;
-        let widx = null;
-        dialogResp.resp = await new Promise(async (resolve) => {
-            new Dialog({
-                title: caller.name + game.i18n.localize('HM.dialog.getAttackTitle'),
-                content: await renderTemplate(template, dialogData),
-                buttons: {
-                    attack: {
-                        label: game.i18n.localize('HM.attack'),
-                        callback: (html) => {
-                            widx = html.find('#weapon-select')[0].value;
-                            resolve({
-                                'advance': document.getElementById('advance_tracker')?.checked || false,
-                                'mod': parseInt(document.getElementById('mod').value, 10) || 0,
-                                'range': penalty[document.getElementById('range').value],
-                                'rangestr': document.getElementById('range').value,
-                            });
-                        },
-                    },
-                },
-                default: 'attack',
-            }).render(true);
-            this._focusById('mod');
-        });
-        dialogResp.context = dialogData.weapons[widx];
         return dialogResp;
     }
 
@@ -278,52 +273,6 @@ export class HMDialogMgr {
             this._focusById('mod');
         });
         dialogResp.context = dialogData.weapons[widx];
-        return dialogResp;
-    }
-
-    async getSkillDialog(dataset, caller) {
-        const dialogResp = {caller};
-        const dialogData = getDialogData();
-        dialogData.skill = caller.items.get(dataset.itemId);
-        const template = 'systems/hackmaster5e/templates/dialog/getSkill.hbs';
-
-        const titlePre = dataset.callers > 1 ? `${dataset.callers}` : `${caller.name}:`;
-        const titlePost = dataset.callers > 1
-            ? game.i18n.localize('HM.dialog.getSkillTitle2')
-            : game.i18n.localize('HM.dialog.getSkillTitle1');
-        const title = `${titlePre} ${game.i18n.localize(dialogData.skill.name)} ${titlePost}`;
-        dialogResp.resp = await new Promise(async resolve => {
-            new Dialog({
-                title,
-                content: await renderTemplate(template, dialogData),
-                buttons: {
-                    standard: {
-                        label: game.i18n.localize('HM.skillcheck'),
-                        callback: () => {
-                            resolve({
-                                'opposed': false,
-                                'bonus': parseInt(document.getElementById('bonus').value || 0, 10),
-                                'rollMode': document.getElementById('rollMode').value,
-                            });
-                        },
-                    },
-                    opposed: {
-                        label: `${game.i18n.localize('HM.opposed')} ${game.i18n.localize('HM.check')}`,
-                        callback: () => {
-                            resolve({
-                                'opposed': true,
-                                'bonus': parseInt(document.getElementById('bonus').value || 0, 10),
-                                'rollMode': document.getElementById('rollMode').value,
-                            });
-                        },
-                    },
-                },
-                default: 'standard',
-            }).render(true);
-            this._focusById('bonus');
-        });
-        dialogResp.context = dialogData.skill;
-        dialogResp.resp.oper = dialogResp.resp.opposed ? '+' : '-';
         return dialogResp;
     }
 

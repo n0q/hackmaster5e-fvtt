@@ -1,0 +1,8 @@
+{{#unless (eq formulaType 'opposed')}}
+    {{#unless (eq dc 'auto')}}
+        {{localize 'HM.target'}}:
+        {{localize (lookup (findConfigObj 'skillLevel') dc)}}
+        <br>
+    {{/unless}}
+    <b>{{specialRow}}</b>
+{{/unless}}

@@ -126,6 +126,13 @@
             "high":     "High"
         },
 
+        "rangeSelect": {
+            "short":    "Short",
+            "medium":   "Medium",
+            "long":     "Long",
+            "extreme":  "Extreme"
+        },
+
         "saves": {
             "fos":      "Strength",
             "foa":      "Agility",
@@ -141,6 +148,14 @@
             "will":     "Will"
         },
 
+        "skillDiffSelect": {
+            "average":       "Average",
+            "difficult":     "Difficult",
+            "easy":          "Easy",
+            "trivial":       "Trivial",
+            "verydifficult": "Very Difficult"
+        },
+
         "itemTypes": {
             "armor":    "Armor",
             "item":     "Item",
@@ -148,11 +163,11 @@
         },
 
         "dialog": {
-            "advCombatTracker":  "Advance Combat Tracker",
+            "advCombatTracker":  "Advance clock by",
             "deleteBody":        "Really delete",
             "getInitDieTitle":   "Roll for Initiative",
             "getInitDieBody":    "Initiative Die",
-            "getAttackTitle":    ": Roll an Attack",
+            "getAttackTitle":    "Roll an Attack",
             "getAttackRangeBody":"Range",
             "getAbilityButtonL": "Ability Save",
             "getAbilityButtonR": "Ability Check",
@@ -317,11 +332,6 @@
         "hp_mod":       "HP mod",
         "reach_mod":    "reach mod",
 
-        "short":        "Short",
-        "medium":       "Medium",
-        "long":         "Long",
-        "extreme":      "Extreme",
-
         "adjective":    "Adjective",
         "age":          "Age",
         "alert":        "Alert",
@@ -331,6 +341,7 @@
         "armortype":    "Armor Type",
         "attack":       "Attack",
         "atkbonus":     "Attack Bonus",
+        "auto":         "Auto",
         "availability": "Availability",
         "average":      "Average",
         "base":         "Base",
@@ -353,6 +364,7 @@
         "critical":     "Critical",
         "days":         "Days",
         "die":          "Die",
+        "difficulty":   "Difficulty",
         "double":       "Double",
         "doublecritical": "Double Critical",
         "drmod":        "DR Mod",
@@ -463,6 +475,7 @@
         "specialty":    "Specialty",
         "spellpoints":  "Spell Points",
         "standard":     "Standard",
+        "target":       "Target",
         "timer":        "Timer",
         "total":        "Total",
         "type":         "Type",

@@ -1,4 +1,6 @@
 import { HMTABLES, HMCONST } from '../sys/constants.js';
+import { idx } from '../sys/localize.js';
+
 /* global PoolTerm */
 
 function getDiceSum(roll) {
@@ -98,9 +100,45 @@ async function createToPAlert(dataset) {
     return {content, flavor};
 }
 
+async function createSkillCard(dataset) {
+    const {context, roll} = dataset;
+    const {rollMode, formulaType, dc} = dataset.resp;
+
+    const skillname = context.specname;
+    const flavor = formulaType === 'opposed'
+        ? `${game.i18n.localize('HM.opposed')} ${skillname} ${game.i18n.localize('HM.skillcheck')}`
+        : `${skillname} ${game.i18n.localize(`HM.${formulaType}`)} ${game.i18n.localize('HM.check')}`;
+    const rollContent = await roll.render({flavor});
+
+    let specialRow;
+    if (formulaType !== 'opposed') {
+        const {difficulty} = HMTABLES.skill;
+        if (dc === 'auto') {
+            for (const key in difficulty) {
+                if (roll.total + difficulty[key] > 0) continue;
+                specialRow = `${game.i18n.localize(idx.skillLevel[key])}
+                              ${game.i18n.localize('HM.success')}`;
+                break;
+            }
+        } else {
+            const success = roll.total + difficulty[dc] < 1;
+            specialRow = success
+                ? game.i18n.localize('HM.passed')
+                : game.i18n.localize('HM.failed');
+        }
+    }
+
+    const templateData = {dc, specialRow, formulaType};
+    const template = 'systems/hackmaster5e/templates/chat/skill.hbs';
+    const resultContent = await renderTemplate(template, templateData);
+    const content = `${resultContent}<p>${rollContent}`;
+    return {content, roll, rollMode, flavor: dataset.caller.name};
+}
+
 export class HMChatMgr {
     constructor() { this._user = game.user.id; }
 
+    // This is out of control. We want: getCard(dataset, options)
     async getCard({cardtype=HMCONST.CARD_TYPE.ROLL, roll, dataset, dialogResp=null, options}) {
         let cData;
         if (cardtype === HMCONST.CARD_TYPE.ROLL) {
@@ -115,7 +153,7 @@ export class HMChatMgr {
                     cData = await this._createSpellCard(dataset, dialogResp);
                     break;
                 case 'skill':
-                    cData = await this._createSkillCard(roll, dataset, dialogResp);
+                    cData = await createSkillCard(dataset);
                     break;
                 case 'save':
                     cData = await createSaveCard(roll, dataset, dialogResp);
@@ -138,7 +176,7 @@ export class HMChatMgr {
             type:    CONST.CHAT_MESSAGE_TYPES.IC,
         };
 
-        if (roll) {
+        if (roll || dataset?.roll) {
             chatData.roll     = cData?.roll || roll;
             chatData.rollMode = cData.rollMode ? cData.rollMode : game.settings.get('core', 'rollMode');
             chatData.type     = CONST.CHAT_MESSAGE_TYPES.ROLL;
@@ -164,7 +202,7 @@ export class HMChatMgr {
                 const speedRow  = `${game.i18n.localize('HM.speed')}:
                                 <b>${item.data.data.bonus.total.spd}</b>`;
                 const rangeRow  = `${game.i18n.localize('HM.range')}:
-                                <b>${game.i18n.localize(`HM.${dialogResp.resp.rangestr}`)}</b>`;
+                                <b>${game.i18n.localize(idx.range[dialogResp.resp.range])}</b>`;
 
                 let specialRow = '';
                 const sumDice = getDiceSum(roll);
@@ -236,35 +274,6 @@ export class HMChatMgr {
             }
             default:
         }
-    }
-
-    async _createSkillCard(roll, dataset, dialogResp) {
-        const item = dialogResp.context;
-        const {data} = item.data;
-        const {skillType} = dataset;
-        const {rollMode} = dialogResp.resp;
-
-        let skillname = game.i18n.localize(item.name);
-        if (data.specialty.checked && data.specialty.value) {
-            skillname += ` (${data.specialty.value})`;
-        }
-
-        let flavor = `${skillname}
-                      ${game.i18n.localize(`HM.${skillType}`)}
-                      ${game.i18n.localize('HM.check')}`;
-
-        if (dialogResp.resp.opposed) flavor = `${game.i18n.localize('HM.opposed')} ${flavor}`;
-        let content = await roll.render({flavor});
-
-        if (!dialogResp.resp.opposed) {
-            const {difficulty} = HMTABLES.skill;
-            for (const key in difficulty) {
-                if (roll.total + difficulty[key] > 0) continue;
-                content = `${game.i18n.localize(key)} ${game.i18n.localize('HM.success')} <p>${content}`;
-                break;
-            }
-        }
-        return {content, rollMode};
     }
 
     async _createSpellCard(_dataset, dialogResp) {

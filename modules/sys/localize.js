@@ -1,6 +1,6 @@
 export const idx = {};
 
-// Localization
+// Dictionaries
 idx.ability_short = {
     'str': 'HM.ability_short.str',
     'int': 'HM.ability_short.int',
@@ -131,6 +131,15 @@ idx.saves = {
     'will':     'HM.saves.will',
 };
 
+idx.skillLevel = {
+    'auto':          'HM.auto',
+    'trivial':       'HM.skillDiffSelect.trivial',
+    'easy':          'HM.skillDiffSelect.easy',
+    'average':       'HM.skillDiffSelect.average',
+    'difficult':     'HM.skillDiffSelect.difficult',
+    'verydifficult': 'HM.skillDiffSelect.verydifficult',
+};
+
 idx.itemCClass = {
     'sp':   'HM.spellpoints',
     'init': 'HM.initbonus',
@@ -156,12 +165,11 @@ idx.dice = {
     '1d3':  'd3',
 };
 
-// TODO: This table is backwards. Values should be keys, keys, should be localized.
 idx.range = {
-    'short':   'Short',
-    'medium':  'Medium (-4)',
-    'long':    'Long (-6)',
-    'extreme': 'Extreme (-8)',
+    0: 'HM.rangeSelect.short',
+    4: 'HM.rangeSelect.medium',
+    6: 'HM.rangeSelect.long',
+    8: 'HM.rangeSelect.extreme',
 };
 
 idx.scale = {

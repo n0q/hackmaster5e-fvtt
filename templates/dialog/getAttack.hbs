@@ -1,28 +1,38 @@
 <form>
     <div class='form-group'>
         <label>{{localize 'HM.weapon'}}</label>
-        <select id='weapon-select'>
-            {{#each weapons}}
+        <select name='widx' class='bind' data-prop='widx' data-render=true>
+            {{#select widx}}{{#each weapons}}
                 <option value='{{@index}}'>{{name}}</option>
-            {{/each}}
-        </select>
-    </div>
-    <div class='form-group' {{#unless ranged}}style='display: none;'{{/unless}}>
-        <label>{{localize 'HM.dialog.getAttackRangeBody'}}</label>
-        <select name='data.quality' id='range'>
-            {{#select 'short'}}{{#each (findConfigObj 'range') as |type t|}}
-            <option value='{{t}}'>{{type}}</option>
             {{/each}}{{/select}}
         </select>
     </div>
     <div class='form-group'>
-        <label>{{localize 'HM.modifier'}}</label>
-        <input id='mod' placeholder=0 type='number'/>
+        {{#if ranged}}
+        <label>{{localize 'HM.dialog.getAttackRangeBody'}}</label>
+        <select name='range' class='bind' data-prop='range' data-render=true>
+        {{selectOptions (findConfigObj 'range') selected=range localize=true}}
+        </select>
+        {{else}}<label>&nbsp</label><label>&nbsp</label>
+        {{/if}}
+        <label>{{localize 'HM.bonus'}}</label>
+        <input name='bonus' value='{{bonus}}' class='focus bind' data-prop='bonus' placeholder=0 type='number'/>
     </div>
     {{#if inCombat}}
     <div class='form-group'>
-        <label>{{localize 'HM.dialog.advCombatTracker'}}</label>
-        <input type='checkbox' id='advance_tracker' checked>
+        <label>
+            {{localize 'HM.dialog.advCombatTracker'}}
+            {{#with (lookup weapons widx)}}
+                <b>{{data.data.bonus.total.spd}}</b>
+            {{/with}}
+            {{toLowerCase (localize 'HM.seconds')}}?
+        </label>
+        <input type='checkbox' class='bind' data-prop='advance' {{checked advance}}>
     </div>
     {{/if}}
+    <div class='dialog-buttons'>
+        <button type='submit' class='dialog-button normal default' data-button='attack' data-render=false>
+            {{localize 'HM.attack'}}
+        </button>
+    </div>
 </form>
