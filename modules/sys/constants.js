@@ -258,6 +258,18 @@ export const HMTABLES = {
             'literacy': 'd100 - (@resp.bonus + @bonus.total.literacy)',
         },
     },
+    'honor': {
+        'category': (level, value) => {
+            const hTable = [0,
+                            3 + level * 2,
+                            6 + level * 4,
+                           10 + level * 10,
+                level > 5 ? 1 + level * 14: Infinity,
+                                            Infinity,
+            ];
+            return hTable.findIndex((x) => x >= value);
+       },
+    },
     'quality': {
         'armor':  [1, 1, 0, 0],
         'weapon': [1, 0, 1, 0],
@@ -334,14 +346,32 @@ export const HMTABLES = {
 
 // TODO: ITEM_STATE and itemstate are the same table.
 export const HMCONST = {
-    'CARD_TYPE': {
-        'ROLL':  0,
-        'ALERT': 1,
+    CARD_TYPE: {
+        ROLL:  0,
+        ALERT: 1,
     },
-    'ITEM_STATE': {
-        'OWNED':    0,
-        'CARRIED':  1,
-        'EQUIPPED': 2,
-        'INNATE':   3,
+    ITEM_STATE: {
+        OWNED:    0,
+        CARRIED:  1,
+        EQUIPPED: 2,
+        INNATE:   3,
+    },
+    HONOR: {
+        NOTORIETY:    0,
+        DISHONORABLE: 1,
+        LOW:          2,
+        AVERAGE:      3,
+        GREAT:        4,
+        LEGENDARY:    5,
+    },
+    SCALE: {
+        TINY:     1,
+        SMALL:    2,
+        MEDIUM:   3,
+        LARGE:    4,
+        HUGE:     5,
+        GIGANTIC: 6,
+        ENORMOUS: 7,
+        COLOSSAL: 8,
     },
 };

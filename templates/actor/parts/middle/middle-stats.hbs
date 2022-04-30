@@ -1,8 +1,9 @@
 {{#with data.data}}
 {{#if (eq ../actor.type 'character')}}
-<figure class='fraction' style='width: auto;'>
-    <label for='data.honor.value' class='resource-label'>{{localize 'HM.honor'}}</label>
-    <input type='number' name='data.honor.value' value='{{honor.value}}' onwheel='this.blur()' data-dtype='Number'/>
+<figure class='category'>
+    <label for='data.honor.value' class='resource-label title'>{{localize 'HM.honor'}}</label>
+    <input type='number' name='data.honor.value' class='resource' value='{{honor.value}}' onwheel='this.blur()' data-dtype='Number'/>
+    <label for='data.honor.bracket' class='bracket'>{{localize (findConfigValue 'honor' honor.bracket)}}</label>
 </figure>
 <figure class='fraction' style='width: auto;'>
     <label for='data.fame.value' class='resource-label'>{{localize 'HM.fame'}}</label>

@@ -68,6 +68,15 @@
             "ambidextrous": "Ambidextrous"
         },
 
+        "honorSelect": {
+            "notoriety":    "Notoriety",
+            "dishonorable": "Dishonorable",
+            "low":          "Low",
+            "average":      "Average",
+            "great":        "Great",
+            "legendary":    "Legendary"
+        },
+
         "physDmgSelect": {
             "crushing":     "Crushing",
             "hacking":      "Hacking",

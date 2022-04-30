@@ -1,3 +1,4 @@
+import { HMCONST } from './constants.js';
 export const idx = {};
 
 // Dictionaries
@@ -48,6 +49,15 @@ idx.handedness = {
     'right':        'HM.handednessSelect.right',
     'left':         'HM.handednessSelect.left',
     'ambidextrous': 'HM.handednessSelect.ambidextrous',
+};
+
+idx.honor = {
+    [HMCONST.HONOR.NOTORIETY]:    'HM.honorSelect.notoriety',
+    [HMCONST.HONOR.DISHONORABLE]: 'HM.honorSelect.dishonorable',
+    [HMCONST.HONOR.LOW]:          'HM.honorSelect.low',
+    [HMCONST.HONOR.AVERAGE]:      'HM.honorSelect.average',
+    [HMCONST.HONOR.GREAT]:        'HM.honorSelect.great',
+    [HMCONST.HONOR.LEGENDARY]:    'HM.honorSelect.legendary',
 };
 
 idx.size = {

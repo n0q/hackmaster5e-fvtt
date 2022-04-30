@@ -1,5 +1,5 @@
-import LOGGER from "./logger.js";
-import idx from "./localize.js";
+import LOGGER from './logger.js';
+import idx from './localize.js';
 
 export default function registerHandlebarsHelpers() {
     LOGGER.log("Calling Register Handlebars Helpers");
@@ -22,20 +22,16 @@ export default function registerHandlebarsHelpers() {
         return DOMPurify.sanitize(str);
     });
 
-    Handlebars.registerHelper("findConfigValue", (obj, key) => {
+    Handlebars.registerHelper('findConfigValue', (obj, key) => {
         LOGGER.trace(`Calling findConfigValue Helper | Arg1:${obj} Arg2:${key}`);
-        if (obj in idx) {
-            return idx[obj][key];
-        }
-        return "INVALID_KEY";
+        if (obj in idx) return idx[obj][key];
+        return 'INVALID_KEY';
     });
 
-    Handlebars.registerHelper("findConfigObj", (obj) => {
+    Handlebars.registerHelper('findConfigObj', (obj) => {
         LOGGER.trace(`Calling findConfigObj Helper | Arg1:${obj}`);
-        if (obj in idx) {
-            return idx[obj];
-        }
-        return "INVALID_LIST";
+        if (obj in idx) return idx[obj];
+        return 'INVALID_LIST';
     });
 
     Handlebars.registerHelper('findBonus', (arg1, arg2, opts) => {
