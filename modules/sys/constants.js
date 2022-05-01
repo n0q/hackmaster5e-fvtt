@@ -258,8 +258,12 @@ export const HMTABLES = {
             'literacy': 'd100 - (@resp.bonus + @bonus.total.literacy)',
         },
     },
-    'honor': {
-        'category': (level, value) => {
+    'bracket': {
+        'fame': (value) => {
+            const fTable = [0, 10, 20, 70, 100, 200, Infinity];
+            return fTable.findIndex((x) => x >= value);
+        },
+        'honor': (level, value) => {
             const hTable = [0,
                             3 + level * 2,
                             6 + level * 4,
@@ -355,6 +359,15 @@ export const HMCONST = {
         CARRIED:  1,
         EQUIPPED: 2,
         INNATE:   3,
+    },
+    FAME: {
+        UNKNOWN:     0,
+        OBSCURE:     1,
+        LOCALPERSON: 2,
+        MINORCELEB:  3,
+        MAJORCELEB:  4,
+        FAMOUS:      5,
+        EPIC:        6,
     },
     HONOR: {
         NOTORIETY:    0,

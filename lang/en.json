@@ -67,6 +67,17 @@
             "left":         "Left",
             "ambidextrous": "Ambidextrous"
         },
+        
+        "fameSelect": {
+            "unknown":      "Unknown",
+            "obscure":      "Obscure",
+            "localperson":  "Local Personality",
+            "minorceleb":   "Minor Celebrity",
+            "majorceleb":   "Major Celebrity",
+            "famous":       "Famous",
+            "legendary":    "Legendary",
+            "epic":         "Epic"
+        },
 
         "honorSelect": {
             "notoriety":    "Notoriety",

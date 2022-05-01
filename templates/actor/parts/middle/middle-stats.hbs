@@ -5,9 +5,10 @@
     <input type='number' name='data.honor.value' class='resource' value='{{honor.value}}' onwheel='this.blur()' data-dtype='Number'/>
     <label for='data.honor.bracket' class='bracket'>{{localize (findConfigValue 'honor' honor.bracket)}}</label>
 </figure>
-<figure class='fraction' style='width: auto;'>
-    <label for='data.fame.value' class='resource-label'>{{localize 'HM.fame'}}</label>
-    <input type='number' name='data.fame.value' value='{{fame.value}}' onwheel='this.blur()' data-dtype='Number'/>
+<figure class='category'>
+    <label for='data.fame.value' class='resource-label title'>{{localize 'HM.fame'}}</label>
+    <input type='number' name='data.fame.value' class='resource' value='{{fame.value}}' onwheel='this.blur()' data-dtype='Number'/>
+    <label for='data.fame.bracket' class='bracket'>{{localize (findConfigValue 'fame' fame.bracket)}}</label>
 </figure>
 {{/if}}
 {{#if hp.tenacity}}

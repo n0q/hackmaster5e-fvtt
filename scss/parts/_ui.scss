@@ -27,36 +27,33 @@
     border-radius: 5px;
     width: auto;
     margin: 2px;
-    margin-bottom: auto;
 
     .title {
-        justify-self: center;
-        align-self: center;
         grid-row: 1;
-        grid-column: span 3 / -1;
-        border-left: solid 1px;
-    }
-
-    .resource {
-        align-self: center;
+        grid-column-start: 2;
         justify-self: center;
-        font-size: 20px;
-        grid-row-start: 1;
-        grid-column-start: 1;
-        grid-row-end: span 3;
+        align-self: center;
+        border-bottom: 2px solid;
+        border-image: linear-gradient(90deg, rgba(60,74,83,0.90), rgba(60,74,83,.00)) 1;
     }
 
     .bracket {
+        grid-row: 2;
+        grid-column-start: 2;
         justify-self: center;
         align-self: center;
-        border-left: solid 1px;
-        grid-row-start: 2;
-        grid-column: span 3 / -1;
     }
 
-    label {
-        text-align: center;
-        width: 5em;
+    .resource {
+        justify-self: center;
+        align-self: center;
+        grid-row-start: 1;
+        grid-column-start: 1;
+        grid-row-end: span 3;
+        font-size: 20px;
+        border-radius: 0;
+        border-right: solid 2px;
+        height: 100%;
     }
 
     input {

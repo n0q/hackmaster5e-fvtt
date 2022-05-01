@@ -60,6 +60,16 @@ idx.honor = {
     [HMCONST.HONOR.LEGENDARY]:    'HM.honorSelect.legendary',
 };
 
+idx.fame = {
+    [HMCONST.FAME.UNKNOWN]:     'HM.fameSelect.unknown',
+    [HMCONST.FAME.OBSCURE]:     'HM.fameSelect.obscure',
+    [HMCONST.FAME.LOCALPERSON]: 'HM.fameSelect.localperson',
+    [HMCONST.FAME.MINORCELEB]:  'HM.fameSelect.minorceleb',
+    [HMCONST.FAME.MAJORCELEB]:  'HM.fameSelect.majorceleb',
+    [HMCONST.FAME.FAMOUS]:      'HM.fameSelect.famous',
+    [HMCONST.FAME.EPIC]:        'HM.fameSelect.epic',
+};
+
 idx.size = {
     'tiny':   'HM.sizeSelect.tiny',
     'small':  'HM.sizeSelect.small',

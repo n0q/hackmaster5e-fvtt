@@ -127,8 +127,13 @@ export class HMCharacterActor extends HMActor {
         if (!cclass) return;
 
         const {level} = cclass.data.data;
-        const value = parseInt(data.honor.value, 10) || 0;
-        data.honor.bracket = HMTABLES.honor.category(level, value) || 0;
-        data.honor.value = Math.min(value, 999);
+
+        const hValue = parseInt(data.honor.value, 10) || 0;
+        data.honor.bracket = HMTABLES.bracket.honor(level, hValue) || 0;
+        data.honor.value = Math.min(hValue, 999);
+
+        const fValue = parseInt(data.fame.value, 10) || 0;
+        data.fame.bracket = HMTABLES.bracket.fame(fValue) || 0;
+        data.fame.value = Math.min(fValue, 999);
     }
 }
