@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - Honor category autoselect.
 - Fame category autoselect.
+- Actors without a trauma save no longer trigger trauma alerts/saves.
+### Changed
+- Weapon quality is now part of base vector.
 
 ## [0.2.7] - 2022-04-28
 ### Fixed
