@@ -231,7 +231,10 @@ export const HMTABLES = {
             'standard': 'd20p + @bonus.total.atk + @resp.bonus',
         },
         'dmg': {
-            'standard': '@resp.dmg + @bonus.total.dmg + @resp.mod',
+            'standard':  '@dmg.normal + @bonus.total.dmg + @resp.bonus',
+            'shield':    '@dmg.shield + @bonus.total.dmg + @resp.bonus',
+            'jab':       '@jab.normal + @bonus.total.dmg + @resp.bonus',
+            'shieldjab': '@jab.shield + @bonus.total.dmg + @resp.bonus',
         },
         'def': {
             'standard': 'd20p + @bonus.total.def + @resp.mod',

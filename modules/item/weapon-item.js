@@ -179,4 +179,35 @@ export class HMWeaponItem extends HMItem {
         const card = await chatMgr.getCard({roll, dataset, dialogResp});
         await ChatMessage.create(card);
     }
+
+    static async rollDamage({weapon, caller}={}) {
+        let actor;
+        let token;
+        if (!caller) {
+            [token] = canvas.tokens.controlled;
+            actor   = token.actor;
+        } else if (caller.isToken) {
+            actor   = caller;
+            token   = caller.token;
+        } else {
+            actor = caller;
+        }
+        if (!token && !actor) return;
+
+        const dialog = 'dmg';
+        const dataset = {dialog, itemId: weapon};
+
+        const dialogMgr = new HMDialogMgr();
+        const dialogResp = await dialogMgr.getDialog(dataset, actor);
+
+        const rollMgr = new HMRollMgr();
+        dataset.roll = await rollMgr.getRoll(dataset, dialogResp);
+        dataset.resp = dialogResp.resp;
+        dataset.context = dialogResp.context;
+        dataset.caller = actor;
+
+        const chatMgr = new HMChatMgr();
+        const card = await chatMgr.getCard({dataset});
+        await ChatMessage.create(card);
+    }
 }

@@ -186,9 +186,8 @@
                 "base":  {"atk": 0, "def": 0, "dmg": 0, "spd": 0, "jspd": 0},
                 "mod":   {"atk": 0, "def": 0, "dmg": 0, "spd": 0}
             },
-            "dmg":     {"normal": "", "shield": "", "type": "hacking",
-                "jab": {"normal": "", "shield": ""}},
-            "jab":     {"checked": false},
+            "dmg":     {"normal": "", "shield": "", "type": "hacking"},
+            "jab":     {"normal": "", "shield": "", "checked": false},
             "qn": 0,
             "reach": 0,
             "ranged": {"checked": false}

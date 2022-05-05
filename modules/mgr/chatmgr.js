@@ -100,6 +100,25 @@ async function createToPAlert(dataset) {
     return {content, flavor};
 }
 
+async function createDamageCard(dataset) {
+    const {caller, context, roll, resp} = dataset;
+    const dmgsrc = context.data.data.ranged.checked
+        ? game.i18n.localize('HM.ranged')
+        : game.i18n.localize('HM.melee');
+    const dmgrollTxt = `${game.i18n.localize('HM.damage')} ${game.i18n.localize('HM.roll')}`;
+    let flavor = `${dmgsrc} ${dmgrollTxt}`;
+
+    const mods = [];
+    if (resp.specialMove === HMCONST.SPECIAL.JAB) mods.push(game.i18n.localize('HM.jab'));
+    if (resp.shieldHit) mods.push(game.i18n.localize('HM.blocked'));
+    if (mods.length) flavor += ` (${mods.join(', ')})`;
+    const weaponRow = `${game.i18n.localize('HM.weapon')}: <b>${context.name}</b>`;
+
+    let content = await roll.render({flavor});
+    content = `${weaponRow}<p>${content}`;
+    return {content, roll, flavor: caller.name};
+}
+
 async function createSkillCard(dataset) {
     const {context, roll} = dataset;
     const {rollMode, formulaType, dc} = dataset.resp;
@@ -143,10 +162,12 @@ export class HMChatMgr {
         let cData;
         if (cardtype === HMCONST.CARD_TYPE.ROLL) {
             switch (dataset.dialog) {
+                case 'dmg':
+                    cData = await createDamageCard(dataset);
+                    break;
                 case 'atk':
                 case 'ratk':
                 case 'def':
-                case 'dmg':
                     cData = await this._createWeaponCard(roll, dataset, dialogResp);
                     break;
                 case 'cast':
@@ -232,22 +253,6 @@ export class HMChatMgr {
                 if (sumDice === 1)  { specialRow += '<b>Potential Fumble</b>'; }
 
                 content = `${weaponRow}<br>${speedRow}<br>${specialRow}<br>${content}`;
-                return {content};
-            }
-
-            case 'dmg': {
-                let flavor =    `${game.i18n.localize('HM.damage')}
-                                 ${game.i18n.localize('HM.roll')}`;
-                if (dialogResp.resp.shieldhit) {
-                    flavor += ` (${game.i18n.localize('HM.blocked')})`;
-                }
-
-                let content = await roll.render({flavor});
-
-                const weaponRow = `${game.i18n.localize('HM.weapon')}:
-                                <b>${item.name}</b>`;
-
-                content = `${weaponRow}<p>${content}`;
                 return {content};
             }
 

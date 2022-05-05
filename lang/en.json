@@ -420,6 +420,7 @@
         "handedness":   "Handedness",
         "height":       "Height",
         "history":      "History",
+        "hit":          "Hit",
         "honor":        "Honor",
         "initmod":      "Init Mod",
         "speedmod":     "Speed Mod",
