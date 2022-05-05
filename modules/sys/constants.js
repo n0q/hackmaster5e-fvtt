@@ -387,4 +387,8 @@ export const HMCONST = {
         ENORMOUS: 7,
         COLOSSAL: 8,
     },
+    SPECIAL: {
+        STANDARD:  0,
+        JAB:       1,
+    },
 };

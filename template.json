@@ -29,8 +29,8 @@
             "hp":    {"value": 0, "max": 0},
             "luck":  {"value": 0, "max": 0},
             "ep":    {"value": 0, "max": 400},
-            "honor": {"value": 0, "bracket": null},
-            "fame":  {"value": 0, "bracket": null},
+            "honor": {"value": 0, "bracket": 0},
+            "fame":  {"value": 0, "bracket": 0},
             "abilities": {
                 "total": null,
                 "base": {
@@ -182,13 +182,15 @@
             "scale": 3,
             "skill": null,
             "bonus": {
-                "total": {"atk": 0, "def": 0, "dmg": 0, "spd": 0},
-                "base":  {"atk": 0, "def": 0, "dmg": 0, "spd": 0},
+                "total": {"atk": 0, "def": 0, "dmg": 0, "spd": 0, "jspd": 0},
+                "base":  {"atk": 0, "def": 0, "dmg": 0, "spd": 0, "jspd": 0},
                 "mod":   {"atk": 0, "def": 0, "dmg": 0, "spd": 0}
             },
-            "dmg":    {"normal": "", "shield": "", "type": "hacking"},
+            "dmg":     {"normal": "", "shield": "", "type": "hacking",
+                "jab": {"normal": "", "shield": ""}},
+            "jab":     {"checked": false},
             "qn": 0,
-            "reach":  0,
+            "reach": 0,
             "ranged": {"checked": false}
         },
 

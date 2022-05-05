@@ -70,6 +70,11 @@ idx.fame = {
     [HMCONST.FAME.EPIC]:        'HM.fameSelect.epic',
 };
 
+idx.special = {
+    [HMCONST.SPECIAL.STANDARD]:  'HM.specSelect.std',
+    [HMCONST.SPECIAL.JAB]:       'HM.specSelect.jab',
+};
+
 idx.size = {
     'tiny':   'HM.sizeSelect.tiny',
     'small':  'HM.sizeSelect.small',

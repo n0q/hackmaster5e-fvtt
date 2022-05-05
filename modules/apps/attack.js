@@ -1,4 +1,11 @@
 import { HMPrompt } from './prompt.js';
+import { idx } from '../sys/localize.js';
+import { HMCONST } from '../sys/constants.js';
+
+function getCapList(caps) {
+    const {special} = idx;
+    return Object.fromEntries(caps.map((x) => Object.entries(special)[x]));
+    }
 
 export class AttackPrompt extends HMPrompt {
     static get defaultOptions() {
@@ -10,8 +17,14 @@ export class AttackPrompt extends HMPrompt {
 
     constructor(dialogData, options) {
         super(dialogData, options);
+        const weapon = dialogData.weapons[0];
+        const capList = getCapList(weapon.capabilities);
+
         mergeObject(this.dialogData, {
-            ranged: dialogData.weapons[0].data.data.ranged.checked,
+            capList,
+            specialMove: 0,
+            ranged: weapon.data.data.ranged.checked,
+            spd: weapon.data.data.bonus.total.spd,
             widx: 0,
             range: 0,
             advance: dialogData.inCombat,
@@ -20,17 +33,26 @@ export class AttackPrompt extends HMPrompt {
 
     update(options) {
         const {weapons, widx} = this.dialogData;
-        const {ranged} = weapons[widx].data.data;
+        const weapon   = weapons[widx];
+        const wData    = weapon.data.data;
+        const {ranged} = wData;
+        const spd = Number(this.dialogData.specialMove) === HMCONST.SPECIAL.JAB
+                        ? wData.bonus.total.jspd
+                        : wData.bonus.total.spd;
+
         this.dialogData.ranged = ranged.checked;
+        this.dialogData.spd = spd;
+        this.dialogData.capList = getCapList(weapons[widx].capabilities);
         super.update(options);
     }
 
     get dialogResp() {
         const dialogResp = {
             widx: this.dialogData.widx,
+            specialMove: Number(this.dialogData.specialMove),
             range: Number(this.dialogData.range),
             bonus: parseInt(this.dialogData.bonus, 10) || 0,
-            advance: Boolean(this.dialogData.advance),
+            advance: this.dialogData.advance ? this.dialogData.spd : false,
         };
         return dialogResp;
     }

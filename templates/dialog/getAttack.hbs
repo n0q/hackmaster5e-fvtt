@@ -8,6 +8,12 @@
         </select>
     </div>
     <div class='form-group'>
+        <label>{{localize 'HM.dialog.specialMove'}}</label>
+        <select name='specialMove' class='bind' data-prop='specialMove' data-render=true>
+        {{selectOptions capList selected=specialMove localize=true}}
+        </select>
+    </div>
+    <div class='form-group'>
         {{#if ranged}}
         <label>{{localize 'HM.dialog.getAttackRangeBody'}}</label>
         <select name='range' class='bind' data-prop='range' data-render=true>
@@ -22,9 +28,7 @@
     <div class='form-group'>
         <label>
             {{localize 'HM.dialog.advCombatTracker'}}
-            {{#with (lookup weapons widx)}}
-                <b>{{data.data.bonus.total.spd}}</b>
-            {{/with}}
+                <b>{{spd}}</b>
             {{toLowerCase (localize 'HM.seconds')}}?
         </label>
         <input type='checkbox' class='bind' data-prop='advance' {{checked advance}}>

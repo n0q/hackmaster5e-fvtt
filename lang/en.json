@@ -119,6 +119,11 @@
             "large":  "Large"
         },
 
+        "specSelect": {
+            "std": "Standard Attack",
+            "jab": "Jab Attack"
+        },
+
         "statbonus": {
             "feat":     "Feat",
             "atk":      "Attack",
@@ -202,6 +207,7 @@
             "setInitBody":       "New Init",
             "setWoundTitle":     "Inflict Wound",
             "setWoundBody":      "Wound HP",
+            "specialMove":       "Special Move",
             "warnMulti":         "Multiple tokens selected. Using <b>"
         },
 
@@ -409,6 +415,7 @@
         "feat":         "Feat",
         "for":          "For",
         "goodbye":      "Goodbye",
+        "habitat":      "Habitat",
         "hair":         "Hair",
         "handedness":   "Handedness",
         "height":       "Height",
@@ -425,6 +432,7 @@
         "initiative":   "Initiative",
         "innate":       "Innate",
         "inventory":    "Inventory",
+        "jab":          "Jab",
         "knockback":    "Knockback",
         "knockout":     "Knock Out",
         "knockedout":   "Knocked Out",
