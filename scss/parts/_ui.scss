@@ -19,6 +19,57 @@
     }
 }
 
+.category {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 3em 1fr;
+    border: 2px solid;
+    border-radius: 5px;
+    width: auto;
+    margin: 2px;
+
+    .title {
+        grid-row: 1;
+        grid-column-start: 2;
+        justify-self: center;
+        align-self: center;
+        text-align: center;
+        width: 85%;
+        border-bottom: 2px solid;
+        border-image: $grad-line 1;
+    }
+
+    .bracket {
+        grid-row: 2;
+        grid-column-start: 2;
+        justify-self: center;
+        align-self: center;
+    }
+
+    .resource {
+        justify-self: center;
+        align-self: center;
+        grid-row-start: 1;
+        grid-column-start: 1;
+        grid-row-end: span 3;
+        font-size: 20px;
+        border-radius: 0;
+        border-right: solid 2px;
+        height: 100%;
+    }
+
+    input {
+        border: none;
+        background: none;
+        box-shadow: unset;
+        text-align: center;
+        height: $font-primary-size;
+        &:hover {
+            @include text-glow;
+        }
+    }
+}
+
 .fraction {
     display: flex;
     flex-direction: column;

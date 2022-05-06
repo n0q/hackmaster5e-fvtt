@@ -67,6 +67,26 @@
             "left":         "Left",
             "ambidextrous": "Ambidextrous"
         },
+        
+        "fameSelect": {
+            "unknown":      "Unknown",
+            "obscure":      "Obscure",
+            "localperson":  "Local Personality",
+            "minorceleb":   "Minor Celebrity",
+            "majorceleb":   "Major Celebrity",
+            "famous":       "Famous",
+            "legendary":    "Legendary",
+            "epic":         "Epic"
+        },
+
+        "honorSelect": {
+            "notoriety":    "Notoriety",
+            "dishonorable": "Dishonorable",
+            "low":          "Low",
+            "average":      "Average",
+            "great":        "Great",
+            "legendary":    "Legendary"
+        },
 
         "physDmgSelect": {
             "crushing":     "Crushing",
@@ -97,6 +117,11 @@
             "small":  "Small",
             "medium": "Medium",
             "large":  "Large"
+        },
+
+        "specSelect": {
+            "std": "Standard Attack",
+            "jab": "Jab Attack"
         },
 
         "statbonus": {
@@ -182,6 +207,7 @@
             "setInitBody":       "New Init",
             "setWoundTitle":     "Inflict Wound",
             "setWoundBody":      "Wound HP",
+            "specialMove":       "Special Move",
             "warnMulti":         "Multiple tokens selected. Using <b>"
         },
 
@@ -389,10 +415,12 @@
         "feat":         "Feat",
         "for":          "For",
         "goodbye":      "Goodbye",
+        "habitat":      "Habitat",
         "hair":         "Hair",
         "handedness":   "Handedness",
         "height":       "Height",
         "history":      "History",
+        "hit":          "Hit",
         "honor":        "Honor",
         "initmod":      "Init Mod",
         "speedmod":     "Speed Mod",
@@ -405,6 +433,7 @@
         "initiative":   "Initiative",
         "innate":       "Innate",
         "inventory":    "Inventory",
+        "jab":          "Jab",
         "knockback":    "Knockback",
         "knockout":     "Knock Out",
         "knockedout":   "Knocked Out",

@@ -104,8 +104,36 @@ export class HMCharacterActor extends HMActor {
         this.data.data.encumb = {carried, effective, total};
     }
 
+    async setCClass() {
+        const {data} = this.data;
+        const cclasses = this.items.filter((a) => a.type === 'cclass');
+        if (!cclasses.length) return;
+        const cclass = cclasses.pop();
+
+        cclass._prepCClassData();
+        const objData = cclass.data.data;
+        if (objData.level > 0) { data.bonus.class = objData.bonus; }
+
+        if (cclasses.length) {
+            let oldclass;
+            while (oldclass = cclasses.pop()) await oldclass.delete();
+        }
+    }
+
     setExtras() {
         const {data} = this.data;
         data.sp.max = data.bonus.total?.sp || 0;
+        const cclass = this.items.find((a) => a.type === 'cclass');
+        if (!cclass) return;
+
+        const {level} = cclass.data.data;
+
+        const hValue = parseInt(data.honor.value, 10) || 0;
+        data.honor.bracket = HMTABLES.bracket.honor(level, hValue) || 0;
+        data.honor.value = Math.min(hValue, 999);
+
+        const fValue = parseInt(data.fame.value, 10) || 0;
+        data.fame.bracket = HMTABLES.bracket.fame(fValue) || 0;
+        data.fame.value = Math.min(fValue, 999);
     }
 }

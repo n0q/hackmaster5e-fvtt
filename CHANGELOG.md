@@ -3,9 +3,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+## [0.2.8] - 2022-05-05
+### Added
+- Honor category autoselect.
+- Fame category autoselect.
+- Actors without a trauma save no longer trigger trauma alerts/saves.
+- Jab combat maneuvers.
+- Compendium items.
+### Changed
+- Weapon quality is now part of base vector.
+- Character sheet ui enhancements.
+- Updated attack macro for jab support.
+- Updated weapons compendium for jab support.
+
 ## [0.2.7] - 2022-04-28
 ### Fixed
-- Fixed broken spellcasting from 0.2.6. Oops.
+- Spellcast ui regression.
 
 ## [0.2.6] - 2022-04-27
 ### Added

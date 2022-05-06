@@ -43,24 +43,33 @@
                 <thead>
                     <tr>
                         <th scope='col'></th>
-                        {{#each data.bonus.total}}
+                        {{#each data.bonus.total}}{{#unless (eq @key 'jspd')}}
                         <th scope='col'><label class='resource-label'>{{@key}}</label></th>
-                        {{/each}}
+                        {{/unless}}{{/each}}
                     </tr>
                 </thead>
                 <tbody>
                     {{#each data.bonus}}
                     <tr>
                         <th scope='row'><label class='resource-label'>{{@key}}</label></td>
-                        {{#each this}}{{#if (eq 'mod' @../key)}}
+                        {{#each this}}{{#unless (eq @key 'jspd')}}{{#if (eq @../key 'mod')}}
                         <td>
                             <input class='editable' type='number' value={{this}}
                                 data-item-prop='data.bonus.mod.{{@key}}'
                                 data-dtype='Number' />
                         </td>
                         {{else}}
-                        <td>{{this}}</td>
-                        {{/if}}{{/each}}
+                        <td>
+                            {{this}}{{#if
+                                (and ../../data.jab.checked
+                                    (eq @key 'spd')
+                                        (or
+                                            (eq @../key 'total')
+                                            (eq @../key 'base'))
+                                    )}}({{../jspd}})
+                            {{/if}}
+                        </td>
+                        {{/if}}{{/unless}}{{/each}}
                     </tr>
                     {{/each}}
                 </tbody>

@@ -1,5 +1,6 @@
 import { HMCONST } from '../sys/constants.js';
 import { AttackPrompt } from '../apps/attack.js';
+import { DamagePrompt } from '../apps/damage.js';
 import { SkillPrompt } from '../apps/skill.js';
 
 function getDialogData() {
@@ -43,6 +44,20 @@ async function getAttackDialog(dataset, caller, opt) {
     return dialogResp;
 }
 
+async function getDamageDialog(dataset, caller) {
+    const dialogResp = {caller};
+    const dialogData = getWeapons(caller, dataset?.itemId);
+
+    const title = `${caller.name}: ${game.i18n.localize('HM.dialog.getDamageTitle')}`;
+    dialogResp.resp = await new Promise((resolve) => {
+        const options = {resolve, title};
+        new DamagePrompt(dialogData, options).render(true);
+    });
+
+    dialogResp.context = dialogData.weapons[dialogResp.resp.widx];
+    return dialogResp;
+}
+
 async function getSkillDialog(dataset, caller) {
     const dialogResp = {caller};
     const dialogData = getDialogData();
@@ -69,11 +84,12 @@ export class HMDialogMgr {
         if (name === 'cast')    return this.getCastDialog(dataset, caller);
         if (name === 'ratk')    return      getAttackDialog(dataset, caller);
         if (name === 'def')     return this.getDefendDialog(dataset, caller);
-        if (name === 'dmg')     return this.getDamageDialog(dataset, caller);
+        if (name === 'dmg')     return      getDamageDialog(dataset, caller);
         if (name === 'initdie') return this.getInitDieDialog(caller);
         if (name === 'save')    return this.getSaveDialog(dataset, caller);
         if (name === 'skill')   return      getSkillDialog(dataset, caller);
         if (name === 'wound')   return this.setWoundDialog(caller);
+        return undefined;
     }
 
     _focusById(id) {
@@ -201,49 +217,6 @@ export class HMDialogMgr {
             this._focusById('mod');
         });
         dialogResp.context = dialogData.spells[sidx];
-        return dialogResp;
-    }
-
-    async getDamageDialog(dataset, caller) {
-        const dialogResp = {caller};
-        const dialogData = getWeapons(caller, dataset?.itemId);
-        const template = 'systems/hackmaster5e/templates/dialog/getDamage.hbs';
-
-        let widx = null;
-        dialogResp.resp = await new Promise(async resolve => {
-            new Dialog({
-                title: caller.name + game.i18n.localize('HM.dialog.getDamageTitle'),
-                content: await renderTemplate(template, dialogData),
-                buttons: {
-                    normal: {
-                        label: game.i18n.localize('HM.normal'),
-                        callback: (html) => {
-                            widx = html.find('#weapon-select')[0].value;
-                            resolve({
-                                'shieldhit': false,
-                                'dmg': dialogData.weapons[widx].data.data.dmg.normal,
-                                'mod': parseInt(document.getElementById('mod').value || 0, 10)
-                            })
-                        }
-                    },
-                    shield: {
-                        label: game.i18n.localize('HM.shield'),
-                        icon: '<i class="fas fa-shield-alt"></i>',
-                        callback: (html) => {
-                            widx = html.find('#weapon-select')[0].value;
-                            resolve({
-                                'shieldhit': true,
-                                'dmg': dialogData.weapons[widx].data.data.dmg.shield,
-                                'mod': parseInt(document.getElementById('mod').value || 0, 10)
-                            })
-                        }
-                    }
-                },
-                default: 'normal'
-            }).render(true);
-            this._focusById('mod');
-        });
-        dialogResp.context = dialogData.weapons[widx];
         return dialogResp;
     }
 

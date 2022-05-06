@@ -138,6 +138,7 @@ export class HMItem extends Item {
         const {parent, type} = item;
         if (type !== 'wound') return;
 
+        if (!parent.data.data.bonus.total.trauma) return;
         const {top} = parent.data.data.hp;
         const wound = item.data.data.hp;
         if (!top || top >= wound) return;

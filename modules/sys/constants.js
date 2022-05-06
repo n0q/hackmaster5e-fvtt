@@ -3,7 +3,7 @@ export const MODULE_ID = 'hackmaster5e';
 
 export const MACRO_VERS = {
     'getAttack': 4,
-    'getDamage': 3,
+    'getDamage': 4,
     'getDefend': 3,
     'setWound':  2,
 };
@@ -231,7 +231,10 @@ export const HMTABLES = {
             'standard': 'd20p + @bonus.total.atk + @resp.bonus',
         },
         'dmg': {
-            'standard': '@resp.dmg + @bonus.total.dmg + @resp.mod',
+            'standard':  '@dmg.normal + @bonus.total.dmg + @resp.bonus',
+            'shield':    '@dmg.shield + @bonus.total.dmg + @resp.bonus',
+            'jab':       '@jab.normal + @bonus.total.dmg + @resp.bonus',
+            'shieldjab': '@jab.shield + @bonus.total.dmg + @resp.bonus',
         },
         'def': {
             'standard': 'd20p + @bonus.total.def + @resp.mod',
@@ -257,6 +260,22 @@ export const HMTABLES = {
             'language': 'd100 - (@resp.bonus + @bonus.total.verbal)',
             'literacy': 'd100 - (@resp.bonus + @bonus.total.literacy)',
         },
+    },
+    'bracket': {
+        'fame': (value) => {
+            const fTable = [0, 10, 20, 70, 100, 200, Infinity];
+            return fTable.findIndex((x) => x >= value);
+        },
+        'honor': (level, value) => {
+            const hTable = [0,
+                            3 + level * 2,
+                            6 + level * 4,
+                           10 + level * 10,
+                level > 5 ? 1 + level * 14: Infinity,
+                                            Infinity,
+            ];
+            return hTable.findIndex((x) => x >= value);
+       },
     },
     'quality': {
         'armor':  [1, 1, 0, 0],
@@ -334,14 +353,45 @@ export const HMTABLES = {
 
 // TODO: ITEM_STATE and itemstate are the same table.
 export const HMCONST = {
-    'CARD_TYPE': {
-        'ROLL':  0,
-        'ALERT': 1,
+    CARD_TYPE: {
+        ROLL:  0,
+        ALERT: 1,
     },
-    'ITEM_STATE': {
-        'OWNED':    0,
-        'CARRIED':  1,
-        'EQUIPPED': 2,
-        'INNATE':   3,
+    ITEM_STATE: {
+        OWNED:    0,
+        CARRIED:  1,
+        EQUIPPED: 2,
+        INNATE:   3,
+    },
+    FAME: {
+        UNKNOWN:     0,
+        OBSCURE:     1,
+        LOCALPERSON: 2,
+        MINORCELEB:  3,
+        MAJORCELEB:  4,
+        FAMOUS:      5,
+        EPIC:        6,
+    },
+    HONOR: {
+        NOTORIETY:    0,
+        DISHONORABLE: 1,
+        LOW:          2,
+        AVERAGE:      3,
+        GREAT:        4,
+        LEGENDARY:    5,
+    },
+    SCALE: {
+        TINY:     1,
+        SMALL:    2,
+        MEDIUM:   3,
+        LARGE:    4,
+        HUGE:     5,
+        GIGANTIC: 6,
+        ENORMOUS: 7,
+        COLOSSAL: 8,
+    },
+    SPECIAL: {
+        STANDARD:  0,
+        JAB:       1,
     },
 };

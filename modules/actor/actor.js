@@ -32,22 +32,6 @@ export class HMActor extends Actor {
         }
     }
 
-    async setCClass() {
-        const {data} = this.data;
-        const cclasses = this.items.filter((a) => a.type === 'cclass');
-        if (!cclasses.length) return;
-        const cclass = cclasses.pop();
-
-        cclass._prepCClassData();
-        const objData = cclass.data.data;
-        if (objData.level > 0) { data.bonus.class = objData.bonus; }
-
-        if (cclasses.length) {
-            let oldclass;
-            while (oldclass = cclasses.pop()) await oldclass.delete();
-        }
-    }
-
     setHP() {
         const {data, type} = this.data;
         const max = type === 'character' ? data.bonus.total?.hp || 0

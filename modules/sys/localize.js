@@ -1,3 +1,4 @@
+import { HMCONST } from './constants.js';
 export const idx = {};
 
 // Dictionaries
@@ -48,6 +49,30 @@ idx.handedness = {
     'right':        'HM.handednessSelect.right',
     'left':         'HM.handednessSelect.left',
     'ambidextrous': 'HM.handednessSelect.ambidextrous',
+};
+
+idx.honor = {
+    [HMCONST.HONOR.NOTORIETY]:    'HM.honorSelect.notoriety',
+    [HMCONST.HONOR.DISHONORABLE]: 'HM.honorSelect.dishonorable',
+    [HMCONST.HONOR.LOW]:          'HM.honorSelect.low',
+    [HMCONST.HONOR.AVERAGE]:      'HM.honorSelect.average',
+    [HMCONST.HONOR.GREAT]:        'HM.honorSelect.great',
+    [HMCONST.HONOR.LEGENDARY]:    'HM.honorSelect.legendary',
+};
+
+idx.fame = {
+    [HMCONST.FAME.UNKNOWN]:     'HM.fameSelect.unknown',
+    [HMCONST.FAME.OBSCURE]:     'HM.fameSelect.obscure',
+    [HMCONST.FAME.LOCALPERSON]: 'HM.fameSelect.localperson',
+    [HMCONST.FAME.MINORCELEB]:  'HM.fameSelect.minorceleb',
+    [HMCONST.FAME.MAJORCELEB]:  'HM.fameSelect.majorceleb',
+    [HMCONST.FAME.FAMOUS]:      'HM.fameSelect.famous',
+    [HMCONST.FAME.EPIC]:        'HM.fameSelect.epic',
+};
+
+idx.special = {
+    [HMCONST.SPECIAL.STANDARD]:  'HM.specSelect.std',
+    [HMCONST.SPECIAL.JAB]:       'HM.specSelect.jab',
 };
 
 idx.size = {

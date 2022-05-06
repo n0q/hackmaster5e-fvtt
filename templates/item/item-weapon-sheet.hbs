@@ -1,87 +1,111 @@
-<form class="{{cssClass}}" autocomplete="off">
-    {{> "systems/hackmaster5e/templates/item/parts/header-logistics.hbs" }}
+<form class='{{cssClass}}' autocomplete='off'>
+    {{> 'systems/hackmaster5e/templates/item/parts/header-logistics.hbs' }}
 
-    <nav class="sheet-tabs tabs" data-group="primary">
-        <a class="item" data-tab="description">Description</a>
-        <a class="item" data-tab="attributes">Attributes</a>
+    <nav class='sheet-tabs tabs' data-group='primary'>
+        <a class='item' data-tab='description'>Description</a>
+        <a class='item' data-tab='attributes'>Attributes</a>
     </nav>
 
-    <section class="sheet-body">
-        <div class="tab" data-group="primary" data-tab="description">
-            {{> "systems/hackmaster5e/templates/item/parts/description.hbs" }}
+    <section class='sheet-body'>
+        <div class='tab' data-group='primary' data-tab='description'>
+            {{> 'systems/hackmaster5e/templates/item/parts/description.hbs' }}
         </div>
-        <div class="tab attributes" data-group="primary" data-tab="attributes">
-            <div class="item-form">
+        <div class='tab attributes' data-group='primary' data-tab='attributes'>
+            <div class='item-form'>
                 {{#with data.data}}
-                <div class="sidepanel">
-                    <div class="options-block">
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.speed"}}</label>
-                            <input type="number" class="editable" value={{bonus.base.spd}}
-                                data-item-prop="data.bonus.base.spd"
-                                data-dtype="Number"/>
+                <div class='sidepanel'>
+                    <div class='options-block'>
+                        <div class='options-row'>
+                            <label class='resource-label'>{{localize 'HM.reach'}}</label>
+                            <input type='number' name='data.reach' value='{{reach}}'>
                         </div>
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.reach"}}</label>
-                            <input type="number" name="data.reach" value="{{reach}}">
-                        </div>
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.skill"}}:</label>
-                            <select name="data.skill" style="width: 6em;" data-dtype="{{skill}}">
-                                {{#select skill}}{{#each (findConfigObj "weaponskill") as |type t|}}
-                                <option value="{{t}}">{{localize type}}</option>
+                        <div class='options-row'>
+                            <label class='resource-label'>{{localize 'HM.type'}}:</label>
+                            <select name='data.dmg.type' data-dtype='{{dmg.type}}'>
+                                {{#select dmg.type}}{{#each (findConfigObj 'physdmgtype') as |type t|}}
+                                <option value='{{t}}'>{{localize type}}</option>
                                 {{/each}}{{/select}}
                             </select>
                         </div>
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.size"}}:</label>
-                            <select name="data.scale" {{#if innate}}disabled{{/if}} style="width: 6em;" data-dtype="{{scale}}">
-                                {{#select scale}}{{#each (findConfigObj "scale") as |type t|}}
+                        <div class='options-row'>
+                            <label class='resource-label'>{{localize 'HM.skill'}}:</label>
+                            <select name='data.skill' style='width: 6em;' data-dtype='{{skill}}'>
+                                {{#select skill}}{{#each (findConfigObj 'weaponskill') as |type t|}}
+                                <option value='{{t}}'>{{localize type}}</option>
+                                {{/each}}{{/select}}
+                            </select>
+                        </div>
+                        <div class='options-row'>
+                            <label class='resource-label'>{{localize 'HM.size'}}:</label>
+                            <select name='data.scale' {{#if innate}}disabled{{/if}} style='width: 6em;' data-dtype='{{scale}}'>
+                                {{#select scale}}{{#each (findConfigObj 'scale') as |type t|}}
                                     {{#if (gt t 0)}}
-                                <option value="{{t}}">{{localize type}}</option>
+                                <option value='{{t}}'>{{localize type}}</option>
                                     {{/if}}
                                 {{/each}}{{/select}}
                             </select>
                         </div>
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.quality"}}</label>
-                            <input type="number" class="editable" value="{{qn}}"
-                                data-item-prop="data.qn"
-                                data-dtype="Number"/>
+                        <div class='options-row'>
+                            <label class='resource-label'>{{localize 'HM.quality'}}</label>
+                            <input type='number' class='editable' value='{{qn}}'
+                                data-item-prop='data.qn'
+                                data-dtype='Number'/>
                         </div>
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.ranged"}}</label>
-                            <input type="checkbox" name="data.ranged.checked" {{checked ranged.checked}}/>
+                        <div class='options-row'>
+                            <label class='resource-label'>{{localize 'HM.jab'}}</label>
+                            <input type='checkbox' name='data.jab.checked' {{checked jab.checked}}/>
                         </div>
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.innate"}}</label>
-                            <input type="checkbox" name="data.innate" {{checked innate}}/>
+                        <div class='options-row'>
+                            <label class='resource-label'>{{localize 'HM.ranged'}}</label>
+                            <input type='checkbox' name='data.ranged.checked' {{checked ranged.checked}}/>
+                        </div>
+                        <div class='options-row'>
+                            <label class='resource-label'>{{localize 'HM.innate'}}</label>
+                            <input type='checkbox' name='data.innate' {{checked innate}}/>
                         </div>
                     </div>
                 </div>
-                <div class="sidepanel">
-                    <div class="options-block">
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.damage"}} {{localize "HM.type"}}:</label>
-                            <select name="data.dmg.type" data-dtype="{{dmg.type}}">
-                                {{#select dmg.type}}{{#each (findConfigObj "physdmgtype") as |type t|}}
-                                <option value="{{t}}">{{localize type}}</option>
-                                {{/each}}{{/select}}
-                            </select>
-                        </div>
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.normal"}} {{localize "HM.dmg"}}</label>
-                            <input type="text" style="width: 12em;" name="data.dmg.normal" value="{{dmg.normal}}" data-dtype="String"/>
-                        </div>
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.shield"}} {{localize "HM.dmg"}}</label>
-                            <input type="text" style="width: 12em;" name="data.dmg.shield" value="{{dmg.shield}}" data-dtype="String"/>
-                        </div>
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.proficiency"}}</label>
-                            <input type="text" style="width: 12em;" name="data.proficiency" value="{{proficiency}}" data-dtype="String"/>
+                <div class='sidepanel'>
+                    <div class='options-block'>
+                        <div class='options-row'>
+                            <label class='resource-label'>{{localize 'HM.proficiency'}}</label>
+                            <input type='text' style='width: 12em;' name='data.proficiency' value='{{proficiency}}' data-dtype='String'/>
                         </div>
                     </div>
+                    <div class='options-block'>
+                        <div class='options-row'>
+                            <label class='resource-label'>{{localize 'HM.speed'}}</label>
+                            <input type='number' class='editable' value={{bonus.base.spd}}
+                                data-item-prop='data.bonus.base.spd'
+                                data-dtype='Number'/>
+                    {{#if jab.checked}}
+                            <label class='resource-label'>{{localize 'HM.jab'}}</label>
+                            <input type='number' class='editable' value={{bonus.base.jspd}}
+                                data-item-prop='data.bonus.base.jspd'
+                                data-dtype='Number'/>
+                    {{else}}
+                    <div></div><div></div>
+                    {{/if}}
+                        </div>
+                        <div class='options-row'>
+                            <label class='resource-label'>{{localize 'HM.normal'}} {{localize 'HM.dmg'}}</label>
+                            <input type='text' style='width: 12em;' name='data.dmg.normal' value='{{dmg.normal}}' data-dtype='String'/>
+                        </div>
+                        <div class='options-row'>
+                            <label class='resource-label'>{{localize 'HM.shield'}} {{localize 'HM.dmg'}}</label>
+                            <input type='text' style='width: 12em;' name='data.dmg.shield' value='{{dmg.shield}}' data-dtype='String'/>
+                        </div>
+                    {{#if jab.checked}}
+                        <div class='options-row'>
+                            <label class='resource-label'>{{localize 'HM.normal'}} {{localize 'HM.jab'}}</label>
+                            <input type='text' style='width: 12em;' name='data.jab.normal' value='{{jab.normal}}' data-dtype='String'/>
+                        </div>
+                        <div class='options-row'>
+                            <label class='resource-label'>{{localize 'HM.shield'}} {{localize 'HM.jab'}}</label>
+                            <input type='text' style='width: 12em;' name='data.jab.shield' value='{{jab.shield}}' data-dtype='String'/>
+                        </div>
+                    </div>
+                    {{/if}}
                 </div>
                 {{/with}}
             </div>

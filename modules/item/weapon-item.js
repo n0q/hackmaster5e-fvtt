@@ -11,15 +11,12 @@ export class HMWeaponItem extends HMItem {
 
     prepareDerivedData() {
         super.prepareDerivedData();
-        this._prepWeaponData();
-    }
-
-    _prepWeaponData() {
         if (!this.actor?.data) return;
+
         const actorData   = this.actor.data;
         const itemData    = this.data.data;
 
-        const {ranged}    = itemData;
+        const {jab, ranged} = itemData;
         const isCharacter = actorData.type === 'character';
         const armors      = [];
         const shields     = [];
@@ -44,7 +41,14 @@ export class HMWeaponItem extends HMItem {
         }
 
         const {bonus}   = itemData;
+
+        // Migration target.
         const qual      = this.quality;
+        bonus.base.atk  = qual.atk;
+        bonus.base.def  = qual.def;
+        bonus.base.dmg  = qual.dmg;
+        delete bonus.qual;
+
         const cclass    = {};
         const misc      = {};
         const race      = {};
@@ -91,7 +95,6 @@ export class HMWeaponItem extends HMItem {
         }
 
         // TODO: Build a new data.data.bonus rather than clean the old one.
-        Object.values(qual).every((a) => a === 0)   ? delete bonus.qual   : bonus.qual   = qual;
         Object.values(armor).every((a) => a === 0)  ? delete bonus.armor  : bonus.armor  = armor;
         Object.values(shield).every((a) => a === 0) ? delete bonus.shield : bonus.shield = shield;
         Object.values(misc).every((a) => a === 0)   ? delete bonus.misc   : bonus.misc   = misc;
@@ -108,8 +111,19 @@ export class HMWeaponItem extends HMItem {
             for (const state in bonus) { sum += bonus[state][key]; }
             bonus.total[key] = sum;
         });
-        const {maxspd} = HMTABLES.weapons.scale[itemData.scale]
+        const {maxspd} = HMTABLES.weapons.scale[itemData.scale];
         bonus.total.spd = Math.max(maxspd, bonus.total.spd);
+        if (jab.checked) {
+            const jspd = bonus.total.spd + (bonus.base.jspd - bonus.base.spd);
+            bonus.total.jspd = Math.max(maxspd, jspd);
+        }
+    }
+
+    get capabilities() {
+        const {data} = this.data;
+        const capList = [HMCONST.SPECIAL.STANDARD];
+        if (data.jab.checked) capList.push(HMCONST.SPECIAL.JAB);
+        return capList;
     }
 
     // TODO: This needs a refactor, but it's too soon to do so. We should
@@ -148,13 +162,13 @@ export class HMWeaponItem extends HMItem {
         const dialogResp = await dialogMgr.getDialog(dataset, actor, opt);
 
         const ranged = dialogResp.context.data.data.ranged.checked;
-        if (ranged) dataset.dialog ='ratk';
+        if (ranged) dataset.dialog = 'ratk';
 
         const rollMgr = new HMRollMgr();
         const roll = await rollMgr.getRoll(dataset, dialogResp);
 
         if (dialogResp.resp.advance) {
-            const {spd} = dialogResp.context.data.data.bonus.total;
+            const spd = Number(dialogResp.resp.advance);
             const newInit = comData.initiative > comData.round
                 ? comData.initiative + spd
                 : comData.round + spd;
@@ -163,6 +177,37 @@ export class HMWeaponItem extends HMItem {
 
         const chatMgr = new HMChatMgr();
         const card = await chatMgr.getCard({roll, dataset, dialogResp});
+        await ChatMessage.create(card);
+    }
+
+    static async rollDamage({weapon, caller}={}) {
+        let actor;
+        let token;
+        if (!caller) {
+            [token] = canvas.tokens.controlled;
+            actor   = token.actor;
+        } else if (caller.isToken) {
+            actor   = caller;
+            token   = caller.token;
+        } else {
+            actor = caller;
+        }
+        if (!token && !actor) return;
+
+        const dialog = 'dmg';
+        const dataset = {dialog, itemId: weapon};
+
+        const dialogMgr = new HMDialogMgr();
+        const dialogResp = await dialogMgr.getDialog(dataset, actor);
+
+        const rollMgr = new HMRollMgr();
+        dataset.roll = await rollMgr.getRoll(dataset, dialogResp);
+        dataset.resp = dialogResp.resp;
+        dataset.context = dialogResp.context;
+        dataset.caller = actor;
+
+        const chatMgr = new HMChatMgr();
+        const card = await chatMgr.getCard({dataset});
         await ChatMessage.create(card);
     }
 }

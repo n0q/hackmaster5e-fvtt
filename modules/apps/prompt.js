@@ -43,6 +43,7 @@ export class HMPrompt extends Application {
             this.close();
         });
 
+        // TODO: Better types handling
         html.on('change', '.bind', async (ev) => {
             ev.preventDefault();
             ev.stopPropagation();
