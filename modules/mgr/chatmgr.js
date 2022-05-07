@@ -92,9 +92,17 @@ async function createSaveCard(roll, dataset, dialogResp) {
 }
 
 async function createAbilityCard(roll, dataset) {
-    const saveType = game.i18n.localize(`HM.abilityLong.${dataset.ability.toLowerCase()}`);
-    const flavor = `${saveType} ${game.i18n.localize('HM.check')}`;
-    const content = await roll.render({flavor});
+    const saveType    = game.i18n.localize(`HM.abilityLong.${dataset.ability.toLowerCase()}`);
+    const flavor      = `${saveType} ${game.i18n.localize('HM.check')}`;
+    const rollContent = await roll.render({flavor});
+
+    const sumDice       = getDiceSum(roll);
+    const specialRow    = sumDice === 1 ? game.i18n.localize('HM.critfail') : undefined;
+    const templateData  = {specialRow};
+    const template      = 'systems/hackmaster5e/templates/chat/check.hbs';
+    const resultContent = await renderTemplate(template, templateData);
+
+    const content = resultContent + rollContent;
     return {content};
 }
 
