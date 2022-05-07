@@ -6,7 +6,9 @@ module.exports = {
     'settings': {
         'react': {'version': 'latest'}
         },
+    'parser': '@babel/eslint-parser',
     'parserOptions': {
+        'requireConfigFile': false,
         'ecmaVersion': 2020,
         'sourceType': 'module',
         'ecmaFeatures': {'jsx': true}

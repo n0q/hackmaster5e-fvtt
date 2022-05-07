@@ -2,7 +2,7 @@
 const gulp = require('gulp');
 const sass = require('gulp-dart-sass');
 const cache = require('gulp-cached');
-const eslint = require('gulp-eslint');
+const eslint = require('gulp-eslint-new');
 
 gulp.task('sass', function () {
     return gulp.src('./scss/**/*.scss')
@@ -10,7 +10,7 @@ gulp.task('sass', function () {
         .pipe(gulp.dest('./styles'));
 });
 
-gulp.task('lint', function () {
+gulp.task('eslint', function () {
     return gulp.src(['hm.js', './modules/**/*.js'])
         .pipe(cache('lint'))
         .pipe(eslint())
@@ -19,5 +19,5 @@ gulp.task('lint', function () {
 
 gulp.task('default', function () {
     gulp.watch('./scss/**/*.scss', gulp.series('sass'));
-    gulp.watch(['hm.js', './modules/**/*.js'], gulp.series('lint'));
+    gulp.watch(['hm.js', './modules/**/*.js'], gulp.series('eslint'));
 });
