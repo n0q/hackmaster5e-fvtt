@@ -73,6 +73,8 @@ idx.fame = {
 idx.special = {
     [HMCONST.SPECIAL.STANDARD]:  'HM.specSelect.std',
     [HMCONST.SPECIAL.JAB]:       'HM.specSelect.jab',
+    [HMCONST.SPECIAL.BACKSTAB]:  'HM.specSelect.stab',
+    [HMCONST.SPECIAL.FLEEING]:   'HM.specSelect.flee',
 };
 
 idx.size = {

@@ -123,6 +123,7 @@ async function createDamageCard(dataset) {
 
     const mods = [];
     if (resp.specialMove === HMCONST.SPECIAL.JAB) mods.push(game.i18n.localize('HM.jab'));
+    if (resp.specialMove === HMCONST.SPECIAL.BACKSTAB) mods.push(game.i18n.localize('HM.backstab'));
     if (resp.shieldHit) mods.push(game.i18n.localize('HM.blocked'));
     if (mods.length) flavor += ` (${mods.join(', ')})`;
     const weaponRow = `${game.i18n.localize('HM.weapon')}: <b>${context.name}</b>`;

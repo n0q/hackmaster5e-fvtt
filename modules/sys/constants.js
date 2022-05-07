@@ -235,6 +235,7 @@ export const HMTABLES = {
             'shield':    '@dmg.shield + @bonus.total.dmg + @resp.bonus',
             'jab':       '@jab.normal + @bonus.total.dmg + @resp.bonus',
             'shieldjab': '@jab.shield + @bonus.total.dmg + @resp.bonus',
+            'backstab':  '@dmg.normal + @bonus.total.dmg + @backstab.bonus + @resp.bonus',
         },
         'def': {
             'standard': 'd20p + @bonus.total.def + @resp.mod',
@@ -394,5 +395,7 @@ export const HMCONST = {
     SPECIAL: {
         STANDARD:  0,
         JAB:       1,
+        BACKSTAB:  2,
+        FLEEING:   3,
     },
 };

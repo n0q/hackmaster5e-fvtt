@@ -119,11 +119,13 @@ export class HMWeaponItem extends HMItem {
         }
     }
 
+    // TODO: Refactor after Migration.
     get capabilities() {
         const {data} = this.data;
-        const capList = [HMCONST.SPECIAL.STANDARD];
+        const capList = Object.keys(data.caps).map((x) => Number(x));
+        capList.push(HMCONST.SPECIAL.STANDARD);
         if (data.jab.checked) capList.push(HMCONST.SPECIAL.JAB);
-        return capList;
+        return capList.sort();
     }
 
     // TODO: This needs a refactor, but it's too soon to do so. We should
@@ -172,16 +174,17 @@ export class HMWeaponItem extends HMItem {
         await ChatMessage.create(card);
 
         if (dialogResp.resp.advance) {
-            const spd = Number(dialogResp.resp.advance);
-            const oldInit = Math.max(comData.initiative, comData.round);
-            const newInit = oldInit + spd;
-            active.setInitiative(comData.combatant.id, newInit);
+            const {combatant} = comData;
+            const delta       = Number(dialogResp.resp.advance);
+            const oldInit     = Math.max(comData.initiative, comData.round);
+            const newInit     = oldInit + delta;
+            active.setInitiative(combatant.id, newInit);
 
             const initChatData = {
-                name: comData.combatant.name,
-                delta: spd,
-                old: oldInit,
-                new: newInit,
+                name: combatant.name,
+                delta,
+                oldInit,
+                newInit,
             };
             const cardtype = HMCONST.CARD_TYPE.NOTE;
             const initChatCard = await chatMgr.getCard({cardtype, dataset: initChatData});

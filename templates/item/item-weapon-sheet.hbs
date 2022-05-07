@@ -14,7 +14,7 @@
             <div class='item-form'>
                 {{#with data.data}}
                 <div class='sidepanel'>
-                    <div class='options-block'>
+                    <div class='options-block' style="zoom: 0.815;">
                         <div class='options-row'>
                             <label class='resource-label'>{{localize 'HM.reach'}}</label>
                             <input type='number' name='data.reach' value='{{reach}}'>
@@ -54,6 +54,10 @@
                         <div class='options-row'>
                             <label class='resource-label'>{{localize 'HM.jab'}}</label>
                             <input type='checkbox' name='data.jab.checked' {{checked jab.checked}}/>
+                        </div>
+                        <div class='options-row'>
+                            <label class='resource-label'>{{localize 'HM.backstab'}}</label>
+                            <input type='checkbox' name='data.caps.2.checked' {{checked caps.[2].checked}}/>
                         </div>
                         <div class='options-row'>
                             <label class='resource-label'>{{localize 'HM.ranged'}}</label>

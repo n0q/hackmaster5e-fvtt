@@ -120,8 +120,10 @@
         },
 
         "specSelect": {
-            "std": "Standard Attack",
-            "jab": "Jab Attack"
+            "std":  "Standard Attack",
+            "jab":  "Jab Attack",
+            "stab": "Backstab",
+            "flee": "Fleeing Opponent"
         },
 
         "statbonus": {
@@ -370,6 +372,7 @@
         "auto":         "Auto",
         "availability": "Availability",
         "average":      "Average",
+        "backstab":     "Backstab",
         "base":         "Base",
         "biography":    "Biography",
         "blocked":      "Blocked",
