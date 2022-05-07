@@ -1,8 +1,6 @@
 import { HMTABLES, HMCONST } from '../sys/constants.js';
 import { idx } from '../sys/localize.js';
 
-/* global PoolTerm */
-
 function getDiceSum(roll) {
     let sum = 0;
     for (let i = 0; i < roll.terms.length; i++) {
@@ -64,6 +62,13 @@ async function saveExtendedTrauma(content, roll) {
     const template = 'systems/hackmaster5e/templates/chat/trauma.hbs';
     const label = await renderTemplate(template, context);
     return {content: label + exContent, rolls};
+}
+
+async function createInitNote(dataset) {
+    const template = 'systems/hackmaster5e/templates/chat/initNote.hbs';
+    const content = await renderTemplate(template, dataset);
+    const type = CONST.CHAT_MESSAGE_TYPES.OTHER;
+    return {content, type};
 }
 
 async function createSaveCard(roll, dataset, dialogResp) {
@@ -188,6 +193,8 @@ export class HMChatMgr {
             }
         } else if (cardtype === HMCONST.CARD_TYPE.ALERT) {
             cData = await createToPAlert(dataset);
+        } else if (cardtype === HMCONST.CARD_TYPE.NOTE) {
+            cData = await createInitNote(dataset);
         }
 
         const chatData = {
@@ -200,7 +207,7 @@ export class HMChatMgr {
         if (roll || dataset?.roll) {
             chatData.roll     = cData?.roll || roll;
             chatData.rollMode = cData.rollMode ? cData.rollMode : game.settings.get('core', 'rollMode');
-            chatData.type     = CONST.CHAT_MESSAGE_TYPES.ROLL;
+            chatData.type     = cData?.type || CONST.CHAT_MESSAGE_TYPES.ROLL;
             chatData.sound    = CONFIG.sounds.dice;
         }
 
@@ -313,4 +320,15 @@ export class HMChatMgr {
         const content = await renderTemplate(template, dialogResp);
         return {content};
     }
+
+   /* eslint-disable */ //
+    static async renderChatMessage(_app, html, _data) {
+        if (!html.find('.hm-chat-note').length) return;
+
+        html.css('padding', '0px');
+        html.find('.message-sender').text('');
+        html.find('.message-metadata')[0].style.display = 'none';
+        if (!game.user.isGM) html.find('a').remove();
+    }
+    /* eslint-enable */ //
 }

@@ -167,17 +167,26 @@ export class HMWeaponItem extends HMItem {
         const rollMgr = new HMRollMgr();
         const roll = await rollMgr.getRoll(dataset, dialogResp);
 
-        if (dialogResp.resp.advance) {
-            const spd = Number(dialogResp.resp.advance);
-            const newInit = comData.initiative > comData.round
-                ? comData.initiative + spd
-                : comData.round + spd;
-            active.setInitiative(comData.combatant.id, newInit);
-        }
-
         const chatMgr = new HMChatMgr();
         const card = await chatMgr.getCard({roll, dataset, dialogResp});
         await ChatMessage.create(card);
+
+        if (dialogResp.resp.advance) {
+            const spd = Number(dialogResp.resp.advance);
+            const oldInit = Math.max(comData.initiative, comData.round);
+            const newInit = oldInit + spd;
+            active.setInitiative(comData.combatant.id, newInit);
+
+            const initChatData = {
+                name: comData.combatant.name,
+                delta: spd,
+                old: oldInit,
+                new: newInit,
+            };
+            const cardtype = HMCONST.CARD_TYPE.NOTE;
+            const initChatCard = await chatMgr.getCard({cardtype, dataset: initChatData});
+            await ChatMessage.create(initChatCard);
+        }
     }
 
     static async rollDamage({weapon, caller}={}) {

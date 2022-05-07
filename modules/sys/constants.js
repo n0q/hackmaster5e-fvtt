@@ -356,6 +356,7 @@ export const HMCONST = {
     CARD_TYPE: {
         ROLL:  0,
         ALERT: 1,
+        NOTE:  2,
     },
     ITEM_STATE: {
         OWNED:    0,

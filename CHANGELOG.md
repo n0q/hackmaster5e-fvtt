@@ -3,11 +3,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+### Added
+- Chat is alerted to initiative auto-updates.
+
 ## [0.2.8] - 2022-05-05
 ### Added
 - Honor category autoselect.
 - Fame category autoselect.
-- Actors without a trauma save no longer trigger trauma alerts/saves.
 - Jab combat maneuvers.
 - Compendium items.
 ### Changed
@@ -15,6 +17,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Character sheet ui enhancements.
 - Updated attack macro for jab support.
 - Updated weapons compendium for jab support.
+### Fixed
+- Actors without a trauma save no longer trigger trauma alerts/saves.
 
 ## [0.2.7] - 2022-04-28
 ### Fixed

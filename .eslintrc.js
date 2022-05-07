@@ -12,6 +12,12 @@ module.exports = {
         'ecmaFeatures': {'jsx': true}
     },
     'extends': ['airbnb', '@typhonjs-fvtt/eslint-config-foundry.js'],
+    'globals': {
+        '$': false,
+        'game': false,
+        'PoolTerm': false,
+        'DOMPurify': false,
+    },
     'rules': {
         'import/extensions': 'off',
         'import/prefer-default-export': 'off',

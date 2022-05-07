@@ -3,7 +3,7 @@ import { HMActorFactory } from './modules/actor/actor-factory.js';
 import { HMBeastActorSheet } from './modules/actor/beast-actor-sheet.js';
 import { HMCharacterActorSheet } from './modules/actor/character-actor-sheet.js';
 import { HMItem } from './modules/item/item.js';
-import { HMWeaponItem } from './modules/item/weapon-item.js'
+import { HMWeaponItem } from './modules/item/weapon-item.js';
 import { HMItemFactory } from './modules/item/item-factory.js';
 import { HMItemSheet } from './modules/item/item-sheet.js';
 import { HMCombat, HMCombatTracker } from './modules/sys/combat.js';
@@ -15,6 +15,7 @@ import registerHandlebarsHelpers from './modules/sys/helpers.js';
 import preloadHandlebarsTemplates from './modules/sys/partials.js';
 
 import './modules/sys/dice.js';
+import {HMChatMgr} from './modules/mgr/chatmgr.js';
 
 Hooks.once('init', async () => {
     game[MODULE_ID] = { HMActor, HMItem, HMWeaponItem };
@@ -57,6 +58,7 @@ Hooks.once('ready', async () => {
 Hooks.on('createActor', HMActor.createActor);
 Hooks.on('createToken', HMActor.createToken);
 Hooks.on('createItem', HMItem.createItem);
+Hooks.on('renderChatMessage', HMChatMgr.renderChatMessage);
 Hooks.on('renderCombatTracker', HMCombatTracker.renderCombatTracker);
 Hooks.on('hotbarDrop', HMMacro.hotbarDrop);
 Hooks.on('diceSoNiceRollStart', (_messageId, context) => {

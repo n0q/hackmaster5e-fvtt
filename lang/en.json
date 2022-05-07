@@ -197,7 +197,7 @@
             "getAbilityButtonL": "Ability Save",
             "getAbilityButtonR": "Ability Check",
             "getCastTitle":      "Cast a Spell",
-            "getDamageTitle":    ": Roll for Damage",
+            "getDamageTitle":    "Roll for Damage",
             "getDefendTitle":    ": Defend Thyself",
             "getSaveTitle":      "Save",
             "getSkillTitle1":    "Skill Check",
