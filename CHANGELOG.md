@@ -6,7 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - Chat is alerted to initiative auto-updates.
 - Ability checks can critically fail.
-- Support for backstabs.
+- Class/Weapon support for backstabs and fleeing opponents specials.
+### Changed
+- Updated class sheets.
+
 ## [0.2.8] - 2022-05-05
 ### Added
 - Honor category autoselect.
@@ -75,7 +78,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [0.2.1] - 2022-04-13
 ### Fixed
 - Beast sheet formatting.
-
 ### Added
 - Functional biography section.
 

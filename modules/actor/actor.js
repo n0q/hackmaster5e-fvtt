@@ -11,6 +11,11 @@ export class HMActor extends Actor {
         this.setHP();
     }
 
+    get canBackstab() {
+        if (this.cclass) return this.cclass.data.features.back || false;
+        return false;
+    }
+
     resetBonus() {
         const {data} = this.data;
         const {misc} = data.bonus;
@@ -60,14 +65,18 @@ export class HMActor extends Actor {
                 for (const idxKey in idx) {
                     const idxValue = idx[idxKey];
                     const table    = HMTABLES[idxKey][idxValue];
-                    bonus[vector]     = Object.assign(bonus[vector], table);
+                    bonus[vector]  = Object.assign(bonus[vector], table);
                 }
             }
 
             for (const key in bonus[vector]) {
                 const value = bonus[vector][key];
                 if (key !== '_idx' && value !== null) {
-                    total[key] = (total?.[key] || 0) + value;
+                    if (typeof value === 'string') {
+                        total[key] = total?.[key]?.length ? `${total[key]} + ${value}` : value;
+                    } else {
+                        total[key] = (total?.[key] || 0) + value;
+                    }
                 }
             }
         }

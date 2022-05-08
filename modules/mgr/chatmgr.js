@@ -113,19 +113,26 @@ async function createToPAlert(dataset) {
     return {content, flavor};
 }
 
+function getSpecialMoveFlavor(resp) {
+    const mods = [];
+    const {specialMove, shieldHit} = resp;
+    const {SPECIAL} = HMCONST;
+    if (specialMove === SPECIAL.JAB) mods.push(game.i18n.localize('HM.jab'));
+    if (specialMove === SPECIAL.BACKSTAB) mods.push(game.i18n.localize('HM.backstab'));
+    if (specialMove === SPECIAL.FLEEING) mods.push(game.i18n.localize('HM.fleeing'));
+    if (shieldHit) mods.push(game.i18n.localize('HM.blocked'));
+    return mods.length ? ` (${mods.join(', ')})` : '';
+}
+
 async function createDamageCard(dataset) {
     const {caller, context, roll, resp} = dataset;
     const dmgsrc = context.data.data.ranged.checked
         ? game.i18n.localize('HM.ranged')
         : game.i18n.localize('HM.melee');
     const dmgrollTxt = `${game.i18n.localize('HM.damage')} ${game.i18n.localize('HM.roll')}`;
-    let flavor = `${dmgsrc} ${dmgrollTxt}`;
 
-    const mods = [];
-    if (resp.specialMove === HMCONST.SPECIAL.JAB) mods.push(game.i18n.localize('HM.jab'));
-    if (resp.specialMove === HMCONST.SPECIAL.BACKSTAB) mods.push(game.i18n.localize('HM.backstab'));
-    if (resp.shieldHit) mods.push(game.i18n.localize('HM.blocked'));
-    if (mods.length) flavor += ` (${mods.join(', ')})`;
+    let flavor = `${dmgsrc} ${dmgrollTxt}`;
+    flavor += getSpecialMoveFlavor(resp);
     const weaponRow = `${game.i18n.localize('HM.weapon')}: <b>${context.name}</b>`;
 
     let content = await roll.render({flavor});
@@ -252,9 +259,10 @@ export class HMChatMgr {
             }
 
             case 'atk': {
-                const flavor = `${game.i18n.localize('HM.melee')}
-                                ${game.i18n.localize('HM.attack')}
-                                ${game.i18n.localize('HM.roll')}`;
+                let flavor = `${game.i18n.localize('HM.melee')}
+                              ${game.i18n.localize('HM.attack')}
+                              ${game.i18n.localize('HM.roll')}`;
+                flavor += getSpecialMoveFlavor(dialogResp.resp);
                 let content = await roll.render({flavor});
 
                 const weaponRow = `${game.i18n.localize('HM.weapon')}:

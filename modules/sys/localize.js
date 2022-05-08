@@ -45,6 +45,16 @@ idx.alignment = {
     'non': 'HM.alignmentSelect.non',
 };
 
+idx.classFeatureTable = {
+    'sp':   'HM.classFeatureTable.sp',
+    'atk':  'HM.classFeatureTable.atk',
+    'spd':  'HM.classFeatureTable.spd',
+    'spdm': 'HM.classFeatureTable.spdm',
+    'spdr': 'HM.classFeatureTable.spdr',
+    'init': 'HM.classFeatureTable.init',
+    'back': 'HM.classFeatureTable.back',
+};
+
 idx.handedness = {
     'right':        'HM.handednessSelect.right',
     'left':         'HM.handednessSelect.left',
@@ -174,6 +184,7 @@ idx.itemCClass = {
     'spd':  'HM.spdbonus',
     'spdr': 'HM.spdrbonus',
     'spdm': 'HM.spdmbonus',
+    'back': 'HM.backstab',
 };
 
 idx.itemTypes = {

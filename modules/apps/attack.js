@@ -1,11 +1,5 @@
 import { HMPrompt } from './prompt.js';
-import { idx } from '../sys/localize.js';
 import { HMCONST } from '../sys/constants.js';
-
-function getCapList(caps) {
-    const {special} = idx;
-    return Object.fromEntries(caps.map((x) => Object.entries(special)[x]));
-    }
 
 export class AttackPrompt extends HMPrompt {
     static get defaultOptions() {
@@ -18,9 +12,10 @@ export class AttackPrompt extends HMPrompt {
     constructor(dialogData, options) {
         super(dialogData, options);
         const weapon = dialogData.weapons[0];
-        const capList = getCapList(weapon.capabilities);
+        const capList = this.getCapList(weapon.capabilities, dialogData?.callerId);
 
         mergeObject(this.dialogData, {
+            callerId: dialogData?.callerId,
             capList,
             specialMove: 0,
             ranged: weapon.data.data.ranged.checked,
@@ -32,7 +27,7 @@ export class AttackPrompt extends HMPrompt {
     }
 
     update(options) {
-        const {weapons, widx} = this.dialogData;
+        const {weapons, widx, callerId} = this.dialogData;
         const weapon   = weapons[widx];
         const wData    = weapon.data.data;
         const {ranged} = wData;
@@ -42,7 +37,7 @@ export class AttackPrompt extends HMPrompt {
 
         this.dialogData.ranged = ranged.checked;
         this.dialogData.spd = spd;
-        this.dialogData.capList = getCapList(weapons[widx].capabilities);
+        this.dialogData.capList = this.getCapList(weapons[widx].capabilities, callerId);
         super.update(options);
     }
 

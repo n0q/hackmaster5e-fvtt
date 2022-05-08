@@ -119,13 +119,19 @@ export class HMWeaponItem extends HMItem {
         }
     }
 
-    // TODO: Refactor after Migration.
     get capabilities() {
+        const {SPECIAL} = HMCONST;
+        const {caps, jab} = this.data.data;
+        const capsArr = Object.keys(caps).filter((key) => caps[key].checked).map((x) => Number(x));
+        capsArr.push(SPECIAL.STANDARD);
+        if (jab.checked) capsArr.push(SPECIAL.JAB);
+        return capsArr.sort();
+    }
+
+    get canBackstab() {
+        const {SPECIAL} = HMCONST;
         const {data} = this.data;
-        const capList = Object.keys(data.caps).map((x) => Number(x));
-        capList.push(HMCONST.SPECIAL.STANDARD);
-        if (data.jab.checked) capList.push(HMCONST.SPECIAL.JAB);
-        return capList.sort();
+        return data.caps?.[SPECIAL.BACKSTAB]?.checked || false;
     }
 
     // TODO: This needs a refactor, but it's too soon to do so. We should

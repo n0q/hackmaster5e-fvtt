@@ -231,11 +231,12 @@ export const HMTABLES = {
             'standard': 'd20p + @bonus.total.atk + @resp.bonus',
         },
         'dmg': {
-            'standard':  '@dmg.normal + @bonus.total.dmg + @resp.bonus',
-            'shield':    '@dmg.shield + @bonus.total.dmg + @resp.bonus',
-            'jab':       '@jab.normal + @bonus.total.dmg + @resp.bonus',
-            'shieldjab': '@jab.shield + @bonus.total.dmg + @resp.bonus',
-            'backstab':  '@dmg.normal + @bonus.total.dmg + @backstab.bonus + @resp.bonus',
+            'standard':    '@dmg.normal + @bonus.total.dmg + @resp.bonus',
+            'shield':      '@dmg.shield + @bonus.total.dmg + @resp.bonus',
+            'jab':         '@jab.normal + @bonus.total.dmg + @resp.bonus',
+            'shieldjab':   '@jab.shield + @bonus.total.dmg + @resp.bonus',
+            'bstab':       '@dmg.normal + @bonus.total.dmg + @actorbonus.total.back + @resp.bonus',
+            'shieldbstab': '@dmg.shield + @bonus.total.dmg + @actorbonus.total.back + @resp.bonus',
         },
         'def': {
             'standard': 'd20p + @bonus.total.def + @resp.mod',

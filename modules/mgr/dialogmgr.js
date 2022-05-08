@@ -32,6 +32,7 @@ function getWeapons(actor, itemId) {
 async function getAttackDialog(dataset, caller, opt) {
     const dialogResp = {caller};
     const dialogData = getWeapons(caller, dataset?.itemId);
+    dialogData.callerId = caller.id;
     if (opt.isCombatant) dialogData.inCombat = true;
 
     const title = `${caller.name}: ${game.i18n.localize('HM.dialog.getAttackTitle')}`;
@@ -47,6 +48,7 @@ async function getAttackDialog(dataset, caller, opt) {
 async function getDamageDialog(dataset, caller) {
     const dialogResp = {caller};
     const dialogData = getWeapons(caller, dataset?.itemId);
+    dialogData.callerId = caller.id;
 
     const title = `${caller.name}: ${game.i18n.localize('HM.dialog.getDamageTitle')}`;
     dialogResp.resp = await new Promise((resolve) => {

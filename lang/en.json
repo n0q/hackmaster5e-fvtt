@@ -62,6 +62,16 @@
             "non":  "Non"
         },
 
+        "classFeatureTable": {
+            "sp":   "SP",
+            "atk":  "Attack",
+            "spd":  "Speed",
+            "spdm": "MSpeed",
+            "spdr": "RSpeed",
+            "init": "Init",
+            "back": "Backstab"
+        },
+
         "handednessSelect": {
             "right":        "Right",
             "left":         "Left",
@@ -418,6 +428,7 @@
         "fame":         "Fame",
         "family":       "Family",
         "feat":         "Feat",
+        "fleeing":      "Fleeing",
         "for":          "For",
         "goodbye":      "Goodbye",
         "habitat":      "Habitat",
