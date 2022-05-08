@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * Adds the 'p' (for 'penetrate') modifier to die rolls.
  * This is similar to 'exploding' dice, but each 'exploded' die has 1 subtracted from it.
@@ -26,10 +27,9 @@ Die.prototype.penetrate = function(modifier, {recursive=true}={}) {
     comparison = comparison || "=";
     max = Number.isNumeric(max) ? parseInt(max) : null;
 
-    var penetrate_faces;
-    if (this.faces == 100) penetrate_faces = 20;
-    else if (this.faces == 20) penetrate_faces = 6;
-    else penetrate_faces = this.faces;
+    let penetrate_faces = this.faces;
+    if (this.faces === 100) { penetrate_faces = 20; } else
+    if (this.faces === 20)  { penetrate_faces = 6;  }
 
     // Recursively penetrate until there are no remaining results to penetrate
     let i = 0;

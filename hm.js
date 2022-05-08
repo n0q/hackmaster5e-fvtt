@@ -6,6 +6,7 @@ import { HMItem } from './modules/item/item.js';
 import { HMWeaponItem } from './modules/item/weapon-item.js';
 import { HMItemFactory } from './modules/item/item-factory.js';
 import { HMItemSheet } from './modules/item/item-sheet.js';
+import { HMChatMgr } from './modules/mgr/chatmgr.js';
 import { HMCombat, HMCombatTracker } from './modules/sys/combat.js';
 import { HMMacro } from './modules/sys/macro.js';
 import LOGGER from './modules/sys/logger.js';
@@ -15,7 +16,6 @@ import registerHandlebarsHelpers from './modules/sys/helpers.js';
 import preloadHandlebarsTemplates from './modules/sys/partials.js';
 
 import './modules/sys/dice.js';
-import {HMChatMgr} from './modules/mgr/chatmgr.js';
 
 Hooks.once('init', async () => {
     game[MODULE_ID] = { HMActor, HMItem, HMWeaponItem };

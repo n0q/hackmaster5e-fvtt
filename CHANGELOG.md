@@ -2,13 +2,17 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [0.2.9] - 2022-05-08
 ### Added
 - Chat is alerted to initiative auto-updates.
 - Ability checks can critically fail.
 - Class/Weapon support for backstabs and fleeing opponents specials.
+- Attack chat cards report special moves like the damage cards.
+- Compendium items.
 ### Changed
 - Updated class sheets.
+### Fixed
+- Attack cards display jab speed for weapons which can jab.
 
 ## [0.2.8] - 2022-05-05
 ### Added
