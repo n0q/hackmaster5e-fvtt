@@ -263,20 +263,19 @@ export class HMChatMgr {
                               ${game.i18n.localize('HM.attack')}
                               ${game.i18n.localize('HM.roll')}`;
                 flavor += getSpecialMoveFlavor(dialogResp.resp);
-                let content = await roll.render({flavor});
-
-                const weaponRow = `${game.i18n.localize('HM.weapon')}:
-                                <b>${item.name}</b>`;
-                const speedRow  = `${game.i18n.localize('HM.speed')}:
-                                <b>${item.data.data.bonus.total.spd}</b>`;
+                let rollContent = await roll.render({flavor});
 
                 let specialRow = '';
                 const sumDice = getDiceSum(roll);
-                if (sumDice >=  20) { specialRow += '<b>Critical!</b>';        } else
-                if (sumDice === 19) { specialRow += '<b>Near Perfect</b>';     } else
-                if (sumDice === 1)  { specialRow += '<b>Potential Fumble</b>'; }
+                if (sumDice >=  20) { specialRow += 'Critical!';        } else
+                if (sumDice === 19) { specialRow += 'Near Perfect';     } else
+                if (sumDice === 1)  { specialRow += 'Potential Fumble'; }
 
-                content = `${weaponRow}<br>${speedRow}<br>${specialRow}<br>${content}`;
+                const template = 'systems/hackmaster5e/templates/chat/attack.hbs';
+                const {resp, context} = dialogResp;
+                const templateData = {resp, specialRow, context};
+                const resultContent = await renderTemplate(template, templateData);
+                const content = resultContent + rollContent;
                 return {content};
             }
 
