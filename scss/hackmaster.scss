@@ -29,6 +29,10 @@
     --font-primary: 'Korinan', 'Gentium', 'Roboto', serif;
 }
 
+#chat-log {
+    @import 'overrides/chat';
+}
+
 #combat {
     @import 'overrides/combat';
 }

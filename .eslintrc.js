@@ -6,12 +6,20 @@ module.exports = {
     'settings': {
         'react': {'version': 'latest'}
         },
+    'parser': '@babel/eslint-parser',
     'parserOptions': {
+        'requireConfigFile': false,
         'ecmaVersion': 2020,
         'sourceType': 'module',
         'ecmaFeatures': {'jsx': true}
     },
     'extends': ['airbnb', '@typhonjs-fvtt/eslint-config-foundry.js'],
+    'globals': {
+        '$': false,
+        'game': false,
+        'PoolTerm': false,
+        'DOMPurify': false,
+    },
     'rules': {
         'import/extensions': 'off',
         'import/prefer-default-export': 'off',

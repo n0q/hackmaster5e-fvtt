@@ -231,10 +231,12 @@ export const HMTABLES = {
             'standard': 'd20p + @bonus.total.atk + @resp.bonus',
         },
         'dmg': {
-            'standard':  '@dmg.normal + @bonus.total.dmg + @resp.bonus',
-            'shield':    '@dmg.shield + @bonus.total.dmg + @resp.bonus',
-            'jab':       '@jab.normal + @bonus.total.dmg + @resp.bonus',
-            'shieldjab': '@jab.shield + @bonus.total.dmg + @resp.bonus',
+            'standard':    '@dmg.normal + @bonus.total.dmg + @resp.bonus',
+            'shield':      '@dmg.shield + @bonus.total.dmg + @resp.bonus',
+            'jab':         '@jab.normal + @bonus.total.dmg + @resp.bonus',
+            'shieldjab':   '@jab.shield + @bonus.total.dmg + @resp.bonus',
+            'bstab':       '@dmg.normal + @bonus.total.dmg + @actorbonus.total.back + @resp.bonus',
+            'shieldbstab': '@dmg.shield + @bonus.total.dmg + @actorbonus.total.back + @resp.bonus',
         },
         'def': {
             'standard': 'd20p + @bonus.total.def + @resp.mod',
@@ -356,6 +358,7 @@ export const HMCONST = {
     CARD_TYPE: {
         ROLL:  0,
         ALERT: 1,
+        NOTE:  2,
     },
     ITEM_STATE: {
         OWNED:    0,
@@ -393,5 +396,7 @@ export const HMCONST = {
     SPECIAL: {
         STANDARD:  0,
         JAB:       1,
+        BACKSTAB:  2,
+        FLEEING:   3,
     },
 };

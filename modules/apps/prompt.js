@@ -1,4 +1,6 @@
-/* eslint class-methods-use-this: ['error', {'exceptMethods': ['dialogResp']}] */
+/* eslint class-methods-use-this: ['error', {'exceptMethods': ['dialogResp', 'getCapList']}] */
+import { idx } from '../sys/localize.js';
+import { HMCONST } from '../sys/constants.js';
 
 export class HMPrompt extends Application {
     static get defaultOptions() {
@@ -14,6 +16,16 @@ export class HMPrompt extends Application {
         super();
         mergeObject(this.options, options);
         this.dialogData = dialogData;
+    }
+
+    getCapList(capsArr, actorId=null) {
+        const {special} = idx;
+        const capsObj = Object.fromEntries(capsArr.map((x) => Object.entries(special)[x]));
+        const actor = game.actors.get(actorId);
+        actor?.canBackstab
+            ? capsObj[HMCONST.SPECIAL.FLEEING] = special[HMCONST.SPECIAL.FLEEING]
+            : delete capsObj[HMCONST.SPECIAL.BACKSTAB];
+        return capsObj;
     }
 
     getData() {

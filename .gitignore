@@ -112,3 +112,6 @@ foundry
 
 # style sheets
 *.css
+
+# backup files
+*~

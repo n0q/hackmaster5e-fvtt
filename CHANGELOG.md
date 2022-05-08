@@ -2,12 +2,22 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [0.2.9] - 2022-05-08
+### Added
+- Chat is alerted to initiative auto-updates.
+- Ability checks can critically fail.
+- Class/Weapon support for backstabs and fleeing opponents specials.
+- Attack chat cards report special moves like the damage cards.
+- Compendium items.
+### Changed
+- Updated class sheets.
+### Fixed
+- Attack cards display jab speed for weapons which can jab.
+
 ## [0.2.8] - 2022-05-05
 ### Added
 - Honor category autoselect.
 - Fame category autoselect.
-- Actors without a trauma save no longer trigger trauma alerts/saves.
 - Jab combat maneuvers.
 - Compendium items.
 ### Changed
@@ -15,6 +25,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Character sheet ui enhancements.
 - Updated attack macro for jab support.
 - Updated weapons compendium for jab support.
+### Fixed
+- Actors without a trauma save no longer trigger trauma alerts/saves.
 
 ## [0.2.7] - 2022-04-28
 ### Fixed
@@ -70,7 +82,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [0.2.1] - 2022-04-13
 ### Fixed
 - Beast sheet formatting.
-
 ### Added
 - Functional biography section.
 

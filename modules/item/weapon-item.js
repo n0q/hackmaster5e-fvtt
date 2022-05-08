@@ -120,10 +120,18 @@ export class HMWeaponItem extends HMItem {
     }
 
     get capabilities() {
+        const {SPECIAL} = HMCONST;
+        const {caps, jab} = this.data.data;
+        const capsArr = Object.keys(caps).filter((key) => caps[key].checked).map((x) => Number(x));
+        capsArr.push(SPECIAL.STANDARD);
+        if (jab.checked) capsArr.push(SPECIAL.JAB);
+        return capsArr.sort();
+    }
+
+    get canBackstab() {
+        const {SPECIAL} = HMCONST;
         const {data} = this.data;
-        const capList = [HMCONST.SPECIAL.STANDARD];
-        if (data.jab.checked) capList.push(HMCONST.SPECIAL.JAB);
-        return capList;
+        return data.caps?.[SPECIAL.BACKSTAB]?.checked || false;
     }
 
     // TODO: This needs a refactor, but it's too soon to do so. We should
@@ -167,17 +175,27 @@ export class HMWeaponItem extends HMItem {
         const rollMgr = new HMRollMgr();
         const roll = await rollMgr.getRoll(dataset, dialogResp);
 
-        if (dialogResp.resp.advance) {
-            const spd = Number(dialogResp.resp.advance);
-            const newInit = comData.initiative > comData.round
-                ? comData.initiative + spd
-                : comData.round + spd;
-            active.setInitiative(comData.combatant.id, newInit);
-        }
-
         const chatMgr = new HMChatMgr();
         const card = await chatMgr.getCard({roll, dataset, dialogResp});
         await ChatMessage.create(card);
+
+        if (dialogResp.resp.advance) {
+            const {combatant} = comData;
+            const delta       = Number(dialogResp.resp.advance);
+            const oldInit     = Math.max(comData.initiative, comData.round);
+            const newInit     = oldInit + delta;
+            active.setInitiative(combatant.id, newInit);
+
+            const initChatData = {
+                name: combatant.name,
+                delta,
+                oldInit,
+                newInit,
+            };
+            const cardtype = HMCONST.CARD_TYPE.NOTE;
+            const initChatCard = await chatMgr.getCard({cardtype, dataset: initChatData});
+            await ChatMessage.create(initChatCard);
+        }
     }
 
     static async rollDamage({weapon, caller}={}) {

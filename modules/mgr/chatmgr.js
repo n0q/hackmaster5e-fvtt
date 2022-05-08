@@ -1,8 +1,6 @@
 import { HMTABLES, HMCONST } from '../sys/constants.js';
 import { idx } from '../sys/localize.js';
 
-/* global PoolTerm */
-
 function getDiceSum(roll) {
     let sum = 0;
     for (let i = 0; i < roll.terms.length; i++) {
@@ -66,6 +64,13 @@ async function saveExtendedTrauma(content, roll) {
     return {content: label + exContent, rolls};
 }
 
+async function createInitNote(dataset) {
+    const template = 'systems/hackmaster5e/templates/chat/initNote.hbs';
+    const content = await renderTemplate(template, dataset);
+    const type = CONST.CHAT_MESSAGE_TYPES.OTHER;
+    return {content, type};
+}
+
 async function createSaveCard(roll, dataset, dialogResp) {
     const {rollMode} = dialogResp.resp;
     let saveType = (dataset.formulaType === 'fos' || dataset.formulaType === 'foa') ? 'Feat of ' : '';
@@ -87,9 +92,17 @@ async function createSaveCard(roll, dataset, dialogResp) {
 }
 
 async function createAbilityCard(roll, dataset) {
-    const saveType = game.i18n.localize(`HM.abilityLong.${dataset.ability.toLowerCase()}`);
-    const flavor = `${saveType} ${game.i18n.localize('HM.check')}`;
-    const content = await roll.render({flavor});
+    const saveType    = game.i18n.localize(`HM.abilityLong.${dataset.ability.toLowerCase()}`);
+    const flavor      = `${saveType} ${game.i18n.localize('HM.check')}`;
+    const rollContent = await roll.render({flavor});
+
+    const sumDice       = getDiceSum(roll);
+    const specialRow    = sumDice === 1 ? game.i18n.localize('HM.critfail') : undefined;
+    const templateData  = {specialRow};
+    const template      = 'systems/hackmaster5e/templates/chat/check.hbs';
+    const resultContent = await renderTemplate(template, templateData);
+
+    const content = resultContent + rollContent;
     return {content};
 }
 
@@ -100,18 +113,26 @@ async function createToPAlert(dataset) {
     return {content, flavor};
 }
 
+function getSpecialMoveFlavor(resp) {
+    const mods = [];
+    const {specialMove, shieldHit} = resp;
+    const {SPECIAL} = HMCONST;
+    if (specialMove === SPECIAL.JAB) mods.push(game.i18n.localize('HM.jab'));
+    if (specialMove === SPECIAL.BACKSTAB) mods.push(game.i18n.localize('HM.backstab'));
+    if (specialMove === SPECIAL.FLEEING) mods.push(game.i18n.localize('HM.fleeing'));
+    if (shieldHit) mods.push(game.i18n.localize('HM.blocked'));
+    return mods.length ? ` (${mods.join(', ')})` : '';
+}
+
 async function createDamageCard(dataset) {
     const {caller, context, roll, resp} = dataset;
     const dmgsrc = context.data.data.ranged.checked
         ? game.i18n.localize('HM.ranged')
         : game.i18n.localize('HM.melee');
     const dmgrollTxt = `${game.i18n.localize('HM.damage')} ${game.i18n.localize('HM.roll')}`;
-    let flavor = `${dmgsrc} ${dmgrollTxt}`;
 
-    const mods = [];
-    if (resp.specialMove === HMCONST.SPECIAL.JAB) mods.push(game.i18n.localize('HM.jab'));
-    if (resp.shieldHit) mods.push(game.i18n.localize('HM.blocked'));
-    if (mods.length) flavor += ` (${mods.join(', ')})`;
+    let flavor = `${dmgsrc} ${dmgrollTxt}`;
+    flavor += getSpecialMoveFlavor(resp);
     const weaponRow = `${game.i18n.localize('HM.weapon')}: <b>${context.name}</b>`;
 
     let content = await roll.render({flavor});
@@ -188,6 +209,8 @@ export class HMChatMgr {
             }
         } else if (cardtype === HMCONST.CARD_TYPE.ALERT) {
             cData = await createToPAlert(dataset);
+        } else if (cardtype === HMCONST.CARD_TYPE.NOTE) {
+            cData = await createInitNote(dataset);
         }
 
         const chatData = {
@@ -200,7 +223,7 @@ export class HMChatMgr {
         if (roll || dataset?.roll) {
             chatData.roll     = cData?.roll || roll;
             chatData.rollMode = cData.rollMode ? cData.rollMode : game.settings.get('core', 'rollMode');
-            chatData.type     = CONST.CHAT_MESSAGE_TYPES.ROLL;
+            chatData.type     = cData?.type || CONST.CHAT_MESSAGE_TYPES.ROLL;
             chatData.sound    = CONFIG.sounds.dice;
         }
 
@@ -236,23 +259,23 @@ export class HMChatMgr {
             }
 
             case 'atk': {
-                const flavor = `${game.i18n.localize('HM.melee')}
-                                ${game.i18n.localize('HM.attack')}
-                                ${game.i18n.localize('HM.roll')}`;
-                let content = await roll.render({flavor});
-
-                const weaponRow = `${game.i18n.localize('HM.weapon')}:
-                                <b>${item.name}</b>`;
-                const speedRow  = `${game.i18n.localize('HM.speed')}:
-                                <b>${item.data.data.bonus.total.spd}</b>`;
+                let flavor = `${game.i18n.localize('HM.melee')}
+                              ${game.i18n.localize('HM.attack')}
+                              ${game.i18n.localize('HM.roll')}`;
+                flavor += getSpecialMoveFlavor(dialogResp.resp);
+                let rollContent = await roll.render({flavor});
 
                 let specialRow = '';
                 const sumDice = getDiceSum(roll);
-                if (sumDice >=  20) { specialRow += '<b>Critical!</b>';        } else
-                if (sumDice === 19) { specialRow += '<b>Near Perfect</b>';     } else
-                if (sumDice === 1)  { specialRow += '<b>Potential Fumble</b>'; }
+                if (sumDice >=  20) { specialRow += 'Critical!';        } else
+                if (sumDice === 19) { specialRow += 'Near Perfect';     } else
+                if (sumDice === 1)  { specialRow += 'Potential Fumble'; }
 
-                content = `${weaponRow}<br>${speedRow}<br>${specialRow}<br>${content}`;
+                const template = 'systems/hackmaster5e/templates/chat/attack.hbs';
+                const {resp, context} = dialogResp;
+                const templateData = {resp, specialRow, context};
+                const resultContent = await renderTemplate(template, templateData);
+                const content = resultContent + rollContent;
                 return {content};
             }
 
@@ -313,4 +336,15 @@ export class HMChatMgr {
         const content = await renderTemplate(template, dialogResp);
         return {content};
     }
+
+   /* eslint-disable */ //
+    static async renderChatMessage(_app, html, _data) {
+        if (!html.find('.hm-chat-note').length) return;
+
+        html.css('padding', '0px');
+        html.find('.message-sender').text('');
+        html.find('.message-metadata')[0].style.display = 'none';
+        if (!game.user.isGM) html.find('a').remove();
+    }
+    /* eslint-enable */ //
 }
