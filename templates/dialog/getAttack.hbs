@@ -1,4 +1,4 @@
-<form>
+<form class='hackmaster'>
     <div class='form-group'>
         <label>{{localize 'HM.weapon'}}</label>
         <select name='widx' class='bind' data-prop='widx' data-render=true>
@@ -36,7 +36,10 @@
     {{/if}}
     <div class='dialog-buttons'>
         <button type='submit' class='dialog-button normal default' data-button='attack' data-render=false>
-            {{localize 'HM.attack'}}
+            <div class='hm-clock'>
+                <label>{{localize 'HM.attack'}}</label>
+                {{#if inCombat}}<a>{{spd}}</a>{{/if}}
+            </div>
         </button>
     </div>
 </form>
