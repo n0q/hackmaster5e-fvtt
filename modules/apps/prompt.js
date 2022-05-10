@@ -21,7 +21,7 @@ export class HMPrompt extends Application {
     getCapList(capsArr, actor=null) {
         const {special} = idx;
         const capsObj = Object.fromEntries(capsArr.map((x) => Object.entries(special)[x]));
-        actor?.canBackstab
+        actor.canBackstab
             ? capsObj[HMCONST.SPECIAL.FLEEING] = special[HMCONST.SPECIAL.FLEEING]
             : delete capsObj[HMCONST.SPECIAL.BACKSTAB];
         return capsObj;
@@ -47,8 +47,10 @@ export class HMPrompt extends Application {
             ev.preventDefault();
             ev.stopPropagation();
             const {dataset} = ev.currentTarget;
-            const {prop, value} = dataset;
-            this.dialogData[prop] = value;
+            const {prop, value, button} = dataset;
+
+            if (prop) this.dialogData[prop] = value;
+            if (button) this.dialogData.button = button;
             this.update({render: false});
             this.options.resolve(this.dialogResp);
             this.close();

@@ -6,6 +6,7 @@ import { HMItem } from './modules/item/item.js';
 import { HMWeaponItem } from './modules/item/weapon-item.js';
 import { HMItemFactory } from './modules/item/item-factory.js';
 import { HMItemSheet } from './modules/item/item-sheet.js';
+import { HMWeaponItemSheet } from './modules/item/weapon-item-sheet.js';
 import { HMChatMgr } from './modules/mgr/chatmgr.js';
 import { HMCombat, HMCombatTracker } from './modules/sys/combat.js';
 import { HMMacro } from './modules/sys/macro.js';
@@ -27,11 +28,12 @@ Hooks.once('init', async () => {
     CONFIG.canvasTextStyle._fontFamily = 'Gentium';
 
     Actors.unregisterSheet('core', ActorSheet);
-    Actors.registerSheet('hackmaster', HMCharacterActorSheet, {types: ['character'], makeDefault:true});
-    Actors.registerSheet('hackmaster', HMBeastActorSheet, {types: ['beast'], makeDefault:true});
+    Actors.registerSheet('hackmaster', HMCharacterActorSheet, {types: ['character'], makeDefault: true});
+    Actors.registerSheet('hackmaster', HMBeastActorSheet, {types: ['beast'], makeDefault: true});
 
     Items.unregisterSheet('core', ItemSheet);
-    Items.registerSheet('hackmaster', HMItemSheet, { makeDefault: true });
+    Items.registerSheet('hackmaster', HMItemSheet, {makeDefault: true});
+    Items.registerSheet('hackmaster', HMWeaponItemSheet, {types: ['weapon'], makeDefault: true});
 
     registerHandlebarsHelpers();
     preloadHandlebarsTemplates();

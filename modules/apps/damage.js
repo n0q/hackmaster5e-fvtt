@@ -15,7 +15,6 @@ export class DamagePrompt extends HMPrompt {
         const capList = this.getCapList(weapon.capabilities, dialogData?.caller);
 
         mergeObject(this.dialogData, {
-            caller: dialogData?.caller,
             capList,
             specialMove: 0,
             widx: 0,

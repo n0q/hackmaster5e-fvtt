@@ -26,20 +26,31 @@
     </div>
     {{#if inCombat}}
     <div class='form-group'>
-        <label>
-            {{localize 'HM.dialog.advCombatTracker'}}
-                <b>{{spd}}</b>
-            {{toLowerCase (localize 'HM.seconds')}}?
-        </label>
-        <input type='checkbox' class='bind' data-prop='advance' {{checked advance}}>
+        <label>{{localize 'HM.dialog.advCombatTracker'}}</label>
+        <input type='checkbox' class='bind' data-prop='advance' {{checked advance}} data-render=true>
     </div>
     {{/if}}
     <div class='dialog-buttons'>
-        <button type='submit' class='dialog-button normal default' data-button='attack' data-render=false>
-            <div class='hm-clock'>
-                <label>{{localize 'HM.attack'}}</label>
-                {{#if inCombat}}<a>{{spd}}</a>{{/if}}
-            </div>
+        {{#if ranged}}
+        <button type='submit' class='dialog-button normal default' data-button='declare'>
+            <span class='hm-clock'>
+                <label>{{localize 'HM.declare'}}</label>
+                {{#if (and advance inCombat)}}<sub>{{spd.declare}}</sub>{{/if}}
+            </span>
         </button>
+        <button type='submit' class='dialog-button normal default' data-button='shoot'>
+            <span class='hm-clock'>
+                <label>{{localize 'HM.attack'}}</label>
+                {{#if (and advance inCombat)}}<sub>{{spd.shoot}}</sub>{{/if}}
+            </span>
+        </button>
+        {{else}}
+        <button type='submit' class='dialog-button normal default' data-button='melee'>
+            <span class='hm-clock'>
+                <label>{{localize 'HM.attack'}}</label>
+                {{#if (and advance inCombat)}}<sub>{{spd.melee}}</sub>{{/if}}
+            </span>
+        </button>
+        {{/if}}
     </div>
 </form>

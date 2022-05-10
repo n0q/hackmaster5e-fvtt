@@ -330,6 +330,15 @@ export const HMTABLES = {
                 'long':    -6,
                 'extreme': -8,
             },
+            'timing': {
+                'declare': (timing, base) => {
+                    if (!timing) return {base, declare: base -1, shoot: 1};
+                    const spd = Object.values(timing).reduce((a, b) => (a || 0) + (b || 0));
+                    const delta = base - spd;
+                    const declare = spd - delta - (timing?.recover || 0) - (timing?.fire || 0);
+                    return {base, declare, shoot: base - declare};
+                },
+            },
         },
         'noprof': {
             'table': {
@@ -382,6 +391,15 @@ export const HMCONST = {
         AVERAGE:      3,
         GREAT:        4,
         LEGENDARY:    5,
+    },
+    RANGED: {
+        TIMER: {
+            AIM:     0,
+            LOAD:    1,
+            RECOVER: 2,
+            DRAW:    3,
+            FIRE:    4,
+        },
     },
     SCALE: {
         TINY:     1,
