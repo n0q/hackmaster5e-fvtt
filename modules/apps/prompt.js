@@ -18,10 +18,9 @@ export class HMPrompt extends Application {
         this.dialogData = dialogData;
     }
 
-    getCapList(capsArr, actorId=null) {
+    getCapList(capsArr, actor=null) {
         const {special} = idx;
         const capsObj = Object.fromEntries(capsArr.map((x) => Object.entries(special)[x]));
-        const actor = game.actors.get(actorId);
         actor?.canBackstab
             ? capsObj[HMCONST.SPECIAL.FLEEING] = special[HMCONST.SPECIAL.FLEEING]
             : delete capsObj[HMCONST.SPECIAL.BACKSTAB];

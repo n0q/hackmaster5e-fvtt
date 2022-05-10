@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 ### Added
 - Dialog buttons which advance clock will display seconds to be advanced.
+### Fixed
+- Cleared token dependency on actor embedded items.
 
 ## [0.2.9] - 2022-05-08
 ### Added

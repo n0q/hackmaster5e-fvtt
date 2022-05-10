@@ -12,10 +12,10 @@ export class DamagePrompt extends HMPrompt {
     constructor(dialogData, options) {
         super(dialogData, options);
         const weapon = dialogData.weapons[0];
-        const capList = this.getCapList(weapon.capabilities, dialogData?.callerId);
+        const capList = this.getCapList(weapon.capabilities, dialogData?.caller);
 
         mergeObject(this.dialogData, {
-            callerId: dialogData?.callerId,
+            caller: dialogData?.caller,
             capList,
             specialMove: 0,
             widx: 0,
@@ -23,8 +23,8 @@ export class DamagePrompt extends HMPrompt {
     }
 
     update(options) {
-        const {weapons, widx, callerId} = this.dialogData;
-        this.dialogData.capList = this.getCapList(weapons[widx].capabilities, callerId);
+        const {weapons, widx, caller} = this.dialogData;
+        this.dialogData.capList = this.getCapList(weapons[widx].capabilities, caller);
         super.update(options);
     }
 

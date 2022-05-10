@@ -12,7 +12,8 @@ export class HMActor extends Actor {
     }
 
     get canBackstab() {
-        if (this.cclass) return this.cclass.data.features.back || false;
+        const {cclass} = this.itemTypes;
+        if (cclass.length) return cclass[0].data.data.features.back || false;
         return false;
     }
 
@@ -42,7 +43,6 @@ export class HMActor extends Actor {
         const max = type === 'character' ? data.bonus.total?.hp || 0
                                          : data.hp.max || 0;
         if (max === 0) { return; }
-
         let value = max;
         const wounds = this.items.filter((a) => a.type === 'wound');
         Object.keys(wounds).forEach((a) => value -= wounds[a].data.data.hp);
