@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - Dialog buttons which advance clock will display seconds to be advanced.
 - Ranged weapons include a full timing breakdown.
+### Changed
+- Updated weapon compendium for ranged weapon timings.
 ### Fixed
 - Cleared token dependency on actor embedded items.
 
