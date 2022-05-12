@@ -1,4 +1,4 @@
-<ol class='inventory-list'>
+<ol class='cards-list'>
     <li class='table-header'>
     {{#with actor.data.data.encumb}}
     <label>
@@ -15,7 +15,7 @@
     </label>
     {{/with}}
     </li>
-    <section class='scrollable' style='height: 36em;'>
+    <section class='scrollable' style='height: 31rem;'>
     {{#each actor.gear.weapons}}
         {{#unless data.innate}}
             {{> 'systems/hackmaster5e/templates/actor/cards/item.hbs' }}
