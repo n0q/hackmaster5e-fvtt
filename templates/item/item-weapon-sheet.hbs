@@ -12,7 +12,7 @@
         </div>
         <div class='tab attributes' data-group='primary' data-tab='attributes'>
             <div class='item-form'>
-                {{#with data.data}}
+{{#with data.data}}
                 <div class='sidepanel'>
                     <div class='options-block' style="zoom: 0.815;">
                         <div class='options-row'>
@@ -53,11 +53,11 @@
                         </div>
                         <div class='options-row'>
                             <label class='resource-label'>{{localize 'HM.jab'}}</label>
-                            <input type='checkbox' name='data.jab.checked' {{checked jab.checked}}/>
+                            <input type='checkbox' name='data.jab.checked' {{#if ranged.checked}}disabled{{/if}} {{checked jab.checked}}/>
                         </div>
                         <div class='options-row'>
                             <label class='resource-label'>{{localize 'HM.backstab'}}</label>
-                            <input type='checkbox' name='data.caps.2.checked' {{checked caps.[2].checked}}/>
+                            <input type='checkbox' name='data.caps.2.checked' {{#if ranged.checked}}disabled{{/if}} {{checked caps.[2].checked}}/>
                         </div>
                         <div class='options-row'>
                             <label class='resource-label'>{{localize 'HM.ranged'}}</label>
@@ -76,21 +76,56 @@
                             <input type='text' style='width: 12em;' name='data.proficiency' value='{{proficiency}}' data-dtype='String'/>
                         </div>
                     </div>
+    {{#if ranged.checked}}
                     <div class='options-block'>
+                        <div class='options-row' style='border-bottom: 2px solid; margin-bottom: 5px;'>
+                            <label class='resource-label'>{{localize 'HM.speed'}}</label>
+                            <label>{{bonus.base.spd}}</label>
+                        </div>
+                        <div class='options-row'>
+                            <label class='resource-label'>{{localize 'HM.load'}}</label>
+                            <input type='number' class='timing' name='data.ranged.timing.load' value='{{ranged.timing.load}}'
+                                data-dtype='Number'>
+                        </div>
+                        <div class='options-row'>
+                            <label class='resource-label'>{{localize 'HM.draw'}}/Spin/Crank</label>
+                            <input type='number' class='timing' name='data.ranged.timing.draw' value='{{ranged.timing.draw}}'
+                                data-dtype='Number'>
+                        </div>
+                        <div class='options-row'>
+                            <label class='resource-label'>{{localize 'HM.aim'}}</label>
+                            <input type='number' class='timing' name='data.ranged.timing.aim' value='{{ranged.timing.aim}}'
+                                data-dtype='Number'>
+                        </div>
+                        <div class='options-row'>
+                            <label class='resource-label'>{{localize 'HM.fire'}}</label>
+                            <input type='number' class='timing' name='data.ranged.timing.fire' value='{{ranged.timing.fire}}'
+                                data-dtype='Number'>
+                        </div>
+                        <div class='options-row'>
+                            <label class='resource-label'>{{localize 'HM.recover'}}</label>
+                            <input type='number' class='timing' name='data.ranged.timing.recover' value='{{ranged.timing.recover}}'
+                                data-dtype='Number'>
+                        </div>
+                    </div>
+    {{/if}}
+                    <div class='options-block'>
+    {{#unless ranged.checked}}
                         <div class='options-row'>
                             <label class='resource-label'>{{localize 'HM.speed'}}</label>
                             <input type='number' class='editable' value={{bonus.base.spd}}
                                 data-item-prop='data.bonus.base.spd'
                                 data-dtype='Number'/>
-                    {{#if jab.checked}}
+        {{#if jab.checked}}
                             <label class='resource-label'>{{localize 'HM.jab'}}</label>
                             <input type='number' class='editable' value={{bonus.base.jspd}}
                                 data-item-prop='data.bonus.base.jspd'
                                 data-dtype='Number'/>
-                    {{else}}
+        {{else}}
                     <div></div><div></div>
-                    {{/if}}
+        {{/if}}
                         </div>
+    {{/unless}}
                         <div class='options-row'>
                             <label class='resource-label'>{{localize 'HM.normal'}} {{localize 'HM.dmg'}}</label>
                             <input type='text' style='width: 12em;' name='data.dmg.normal' value='{{dmg.normal}}' data-dtype='String'/>
@@ -99,7 +134,7 @@
                             <label class='resource-label'>{{localize 'HM.shield'}} {{localize 'HM.dmg'}}</label>
                             <input type='text' style='width: 12em;' name='data.dmg.shield' value='{{dmg.shield}}' data-dtype='String'/>
                         </div>
-                    {{#if jab.checked}}
+    {{#if jab.checked}}
                         <div class='options-row'>
                             <label class='resource-label'>{{localize 'HM.normal'}} {{localize 'HM.jab'}}</label>
                             <input type='text' style='width: 12em;' name='data.jab.normal' value='{{jab.normal}}' data-dtype='String'/>
@@ -109,9 +144,9 @@
                             <input type='text' style='width: 12em;' name='data.jab.shield' value='{{jab.shield}}' data-dtype='String'/>
                         </div>
                     </div>
-                    {{/if}}
+    {{/if}}
                 </div>
-                {{/with}}
+{{/with}}
             </div>
         </div>
     </section>

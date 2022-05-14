@@ -18,11 +18,13 @@ export class HMPrompt extends Application {
         this.dialogData = dialogData;
     }
 
-    getCapList(capsArr, actorId=null) {
+    getCapList(weapon, actor=null) {
+        const capsArr = weapon.capabilities;
         const {special} = idx;
         const capsObj = Object.fromEntries(capsArr.map((x) => Object.entries(special)[x]));
-        const actor = game.actors.get(actorId);
-        actor?.canBackstab
+        const ranged = weapon.data.data.ranged.checked;
+
+        (actor.canBackstab && !ranged)
             ? capsObj[HMCONST.SPECIAL.FLEEING] = special[HMCONST.SPECIAL.FLEEING]
             : delete capsObj[HMCONST.SPECIAL.BACKSTAB];
         return capsObj;
@@ -48,8 +50,10 @@ export class HMPrompt extends Application {
             ev.preventDefault();
             ev.stopPropagation();
             const {dataset} = ev.currentTarget;
-            const {prop, value} = dataset;
-            this.dialogData[prop] = value;
+            const {prop, value, button} = dataset;
+
+            if (prop) this.dialogData[prop] = value;
+            if (button) this.dialogData.button = button;
             this.update({render: false});
             this.options.resolve(this.dialogResp);
             this.close();

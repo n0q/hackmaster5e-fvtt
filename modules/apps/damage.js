@@ -12,10 +12,9 @@ export class DamagePrompt extends HMPrompt {
     constructor(dialogData, options) {
         super(dialogData, options);
         const weapon = dialogData.weapons[0];
-        const capList = this.getCapList(weapon.capabilities, dialogData?.callerId);
+        const capList = this.getCapList(weapon, dialogData?.caller);
 
         mergeObject(this.dialogData, {
-            callerId: dialogData?.callerId,
             capList,
             specialMove: 0,
             widx: 0,
@@ -23,8 +22,8 @@ export class DamagePrompt extends HMPrompt {
     }
 
     update(options) {
-        const {weapons, widx, callerId} = this.dialogData;
-        this.dialogData.capList = this.getCapList(weapons[widx].capabilities, callerId);
+        const {weapons, widx, caller} = this.dialogData;
+        this.dialogData.capList = this.getCapList(weapons[widx], caller);
         super.update(options);
     }
 
@@ -34,8 +33,8 @@ export class DamagePrompt extends HMPrompt {
         const jabbed   = specialMove === HMCONST.SPECIAL.JAB;
         const backstab = specialMove === HMCONST.SPECIAL.BACKSTAB;
         let formulaType;
-        /* eslint 'space-in-parens': 0 */
 
+        /* eslint 'space-in-parens': 0 */
         if (backstab && !shieldHit) { formulaType = 'bstab';       } else
         if (backstab &&  shieldHit) { formulaType = 'shieldbstab'; } else
         if (!jabbed  && !shieldHit) { formulaType = 'standard';    } else

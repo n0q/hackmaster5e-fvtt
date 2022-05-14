@@ -1,0 +1,26 @@
+.dialog-buttons {
+    .hm-clock {
+        display: grid;
+        grid-template-columns: 1fr 3em;
+
+        label {
+            grid-column: 1 / span 2;
+            grid-row: 1;
+        }
+
+        sub {
+            grid-column: 2;
+            grid-row: 1;
+            justify-self: right;
+            align-self: end;
+            margin-bottom: -12.5%;
+            font-size: .85rem;
+            &:after {
+                font-family: "Font Awesome 5 Free";
+                font-size: calc(.85rem * .75);
+                font-weight: bold;
+                content: "\f252";
+            }
+        }
+    }
+}

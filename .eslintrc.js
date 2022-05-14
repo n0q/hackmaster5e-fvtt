@@ -35,6 +35,7 @@ module.exports = {
         'no-unused-expressions': ['error', { 'allowTernary': true }],
         'object-curly-newline': 'off',
         'object-curly-spacing': 'off',
+        'prefer-destructuring': ['error', { 'AssignmentExpression': { 'array': false }}],
         'quotes': ['warn', 'single'],
         'quote-props': 'off',
         'space-infix-ops': 'off',

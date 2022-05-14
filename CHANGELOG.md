@@ -4,6 +4,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [0.2.9] - 2022-05-08
 ### Added
+- Dialog buttons which advance clock will display seconds to be advanced.
+- Ranged weapons include a full timing breakdown.
+- Compendium items.
+### Changed
+- Updated weapon compendium for ranged weapon timings.
+- Improved attack dialog formatting.
+### Fixed
+- Cleared token dependency on actor embedded items.
+- Items with overly long names no longer distort their cards.
+
+## [0.2.9] - 2022-05-08
+### Added
 - Chat is alerted to initiative auto-updates.
 - Ability checks can critically fail.
 - Class/Weapon support for backstabs and fleeing opponents specials.

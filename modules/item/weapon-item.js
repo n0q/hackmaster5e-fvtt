@@ -5,6 +5,13 @@ import { HMDialogMgr } from '../mgr/dialogmgr.js';
 import { HMRollMgr } from '../mgr/rollmgr.js';
 
 export class HMWeaponItem extends HMItem {
+    get minspd() {
+        const {data} = this.data;
+        const ranged = data.ranged.checked;
+        if (ranged) return HMTABLES.weapons.ranged.minspd(data.ranged.timing);
+        return HMTABLES.weapons.scale[data.scale].minspd;
+    }
+
     prepareBaseData() {
         super.prepareBaseData();
     }
@@ -26,7 +33,7 @@ export class HMWeaponItem extends HMItem {
                                                        && a.invstate === 'equipped');
 
         if (itemData.innate) itemData.state = HMCONST.ITEM_STATE.INNATE;
-        // HACK: This belongs in item-sheet.js, which needs a refactor.
+        // TODO: Some of this can be relocated to weapon-item-sheet.js.
         const {reach} = this.data.data;
         const offset = this.parent.data.data.bonus.total.reach || 0;
         itemData.adjReach = Math.max(reach + offset, 0) || 0;
@@ -111,11 +118,11 @@ export class HMWeaponItem extends HMItem {
             for (const state in bonus) { sum += bonus[state][key]; }
             bonus.total[key] = sum;
         });
-        const {maxspd} = HMTABLES.weapons.scale[itemData.scale];
-        bonus.total.spd = Math.max(maxspd, bonus.total.spd);
+
+        bonus.total.spd = Math.max(this.minspd, bonus.total.spd);
         if (jab.checked) {
             const jspd = bonus.total.spd + (bonus.base.jspd - bonus.base.spd);
-            bonus.total.jspd = Math.max(maxspd, jspd);
+            bonus.total.jspd = Math.max(this.minspd, jspd);
         }
     }
 
@@ -172,8 +179,11 @@ export class HMWeaponItem extends HMItem {
         const ranged = dialogResp.context.data.data.ranged.checked;
         if (ranged) dataset.dialog = 'ratk';
 
-        const rollMgr = new HMRollMgr();
-        const roll = await rollMgr.getRoll(dataset, dialogResp);
+        let roll;
+        if (dialogResp.resp.button !== 'declare') {
+            const rollMgr = new HMRollMgr();
+            roll = await rollMgr.getRoll(dataset, dialogResp);
+        }
 
         const chatMgr = new HMChatMgr();
         const card = await chatMgr.getCard({roll, dataset, dialogResp});

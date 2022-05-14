@@ -234,6 +234,12 @@ export class HMChatMgr {
         const {caller} = dialogResp;
         const item = dialogResp.context;
 
+        if (dialogResp.resp?.button === 'declare') {
+            const template = 'systems/hackmaster5e/templates/chat/declare.hbs';
+            const content = await renderTemplate(template, dialogResp);
+            return {content};
+        }
+
         switch (dataset.dialog) {
             case 'ratk': {
                 const flavor = `${game.i18n.localize('HM.ranged')}

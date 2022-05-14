@@ -1,42 +1,60 @@
-<form>
-    <div class='form-group'>
+<form class='hackmaster'>
+    <span class='form-group'>
         <label>{{localize 'HM.weapon'}}</label>
         <select name='widx' class='bind' data-prop='widx' data-render=true>
             {{#select widx}}{{#each weapons}}
                 <option value='{{@index}}'>{{name}}</option>
             {{/each}}{{/select}}
         </select>
-    </div>
-    <div class='form-group'>
+    </span>
+    <span class='form-group'>
         <label>{{localize 'HM.dialog.specialMove'}}</label>
         <select name='specialMove' class='bind' data-prop='specialMove' data-render=true>
         {{selectOptions capList selected=specialMove localize=true}}
         </select>
-    </div>
-    <div class='form-group'>
-        {{#if ranged}}
-        <label>{{localize 'HM.dialog.getAttackRangeBody'}}</label>
-        <select name='range' class='bind' data-prop='range' data-render=true>
-        {{selectOptions (findConfigObj 'range') selected=range localize=true}}
-        </select>
-        {{else}}<label>&nbsp</label><label>&nbsp</label>
-        {{/if}}
-        <label>{{localize 'HM.bonus'}}</label>
-        <input name='bonus' value='{{bonus}}' class='focus bind' data-prop='bonus' placeholder=0 type='number'/>
-    </div>
+    </span>
+    <section class='grid-2col' style='gap: 20px;'>
+        <span class='form-group'>
+            {{#if ranged}}
+            <label>{{localize 'HM.dialog.getAttackRangeBody'}}</label>
+            <select name='range' class='bind' data-prop='range' data-render=true>
+            {{selectOptions (findConfigObj 'range') selected=range localize=true}}
+            </select>
+            {{/if}}
+        </span>
+        <span class='form-group' style='padding-bottom: 2px;'>
+            <label>{{localize 'HM.bonus'}}</label>
+            <input name='bonus' value='{{bonus}}' class='focus bind' data-prop='bonus' placeholder=0 type='number'/>
+        </span>
+    </section>
     {{#if inCombat}}
-    <div class='form-group'>
-        <label>
-            {{localize 'HM.dialog.advCombatTracker'}}
-                <b>{{spd}}</b>
-            {{toLowerCase (localize 'HM.seconds')}}?
-        </label>
-        <input type='checkbox' class='bind' data-prop='advance' {{checked advance}}>
-    </div>
+    <hr>
+    <span class='form-group'>
+        <label>{{localize 'HM.dialog.advCombatTracker'}}</label>
+        <input type='checkbox' class='bind' data-prop='advance' {{checked advance}} data-render=true>
+    </span>
     {{/if}}
-    <div class='dialog-buttons'>
-        <button type='submit' class='dialog-button normal default' data-button='attack' data-render=false>
-            {{localize 'HM.attack'}}
+    <section class='dialog-buttons'>
+        {{#if ranged}}
+        <button type='submit' class='dialog-button normal default' data-button='declare'>
+            <span class='hm-clock'>
+                <label>{{localize 'HM.declare'}}</label>
+                {{#if (and advance inCombat)}}<sub>{{spd.declare}}</sub>{{/if}}
+            </span>
         </button>
-    </div>
+        <button type='submit' class='dialog-button normal default' data-button='shoot'>
+            <span class='hm-clock'>
+                <label>{{localize 'HM.attack'}}</label>
+                {{#if (and advance inCombat)}}<sub>{{spd.shoot}}</sub>{{/if}}
+            </span>
+        </button>
+        {{else}}
+        <button type='submit' class='dialog-button normal default' data-button='melee'>
+            <span class='hm-clock'>
+                <label>{{localize 'HM.attack'}}</label>
+                {{#if (and advance inCombat)}}<sub>{{spd.melee}}</sub>{{/if}}
+            </span>
+        </button>
+        {{/if}}
+    </section>
 </form>

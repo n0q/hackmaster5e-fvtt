@@ -1,4 +1,4 @@
-// Import utilities.
+/* Import utilities */
 @import 'base/typography';
 @import 'helpers/colors';
 @import 'helpers/mixins';
@@ -18,13 +18,12 @@
     @import 'parts/skills';
     @import 'parts/cards';
     @import 'parts/ui';
+    @import 'parts/dialog';
     @import 'layout/actor-sheet';
     @import 'layout/bio';
-    @import 'cards/inventory';
 }
 
 /* Styles which override foundry core */
-
 :root {
     --font-primary: 'Korinan', 'Gentium', 'Roboto', serif;
 }
