@@ -314,14 +314,14 @@ export const HMTABLES = {
     'top': {'character': 0.3, 'beast': 0.4},
     'weapons': {
         'scale': {
-            1: {'maxspd': 1},
-            2: {'maxspd': 2},
-            3: {'maxspd': 3},
-            4: {'maxspd': 4},
-            5: {'maxspd': 5},
-            6: {'maxspd': 6},
-            7: {'maxspd': 8},
-            8: {'maxspd': 15},
+            1: {'minspd': 1},
+            2: {'minspd': 2},
+            3: {'minspd': 3},
+            4: {'minspd': 4},
+            5: {'minspd': 5},
+            6: {'minspd': 6},
+            7: {'minspd': 8},
+            8: {'minspd': 15},
         },
         'ranged': {
             'penalty': {
@@ -330,42 +330,50 @@ export const HMTABLES = {
                 'long':    -6,
                 'extreme': -8,
             },
-            'timing': {
-                'declare': (timing, base) => {
-                    if (!timing) return {base, declare: base, shoot: 0};
+            'minspd': (timing) => {
+                if (!timing) return 4;
+                let minRoF = 0;
+                Object.keys(timing).forEach((i) => { if (timing[i]) minRoF++; });
+                return minRoF;
+            },
+            'timing': (timing, base) => {
+                if (!timing) return {base, declare: base, shoot: 0};
 
-                    // Workaround for broken js modulo implementation.
-                    const mod = (x, y) => ((x % y) + y) % y;
+                const mod = (x, y) => ((x % y) + y) % y;
 
-                    const timerCascade = (t0, d0) => {
-                        if ((Number(t0) || 0) < 1) return [0, d0];
-                        const t1 = Math.max(t0 - d0, 1);
-                        const d1 = Math.max(d0 - (t0 - t1), 0);
-                        return [t1, d1];
-                    };
+                const timerCascade = (t0, d0) => {
+                    if ((Number(t0) || 0) < 1) return [0, d0];
+                    const t1 = Math.max(t0 - d0, 1);
+                    const d1 = Math.max(d0 - (t0 - t1), 0);
+                    return [t1, d1];
+                };
 
-                    const spd = Object.values(timing).reduce((a, b) => (a || 0) + (b || 0));
-                    const dt = spd - base;
-                    const adjArr = [];
-                    const timingOrder = ['aim', 'load', 'draw', 'recover'];
-                    const tlength = timingOrder.length;
-                    for (let i = 0; i < tlength; i++) adjArr[i] = Math.ceil((dt - i) / tlength);
+                const spd = Object.values(timing).reduce((a, b) => (a || 0) + (b || 0));
+                const dt = spd - base;
 
-                    const timingNew = duplicate(timing);
-                    for (let j = timingOrder.length - 1; j >= 0; j--) {
-                        const tCasc = timerCascade(timingNew[timingOrder[j]], adjArr[j]);
-                        timingNew[timingOrder[j]] = tCasc[0];
-                        adjArr[j] = 0;
-                        if (j) adjArr[mod(j - 1, tlength)] += tCasc[1];
-                    }
-                    const declare = (timingNew.load    || 0)
-                                  + (timingNew.draw    || 0)
-                                  + (timingNew.aim     || 0);
+                const adjArr = [];
+                const timingOrder = ['aim', 'load', 'recover', 'draw'];
+                const tlength = timingOrder.length;
+                for (let i = 0; i < tlength; i++) adjArr[i] = Math.ceil((dt - i) / tlength);
 
-                    const shoot   = (timingNew.fire    || 0)
-                                  + (timingNew.recover || 0);
-                    return {base, declare, shoot};
-                },
+                const timingNew = duplicate(timing);
+
+                // We run through the array twice to ensure all possible bonuses are applied.
+                for (let j = 2*tlength - 1; j >= 0; j--) {
+                    const jmod = mod(j, tlength);
+                    const tCasc = timerCascade(timingNew[timingOrder[jmod]], adjArr[jmod]);
+                    timingNew[timingOrder[jmod]] = tCasc[0];
+                    adjArr[jmod] = 0;
+                    adjArr[mod(j - 1, tlength)] += tCasc[1];
+                }
+
+                const declare = (timingNew.load || 0)
+                              + (timingNew.draw || 0)
+                              + (timingNew.aim  || 0);
+
+                const shoot   = (timingNew.fire    || 0)
+                              + (timingNew.recover || 0);
+                return {base, declare, shoot};
             },
         },
         'noprof': {

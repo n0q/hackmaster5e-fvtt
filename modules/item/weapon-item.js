@@ -5,6 +5,13 @@ import { HMDialogMgr } from '../mgr/dialogmgr.js';
 import { HMRollMgr } from '../mgr/rollmgr.js';
 
 export class HMWeaponItem extends HMItem {
+    get minspd() {
+        const {data} = this.data;
+        const ranged = data.ranged.checked;
+        if (ranged) return HMTABLES.weapons.ranged.minspd(data.ranged.timing);
+        return HMTABLES.weapons.scale[data.scale].minspd;
+    }
+
     prepareBaseData() {
         super.prepareBaseData();
     }
@@ -111,11 +118,11 @@ export class HMWeaponItem extends HMItem {
             for (const state in bonus) { sum += bonus[state][key]; }
             bonus.total[key] = sum;
         });
-        const {maxspd} = HMTABLES.weapons.scale[itemData.scale];
-        bonus.total.spd = Math.max(maxspd, bonus.total.spd);
+
+        bonus.total.spd = Math.max(this.minspd, bonus.total.spd);
         if (jab.checked) {
             const jspd = bonus.total.spd + (bonus.base.jspd - bonus.base.spd);
-            bonus.total.jspd = Math.max(maxspd, jspd);
+            bonus.total.jspd = Math.max(this.minspd, jspd);
         }
     }
 

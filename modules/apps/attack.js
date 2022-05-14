@@ -6,7 +6,7 @@ function getSpeed(ranged, wData, specialMove=0) {
     if (!ranged) return {melee: Number(specialMove) === HMCONST.SPECIAL.JAB ? jspd : spd};
 
     const {timing} = wData.ranged;
-    return HMTABLES.weapons.ranged.timing.declare(timing, spd);
+    return HMTABLES.weapons.ranged.timing(timing, spd);
 }
 
 export class AttackPrompt extends HMPrompt {

@@ -8,7 +8,6 @@ export class HMWeaponItemSheet extends HMItemSheet {
             width: 480,
             height: 680,
             tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'description' }],
-            tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'attributes' }],
         });
     }
 
@@ -23,7 +22,7 @@ export class HMWeaponItemSheet extends HMItemSheet {
         ev.preventDefault();
         ev.stopPropagation();
         const {name, value} = ev.currentTarget;
-        const newTiming = parseInt(value, 10);
+        const newTiming = Math.max(parseInt(value, 10) || 0, 0);
         await this.item.update({[name]: newTiming});
 
         const {timing} = this.item.data.data.ranged;
