@@ -8,10 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Ranged weapons include a full timing breakdown.
 ### Changed
 - Updated weapon compendium for ranged weapon timings.
+- Improved attack dialog formatting.
 ### Fixed
 - Cleared token dependency on actor embedded items.
 - Cards with overly long names no longer distort list.
-- Improved attack dialog formatting.
 
 ## [0.2.9] - 2022-05-08
 ### Added

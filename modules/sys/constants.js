@@ -332,11 +332,39 @@ export const HMTABLES = {
             },
             'timing': {
                 'declare': (timing, base) => {
-                    if (!timing) return {base, declare: base -1, shoot: 1};
+                    if (!timing) return {base, declare: base, shoot: 0};
+
+                    // Workaround for broken js modulo implementation.
+                    const mod = (x, y) => ((x % y) + y) % y;
+
+                    const timerCascade = (t0, d0) => {
+                        if ((Number(t0) || 0) < 1) return [0, d0];
+                        const t1 = Math.max(t0 - d0, 1);
+                        const d1 = Math.max(d0 - (t0 - t1), 0);
+                        return [t1, d1];
+                    };
+
                     const spd = Object.values(timing).reduce((a, b) => (a || 0) + (b || 0));
-                    const delta = base - spd;
-                    const declare = spd - delta - (timing?.recover || 0) - (timing?.fire || 0);
-                    return {base, declare, shoot: base - declare};
+                    const dt = spd - base;
+                    const adjArr = [];
+                    const timingOrder = ['aim', 'load', 'draw', 'recover'];
+                    const tlength = timingOrder.length;
+                    for (let i = 0; i < tlength; i++) adjArr[i] = Math.ceil((dt - i) / tlength);
+
+                    const timingNew = duplicate(timing);
+                    for (let j = timingOrder.length - 1; j >= 0; j--) {
+                        const tCasc = timerCascade(timingNew[timingOrder[j]], adjArr[j]);
+                        timingNew[timingOrder[j]] = tCasc[0];
+                        adjArr[j] = 0;
+                        if (j) adjArr[mod(j - 1, tlength)] += tCasc[1];
+                    }
+                    const declare = (timingNew.load    || 0)
+                                  + (timingNew.draw    || 0)
+                                  + (timingNew.aim     || 0);
+
+                    const shoot   = (timingNew.fire    || 0)
+                                  + (timingNew.recover || 0);
+                    return {base, declare, shoot};
                 },
             },
         },
