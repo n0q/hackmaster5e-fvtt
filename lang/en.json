@@ -548,5 +548,9 @@
 
     "COMBAT": {
         "Round":       "Count:"
+    },
+    
+    "dragRuler": {
+        "current":      "current"
     }
 }

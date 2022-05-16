@@ -40,9 +40,9 @@ export class HMSupport {
         class HMSpeedProvider extends SpeedProvider {
             get colors() {
                 return [
-                    {id: 0, default: 0x00FF00, name: 'stable'},
-                    {id: 1, default: 0xFFFF00, name: 'rate ± 1'},
-                    {id: 2, default: 0xFF8000, name: 'rate ± 2'},
+                    {id: 0, default: 0x00FF00, name: 'dragRuler.current'},
+                    {id: 1, default: 0xFFFF00, name: '±1'},
+                    {id: 2, default: 0xFF8000, name: '±2'},
                 ];
             }
 
@@ -51,18 +51,20 @@ export class HMSupport {
                 const {round} = combat.data;
                 const {movespd} = token.actor;
                 movespd.push(Infinity);
+                movespd.unshift(0);
 
                 const combatant = combat.getCombatantByToken(token.id);
                 const movedFlag = combatant.getFlag(MODULE_ID, 'moved');
                 const moved = movedFlag?.[round - 1] || 0;
 
-                const ratemap = [0, 1, 2, 'unreachable', 'unreachable', 2, 1];
-                const ridx = movespd.findIndex((a) => moved <= a);
-                for (let i = 0; i < ridx; i++) ratemap.unshift(ratemap.pop());
+                const colormask = [0, 1, 2, 'unreachable', 'unreachable', 2, 1];
+                const ridx = Math.min(movespd.findIndex((a) => moved <= a), 4);
+                for (let i = 0; i < ridx; i++) colormask.unshift(colormask.pop());
+                movespd.pop();
 
                 const ranges = [];
-                movespd.forEach((range, i) => ranges.push({range, color: ratemap[i]}));
-                return ranges.splice(0, 4);
+                movespd.forEach((range, i) => ranges.push({range, color: colormask[i]}));
+                return ranges;
             }
 
             async onMovementHistoryUpdate(tokens) {
@@ -79,24 +81,25 @@ export class HMSupport {
                     return dragRulerFlags.passedWaypoints ?? [];
                 }
 
-                const movedToken = tokens[0];
-                const moveHistory = foundry.utils.duplicate(getMovementHistory(movedToken));
-                if (!moveHistory.length) return;
+                tokens.forEach((movedToken) => {
+                    const moveHistory = foundry.utils.duplicate(getMovementHistory(movedToken));
+                    if (!moveHistory.length) return;
 
-                moveHistory.push(movedToken.center);
-                const rays = [];
-                for (let i = 0; i < moveHistory.length -1; i++) {
-                    rays.push({ray: new Ray(moveHistory[i], moveHistory[i+1])});
-                }
+                    moveHistory.push(movedToken.center);
+                    const rays = [];
+                    for (let i = 0; i < moveHistory.length -1; i++) {
+                        rays.push({ray: new Ray(moveHistory[i], moveHistory[i+1])});
+                    }
 
-                const distances = game.canvas.grid.measureDistances(rays, {gridSpaces: true});
-                const moved = Math.round(distances.reduce((sum, a) => sum + a, 0) * 1e4) / 1e4;
+                    const distances = game.canvas.grid.measureDistances(rays, {gridSpaces: true});
+                    const moved = Math.round(distances.reduce((sum, a) => sum + a, 0) * 1e4) / 1e4;
 
-                const combatant = game.combat.getCombatantByToken(movedToken.id);
-                const movedFlag = combatant.getFlag(MODULE_ID, 'moved') || {};
-                const roundCurrent = game.combat.data.round;
-                movedFlag[roundCurrent] = moved;
-                combatant.setFlag(MODULE_ID, 'moved', movedFlag);
+                    const combatant = game.combat.getCombatantByToken(movedToken.id);
+                    const movedFlag = combatant.getFlag(MODULE_ID, 'moved') || {};
+                    const roundCurrent = game.combat.data.round;
+                    movedFlag[roundCurrent] = moved;
+                    combatant.setFlag(MODULE_ID, 'moved', movedFlag);
+                });
             }
         }
         dragRuler.registerSystem(MODULE_ID, HMSpeedProvider);
