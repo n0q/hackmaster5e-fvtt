@@ -30,11 +30,13 @@ export class HMCharacterActor extends HMActor {
         for (const stat in abilities.base) {
             let value = 0;
             let fvalue = 0;
-            for (let row in abilities) {
+            for (const row in abilities) {
                 if (row === 'total') { continue; }
                 value  += abilities[row][stat].value;
                 fvalue += abilities[row][stat].fvalue;
             }
+            value += Math.floor(fvalue / 100);
+            fvalue = ((fvalue % 100) + 100) % 100;
             total[stat] = {value, fvalue};
         }
         abilities.total = total;
