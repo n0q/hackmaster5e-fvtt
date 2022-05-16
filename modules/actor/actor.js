@@ -56,6 +56,7 @@ export class HMActor extends Actor {
         const {bonus} = this.data.data;
         const total = {};
 
+        const multiply = ['move'];
         for (const vector in bonus) {
             if (vector === 'total') { continue; }
 
@@ -74,6 +75,8 @@ export class HMActor extends Actor {
                 if (key !== '_idx' && value !== null) {
                     if (typeof value === 'string') {
                         total[key] = total?.[key]?.length ? `${total[key]} + ${value}` : value;
+                    } else if (multiply.includes(key)) {
+                        total[key] = (total?.[key] || 1) * value;
                     } else {
                         total[key] = (total?.[key] || 0) + value;
                     }

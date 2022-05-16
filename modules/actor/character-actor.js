@@ -18,6 +18,11 @@ export class HMCharacterActor extends HMActor {
         this.setEncumbrance();
     }
 
+    get movespd() {
+        const {move} = this.data.data.bonus.total;
+        return Object.values(HMTABLES.movespd).map((x) => x * move);
+    }
+
     setAbilities() {
         const { abilities } = this.data.data;
 

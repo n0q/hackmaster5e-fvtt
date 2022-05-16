@@ -8,6 +8,69 @@ export const MACRO_VERS = {
     'setWound':  2,
 };
 
+// TODO: ITEM_STATE and itemstate are the same table.
+export const HMCONST = {
+    CARD_TYPE: {
+        ROLL:  0,
+        ALERT: 1,
+        NOTE:  2,
+    },
+    ITEM_STATE: {
+        OWNED:    0,
+        CARRIED:  1,
+        EQUIPPED: 2,
+        INNATE:   3,
+    },
+    FAME: {
+        UNKNOWN:     0,
+        OBSCURE:     1,
+        LOCALPERSON: 2,
+        MINORCELEB:  3,
+        MAJORCELEB:  4,
+        FAMOUS:      5,
+        EPIC:        6,
+    },
+    HONOR: {
+        NOTORIETY:    0,
+        DISHONORABLE: 1,
+        LOW:          2,
+        AVERAGE:      3,
+        GREAT:        4,
+        LEGENDARY:    5,
+    },
+    MOVE: {
+        WALK:   0,
+        JOG:    1,
+        RUN:    2,
+        SPRINT: 3,
+    },
+    RANGED: {
+        TIMER: {
+            AIM:     0,
+            LOAD:    1,
+            RECOVER: 2,
+            DRAW:    3,
+            FIRE:    4,
+        },
+    },
+    SCALE: {
+        TINY:     1,
+        SMALL:    2,
+        MEDIUM:   3,
+        LARGE:    4,
+        HUGE:     5,
+        GIGANTIC: 6,
+        ENORMOUS: 7,
+        COLOSSAL: 8,
+    },
+    SPECIAL: {
+        STANDARD:  0,
+        JAB:       1,
+        BACKSTAB:  2,
+        FLEEING:   3,
+    },
+};
+
 // system rules
 export const HMTABLES = {
     'abilitymods': {
@@ -279,20 +342,26 @@ export const HMTABLES = {
             return hTable.findIndex((x) => x >= value);
        },
     },
+    'movespd': {
+        [HMCONST.MOVE.WALK]:    5.0,
+        [HMCONST.MOVE.JOG]:    10.0,
+        [HMCONST.MOVE.RUN]:    15.0,
+        [HMCONST.MOVE.SPRINT]: 20.0,
+    },
     'quality': {
         'armor':  [1, 1, 0, 0],
         'weapon': [1, 0, 1, 0],
         'ranged': [1, 0, 0, 0],
     },
     'scale': {
-        1: {'hp':  0, 'kb':  5, 'reach': -2,  'movecf':  0.33},
-        2: {'hp':  5, 'kb': 10, 'reach': -1,  'movecf':  0.50},
-        3: {'hp': 10, 'kb': 15, 'reach':  0,  'movecf':  1.00},
-        4: {'hp': 15, 'kb': 20, 'reach':  1,  'movecf':  2.00},
-        5: {'hp': 20, 'kb': 25, 'reach':  2,  'movecf':  3.00},
-        6: {'hp': 25, 'kb': 30, 'reach':  3,  'movecf':  4.00},
-        7: {'hp': 35, 'kb': 40, 'reach':  5,  'movecf':  6.00},
-        8: {'hp': 70, 'kb': 75, 'reach':  12, 'movecf': 13.00},
+        [HMCONST.SCALE.TINY]:     {'hp':  0, 'kb':  5, 'reach': -2,  'move': 1/3},
+        [HMCONST.SCALE.SMALL]:    {'hp':  5, 'kb': 10, 'reach': -1,  'move': 1/2},
+        [HMCONST.SCALE.MEDIUM]:   {'hp': 10, 'kb': 15, 'reach':  0,  'move':   1},
+        [HMCONST.SCALE.LARGE]:    {'hp': 15, 'kb': 20, 'reach':  1,  'move':   2},
+        [HMCONST.SCALE.HUGE]:     {'hp': 20, 'kb': 25, 'reach':  2,  'move':   3},
+        [HMCONST.SCALE.GIGANTIC]: {'hp': 25, 'kb': 30, 'reach':  3,  'move':   4},
+        [HMCONST.SCALE.ENORMOUS]: {'hp': 35, 'kb': 40, 'reach':  5,  'move':   6},
+        [HMCONST.SCALE.COLOSSAL]: {'hp': 70, 'kb': 75, 'reach':  12, 'move':  13},
     },
     'skill': {
         'difficulty': {
@@ -314,14 +383,14 @@ export const HMTABLES = {
     'top': {'character': 0.3, 'beast': 0.4},
     'weapons': {
         'scale': {
-            1: {'minspd': 1},
-            2: {'minspd': 2},
-            3: {'minspd': 3},
-            4: {'minspd': 4},
-            5: {'minspd': 5},
-            6: {'minspd': 6},
-            7: {'minspd': 8},
-            8: {'minspd': 15},
+            [HMCONST.SCALE.TINY]:     {'minspd': 1},
+            [HMCONST.SCALE.SMALL]:    {'minspd': 2},
+            [HMCONST.SCALE.MEDIUM]:   {'minspd': 3},
+            [HMCONST.SCALE.LARGE]:    {'minspd': 4},
+            [HMCONST.SCALE.HUGE]:     {'minspd': 5},
+            [HMCONST.SCALE.GIGANTIC]: {'minspd': 6},
+            [HMCONST.SCALE.ENORMOUS]: {'minspd': 8},
+            [HMCONST.SCALE.COLOSSAL]: {'minspd': 15},
         },
         'ranged': {
             'penalty': {
@@ -395,62 +464,5 @@ export const HMTABLES = {
         1: 'carried',
         2: 'equipped',
         3: 'innate',
-    },
-};
-
-// TODO: ITEM_STATE and itemstate are the same table.
-export const HMCONST = {
-    CARD_TYPE: {
-        ROLL:  0,
-        ALERT: 1,
-        NOTE:  2,
-    },
-    ITEM_STATE: {
-        OWNED:    0,
-        CARRIED:  1,
-        EQUIPPED: 2,
-        INNATE:   3,
-    },
-    FAME: {
-        UNKNOWN:     0,
-        OBSCURE:     1,
-        LOCALPERSON: 2,
-        MINORCELEB:  3,
-        MAJORCELEB:  4,
-        FAMOUS:      5,
-        EPIC:        6,
-    },
-    HONOR: {
-        NOTORIETY:    0,
-        DISHONORABLE: 1,
-        LOW:          2,
-        AVERAGE:      3,
-        GREAT:        4,
-        LEGENDARY:    5,
-    },
-    RANGED: {
-        TIMER: {
-            AIM:     0,
-            LOAD:    1,
-            RECOVER: 2,
-            DRAW:    3,
-            FIRE:    4,
-        },
-    },
-    SCALE: {
-        TINY:     1,
-        SMALL:    2,
-        MEDIUM:   3,
-        LARGE:    4,
-        HUGE:     5,
-        GIGANTIC: 6,
-        ENORMOUS: 7,
-        COLOSSAL: 8,
-    },
-    SPECIAL: {
-        STANDARD:  0,
-        JAB:       1,
-        BACKSTAB:  2,
-        FLEEING:   3,
     },
 };
