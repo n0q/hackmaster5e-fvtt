@@ -39,10 +39,11 @@ export const HMCONST = {
         LEGENDARY:    5,
     },
     MOVE: {
-        WALK:   0,
-        JOG:    1,
-        RUN:    2,
-        SPRINT: 3,
+        CRAWL:  0,
+        WALK:   1,
+        JOG:    2,
+        RUN:    3,
+        SPRINT: 4,
     },
     RANGED: {
         TIMER: {
@@ -343,6 +344,7 @@ export const HMTABLES = {
        },
     },
     'movespd': {
+        [HMCONST.MOVE.CRAWL]:   2.5,
         [HMCONST.MOVE.WALK]:    5.0,
         [HMCONST.MOVE.JOG]:    10.0,
         [HMCONST.MOVE.RUN]:    15.0,

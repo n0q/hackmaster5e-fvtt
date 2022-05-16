@@ -14,6 +14,11 @@ export class HMBeastActor extends HMActor {
         this.setHP();
     }
 
+    get movespd() {
+        const move = this.data.data.bonus.total.move ?? 1;
+        return Object.values(this.data.data.movespd.gnd).map((x) => x * move);
+    }
+
     setExtras() {
         const {bonus} = this.data.data;
         if (bonus.stats === undefined) bonus.stats = {};

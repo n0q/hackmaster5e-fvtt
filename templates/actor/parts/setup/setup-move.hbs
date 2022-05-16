@@ -1,0 +1,15 @@
+{{#with data.data.movespd}}
+<section class='setup-abilities'>
+    <table class='table-basic'>
+        <tbody>
+            <tr><td colspan='2'>Movement Rates</td></tr>
+            {{#each gnd as |val key|}}
+            <tr>
+                <th scope='row'><label class='resource-label'>{{localize (concat 'HM.moveSpds.' key)}}</label></th>
+                <td><input type="number" name="data.movespd.gnd.{{key}}" value="{{val}}" data-dtype="Number"/></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</section>
+{{/with}}

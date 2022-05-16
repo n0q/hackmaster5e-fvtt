@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Native Drag Ruler support.
 ### Fixed
 - New characters were built incorrectly while more than one GM was present.
+- Ability scores added incorrectly in certain cases.
  
 ## [0.2.10] - 2022-05-13
 ### Added
