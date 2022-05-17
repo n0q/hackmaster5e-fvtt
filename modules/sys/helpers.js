@@ -52,6 +52,11 @@ export default function registerHandlebarsHelpers() {
         return num;
     });
 
+    Handlebars.registerHelper('pct', (arg1) => {
+        const pct = Math.round((Number(arg1) || 0) * 100);
+        return `${pct}%`;
+    });
+
     Handlebars.registerHelper("repeat", function (count, opts) {
         let str = "";
 

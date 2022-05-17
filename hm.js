@@ -10,7 +10,7 @@ import { HMWeaponItemSheet } from './modules/item/weapon-item-sheet.js';
 import { HMChatMgr } from './modules/mgr/chatmgr.js';
 import { HMCombat, HMCombatTracker } from './modules/sys/combat.js';
 import { HMMacro } from './modules/sys/macro.js';
-import LOGGER from './modules/sys/logger.js';
+import { HMSupport } from './modules/sys/support.js';
 import { MODULE_ID } from './modules/sys/constants.js';
 
 import registerHandlebarsHelpers from './modules/sys/helpers.js';
@@ -39,10 +39,6 @@ Hooks.once('init', async () => {
     preloadHandlebarsTemplates();
 });
 
-Hooks.once('devModeReady', ({ registerPackageDebugFlag }) => {
-    registerPackageDebugFlag(MODULE_ID);
-});
-
 Hooks.once('ready', async () => {
     if (game.modules.get('_dev-mode')?.api?.getPackageDebugValue(MODULE_ID)) {
         const tItem = game.items.contents.find((a) => a.name === 'test');
@@ -57,35 +53,12 @@ Hooks.once('ready', async () => {
     if (!f) f = await Folder.create({type: 'Macro', name: folderName, parent: null});
 });
 
+Hooks.once('devModeReady', HMSupport.devModeReady);
+Hooks.once('dragRuler.ready', HMSupport.dragRuler_ready);
 Hooks.on('createActor', HMActor.createActor);
 Hooks.on('createToken', HMActor.createToken);
 Hooks.on('createItem', HMItem.createItem);
 Hooks.on('renderChatMessage', HMChatMgr.renderChatMessage);
 Hooks.on('renderCombatTracker', HMCombatTracker.renderCombatTracker);
 Hooks.on('hotbarDrop', HMMacro.hotbarDrop);
-Hooks.on('diceSoNiceRollStart', (_messageId, context) => {
-    // Add 1 to penetration dice so dsn shows actual die throws.
-    const normalize = (roll, r=5) => {
-        if (r < 0) {
-            LOGGER.warn('Normalize recursion limit reached.');
-            return;
-        }
-
-        for (let i = 0; i < roll.terms.length; i++) {
-            // PoolTerms contain sets of terms we need to evaluate.
-            if (roll.terms[i]?.rolls) {
-                for (let j = 0; j < roll.terms[i].rolls.length; j++) {
-                    normalize(roll.terms[i].rolls[j], --r);
-                }
-            }
-
-            let penetrated = false;
-            for (let j = 0; j < roll.terms[i]?.results?.length; j++) {
-                const result = roll.terms[i].results[j];
-                if (penetrated && j) result.result++;
-                penetrated = result.penetrated;
-            }
-        }
-    };
-    normalize(context.roll);
-});
+Hooks.on('diceSoNiceRollStart', HMSupport.diceSoNiceRollStart);

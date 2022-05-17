@@ -41,6 +41,13 @@
                                 data-dtype="Number"/>
                         </div>
                         <div class="options-row">
+                            <label class="resource-label">{{localize "HM.move"}}</label>
+                            <input type="text" class="editable" value="{{pct bonus.base.move}}"
+                                style='width: 2.5rem; text-align: right;'
+                                data-item-prop="data.bonus.base.move"
+                                data-dtype="Percent"/>
+                        </div>
+                        <div class="options-row">
                             <label class="resource-label">{{localize "HM.shield"}}</label>
                             <input type="checkbox" name="data.shield.checked" {{checked shield.checked}}/>
                         </div>

@@ -30,7 +30,7 @@
                     value="{{lookup (lookup rowObj statKey) 'value'}}" maxlength=2 data-dtype="Number"/>
                 <label class="resource-label">/</label>
                 <input type="text" name="data.abilities.{{rowKey}}.{{statKey}}.fvalue" title="data.abilities.{{rowKey}}.{{statKey}}.fvalue"
-                    value="{{pad (lookup (lookup rowObj statKey) 'fvalue')}}" maxlength=2 data-dtype="Number"/>
+                    value="{{pad (lookup (lookup rowObj statKey) 'fvalue')}}" maxlength=3 data-dtype="Number"/>
             {{/if}}
             </td>
     {{/each}}

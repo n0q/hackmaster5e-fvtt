@@ -1,5 +1,5 @@
 import { HMActor } from './actor.js';
-import { HMTABLES } from '../sys/constants.js';
+import { HMCONST, HMTABLES } from '../sys/constants.js';
 
 export class HMCharacterActor extends HMActor {
     prepareBaseData() {
@@ -18,6 +18,18 @@ export class HMCharacterActor extends HMActor {
         this.setEncumbrance();
     }
 
+    get movespd() {
+        const raceMove = this.data.data.bonus.race?.move || 0;
+        let movespd = Object.values(HMTABLES.movespd).map((x) => x * raceMove);
+
+        const armorMove = this.data.data.bonus.armor?.move || 1;
+        if (armorMove !== 1) {
+            const armorPenalty = [1, 1, armorMove, armorMove, armorMove];
+            movespd = movespd.map((move, i) => move * armorPenalty[i]);
+        }
+        return movespd;
+    }
+
     setAbilities() {
         const { abilities } = this.data.data;
 
@@ -25,11 +37,13 @@ export class HMCharacterActor extends HMActor {
         for (const stat in abilities.base) {
             let value = 0;
             let fvalue = 0;
-            for (let row in abilities) {
+            for (const row in abilities) {
                 if (row === 'total') { continue; }
                 value  += abilities[row][stat].value;
                 fvalue += abilities[row][stat].fvalue;
             }
+            value += Math.floor(fvalue / 100);
+            fvalue = ((fvalue % 100) + 100) % 100;
             total[stat] = {value, fvalue};
         }
         abilities.total = total;

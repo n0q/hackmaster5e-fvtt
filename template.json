@@ -57,7 +57,10 @@
         "beast": {
             "templates": ["base"],
             "bio": {"desc": "", "tactics": "", "habitat": "", "ecology": ""},
-            "hp": {"value": 0, "max": null, "formula": null}
+            "hp": {"value": 0, "max": null, "formula": null},
+            "movespd": {
+                "gnd": {"crawl": 2.5, "walk": 5, "jog": 10, "run": 15, "sprint": 20}
+            }
         }
     },
 
@@ -86,9 +89,9 @@
             "armortype": null,
             "proficiency": null,
             "bonus": {
-                "total": {"dr": 0, "def": 0, "init": 0, "spd": 0},
-                "base":  {"dr": 0, "def": 0, "init": 0, "spd": 0},
-                "mod":   {"dr": 0, "def": 0, "init": 0, "spd": 0}
+                "total": {"dr": 0, "def": 0, "init": 0, "spd": 0, "move": 1.00},
+                "base":  {"dr": 0, "def": 0, "init": 0, "spd": 0, "move": 1.00},
+                "mod":   {"dr": 0, "def": 0, "init": 0, "spd": 0, "move": 0}
             },
             "qn": 0,
             "shield": {"checked": false}
@@ -127,8 +130,8 @@
         "race": {
             "templates": ["base"],
             "adj": null,
-            "scale": {"hp": 3,  "kb": 3,  "reach": 3},
-            "bonus": {"hp": 10, "kb": 15, "reach": 0}, 
+            "scale": {"hp": 3,  "kb": 3,  "reach": 3, "move": 3},
+            "bonus": {"hp": 10, "kb": 15, "reach": 0, "move": 1}, 
             "abilities": {
                 "str": {"value": 0, "fvalue": 0},
                 "int": {"value": 0, "fvalue": 0},

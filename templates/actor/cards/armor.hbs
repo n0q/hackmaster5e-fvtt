@@ -24,13 +24,21 @@
                     <tr>
                         <th scope="row"><label class="resource-label">{{@key}}</label></td>
                         {{#each this}}{{#if (eq 'mod' @../key)}}
+                            {{#if (eq 'move' @key)}}
+                        <td>
+                            <input class="editable" type="text" value={{pct this}} style='width: 2.5rem;'
+                                data-item-prop="data.bonus.mod.{{@key}}"
+                                data-dtype="Percent" />
+                        </td>
+                            {{else}}
                         <td>
                             <input class="editable" type="number" value={{this}}
                                 data-item-prop="data.bonus.mod.{{@key}}"
                                 data-dtype="Number" />
                         </td>
+                            {{/if}}
                         {{else}}
-                        <td>{{this}}</td>
+                        <td>{{#if (eq 'move' @key)}}{{pct this}}{{else}}{{this}}{{/if}}</td>
                         {{/if}}{{/each}}
                     </tr>
                     {{/each}}

@@ -20,9 +20,7 @@
                             <label class="resource-label">{{localize "HM.hp"}}</label>
                             <span>
                                 <select name="data.scale.hp">
-                                {{#select scale.hp}}{{#each (findConfigObj "scale") as |type t|}}
-                                    <option value="{{t}}">{{localize type}}</option>
-                                {{/each}}{{/select}}
+                                    {{selectOptions (findConfigObj 'scale') selected=scale.hp localize=true}}
                                 </select>
                                 <input type="number" name="data.bonus.hp" value="{{bonus.hp}}"
                                 {{#if (ne scale.hp '0')}}readonly{{/if}} data-dtype="Number"/>
@@ -32,9 +30,7 @@
                             <label class="resource-label">{{localize "HM.kb"}}</label>
                             <span>
                                 <select name="data.scale.kb">
-                                {{#select scale.kb}}{{#each (findConfigObj "scale") as |type t|}}
-                                    <option value="{{t}}">{{localize type}}</option>
-                                {{/each}}{{/select}}
+                                    {{selectOptions (findConfigObj 'scale') selected=scale.kb localize=true}}
                                 </select>
                                 <input type="number" name="data.bonus.kb" value="{{bonus.kb}}"
                                 {{#if (ne scale.kb '0')}}readonly{{/if}} data-dtype="Number"/>
@@ -44,12 +40,20 @@
                             <label class="resource-label">{{localize "HM.reach"}}</label>
                             <span>
                                 <select name="data.scale.reach">
-                                {{#select scale.reach}}{{#each (findConfigObj "scale") as |type t|}}
-                                    <option value="{{t}}">{{localize type}}</option>
-                                {{/each}}{{/select}}
+                                    {{selectOptions (findConfigObj 'scale') selected=scale.reach localize=true}}
                                 </select>
                                 <input type="number" name="data.bonus.reach" value="{{bonus.reach}}"
                                 {{#if (ne scale.reach '0')}}readonly{{/if}} data-dtype="Number"/>
+                            </span>
+                        </div>
+                        <div class="options-row">
+                            <label class="resource-label">{{localize "HM.move"}}</label>
+                            <span>
+                                <select name="data.scale.move">
+                                    {{selectOptions (findConfigObj 'scale') selected=scale.move localize=true}}
+                                </select>
+                                <input type="text" class="editable" name="data.bonus.move" style='width: 2.5rem; text-align: right;' value="{{pct bonus.move}}"
+                                {{#if (ne scale.move '0')}}readonly{{/if}} data-item-prop='data.bonus.move' data-dtype="Percent"/>
                             </span>
                         </div>
                         <div class="options-row">

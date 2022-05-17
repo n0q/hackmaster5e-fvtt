@@ -56,6 +56,7 @@ export class HMActor extends Actor {
         const {bonus} = this.data.data;
         const total = {};
 
+        const multiply = ['move'];
         for (const vector in bonus) {
             if (vector === 'total') { continue; }
 
@@ -74,6 +75,8 @@ export class HMActor extends Actor {
                 if (key !== '_idx' && value !== null) {
                     if (typeof value === 'string') {
                         total[key] = total?.[key]?.length ? `${total[key]} + ${value}` : value;
+                    } else if (multiply.includes(key)) {
+                        total[key] = (total?.[key] || 1) * value;
                     } else {
                         total[key] = (total?.[key] || 0) + value;
                     }
@@ -90,7 +93,8 @@ export class HMActor extends Actor {
         return {armor, shield};
     }
 
-    static async createActor(actor) {
+    static async createActor(actor, _options, userId) {
+        if (game.user.id !== userId) return;
         if (actor.items.size || actor.data.type === 'beast') { return; }
 
         const skillPack = game.packs.get('hackmaster5e.uskills');
@@ -116,10 +120,9 @@ export class HMActor extends Actor {
 
     // Populate hp.max for beast tokens.
     static async createToken(token, _options, userId) {
+        if (game.user.id !== userId) return;
         const {actor} = token;
-        if (actor.type !== 'beast'
-            || actor.data.data.hp.max
-            || userId !== game.user.id) { return; }
+        if (actor.type !== 'beast' || actor.data.data.hp.max || userId !== game.user.id) return;
 
         const {hp} = actor.data.data;
         const {formula} = hp;
