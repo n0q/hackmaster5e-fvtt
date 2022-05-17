@@ -22,7 +22,6 @@ export class HMBeastActor extends HMActor {
             const armorPenalty = [1, 1, armorMove, armorMove, armorMove];
             movespd = movespd.map((move, i) => move * armorPenalty[i]);
         }
-        console.warn(movespd);
         return movespd;
     }
 
