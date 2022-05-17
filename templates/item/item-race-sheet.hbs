@@ -52,8 +52,8 @@
                                 <select name="data.scale.move">
                                     {{selectOptions (findConfigObj 'scale') selected=scale.move localize=true}}
                                 </select>
-                                <input type="number" name="data.bonus.move" value="{{numberFormat bonus.move decimals=2}}"
-                                {{#if (ne scale.move '0')}}readonly{{/if}} data-dtype="Number"/>
+                                <input type="text" class="editable" name="data.bonus.move" style='width: 2.5rem; text-align: right;' value="{{pct bonus.move}}"
+                                {{#if (ne scale.move '0')}}readonly{{/if}} data-item-prop='data.bonus.move' data-dtype="Percent"/>
                             </span>
                         </div>
                         <div class="options-row">

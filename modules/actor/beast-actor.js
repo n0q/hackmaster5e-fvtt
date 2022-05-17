@@ -15,8 +15,15 @@ export class HMBeastActor extends HMActor {
     }
 
     get movespd() {
-        const move = this.data.data.bonus.total.move ?? 1;
-        return Object.values(this.data.data.movespd.gnd).map((x) => x * move);
+        let movespd = Object.values(this.data.data.movespd.gnd);
+        const armorMove = this.data.data.bonus.armor?.move || 1;
+
+        if (armorMove !== 1) {
+            const armorPenalty = [1, 1, armorMove, armorMove, armorMove];
+            movespd = movespd.map((move, i) => move * armorPenalty[i]);
+        }
+        console.warn(movespd);
+        return movespd;
     }
 
     setExtras() {

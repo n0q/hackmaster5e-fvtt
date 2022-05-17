@@ -15,11 +15,14 @@ export class HMArmorItem extends HMItem {
 
         const {bonus, shield, qn} = this.data.data;
         qn ? bonus.qual = this.quality : delete bonus.qual;
-        for (const key in bonus.total) {
-            let sum = -bonus.total[key];
-            for (const row in bonus) { sum += bonus[row][key]; }
+
+        Object.keys(bonus.base).forEach((key) => {
+            let sum = 0;
+            Object.keys(bonus).filter((x) => x !== 'total').forEach((row) => {
+               sum += (bonus[row][key] || 0);
+            });
             bonus.total[key] = sum;
-        }
+        });
 
         // Populate armor and shield vectors on actor.
         // TODO: Items should never do this to actors.

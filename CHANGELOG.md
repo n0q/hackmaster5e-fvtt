@@ -5,7 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 ### Added
 - Racial move speed modifiers.
+- Beast move speeds.
+- Armor move speed modifiers (jog+ movement rates).
 - Native Drag Ruler support.
+### Changed
+- Updated race compendium for movement speeds.
+- Updated armor compendium for movement speeds.
 ### Fixed
 - New characters were built incorrectly while more than one GM was present.
 - Ability scores added incorrectly in certain cases.

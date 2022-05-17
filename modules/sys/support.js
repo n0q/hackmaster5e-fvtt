@@ -48,12 +48,15 @@ export class HMSupport {
 
             getRanges(token) {
                 const {combat} = game;
+                if (!combat) return [];
                 const {round} = combat.data;
+                if (!round) return [];
                 const {movespd} = token.actor;
                 movespd.push(Infinity);
-                movespd.unshift(0);
+                movespd[0] = 0;
 
                 const combatant = combat.getCombatantByToken(token.id);
+                if (!combatant) return [];
                 const movedFlag = combatant.getFlag(MODULE_ID, 'moved');
                 const moved = movedFlag?.[round - 1] || 0;
 
@@ -64,7 +67,13 @@ export class HMSupport {
 
                 const ranges = [];
                 movespd.forEach((range, i) => ranges.push({range, color: colormask[i]}));
-                return ranges;
+
+                // dedup extra ranges due to armor.
+                return ranges.reduce((acc, curr) => {
+                    if (acc[acc.length -1].range === curr.range) acc.pop();
+                    acc.push(curr);
+                    return acc;
+                }, [ranges[0]]);
             }
 
             async onMovementHistoryUpdate(tokens) {
