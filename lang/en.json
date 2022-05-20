@@ -220,7 +220,7 @@
             "setWoundTitle":     "Inflict Wound",
             "setWoundBody":      "Wound HP",
             "specialMove":       "Special Move",
-            "warnSP":            "Insufficient Spell Points",
+            "warnSP":            "Insufficient points to cast this spell.",
             "warnMulti":         "Multiple tokens selected. Using <b>"
         },
 

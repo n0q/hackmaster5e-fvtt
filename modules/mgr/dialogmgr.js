@@ -67,41 +67,6 @@ async function getCastDialog(dataset, caller, opt) {
     return dialogResp;
 }
 
-/*
-async function getCastDialog2(dataset, caller) {
-    const dialogResp = {caller};
-    const dialogData = {};
-
-    dialogData.spells = getSpells(caller, dataset?.itemId);
-    dialogData.divine = dataset.itemDivine === 'true' ? true : false;
-    const template = 'systems/hackmaster5e/templates/dialog/getCast.hbs';
-
-    let sidx = null;
-    dialogResp.resp = await new Promise(async resolve => {
-        new Dialog({
-            title: game.i18n.localize('HM.dialog.getCastTitle'),
-            content: await renderTemplate(template, dialogData),
-            buttons: {
-                cast: {
-                    label: game.i18n.localize('HM.cast'),
-                    icon: '<i class="fas fa-magic"></i>',
-                    callback: (html) => {
-                        sidx = html.find('#spell-select')[0].value;
-                        resolve({
-                            'mod': parseInt(document.getElementById('mod').value || 0, 10),
-                        })
-                    }
-                }
-            },
-            default: 'cast'
-        }).render(true);
-        this._focusById('mod');
-    });
-    dialogResp.context = dialogData.spells[sidx];
-    return dialogResp;
-}
-*/
-
 async function getDamageDialog(dataset, caller) {
     const dialogResp = {caller};
     const dialogData = getWeapons(caller, dataset?.itemId);

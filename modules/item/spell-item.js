@@ -50,7 +50,7 @@ export class HMSpellItem extends HMItem {
             const sum = resp.cost + (resp.schedule || 0);
             const {sp} = actor.data.data;
             if (sum > sp.value) {
-                ui.notifications.warn('Insufficient Spell Points to cast Spell, dumbass.');
+                ui.notifications.warn(game.i18n.localize('HM.dialog.warnSP'));
                 return;
             }
             sp.value -= sum;
