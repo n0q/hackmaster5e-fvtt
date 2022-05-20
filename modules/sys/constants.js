@@ -344,10 +344,15 @@ export const HMTABLES = {
        },
     },
     'cast': {
-        'timing': (spd) => ({declare: spd, cast: spd + 5}),
+        'timing': (spd, caller) => {
+            const {fatigue} = caller.data.data.bonus.total;
+            const declare = spd;
+            const cast = Math.max(spd + 5 + (Number(fatigue) || 0), 1);
+            return {declare, cast};
+        },
         'cost': (lidx, prepped) => {
             const base = (lidx * 10) + 30;
-            return prepped ? base : base * 2
+            return prepped ? base : base * 2;
         },
     },
     'movespd': {

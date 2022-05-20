@@ -1,8 +1,8 @@
 import { HMPrompt } from './prompt.js';
 import { HMTABLES } from '../sys/constants.js';
 
-function getSpeed(sData) {
-    const spd = HMTABLES.cast.timing(sData.speed);
+function getSpeed(sData, caller) {
+    const spd = HMTABLES.cast.timing(sData.speed, caller);
     if (sData.divine) spd.cast = false;
     return spd;
 }
@@ -17,9 +17,10 @@ export class CastPrompt extends HMPrompt {
 
     constructor(dialogData, options) {
         super(dialogData, options);
+        const {caller} = dialogData;
         const spell = dialogData.spells[0];
         const sData = spell.data.data;
-        const spd = getSpeed(sData);
+        const spd = getSpeed(sData, caller);
         const {divine, lidx, prepped} = sData;
         const cost = HMTABLES.cast.cost(lidx, prepped);
 
@@ -35,13 +36,13 @@ export class CastPrompt extends HMPrompt {
     }
 
     update(options) {
-        const {spells, sidx} = this.dialogData;
+        const {spells, sidx, caller} = this.dialogData;
         const spell = spells[sidx];
         const sData = spell.data.data;
         const {divine, lidx, prepped} = sData;
 
         this.dialogData.cost = HMTABLES.cast.cost(lidx, prepped);
-        this.dialogData.spd = getSpeed(sData);
+        this.dialogData.spd = getSpeed(sData, caller);
         this.dialogData.divine = divine;
         this.dialogData.lidx = lidx;
         super.update(options);
