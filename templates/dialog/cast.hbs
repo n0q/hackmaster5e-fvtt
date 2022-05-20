@@ -1,0 +1,50 @@
+<form class='hackmaster'>
+    <span class='form-group'>
+        <label>{{localize 'HM.spell'}}</label>
+        <select name='sidx' class='bind' data-prop='sidx' data-render=true>
+            {{#select sidx}}{{#each spells}}
+                <option value='{{@index}}'>{{name}}</option>
+            {{/each}}{{/select}}
+        </select>
+    </span>
+    <section class='grid-2col'>
+        <span>
+            {{localize (concat 'HM.spellLevels.' lidx)}} {{localize 'HM.level'}}
+            {{#if divine}}{{localize 'HM.clerical'}}{{else}}{{localize 'HM.mage'}}{{/if}} {{localize 'HM.spell'}}
+            {{#unless prepped}} ({{localize 'HM.unprepared'}}){{/unless}}
+        </span>
+        {{#unless divine}}
+        <span style='text-align: right;'>
+            <b>{{cost}} {{localize 'HM.sp'}}</b>
+        </span>
+    </section>
+    <section>
+        <span class='form-group' style='text-align: right;'>
+            <label style='padding-right: 5px;'>{{localize 'HM.schedule'}}</label>
+            <input name='bonus' style='width: 2rem; min-width: 0; flex: 0 1 auto;'
+                value='{{schedule}}' class='focus bind' data-prop='schedule' placeholder=0 type='number'/> SP
+         </span>
+        {{/unless}}
+    </section>
+    {{#if inCombat}}
+    <hr>
+    <span class='form-group'>
+        <label>{{localize 'HM.dialog.advCombatTracker'}}</label>
+        <input type='checkbox' class='bind' data-prop='advance' {{checked advance}} data-render=true>
+    </span>
+    {{/if}}
+    <section class='dialog-buttons'>
+        <button type='submit' class='dialog-button normal default' data-button='declare'>
+            <span class='hm-clock'>
+                <label>{{localize 'HM.declare'}}</label>
+                {{#if (and advance inCombat)}}<sub>{{spd.declare}}</sub>{{/if}}
+            </span>
+        </button>
+        <button type='submit' class='dialog-button normal default' data-button='cast'>
+            <span class='hm-clock'>
+                <label>{{localize 'HM.cast'}}</label>
+                {{#if (and advance inCombat (not divine))}}<sub>{{spd.cast}}</sub>{{/if}}
+            </span>
+        </button>
+    </section>
+</form>

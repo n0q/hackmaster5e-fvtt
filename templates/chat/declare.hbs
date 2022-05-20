@@ -1,7 +1,28 @@
-{{localize 'HM.weapon'}}: <b>{{context.name}}</b><br>
-{{localize 'HM.speed'}}: {{context.data.data.bonus.total.spd}}
+{{#if (eq dialog 'cast')}}
+    {{localize 'HM.spell'}}: <b>{{context.name}}</b><br>
+    {{localize 'HM.components'}}: <b>{{resp.components}}</b><br>
+    {{#unless context.data.data.divine}}
+        {{localize 'HM.cost'}}: <b>{{resp.cost}} {{localize 'HM.sp'}}</b>
+        {{#if resp.schedule}}+ <b>{{resp.schedule}} {{localize 'HM.sp'}}</b>{{/if}}<br>
+    {{/unless}}
+    {{localize 'HM.speed'}}: <b>{{resp.advance}}</b><br>
 <div class='dice-roll'>
     <div class='dice-flavor'>
-        {{localize 'HM.ranged'}} {{localize 'HM.attack'}} {{localize 'HM.declaration'}}
+        {{localize (concat 'HM.spellLevels.' context.data.data.lidx)}} {{localize 'HM.level'}}
+        {{#if context.data.data.divine}}
+            {{localize 'HM.clerical'}}
+        {{else}}
+            {{localize 'HM.mage'}}
+        {{/if}}
+            {{localize 'HM.spell'}} ({{toLowerCase (localize 'HM.preparing')}})
     </div>
 </div>
+{{else}}
+    {{localize 'HM.weapon'}}: <b>{{context.name}}</b><br>
+    {{localize 'HM.speed'}}: {{context.data.data.bonus.total.spd}}
+<div class='dice-roll'>
+    <div class='dice-flavor'>
+        {{localize 'HM.ranged'}} {{localize 'HM.attack'}} ({{localize 'HM.preparing'}})
+    </div>
+</div>
+{{/if}}

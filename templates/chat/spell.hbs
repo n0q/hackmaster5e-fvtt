@@ -1,23 +1,17 @@
-<h3>{{context.data.name}}</h3><hr>
-{{name}}
-{{localize (findConfigValue 'spellLevels' context.data.data.lidx)}}
-{{localize 'HM.level'}}
-{{#if divine}}
-    {{localize 'HM.clerical'}}
-{{else}}
-    {{localize 'HM.arcane'}}
-{{/if}} {{localize 'HM.spell'}}<br> 
-{{#with resp}}
-{{localize 'HM.components'}}: <b>({{components}})</b><br>
-{{#unless ../context.data.data.divine}}
-    {{localize 'HM.sp'}}: <b>{{sp.base}} 
-    {{#if (gt sp.schedule 0)}} + {{sp.schedule}}{{/if}}
-    </b><br>
+{{localize 'HM.spell'}}: <b>{{context.name}}</b><br>
+{{localize 'HM.components'}}: <b>{{resp.components}}</b><br>
+{{#unless context.data.data.divine}}
+    {{localize 'HM.spell'}} {{localize 'HM.fatigue'}}: <b>{{resp.advance}}</b>
+    <i>{{toLowerCase (localize 'HM.seconds')}}.</i><br>
 {{/unless}}
-{{/with}}
-{{localize 'HM.speed'}}: <b>{{context.data.data.speed}}</b><br>
 <div class='dice-roll'>
     <div class='dice-flavor'>
-        {{localize 'HM.spell'}}
+        {{localize (concat 'HM.spellLevels.' context.data.data.lidx)}} {{localize 'HM.level'}}
+        {{#if context.data.data.divine}}
+            {{localize 'HM.clerical'}}
+        {{else}}
+            {{localize 'HM.mage'}}
+        {{/if}}
+            {{localize 'HM.spell'}}
     </div>
 </div>

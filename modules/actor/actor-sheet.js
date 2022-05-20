@@ -309,6 +309,10 @@ export class HMActorSheet extends ActorSheet {
             return game[MODULE_ID].HMItem.rollSkill({itemId: dataset.itemId, caller: actor});
         }
 
+        if (dataset.dialog === 'cast') {
+            return game[MODULE_ID].HMSpellItem.rollSpell({spell: dataset.itemId, caller: actor});
+        }
+
         if (dataset.dialog) {
             const dialogMgr = new HMDialogMgr();
             const dialogResp = await dialogMgr.getDialog(dataset, actor);
