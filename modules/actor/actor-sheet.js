@@ -80,8 +80,7 @@ export class HMActorSheet extends ActorSheet {
         }
 
         function spellsort(a, b) {
-            return Number(a.data.lidx) > Number(b.data.lidx)
-                || a.name > b.name ? 1 : -1;
+            return a.name > b.name || Number(a.data.lidx) > Number(b.data.lidx) ? 1 : -1;
         }
 
         skills.sort(skillsort);

@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Spellcasting advances actor clocks.
 ### Fixed
 - Race movement speed wasn't filtering properly to character actors.
+- Spell sort now prioritizes level over name.
 
 ## [0.2.11] - 2022-05-16
 ### Added
