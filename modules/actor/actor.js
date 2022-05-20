@@ -23,21 +23,6 @@ export class HMActor extends Actor {
         data.bonus   = {'total': {}, misc};
     }
 
-    async setRace() {
-        const {data} = this.data;
-        const races = this.items.filter((a) => a.type === 'race');
-        if (!races.length) return;
-        const race = races.pop();
-
-        data.bonus.race     = race.data.data.bonus;
-        data.abilities.race = race.data.data.abilities;
-
-        if (races.length) {
-            let oldrace;
-            while (oldrace = races.pop()) await oldrace.delete();
-        }
-    }
-
     setHP() {
         const {data, type} = this.data;
         const max = type === 'character' ? data.bonus.total?.hp || 0

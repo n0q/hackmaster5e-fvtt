@@ -91,6 +91,32 @@ async function createSaveCard(roll, dataset, dialogResp) {
     return {content, roll, rollMode};
 }
 
+async function createSpellCard(dataset) {
+    const {caller, resp} = dataset;
+    const item = dataset.context;
+    const {data} = item.data;
+
+    // Spell Components
+    const components = [];
+    if (data.component.verbal)   { components.push('V');  }
+    if (data.component.somatic)  { components.push('S');  }
+    if (data.component.material) { components.push('M');  }
+    if (data.component.catalyst) { components.push('C');  }
+    if (data.component.divine)   { components.push('DI'); }
+    resp.components = components.join(', ');
+
+    if (dataset.resp.button === 'declare') {
+        const template = 'systems/hackmaster5e/templates/chat/declare.hbs';
+        const content = await renderTemplate(template, dataset);
+        return {content, flavor: caller.name};
+    }
+
+    const template = 'systems/hackmaster5e/templates/chat/spell.hbs';
+    const content = await renderTemplate(template, dataset);
+
+    return {content, flavor: caller.name};
+}
+
 async function createAbilityCard(roll, dataset) {
     const saveType    = game.i18n.localize(`HM.abilityLong.${dataset.ability.toLowerCase()}`);
     const flavor      = `${saveType} ${game.i18n.localize('HM.check')}`;
@@ -192,7 +218,7 @@ export class HMChatMgr {
                     cData = await this._createWeaponCard(roll, dataset, dialogResp);
                     break;
                 case 'cast':
-                    cData = await this._createSpellCard(dataset, dialogResp);
+                    cData = await createSpellCard(dataset);
                     break;
                 case 'skill':
                     cData = await createSkillCard(dataset);
@@ -308,39 +334,6 @@ export class HMChatMgr {
             }
             default:
         }
-    }
-
-    async _createSpellCard(_dataset, dialogResp) {
-        const {caller} = dialogResp;
-        const item     = dialogResp.context;
-        const {data}   = item.data;
-
-        // Spell Components
-        const components = [];
-        if (data.component.verbal)   { components.push('V');  }
-        if (data.component.somatic)  { components.push('S');  }
-        if (data.component.material) { components.push('M');  }
-        if (data.component.catalyst) { components.push('C');  }
-        if (data.component.divine)   { components.push('DI'); }
-        dialogResp.resp.components = components.join(', ');
-
-        if (data.divine) {
-            const prepped = Math.max(data.prepped - 1, 0);
-            await item.update({'data.prepped': prepped});
-        } else {
-            // Spell Point Calculation
-            let base = 30 + 10 * data.lidx;
-            if (data.prepped < 1) { base *= 2; }
-            const schedule = Math.max(0, dialogResp.resp.mod || 0);
-            const sum = base + schedule;
-            dialogResp.resp.sp = {value: sum, base, schedule};
-            const spNew = caller.data.data.sp.value - sum;
-            await caller.update({'data.sp.value': spNew});
-        }
-
-        const template = 'systems/hackmaster5e/templates/chat/spell.hbs';
-        const content = await renderTemplate(template, dialogResp);
-        return {content};
     }
 
    /* eslint-disable */ //

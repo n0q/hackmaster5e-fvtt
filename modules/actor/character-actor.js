@@ -120,18 +120,16 @@ export class HMCharacterActor extends HMActor {
 
     async setCClass() {
         const {data} = this.data;
-        const cclasses = this.items.filter((a) => a.type === 'cclass');
+        const cclasses = this.itemTypes.cclass;
         if (!cclasses.length) return;
-        const cclass = cclasses.pop();
 
+        const cclass = cclasses[cclasses.length -1];
         cclass._prepCClassData();
         const objData = cclass.data.data;
-        if (objData.level > 0) { data.bonus.class = objData.bonus; }
+        if (objData.level > 0) data.bonus.class = objData.bonus;
 
-        if (cclasses.length) {
-            let oldclass;
-            while (oldclass = cclasses.pop()) await oldclass.delete();
-        }
+        Object.entries(cclasses.slice(0, cclasses.length -1))
+            .map((a) => this.items.get(a[1].id).delete());
     }
 
     setExtras() {
@@ -149,5 +147,19 @@ export class HMCharacterActor extends HMActor {
         const fValue = parseInt(data.fame.value, 10) || 0;
         data.fame.bracket = HMTABLES.bracket.fame(fValue) || 0;
         data.fame.value = Math.min(fValue, 999);
+    }
+
+    setRace() {
+        const {data} = this.data;
+        const races = this.itemTypes.race;
+        if (!races.length) return;
+
+        const race = races[races.length -1];
+        race.prepareBaseData();
+        data.bonus.race     = race.data.data.bonus;
+        data.abilities.race = race.data.data.abilities;
+
+        Object.entries(races.slice(0, races.length -1))
+            .map((a) => this.items.get(a[1].id).delete());
     }
 }

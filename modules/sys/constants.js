@@ -343,6 +343,18 @@ export const HMTABLES = {
             return hTable.findIndex((x) => x >= value);
        },
     },
+    'cast': {
+        'timing': (spd, caller) => {
+            const {fatigue} = caller.data.data.bonus.total;
+            const declare = spd;
+            const cast = Math.max(spd + 5 + (Number(fatigue) || 0), 1);
+            return {declare, cast};
+        },
+        'cost': (lidx, prepped) => {
+            const base = (lidx * 10) + 30;
+            return prepped ? base : base * 2;
+        },
+    },
     'movespd': {
         [HMCONST.MOVE.CRAWL]:   2.5,
         [HMCONST.MOVE.WALK]:    5.0,

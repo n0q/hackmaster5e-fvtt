@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.2.12] - 2022-05-20
+### Added
+- Spellcasting advances actor clocks.
+- Fatigue duration bonus modifier.
+### Fixed
+- Race movement speed wasn't filtering properly to character actors.
+- Spell sort now prioritizes level over name.
+- No longer able to spend spell points into the negative.
+
 ## [0.2.11] - 2022-05-16
 ### Added
 - Racial move speed modifiers.
