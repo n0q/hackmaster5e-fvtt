@@ -40,6 +40,12 @@ export class HMSpellItem extends HMItem {
 
         const dialog = 'cast';
         const dialogDataset = {dialog, itemId: spell};
+
+        if (comData.combatant) {
+            dialogDataset.isNPC = comData.combatant.isNPC;
+            dialogDataset.visible = comData.combatant.visible;
+        }
+
         const dialogMgr = new HMDialogMgr();
         const dialogResp = await dialogMgr.getDialog(dialogDataset, actor, opt);
 
