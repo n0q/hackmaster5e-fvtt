@@ -56,6 +56,7 @@ export class CastPrompt extends HMPrompt {
             cost: this.dialogData.cost,
             schedule: parseInt(this.dialogData.schedule, 10) || 0,
             advance: this.dialogData.advance ? spd[button] : false,
+            private: this.dialogData.private,
             button,
         };
         return dialogResp;

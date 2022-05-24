@@ -7,8 +7,8 @@
             {{/each}}{{/select}}
         </select>
     </span>
-    <section class='grid-2col'>
-        <span>
+    <section class='form-group'>
+        <span style='flex: 1 0 auto;'>
             {{localize (concat 'HM.spellLevels.' lidx)}} {{localize 'HM.level'}}
             {{#if divine}}{{localize 'HM.clerical'}}{{else}}{{localize 'HM.mage'}}{{/if}} {{localize 'HM.spell'}}
             {{#unless prepped}} ({{localize 'HM.unprepared'}}){{/unless}}
@@ -26,13 +26,19 @@
          </span>
         {{/unless}}
     </section>
-    {{#if inCombat}}
     <hr>
-    <span class='form-group'>
-        <label>{{localize 'HM.dialog.advCombatTracker'}}</label>
-        <input type='checkbox' class='bind' data-prop='advance' {{checked advance}} data-render=true>
-    </span>
-    {{/if}}
+    <section class='grid-2col' style='gap: 20px;'>
+        {{#if inCombat}}
+        <span class='form-group'>
+            <label>{{localize 'HM.dialog.advCombatTracker'}}</label>
+            <input type='checkbox' class='bind' data-prop='advance' {{checked advance}} data-render=true>
+        </span>
+        {{/if}}
+        <span class='form-group'>
+            <label>{{localize 'HM.private'}}?</label>
+            <input type='checkbox' class='bind' data-prop='private' {{checked private}} data-render=true>
+        </span>
+    </section>
     <section class='dialog-buttons'>
         <button type='submit' class='dialog-button normal default' data-button='declare'>
             <span class='hm-clock'>

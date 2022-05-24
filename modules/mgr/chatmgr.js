@@ -67,8 +67,15 @@ async function saveExtendedTrauma(content, roll) {
 async function createInitNote(dataset) {
     const template = 'systems/hackmaster5e/templates/chat/initNote.hbs';
     const content = await renderTemplate(template, dataset);
-    const type = CONST.CHAT_MESSAGE_TYPES.OTHER;
-    return {content, type};
+
+    let whisper;
+    if (dataset?.hidden) {
+        whisper = game.users.reduce((arr, u) => {
+            if (u.isGM) arr.push(u.id);
+            return arr;
+        }, []);
+    }
+    return {content, whisper};
 }
 
 async function createSaveCard(roll, dataset, dialogResp) {
@@ -92,11 +99,9 @@ async function createSaveCard(roll, dataset, dialogResp) {
 }
 
 async function createSpellCard(dataset) {
-    const {caller, resp} = dataset;
-    const item = dataset.context;
-    const {data} = item.data;
+    const {caller, resp, context} = dataset;
+    const {data} = context.data;
 
-    // Spell Components
     const components = [];
     if (data.component.verbal)   { components.push('V');  }
     if (data.component.somatic)  { components.push('S');  }
@@ -105,16 +110,19 @@ async function createSpellCard(dataset) {
     if (data.component.divine)   { components.push('DI'); }
     resp.components = components.join(', ');
 
-    if (dataset.resp.button === 'declare') {
-        const template = 'systems/hackmaster5e/templates/chat/declare.hbs';
-        const content = await renderTemplate(template, dataset);
-        return {content, flavor: caller.name};
+    let whisper;
+    if (resp.private) {
+        whisper = game.users.reduce((arr, u) => {
+            if (u.isGM) arr.push(u.id);
+            return arr;
+        }, []);
     }
 
-    const template = 'systems/hackmaster5e/templates/chat/spell.hbs';
+    const template = resp.button === 'declare'
+        ? 'systems/hackmaster5e/templates/chat/declare.hbs'
+        : 'systems/hackmaster5e/templates/chat/spell.hbs';
     const content = await renderTemplate(template, dataset);
-
-    return {content, flavor: caller.name};
+    return {content, whisper, flavor: caller.name};
 }
 
 async function createAbilityCard(roll, dataset) {
@@ -243,13 +251,14 @@ export class HMChatMgr {
             user:    this._user,
             flavor:  cData?.flavor || dialogResp?.caller?.name,
             content: cData.content,
-            type:    CONST.CHAT_MESSAGE_TYPES.IC,
+            type:    cData?.type || CONST.CHAT_MESSAGE_TYPES.OTHER,
+            whisper: cData?.whisper,
         };
 
         if (roll || dataset?.roll) {
             chatData.roll     = cData?.roll || roll;
             chatData.rollMode = cData.rollMode ? cData.rollMode : game.settings.get('core', 'rollMode');
-            chatData.type     = cData?.type || CONST.CHAT_MESSAGE_TYPES.ROLL;
+            chatData.type     = CONST.CHAT_MESSAGE_TYPES.ROLL;
             chatData.sound    = CONFIG.sounds.dice;
         }
 
@@ -343,6 +352,7 @@ export class HMChatMgr {
         html.css('padding', '0px');
         html.find('.message-sender').text('');
         html.find('.message-metadata')[0].style.display = 'none';
+        html.find('.whisper-to').remove();
         if (!game.user.isGM) html.find('a').remove();
     }
     /* eslint-enable */ //

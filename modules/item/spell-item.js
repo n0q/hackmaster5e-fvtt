@@ -40,6 +40,8 @@ export class HMSpellItem extends HMItem {
 
         const dialog = 'cast';
         const dialogDataset = {dialog, itemId: spell};
+        dialogDataset.isNPC = comData?.combatant?.isNPC || false;
+
         const dialogMgr = new HMDialogMgr();
         const dialogResp = await dialogMgr.getDialog(dialogDataset, actor, opt);
 
@@ -81,6 +83,7 @@ export class HMSpellItem extends HMItem {
 
             const initChatData = {
                 name: combatant.name,
+                hidden: combatant.hidden,
                 delta,
                 oldInit,
                 newInit,

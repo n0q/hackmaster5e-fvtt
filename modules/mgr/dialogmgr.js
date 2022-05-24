@@ -53,10 +53,14 @@ async function getAttackDialog(dataset, caller, opt) {
 
 async function getCastDialog(dataset, caller, opt) {
     const dialogResp = {caller};
-    const dialogData = {};
+    const dialogData = getDialogData();
+
     dialogData.spells = getSpells(caller, dataset?.itemId);
     dialogData.caller = caller;
-    if (opt.isCombatant) dialogData.inCombat = true;
+    if (opt.isCombatant) {
+        dialogData.inCombat = true;
+        dialogData.private = dataset.isNPC;
+    }
 
     const title = game.i18n.localize('HM.dialog.getCastTitle');
     dialogResp.resp = await new Promise((resolve) => {
