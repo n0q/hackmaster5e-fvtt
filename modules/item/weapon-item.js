@@ -198,6 +198,7 @@ export class HMWeaponItem extends HMItem {
 
             const initChatData = {
                 name: combatant.name,
+                hidden: combatant.hidden,
                 delta,
                 oldInit,
                 newInit,

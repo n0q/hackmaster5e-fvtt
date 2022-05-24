@@ -43,7 +43,6 @@ export class HMSpellItem extends HMItem {
 
         if (comData.combatant) {
             dialogDataset.isNPC = comData.combatant.isNPC;
-            dialogDataset.visible = comData.combatant.visible;
         }
 
         const dialogMgr = new HMDialogMgr();
@@ -87,6 +86,7 @@ export class HMSpellItem extends HMItem {
 
             const initChatData = {
                 name: combatant.name,
+                hidden: combatant.hidden,
                 delta,
                 oldInit,
                 newInit,

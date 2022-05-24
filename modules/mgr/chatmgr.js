@@ -67,8 +67,15 @@ async function saveExtendedTrauma(content, roll) {
 async function createInitNote(dataset) {
     const template = 'systems/hackmaster5e/templates/chat/initNote.hbs';
     const content = await renderTemplate(template, dataset);
-    const type = CONST.CHAT_MESSAGE_TYPES.OTHER;
-    return {content, type};
+
+    let whisper;
+    if (dataset?.hidden) {
+        whisper = game.users.reduce((arr, u) => {
+            if (u.isGM) arr.push(u.id);
+            return arr;
+        }, []);
+    }
+    return {content, whisper};
 }
 
 async function createSaveCard(roll, dataset, dialogResp) {
@@ -103,10 +110,8 @@ async function createSpellCard(dataset) {
     if (data.component.divine)   { components.push('DI'); }
     resp.components = components.join(', ');
 
-    let type;
     let whisper;
     if (resp.private) {
-        type = CONST.CHAT_MESSAGE_TYPES.WHISPER;
         whisper = game.users.reduce((arr, u) => {
             if (u.isGM) arr.push(u.id);
             return arr;
@@ -117,7 +122,7 @@ async function createSpellCard(dataset) {
         ? 'systems/hackmaster5e/templates/chat/declare.hbs'
         : 'systems/hackmaster5e/templates/chat/spell.hbs';
     const content = await renderTemplate(template, dataset);
-    return {content, type, whisper, flavor: caller.name};
+    return {content, whisper, flavor: caller.name};
 }
 
 async function createAbilityCard(roll, dataset) {
@@ -347,6 +352,7 @@ export class HMChatMgr {
         html.css('padding', '0px');
         html.find('.message-sender').text('');
         html.find('.message-metadata')[0].style.display = 'none';
+        html.find('.whisper-to').remove();
         if (!game.user.isGM) html.find('a').remove();
     }
     /* eslint-enable */ //
