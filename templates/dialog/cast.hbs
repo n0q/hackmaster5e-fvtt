@@ -7,8 +7,8 @@
             {{/each}}{{/select}}
         </select>
     </span>
-    <section class='grid-2col'>
-        <span>
+    <section class='form-group'>
+        <span style='flex: 1 0 auto;'>
             {{localize (concat 'HM.spellLevels.' lidx)}} {{localize 'HM.level'}}
             {{#if divine}}{{localize 'HM.clerical'}}{{else}}{{localize 'HM.mage'}}{{/if}} {{localize 'HM.spell'}}
             {{#unless prepped}} ({{localize 'HM.unprepared'}}){{/unless}}

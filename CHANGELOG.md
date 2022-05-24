@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Time cards for non-visible actors are no longer sent to the entire table.
 ### Fixed
 - Beast auto-trauma was not completing correctly.
+- Overflow on spell dialog for certain strings.
 
 ## [0.2.12] - 2022-05-20
 ### Added
