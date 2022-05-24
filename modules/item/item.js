@@ -84,8 +84,7 @@ export class HMItem extends Item {
             Object.values(actors).forEach(async (actor) => {
                 let context;
                 if (specialty) {
-                    console.warn(specialty);
-                context = actor.items.find((a) => a.type === 'skill'
+                    context = actor.items.find((a) => a.type === 'skill'
                         && skillName === a.name
                         && specialty === a.data.data?.specialty?.value);
                 } else {
