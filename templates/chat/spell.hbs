@@ -1,8 +1,12 @@
 {{localize 'HM.spell'}}: <b>{{context.name}}</b><br>
 {{localize 'HM.components'}}: <b>{{resp.components}}</b><br>
 {{#unless context.data.data.divine}}
-    {{localize 'HM.spell'}} {{localize 'HM.fatigue'}}: <b>{{resp.advance}}</b>
-    <i>{{toLowerCase (localize 'HM.seconds')}}.</i><br>
+    {{#if resp.advance}}
+        {{localize 'HM.spell'}} {{localize 'HM.fatigue'}}: <b>{{resp.advance}}</b>
+        <i>{{toLowerCase (localize 'HM.seconds')}}.</i><br>
+    {{else}}
+        {{localize 'HM.speed'}}: <b>{{context.data.data.speed}}</b>
+    {{/if}}
 {{/unless}}
 <div class='dice-roll'>
     <div class='dice-flavor'>
