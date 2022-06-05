@@ -98,7 +98,6 @@ $character-width: 820px;
         border: 2px solid $c-grey;
         >section {
             height: 24ex;
-            overflow-y: overlay;
         }
     }
 
@@ -149,6 +148,7 @@ $character-width: 820px;
 }
 
 .scrollable {
-    overflow-y: overlay;
+    min-height: 0;
+    overflow-y: auto;
     padding-right: 1.5%;
 }

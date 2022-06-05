@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.2.14] - 2022-06-05
+### Added
+- Compendium items.
+### Fixed
+- Spurious speed results in spell cards when not in combat.
+- Broken scrollbars and ugly priors under mozilla.
+- Movement speed setup for beasts field size increase.
+
 ## [0.2.13] - 2022-05-24
 ### Added
 - Casting gives an option to hide spell chat cards (defaults to 'on' for NPCs).

@@ -5,7 +5,9 @@
         {{localize 'HM.cost'}}: <b>{{resp.cost}} {{localize 'HM.sp'}}</b>
         {{#if resp.schedule}}+ <b>{{resp.schedule}} {{localize 'HM.sp'}}</b>{{/if}}<br>
     {{/unless}}
-    {{localize 'HM.speed'}}: <b>{{resp.advance}}</b><br>
+    {{#if resp.advance}}
+        {{localize 'HM.speed'}}: <b>{{resp.advance}}</b><br>
+    {{/if}}
 <div class='dice-roll'>
     <div class='dice-flavor'>
         {{localize (concat 'HM.spellLevels.' context.data.data.lidx)}} {{localize 'HM.level'}}
