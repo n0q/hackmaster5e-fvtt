@@ -156,7 +156,7 @@ export class HMItem extends Item {
             const dialogResp = {caller: parent, context: parent};
             dataset.resp = {caller: parent};
 
-            const roll = await rollMgr.getRoll(dataset);
+            const roll = await rollMgr.getRoll(dataset, dialogResp);
             const rollMode = 'gmroll';
             dialogResp.resp = {rollMode};
             const topcard = await chatmgr.getCard({dataset, roll, dialogResp});
