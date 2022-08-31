@@ -10,7 +10,6 @@ import { HMRollMgr } from '../mgr/rollmgr.js';
 export class HMItem extends Item {
     /** @override */
     prepareData(options={}) {
-        this.data.reset();
         this.prepareBaseData(options);
         super.prepareEmbeddedDocuments();
         this.prepareDerivedData();
@@ -21,7 +20,7 @@ export class HMItem extends Item {
         super.prepareBaseData();
 
         // HACK: This will suffice for now.
-        if (typeof this.data.data?.state === 'object') this._shittyMigrate();
+        if (typeof this.system?.state === 'object') this._shittyMigrate();
     }
 
     /** @override */
@@ -154,7 +153,7 @@ export class HMItem extends Item {
             dataset.formulaType = 'trauma';
 
             const rollMgr = new HMRollMgr();
-            const dialogResp = {caller: parent};
+            const dialogResp = {caller: parent, context: parent};
             dataset.resp = {caller: parent};
 
             const roll = await rollMgr.getRoll(dataset);
