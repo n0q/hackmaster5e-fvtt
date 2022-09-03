@@ -1,23 +1,21 @@
 import { MODULE_ID, MACRO_VERS } from './constants.js';
-import { HMItem } from '../item/item.js';
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMRollMgr } from '../mgr/rollmgr.js';
 
 /* global DOMPurify */
-async function createSkillMacro(itemData, slot) {
-    if (!game || !game.macros) return;
+async function createSkillMacro(data, slot) {
+    const item = await fromUuid(data.uuid);
+    if (!game || !game.macros || item.type !== 'skill') return;
 
-    const {name, img} = itemData;
-    const {specialty} = itemData.data;
-    const args = {skillName: DOMPurify.sanitize(name)};
+    const {system, img} = item;
+    const {specialty} = system;
+    const args = {skillName: item.name};
     if (specialty.checked) args.specialty = DOMPurify.sanitize(specialty.value);
-    const fullName = HMItem.specname(itemData);
-
+    const fullName = DOMPurify.sanitize(item.specname);
     const command = `game.${MODULE_ID}.HMItem.rollSkill(${JSON.stringify(args)});`;
     let macro = game.macros.contents.find((a) => a.name === fullName);
     if (!macro) {
-
         const folderName = game.i18n.localize('HM.sys.folders.skillmacro');
         const f = game.folders.find((a) => a.type === 'Macro' && a.name === folderName);
 
@@ -67,8 +65,8 @@ export class HMMacro extends Macro {
         return actor;
     }
 
-    static async hotbarDrop(_bar, data, slot) {
-        if (data.type === 'Macro') return;
-        if (data.data.type === 'skill') { createSkillMacro(data.data, slot); }
+    static hotbarDrop(_bar, data, slot) {
+        createSkillMacro(data, slot);
+        return false;
     }
 }
