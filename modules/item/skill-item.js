@@ -7,18 +7,21 @@ export class HMSkillItem extends HMItem {
 
     prepareDerivedData() {
         super.prepareDerivedData();
-        if (!this.actor?.data) return;
+        if (!this.actor?.system?.abilities) return;
 
-        const actorData = this.actor.data;
-        const {bonus, relevant, universal} = this.data.data;
+        const actorData = this.actor.system;
+        const {bonus, relevant, universal} = this.system;
 
         if (this.actor.type === 'character') {
-            if (universal && !bonus.mastery.value) {
-                const abilities = actorData.data.abilities.total;
-                const stack = [];
+            const abilities = actorData.abilities.total;
 
+            // It's not clear why this third term is needed, now.
+            // Sometimes actgorData.abilities.total is null.
+            // TODO: Fix this properly.
+            if (universal && !bonus.mastery.value && abilities) {
+                const stack = [];
                 for (const key in relevant) {
-                    if (relevant[key]) { stack.push(abilities[key].value); }
+                    if (relevant[key]) stack.push(abilities[key].value);
                 }
                 const value = Math.min(...stack);
                 bonus.stats = {value, 'literacy': value, 'verbal': value};

@@ -8,59 +8,59 @@
     <section class="sheet-body">
         <div class="tab attributes" data-group="primary" data-tab="attributes">
             <div class="item-form">
-                {{#with data.data}}
+                {{#with data}}
                 <div class="sidepanel">
                     <div class="options-block">
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.weapon"}}</label>
-                            <input type="checkbox" name="data.weapon.checked" {{checked weapon.checked}}/>
+                            <input type="checkbox" name="system.weapon.checked" {{checked system.weapon.checked}}/>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.skill"}}:</label>
-                            <select name="data.skill" data-dtype="{{skill}}"
-                                {{#if weapon.checked}}{{else}}disabled{{/if}}>
-                                {{#select skill}}{{#each (findConfigObj "weaponskill") as |type t|}}
+                            <select name="system.skill" data-dtype="{{system.skill}}"
+                                {{#unless system.weapon.checked}} disabled {{/unless}}>
+                                {{#select system.skill}}{{#each (findConfigObj "weaponskill") as |type t|}}
                                 <option value="{{t}}">{{localize type}}</option>
                                 {{/each}}{{/select}}
                             </select>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.ranged"}}</label>
-                            <input type="checkbox" name="data.ranged.checked"
-                            {{checked ranged.checked}}
-                            {{#if weapon.checked}}{{else}}disabled{{/if}}/>
+                            <input type="checkbox" name="system.ranged.checked"
+                            {{checked system.ranged.checked}}
+                            {{#unless system.weapon.checked}} disabled {{/unless}}>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.mechanical"}}</label>
-                            <input type="checkbox" name="data.mechanical.checked"
-                            {{checked mechanical.checked}}
-                            {{#if ranged.checked}}{{else}}disabled{{/if}}/>
+                            <input type="checkbox" name="system.mechanical.checked"
+                            {{checked system.mechanical.checked}}
+                            {{#unless (and system.weapon.checked system.ranged.checked)}} disabled {{/unless}}>
                         </div>
                     </div>
                 </div>
-                {{#if weapon.checked}}
+                {{#if system.weapon.checked}}
                 <div class="sidepanel">
                     <div class="options-block">
                         <div class="options-row">
                             <label class="resource-label" style="width: 6em;">{{localize "HM.attack"}}:</label>
-                            <input type="number" name="data.bonus.atk" value="{{bonus.atk}}" data-dtype="Number"/>
+                            <input type="number" name="system.bonus.atk" value="{{system.bonus.atk}}" data-dtype="Number"/>
                         </div>
                         {{#if ranged.checked}}{{else}}
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.defense"}}:</label>
-                            <input type="number" name="data.bonus.def" value="{{bonus.def}}"
+                            <input type="number" name="system.bonus.def" value="{{system.bonus.def}}"
                             data-dtype="Number"/>
                         </div>
                         {{/if}}
                         {{#if mechanical.checked}}{{else}}
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.damage"}}:</label>
-                            <input type="number" name="data.bonus.dmg" value="{{bonus.dmg}}" data-dtype="Number"/>
+                            <input type="number" name="system.bonus.dmg" value="{{system.bonus.dmg}}" data-dtype="Number"/>
                         </div>
                         {{/if}}
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.speed"}}:</label>
-                            <input type="number" name="data.bonus.spd" value="{{bonus.spd}}" data-dtype="Number"/>
+                            <input type="number" name="system.bonus.spd" value="{{system.bonus.spd}}" data-dtype="Number"/>
                         </div>
                     </div>
                 </div>

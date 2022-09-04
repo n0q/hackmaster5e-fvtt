@@ -1,19 +1,19 @@
-{{#with data.data}}
+{{#with data}}
 <form class="{{cssClass}}" autocomplete="off">
     <div class="item-form">
         <div class="sidepanel">
             <div class="options-block">
                 <div class="options-row">
                     <label class="resource-label">{{localize "HM.hp"}}:</label>
-                    <input type="number" name="data.hp" value="{{hp}}" data-dtype="Number"/>
+                    <input type="number" name="system.hp" value="{{system.hp}}" data-dtype="Number"/>
                 </div>
                 <div class="options-row">
                     <label class="resource-label">{{localize "HM.duration"}}:</label>
-                    <input type="number" name="data.timer" value="{{timer}}" data-dtype="Number"/>
+                    <input type="number" name="system.timer" value="{{system.timer}}" data-dtype="Number"/>
                 </div>
                 <div class="options-row">
                     <label class="resource-label">{{localize "HM.treated"}}:</label>
-                    <input type="checkbox" name="data.treated" {{checked treated}}/>
+                    <input type="checkbox" name="system.treated" {{checked system.treated}}/>
                 </div>
             </div>
         </div>

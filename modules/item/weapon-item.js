@@ -6,10 +6,10 @@ import { HMRollMgr } from '../mgr/rollmgr.js';
 
 export class HMWeaponItem extends HMItem {
     get minspd() {
-        const {data} = this.data;
-        const ranged = data.ranged.checked;
-        if (ranged) return HMTABLES.weapons.ranged.minspd(data.ranged.timing);
-        return HMTABLES.weapons.scale[data.scale].minspd;
+        const {system} = this;
+        const ranged = system.ranged.checked;
+        if (ranged) return HMTABLES.weapons.ranged.minspd(system.ranged.timing);
+        return HMTABLES.weapons.scale[system.scale].minspd;
     }
 
     prepareBaseData() {
@@ -18,30 +18,30 @@ export class HMWeaponItem extends HMItem {
 
     prepareDerivedData() {
         super.prepareDerivedData();
-        if (!this.actor?.data) return;
+        if (!this.actor?.system) return;
 
-        const actorData   = this.actor.data;
-        const itemData    = this.data.data;
+        const actorData   = this.actor.system;
+        const itemData    = this.system;
 
         const {jab, ranged} = itemData;
-        const isCharacter = actorData.type === 'character';
+        const isCharacter = this.actor.type === 'character';
         const armors      = [];
         const shields     = [];
         const armor       = {};
         const shield      = {};
-        const defItems    = actorData.items.filter((a) => a.type === 'armor'
-                                                       && a.invstate === 'equipped');
+        const defItems    = this.actor.items.filter((a) => a.type === 'armor'
+                                                    && a.invstate === 'equipped');
 
         if (itemData.innate) itemData.state = HMCONST.ITEM_STATE.INNATE;
         // TODO: Some of this can be relocated to weapon-item-sheet.js.
-        const {reach} = this.data.data;
-        const offset = this.parent.data.data.bonus.total.reach || 0;
+        const {reach} = this.system;
+        const offset = this.parent.system.bonus.total.reach || 0;
         itemData.adjReach = Math.max(reach + offset, 0) || 0;
 
         // Splitting armor and shields for now, so we can manage stances later.
         for (let i = 0; i < defItems.length; i++) {
             const defItem = defItems[i];
-            const defData = defItem.data.data;
+            const defData = defItem.system;
             // Without having finer control over prepData order, we must force a prep here.
             defItem.prepareData({setBonus: false});
             defData.shield.checked ? shields.push(defItem) : armors.push(defItem);
@@ -60,21 +60,21 @@ export class HMWeaponItem extends HMItem {
         const misc      = {};
         const race      = {};
         const stats     = {};
-        const classData = actorData.data.bonus.class;
-        const miscData  = actorData.data.bonus.misc;
-        const statsData = actorData.data.bonus.stats;
-        const raceData  = actorData.data.bonus.race;
+        const classData = actorData.bonus.class;
+        const miscData  = actorData.bonus.misc;
+        const statsData = actorData.bonus.stats;
+        const raceData  = actorData.bonus.race;
 
         const spec      = {};
         const profTable = HMTABLES.weapons.noprof;
         const wSkill    = itemData.skill;
-        const profItem  = actorData.items.find((a) => {
+        const profItem  = this.actor.items.find((a) => {
             return a.type === 'proficiency' && a.name === itemData.proficiency;
         });
 
         let j = 0;
         for (const key in bonus.total) {
-            const profBonus = profItem ? profItem.data.data.bonus?.[key] || 0
+            const profBonus = profItem ? profItem.system.bonus?.[key] || 0
                                        : profTable.table[wSkill] * profTable.vector[j++];
             spec[key]   = profBonus || 0;
             cclass[key] = classData?.[key] || 0;
@@ -84,11 +84,11 @@ export class HMWeaponItem extends HMItem {
 
             // Explicitly allowing multiple armor/shields because we don't support accesories yet.
             for (let i = 0; i < armors.length; i++)  {
-                const armorData = armors[i].data.data.bonus.total;
+                const armorData = armors[i].system.bonus.total;
                 armor[key] = (armor[key] || 0) + (armorData[key] || 0);
             }
             for (let i = 0; i < shields.length; i++)  {
-                const shieldData = shields[i].data.data.bonus.total;
+                const shieldData = shields[i].system.bonus.total;
                 shield[key] = (shield[key] || 0) + (shieldData[key] || 0);
             }
         }
@@ -101,7 +101,7 @@ export class HMWeaponItem extends HMItem {
             cclass.spd = Math.min(cclass.spd, classData?.spdm || cclass.spd);
         }
 
-        // TODO: Build a new data.data.bonus rather than clean the old one.
+        // TODO: Build a new system.bonus rather than clean the old one.
         Object.values(armor).every((a) => a === 0)  ? delete bonus.armor  : bonus.armor  = armor;
         Object.values(shield).every((a) => a === 0) ? delete bonus.shield : bonus.shield = shield;
         Object.values(misc).every((a) => a === 0)   ? delete bonus.misc   : bonus.misc   = misc;
@@ -128,7 +128,7 @@ export class HMWeaponItem extends HMItem {
 
     get capabilities() {
         const {SPECIAL} = HMCONST;
-        const {caps, jab} = this.data.data;
+        const {caps, jab} = this.system;
         const capsArr = Object.keys(caps).filter((key) => caps[key].checked).map((x) => Number(x));
         capsArr.push(SPECIAL.STANDARD);
         if (jab.checked) capsArr.push(SPECIAL.JAB);
@@ -137,8 +137,8 @@ export class HMWeaponItem extends HMItem {
 
     get canBackstab() {
         const {SPECIAL} = HMCONST;
-        const {data} = this.data;
-        return data.caps?.[SPECIAL.BACKSTAB]?.checked || false;
+        const {system} = this;
+        return system.caps?.[SPECIAL.BACKSTAB]?.checked || false;
     }
 
     // TODO: This needs a refactor, but it's too soon to do so. We should
@@ -176,7 +176,7 @@ export class HMWeaponItem extends HMItem {
         const dialogMgr = new HMDialogMgr();
         const dialogResp = await dialogMgr.getDialog(dataset, actor, opt);
 
-        const ranged = dialogResp.context.data.data.ranged.checked;
+        const ranged = dialogResp.context.system.ranged.checked;
         if (ranged) dataset.dialog = 'ratk';
 
         let roll;

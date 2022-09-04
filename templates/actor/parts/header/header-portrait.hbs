@@ -5,17 +5,17 @@
         <input class="name" name="name" type="text" value="{{name}}" placeholder="Name"/>
     {{#if (eq type 'character')}}
         <div>
-        {{localize (concat 'HM.alignmentShort.' data.data.priors.alignment)}}
-        {{#if race.data.adj}}
-            {{race.data.adj}}
+        {{localize (concat 'HM.alignmentShort.' system.priors.alignment)}}
+        {{#if race.system.adj}}
+            {{race.system.adj}}
         {{else}}
             {{race.name}}
         {{/if}}
         {{#if cclass}}
-            {{cclass.name}}-{{cclass.data.level}}
+            {{cclass.name}}-{{cclass.system.level}}
         {{/if}}
         </div>
-        {{#with data.data.priors}}
+        {{#with system.priors}}
         <div>
             {{#if height}}
             <label class="bold-label">{{localize 'HM.height'}}</label>: {{height}} in,

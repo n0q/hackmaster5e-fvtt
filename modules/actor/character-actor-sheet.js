@@ -23,7 +23,7 @@ export class HMCharacterActorSheet extends HMActorSheet {
     _HMprepareSheet(sheetData) {
         const actorData = sheetData.actor;
 
-        const {priors} = actorData.data.data;
+        const {priors} = actorData.system;
         priors.weight = HMTABLES.weight(priors.bmi || 0, priors.height || 0);
 
         // Saves

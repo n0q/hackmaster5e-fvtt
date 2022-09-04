@@ -10,12 +10,12 @@ export class SkillPrompt extends HMPrompt {
 
     constructor(dialogData, options) {
         super(dialogData, options);
-        const {data} = this.dialogData.skill.data;
+        const {system} = this.dialogData.skill;
         mergeObject(this.dialogData, {
             dc: 'auto',
-            language: data.language,
-            hasVerbal: data.bonus.total.verbal > 0,
-            hasLiteracy: data.bonus.total.literacy > 0,
+            language: system.language,
+            hasVerbal: system.bonus.total.verbal > 0,
+            hasLiteracy: system.bonus.total.literacy > 0,
         });
     }
 

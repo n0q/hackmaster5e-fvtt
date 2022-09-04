@@ -25,8 +25,8 @@ export class HMWeaponItemSheet extends HMItemSheet {
         const newTiming = Math.max(parseInt(value, 10) || 0, 0);
         await this.item.update({[name]: newTiming});
 
-        const {timing} = this.item.data.data.ranged;
+        const {timing} = this.item.system.ranged;
         const spd = Object.values(timing).reduce((a, b) => (a || 0) + (b || 0));
-        await this.item.update({'data.bonus.base.spd': spd});
+        await this.item.update({'system.bonus.base.spd': spd});
     }
 }

@@ -6,13 +6,13 @@
                 <h4 class='card-name' style='font-size: 16px;'>{{name}}</h4>
             </label>
         </header>
-        {{#if (gt data.state 1)}}
+        {{#if (gt system.state 1)}}
         <section>
             <img class='rollable imgbutton' src='{{findConfigValue 'combatImg' 'def'}}' height='36' title='Defend'
                 data-dialog='def'
                 data-formula-type='standard'
                 data-item-id='{{_id}}'>
-            {{#if data.ranged.checked}}
+            {{#if system.ranged.checked}}
             <img class='rollable imgbutton' src='{{findConfigValue 'combatImg' 'rdmg'}}' height='36' title='Ranged Damage'
             {{else}}
             <img class='rollable imgbutton' src='{{findConfigValue 'combatImg' 'dmg'}}' height='36' title='Damage'
@@ -20,7 +20,7 @@
                 data-dialog='dmg'
                 data-formula-type='standard'
                 data-item-id='{{_id}}'>
-            {{#if data.ranged.checked}}
+            {{#if system.ranged.checked}}
             <img class='rollable imgbutton' src='{{findConfigValue 'combatImg' 'ratk'}}' height='36' title='Ranged Attack'
                 data-dialog='ratk'
                 data-formula-type='standard'
@@ -37,31 +37,31 @@
     <section class='hide' toggle>
         <div class='splitview'>
             <div>
-                {{localize 'HM.reach'}}: {{data.adjReach}}    
+                {{localize 'HM.reach'}}: {{system.adjReach}}    
             </div>
             <table class='table-basic'>
                 <thead>
                     <tr>
                         <th scope='col'></th>
-                        {{#each data.bonus.total}}{{#unless (eq @key 'jspd')}}
+                        {{#each system.bonus.total}}{{#unless (eq @key 'jspd')}}
                         <th scope='col'><label class='resource-label'>{{@key}}</label></th>
                         {{/unless}}{{/each}}
                     </tr>
                 </thead>
                 <tbody>
-                    {{#each data.bonus}}
+                    {{#each system.bonus}}
                     <tr>
                         <th scope='row'><label class='resource-label'>{{@key}}</label></td>
                         {{#each this}}{{#unless (eq @key 'jspd')}}{{#if (eq @../key 'mod')}}
                         <td>
                             <input class='editable' type='number' value={{this}}
-                                data-item-prop='data.bonus.mod.{{@key}}'
+                                data-item-prop='system.bonus.mod.{{@key}}'
                                 data-dtype='Number' />
                         </td>
                         {{else}}
                         <td>
                             {{this}}{{#if
-                                (and ../../data.jab.checked
+                                (and ../../system.jab.checked
                                     (eq @key 'spd')
                                         (or
                                             (eq @../key 'total')

@@ -14,26 +14,26 @@
                 <thead>
                     <tr>
                         <th scope="col"></th>
-                        {{#each data.bonus.total}}
+                        {{#each system.bonus.total}}
                         <th scope="col"><label class="resource-label">{{@key}}</label></th>
                         {{/each}}
                     </tr>
                 </thead>
                 <tbody>
-                    {{#each data.bonus}}
+                    {{#each system.bonus}}
                     <tr>
                         <th scope="row"><label class="resource-label">{{@key}}</label></td>
                         {{#each this}}{{#if (eq 'mod' @../key)}}
                             {{#if (eq 'move' @key)}}
                         <td>
                             <input class="editable" type="text" value={{pct this}} style='width: 2.5rem;'
-                                data-item-prop="data.bonus.mod.{{@key}}"
+                                data-item-prop="system.bonus.mod.{{@key}}"
                                 data-dtype="Percent" />
                         </td>
                             {{else}}
                         <td>
                             <input class="editable" type="number" value={{this}}
-                                data-item-prop="data.bonus.mod.{{@key}}"
+                                data-item-prop="system.bonus.mod.{{@key}}"
                                 data-dtype="Number" />
                         </td>
                             {{/if}}

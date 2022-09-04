@@ -11,49 +11,49 @@
             {{> "systems/hackmaster5e/templates/item/parts/description.hbs" }}
         </div>
 
-{{#with data.data}}
+{{#with data}}
         <div class="tab attributes" data-group="primary" data-tab="attributes">
             <div class="item-form">
                 <div class="sidepanel">
                     <div class="options-block">
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.level"}}</label>
-                            <select name="data.lidx">
-                                {{#select lidx}}{{#each (findConfigObj "spellLevels") as |type t|}}
+                            <select name="system.lidx">
+                                {{#select system.lidx}}{{#each (findConfigObj "spellLevels") as |type t|}}
                                 <option value="{{t}}">{{localize type}}</option>
                                 {{/each}}{{/select}}
                             </select>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.speed"}}</label>
-                            <input type="number" name="data.speed" value="{{speed}}" data-dtype="Number"/>
+                            <input type="number" name="system.speed" value="{{system.speed}}" data-dtype="Number"/>
                         </div>       
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.prayer"}}</label>
-                            <input type="checkbox" name="data.divine" {{checked divine}}/>
+                            <input type="checkbox" name="system.divine" {{checked system.divine}}/>
                         </div>
                     </div>
                     <div class="options-block">
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.verbal"}}</label>
-                            <input type="checkbox" name="data.component.verbal" {{checked component.verbal}}/>
+                            <input type="checkbox" name="system.component.verbal" {{checked system.component.verbal}}/>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.somatic"}}</label>
-                            <input type="checkbox" name="data.component.somatic" {{checked component.somatic}}/>
+                            <input type="checkbox" name="system.component.somatic" {{checked system.component.somatic}}/>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.material"}}</label>
-                            <input type="checkbox" name="data.component.material" {{checked component.material}}/>
+                            <input type="checkbox" name="system.component.material" {{checked system.component.material}}/>
                         </div>
-    {{#if divine}}
+    {{#if system.divine}}
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.catalyst"}}</label>
-                            <input type="checkbox" name="data.component.catalyst" {{checked component.catalyst}}/>
+                            <input type="checkbox" name="system.component.catalyst" {{checked system.component.catalyst}}/>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.divine"}}</label>
-                            <input type="checkbox" name="data.component.divine" {{checked component.divine}}/>
+                            <input type="checkbox" name="system.component.divine" {{checked system.component.divine}}/>
                         </div>
     {{/if}}
                     </div>

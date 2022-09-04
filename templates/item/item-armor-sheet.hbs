@@ -13,48 +13,48 @@
 
         <div class="tab attributes" data-group="primary" data-tab="attributes">
             <div class="item-form">
-                {{#with data.data}} 
+                {{#with data}} 
                 <div class="sidepanel">
                     <div class="options-block">
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.dr"}}</label>
-                            <input type="number" class="editable" value="{{bonus.base.dr}}"
-                                data-item-prop="data.bonus.base.dr"
+                            <input type="number" class="editable" value="{{system.bonus.base.dr}}"
+                                data-item-prop="system.bonus.base.dr"
                                 data-dtype="Number"/>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.def"}}</label>
-                            <input type="number" class="editable" value="{{bonus.base.def}}"
-                                data-item-prop="data.bonus.base.def"
+                            <input type="number" class="editable" value="{{system.bonus.base.def}}"
+                                data-item-prop="system.bonus.base.def"
                                 data-dtype="Number"/>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.init"}}</label>
-                            <input type="number" class="editable" value="{{bonus.base.init}}"
-                                data-item-prop="data.bonus.base.init"
+                            <input type="number" class="editable" value="{{system.bonus.base.init}}"
+                                data-item-prop="system.bonus.base.init"
                                 data-dtype="Number"/>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.speed"}}</label>
-                            <input type="number" class="editable" value="{{bonus.base.spd}}"
-                                data-item-prop="data.bonus.base.spd"
+                            <input type="number" class="editable" value="{{system.bonus.base.spd}}"
+                                data-item-prop="system.bonus.base.spd"
                                 data-dtype="Number"/>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.move"}}</label>
-                            <input type="text" class="editable" value="{{pct bonus.base.move}}"
+                            <input type="text" class="editable" value="{{pct system.bonus.base.move}}"
                                 style='width: 2.5rem; text-align: right;'
-                                data-item-prop="data.bonus.base.move"
+                                data-item-prop="system.bonus.base.move"
                                 data-dtype="Percent"/>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.shield"}}</label>
-                            <input type="checkbox" name="data.shield.checked" {{checked shield.checked}}/>
+                            <input type="checkbox" name="system.shield.checked" {{checked system.shield.checked}}/>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.quality"}}</label>
-                            <input type="number" class="editable" value="{{qn}}"
-                                data-item-prop="data.qn"
+                            <input type="number" class="editable" value="{{system.qn}}"
+                                data-item-prop="system.qn"
                                 data-dtype="Number"/>
                         </div>
                     </div>
@@ -63,14 +63,14 @@
                     <div class="options-block">
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.proficiency"}}</label>
-                            <input type="text" name="data.proficiency" value="{{proficiency}}"
+                            <input type="text" name="system.proficiency" value="{{system.proficiency}}"
                             data-dtype="String"/>
                         </div>
                         {{#if shield.checked}}{{else}}
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.armortype"}}</label>
-                            <select name="data.armortype">
-                                {{#select armortype}}{{#each (findConfigObj "armortype") as |type t|}}
+                            <select name="system.armortype">
+                                {{#select system.armortype}}{{#each (findConfigObj "armortype") as |type t|}}
                                     <option value="{{t}}">{{localize type}}</option>
                                 {{/each}}{{/select}}
                             </select>

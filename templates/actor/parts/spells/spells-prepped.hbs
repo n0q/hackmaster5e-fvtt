@@ -2,7 +2,7 @@
 <select style="visibility: hidden;"></select>
 <ol class="card-list">
 {{#each actor.spells}}
-    {{#repeat data.prepped}}
+    {{#repeat system.prepped}}
         {{> "systems/hackmaster5e/templates/actor/cards/prepped-spell.hbs" }}
     {{/repeat}}
 {{/each}}

@@ -1,6 +1,6 @@
 {{localize 'HM.weapon'}}: <b>{{context.name}}</b><br>
 {{localize 'HM.speed'}}:
-{{#with context.data.data.bonus.total}}
+{{#with context.system.bonus.total}}
     {{#if (eq ../resp.specialMove 1)}}
 {{spd}}(<b>{{jspd}}</b>)<br>
     {{else}}

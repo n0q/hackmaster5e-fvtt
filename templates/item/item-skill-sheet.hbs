@@ -10,72 +10,73 @@
         <div class="tab" data-group="primary" data-tab="description">
             {{> "systems/hackmaster5e/templates/item/parts/description.hbs" }}
         </div>
-
+        {{#with data}}
         <div class="tab attributes" data-group="primary" data-tab="attributes">
             <div class="item-form">
                 <div class="sidepanel">
                     <div class="options-block">
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.bp"}}:</label>
-                            <input type="number" name="data.bp" value="{{data.data.bp}}" data-dtype="Number"/>
+                            <input type="number" name="system.bp" value="{{system.bp}}" data-dtype="Number"/>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.universal"}}:</label>
-                            <input type="checkbox" name="data.universal" {{checked data.data.universal}}/>
+                            <input type="checkbox" name="system.universal" {{checked system.universal}}/>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.tools"}}:</label>
-                            <input type="checkbox" name="data.tools" {{checked data.data.tools}}/>
+                            <input type="checkbox" name="system.tools" {{checked system.tools}}/>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.specialty"}}:</label>
-                            <input type="checkbox" name="data.specialty.checked" {{checked data.data.specialty.checked}}/>
+                            <input type="checkbox" name="system.specialty.checked" {{checked system.specialty.checked}}/>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.language"}}:</label>
-                            <input type="checkbox" name="data.language" {{checked data.data.language}}/>
+                            <input type="checkbox" name="system.language" {{checked system.language}}/>
                         </div>
                     </div>
                 </div>
                 <div class="sidepanel">
                     <div class="options-block">
-                        {{#each data.data.relevant as |ability key|}}
+                        {{#each system.relevant as |ability key|}}
                         <div class="options-row">
                             <label class="resource-label">
                                 {{localize (findConfigValue "ability_short" key)}}
                             </label>
-                            <input type="checkbox" name="data.relevant.{{key}}" {{checked ability}}/>
+                            <input type="checkbox" name="system.relevant.{{key}}" {{checked ability}}/>
                         </div>
                         {{/each}}
                     </div>
                 </div>
                 <div class="sidepanel">
                     <div class="options-block">
-                        {{#if data.data.language}}
+                        {{#if system.language}}
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.verbal"}} {{localize "HM.mastery"}}:</label>
-                            <input type="number" name="data.bonus.mastery.verbal" value="{{data.data.bonus.mastery.verbal}}" data-dtype="Number"/>
+                            <input type="number" name="system.bonus.mastery.verbal" value="{{system.bonus.mastery.verbal}}" data-dtype="Number"/>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.literacy"}} {{localize "HM.mastery"}}:</label>
-                            <input type="number" name="data.bonus.mastery.literacy" value="{{data.data.bonus.mastery.literacy}}" data-dtype="Number"/>
+                            <input type="number" name="system.bonus.mastery.literacy" value="{{system.bonus.mastery.literacy}}" data-dtype="Number"/>
                         </div>
                         {{else}}
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.mastery"}}:</label>
-                            <input type="number" name="data.bonus.mastery.value" value="{{data.data.bonus.mastery.value}}" data-dtype="Number"/>
+                            <input type="number" name="system.bonus.mastery.value" value="{{system.bonus.mastery.value}}" data-dtype="Number"/>
                         </div>
                         {{/if}}
-                        {{#if data.data.specialty.checked}}
+                        {{#if system.specialty.checked}}
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.specialty"}}:</label>
-                            <input type="text" name="data.specialty.value" value="{{data.data.specialty.value}}" data-dtype="String"/>
+                            <input type="text" name="system.specialty.value" value="{{system.specialty.value}}" data-dtype="String"/>
                         </div>
                         {{/if}}
                     </div>
                 </div>
             </div>
         </div>
+        {{/with}}
     </section>
 </form>
 

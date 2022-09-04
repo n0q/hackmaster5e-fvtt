@@ -18,12 +18,12 @@ function getWeapons(actor, itemId) {
     } else {
         weaponList = actor.items.filter(
             (a) => a.type === 'weapon'
-            && HMCONST.ITEM_STATE.EQUIPPED <= a.data.data.state,
+            && HMCONST.ITEM_STATE.EQUIPPED <= a.system.state,
         );
     }
 
     function wsort(a, b) {
-        return a.name > b.name || a.data.data.state > b.data.data.state ? 1 : -1;
+        return a.name > b.name || a.system.state > b.system.state ? 1 : -1;
     }
 
     const weapons = weaponList.sort(wsort);

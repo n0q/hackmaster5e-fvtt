@@ -22,7 +22,7 @@ export class HMPrompt extends Application {
         const capsArr = weapon.capabilities;
         const {special} = idx;
         const capsObj = Object.fromEntries(capsArr.map((x) => Object.entries(special)[x]));
-        const ranged = weapon.data.data.ranged.checked;
+        const ranged = weapon.system.ranged.checked;
 
         (actor.canBackstab && !ranged)
             ? capsObj[HMCONST.SPECIAL.FLEEING] = special[HMCONST.SPECIAL.FLEEING]

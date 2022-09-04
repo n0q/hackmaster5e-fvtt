@@ -4,38 +4,38 @@
         <h1 class='itemname'><input name='name' type='text' size=48 value='{{item.name}}' placeholder='Name'/></h1>
     </label></header>
 </div>
-{{#with data.data}}
+{{#with data}}
 <div class='grid grid-3col'>
     <div>
         <div class='form-group'>
             <label class='resource-label'>{{localize 'HM.qty'}}</label>
-{{#if (eq ../data.type 'item')}}
-            <input type='number' name='data.qty' value='{{qty}}' data-dtype='Number'/>
+{{#if (eq type 'item')}}
+            <input type='number' name='system.qty' value='{{system.qty}}' data-dtype='Number'/>
 {{else}}
             <input type='number' readonly value='1'/>
 {{/if}}
         </div>
         <div class='form-group'>
             <label class='resource-label'>{{localize 'HM.avail.high'}}</label>
-            <input type='number' name='data.avail.high' value='{{avail.high}}' data-dtype='Number'/>
+            <input type='number' name='system.avail.high' value='{{system.avail.high}}' data-dtype='Number'/>
         </div>
     </div><div>
         <div class='form-group'>
             <label class='resource-label'>{{localize 'HM.weight'}}</label>
-            <input type='number' name='data.weight' value='{{weight}}' data-dtype='Number'/>
+            <input type='number' name='system.weight' value='{{system.weight}}' data-dtype='Number'/>
         </div>
         <div class='form-group'>
             <label class='resource-label'>{{localize 'HM.avail.med'}}</label>
-            <input type='number' name='data.avail.med' value='{{avail.med}}' data-dtype='Number'/>
+            <input type='number' name='system.avail.med' value='{{system.avail.med}}' data-dtype='Number'/>
         </div>
     </div><div>
         <div class='form-group'>
             <label class='resource-label'>{{localize 'HM.price'}}</label>
-            <input type='text' name='data.price' value='{{price}}' data-dtype='String'/>
+            <input type='text' name='system.price' value='{{system.price}}' data-dtype='String'/>
         </div>
         <div class='form-group'>
             <label class='resource-label'>{{localize 'HM.avail.low'}}</label>
-            <input type='number' name='data.avail.low' value='{{avail.low}}' data-dtype='Number'/>
+            <input type='number' name='system.avail.low' value='{{system.avail.low}}' data-dtype='Number'/>
         </div>
     </div>
 </div>

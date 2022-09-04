@@ -3,7 +3,7 @@
         <header>
             <label for="{{name}}">
                 <img src="{{img}}" title="{{name}}" width="28" height="28"/>
-                <label class="spell-level resource-label">{{localize (concat "HM.spellLevelsAbbr." data.lidx)}}</label>
+                <label class="spell-level resource-label">{{localize (concat "HM.spellLevelsAbbr." system.lidx)}}</label>
                 <h4 class="item-name">{{name}}</h4>
             </label>
         </header>
@@ -15,12 +15,12 @@
             <img class="imgbutton spell-prep" src="{{findConfigValue "combatImg" "prep"}}" height=20 title="Prepare"
                 data-item-prepare=true
                 data-item-id="{{_id}}">
-            {{#if data.divine}}{{else}}
+{{#unless system.divine}}
             <img class="rollable imgbutton" src="{{findConfigValue "combatImg" "cast"}}" height=20 title="Cast"
                 data-dialog="cast"
-                data-item-divine={{data.divine}}
+                data-item-divine={{system.divine}}
                 data-item-id="{{_id}}">
-            {{/if}}
+{{/unless}}
         </section>
     </summary>
 </li>

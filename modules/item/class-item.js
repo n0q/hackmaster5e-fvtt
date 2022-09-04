@@ -12,23 +12,23 @@ export class HMClassItem extends HMItem {
     }
 
     async _prepCClassData() {
-        const {data} = this.data;
-        const pTable = data.ptable;
+        const {system} = this;
+        const pTable = system.ptable;
 
         // initialize new cclass object ptable
         if (Object.entries(pTable).length === 0) {
             const {pData} = HMTABLES.cclass;
             for (let i = 1; i < 21; i++) pTable[i] = deepClone(pData);
             if (Object.entries(pTable).length) return;
-            await this.update({'data.ptable': pTable});
+            await this.update({'system.ptable': pTable});
         }
 
-        if (!this.actor?.data) return;
+        if (!this.actor?.system) return;
 
         // calculate hp
-        const level = Math.clamped((data.level || 0), 0, 20);
+        const level = Math.clamped((system.level || 0), 0, 20);
         if (level < 1) {
-            delete data.bonus;
+            delete system.bonus;
             return;
         }
 
@@ -61,15 +61,15 @@ export class HMClassItem extends HMItem {
             'dodge':    level,
             'mental':   level,
             'physical': level,
-            'top':      (data.top_cf || 0.01) * level,
+            'top':      (system.top_cf || 0.01) * level,
         };
 
         // grab the level data off the ptable
-        const {features} = data;
+        const {features} = system;
         Object.keys(features).forEach((idx) => {
             bonus[idx] = features[idx] ? pTable[level][idx].value || 0 : 0;
         });
 
-        data.bonus = bonus;
+        system.bonus = bonus;
     }
 }
