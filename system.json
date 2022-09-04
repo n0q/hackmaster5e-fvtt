@@ -1,14 +1,15 @@
 {
-    "name": "hackmaster5e",
+    "id": "hackmaster5e",
     "title": "Hackmaster",
     "description": "Implementation of Hackmaster for FoundryVTT.",
     "url": null,
     "version": null,
-    "minimumCoreVersion": "9.251",
-    "compatibleCoreVersion": "9",
+    "compatibility": {
+        "minimum": "10",
+        "verified": "10"
+    },
     "manifestPlusVersion": "1.2.0",
     "templateVersion": 1,
-    "author": "n0qtrnL#2610",
     "authors": [{"name": "n0q", "discord": "n0qtrnL#2610"}],
     "media": [{
         "type": "cover",

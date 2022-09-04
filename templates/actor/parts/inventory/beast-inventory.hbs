@@ -1,6 +1,6 @@
 <ol class='cards-list'>
     <li class='table-header'>
-    {{#with actor.data.data.encumb}}
+    {{#with actor.system.encumb}}
     <label>
         {{localize 'HM.scale'}} {{localize 'HM.weight'}}:
         <b>{{numberFormat total decimals=2}} lbs.</b>
@@ -17,7 +17,7 @@
     </li>
     <section class='scrollable' style='height: 24.5em;'>
     {{#each actor.gear.weapons}}
-        {{#unless data.innate}}
+        {{#unless system.innate}}
             {{> 'systems/hackmaster5e/templates/actor/cards/item.hbs' }}
         {{/unless}}
     {{/each}}

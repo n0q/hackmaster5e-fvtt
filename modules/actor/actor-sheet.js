@@ -8,7 +8,7 @@ export class HMActorSheet extends ActorSheet {
     /** @override */
     get template() {
         const path = 'systems/hackmaster5e/templates/actor';
-        return `${path}/${this.actor.data.type}-base.hbs`;
+        return `${path}/${this.actor.type}-base.hbs`;
     }
 
     /** @override */
@@ -51,20 +51,20 @@ export class HMActorSheet extends ActorSheet {
             i.img = i.img || DEFAULT_TOKEN;
 
             if (i.type === 'skill') {
-                if (i.data.language) { langs.push(i); } else {
+                if (i.system.language) { langs.push(i); } else {
                     if (actorData.type === 'character') {
-                        i.data.universal ? uskills.push(i) : skills.push(i);
+                        i.system.universal ? uskills.push(i) : skills.push(i);
                     } else { skills.push(i); }
                 }
             } else
             if (i.type === 'armor') {
                 gear.armors.push(i);
-                const state = HMTABLES.itemstate[(i.data.state)];
+                const state = HMTABLES.itemstate[(i.system.state)];
                 armors[state].push(i);
             } else
             if (i.type === 'weapon') {
                 gear.weapons.push(i);
-                const state = HMTABLES.itemstate[(i.data.state)];
+                const state = HMTABLES.itemstate[(i.system.state)];
                 weapons[state].push(i);
             } else
             if (i.type === 'wound')  { wounds.push(i);     } else
@@ -74,12 +74,12 @@ export class HMActorSheet extends ActorSheet {
 
         // Sort
         function skillsort(a, b) {
-            return `${game.i18n.localize(a.name)} ${a.data.specialty.value || ''}`
-                 > `${game.i18n.localize(b.name)} ${b.data.specialty.value || ''}` ? 1 : -1;
+            return `${game.i18n.localize(a.name)} ${a.system.specialty.value || ''}`
+                 > `${game.i18n.localize(b.name)} ${b.system.specialty.value || ''}` ? 1 : -1;
         }
 
         function spellsort(a, b) {
-            return a.name > b.name || Number(a.data.lidx) > Number(b.data.lidx) ? 1 : -1;
+            return a.name > b.name || Number(a.system.lidx) > Number(b.system.lidx) ? 1 : -1;
         }
 
         skills.sort(skillsort);
@@ -100,7 +100,7 @@ export class HMActorSheet extends ActorSheet {
 
         const slevels = [];
             for (let i=0; i < actorData.spells.length; i++) {
-                const lidx = Number(actorData.spells[i].data.lidx);
+                const lidx = Number(actorData.spells[i].system.lidx);
                 if (!slevels.includes(lidx)) { slevels.push(lidx); }
             }
 
@@ -108,7 +108,7 @@ export class HMActorSheet extends ActorSheet {
 
         // If sheet has only one spell level, the controls are locked.
         if (slevels.length == 1) {
-            actorData.data.data.cslevel = actorData.slevels[0];
+            actorData.system.cslevel = actorData.slevels[0];
         }
     }
 
@@ -250,11 +250,11 @@ export class HMActorSheet extends ActorSheet {
         const li = $(ev.currentTarget).parents('.card');
         const item = this.actor.items.get(li.data('itemId'));
 
-        let { prepped } = item.data.data || 0;
+        let { prepped } = item.system || 0;
         dataset.itemPrepare ? prepped++ : prepped--;
 
-        item.data.data.prepped = prepped;
-        await this.actor.updateEmbeddedDocuments('Item', [{_id:item.id, data:item.data.data}]);
+        item.system.prepped = prepped;
+        await this.actor.updateEmbeddedDocuments('Item', [{_id:item.id, data:item.system}]);
     }
 
     _onClick(event) {
@@ -284,7 +284,7 @@ export class HMActorSheet extends ActorSheet {
             setProperty(item.data, itemProp, targetValue);
 
             // TODO: Update only the altered property.
-           await this.actor.updateEmbeddedDocuments("Item", [{_id:item.id, data:item.data.data}]);
+           await this.actor.updateEmbeddedDocuments("Item", [{_id:item.id, data:item.system}]);
         }
     }
 

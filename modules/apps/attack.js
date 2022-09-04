@@ -22,7 +22,7 @@ export class AttackPrompt extends HMPrompt {
         const weapon = dialogData.weapons[0];
         const capList = this.getCapList(weapon, dialogData?.caller);
 
-        const wData = weapon.data.data;
+        const wData = weapon.system;
         const ranged = wData.ranged.checked;
         const spd = getSpeed(ranged, wData);
 
@@ -40,7 +40,7 @@ export class AttackPrompt extends HMPrompt {
     update(options) {
         const {weapons, widx, caller, specialMove} = this.dialogData;
         const weapon  = weapons[widx];
-        const wData   = weapon.data.data;
+        const wData   = weapon.system;
         const ranged  = wData.ranged.checked;
 
         this.dialogData.ranged = ranged;

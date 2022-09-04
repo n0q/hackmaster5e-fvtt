@@ -5,11 +5,11 @@ export class HMRaceItem extends HMItem {
     prepareBaseData() {
         super.prepareBaseData();
 
-        const {data} = this.data;
-        const {bonus, scale} = data;
+        const {system} = this;
+        const {bonus, scale} = system;
         const scaleTable = HMTABLES.scale;
         Object.keys(scale).forEach((key) => {
-            const idx = data.scale[key];
+            const idx = system.scale[key];
             if (idx > 0) { bonus[key] = scaleTable[idx][key]; }
         });
     }

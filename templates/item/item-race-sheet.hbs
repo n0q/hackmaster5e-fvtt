@@ -13,78 +13,78 @@
 
         <div class="tab attributes" data-group="primary" data-tab="attributes">
             <div class="item-form">
-                {{#with data.data}}
+                {{#with data}}
                 <div class="sidepanel">
                     <div class="options-block">
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.hp"}}</label>
                             <span>
-                                <select name="data.scale.hp">
-                                    {{selectOptions (findConfigObj 'scale') selected=scale.hp localize=true}}
+                                <select name="system.scale.hp">
+                                    {{selectOptions (findConfigObj 'scale') selected=system.scale.hp localize=true}}
                                 </select>
-                                <input type="number" name="data.bonus.hp" value="{{bonus.hp}}"
-                                {{#if (ne scale.hp '0')}}readonly{{/if}} data-dtype="Number"/>
+                                <input type="number" name="system.bonus.hp" value="{{system.bonus.hp}}"
+                                {{#if (ne system.scale.hp '0')}}readonly{{/if}} data-dtype="Number"/>
                             </span>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.kb"}}</label>
                             <span>
-                                <select name="data.scale.kb">
-                                    {{selectOptions (findConfigObj 'scale') selected=scale.kb localize=true}}
+                                <select name="system.scale.kb">
+                                    {{selectOptions (findConfigObj 'scale') selected=system.scale.kb localize=true}}
                                 </select>
-                                <input type="number" name="data.bonus.kb" value="{{bonus.kb}}"
-                                {{#if (ne scale.kb '0')}}readonly{{/if}} data-dtype="Number"/>
+                                <input type="number" name="system.bonus.kb" value="{{system.bonus.kb}}"
+                                {{#if (ne system.scale.kb '0')}}readonly{{/if}} data-dtype="Number"/>
                             </span>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.reach"}}</label>
                             <span>
-                                <select name="data.scale.reach">
-                                    {{selectOptions (findConfigObj 'scale') selected=scale.reach localize=true}}
+                                <select name="system.scale.reach">
+                                    {{selectOptions (findConfigObj 'scale') selected=system.scale.reach localize=true}}
                                 </select>
-                                <input type="number" name="data.bonus.reach" value="{{bonus.reach}}"
-                                {{#if (ne scale.reach '0')}}readonly{{/if}} data-dtype="Number"/>
+                                <input type="number" name="system.bonus.reach" value="{{system.bonus.reach}}"
+                                {{#if (ne system.scale.reach '0')}}readonly{{/if}} data-dtype="Number"/>
                             </span>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.move"}}</label>
                             <span>
-                                <select name="data.scale.move">
-                                    {{selectOptions (findConfigObj 'scale') selected=scale.move localize=true}}
+                                <select name="system.scale.move">
+                                    {{selectOptions (findConfigObj 'scale') selected=system.scale.move localize=true}}
                                 </select>
-                                <input type="text" class="editable" name="data.bonus.move" style='width: 2.5rem; text-align: right;'
-                                    value="{{pct bonus.move}}"
-                                    {{#if (ne scale.move '0')}}
+                                <input type="text" class="editable" name="system.bonus.move" style='width: 2.5rem; text-align: right;'
+                                    value="{{pct system.bonus.move}}"
+                                    {{#if (ne system.scale.move '0')}}
                                         readonly
                                     {{else}}
-                                        data-item-prop='data.bonus.move' data-dtype="Percent"
+                                        data-item-prop='system.bonus.move' data-dtype="Percent"
                                     {{/if}}/>
                             </span>
                         </div>
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.def"}}</label>
-                            <input type="number" name="data.bonus.def" value="{{bonus.def}}" placeholder=0 data-dtype="Number"/>
+                            <input type="number" name="system.bonus.def" value="{{system.bonus.def}}" placeholder=0 data-dtype="Number"/>
                         </div>
                     </div>
                     <div class="options-block">
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.adjective"}}</label>
                         </div><div class="options-row">
-                            <input type="text" placeholder="Elven" name="data.adj" value="{{adj}}" data-dtype="String"/>
+                            <input type="text" placeholder="Elven" name="system.adj" value="{{system.adj}}" data-dtype="String"/>
                         </div>
                     </div>
                 </div>
                 <div class="sidepanel">
                     <div class="options-block">
-                        {{#each abilities as |ability key|}}
+                        {{#each system.abilities as |ability key|}}
                         <div class="options-row">
-                            <label for="data.mods.abilities.{{key}}.value" class="resource-label">
+                            <label for="system.mods.abilities.{{key}}.value" class="resource-label">
                                 {{localize (findConfigValue "ability_short" key)}}
                             </label>
                             <span>
-                                <input type="number" name="data.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number"/>
+                                <input type="number" name="system.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number"/>
                                 <label class="resource-label">/</label>
-                                <input type="number" name="data.abilities.{{key}}.fvalue" value="{{ability.fvalue}}" data-dtype="Number"/>
+                                <input type="number" name="system.abilities.{{key}}.fvalue" value="{{ability.fvalue}}" data-dtype="Number"/>
                                 <label class="resource-label">%</label>
                             </span>
                         </div>

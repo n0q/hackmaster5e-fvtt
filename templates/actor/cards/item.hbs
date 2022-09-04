@@ -15,12 +15,12 @@
                 <span>
                     {{localize (findConfigValue 'itemTypes' type)}}
                 </span>
-                <div class='item-control item-state location {{#unless (eq data.state 3)}}button{{/unless}}'>
-                    {{localize (findConfigValue 'thingState' data.state)}}
+                <div class='item-control item-state location {{#unless (eq system.state 3)}}button{{/unless}}'>
+                    {{localize (findConfigValue 'thingState' system.state)}}
                 </div>
-                {{#unless data.innate}}
-                <div>{{#if (eq type 'item')}}{{data.qty}}x{{/if}}</div>
-                <span>{{numberFormat data.weight decimals=2}} lbs.</span>
+                {{#unless system.innate}}
+                <div>{{#if (eq type 'item')}}{{system.qty}}x{{/if}}</div>
+                <span>{{numberFormat system.weight decimals=2}} lbs.</span>
                 {{/unless}}
             </div>
         </section>

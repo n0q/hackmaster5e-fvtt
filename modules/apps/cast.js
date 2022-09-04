@@ -19,7 +19,7 @@ export class CastPrompt extends HMPrompt {
         super(dialogData, options);
         const {caller} = dialogData;
         const spell = dialogData.spells[0];
-        const sData = spell.data.data;
+        const sData = spell.system;
         const spd = getSpeed(sData, caller);
         const {divine, lidx, prepped} = sData;
         const cost = HMTABLES.cast.cost(lidx, prepped);
@@ -38,7 +38,7 @@ export class CastPrompt extends HMPrompt {
     update(options) {
         const {spells, sidx, caller} = this.dialogData;
         const spell = spells[sidx];
-        const sData = spell.data.data;
+        const sData = spell.system;
         const {divine, lidx, prepped} = sData;
 
         this.dialogData.cost = HMTABLES.cast.cost(lidx, prepped);

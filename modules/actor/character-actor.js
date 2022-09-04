@@ -19,10 +19,10 @@ export class HMCharacterActor extends HMActor {
     }
 
     get movespd() {
-        const raceMove = this.data.data.bonus.race?.move || 0;
+        const raceMove = this.system.bonus.race?.move || 0;
         let movespd = Object.values(HMTABLES.movespd).map((x) => x * raceMove);
 
-        const armorMove = this.data.data.bonus.armor?.move || 1;
+        const armorMove = this.system.bonus.armor?.move || 1;
         if (armorMove !== 1) {
             const armorPenalty = [1, 1, armorMove, armorMove, armorMove];
             movespd = movespd.map((move, i) => move * armorPenalty[i]);
@@ -31,7 +31,7 @@ export class HMCharacterActor extends HMActor {
     }
 
     setAbilities() {
-        const { abilities } = this.data.data;
+        const {abilities} = this.system;
 
         const total = {};
         for (const stat in abilities.base) {
@@ -50,8 +50,8 @@ export class HMCharacterActor extends HMActor {
     }
 
     setAbilityBonuses() {
-        const {data} = this.data;
-        const aData  = data.abilities.total;
+        const {system} = this;
+        const aData = system.abilities.total;
 
         const stats        = {};
         const abilityBonus = {};
@@ -76,14 +76,14 @@ export class HMCharacterActor extends HMActor {
         stats.poison = aData.con.value;
         stats.trauma = Math.floor(aData.con.value / 2);
 
-        data.bonus.stats = stats;
-        data.hmsheet ? data.hmsheet.bonus = abilityBonus
-                     : data.hmsheet = {'bonus': abilityBonus};
+        system.bonus.stats = stats;
+        system.hmsheet ? system.hmsheet.bonus = abilityBonus
+                       : system.hmsheet = {'bonus': abilityBonus};
     }
 
     setEncumbrance() {
         const item = this.items.filter((a) => {
-            const {data} = a.data;
+            const data = a.system;
             if (!('state' in data)) return false;
             return true;
         });
@@ -92,15 +92,13 @@ export class HMCharacterActor extends HMActor {
         let armor = 0.0;
         for (let i=0; i < item.length; i++) {
             const {invstate} = item[i];
-            const {data, type} = item[i].data;
-            const load = data.weight * (Math.max(data?.qty, 1) || 1);
+            const {system, type} = item[i];
+            const load = system.weight * (Math.max(system?.qty, 1) || 1);
             switch (invstate) {
                 case 'innate': break;
 
                 case 'equipped': {
-                    if (type === 'armor' && !data?.shield?.checked) {
-                        armor += load;
-                    }
+                    if (type === 'armor' && !system?.shield?.checked) armor += load;
                 }
                 // Falls through
 
@@ -113,51 +111,51 @@ export class HMCharacterActor extends HMActor {
         }
 
         const effective = carried - armor;
-        const {priors} = this.data.data;
+        const {priors} = this.system;
         const total = carried + HMTABLES.weight(priors.bmi, priors.height) || 0.0;
-        this.data.data.encumb = {carried, effective, total};
+        this.system.encumb = {carried, effective, total};
     }
 
     async setCClass() {
-        const {data} = this.data;
+        const {system} = this;
         const cclasses = this.itemTypes.cclass;
         if (!cclasses.length) return;
 
         const cclass = cclasses[cclasses.length -1];
         cclass._prepCClassData();
-        const objData = cclass.data.data;
-        if (objData.level > 0) data.bonus.class = objData.bonus;
+        const objData = cclass.system;
+        if (objData.level > 0) system.bonus.class = objData.bonus;
 
         Object.entries(cclasses.slice(0, cclasses.length -1))
             .map((a) => this.items.get(a[1].id).delete());
     }
 
     setExtras() {
-        const {data} = this.data;
-        data.sp.max = data.bonus.total?.sp || 0;
+        const {system} = this;
+        system.sp.max = system.bonus.total?.sp || 0;
         const cclass = this.items.find((a) => a.type === 'cclass');
         if (!cclass) return;
 
-        const {level} = cclass.data.data;
+        const {level} = cclass.system;
 
-        const hValue = parseInt(data.honor.value, 10) || 0;
-        data.honor.bracket = HMTABLES.bracket.honor(level, hValue) || 0;
-        data.honor.value = Math.min(hValue, 999);
+        const hValue = parseInt(system.honor.value, 10) || 0;
+        system.honor.bracket = HMTABLES.bracket.honor(level, hValue) || 0;
+        system.honor.value = Math.min(hValue, 999);
 
-        const fValue = parseInt(data.fame.value, 10) || 0;
-        data.fame.bracket = HMTABLES.bracket.fame(fValue) || 0;
-        data.fame.value = Math.min(fValue, 999);
+        const fValue = parseInt(system.fame.value, 10) || 0;
+        system.fame.bracket = HMTABLES.bracket.fame(fValue) || 0;
+        system.fame.value = Math.min(fValue, 999);
     }
 
     setRace() {
-        const {data} = this.data;
+        const {system} = this;
         const races = this.itemTypes.race;
         if (!races.length) return;
 
         const race = races[races.length -1];
         race.prepareBaseData();
-        data.bonus.race     = race.data.data.bonus;
-        data.abilities.race = race.data.data.abilities;
+        system.bonus.race     = race.system.bonus;
+        system.abilities.race = race.system.abilities;
 
         Object.entries(races.slice(0, races.length -1))
             .map((a) => this.items.get(a[1].id).delete());

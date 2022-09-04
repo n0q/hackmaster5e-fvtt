@@ -1,4 +1,4 @@
-{{#each data.data.abilities.total}}
+{{#each data.system.abilities.total}}
     <div class="ability">
         <span>
             {{value}}
@@ -6,7 +6,7 @@
             {{pad fvalue}}
             <i class="unit-pct"></i>
         </span>
-        <label for="data.data.abilities.total.{{@key}}.value" class="resource-label rollable"
+        <label for="system.abilities.total.{{@key}}.value" class="resource-label rollable"
             data-dialog="ability"
             data-formula="1d20p + @resp.mod @resp.oper @abilities.total.{{@key}}.value"
             data-ability="{{localize (findConfigValue "ability_long" @key)}}">

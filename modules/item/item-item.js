@@ -11,11 +11,11 @@ export class HMItemItem extends HMItem {
     }
 
     _prepItemData() {
-        if (!this.actor?.data) return;
+        if (!this.actor?.system) return;
 
-        const {qty} = this.data.data;
+        const {qty} = this.system;
         if (Number.isInteger(qty) && qty > 0) return;
         const newqty = Math.max(1, parseInt(qty, 10)) || 1;
-        this.update({'data.qty': newqty});
+        this.update({'system.qty': newqty});
     }
 }

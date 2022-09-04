@@ -13,9 +13,9 @@ export class HMProficiencyItem extends HMItem {
     // TODO: A user can technically set defense and damage, then
     // set a weapon to ranged. These values should be culled.
     _prepProficiencyData() {
-        const {data} = this.data;
-        if (data.mechanical.checked && !data.ranged.checked) {
-            this.update({'data.mechanical.checked': false});
+        const {system} = this;
+        if (system.mechanical.checked && !system.ranged.checked) {
+            this.update({'system.mechanical.checked': false});
         }
     }
 }

@@ -18,9 +18,6 @@ export class HMItem extends Item {
     /** @override */
     prepareBaseData(options={}) {
         super.prepareBaseData();
-
-        // HACK: This will suffice for now.
-        if (typeof this.system?.state === 'object') this._shittyMigrate();
     }
 
     /** @override */
@@ -28,29 +25,27 @@ export class HMItem extends Item {
         super.prepareDerivedData();
     }
 
-    // TODO: When we do migration for real, ensure typeof data.state === 'integer'
-    async _shittyMigrate() {
-        await this.update({'data.state': 0});
-    }
-
     get quality() {
-        const {data} = this.data;
-        const qKey = data?.ranged?.checked ? 'ranged' : this.type;
-        const {bonus, qn} = data;
+        const {system} = this;
+        const qKey = system?.ranged?.checked ? 'ranged' : this.type;
+        const {bonus, qn} = system;
         const values = HMTABLES.quality[qKey].map((a) => a * qn);
         const keys = Object.keys(bonus.total);
         return Object.fromEntries(keys.map((_, i) => [keys[i], values[i]]));
     }
 
-    // HACK: Seriously, now.
     get specname() {
-       return HMItem.specname(this.data);
+        const rawName = this.name;
+        if (this.type !== 'skill') return rawName;
+        const {specialty} = this.system;
+        if (specialty.checked && specialty.value.length) return `${rawName} (${specialty.value})`;
+        return rawName;
     }
 
     // HACK: Temporary measure until future inventory overhaul.
     get invstate() {
         // TODO: Migrate
-        const state = parseInt(this.data.data.state, 10) || 0;
+        const state = parseInt(this.system.state, 10) || 0;
         return HMTABLES.itemstate[state];
     }
 
@@ -62,7 +57,7 @@ export class HMItem extends Item {
     async WoundAction(event) {
         const element = event.currentTarget;
         const {dataset} = element;
-        const itemData = this.data.data;
+        const itemData = this.system;
 
         let {hp, timer, treated} = itemData;
 
@@ -70,7 +65,7 @@ export class HMItem extends Item {
         if (dataset.action === 'decHp' || timer < 1) timer = --hp;
 
         if (hp < 0) return this.delete();
-        await this.update({'data': {hp, timer, treated}});
+        await this.update({'system': {hp, timer, treated}});
     }
 
     // TODO: The first half of this function could be a lot neater.
@@ -85,11 +80,11 @@ export class HMItem extends Item {
                 if (specialty) {
                     context = actor.items.find((a) => a.type === 'skill'
                         && skillName === a.name
-                        && specialty === a.data.data?.specialty?.value);
+                        && specialty === a.system?.specialty?.value);
                 } else {
                     context = actor.items.find((a) => a.type === 'skill'
                         && skillName === a.name
-                        && !a.data.data?.specialty?.value);
+                        && !a.system?.specialty?.value);
                 }
                 if (!context) return;
                 callers.push({caller: actor, context});
@@ -121,24 +116,14 @@ export class HMItem extends Item {
         });
     }
 
-    static specname(data) {
-        const skillName = game.i18n.localize(data.name);
-        if (data.type !== 'skill') return skillName;
-        const {specialty} = data.data;
-        if (specialty.checked && specialty.value.length) {
-            return `${skillName} (${specialty.value})`;
-        }
-        return skillName;
-    }
-
     static async createItem(item, _options, userId) {
         if (game.user.id !== userId) return;
         const {parent, type} = item;
         if (type !== 'wound') return;
 
-        if (!parent.data.data.bonus.total.trauma) return;
-        const {top} = parent.data.data.hp;
-        const wound = item.data.data.hp;
+        if (!parent.system.bonus.total.trauma) return;
+        const {top} = parent.system.hp;
+        const wound = item.system.hp;
         if (!top || top >= wound) return;
 
         const chatmgr = new HMChatMgr();
