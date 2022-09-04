@@ -35,7 +35,7 @@ export default function registerHandlebarsHelpers() {
     });
 
     Handlebars.registerHelper('findBonus', (arg1, arg2, opts) => {
-        const {bonus} = opts.data.root.actor.data.data;
+        const {bonus} = opts.data.root.actor.system;
         const vector = bonus[arg1];
         return getProperty(vector, arg2);
     });

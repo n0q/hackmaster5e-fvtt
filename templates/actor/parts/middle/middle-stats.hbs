@@ -1,32 +1,32 @@
-{{#with data.data}}
+{{#with data}}
 {{#if (eq ../actor.type 'character')}}
 <figure class='category'>
-    <label for='data.honor.value' class='resource-label title'>{{localize 'HM.honor'}}</label>
-    <input type='number' name='data.honor.value' class='resource' value='{{honor.value}}' onwheel='this.blur()' data-dtype='Number'/>
-    <label for='data.honor.bracket' class='bracket'>{{localize (findConfigValue 'honor' honor.bracket)}}</label>
+    <label for='system.honor.value' class='resource-label title'>{{localize 'HM.honor'}}</label>
+    <input type='number' name='system.honor.value' class='resource' value='{{system.honor.value}}' onwheel='this.blur()' data-dtype='Number'/>
+    <label for='system.honor.bracket' class='bracket'>{{localize (findConfigValue 'honor' system.honor.bracket)}}</label>
 </figure>
 <figure class='category'>
-    <label for='data.fame.value' class='resource-label title'>{{localize 'HM.fame'}}</label>
-    <input type='number' name='data.fame.value' class='resource' value='{{fame.value}}' onwheel='this.blur()' data-dtype='Number'/>
-    <label for='data.fame.bracket' class='bracket'>{{localize (findConfigValue 'fame' fame.bracket)}}</label>
+    <label for='system.fame.value' class='resource-label title'>{{localize 'HM.fame'}}</label>
+    <input type='number' name='system.fame.value' class='resource' value='{{system.fame.value}}' onwheel='this.blur()' data-dtype='Number'/>
+    <label for='system.fame.bracket' class='bracket'>{{localize (findConfigValue 'fame' system.fame.bracket)}}</label>
 </figure>
 {{/if}}
-{{#if hp.tenacity}}
+{{#if system.hp.tenacity}}
 <figure class='fraction' style='width: auto;'>
-    <label for='data.hp.tenacity' class='resource-label'>{{localize 'HM.tenacity'}}</label>
-    {{hp.tenacity}} 
+    <label for='system.hp.tenacity' class='resource-label'>{{localize 'HM.tenacity'}}</label>
+    {{system.hp.tenacity}} 
 </figure>
 {{/if}}
-{{#if hp.top}}
+{{#if system.hp.top}}
 <figure class='fraction' style='width: auto;'>
-    <label for='data.fame.value' class='resource-label'>{{localize 'HM.top'}}</label>
-    {{hp.top}} 
+    <label for='system.fame.value' class='resource-label'>{{localize 'HM.top'}}</label>
+    {{system.hp.top}} 
 </figure>
 {{/if}}
-{{#if bonus.total.init includeZero=true}}
+{{#if system.bonus.total.init includeZero=true}}
 <figure class='fraction' style='width: auto;'>
-    <label for='data.bonus.total.init' class='resource-label'>{{localize 'HM.init'}}</label>
-    {{bonus.total.init}}
+    <label for='system.bonus.total.init' class='resource-label'>{{localize 'HM.init'}}</label>
+    {{system.bonus.total.init}}
 </figure>
 {{/if}}
 {{/with}}

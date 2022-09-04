@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 ### Added
 - Compendium items.
+### Changed
+- Foundry v10 API support.
+### Fixed
+- Auto ToP checks were not using beast trauma saves.
 
 ## [0.2.14] - 2022-06-05
 ### Added

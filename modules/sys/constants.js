@@ -345,7 +345,7 @@ export const HMTABLES = {
     },
     'cast': {
         'timing': (spd, caller) => {
-            const {fatigue} = caller.data.data.bonus.total;
+            const {fatigue} = caller.system.bonus.total;
             const declare = spd;
             const cast = Math.max(spd + 5 + (Number(fatigue) || 0), 1);
             return {declare, cast};

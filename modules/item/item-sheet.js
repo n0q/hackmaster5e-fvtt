@@ -16,7 +16,7 @@ export class HMItemSheet extends ItemSheet {
     /** @override */
     get template() {
         const path = 'systems/hackmaster5e/templates/item';
-        return `${path}/item-${this.item.data.type}-sheet.hbs`;
+        return `${path}/item-${this.item.type}-sheet.hbs`;
     }
 
     /* -------------------------------------------- */
@@ -65,10 +65,9 @@ export class HMItemSheet extends ItemSheet {
                 if (pctMatch)   { targetValue = parseFloat(pctMatch[1]) / 100;   } else
                 if (floatMatch) { targetValue = parseFloat(floatMatch[1]);       } else
                                 { targetValue = parseInt(targetValue, 10) / 100; }
-                }
-
-            setProperty(item.data, itemProp, targetValue);
-            await this.item.update({data:item.data.data});
+            }
+            setProperty(item, itemProp, targetValue);
+            await this.item.update({system:item.system});
             this.render(true);
         }
     }

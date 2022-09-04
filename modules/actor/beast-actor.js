@@ -15,8 +15,8 @@ export class HMBeastActor extends HMActor {
     }
 
     get movespd() {
-        let movespd = Object.values(this.data.data.movespd.gnd);
-        const armorMove = this.data.data.bonus.armor?.move || 1;
+        let movespd = Object.values(this.system.movespd.gnd);
+        const armorMove = this.system.bonus.armor?.move || 1;
 
         if (armorMove !== 1) {
             const armorPenalty = [1, 1, armorMove, armorMove, armorMove];
@@ -26,21 +26,21 @@ export class HMBeastActor extends HMActor {
     }
 
     setExtras() {
-        const {bonus} = this.data.data;
+        const {bonus} = this.system;
         if (bonus.stats === undefined) bonus.stats = {};
-        const {misc, stats} = this.data.data.bonus;
+        const {misc, stats} = this.system.bonus;
         stats.poison = (misc.trauma || 0) * 2;
     }
 
     setSP() {
-        const {bonus, sp} = this.data.data;
+        const {bonus, sp} = this.system;
         if (bonus.stats === undefined) bonus.stats = {};
         sp.max = bonus.total?.sp || 0;
     }
 
     setHP() {
         super.setHP();
-        const {bonus, hp} = this.data.data;
+        const {bonus, hp} = this.system;
         const tenacity = Math.ceil(hp.max * bonus.total.tenacityCf || 0);
         delete hp.tenacity;
         if (tenacity > 0) hp.tenacity = tenacity;

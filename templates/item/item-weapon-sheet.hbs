@@ -12,33 +12,33 @@
         </div>
         <div class='tab attributes' data-group='primary' data-tab='attributes'>
             <div class='item-form'>
-{{#with data.data}}
+{{#with data}}
                 <div class='sidepanel'>
                     <div class='options-block' style="zoom: 0.815;">
                         <div class='options-row'>
                             <label class='resource-label'>{{localize 'HM.reach'}}</label>
-                            <input type='number' name='data.reach' value='{{reach}}'>
+                            <input type='number' name='system.reach' value='{{system.reach}}'>
                         </div>
                         <div class='options-row'>
                             <label class='resource-label'>{{localize 'HM.type'}}:</label>
-                            <select name='data.dmg.type' data-dtype='{{dmg.type}}'>
-                                {{#select dmg.type}}{{#each (findConfigObj 'physdmgtype') as |type t|}}
+                            <select name='system.dmg.type' data-dtype='{{system.dmg.type}}'>
+                                {{#select system.dmg.type}}{{#each (findConfigObj 'physdmgtype') as |type t|}}
                                 <option value='{{t}}'>{{localize type}}</option>
                                 {{/each}}{{/select}}
                             </select>
                         </div>
                         <div class='options-row'>
                             <label class='resource-label'>{{localize 'HM.skill'}}:</label>
-                            <select name='data.skill' style='width: 6em;' data-dtype='{{skill}}'>
-                                {{#select skill}}{{#each (findConfigObj 'weaponskill') as |type t|}}
+                            <select name='system.skill' style='width: 6em;' data-dtype='{{system.skill}}'>
+                                {{#select system.skill}}{{#each (findConfigObj 'weaponskill') as |type t|}}
                                 <option value='{{t}}'>{{localize type}}</option>
                                 {{/each}}{{/select}}
                             </select>
                         </div>
                         <div class='options-row'>
                             <label class='resource-label'>{{localize 'HM.size'}}:</label>
-                            <select name='data.scale' {{#if innate}}disabled{{/if}} style='width: 6em;' data-dtype='{{scale}}'>
-                                {{#select scale}}{{#each (findConfigObj 'scale') as |type t|}}
+                            <select name='system.scale' {{#if innate}}disabled{{/if}} style='width: 6em;' data-dtype='{{system.scale}}'>
+                                {{#select system.scale}}{{#each (findConfigObj 'scale') as |type t|}}
                                     {{#if (gt t 0)}}
                                 <option value='{{t}}'>{{localize type}}</option>
                                     {{/if}}
@@ -47,25 +47,27 @@
                         </div>
                         <div class='options-row'>
                             <label class='resource-label'>{{localize 'HM.quality'}}</label>
-                            <input type='number' class='editable' value='{{qn}}'
-                                data-item-prop='data.qn'
+                            <input type='number' class='editable' value='{{system.qn}}'
+                                data-item-prop='system.qn'
                                 data-dtype='Number'/>
                         </div>
                         <div class='options-row'>
                             <label class='resource-label'>{{localize 'HM.jab'}}</label>
-                            <input type='checkbox' name='data.jab.checked' {{#if ranged.checked}}disabled{{/if}} {{checked jab.checked}}/>
+                            <input type='checkbox' name='system.jab.checked'
+                            {{#if system.ranged.checked}}disabled{{/if}} {{checked system.jab.checked}}/>
                         </div>
                         <div class='options-row'>
                             <label class='resource-label'>{{localize 'HM.backstab'}}</label>
-                            <input type='checkbox' name='data.caps.2.checked' {{#if ranged.checked}}disabled{{/if}} {{checked caps.[2].checked}}/>
+                            <input type='checkbox' name='system.caps.2.checked'
+                            {{#if system.ranged.checked}}disabled{{/if}} {{checked system.caps.[2].checked}}/>
                         </div>
                         <div class='options-row'>
                             <label class='resource-label'>{{localize 'HM.ranged'}}</label>
-                            <input type='checkbox' name='data.ranged.checked' {{checked ranged.checked}}/>
+                            <input type='checkbox' name='system.ranged.checked' {{checked system.ranged.checked}}/>
                         </div>
                         <div class='options-row'>
                             <label class='resource-label'>{{localize 'HM.innate'}}</label>
-                            <input type='checkbox' name='data.innate' {{checked innate}}/>
+                            <input type='checkbox' name='system.innate' {{checked system.innate}}/>
                         </div>
                     </div>
                 </div>
@@ -73,53 +75,53 @@
                     <div class='options-block'>
                         <div class='options-row'>
                             <label class='resource-label'>{{localize 'HM.proficiency'}}</label>
-                            <input type='text' style='width: 12em;' name='data.proficiency' value='{{proficiency}}' data-dtype='String'/>
+                            <input type='text' style='width: 12em;' name='system.proficiency' value='{{system.proficiency}}' data-dtype='String'/>
                         </div>
                     </div>
-    {{#if ranged.checked}}
+    {{#if system.ranged.checked}}
                     <div class='options-block'>
                         <div class='options-row' style='border-bottom: 2px solid; margin-bottom: 5px;'>
                             <label class='resource-label'>{{localize 'HM.speed'}}</label>
-                            <label>{{bonus.base.spd}}</label>
+                            <label>{{system.bonus.base.spd}}</label>
                         </div>
                         <div class='options-row'>
                             <label class='resource-label'>{{localize 'HM.load'}}</label>
-                            <input type='number' class='timing' name='data.ranged.timing.load' value='{{ranged.timing.load}}'
+                            <input type='number' class='timing' name='system.ranged.timing.load' value='{{system.ranged.timing.load}}'
                                 data-dtype='Number'>
                         </div>
                         <div class='options-row'>
                             <label class='resource-label'>{{localize 'HM.draw'}}/Spin/Crank</label>
-                            <input type='number' class='timing' name='data.ranged.timing.draw' value='{{ranged.timing.draw}}'
+                            <input type='number' class='timing' name='system.ranged.timing.draw' value='{{system.ranged.timing.draw}}'
                                 data-dtype='Number'>
                         </div>
                         <div class='options-row'>
                             <label class='resource-label'>{{localize 'HM.aim'}}</label>
-                            <input type='number' class='timing' name='data.ranged.timing.aim' value='{{ranged.timing.aim}}'
+                            <input type='number' class='timing' name='system.ranged.timing.aim' value='{{system.ranged.timing.aim}}'
                                 data-dtype='Number'>
                         </div>
                         <div class='options-row'>
                             <label class='resource-label'>{{localize 'HM.fire'}}</label>
-                            <input type='number' class='timing' name='data.ranged.timing.fire' value='{{ranged.timing.fire}}'
+                            <input type='number' class='timing' name='system.ranged.timing.fire' value='{{system.ranged.timing.fire}}'
                                 data-dtype='Number'>
                         </div>
                         <div class='options-row'>
                             <label class='resource-label'>{{localize 'HM.recover'}}</label>
-                            <input type='number' class='timing' name='data.ranged.timing.recover' value='{{ranged.timing.recover}}'
+                            <input type='number' class='timing' name='system.ranged.timing.recover' value='{{system.ranged.timing.recover}}'
                                 data-dtype='Number'>
                         </div>
                     </div>
     {{/if}}
                     <div class='options-block'>
-    {{#unless ranged.checked}}
+    {{#unless system.ranged.checked}}
                         <div class='options-row'>
                             <label class='resource-label'>{{localize 'HM.speed'}}</label>
-                            <input type='number' class='editable' value={{bonus.base.spd}}
-                                data-item-prop='data.bonus.base.spd'
+                            <input type='number' class='editable' value={{system.bonus.base.spd}}
+                                data-item-prop='system.bonus.base.spd'
                                 data-dtype='Number'/>
-        {{#if jab.checked}}
+        {{#if system.jab.checked}}
                             <label class='resource-label'>{{localize 'HM.jab'}}</label>
-                            <input type='number' class='editable' value={{bonus.base.jspd}}
-                                data-item-prop='data.bonus.base.jspd'
+                            <input type='number' class='editable' value={{system.bonus.base.jspd}}
+                                data-item-prop='system.bonus.base.jspd'
                                 data-dtype='Number'/>
         {{else}}
                     <div></div><div></div>
@@ -128,20 +130,20 @@
     {{/unless}}
                         <div class='options-row'>
                             <label class='resource-label'>{{localize 'HM.normal'}} {{localize 'HM.dmg'}}</label>
-                            <input type='text' style='width: 12em;' name='data.dmg.normal' value='{{dmg.normal}}' data-dtype='String'/>
+                            <input type='text' style='width: 12em;' name='system.dmg.normal' value='{{system.dmg.normal}}' data-dtype='String'/>
                         </div>
                         <div class='options-row'>
                             <label class='resource-label'>{{localize 'HM.shield'}} {{localize 'HM.dmg'}}</label>
-                            <input type='text' style='width: 12em;' name='data.dmg.shield' value='{{dmg.shield}}' data-dtype='String'/>
+                            <input type='text' style='width: 12em;' name='system.dmg.shield' value='{{system.dmg.shield}}' data-dtype='String'/>
                         </div>
     {{#if jab.checked}}
                         <div class='options-row'>
                             <label class='resource-label'>{{localize 'HM.normal'}} {{localize 'HM.jab'}}</label>
-                            <input type='text' style='width: 12em;' name='data.jab.normal' value='{{jab.normal}}' data-dtype='String'/>
+                            <input type='text' style='width: 12em;' name='system.jab.normal' value='{{system.jab.normal}}' data-dtype='String'/>
                         </div>
                         <div class='options-row'>
                             <label class='resource-label'>{{localize 'HM.shield'}} {{localize 'HM.jab'}}</label>
-                            <input type='text' style='width: 12em;' name='data.jab.shield' value='{{jab.shield}}' data-dtype='String'/>
+                            <input type='text' style='width: 12em;' name='system.jab.shield' value='{{system.jab.shield}}' data-dtype='String'/>
                         </div>
                     </div>
     {{/if}}

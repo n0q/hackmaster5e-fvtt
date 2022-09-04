@@ -5,28 +5,28 @@
                 <img src='{{img}}' title='{{name}}' width='24' height='24'/>
                 <h4>
                     {{localize name}}
-                    {{#if data.specialty.checked}}
-                        {{#if data.specialty.value}}({{data.specialty.value}}){{/if}}
+                    {{#if system.specialty.checked}}
+                        {{#if system.specialty.value}}({{system.specialty.value}}){{/if}}
                     {{/if}}
                 </h4>
             </label>
         </header>
         <section>
-        {{#if data.language}}
+        {{#if system.language}}
            <div toggle class='rollable button' title='Verbal'
                    data-dialog='skill'
                    data-skill-type='language'
                    data-formula-type='language'
                    data-item-id='{{_id}}'>
-                   {{data.bonus.total.verbal}}
+                   {{system.bonus.total.verbal}}
                </div>
-               {{#if data.bonus.total.literacy}}
+               {{#if system.bonus.total.literacy}}
             <div toggle class='rollable button' title='Literacy'
                    data-dialog='skill'
                    data-skill-type='literacy'
                    data-formula-type='literacy'
                    data-item-id='{{_id}}'>
-                   {{data.bonus.total.literacy}}
+                   {{system.bonus.total.literacy}}
                </div>
                {{/if}}
         {{else}}
@@ -35,7 +35,7 @@
                 data-skill-type='skill'
                 data-formula-type='skill'
                 data-item-id='{{_id}}'>
-                {{data.bonus.total.value}}
+                {{system.bonus.total.value}}
             </div>
         {{/if}}
             <div class='hide item-controls' toggle>
@@ -44,33 +44,33 @@
         </section>
     </summary>
     <article class='hide' toggle>
-    {{#if data.language}}
+    {{#if system.language}}
         <div class='form-group'>
             <label>{{localize 'HM.literacy'}}:</label>
-            <input class='editable' type='number' value='{{data.bonus.mastery.literacy}}'
-                data-item-prop='data.bonus.mastery.literacy'
+            <input class='editable' type='number' value='{{system.bonus.mastery.literacy}}'
+                data-item-prop='system.bonus.mastery.literacy'
                 data-dtype='Number'
             />
             <label>{{localize 'HM.verbal'}}:</label>
-            <input class='editable' type='number' value='{{data.bonus.mastery.verbal}}'
-                data-item-prop='data.bonus.mastery.verbal'
+            <input class='editable' type='number' value='{{system.bonus.mastery.verbal}}'
+                data-item-prop='system.bonus.mastery.verbal'
                 data-dtype='Number'
             />
         </div>
     {{else}}
         <div class='form-group'>
             <label>{{localize 'HM.mastery'}}:</label>
-            <input class='editable' type='number' value='{{data.bonus.mastery.value}}'
-                data-item-prop='data.bonus.mastery.value'
+            <input class='editable' type='number' value='{{system.bonus.mastery.value}}'
+                data-item-prop='system.bonus.mastery.value'
                 data-dtype='Number'
             />
         </div>
     {{/if}}
-    {{#if data.specialty.checked}}
+    {{#if system.specialty.checked}}
         <div class='form-group'>
             <label>{{localize 'HM.specialty'}}:</label>
-            <input class='editable' type='text' value='{{data.specialty.value}}'
-                data-item-prop='data.specialty.value'
+            <input class='editable' type='text' value='{{system.specialty.value}}'
+                data-item-prop='system.specialty.value'
                 data-dtype='String'
             />
         </div>

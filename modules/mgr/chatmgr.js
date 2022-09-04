@@ -100,14 +100,14 @@ async function createSaveCard(roll, dataset, dialogResp) {
 
 async function createSpellCard(dataset) {
     const {caller, resp, context} = dataset;
-    const {data} = context.data;
+    const {system} = context;
 
     const components = [];
-    if (data.component.verbal)   { components.push('V');  }
-    if (data.component.somatic)  { components.push('S');  }
-    if (data.component.material) { components.push('M');  }
-    if (data.component.catalyst) { components.push('C');  }
-    if (data.component.divine)   { components.push('DI'); }
+    if (system.component.verbal)   { components.push('V');  }
+    if (system.component.somatic)  { components.push('S');  }
+    if (system.component.material) { components.push('M');  }
+    if (system.component.catalyst) { components.push('C');  }
+    if (system.component.divine)   { components.push('DI'); }
     resp.components = components.join(', ');
 
     let whisper;
@@ -160,7 +160,7 @@ function getSpecialMoveFlavor(resp) {
 
 async function createDamageCard(dataset) {
     const {caller, context, roll, resp} = dataset;
-    const dmgsrc = context.data.data.ranged.checked
+    const dmgsrc = context.system.ranged.checked
         ? game.i18n.localize('HM.ranged')
         : game.i18n.localize('HM.melee');
     const dmgrollTxt = `${game.i18n.localize('HM.damage')} ${game.i18n.localize('HM.roll')}`;
@@ -256,7 +256,7 @@ export class HMChatMgr {
         };
 
         if (roll || dataset?.roll) {
-            chatData.roll     = cData?.roll || roll;
+            chatData.rolls     = [cData?.roll || roll];
             chatData.rollMode = cData.rollMode ? cData.rollMode : game.settings.get('core', 'rollMode');
             chatData.type     = CONST.CHAT_MESSAGE_TYPES.ROLL;
             chatData.sound    = CONFIG.sounds.dice;
@@ -285,7 +285,7 @@ export class HMChatMgr {
                 const weaponRow = `${game.i18n.localize('HM.weapon')}:
                                 <b>${item.name}</b>`;
                 const speedRow  = `${game.i18n.localize('HM.speed')}:
-                                <b>${item.data.data.bonus.total.spd}</b>`;
+                                <b>${item.system.bonus.total.spd}</b>`;
                 const rangeRow  = `${game.i18n.localize('HM.range')}:
                                 <b>${game.i18n.localize(idx.range[dialogResp.resp.range])}</b>`;
 

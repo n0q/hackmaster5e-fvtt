@@ -1,17 +1,17 @@
 {{localize 'HM.spell'}}: <b>{{context.name}}</b><br>
 {{localize 'HM.components'}}: <b>{{resp.components}}</b><br>
-{{#unless context.data.data.divine}}
+{{#unless context.system.divine}}
     {{#if resp.advance}}
         {{localize 'HM.spell'}} {{localize 'HM.fatigue'}}: <b>{{resp.advance}}</b>
         <i>{{toLowerCase (localize 'HM.seconds')}}.</i><br>
     {{else}}
-        {{localize 'HM.speed'}}: <b>{{context.data.data.speed}}</b>
+        {{localize 'HM.speed'}}: <b>{{context.system.speed}}</b>
     {{/if}}
 {{/unless}}
 <div class='dice-roll'>
     <div class='dice-flavor'>
-        {{localize (concat 'HM.spellLevels.' context.data.data.lidx)}} {{localize 'HM.level'}}
-        {{#if context.data.data.divine}}
+        {{localize (concat 'HM.spellLevels.' context.system.lidx)}} {{localize 'HM.level'}}
+        {{#if context.system.divine}}
             {{localize 'HM.clerical'}}
         {{else}}
             {{localize 'HM.mage'}}

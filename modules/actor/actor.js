@@ -13,32 +13,32 @@ export class HMActor extends Actor {
 
     get canBackstab() {
         const {cclass} = this.itemTypes;
-        if (cclass.length) return cclass[0].data.data.features.back || false;
+        if (cclass.length) return cclass[0].system.features.back || false;
         return false;
     }
 
     resetBonus() {
-        const {data} = this.data;
-        const {misc} = data.bonus;
-        data.bonus   = {'total': {}, misc};
+        const {system} = this;
+        const {misc} = system.bonus;
+        system.bonus = {'total': {}, misc};
     }
 
     setHP() {
-        const {data, type} = this.data;
-        const max = type === 'character' ? data.bonus.total?.hp || 0
-                                         : data.hp.max || 0;
-        if (max === 0) { return; }
+        const {system, type} = this;
+        const max = type === 'character' ? system.bonus.total?.hp || 0
+                                         : system.hp.max || 0;
+        if (max === 0) return;
         let value = max;
         const wounds = this.items.filter((a) => a.type === 'wound');
-        Object.keys(wounds).forEach((a) => value -= wounds[a].data.data.hp);
+        Object.keys(wounds).forEach((a) => value -= wounds[a].system.hp);
 
-        const topCf = HMTABLES.top[type] + (data.bonus.total.top || 0);
+        const topCf = HMTABLES.top[type] + (system.bonus.total.top || 0);
         const top   = Math.ceil(max * topCf);
-        data.hp = {max, value, top};
+        system.hp = {max, value, top};
     }
 
     setBonusTotal() {
-        const {bonus} = this.data.data;
+        const {bonus} = this.system;
         const total = {};
 
         const multiply = ['move'];
@@ -72,7 +72,7 @@ export class HMActor extends Actor {
     }
 
     get drObj() {
-        const {bonus} = this.data.data;
+        const {bonus} = this.system;
         const shield  = bonus.shield?.dr || 0;
         const armor   = (bonus.total?.dr || 0) - shield;
         return {armor, shield};
@@ -80,7 +80,7 @@ export class HMActor extends Actor {
 
     static async createActor(actor, _options, userId) {
         if (game.user.id !== userId) return;
-        if (actor.items.size || actor.data.type === 'beast') { return; }
+        if (actor.items.size || actor.type === 'beast') { return; }
 
         const skillPack = game.packs.get('hackmaster5e.uskills');
         const skillIndex = await skillPack.getIndex();
@@ -89,16 +89,16 @@ export class HMActor extends Actor {
         /* eslint no-await-in-loop: 0 */
         for (const idx of skillIndex) {
             const skill = await skillPack.getDocument(idx._id);
-            const translated = game.i18n.localize(skill.data.name);
-            if (translated !== '') { skill.data.name = translated; }
-            itemList.push(skill.data);
+            const translated = game.i18n.localize(skill.name);
+            if (translated !== '') { skill.name = translated; }
+            itemList.push(skill);
         }
 
         const innatePack = game.packs.get('hackmaster5e.hmbinnate');
         const innateIndex = await innatePack.getIndex();
         const id = innateIndex.getName('Unarmed')._id;
         const unarmed = await innatePack.getDocument(id);
-        itemList.push(unarmed.data);
+        itemList.push(unarmed);
 
         await actor.createEmbeddedDocuments('Item', itemList);
     }
@@ -107,9 +107,9 @@ export class HMActor extends Actor {
     static async createToken(token, _options, userId) {
         if (game.user.id !== userId) return;
         const {actor} = token;
-        if (actor.type !== 'beast' || actor.data.data.hp.max || userId !== game.user.id) return;
+        if (actor.type !== 'beast' || actor.system.hp.max || userId !== game.user.id) return;
 
-        const {hp} = actor.data.data;
+        const {hp} = actor.system;
         const {formula} = hp;
         if (Roll.validate(formula)) {
             const r = new Roll(formula);

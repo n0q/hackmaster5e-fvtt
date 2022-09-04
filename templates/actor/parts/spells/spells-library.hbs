@@ -1,13 +1,13 @@
 <label class="resource-label">{{localize "HM.spelllibrary"}}</label>
-<select name="data.cslevel">
-    {{#select actor.data.data.cslevel}}{{#each actor.slevels as |slevel|}}
+<select name="system.cslevel">
+    {{#select actor.system.cslevel}}{{#each actor.slevels as |slevel|}}
     <option value="{{slevel}}">{{localize (concat "HM.spellLevels." slevel)}}</option>
     {{/each}}{{/select}}
 </select>
 <ol class="card-list">
     {{#each actor.spells}}
-    {{#if (eq data.lidx ../actor.data.data.cslevel)}}
-        {{> "systems/hackmaster5e/templates/actor/cards/spell.hbs" }}
-    {{/if}}
+        {{#if (eq system.lidx ../actor.system.cslevel)}}
+            {{> "systems/hackmaster5e/templates/actor/cards/spell.hbs" }}
+        {{/if}}
     {{/each}}
 </ol>

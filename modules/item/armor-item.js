@@ -11,9 +11,9 @@ export class HMArmorItem extends HMItem {
     }
 
     _prepArmorData({setBonus=true}={}) {
-        if (!this.actor?.data) return;
+        if (!this.actor?.system) return;
 
-        const {bonus, shield, qn} = this.data.data;
+        const {bonus, shield, qn} = this.system;
         qn ? bonus.qual = this.quality : delete bonus.qual;
 
         Object.keys(bonus.base).forEach((key) => {
@@ -27,7 +27,7 @@ export class HMArmorItem extends HMItem {
         // Populate armor and shield vectors on actor.
         // TODO: Items should never do this to actors.
         if (setBonus && this.invstate === 'equipped') {
-            const actorBonus = this.actor.data.data.bonus;
+            const actorBonus = this.actor.system.bonus;
             const aVector = actorBonus?.armor || {};
             const sVector = actorBonus?.shield || {};
             const sum = shield.checked ? sVector : aVector;

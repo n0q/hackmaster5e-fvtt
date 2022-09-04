@@ -50,7 +50,7 @@ export class HMSpellItem extends HMItem {
 
         if (!resp.divine && resp.button === 'declare') {
             const sum = resp.cost + (resp.schedule || 0);
-            const {sp} = actor.data.data;
+            const {sp} = actor.system;
             if (sum > sp.value) {
                 ui.notifications.warn(game.i18n.localize('HM.dialog.warnSP'));
                 return;
@@ -60,7 +60,7 @@ export class HMSpellItem extends HMItem {
         }
 
         if (resp.divine && resp.button === 'cast') {
-            let {prepped} = context.data.data;
+            let {prepped} = context.system;
             if (prepped > 0) await context.update({'data.prepped': --prepped});
         }
 
