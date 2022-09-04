@@ -46,10 +46,7 @@ export class HMActorSheet extends ActorSheet {
             'innate':   [],
         };
 
-        const DEFAULT_TOKEN = idx.defaultImg.item;
         for (const i of sheetData.items) {
-            i.img = i.img || DEFAULT_TOKEN;
-
             if (i.type === 'skill') {
                 if (i.system.language) { langs.push(i); } else {
                     if (actorData.type === 'character') {

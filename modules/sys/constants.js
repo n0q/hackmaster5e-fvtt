@@ -10,6 +10,7 @@ export const MACRO_VERS = {
 
 // TODO: ITEM_STATE and itemstate are the same table.
 export const HMCONST = {
+    DEFAULT_ICON: 'icons/magic/symbols/question-stone-yellow.webp',
     CARD_TYPE: {
         ROLL:  0,
         ALERT: 1,

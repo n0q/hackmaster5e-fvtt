@@ -8,6 +8,8 @@ import { HMRollMgr } from '../mgr/rollmgr.js';
 // we are making Hackmaster, not Aces & Eights.
 
 export class HMItem extends Item {
+    static DEFAULT_ICON = HMCONST.DEFAULT_ICON;
+
     /** @override */
     prepareData(options={}) {
         this.prepareBaseData(options);
