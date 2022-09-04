@@ -8,7 +8,6 @@ export class HMBeastActorSheet extends HMActorSheet {
             width: 640,
             height: 800,
             tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'overview' }],
-            tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'setup' }],
         });
     }
 
