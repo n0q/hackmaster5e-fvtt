@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.2.16] - 2022-09-05
+### Added
+- Compendium items.
+### Fixed
+- Character class hp reroll tracking (v10 regression)
+
 ## [0.2.15] - 2022-09-04
 ### Added
 - Compendium items.
