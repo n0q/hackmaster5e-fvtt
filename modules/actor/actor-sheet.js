@@ -235,9 +235,9 @@ export class HMActorSheet extends ActorSheet {
         ev.preventDefault();
         const li = $(ev.currentTarget).parents('.card');
         const item = this.actor.items.get(li.data('itemId'));
-        const { data } = item.data;
-        data.state = (++data.state || 0) % 3;
-        await this.actor.updateEmbeddedDocuments('Item', [{_id:item.id, data}]);
+        const {system} = item;
+        system.state = (++system.state || 0) % 3;
+        await this.actor.updateEmbeddedDocuments('Item', [{_id:item.id, system}]);
     }
 
     async _onSpellPrep(ev) {
@@ -278,7 +278,7 @@ export class HMActorSheet extends ActorSheet {
                 if (floatMatch) { targetValue = parseFloat(floatMatch[1]);       } else
                                 { targetValue = parseInt(targetValue, 10) / 100; }
             }
-            setProperty(item.data, itemProp, targetValue);
+            setProperty(item, itemProp, targetValue);
 
             // TODO: Update only the altered property.
            await this.actor.updateEmbeddedDocuments("Item", [{_id:item.id, data:item.system}]);

@@ -42,7 +42,7 @@
                             <td>{{lkey}}</td>
                             <td>{{level.hp.die}}</td>
                             <td><input type="number" name="system.ptable.{{lkey}}.hp.value" value="{{level.hp.value}}" data-dtype="Number"/></td>
-                            <td>{{#if system.level.hp.reroll}}(reroll){{/if}}</td>
+                            <td>{{#if level.hp.reroll}}(reroll){{/if}}</td>
                         </tr>
                             {{/if}}
                         {{/each}}
@@ -83,10 +83,10 @@
                                 <th scope='row'>{{lkey}}</th>
                                 <td>
                                     <input type='text' name='system.ptable.{{lkey}}.hp.die'
-                                    style='width:1em;' value='{{system.level.hp.die}}' data-dtype='String'/>
+                                    style='width:1em;' value='{{level.hp.die}}' data-dtype='String'/>
                                 </td>
                                 <td>
-                                    <input type='checkbox' name='system.ptable.{{lkey}}.hp.reroll' {{checked system.level.hp.reroll}}/>
+                                    <input type='checkbox' name='system.ptable.{{lkey}}.hp.reroll' {{checked level.hp.reroll}}/>
                                 </td>
                                 {{#each ../system.features as |enabled feature|}}
                                     {{#if enabled}}
