@@ -27,11 +27,10 @@ export class HMSkillItem extends HMItem {
                 bonus.stats = {value, 'literacy': value, 'verbal': value};
             } else { delete bonus.stats; }
         }
-
         for (const key in bonus.total) {
             let sum = -bonus.total[key];
             for (const state in bonus) { sum += (bonus[state][key] || 0); }
-            bonus.total[key] = sum;
+            bonus.total[key] = sum + (actorData.bonus?.state?.skills || 0);
         }
     }
 }

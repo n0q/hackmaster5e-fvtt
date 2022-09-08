@@ -562,9 +562,14 @@
     },
 
     "COMBAT": {
-        "Round":       "Count:"
+        "Round":        "Count",
+        "Rounds":       "Counts"
     },
     
+    "EFFECT": {
+        "sfatigue":     "Spell Fatigue"
+    },
+
     "dragRuler": {
         "current":      "current"
     }

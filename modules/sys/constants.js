@@ -387,6 +387,16 @@ export const HMTABLES = {
             'trivial':      -90,
         },
     },
+    statusEffects: {
+        sfatigue: {
+            label: 'EFFECT.sfatigue',
+            icon: 'systems/hackmaster5e/styles/icons/stoned-skull.svg',
+            changes: [
+                {key: 'system.bonus.state.def',    value: '-6',  mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                {key: 'system.bonus.state.skills', value: '-30', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+            ],
+        },
+    },
     'tenacity': {
         0: {'tenacity':  null, 'tenacityCf':  null},
         1: {'tenacity':  2,    'tenacityCf': 0.500},

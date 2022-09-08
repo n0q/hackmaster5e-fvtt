@@ -12,6 +12,7 @@ import { HMChatMgr } from './modules/mgr/chatmgr.js';
 import { HMCombat, HMCombatTracker } from './modules/sys/combat.js';
 import { HMMacro } from './modules/sys/macro.js';
 import { HMSupport } from './modules/sys/support.js';
+import { HMStates, HMActiveEffect } from './modules/sys/effects.js';
 import { MODULE_ID } from './modules/sys/constants.js';
 
 import registerHandlebarsHelpers from './modules/sys/helpers.js';
@@ -26,6 +27,7 @@ Hooks.once('init', async () => {
     CONFIG.Combat.documentClass = HMCombat;
     CONFIG.ui.combat = HMCombatTracker;
     CONFIG.Macro.documentClass = HMMacro;
+    CONFIG.ActiveEffect.documentClass = HMActiveEffect;
     CONFIG.canvasTextStyle._fontFamily = 'Gentium';
 
     Actors.unregisterSheet('core', ActorSheet);
@@ -54,12 +56,15 @@ Hooks.once('ready', async () => {
     if (!f) f = await Folder.create({type: 'Macro', name: folderName, parent: null});
 });
 
+Hooks.once('setup', HMStates.setupStatusEffects);
 Hooks.once('devModeReady', HMSupport.devModeReady);
 Hooks.once('dragRuler.ready', HMSupport.dragRuler_ready);
 Hooks.on('createActor', HMActor.createActor);
 Hooks.on('createToken', HMActor.createToken);
 Hooks.on('createItem', HMItem.createItem);
 Hooks.on('renderChatMessage', HMChatMgr.renderChatMessage);
+Hooks.on('updateCombat', HMCombat.updateCombat);
+Hooks.on('preDeleteCombat', HMCombat.preDeleteCombat);
 Hooks.on('renderCombatTracker', HMCombatTracker.renderCombatTracker);
 Hooks.on('hotbarDrop', HMMacro.hotbarDrop);
 Hooks.on('diceSoNiceRollStart', HMSupport.diceSoNiceRollStart);

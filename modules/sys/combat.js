@@ -1,4 +1,3 @@
-/* global $ */
 /* eslint max-classes-per-file: ['error', 2] */
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
 
@@ -19,7 +18,7 @@ export class HMCombat extends Combat {
         if (!initFormula) {
             const initDie = await this._getInitiativeDie(ids);
             if (initDie) {
-                initFormula = `${initDie} + ${game.system.data.initiative}`;
+                initFormula = `${initDie} + ${game.system.initiative}`;
             } else {
                 initFormula = '1';
                 messageOptions.sound = null;
@@ -28,6 +27,33 @@ export class HMCombat extends Combat {
 
         const rollData = {formula: initFormula, updateTurn, messageOptions};
         return super.rollInitiative(ids, rollData);
+    }
+
+    static async updateCombat(combat) {
+        const combatants = combat.turns;
+        combatants.forEach((x) => {
+            // Toggle status effects on/off based on their timers.
+            const effects = x.actor.effects.filter((y) => y.isTemporary === true);
+            effects.forEach(async (effect) => {
+                const {remaining, startRound} = effect.duration;
+                const started = startRound <= combat.round;
+                if ((!started &&               !effect.disabled)        // Case 1: Before effect
+                  || (started &&  remaining &&  effect.disabled)        // Case 2: During effect
+                  || (started && !remaining && !effect.disabled)) {     // Case 3: After effect
+                    await effect.update({disabled: !effect.disabled});
+                }
+            });
+        });
+    }
+
+    static async preDeleteCombat(combat) {
+        const combatants = combat.turns;
+        combatants.forEach((x) => {
+            const effects = x.actor.effects.filter((y) => y.isTemporary
+                                                       && y.disabled
+                                                       && y.duration.combat.id === combat.id);
+            effects.forEach((effect) => x.actor.deleteEmbeddedDocuments('ActiveEffect', [effect.id]));
+        });
     }
 }
 
