@@ -2,13 +2,14 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [0.2.17] - 2022-09-09
 ### Added
- - Spell Fatigue status effect.
- - Full Parry status effect.
- - Status effects auto apply/delete.
+- Compendium items.
+- Spell Fatigue status effect.
+- Full Parry status effect.
+- Status effects auto apply/delete.
 ### Fixed
- - Macro attacks no longer bleed weapon capabilities to other equipped weapons.
+- Weapon capabilities could bleed to other weapons under certain circumstances.
 
 ## [0.2.16] - 2022-09-05
 ### Added
@@ -19,8 +20,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [0.2.15] - 2022-09-04
 ### Added
 - Compendium items.
-### Changed
 - Foundry v10 API support.
+## Removed
+- Foundry v9 API support.
+### Changed
 - Changed default item icon.
 ### Fixed
 - Auto ToP checks were not using beast trauma saves.
