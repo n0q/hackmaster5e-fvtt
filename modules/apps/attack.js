@@ -62,7 +62,6 @@ export class AttackPrompt extends HMPrompt {
 
     get dialogResp() {
         const {button, spd} = this.dialogData;
-        console.warn(spd);
         const dialogResp = {
             widx: this.dialogData.widx,
             specialMove: Number(this.dialogData.specialMove),
