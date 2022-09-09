@@ -41,6 +41,7 @@ export class HMCombat extends Combat {
                   || (started &&  remaining &&  effect.disabled)        // Case 2: During effect
                   || (started && !remaining && !effect.disabled)) {     // Case 3: After effect
                     await effect.update({disabled: !effect.disabled});
+                    if (effect.disabled) effect._displayScrollingStatus(false);
                 }
             });
         });
