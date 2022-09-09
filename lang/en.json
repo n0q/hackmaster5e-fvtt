@@ -562,9 +562,15 @@
     },
 
     "COMBAT": {
-        "Round":       "Count:"
+        "Round":        "Count",
+        "Rounds":       "Counts"
     },
     
+    "EFFECT": {
+        "fullparry":    "Full Parry",
+        "sfatigue":     "Spell Fatigue"
+    },
+
     "dragRuler": {
         "current":      "current"
     }

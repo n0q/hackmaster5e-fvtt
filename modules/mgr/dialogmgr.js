@@ -48,6 +48,7 @@ async function getAttackDialog(dataset, caller, opt) {
     });
 
     dialogResp.context = dialogData.weapons[dialogResp.resp.widx];
+    dialogResp.SPECIAL = HMCONST.SPECIAL;
     return dialogResp;
 }
 

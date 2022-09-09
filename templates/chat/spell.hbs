@@ -2,7 +2,7 @@
 {{localize 'HM.components'}}: <b>{{resp.components}}</b><br>
 {{#unless context.system.divine}}
     {{#if resp.advance}}
-        {{localize 'HM.spell'}} {{localize 'HM.fatigue'}}: <b>{{resp.advance}}</b>
+        {{localize 'HM.spell'}} {{localize 'HM.fatigue'}}: <b>{{resp.sfatigue}}</b>
         <i>{{toLowerCase (localize 'HM.seconds')}}.</i><br>
     {{else}}
         {{localize 'HM.speed'}}: <b>{{context.system.speed}}</b>

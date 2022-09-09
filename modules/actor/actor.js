@@ -11,6 +11,17 @@ export class HMActor extends Actor {
         this.setHP();
     }
 
+    /** @override */
+    // effects need to be applied before the other documents, or their effects will be missed.
+    // We're relying on effects to be the first embeddedType. This seems to be safe, but...
+    prepareEmbeddedDocuments() {
+        const embeddedTypes = this.constructor.metadata.embedded || {};
+        for (const collectionName of Object.values(embeddedTypes)) {
+            for (let e of this[collectionName]) e._safePrepareData();
+            if (collectionName == 'effects') this.applyActiveEffects();
+        }
+    }
+
     get canBackstab() {
         const {cclass} = this.itemTypes;
         if (cclass.length) return cclass[0].system.features.back || false;

@@ -3,7 +3,12 @@ import { HMCONST, HMTABLES } from '../sys/constants.js';
 
 function getSpeed(ranged, wData, specialMove=0) {
     const {spd, jspd} = wData.bonus.total;
-    if (!ranged) return {melee: Number(specialMove) === HMCONST.SPECIAL.JAB ? jspd : spd};
+    if (!ranged) {
+        return {
+            declare: spd,
+            melee: Number(specialMove) === HMCONST.SPECIAL.JAB ? jspd : spd,
+        };
+    }
 
     const {timing} = wData.ranged;
     return HMTABLES.weapons.ranged.timing(timing, spd);
@@ -34,18 +39,24 @@ export class AttackPrompt extends HMPrompt {
             widx: 0,
             range: 0,
             advance: dialogData.inCombat,
+            SPECIAL: HMCONST.SPECIAL,
         });
     }
 
     update(options) {
-        const {weapons, widx, caller, specialMove} = this.dialogData;
+        const {weapons, widx, caller} = this.dialogData;
+        let {specialMove} = this.dialogData;
         const weapon  = weapons[widx];
         const wData   = weapon.system;
         const ranged  = wData.ranged.checked;
+        const capList = this.getCapList(weapons[widx], caller);
+
+        if (!(specialMove in capList)) specialMove = Object.keys(capList)[0];
 
         this.dialogData.ranged = ranged;
         this.dialogData.spd = getSpeed(ranged, wData, specialMove);
-        this.dialogData.capList = this.getCapList(weapons[widx], caller);
+        this.dialogData.specialMove = specialMove;
+        this.dialogData.capList = capList;
         super.update(options);
     }
 

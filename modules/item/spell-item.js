@@ -2,6 +2,7 @@ import { HMCONST } from '../sys/constants.js';
 import { HMItem } from './item.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
+import { HMStates } from '../sys/effects.js';
 
 export class HMSpellItem extends HMItem {
     prepareBaseData() {
@@ -91,6 +92,19 @@ export class HMSpellItem extends HMItem {
             const cardtype = HMCONST.CARD_TYPE.NOTE;
             const initChatCard = await chatMgr.getCard({cardtype, dataset: initChatData});
             await ChatMessage.create(initChatCard);
+        }
+
+        if (opt.isCombatant && dialogResp.resp.sfatigue) {
+            const {combatant} = comData;
+            const combatToken = canvas.scene.tokens.get(combatant.tokenId);
+            const duration = {
+                combat: active.id,
+                startRound: active.round,
+                rounds: dialogResp.resp.sfatigue,
+                type: 'rounds',
+            };
+
+            await HMStates.setStatusEffect(combatToken, 'sfatigue', duration);
         }
     }
 }

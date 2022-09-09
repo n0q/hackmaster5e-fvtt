@@ -3,6 +3,7 @@ import { HMItem } from './item.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
 import { HMRollMgr } from '../mgr/rollmgr.js';
+import { HMStates } from '../sys/effects.js';
 
 export class HMWeaponItem extends HMItem {
     get minspd() {
@@ -60,10 +61,12 @@ export class HMWeaponItem extends HMItem {
         const misc      = {};
         const race      = {};
         const stats     = {};
+        const state     = {};
         const classData = actorData.bonus.class;
         const miscData  = actorData.bonus.misc;
         const statsData = actorData.bonus.stats;
         const raceData  = actorData.bonus.race;
+        const stateData = actorData.bonus.state;
 
         const spec      = {};
         const profTable = HMTABLES.weapons.noprof;
@@ -81,6 +84,7 @@ export class HMWeaponItem extends HMItem {
             misc[key]   = miscData?.[key] || 0;
             race[key]   = raceData?.[key] || 0;
             stats[key]  = statsData?.[key] || 0;
+            state[key]  = stateData?.[key] || 0;
 
             // Explicitly allowing multiple armor/shields because we don't support accesories yet.
             for (let i = 0; i < armors.length; i++)  {
@@ -105,6 +109,7 @@ export class HMWeaponItem extends HMItem {
         Object.values(armor).every((a) => a === 0)  ? delete bonus.armor  : bonus.armor  = armor;
         Object.values(shield).every((a) => a === 0) ? delete bonus.shield : bonus.shield = shield;
         Object.values(misc).every((a) => a === 0)   ? delete bonus.misc   : bonus.misc   = misc;
+        Object.values(state).every((a) => a === 0)   ? delete bonus.state : bonus.state  = state;
 
         if (isCharacter) {
             Object.values(stats).every((a) => a === 0)  ? delete bonus.stats : bonus.stats = stats;
@@ -128,10 +133,11 @@ export class HMWeaponItem extends HMItem {
 
     get capabilities() {
         const {SPECIAL} = HMCONST;
-        const {caps, jab} = this.system;
+        const {caps, jab, ranged} = this.system;
         const capsArr = Object.keys(caps).filter((key) => caps[key].checked).map((x) => Number(x));
         capsArr.push(SPECIAL.STANDARD);
         if (jab.checked) capsArr.push(SPECIAL.JAB);
+        if (!ranged.checked) capsArr.push(SPECIAL.FULLPARRY);
         return capsArr.sort();
     }
 
@@ -206,6 +212,18 @@ export class HMWeaponItem extends HMItem {
             const cardtype = HMCONST.CARD_TYPE.NOTE;
             const initChatCard = await chatMgr.getCard({cardtype, dataset: initChatData});
             await ChatMessage.create(initChatCard);
+        }
+
+        if (opt.isCombatant && dialogResp.resp.specialMove === HMCONST.SPECIAL.FULLPARRY) {
+            const {combatant} = comData;
+            const combatToken = canvas.scene.tokens.get(combatant.tokenId);
+            const duration = {
+                combat: active.id,
+                startRound: active.round,
+                rounds: dialogResp.resp.advance,
+                type: 'rounds',
+            };
+            await HMStates.setStatusEffect(combatToken, 'fullparry', duration);
         }
     }
 

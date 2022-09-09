@@ -85,6 +85,7 @@ idx.special = {
     [HMCONST.SPECIAL.JAB]:       'HM.specSelect.jab',
     [HMCONST.SPECIAL.BACKSTAB]:  'HM.specSelect.stab',
     [HMCONST.SPECIAL.FLEEING]:   'HM.specSelect.flee',
+    [HMCONST.SPECIAL.FULLPARRY]: 'EFFECT.fullparry',
 };
 
 idx.size = {
