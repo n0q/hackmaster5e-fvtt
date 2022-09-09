@@ -21,9 +21,21 @@ export class DamagePrompt extends HMPrompt {
         });
     }
 
+    getCapList(weapon, actor=null) {
+        const capsObj = super.getCapList(weapon, actor);
+        delete capsObj[HMCONST.SPECIAL.FULLPARRY];
+        return capsObj;
+    }
+
     update(options) {
         const {weapons, widx, caller} = this.dialogData;
-        this.dialogData.capList = this.getCapList(weapons[widx], caller);
+        let {specialMove} = this.dialogData;
+        const capList = this.getCapList(weapons[widx], caller);
+
+        if (!(specialMove in capList)) specialMove = Object.keys(capList)[0];
+
+        this.dialogData.specialMove = specialMove;
+        this.dialogData.capList = capList;
         super.update(options);
     }
 

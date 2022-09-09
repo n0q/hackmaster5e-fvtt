@@ -70,6 +70,7 @@ export const HMCONST = {
         JAB:       1,
         BACKSTAB:  2,
         FLEEING:   3,
+        FULLPARRY: 4,
     },
 };
 
@@ -388,6 +389,13 @@ export const HMTABLES = {
         },
     },
     statusEffects: {
+        fullparry: {
+            label: 'EFFECT.fullparry',
+            icon: 'systems/hackmaster5e/styles/icons/sword-clash.svg',
+            changes: [
+                {key: 'system.bonus.state.def',    value: '5',  mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+            ],
+        },
         sfatigue: {
             label: 'EFFECT.sfatigue',
             icon: 'systems/hackmaster5e/styles/icons/stoned-skull.svg',

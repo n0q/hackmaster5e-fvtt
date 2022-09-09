@@ -4,8 +4,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 ### Added
- - Functional Spell Fatigue status effect.
+ - Spell Fatigue status effect.
+ - Full Parry status effect.
  - Status effects auto apply/delete.
+### Fixed
+ - Macro attacks no longer bleed weapon capabilities to other equipped weapons.
 
 ## [0.2.16] - 2022-09-05
 ### Added

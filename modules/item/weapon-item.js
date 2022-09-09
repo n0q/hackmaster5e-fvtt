@@ -3,6 +3,7 @@ import { HMItem } from './item.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
 import { HMRollMgr } from '../mgr/rollmgr.js';
+import { HMStates } from '../sys/effects.js';
 
 export class HMWeaponItem extends HMItem {
     get minspd() {
@@ -132,10 +133,11 @@ export class HMWeaponItem extends HMItem {
 
     get capabilities() {
         const {SPECIAL} = HMCONST;
-        const {caps, jab} = this.system;
+        const {caps, jab, ranged} = this.system;
         const capsArr = Object.keys(caps).filter((key) => caps[key].checked).map((x) => Number(x));
         capsArr.push(SPECIAL.STANDARD);
         if (jab.checked) capsArr.push(SPECIAL.JAB);
+        if (!ranged.checked) capsArr.push(SPECIAL.FULLPARRY);
         return capsArr.sort();
     }
 
@@ -210,6 +212,18 @@ export class HMWeaponItem extends HMItem {
             const cardtype = HMCONST.CARD_TYPE.NOTE;
             const initChatCard = await chatMgr.getCard({cardtype, dataset: initChatData});
             await ChatMessage.create(initChatCard);
+        }
+
+        if (opt.isCombatant && dialogResp.resp.specialMove === HMCONST.SPECIAL.FULLPARRY) {
+            const {combatant} = comData;
+            const combatToken = canvas.scene.tokens.get(combatant.tokenId);
+            const duration = {
+                combat: active.id,
+                startRound: active.round,
+                rounds: dialogResp.resp.advance,
+                type: 'rounds',
+            };
+            await HMStates.setStatusEffect(combatToken, 'fullparry', duration);
         }
     }
 

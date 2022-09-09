@@ -567,6 +567,7 @@
     },
     
     "EFFECT": {
+        "fullparry":    "Full Parry",
         "sfatigue":     "Spell Fatigue"
     },
 
