@@ -151,3 +151,27 @@ export class HMItem extends Item {
         }
     }
 }
+
+    export async function advanceClock(comData, dialogResp, smartInit=false) {
+        const {active}    = game.combats;
+        const {combatant} = comData;
+        const delta       = Number(dialogResp.resp.advance);
+        const oldInit     = smartInit
+            ? Math.max(comData.initiative, comData.round)
+            : comData.round;
+        const newInit     = oldInit + delta;
+        active.setInitiative(combatant.id, newInit);
+
+        const initChatData = {
+            name: combatant.name,
+            hidden: combatant.hidden,
+            delta,
+            oldInit,
+            newInit,
+        };
+
+        const cardtype = HMCONST.CARD_TYPE.NOTE;
+        const chatMgr = new HMChatMgr();
+        const initChatCard = await chatMgr.getCard({cardtype, dataset: initChatData});
+        await ChatMessage.create(initChatCard);
+    }

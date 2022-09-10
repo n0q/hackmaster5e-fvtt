@@ -1,5 +1,4 @@
-import { HMCONST } from '../sys/constants.js';
-import { HMItem } from './item.js';
+import { HMItem, advanceClock } from './item.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
 import { HMStates } from '../sys/effects.js';
@@ -75,24 +74,7 @@ export class HMSpellItem extends HMItem {
         const card = await chatMgr.getCard({dataset});
         await ChatMessage.create(card);
 
-        if (dialogResp.resp.advance) {
-            const {combatant} = comData;
-            const delta       = Number(dialogResp.resp.advance);
-            const oldInit     = Math.max(comData.initiative, comData.round);
-            const newInit     = oldInit + delta;
-            active.setInitiative(combatant.id, newInit);
-
-            const initChatData = {
-                name: combatant.name,
-                hidden: combatant.hidden,
-                delta,
-                oldInit,
-                newInit,
-            };
-            const cardtype = HMCONST.CARD_TYPE.NOTE;
-            const initChatCard = await chatMgr.getCard({cardtype, dataset: initChatData});
-            await ChatMessage.create(initChatCard);
-        }
+        if (dialogResp.resp.advance) await advanceClock(comData, dialogResp, false);
 
         if (opt.isCombatant && dialogResp.resp.sfatigue) {
             const {combatant} = comData;

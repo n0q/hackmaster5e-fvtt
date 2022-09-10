@@ -225,6 +225,7 @@
         },
 
         "chatCard": {
+            "wcreset":     "Weapon count reset",
             "toplimitPre": "Damage exceeds",
             "top":         "Threshold of Pain"
         },
