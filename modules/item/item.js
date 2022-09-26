@@ -2,6 +2,7 @@ import { HMTABLES, HMCONST } from '../sys/constants.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
 import { HMRollMgr } from '../mgr/rollmgr.js';
+import { HMStates } from '../sys/effects.js';
 
 // Remember: Items may not alter Actors under any circumstances.
 // You will create a free fire shooting gallery if you do this, and
@@ -150,4 +151,41 @@ export class HMItem extends Item {
             await ChatMessage.create(topcard);
         }
     }
+}
+
+export async function advanceClock(comData, dialogResp, smartInit=false) {
+    const {active}    = game.combats;
+    const {combatant} = comData;
+    const delta       = Number(dialogResp.resp.advance);
+    const oldInit     = smartInit
+        ? Math.max(comData.initiative, comData.round)
+        : comData.round;
+    const newInit     = oldInit + delta;
+    active.setInitiative(combatant.id, newInit);
+
+    const initChatData = {
+        name: combatant.name,
+        hidden: combatant.hidden,
+        delta,
+        oldInit,
+        newInit,
+    };
+
+    const cardtype = HMCONST.CARD_TYPE.NOTE;
+    const chatMgr = new HMChatMgr();
+    const initChatCard = await chatMgr.getCard({cardtype, dataset: initChatData});
+    await ChatMessage.create(initChatCard);
+}
+
+export async function setStatusEffectOnToken(comData, effect, rounds) {
+    const {active} = game.combats;
+    const {combatant} = comData;
+    const combatToken = canvas.scene.tokens.get(combatant.tokenId);
+    const duration = {
+        combat: active.id,
+        startRound: active.round,
+        rounds,
+        type: 'rounds',
+    };
+    await HMStates.setStatusEffect(combatToken, effect, duration);
 }

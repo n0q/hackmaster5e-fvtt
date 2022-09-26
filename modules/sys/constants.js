@@ -71,6 +71,9 @@ export const HMCONST = {
         BACKSTAB:  2,
         FLEEING:   3,
         FULLPARRY: 4,
+        DEFEND:    64,
+        GGROUND:   65,
+        SCAMPER:   66,
     },
 };
 
@@ -305,7 +308,9 @@ export const HMTABLES = {
             'shieldbstab': '@dmg.shield + @bonus.total.dmg + @actorbonus.total.back + @resp.bonus',
         },
         'def': {
-            'standard': 'd20p + @bonus.total.def + @resp.mod',
+            [HMCONST.SPECIAL.DEFEND]:  'd20p + @bonus.total.def     + @resp.bonus',
+            [HMCONST.SPECIAL.SCAMPER]: 'd20p + @bonus.total.def + 5 + @resp.bonus',
+            [HMCONST.SPECIAL.GGROUND]: 'd20p + @bonus.total.def + 5 + @resp.bonus',
         },
         'ratk': {
             'standard': 'd20p + @bonus.total.atk - @resp.range + @resp.bonus',
@@ -393,7 +398,21 @@ export const HMTABLES = {
             label: 'EFFECT.fullparry',
             icon: 'systems/hackmaster5e/styles/icons/sword-clash.svg',
             changes: [
-                {key: 'system.bonus.state.def',    value: '5',  mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                {key: 'system.bonus.state.def', value: '5',  mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+            ],
+        },
+        gground: {
+            label: 'EFFECT.gground',
+            icon: 'systems/hackmaster5e/styles/icons/swordman.svg',
+            changes: [
+                {key: 'system.bonus.state.atk', value: '-1',  mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+            ],
+        },
+        scamper: {
+            label: 'EFFECT.scamper',
+            icon: 'systems/hackmaster5e/styles/icons/dodging.svg',
+            changes: [
+                {key: 'system.bonus.state.atk', value: '-4',  mode: CONST.ACTIVE_EFFECT_MODES.ADD},
             ],
         },
         sfatigue: {

@@ -85,6 +85,9 @@ idx.special = {
     [HMCONST.SPECIAL.JAB]:       'HM.specSelect.jab',
     [HMCONST.SPECIAL.BACKSTAB]:  'HM.specSelect.stab',
     [HMCONST.SPECIAL.FLEEING]:   'HM.specSelect.flee',
+    [HMCONST.SPECIAL.DEFEND]:    'HM.specSelect.def',
+    [HMCONST.SPECIAL.SCAMPER]:   'EFFECT.scamper',
+    [HMCONST.SPECIAL.GGROUND]:   'EFFECT.gground',
     [HMCONST.SPECIAL.FULLPARRY]: 'EFFECT.fullparry',
 };
 
