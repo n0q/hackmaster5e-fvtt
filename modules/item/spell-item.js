@@ -1,7 +1,6 @@
-import { HMItem, advanceClock } from './item.js';
+import { HMItem, advanceClock, setStatusEffectOnToken } from './item.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
-import { HMStates } from '../sys/effects.js';
 
 export class HMSpellItem extends HMItem {
     prepareBaseData() {
@@ -77,16 +76,7 @@ export class HMSpellItem extends HMItem {
         if (dialogResp.resp.advance) await advanceClock(comData, dialogResp, false);
 
         if (opt.isCombatant && dialogResp.resp.sfatigue) {
-            const {combatant} = comData;
-            const combatToken = canvas.scene.tokens.get(combatant.tokenId);
-            const duration = {
-                combat: active.id,
-                startRound: active.round,
-                rounds: dialogResp.resp.sfatigue,
-                type: 'rounds',
-            };
-
-            await HMStates.setStatusEffect(combatToken, 'sfatigue', duration);
+            setStatusEffectOnToken(comData, 'sfatigue', dialogResp.resp.sfatigue);
         }
     }
 }

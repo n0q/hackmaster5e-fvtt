@@ -151,9 +151,11 @@ function getSpecialMoveFlavor(resp) {
     const mods = [];
     const {specialMove, shieldHit} = resp;
     const {SPECIAL} = HMCONST;
-    if (specialMove === SPECIAL.JAB) mods.push(game.i18n.localize('HM.jab'));
     if (specialMove === SPECIAL.BACKSTAB) mods.push(game.i18n.localize('HM.backstab'));
     if (specialMove === SPECIAL.FLEEING) mods.push(game.i18n.localize('HM.fleeing'));
+    if (specialMove === SPECIAL.GGROUND) mods.push(game.i18n.localize('EFFECT.gground'));
+    if (specialMove === SPECIAL.JAB) mods.push(game.i18n.localize('HM.jab'));
+    if (specialMove === SPECIAL.SCAMPER) mods.push(game.i18n.localize('EFFECT.scamper'));
     if (shieldHit) mods.push(game.i18n.localize('HM.blocked'));
     return mods.length ? ` (${mods.join(', ')})` : '';
 }
@@ -304,7 +306,7 @@ export class HMChatMgr {
                               ${game.i18n.localize('HM.attack')}
                               ${game.i18n.localize('HM.roll')}`;
                 flavor += getSpecialMoveFlavor(dialogResp.resp);
-                let rollContent = await roll.render({flavor});
+                const rollContent = await roll.render({flavor});
 
                 let specialRow = '';
                 const sumDice = getDiceSum(roll);
@@ -321,8 +323,10 @@ export class HMChatMgr {
             }
 
             case 'def': {
-                const flavor = `${game.i18n.localize('HM.defense')}
-                                ${game.i18n.localize('HM.roll')}`;
+                let flavor = `${game.i18n.localize('HM.defense')}
+                              ${game.i18n.localize('HM.roll')}`;
+                flavor    += getSpecialMoveFlavor(dialogResp.resp);
+
                 let content = await roll.render({flavor});
 
                 const weaponRow = `${game.i18n.localize('HM.weapon')}:

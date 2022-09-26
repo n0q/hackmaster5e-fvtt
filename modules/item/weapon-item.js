@@ -1,9 +1,8 @@
 import { HMTABLES, HMCONST } from '../sys/constants.js';
-import { HMItem, advanceClock } from './item.js';
+import { HMItem, advanceClock, setStatusEffectOnToken } from './item.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
 import { HMRollMgr } from '../mgr/rollmgr.js';
-import { HMStates } from '../sys/effects.js';
 
 export class HMWeaponItem extends HMItem {
     get minspd() {
@@ -135,7 +134,7 @@ export class HMWeaponItem extends HMItem {
         const {SPECIAL} = HMCONST;
         const {caps, jab, ranged} = this.system;
         const capsArr = Object.keys(caps).filter((key) => caps[key].checked).map((x) => Number(x));
-        capsArr.push(SPECIAL.STANDARD);
+        capsArr.push(...[SPECIAL.STANDARD, SPECIAL.DEFEND, SPECIAL.GGROUND, SPECIAL.SCAMPER]);
         if (jab.checked) capsArr.push(SPECIAL.JAB);
         if (!ranged.checked) capsArr.push(SPECIAL.FULLPARRY);
         return capsArr.sort();
@@ -198,15 +197,7 @@ export class HMWeaponItem extends HMItem {
         if (dialogResp.resp.advance) await advanceClock(comData, dialogResp, true);
 
         if (opt.isCombatant && dialogResp.resp.specialMove === HMCONST.SPECIAL.FULLPARRY) {
-            const {combatant} = comData;
-            const combatToken = canvas.scene.tokens.get(combatant.tokenId);
-            const duration = {
-                combat: active.id,
-                startRound: active.round,
-                rounds: dialogResp.resp.advance,
-                type: 'rounds',
-            };
-            await HMStates.setStatusEffect(combatToken, 'fullparry', duration);
+            setStatusEffectOnToken(comData, 'fullparry', dialogResp.resp.advance);
         }
     }
 
@@ -239,5 +230,54 @@ export class HMWeaponItem extends HMItem {
         const chatMgr = new HMChatMgr();
         const card = await chatMgr.getCard({dataset});
         await ChatMessage.create(card);
+    }
+
+    static async rollDefend({weapon, caller}={}) {
+        let actor;
+        let token;
+        if (!caller) {
+            [token] = canvas.tokens.controlled;
+            actor   = token.actor;
+        } else if (caller.isToken) {
+            actor   = caller;
+            token   = caller.token;
+        } else {
+            actor = caller;
+        }
+        if (!token && !actor) return;
+
+        const opt = {isCombatant: false};
+        const comData = {};
+        const {active} = game.combats;
+        if (active) {
+            comData.round = active.round;
+            comData.combatant = token
+                ? active.getCombatantByToken(token.id)
+                : active.getCombatantByActor(actor.id);
+            comData.initiative = comData.combatant?.initiative;
+            opt.isCombatant    = Number.isInteger(comData.initiative) && comData.round > 0;
+        }
+
+        const dialog = 'def';
+        const dataset = {dialog, itemId: weapon};
+
+        const dialogMgr = new HMDialogMgr();
+        const dialogResp = await dialogMgr.getDialog(dataset, actor);
+        dataset.formula = HMTABLES.formula.def[dialogResp.resp.specialMove];
+
+        const rollMgr = new HMRollMgr();
+        const roll = await rollMgr.getRoll(dataset, dialogResp);
+
+        const chatMgr = new HMChatMgr();
+        const card = await chatMgr.getCard({roll, dataset, dialogResp});
+        await ChatMessage.create(card);
+
+        if (opt.isCombatant && dialogResp.resp.specialMove === HMCONST.SPECIAL.GGROUND) {
+            setStatusEffectOnToken(comData, 'gground', dialogResp.resp.duration);
+        }
+
+        if (opt.isCombatant && dialogResp.resp.specialMove === HMCONST.SPECIAL.SCAMPER) {
+            setStatusEffectOnToken(comData, 'scamper', dialogResp.resp.duration);
+        }
     }
 }

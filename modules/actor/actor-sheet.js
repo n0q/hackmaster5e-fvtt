@@ -300,6 +300,10 @@ export class HMActorSheet extends ActorSheet {
             return game[MODULE_ID].HMWeaponItem.rollDamage({weapon: dataset.itemId, caller: actor});
         }
 
+        if (dataset.dialog === 'def') {
+            return game[MODULE_ID].HMWeaponItem.rollDefend({weapon: dataset.itemId, caller: actor});
+        }
+
         if (dataset.dialog === 'skill') {
             return game[MODULE_ID].HMItem.rollSkill({itemId: dataset.itemId, caller: actor});
         }

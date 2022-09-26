@@ -130,10 +130,11 @@
         },
 
         "specSelect": {
-            "std":  "Standard Attack",
+            "def":  "Standard Defense",
             "jab":  "Jab Attack",
+            "flee": "Fleeing Opponent",
             "stab": "Backstab",
-            "flee": "Fleeing Opponent"
+            "std":  "Standard Attack"
         },
 
         "statbonus": {
@@ -210,7 +211,7 @@
             "getAbilityButtonR": "Ability Check",
             "getCastTitle":      "Cast a Spell",
             "getDamageTitle":    "Roll for Damage",
-            "getDefendTitle":    ": Defend Thyself",
+            "getDefendTitle":    "Roll a Defense",
             "getSaveTitle":      "Save",
             "getSkillTitle1":    "Skill Check",
             "getSkillTitle2":    "Skill Checks",
@@ -569,6 +570,8 @@
     
     "EFFECT": {
         "fullparry":    "Full Parry",
+        "gground":      "Give Ground",
+        "scamper":      "Scamper Back",
         "sfatigue":     "Spell Fatigue"
     },
 

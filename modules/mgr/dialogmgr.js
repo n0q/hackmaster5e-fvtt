@@ -1,6 +1,7 @@
 import { HMCONST } from '../sys/constants.js';
 import { AttackPrompt } from '../apps/attack.js';
 import { DamagePrompt } from '../apps/damage.js';
+import { DefendPrompt } from '../apps/defend.js';
 import { SkillPrompt } from '../apps/skill.js';
 import { CastPrompt } from '../apps/cast.js';
 
@@ -87,6 +88,21 @@ async function getDamageDialog(dataset, caller) {
     return dialogResp;
 }
 
+async function getDefendDialog(dataset, caller) {
+    const dialogResp = {caller};
+    const dialogData = getWeapons(caller, dataset?.itemId);
+    dialogData.caller = caller;
+
+    const title = `${caller.name}: ${game.i18n.localize('HM.dialog.getDefendTitle')}`;
+    dialogResp.resp = await new Promise((resolve) => {
+        const options = {resolve, title};
+        new DefendPrompt(dialogData, options).render(true);
+    });
+
+    dialogResp.context = dialogData.weapons[dialogResp.resp.widx];
+    return dialogResp;
+}
+
 async function getSkillDialog(dataset, caller) {
     const dialogResp = {caller};
     const dialogData = getDialogData();
@@ -112,7 +128,7 @@ export class HMDialogMgr {
         if (name === 'atk')     return      getAttackDialog(dataset, caller, opt);
         if (name === 'cast')    return      getCastDialog(dataset, caller, opt);
         if (name === 'ratk')    return      getAttackDialog(dataset, caller);
-        if (name === 'def')     return this.getDefendDialog(dataset, caller);
+        if (name === 'def')     return      getDefendDialog(dataset, caller);
         if (name === 'dmg')     return      getDamageDialog(dataset, caller);
         if (name === 'initdie') return this.getInitDieDialog(caller);
         if (name === 'save')    return this.getSaveDialog(dataset, caller);
@@ -208,35 +224,6 @@ export class HMDialogMgr {
             this._focusById('bonus');
         });
         dialogResp.context = caller;
-        return dialogResp;
-    }
-
-    async getDefendDialog(dataset, caller) {
-        const dialogResp = {caller};
-        const dialogData = getWeapons(caller, dataset?.itemId);
-        const template = 'systems/hackmaster5e/templates/dialog/getDefend.hbs';
-
-        let widx = null;
-        dialogResp.resp = await new Promise(async resolve => {
-            new Dialog({
-                title: caller.name + game.i18n.localize('HM.dialog.getDefendTitle'),
-                content: await renderTemplate(template, dialogData),
-                buttons: {
-                    defend: {
-                        label: game.i18n.localize('HM.defend'),
-                        callback: (html) => {
-                            widx = html.find('#weapon-select')[0].value;
-                            resolve({
-                                'mod': parseInt(document.getElementById('mod').value || 0, 10)
-                            })
-                        }
-                    }
-                },
-                default: 'defend'
-            }).render(true);
-            this._focusById('mod');
-        });
-        dialogResp.context = dialogData.weapons[widx];
         return dialogResp;
     }
 
