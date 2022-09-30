@@ -3,15 +3,18 @@ import { HMCONST, HMTABLES } from '../sys/constants.js';
 
 function getSpeed(ranged, wData, specialMove=0) {
     const {spd, jspd} = wData.bonus.total;
-    if (!ranged) {
-        return {
-            declare: spd,
-            melee: Number(specialMove) === HMCONST.SPECIAL.JAB ? jspd : spd,
-        };
+
+    if (ranged) {
+        const {timing} = wData.ranged;
+        return HMTABLES.weapons.ranged.timing(timing, spd);
     }
 
-    const {timing} = wData.ranged;
-    return HMTABLES.weapons.ranged.timing(timing, spd);
+    const s4c = HMTABLES.weapons.s4c.spd;
+
+    return {
+        declare: Number(specialMove) === HMCONST.SPECIAL.SET4CHARGE ? s4c : spd,
+        melee: Number(specialMove) === HMCONST.SPECIAL.JAB ? jspd : spd,
+    };
 }
 
 export class AttackPrompt extends HMPrompt {

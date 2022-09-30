@@ -156,6 +156,7 @@ function getSpecialMoveFlavor(resp) {
     if (specialMove === SPECIAL.GGROUND) mods.push(game.i18n.localize('EFFECT.gground'));
     if (specialMove === SPECIAL.JAB) mods.push(game.i18n.localize('HM.jab'));
     if (specialMove === SPECIAL.SCAMPER) mods.push(game.i18n.localize('EFFECT.scamper'));
+    if (specialMove === SPECIAL.SET4CHARGE) mods.push(game.i18n.localize('HM.specSelect.s4c'));
     if (shieldHit) mods.push(game.i18n.localize('HM.blocked'));
     return mods.length ? ` (${mods.join(', ')})` : '';
 }

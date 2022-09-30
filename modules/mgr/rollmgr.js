@@ -1,7 +1,7 @@
 import { HMTABLES, HMCONST } from '../sys/constants.js';
 
-function convertToBackstab(stringTerms) {
-    const setComparator = (sterms, r=5) => {
+function convertDamageFormula(stringTerms, operation=null) {
+    const setComparator = (sterms, oper, r=5) => {
         if (r < 0) return;
 
         const terms = Roll.simplifyTerms(sterms);
@@ -20,13 +20,16 @@ function convertToBackstab(stringTerms) {
 
             if (!terms[i].isDeterministic && terms[i].faces) {
                 const {faces, modifiers} = terms[i];
-                const mIdx = modifiers.indexOf('p');
-                if (!Number.isNaN(mIdx)) terms[i].modifiers[mIdx] = `p>${faces - 2}`;
+                if (oper === '2x') terms[i].number *= 2;
+                else if (oper === 'backstab') {
+                    const mIdx = modifiers.indexOf('p');
+                    if (!Number.isNaN(mIdx)) terms[i].modifiers[mIdx] = `p>${faces - 2}`;
+                }
             }
         }
         return terms; // eslint-disable-line
     };
-    return setComparator(stringTerms);
+    return setComparator(stringTerms, operation);
 }
 
 export class HMRollMgr {
@@ -46,12 +49,17 @@ export class HMRollMgr {
         const formula = Roll.replaceFormulaData(dataset.formula, resp);
         const data = dialogResp ? dialogResp.context.system : null;
         const r = new Roll(formula, data);
-        if ((resp?.resp?.specialMove === HMCONST.SPECIAL.BACKSTAB
-          || resp?.resp?.specialMove === HMCONST.SPECIAL.FLEEING)
-          && dataset.dialog          === 'dmg') {
-            const terms = convertToBackstab(r.terms);
+
+        const specialMove = resp?.resp?.specialMove;
+        if (dataset.dialog === 'dmg' && specialMove) {
+            let operation = null;
+            if (specialMove === HMCONST.SPECIAL.BACKSTAB)   operation = 'backstab'; else
+            if (specialMove === HMCONST.SPECIAL.FLEEING)    operation = 'backstab'; else
+            if (specialMove === HMCONST.SPECIAL.SET4CHARGE) operation = '2x';
+            const terms = convertDamageFormula(r.terms, operation);
             return Roll.fromTerms(terms).evaluate({async: true});
         }
+
         return r.evaluate({async: true});
     }
 

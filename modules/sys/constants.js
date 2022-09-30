@@ -4,7 +4,7 @@ export const MODULE_ID = 'hackmaster5e';
 export const MACRO_VERS = {
     'getAttack': 4,
     'getDamage': 4,
-    'getDefend': 3,
+    'getDefend': 4,
     'setWound':  2,
 };
 
@@ -66,14 +66,15 @@ export const HMCONST = {
         COLOSSAL: 8,
     },
     SPECIAL: {
-        STANDARD:  0,
-        JAB:       1,
-        BACKSTAB:  2,
-        FLEEING:   3,
-        FULLPARRY: 4,
-        DEFEND:    64,
-        GGROUND:   65,
-        SCAMPER:   66,
+        STANDARD:    0,
+        JAB:         1,
+        BACKSTAB:    2,
+        FLEEING:     3,
+        FULLPARRY:   4,
+        SET4CHARGE:  5,
+        DEFEND:     64,
+        GGROUND:    65,
+        SCAMPER:    66,
     },
 };
 
@@ -434,6 +435,7 @@ export const HMTABLES = {
     },
     'top': {'character': 0.3, 'beast': 0.4},
     'weapons': {
+        s4c: { spd: 3},
         'scale': {
             [HMCONST.SCALE.TINY]:     {'minspd': 1},
             [HMCONST.SCALE.SMALL]:    {'minspd': 2},

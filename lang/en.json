@@ -133,6 +133,7 @@
             "def":  "Standard Defense",
             "jab":  "Jab Attack",
             "flee": "Fleeing Opponent",
+            "s4c":  "Set for Charge",
             "stab": "Backstab",
             "std":  "Standard Attack"
         },
@@ -401,6 +402,7 @@
         "bonus":        "Bonus",
         "body":         "Body",
         "bmi":          "BMI",
+        "brace":        "Brace",
         "carried":      "Carried",
         "cast":         "Cast",
         "catalyst":     "Catalyst",
@@ -527,6 +529,7 @@
         "seconds":      "Seconds",
         "setup":        "Setup",
         "sex":          "Sex",
+        "s4c":          "Set for Charge",
         "size":         "Size",
         "shield":       "Shield",
         "speed":        "Speed",

@@ -21,14 +21,18 @@
 </div>
 {{else}}
     {{localize 'HM.weapon'}}: <b>{{context.name}}</b><br>
-    {{localize 'HM.speed'}}:
-    {{#with context.system.bonus.total}}
-    <b>{{spd}}</b>{{#if jspd}}({{jspd}}){{/if}}<br>
-    {{/with}}
+    {{#unless (eq SPECIAL.SET4CHARGE resp.specialMove)}}
+        {{localize 'HM.speed'}}:
+        {{#with context.system.bonus.total}}
+            <b>{{spd}}</b>{{#if jspd}}({{jspd}}){{/if}}<br>
+        {{/with}}
+    {{/unless}}
 <div class='dice-roll'>
     <div class='dice-flavor'>
     {{#if (eq SPECIAL.FULLPARRY resp.specialMove)}}
         {{localize 'EFFECT.fullparry'}}
+    {{else if (eq SPECIAL.SET4CHARGE resp.specialMove)}}
+        {{localize 'HM.specSelect.s4c'}}
     {{else}}
         {{localize 'HM.ranged'}} {{localize 'HM.attack'}} ({{localize 'HM.preparing'}})
     {{/if}}

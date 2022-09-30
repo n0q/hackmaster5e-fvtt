@@ -81,14 +81,15 @@ idx.fame = {
 };
 
 idx.special = {
-    [HMCONST.SPECIAL.STANDARD]:  'HM.specSelect.std',
-    [HMCONST.SPECIAL.JAB]:       'HM.specSelect.jab',
-    [HMCONST.SPECIAL.BACKSTAB]:  'HM.specSelect.stab',
-    [HMCONST.SPECIAL.FLEEING]:   'HM.specSelect.flee',
-    [HMCONST.SPECIAL.DEFEND]:    'HM.specSelect.def',
-    [HMCONST.SPECIAL.SCAMPER]:   'EFFECT.scamper',
-    [HMCONST.SPECIAL.GGROUND]:   'EFFECT.gground',
-    [HMCONST.SPECIAL.FULLPARRY]: 'EFFECT.fullparry',
+    [HMCONST.SPECIAL.STANDARD]:   'HM.specSelect.std',
+    [HMCONST.SPECIAL.JAB]:        'HM.specSelect.jab',
+    [HMCONST.SPECIAL.BACKSTAB]:   'HM.specSelect.stab',
+    [HMCONST.SPECIAL.FLEEING]:    'HM.specSelect.flee',
+    [HMCONST.SPECIAL.SET4CHARGE]: 'HM.specSelect.s4c',
+    [HMCONST.SPECIAL.DEFEND]:     'HM.specSelect.def',
+    [HMCONST.SPECIAL.SCAMPER]:    'EFFECT.scamper',
+    [HMCONST.SPECIAL.GGROUND]:    'EFFECT.gground',
+    [HMCONST.SPECIAL.FULLPARRY]:  'EFFECT.fullparry',
 };
 
 idx.size = {
