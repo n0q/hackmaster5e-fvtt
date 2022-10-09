@@ -1,5 +1,5 @@
 /* eslint class-methods-use-this: ['error', {'exceptMethods': ['dialogResp', 'getCapList']}] */
-import { idx } from '../sys/localize.js';
+import { idx } from '../sys/dictionary.js';
 import { HMCONST } from '../sys/constants.js';
 
 export class HMPrompt extends Application {

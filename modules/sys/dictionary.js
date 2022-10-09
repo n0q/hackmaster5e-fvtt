@@ -87,10 +87,10 @@ idx.special = {
     [HMCONST.SPECIAL.FLEEING]:    'HM.specSelect.flee',
     [HMCONST.SPECIAL.SET4CHARGE]: 'HM.specSelect.s4c',
     [HMCONST.SPECIAL.DEFEND]:     'HM.specSelect.def',
-    [HMCONST.SPECIAL.SCAMPER]:    'EFFECT.scamper',
-    [HMCONST.SPECIAL.GGROUND]:    'EFFECT.gground',
-    [HMCONST.SPECIAL.FULLPARRY]:  'EFFECT.fullparry',
-    [HMCONST.SPECIAL.AGGRESSIVE]: 'EFFECT.aggressive',
+    [HMCONST.SPECIAL.SCAMPER]:    'HM.specSelect.sback',
+    [HMCONST.SPECIAL.GGROUND]:    'HM.specSelect.ggnd',
+    [HMCONST.SPECIAL.FULLPARRY]:  'HM.specSelect.fparry',
+    [HMCONST.SPECIAL.AGGRESSIVE]: 'HM.specSelect.agg',
 };
 
 idx.size = {

@@ -1,5 +1,5 @@
 import { HMTABLES, HMCONST } from '../sys/constants.js';
-import { idx } from '../sys/localize.js';
+import { idx } from '../sys/dictionary.js';
 
 function getDiceSum(roll) {
     let sum = 0;

@@ -9,7 +9,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Aggressive Attack status effect.
 ### Changed
 - Added Set for Charge capability to compendium weapons.
-- Give Ground and Scamper Back toggle off after actor makes an attack.
+- Status effect names are in past tense.
+- Gave Ground and Scampered Back toggle off after actor makes an attack.
 
 ## [0.2.18] - 2022-09-26
 ### Added

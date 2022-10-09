@@ -1,7 +1,7 @@
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMRollMgr } from '../mgr/rollmgr.js';
-import { idx } from '../sys/localize.js';
+import { idx } from '../sys/dictionary.js';
 import { HMTABLES, MODULE_ID } from '../sys/constants.js';
 
 export class HMActorSheet extends ActorSheet {

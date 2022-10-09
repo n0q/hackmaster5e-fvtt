@@ -130,12 +130,17 @@
         },
 
         "specSelect": {
-            "def":  "Standard Defense",
-            "jab":  "Jab Attack",
-            "flee": "Fleeing Opponent",
-            "s4c":  "Set for Charge",
-            "stab": "Backstab",
-            "std":  "Standard Attack"
+            "agg":      "Aggressive Attack",
+            "def":      "Standard Defense",
+            "jab":      "Jab Attack",
+            "flee":     "Fleeing Opponent",
+            "fparry":   "Full Parry",
+            "ggnd":     "Give Ground",
+            "s4c":      "Set for Charge",
+            "sback":    "Scamper Back",
+            "sfatigue": "Spell Fatigue",
+            "stab":     "Backstab",
+            "std":      "Standard Attack"
         },
 
         "statbonus": {
@@ -573,11 +578,11 @@
     },
     
     "EFFECT": {
-        "aggressive":   "Aggressive Attack",
-        "fullparry":    "Full Parry",
-        "gground":      "Give Ground",
-        "scamper":      "Scamper Back",
-        "sfatigue":     "Spell Fatigue"
+        "aggressive":   "Aggressively Attacked",
+        "fullparry":    "Full Parried",
+        "gground":      "Gave Ground",
+        "scamper":      "Scampered Back",
+        "sfatigue":     "Spell Fatigued"
     },
 
     "dragRuler": {
