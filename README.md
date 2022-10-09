@@ -1,15 +1,15 @@
 # hackmaster5e-fvtt
 
-Hackmaster for Foundry. It's barebones for now, but should get the job done. Definitely more to come. Please note this product is still in the early stages and is lacking support for a number of systems, but it's absolutely usable in its current form.
+Hackmaster for Foundry. Some rough edges here and there, but this should do what you need. Don't fret if the repo goes quiet. If I vanish, I will be back sooner than later.
 
 ----
 ## Roadmap
 
-##### 0.2.x: Combat, Refactors, and Polish
-Better support for the various particulars of combat in Hackmaster. Fighting styles, combat moves, smarter defense rolls, and so on. In the process, a lot of the ugly "this will do for now" code should get reigned in, here. Lastly, a customized appearance and style for chat cards should happen here.
+##### 0.2.x: Combat Competency
+Better support for the various particulars of combat in Hackmaster. Combat moves, smarter defense rolls, status effects, initiative manipulation, fatigue, and encumbrance.
 
-##### 0.3.x: Inventory Overhaul
-A proper, nested inventory system with containers, proper weight management, and more. This should pay off vast dividends, as this functionality could be leveraged to improve ranged weapons, spell libraries, and combat.
+##### 0.3.x: Inventory and Talents
+A proper, nested inventory system with containers, proper weight management, and more. Better talents which will alter a character's behavior without needing to manually tune miscellanious bonuses.
 
 ----
 ### Credits and Thanks

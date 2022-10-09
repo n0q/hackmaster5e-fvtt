@@ -1,8 +1,8 @@
 # Contributing
 
-This project is still in the "core functionality" stages, so viable contributions are slim pickings for now. Still, it's not a bad idea for me to detail setup for documentation purposes.
+I am accepting contributions from interested parties, but I do require you to know Hackmaster. This is a passion project (like most foundry systems) and I'd prefer help from those with an interest in improving the state of the game on foundry.
 
-As I'm relatively new to javascript, my toolchain is simple and straight forward. I don't believe you should have trouble getting this to go, but let me know if there are any snags. I use linux and vim and I'm not entirely sure what the right way to go about things would be in other environments, so I'll try my best to provide system agnostic instructions.
+The toolchain is simple and straight forward. I don't believe you should have trouble getting this to go, but let me know if there are any snags. I use linux and vim and I'm not entirely sure what the right way to go about things would be in other environments, so I'll try my best to provide system agnostic instructions.
 
 #### Environment
 1. Install [npm](https://nodejs.org/en/) however is best for your system.
