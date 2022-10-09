@@ -136,7 +136,7 @@ export class HMWeaponItem extends HMItem {
         const capsArr = Object.keys(caps).filter((key) => caps[key].checked).map((x) => Number(x));
         capsArr.push(...[SPECIAL.STANDARD, SPECIAL.DEFEND, SPECIAL.GGROUND, SPECIAL.SCAMPER]);
         if (jab.checked) capsArr.push(SPECIAL.JAB);
-        if (!ranged.checked) capsArr.push(...[SPECIAL.FULLPARRY, SPECIAL.AGGRESSIVE]);
+        if (!ranged.checked) capsArr.push(...[SPECIAL.FULLPARRY, SPECIAL.AGGRESSIVE, SPECIAL.WITHDRAWL]);
         return capsArr.sort();
     }
 

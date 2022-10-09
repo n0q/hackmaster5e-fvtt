@@ -91,6 +91,7 @@ idx.special = {
     [HMCONST.SPECIAL.GGROUND]:    'HM.specSelect.ggnd',
     [HMCONST.SPECIAL.FULLPARRY]:  'HM.specSelect.fparry',
     [HMCONST.SPECIAL.AGGRESSIVE]: 'HM.specSelect.agg',
+    [HMCONST.SPECIAL.WITHDRAWL]:  'HM.specSelect.wdrawl',
 };
 
 idx.size = {

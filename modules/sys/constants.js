@@ -73,6 +73,7 @@ export const HMCONST = {
         FULLPARRY:   4,
         SET4CHARGE:  5,
         AGGRESSIVE: 16,
+        WITHDRAWL:  17,
         DEFEND:     64,
         GGROUND:    65,
         SCAMPER:    66,
@@ -301,6 +302,7 @@ export const HMTABLES = {
         atk: {
             [HMCONST.SPECIAL.STANDARD]:   'd20p + @bonus.total.atk +     @resp.bonus',
             [HMCONST.SPECIAL.AGGRESSIVE]: 'd20p + @bonus.total.atk + 5 + @resp.bonus',
+            [HMCONST.SPECIAL.WITHDRAWL]:  'd20p + @bonus.total.atk - 2 + @resp.bonus',
         },
         'dmg': {
             'standard':    '@dmg.normal + @bonus.total.dmg + @resp.bonus',

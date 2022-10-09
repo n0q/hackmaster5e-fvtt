@@ -23,7 +23,9 @@ export class DamagePrompt extends HMPrompt {
 
     getCapList(weapon, actor=null) {
         const capsObj = super.getCapList(weapon, actor);
+        delete capsObj[HMCONST.SPECIAL.AGGRESSIVE];
         delete capsObj[HMCONST.SPECIAL.FULLPARRY];
+        delete capsObj[HMCONST.SPECIAL.WITHDRAWL];
         return capsObj;
     }
 
