@@ -151,6 +151,7 @@ function getSpecialMoveFlavor(resp) {
     const mods = [];
     const {specialMove, shieldHit} = resp;
     const {SPECIAL} = HMCONST;
+    if (specialMove === SPECIAL.AGGRESSIVE) mods.push(game.i18n.localize('HM.aggressive'));
     if (specialMove === SPECIAL.BACKSTAB) mods.push(game.i18n.localize('HM.backstab'));
     if (specialMove === SPECIAL.FLEEING) mods.push(game.i18n.localize('HM.fleeing'));
     if (specialMove === SPECIAL.GGROUND) mods.push(game.i18n.localize('EFFECT.gground'));

@@ -10,7 +10,7 @@ function convertDamageFormula(stringTerms, operation=null) {
             if (terms[i].rolls) {
                 for (let j = 0; j < terms[i].rolls.length; j++) {
                     // eslint-disable-next-line
-                    const subTerms = setComparator(terms[i].rolls[j].terms, --r);
+                    const subTerms = setComparator(terms[i].rolls[j].terms, oper, --r);
                     if (subTerms) terms[i].rolls[j] = Roll.fromTerms(Roll.simplifyTerms(subTerms));
                 }
                 const {modifiers} = terms[i];

@@ -21,6 +21,15 @@ export class HMStates {
             CONFIG.statusEffects.push(effect);
         });
     }
+
+    static async unsetStatusEffect(token, id) {
+        const effects = token.actor.effects;
+        const effect = effects.find((x) => x.getFlag('core', 'statusId') === id);
+        if (effect && !effect.disabled) {
+            const idx = CONFIG.statusEffects.findIndex((x) => x.id === id);
+            await token.toggleActiveEffect(CONFIG.statusEffects[idx]);
+        }
+    }
 }
 
 export class HMActiveEffect extends ActiveEffect {

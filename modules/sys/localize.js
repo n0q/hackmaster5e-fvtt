@@ -90,6 +90,7 @@ idx.special = {
     [HMCONST.SPECIAL.SCAMPER]:    'EFFECT.scamper',
     [HMCONST.SPECIAL.GGROUND]:    'EFFECT.gground',
     [HMCONST.SPECIAL.FULLPARRY]:  'EFFECT.fullparry',
+    [HMCONST.SPECIAL.AGGRESSIVE]: 'EFFECT.aggressive',
 };
 
 idx.size = {

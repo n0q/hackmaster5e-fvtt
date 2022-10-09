@@ -177,15 +177,21 @@ export async function advanceClock(comData, dialogResp, smartInit=false) {
     await ChatMessage.create(initChatCard);
 }
 
-export async function setStatusEffectOnToken(comData, effect, rounds) {
+export async function setStatusEffectOnToken(comData, effect, rounds=null) {
     const {active} = game.combats;
     const {combatant} = comData;
     const combatToken = canvas.scene.tokens.get(combatant.tokenId);
-    const duration = {
+    const duration = rounds ? {
         combat: active.id,
         startRound: active.round,
         rounds,
         type: 'rounds',
-    };
+        } : null;
     await HMStates.setStatusEffect(combatToken, effect, duration);
+}
+
+export async function unsetStatusEffectOnToken(comData, effect) {
+    const {combatant} = comData;
+    const combatToken = canvas.scene.tokens.get(combatant.tokenId);
+    await HMStates.unsetStatusEffect(combatToken, effect);
 }

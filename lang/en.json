@@ -384,6 +384,7 @@
 
         "adjective":    "Adjective",
         "age":          "Age",
+        "aggressive":   "Aggressive",
         "aim":          "Aim",
         "alert":        "Alert",
         "alignment":    "Alignment",
@@ -572,6 +573,7 @@
     },
     
     "EFFECT": {
+        "aggressive":   "Aggressive Attack",
         "fullparry":    "Full Parry",
         "gground":      "Give Ground",
         "scamper":      "Scamper Back",

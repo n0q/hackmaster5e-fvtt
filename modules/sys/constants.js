@@ -72,6 +72,7 @@ export const HMCONST = {
         FLEEING:     3,
         FULLPARRY:   4,
         SET4CHARGE:  5,
+        AGGRESSIVE: 16,
         DEFEND:     64,
         GGROUND:    65,
         SCAMPER:    66,
@@ -296,9 +297,10 @@ export const HMTABLES = {
             'init': {value: null},
         },
     },
-    'formula': {
-        'atk': {
-            'standard': 'd20p + @bonus.total.atk + @resp.bonus',
+    formula: {
+        atk: {
+            [HMCONST.SPECIAL.STANDARD]:   'd20p + @bonus.total.atk +     @resp.bonus',
+            [HMCONST.SPECIAL.AGGRESSIVE]: 'd20p + @bonus.total.atk + 5 + @resp.bonus',
         },
         'dmg': {
             'standard':    '@dmg.normal + @bonus.total.dmg + @resp.bonus',
@@ -308,7 +310,7 @@ export const HMTABLES = {
             'bstab':       '@dmg.normal + @bonus.total.dmg + @actorbonus.total.back + @resp.bonus',
             'shieldbstab': '@dmg.shield + @bonus.total.dmg + @actorbonus.total.back + @resp.bonus',
         },
-        'def': {
+        def: {
             [HMCONST.SPECIAL.DEFEND]:  'd20p + @bonus.total.def     + @resp.bonus',
             [HMCONST.SPECIAL.SCAMPER]: 'd20p + @bonus.total.def + 5 + @resp.bonus',
             [HMCONST.SPECIAL.GGROUND]: 'd20p + @bonus.total.def + 5 + @resp.bonus',
@@ -395,6 +397,13 @@ export const HMTABLES = {
         },
     },
     statusEffects: {
+        aggressive: {
+            label: 'EFFECT.aggressive',
+            icon: 'systems/hackmaster5e/styles/icons/saber-slash.svg',
+            changes: [
+                {key: 'system.bonus.state.def', value: '-2', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+            ],
+        },
         fullparry: {
             label: 'EFFECT.fullparry',
             icon: 'systems/hackmaster5e/styles/icons/sword-clash.svg',

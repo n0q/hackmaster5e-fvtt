@@ -1,5 +1,5 @@
 import { HMTABLES, HMCONST } from '../sys/constants.js';
-import { HMItem, advanceClock, setStatusEffectOnToken } from './item.js';
+import { HMItem, advanceClock, setStatusEffectOnToken, unsetStatusEffectOnToken } from './item.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
 import { HMRollMgr } from '../mgr/rollmgr.js';
@@ -136,7 +136,7 @@ export class HMWeaponItem extends HMItem {
         const capsArr = Object.keys(caps).filter((key) => caps[key].checked).map((x) => Number(x));
         capsArr.push(...[SPECIAL.STANDARD, SPECIAL.DEFEND, SPECIAL.GGROUND, SPECIAL.SCAMPER]);
         if (jab.checked) capsArr.push(SPECIAL.JAB);
-        if (!ranged.checked) capsArr.push(SPECIAL.FULLPARRY);
+        if (!ranged.checked) capsArr.push(...[SPECIAL.FULLPARRY, SPECIAL.AGGRESSIVE]);
         return capsArr.sort();
     }
 
@@ -175,11 +175,13 @@ export class HMWeaponItem extends HMItem {
         }
 
         const dialog = 'atk';
-        const formulaType = 'standard';
-        const dataset = {dialog, formulaType, itemId: weapon};
-
+        const dataset = {dialog, itemId: weapon};
         const dialogMgr = new HMDialogMgr();
         const dialogResp = await dialogMgr.getDialog(dataset, actor, opt);
+
+        const {specialMove} = dialogResp.resp;
+        const {atk} = HMTABLES.formula;
+        dataset.formula = specialMove < 16 ? atk[HMCONST.SPECIAL.STANDARD] : atk[specialMove];
 
         const ranged = dialogResp.context.system.ranged.checked;
         if (ranged) dataset.dialog = 'ratk';
@@ -196,8 +198,17 @@ export class HMWeaponItem extends HMItem {
 
         if (dialogResp.resp.advance) await advanceClock(comData, dialogResp, true);
 
-        if (opt.isCombatant && dialogResp.resp.specialMove === HMCONST.SPECIAL.FULLPARRY) {
-            setStatusEffectOnToken(comData, 'fullparry', dialogResp.resp.advance);
+        if (opt.isCombatant) {
+            unsetStatusEffectOnToken(comData, 'gground');
+            unsetStatusEffectOnToken(comData, 'scamper');
+
+            if (dialogResp.resp.specialMove === HMCONST.SPECIAL.FULLPARRY) {
+                setStatusEffectOnToken(comData, 'fullparry', dialogResp.resp.advance);
+            }
+
+            if (dialogResp.resp.specialMove === HMCONST.SPECIAL.AGGRESSIVE) {
+                setStatusEffectOnToken(comData, 'aggressive');
+            }
         }
     }
 
@@ -272,12 +283,16 @@ export class HMWeaponItem extends HMItem {
         const card = await chatMgr.getCard({roll, dataset, dialogResp});
         await ChatMessage.create(card);
 
-        if (opt.isCombatant && dialogResp.resp.specialMove === HMCONST.SPECIAL.GGROUND) {
-            setStatusEffectOnToken(comData, 'gground', dialogResp.resp.duration);
-        }
+        if (opt.isCombatant) {
+            unsetStatusEffectOnToken(comData, 'aggressive');
 
-        if (opt.isCombatant && dialogResp.resp.specialMove === HMCONST.SPECIAL.SCAMPER) {
-            setStatusEffectOnToken(comData, 'scamper', dialogResp.resp.duration);
+            if (dialogResp.resp.specialMove === HMCONST.SPECIAL.GGROUND) {
+                setStatusEffectOnToken(comData, 'gground');
+            }
+
+            if (dialogResp.resp.specialMove === HMCONST.SPECIAL.SCAMPER) {
+                setStatusEffectOnToken(comData, 'scamper');
+            }
         }
     }
 }
