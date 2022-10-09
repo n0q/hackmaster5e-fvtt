@@ -130,11 +130,17 @@
         },
 
         "specSelect": {
-            "def":  "Standard Defense",
-            "jab":  "Jab Attack",
-            "flee": "Fleeing Opponent",
-            "stab": "Backstab",
-            "std":  "Standard Attack"
+            "agg":      "Aggressive Attack",
+            "def":      "Standard Defense",
+            "jab":      "Jab Attack",
+            "flee":     "Fleeing Opponent",
+            "fparry":   "Full Parry",
+            "ggnd":     "Give Ground",
+            "s4c":      "Set for Charge",
+            "sback":    "Scamper Back",
+            "sfatigue": "Spell Fatigue",
+            "stab":     "Backstab",
+            "std":      "Standard Attack"
         },
 
         "statbonus": {
@@ -383,6 +389,7 @@
 
         "adjective":    "Adjective",
         "age":          "Age",
+        "aggressive":   "Aggressive",
         "aim":          "Aim",
         "alert":        "Alert",
         "alignment":    "Alignment",
@@ -401,6 +408,7 @@
         "bonus":        "Bonus",
         "body":         "Body",
         "bmi":          "BMI",
+        "brace":        "Brace",
         "carried":      "Carried",
         "cast":         "Cast",
         "catalyst":     "Catalyst",
@@ -527,6 +535,7 @@
         "seconds":      "Seconds",
         "setup":        "Setup",
         "sex":          "Sex",
+        "s4c":          "Set for Charge",
         "size":         "Size",
         "shield":       "Shield",
         "speed":        "Speed",
@@ -569,10 +578,11 @@
     },
     
     "EFFECT": {
-        "fullparry":    "Full Parry",
-        "gground":      "Give Ground",
-        "scamper":      "Scamper Back",
-        "sfatigue":     "Spell Fatigue"
+        "aggressive":   "Aggressively Attacked",
+        "fullparry":    "Full Parried",
+        "gground":      "Gave Ground",
+        "scamper":      "Scampered Back",
+        "sfatigue":     "Spell Fatigued"
     },
 
     "dragRuler": {

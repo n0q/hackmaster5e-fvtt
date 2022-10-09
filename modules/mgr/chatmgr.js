@@ -1,5 +1,5 @@
 import { HMTABLES, HMCONST } from '../sys/constants.js';
-import { idx } from '../sys/localize.js';
+import { idx } from '../sys/dictionary.js';
 
 function getDiceSum(roll) {
     let sum = 0;
@@ -151,11 +151,13 @@ function getSpecialMoveFlavor(resp) {
     const mods = [];
     const {specialMove, shieldHit} = resp;
     const {SPECIAL} = HMCONST;
+    if (specialMove === SPECIAL.AGGRESSIVE) mods.push(game.i18n.localize('HM.aggressive'));
     if (specialMove === SPECIAL.BACKSTAB) mods.push(game.i18n.localize('HM.backstab'));
     if (specialMove === SPECIAL.FLEEING) mods.push(game.i18n.localize('HM.fleeing'));
     if (specialMove === SPECIAL.GGROUND) mods.push(game.i18n.localize('EFFECT.gground'));
     if (specialMove === SPECIAL.JAB) mods.push(game.i18n.localize('HM.jab'));
     if (specialMove === SPECIAL.SCAMPER) mods.push(game.i18n.localize('EFFECT.scamper'));
+    if (specialMove === SPECIAL.SET4CHARGE) mods.push(game.i18n.localize('HM.specSelect.s4c'));
     if (shieldHit) mods.push(game.i18n.localize('HM.blocked'));
     return mods.length ? ` (${mods.join(', ')})` : '';
 }

@@ -56,7 +56,6 @@ export default function preloadHandlebarsTemplates() {
 
         'systems/hackmaster5e/templates/dialog/getAbility.hbs',
         'systems/hackmaster5e/templates/dialog/getAttack.hbs',
-        'systems/hackmaster5e/templates/dialog/getCast.hbs',
         'systems/hackmaster5e/templates/dialog/cast.hbs',
         'systems/hackmaster5e/templates/dialog/getDamage.hbs',
         'systems/hackmaster5e/templates/dialog/getDefend.hbs',

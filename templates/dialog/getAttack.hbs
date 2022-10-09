@@ -49,6 +49,19 @@
                 {{#if (and advance inCombat)}}<sub>{{spd.shoot}}</sub>{{/if}}
             </span>
         </button>
+        {{else if (eq SPECIAL.SET4CHARGE specialMove)}}
+        <button type='submit' class='dialog-button normal default' data-button='declare'>
+            <span class='hm-clock'>
+                <label>{{localize 'HM.brace'}}</label>
+                {{#if (and advance inCombat)}}<sub>{{spd.declare}}</sub>{{/if}}
+            </span>
+        </button>
+        <button type='submit' class='dialog-button normal default' data-button='shoot'>
+            <span class='hm-clock'>
+                <label>{{localize 'HM.attack'}}</label>
+                {{#if (and advance inCombat)}}<sub>{{spd.melee}}</sub>{{/if}}
+            </span>
+        </button>
         {{else if (eq SPECIAL.FULLPARRY specialMove)}}
         <button type='submit' class='dialog-button normal default' data-button='declare'>
             <span class='hm-clock'>
