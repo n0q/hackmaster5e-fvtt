@@ -45,7 +45,7 @@
     </summary>
     <article class='hide' toggle>
     {{#if system.language}}
-        <div class='form-group'>
+        <div class='form-group' style='gap: 10px;'>
             <label>{{localize 'HM.literacy'}}:</label>
             <input class='editable' type='number' value='{{system.bonus.mastery.literacy}}'
                 data-item-prop='system.bonus.mastery.literacy'
@@ -69,7 +69,7 @@
     {{#if system.specialty.checked}}
         <div class='form-group'>
             <label>{{localize 'HM.specialty'}}:</label>
-            <input class='editable' type='text' value='{{system.specialty.value}}'
+            <input class='editable' type='text' value='{{system.specialty.value}}' style='max-width: unset;'
                 data-item-prop='system.specialty.value'
                 data-dtype='String'
             />
