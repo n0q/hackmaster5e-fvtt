@@ -43,4 +43,10 @@ export class HMActiveEffect extends ActiveEffect {
         }
         return d;
     }
+
+     static async applyActiveEffect(actor, change, current, mdelta, changes) {
+         const delta = HMTABLES.c_effect[mdelta](actor);
+         const update = current + delta;
+         changes[change.key] = update;
+     }
 }

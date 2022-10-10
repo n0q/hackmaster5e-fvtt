@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 ### Added
 - Fighting Withdrawl special move.
+- Charge status effect/special move.
 ### Changed
 - Improved formatting on dialog forms.
 
@@ -12,7 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - Compendium items.
 - Set for Charge weapon capability.
-- Aggressive Attack status effect.
+- Aggressively Attacked status effect/special move.
 ### Changed
 - Added Set for Charge capability to compendium weapons.
 - Status effect names are in past tense.
@@ -21,8 +22,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [0.2.18] - 2022-09-26
 ### Added
 - Compendium items.
-- Give Ground status effect.
-- Scamper Back status effect.
+- Give Ground status effect/special move.
+- Scamper Back status effect/special move.
 ### Changed
 - Magic always uses combat encounter's round for timing purposes.
 - Spell chat cards are more explicit about weapon resets.
@@ -31,7 +32,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - Compendium items.
 - Spell Fatigue status effect.
-- Full Parry status effect.
+- Full Parry status effect/special move.
 - Status effects auto apply/delete.
 ### Fixed
 - Weapon capabilities could bleed to other weapons under certain circumstances.

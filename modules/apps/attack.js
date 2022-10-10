@@ -43,6 +43,7 @@ export class AttackPrompt extends HMPrompt {
             range: 0,
             advance: dialogData.inCombat,
             SPECIAL: HMCONST.SPECIAL,
+            charge: HMCONST.SPECIAL.CHARGE4,
         });
     }
 
@@ -64,12 +65,15 @@ export class AttackPrompt extends HMPrompt {
     }
 
     get dialogResp() {
-        const {button, spd} = this.dialogData;
+        const {button, charge, spd, widx} = this.dialogData;
+        let specialMove = Number(this.dialogData.specialMove);
+        if (specialMove === HMCONST.SPECIAL.CHARGE) specialMove = Number(charge);
+
         const dialogResp = {
-            widx: this.dialogData.widx,
-            specialMove: Number(this.dialogData.specialMove),
+            widx,
+            specialMove,
             range: Number(this.dialogData.range),
-            bonus: parseInt(this.dialogData.bonus, 10) || 0,
+            bonus: Number(this.dialogData.bonus) || 0,
             advance: this.dialogData.advance ? spd[button] : false,
             button,
         };

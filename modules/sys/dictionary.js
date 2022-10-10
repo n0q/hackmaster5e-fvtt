@@ -92,6 +92,7 @@ idx.special = {
     [HMCONST.SPECIAL.FULLPARRY]:  'HM.specSelect.fparry',
     [HMCONST.SPECIAL.AGGRESSIVE]: 'HM.specSelect.agg',
     [HMCONST.SPECIAL.WITHDRAWL]:  'HM.specSelect.wdrawl',
+    [HMCONST.SPECIAL.CHARGE]:     'HM.specSelect.charge',
 };
 
 idx.size = {
@@ -208,6 +209,11 @@ idx.dice = {
     '1d6':  'd6',
     '1d4':  'd4',
     '1d3':  'd3',
+};
+
+idx.chargeSpd = {
+    [HMCONST.SPECIAL.CHARGE2]: 'HM.slow',
+    [HMCONST.SPECIAL.CHARGE4]: 'HM.fast',
 };
 
 idx.range = {

@@ -57,6 +57,7 @@ export class HMCharacterActor extends HMActor {
         const abilityBonus = {};
 
         for (const statName in aData) {
+            // TODO: Convert this into a function, as it's also used in HMTABLES.
             const clamp = HMTABLES.abilitymods.clamp[statName];
             const statDerived = aData[statName].value + aData[statName].fvalue / 100;
             const statAdj = Math.clamped(statDerived, clamp.min, clamp.max);

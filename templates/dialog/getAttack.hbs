@@ -17,8 +17,13 @@
         <span class='form-group'>
             {{#if ranged}}
             <label>{{localize 'HM.dialog.getAttackRangeBody'}}</label>
-            <select name='range' class='bind' data-prop='range' data-render=true>
-            {{selectOptions (findConfigObj 'range') selected=range localize=true}}
+            <select name='range' class='bind' data-prop='range' data-render=true style='max-width: 4em;'>
+                {{selectOptions (findConfigObj 'range') selected=range localize=true}}
+            </select>
+            {{else if (eq SPECIAL.CHARGE specialMove)}}
+            <label>{{localize 'HM.dialog.getChargeSpdBody'}}</label>
+            <select name='charge' class='bind' data-prop='charge' data-render=true>
+                {{selectOptions (findConfigObj 'chargeSpd') selected=charge localize=true}}
             </select>
             {{/if}}
         </span>

@@ -134,9 +134,9 @@ export class HMWeaponItem extends HMItem {
         const {SPECIAL} = HMCONST;
         const {caps, jab, ranged} = this.system;
         const capsArr = Object.keys(caps).filter((key) => caps[key].checked).map((x) => Number(x));
-        capsArr.push(...[SPECIAL.STANDARD, SPECIAL.DEFEND, SPECIAL.GGROUND, SPECIAL.SCAMPER]);
+        capsArr.push(...HMTABLES.weapons.caps.std);
         if (jab.checked) capsArr.push(SPECIAL.JAB);
-        if (!ranged.checked) capsArr.push(...[SPECIAL.FULLPARRY, SPECIAL.AGGRESSIVE, SPECIAL.WITHDRAWL]);
+        if (!ranged.checked) capsArr.push(...HMTABLES.weapons.caps.melee);
         return capsArr.sort();
     }
 
@@ -202,12 +202,17 @@ export class HMWeaponItem extends HMItem {
             unsetStatusEffectOnToken(comData, 'gground');
             unsetStatusEffectOnToken(comData, 'scamper');
 
-            if (dialogResp.resp.specialMove === HMCONST.SPECIAL.FULLPARRY) {
+            const {SPECIAL} = HMCONST;
+            if (specialMove === SPECIAL.FULLPARRY) {
                 setStatusEffectOnToken(comData, 'fullparry', dialogResp.resp.advance);
             }
 
-            if (dialogResp.resp.specialMove === HMCONST.SPECIAL.AGGRESSIVE) {
+            if (specialMove === SPECIAL.AGGRESSIVE) {
                 setStatusEffectOnToken(comData, 'aggressive');
+            }
+
+            if (specialMove === SPECIAL.CHARGE2 || specialMove === SPECIAL.CHARGE4) {
+                setStatusEffectOnToken(comData, 'charge', 5);
             }
         }
     }

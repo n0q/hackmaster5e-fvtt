@@ -131,6 +131,7 @@
 
         "specSelect": {
             "agg":      "Aggressive Attack",
+            "charge":   "Charge",
             "def":      "Standard Defense",
             "jab":      "Jab Attack",
             "flee":     "Fleeing Opponent",
@@ -217,6 +218,7 @@
             "getAbilityButtonL": "Ability Save",
             "getAbilityButtonR": "Ability Check",
             "getCastTitle":      "Cast a Spell",
+            "getChargeSpdBody":  "Speed",
             "getDamageTitle":    "Roll for Damage",
             "getDefendTitle":    "Roll a Defense",
             "getSaveTitle":      "Save",
@@ -413,6 +415,7 @@
         "carried":      "Carried",
         "cast":         "Cast",
         "catalyst":     "Catalyst",
+        "charged":      "Charged",
         "check":        "Check",
         "class":        "Class",
         "clerical":     "Clerical",
@@ -452,6 +455,7 @@
         "failure":      "Failure",
         "fame":         "Fame",
         "family":       "Family",
+        "fast":         "Fast",
         "fatigue":      "Fatigue",
         "feat":         "Feat",
         "fire":         "Fire",
@@ -539,6 +543,7 @@
         "s4c":          "Set for Charge",
         "size":         "Size",
         "shield":       "Shield",
+        "slow":         "Slow",
         "speed":        "Speed",
         "spell":        "Spell",
         "spells":       "Spells",
@@ -580,6 +585,7 @@
     
     "EFFECT": {
         "aggressive":   "Aggressively Attacked",
+        "charge":       "Charged",
         "fullparry":    "Full Parried",
         "gground":      "Gave Ground",
         "scamper":      "Scampered Back",

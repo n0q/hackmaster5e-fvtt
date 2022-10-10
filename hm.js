@@ -59,6 +59,7 @@ Hooks.once('ready', async () => {
 Hooks.once('setup', HMStates.setupStatusEffects);
 Hooks.once('devModeReady', HMSupport.devModeReady);
 Hooks.once('dragRuler.ready', HMSupport.dragRuler_ready);
+Hooks.on('applyActiveEffect', HMActiveEffect.applyActiveEffect);
 Hooks.on('createActor', HMActor.createActor);
 Hooks.on('createToken', HMActor.createToken);
 Hooks.on('createItem', HMItem.createItem);
