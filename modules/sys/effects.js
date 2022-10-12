@@ -14,7 +14,7 @@ export class HMStates {
     }
 
     static async setupStatusEffects() {
-        const {statusEffects} = HMTABLES;
+        const {statusEffects} = HMTABLES.effects;
         Object.keys(statusEffects).forEach((key) => {
             const effect = statusEffects[key];
             effect.id = key;
@@ -27,6 +27,7 @@ export class HMStates {
         const effect = effects.find((x) => x.getFlag('core', 'statusId') === id);
         if (effect && !effect.disabled) {
             const idx = CONFIG.statusEffects.findIndex((x) => x.id === id);
+            await effect.update({disabled: true});
             await token.toggleActiveEffect(CONFIG.statusEffects[idx]);
         }
     }
@@ -44,9 +45,21 @@ export class HMActiveEffect extends ActiveEffect {
         return d;
     }
 
-     static async applyActiveEffect(actor, change, current, mdelta, changes) {
-         const delta = HMTABLES.c_effect[mdelta](actor);
-         const update = current + delta;
-         changes[change.key] = update;
-     }
+    static async applyActiveEffect(actor, change, current, mdelta, changes) {
+        const delta = HMTABLES.c_effect[mdelta](actor);
+        const update = current + delta;
+        changes[change.key] = update; // eslint-disable-line
+    }
+
+    // Enforces exclusivity if effects are manually set by the user.
+    static async createActiveEffect(obj) {
+        const {statusId} = obj.flags.core;
+        const exclusiveEffects = [...HMTABLES.effects.exclusiveEffects];
+        const idx = exclusiveEffects.indexOf(statusId);
+        if (idx !== -1) {
+            exclusiveEffects.splice(idx, 1);
+            const token = await obj.parent.getTokenDocument();
+            exclusiveEffects.forEach((effect) => HMStates.unsetStatusEffect(token, effect));
+        }
+    }
 }

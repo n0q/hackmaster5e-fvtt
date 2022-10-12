@@ -72,6 +72,14 @@
             "back": "Backstab"
         },
 
+        "defenseSelect": {
+            "defense0":     "Standard",
+            "defense1":     "+1 / -2 ATK",
+            "defense2":     "+2 / -4 ATK",
+            "defense3":     "+3 / -6 ATK",
+            "defense4":     "+4 / -8 ATK"
+        },
+
         "handednessSelect": {
             "right":        "Right",
             "left":         "Left",
@@ -439,6 +447,7 @@
         "declare":      "Declare",
         "defend":       "Defend",
         "defense":      "Defense",
+        "defensive":    "Defensive",
         "defmod":       "Def Mod",
         "deity":        "Deity",
         "description":  "Description",
@@ -586,6 +595,10 @@
     "EFFECT": {
         "aggressive":   "Aggressively Attacked",
         "charge":       "Charged",
+        "defense1":     "Defensively Fighting +1",
+        "defense2":     "Defensively Fighting +2",
+        "defense3":     "Defensively Fighting +3",
+        "defense4":     "Defensively Fighting +4",
         "fullparry":    "Full Parried",
         "gground":      "Gave Ground",
         "scamper":      "Scampered Back",

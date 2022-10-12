@@ -216,6 +216,14 @@ idx.chargeSpd = {
     [HMCONST.SPECIAL.CHARGE4]: 'HM.fast',
 };
 
+idx.defense = {
+    [HMCONST.DEFENSE.DEFENSE0]: 'HM.defenseSelect.defense0',
+    [HMCONST.DEFENSE.DEFENSE1]: 'HM.defenseSelect.defense1',
+    [HMCONST.DEFENSE.DEFENSE2]: 'HM.defenseSelect.defense2',
+    [HMCONST.DEFENSE.DEFENSE3]: 'HM.defenseSelect.defense3',
+    [HMCONST.DEFENSE.DEFENSE4]: 'HM.defenseSelect.defense4',
+};
+
 idx.range = {
     0: 'HM.rangeSelect.short',
     4: 'HM.rangeSelect.medium',

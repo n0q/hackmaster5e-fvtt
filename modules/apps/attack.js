@@ -17,6 +17,14 @@ function getSpeed(ranged, wData, specialMove=0) {
     };
 }
 
+function getDefense(effects) {
+    if (!effects) return HMCONST.DEFENSE.DEFENSE0;
+    const dList = Object.values(HMTABLES.effects.defense);
+    const fxSet = new Set(effects.map((fx) => fx.getFlag('core', 'statusId')));
+    const [dKey] = new Set([...(new Set(dList))].filter((x) => fxSet.has(x)));
+    return dList.indexOf(dKey) + 1;
+}
+
 export class AttackPrompt extends HMPrompt {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
@@ -29,6 +37,7 @@ export class AttackPrompt extends HMPrompt {
         super(dialogData, options);
         const weapon = dialogData.weapons[0];
         const capList = this.getCapList(weapon, dialogData?.caller);
+        const defense = getDefense(dialogData?.caller.effects);
 
         const wData = weapon.system;
         const ranged = wData.ranged.checked;
@@ -37,6 +46,7 @@ export class AttackPrompt extends HMPrompt {
         mergeObject(this.dialogData, {
             capList,
             specialMove: 0,
+            defense,
             ranged,
             spd,
             widx: 0,
@@ -72,6 +82,7 @@ export class AttackPrompt extends HMPrompt {
         const dialogResp = {
             widx,
             specialMove,
+            defense: Number(this.dialogData.defense),
             range: Number(this.dialogData.range),
             bonus: Number(this.dialogData.bonus) || 0,
             advance: this.dialogData.advance ? spd[button] : false,

@@ -19,6 +19,13 @@ export const HMCONST = {
     C_EFFECT_TYPE: {
         NO_DEXDEF: 0,
     },
+    DEFENSE: {
+        DEFENSE0: 0,
+        DEFENSE1: 1,
+        DEFENSE2: 2,
+        DEFENSE3: 3,
+        DEFENSE4: 4,
+    },
     ITEM_STATE: {
         OWNED:    0,
         CARRIED:  1,
@@ -57,6 +64,12 @@ export const HMCONST = {
             DRAW:    3,
             FIRE:    4,
         },
+    },
+    FORMULA_MOD: {
+        STANDARD:       0,
+        BACKSTAB:       1,
+        DOUBLE:         2,
+        NOPENETRATE:    3,
     },
     SCALE: {
         TINY:     1,
@@ -406,49 +419,96 @@ export const HMTABLES = {
             'trivial':      -90,
         },
     },
-    statusEffects: {
-        aggressive: {
-            label: 'EFFECT.aggressive',
-            icon: 'systems/hackmaster5e/styles/icons/saber-slash.svg',
-            changes: [
-                {key: 'system.bonus.state.def', value: '-2', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
-            ],
+    effects: {
+        defense: {
+            [HMCONST.DEFENSE.DEFENSE1]: 'defense1',
+            [HMCONST.DEFENSE.DEFENSE2]: 'defense2',
+            [HMCONST.DEFENSE.DEFENSE3]: 'defense3',
+            [HMCONST.DEFENSE.DEFENSE4]: 'defense4',
         },
-        charge: {
-            label: 'EFFECT.charge',
-            icon: 'systems/hackmaster5e/styles/icons/shield-bash.svg',
-            changes: [
-                {key: 'system.bonus.state.def', value: HMCONST.C_EFFECT_TYPE.NO_DEXDEF, mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM},
-            ],
-        },
-        fullparry: {
-            label: 'EFFECT.fullparry',
-            icon: 'systems/hackmaster5e/styles/icons/sword-clash.svg',
-            changes: [
-                {key: 'system.bonus.state.def', value: '5', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
-            ],
-        },
-        gground: {
-            label: 'EFFECT.gground',
-            icon: 'systems/hackmaster5e/styles/icons/swordman.svg',
-            changes: [
-                {key: 'system.bonus.state.atk', value: '-1', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
-            ],
-        },
-        scamper: {
-            label: 'EFFECT.scamper',
-            icon: 'systems/hackmaster5e/styles/icons/dodging.svg',
-            changes: [
-                {key: 'system.bonus.state.atk', value: '-4', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
-            ],
-        },
-        sfatigue: {
-            label: 'EFFECT.sfatigue',
-            icon: 'systems/hackmaster5e/styles/icons/stoned-skull.svg',
-            changes: [
-                {key: 'system.bonus.state.def',    value: '-6',  mode: CONST.ACTIVE_EFFECT_MODES.ADD},
-                {key: 'system.bonus.state.skills', value: '-30', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
-            ],
+        exclusiveEffects: [
+            'defense1',
+            'defense2',
+            'defense3',
+            'defense4',
+            'fullparry',
+        ],
+        statusEffects: {
+            defense1: {
+                label: 'EFFECT.defense1',
+                icon: 'systems/hackmaster5e/styles/icons/swords-emblem1.svg',
+                changes: [
+                    {key: 'system.bonus.state.def', value:  '1', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                    {key: 'system.bonus.state.atk', value: '-2', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                ],
+            },
+            defense2: {
+                label: 'EFFECT.defense2',
+                icon: 'systems/hackmaster5e/styles/icons/swords-emblem2.svg',
+                changes: [
+                    {key: 'system.bonus.state.def', value:  '2', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                    {key: 'system.bonus.state.atk', value: '-4', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                ],
+            },
+            defense3: {
+                label: 'EFFECT.defense3',
+                icon: 'systems/hackmaster5e/styles/icons/swords-emblem3.svg',
+                changes: [
+                    {key: 'system.bonus.state.def', value:  '3', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                    {key: 'system.bonus.state.atk', value: '-6', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                ],
+            },
+            defense4: {
+                label: 'EFFECT.defense4',
+                icon: 'systems/hackmaster5e/styles/icons/swords-emblem4.svg',
+                changes: [
+                    {key: 'system.bonus.state.def', value:  '4', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                    {key: 'system.bonus.state.atk', value: '-8', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                ],
+            },
+            aggressive: {
+                label: 'EFFECT.aggressive',
+                icon: 'systems/hackmaster5e/styles/icons/saber-slash.svg',
+                changes: [
+                    {key: 'system.bonus.state.def', value: '-2', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                ],
+            },
+            charge: {
+                label: 'EFFECT.charge',
+                icon: 'systems/hackmaster5e/styles/icons/shield-bash.svg',
+                changes: [
+                    {key: 'system.bonus.state.def', value: HMCONST.C_EFFECT_TYPE.NO_DEXDEF, mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM},
+                ],
+            },
+            fullparry: {
+                label: 'EFFECT.fullparry',
+                icon: 'systems/hackmaster5e/styles/icons/sword-clash.svg',
+                changes: [
+                    {key: 'system.bonus.state.def', value: '5', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                ],
+            },
+            gground: {
+                label: 'EFFECT.gground',
+                icon: 'systems/hackmaster5e/styles/icons/swordman.svg',
+                changes: [
+                    {key: 'system.bonus.state.atk', value: '-1', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                ],
+            },
+            scamper: {
+                label: 'EFFECT.scamper',
+                icon: 'systems/hackmaster5e/styles/icons/dodging.svg',
+                changes: [
+                    {key: 'system.bonus.state.atk', value: '-4', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                ],
+            },
+            sfatigue: {
+                label: 'EFFECT.sfatigue',
+                icon: 'systems/hackmaster5e/styles/icons/stoned-skull.svg',
+                changes: [
+                    {key: 'system.bonus.state.def',    value: '-6',  mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                    {key: 'system.bonus.state.skills', value: '-30', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                ],
+            },
         },
     },
     c_effect: {

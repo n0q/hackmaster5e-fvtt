@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - Fighting Withdrawl special move.
 - Charge status effect/special move.
+- Defensive Fighting status effect.
 ### Changed
 - Improved formatting on dialog forms.
 
@@ -15,7 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Set for Charge weapon capability.
 - Aggressively Attacked status effect/special move.
 ### Changed
-- Added Set for Charge capability to compendium weapons.
+- Set for Charge capability set on weapons compendium.
 - Status effect names are in past tense.
 - Gave Ground and Scampered Back toggle off after actor makes an attack.
 
@@ -43,7 +44,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Fixed
 - Character class hp reroll tracking (v10 regression)
 
-## [0.2.15] - 2022-09-04
+## [0.2.15] - 2022-09-04 [YANKED]
 ### Added
 - Compendium items.
 - Foundry v10 API support.
@@ -136,7 +137,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Fixed
 - Spellcast ui regression.
 
-## [0.2.6] - 2022-04-27
+## [0.2.6] - 2022-04-27 [YANKED]
 ### Added
 - Can specify skill check difficulty.
 - Language hotbar macros.

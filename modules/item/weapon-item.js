@@ -3,6 +3,7 @@ import { HMItem, advanceClock, setStatusEffectOnToken, unsetStatusEffectOnToken 
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
 import { HMRollMgr } from '../mgr/rollmgr.js';
+// import { HMStates } from '../sys/effects.js';
 
 export class HMWeaponItem extends HMItem {
     get minspd() {
@@ -179,12 +180,24 @@ export class HMWeaponItem extends HMItem {
         const dialogMgr = new HMDialogMgr();
         const dialogResp = await dialogMgr.getDialog(dataset, actor, opt);
 
-        const {specialMove} = dialogResp.resp;
+        const {specialMove, defense} = dialogResp.resp;
         const {atk} = HMTABLES.formula;
         dataset.formula = specialMove < 16 ? atk[HMCONST.SPECIAL.STANDARD] : atk[specialMove];
 
         const ranged = dialogResp.context.system.ranged.checked;
         if (ranged) dataset.dialog = 'ratk';
+
+        const {SPECIAL} = HMCONST;
+
+        // Full Parry, Defensive Fighting exclusivity.
+        specialMove === SPECIAL.FULLPARRY
+            ? setStatusEffectOnToken(comData, 'fullparry', dialogResp.resp.advance)
+            : await unsetStatusEffectOnToken(comData, 'fullparry');
+
+        const dList = Object.values(HMTABLES.effects.defense);
+        if (defense) dList.splice(defense -1, 1);
+        for (let i = 0; i < dList.length; i++) await unsetStatusEffectOnToken(comData, dList[i]);
+        if (defense) await setStatusEffectOnToken(comData, HMTABLES.effects.defense[defense]);
 
         let roll;
         if (dialogResp.resp.button !== 'declare') {
@@ -201,11 +214,6 @@ export class HMWeaponItem extends HMItem {
         if (opt.isCombatant) {
             unsetStatusEffectOnToken(comData, 'gground');
             unsetStatusEffectOnToken(comData, 'scamper');
-
-            const {SPECIAL} = HMCONST;
-            if (specialMove === SPECIAL.FULLPARRY) {
-                setStatusEffectOnToken(comData, 'fullparry', dialogResp.resp.advance);
-            }
 
             if (specialMove === SPECIAL.AGGRESSIVE) {
                 setStatusEffectOnToken(comData, 'aggressive');
