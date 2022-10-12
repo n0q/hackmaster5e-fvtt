@@ -23,7 +23,10 @@ export class DamagePrompt extends HMPrompt {
 
     getCapList(weapon, actor=null) {
         const capsObj = super.getCapList(weapon, actor);
+        delete capsObj[HMCONST.SPECIAL.AGGRESSIVE];
         delete capsObj[HMCONST.SPECIAL.FULLPARRY];
+        delete capsObj[HMCONST.SPECIAL.WITHDRAWL];
+        delete capsObj[HMCONST.SPECIAL.CHARGE];
         return capsObj;
     }
 
@@ -57,6 +60,7 @@ export class DamagePrompt extends HMPrompt {
         const dialogResp = {
             widx: this.dialogData.widx,
             bonus: parseInt(this.dialogData.bonus, 10) || 0,
+            defense: this.dialogData?.caller.fightingDefensively,
             specialMove,
             shieldHit,
             formulaType,

@@ -1,3 +1,11 @@
+.form-group {
+    input[type="text"],
+    input[type="number"] {
+        max-width: 4em;
+        text-align: right;
+    }
+}
+
 .item-form {
     font-family: $font-primary;
     display: grid;
@@ -144,7 +152,4 @@
             }
         }
     }
-
-
-
 }

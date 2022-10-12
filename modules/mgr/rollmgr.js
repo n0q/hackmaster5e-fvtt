@@ -1,6 +1,7 @@
 import { HMTABLES, HMCONST } from '../sys/constants.js';
 
 function convertDamageFormula(stringTerms, operation=null) {
+    const {FORMULA_MOD} = HMCONST;
     const setComparator = (sterms, oper, r=5) => {
         if (r < 0) return;
 
@@ -20,10 +21,13 @@ function convertDamageFormula(stringTerms, operation=null) {
 
             if (!terms[i].isDeterministic && terms[i].faces) {
                 const {faces, modifiers} = terms[i];
-                if (oper === '2x') terms[i].number *= 2;
-                else if (oper === 'backstab') {
+                if (oper.includes(FORMULA_MOD.DOUBLE)) terms[i].number *= 2;
+                else if (oper.includes(FORMULA_MOD.BACKSTAB)) {
                     const mIdx = modifiers.indexOf('p');
                     if (!Number.isNaN(mIdx)) terms[i].modifiers[mIdx] = `p>${faces - 2}`;
+                } else if (oper.includes(FORMULA_MOD.NOPENETRATE)) {
+                    const mIdx = modifiers.indexOf('p');
+                    if (!Number.isNaN(mIdx)) terms[i].modifiers.splice(mIdx, 1);
                 }
             }
         }
@@ -51,11 +55,15 @@ export class HMRollMgr {
         const r = new Roll(formula, data);
 
         const specialMove = resp?.resp?.specialMove;
-        if (dataset.dialog === 'dmg' && specialMove) {
-            let operation = null;
-            if (specialMove === HMCONST.SPECIAL.BACKSTAB)   operation = 'backstab'; else
-            if (specialMove === HMCONST.SPECIAL.FLEEING)    operation = 'backstab'; else
-            if (specialMove === HMCONST.SPECIAL.SET4CHARGE) operation = '2x';
+        const defense = resp?.resp?.defense;
+
+        if (dataset.dialog === 'dmg') {
+            const {SPECIAL, FORMULA_MOD} = HMCONST;
+            const operation = [];
+            if (specialMove === SPECIAL.BACKSTAB)   operation.push(FORMULA_MOD.BACKSTAB); else
+            if (specialMove === SPECIAL.FLEEING)    operation.push(FORMULA_MOD.BACKSTAB); else
+            if (specialMove === SPECIAL.SET4CHARGE) operation.push(FORMULA_MOD.DOUBLE);
+            if (defense)                            operation.push(FORMULA_MOD.NOPENETRATE);
             const terms = convertDamageFormula(r.terms, operation);
             return Roll.fromTerms(terms).evaluate({async: true});
         }

@@ -72,6 +72,14 @@
             "back": "Backstab"
         },
 
+        "defenseSelect": {
+            "defense0":     "Standard",
+            "defense1":     "+1 / -2 ATK",
+            "defense2":     "+2 / -4 ATK",
+            "defense3":     "+3 / -6 ATK",
+            "defense4":     "+4 / -8 ATK"
+        },
+
         "handednessSelect": {
             "right":        "Right",
             "left":         "Left",
@@ -131,10 +139,12 @@
 
         "specSelect": {
             "agg":      "Aggressive Attack",
+            "charge":   "Charge",
             "def":      "Standard Defense",
             "jab":      "Jab Attack",
             "flee":     "Fleeing Opponent",
             "fparry":   "Full Parry",
+            "wdrawl":   "Fighting Withdrawl",
             "ggnd":     "Give Ground",
             "s4c":      "Set for Charge",
             "sback":    "Scamper Back",
@@ -216,6 +226,7 @@
             "getAbilityButtonL": "Ability Save",
             "getAbilityButtonR": "Ability Check",
             "getCastTitle":      "Cast a Spell",
+            "getChargeSpdBody":  "Speed",
             "getDamageTitle":    "Roll for Damage",
             "getDefendTitle":    "Roll a Defense",
             "getSaveTitle":      "Save",
@@ -412,6 +423,7 @@
         "carried":      "Carried",
         "cast":         "Cast",
         "catalyst":     "Catalyst",
+        "charged":      "Charged",
         "check":        "Check",
         "class":        "Class",
         "clerical":     "Clerical",
@@ -435,6 +447,7 @@
         "declare":      "Declare",
         "defend":       "Defend",
         "defense":      "Defense",
+        "defensive":    "Defensive",
         "defmod":       "Def Mod",
         "deity":        "Deity",
         "description":  "Description",
@@ -451,6 +464,7 @@
         "failure":      "Failure",
         "fame":         "Fame",
         "family":       "Family",
+        "fast":         "Fast",
         "fatigue":      "Fatigue",
         "feat":         "Feat",
         "fire":         "Fire",
@@ -538,6 +552,7 @@
         "s4c":          "Set for Charge",
         "size":         "Size",
         "shield":       "Shield",
+        "slow":         "Slow",
         "speed":        "Speed",
         "spell":        "Spell",
         "spells":       "Spells",
@@ -579,6 +594,11 @@
     
     "EFFECT": {
         "aggressive":   "Aggressively Attacked",
+        "charge":       "Charged",
+        "defense1":     "Defensively Fighting +1",
+        "defense2":     "Defensively Fighting +2",
+        "defense3":     "Defensively Fighting +3",
+        "defense4":     "Defensively Fighting +4",
         "fullparry":    "Full Parried",
         "gground":      "Gave Ground",
         "scamper":      "Scampered Back",

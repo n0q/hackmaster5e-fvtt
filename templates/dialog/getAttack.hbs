@@ -13,12 +13,22 @@
         {{selectOptions capList selected=specialMove localize=true}}
         </select>
     </span>
-    <section class='grid-2col' style='gap: 20px;'>
+    <section class='grid-2col' style='gap: 0 20px;'>
         <span class='form-group'>
             {{#if ranged}}
             <label>{{localize 'HM.dialog.getAttackRangeBody'}}</label>
             <select name='range' class='bind' data-prop='range' data-render=true>
-            {{selectOptions (findConfigObj 'range') selected=range localize=true}}
+                {{selectOptions (findConfigObj 'range') selected=range localize=true}}
+            </select>
+            {{else if (eq SPECIAL.CHARGE specialMove)}}
+            <label>{{localize 'HM.dialog.getChargeSpdBody'}}</label>
+            <select name='charge' class='bind' data-prop='charge' data-render=true>
+                {{selectOptions (findConfigObj 'chargeSpd') selected=charge localize=true}}
+            </select>
+            {{else if (and (neq SPECIAL.AGGRESSIVE specialMove) (neq SPECIAL.FULLPARRY specialMove))}}
+            <label>{{localize 'Defense'}}</label>
+            <select name='defense' class='bind' data-prop='defense' data-render=true>
+                {{selectOptions (findConfigObj 'defense') selected=defense localize=true}}
             </select>
             {{/if}}
         </span>

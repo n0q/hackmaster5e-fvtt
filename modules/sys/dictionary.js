@@ -91,6 +91,8 @@ idx.special = {
     [HMCONST.SPECIAL.GGROUND]:    'HM.specSelect.ggnd',
     [HMCONST.SPECIAL.FULLPARRY]:  'HM.specSelect.fparry',
     [HMCONST.SPECIAL.AGGRESSIVE]: 'HM.specSelect.agg',
+    [HMCONST.SPECIAL.WITHDRAWL]:  'HM.specSelect.wdrawl',
+    [HMCONST.SPECIAL.CHARGE]:     'HM.specSelect.charge',
 };
 
 idx.size = {
@@ -207,6 +209,19 @@ idx.dice = {
     '1d6':  'd6',
     '1d4':  'd4',
     '1d3':  'd3',
+};
+
+idx.chargeSpd = {
+    [HMCONST.SPECIAL.CHARGE2]: 'HM.slow',
+    [HMCONST.SPECIAL.CHARGE4]: 'HM.fast',
+};
+
+idx.defense = {
+    [HMCONST.DEFENSE.DEFENSE0]: 'HM.defenseSelect.defense0',
+    [HMCONST.DEFENSE.DEFENSE1]: 'HM.defenseSelect.defense1',
+    [HMCONST.DEFENSE.DEFENSE2]: 'HM.defenseSelect.defense2',
+    [HMCONST.DEFENSE.DEFENSE3]: 'HM.defenseSelect.defense3',
+    [HMCONST.DEFENSE.DEFENSE4]: 'HM.defenseSelect.defense4',
 };
 
 idx.range = {

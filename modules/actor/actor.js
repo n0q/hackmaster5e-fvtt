@@ -28,6 +28,12 @@ export class HMActor extends Actor {
         return false;
     }
 
+    get fightingDefensively() {
+        const fxList = this.effects.map((fx) => fx.getFlag('core', 'statusId'));
+        const dList = Object.values(HMTABLES.effects.defense);
+        return fxList.map((x) => dList.indexOf(x) >= 0).some((y) => y);
+    }
+
     resetBonus() {
         const {system} = this;
         const {misc} = system.bonus;

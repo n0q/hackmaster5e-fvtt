@@ -16,6 +16,16 @@ export const HMCONST = {
         ALERT: 1,
         NOTE:  2,
     },
+    C_EFFECT_TYPE: {
+        NO_DEXDEF: 0,
+    },
+    DEFENSE: {
+        DEFENSE0: 0,
+        DEFENSE1: 1,
+        DEFENSE2: 2,
+        DEFENSE3: 3,
+        DEFENSE4: 4,
+    },
     ITEM_STATE: {
         OWNED:    0,
         CARRIED:  1,
@@ -55,6 +65,12 @@ export const HMCONST = {
             FIRE:    4,
         },
     },
+    FORMULA_MOD: {
+        STANDARD:       0,
+        BACKSTAB:       1,
+        DOUBLE:         2,
+        NOPENETRATE:    3,
+    },
     SCALE: {
         TINY:     1,
         SMALL:    2,
@@ -73,6 +89,10 @@ export const HMCONST = {
         FULLPARRY:   4,
         SET4CHARGE:  5,
         AGGRESSIVE: 16,
+        WITHDRAWL:  17,
+        CHARGE:     18,
+        CHARGE4:    18,
+        CHARGE2:    19,
         DEFEND:     64,
         GGROUND:    65,
         SCAMPER:    66,
@@ -301,6 +321,9 @@ export const HMTABLES = {
         atk: {
             [HMCONST.SPECIAL.STANDARD]:   'd20p + @bonus.total.atk +     @resp.bonus',
             [HMCONST.SPECIAL.AGGRESSIVE]: 'd20p + @bonus.total.atk + 5 + @resp.bonus',
+            [HMCONST.SPECIAL.CHARGE2]:    'd20p + @bonus.total.atk + 2 + @resp.bonus',
+            [HMCONST.SPECIAL.CHARGE4]:    'd20p + @bonus.total.atk + 4 + @resp.bonus',
+            [HMCONST.SPECIAL.WITHDRAWL]:  'd20p + @bonus.total.atk - 2 + @resp.bonus',
         },
         'dmg': {
             'standard':    '@dmg.normal + @bonus.total.dmg + @resp.bonus',
@@ -396,42 +419,109 @@ export const HMTABLES = {
             'trivial':      -90,
         },
     },
-    statusEffects: {
-        aggressive: {
-            label: 'EFFECT.aggressive',
-            icon: 'systems/hackmaster5e/styles/icons/saber-slash.svg',
-            changes: [
-                {key: 'system.bonus.state.def', value: '-2', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
-            ],
+    effects: {
+        defense: {
+            [HMCONST.DEFENSE.DEFENSE1]: 'defense1',
+            [HMCONST.DEFENSE.DEFENSE2]: 'defense2',
+            [HMCONST.DEFENSE.DEFENSE3]: 'defense3',
+            [HMCONST.DEFENSE.DEFENSE4]: 'defense4',
         },
-        fullparry: {
-            label: 'EFFECT.fullparry',
-            icon: 'systems/hackmaster5e/styles/icons/sword-clash.svg',
-            changes: [
-                {key: 'system.bonus.state.def', value: '5',  mode: CONST.ACTIVE_EFFECT_MODES.ADD},
-            ],
+        exclusiveEffects: [
+            'defense1',
+            'defense2',
+            'defense3',
+            'defense4',
+            'fullparry',
+        ],
+        statusEffects: {
+            defense1: {
+                label: 'EFFECT.defense1',
+                icon: 'systems/hackmaster5e/styles/icons/swords-emblem1.svg',
+                changes: [
+                    {key: 'system.bonus.state.def', value:  '1', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                    {key: 'system.bonus.state.atk', value: '-2', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                ],
+            },
+            defense2: {
+                label: 'EFFECT.defense2',
+                icon: 'systems/hackmaster5e/styles/icons/swords-emblem2.svg',
+                changes: [
+                    {key: 'system.bonus.state.def', value:  '2', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                    {key: 'system.bonus.state.atk', value: '-4', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                ],
+            },
+            defense3: {
+                label: 'EFFECT.defense3',
+                icon: 'systems/hackmaster5e/styles/icons/swords-emblem3.svg',
+                changes: [
+                    {key: 'system.bonus.state.def', value:  '3', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                    {key: 'system.bonus.state.atk', value: '-6', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                ],
+            },
+            defense4: {
+                label: 'EFFECT.defense4',
+                icon: 'systems/hackmaster5e/styles/icons/swords-emblem4.svg',
+                changes: [
+                    {key: 'system.bonus.state.def', value:  '4', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                    {key: 'system.bonus.state.atk', value: '-8', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                ],
+            },
+            aggressive: {
+                label: 'EFFECT.aggressive',
+                icon: 'systems/hackmaster5e/styles/icons/saber-slash.svg',
+                changes: [
+                    {key: 'system.bonus.state.def', value: '-2', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                ],
+            },
+            charge: {
+                label: 'EFFECT.charge',
+                icon: 'systems/hackmaster5e/styles/icons/shield-bash.svg',
+                changes: [
+                    {key: 'system.bonus.state.def', value: HMCONST.C_EFFECT_TYPE.NO_DEXDEF, mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM},
+                ],
+            },
+            fullparry: {
+                label: 'EFFECT.fullparry',
+                icon: 'systems/hackmaster5e/styles/icons/sword-clash.svg',
+                changes: [
+                    {key: 'system.bonus.state.def', value: '5', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                ],
+            },
+            gground: {
+                label: 'EFFECT.gground',
+                icon: 'systems/hackmaster5e/styles/icons/swordman.svg',
+                changes: [
+                    {key: 'system.bonus.state.atk', value: '-1', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                ],
+            },
+            scamper: {
+                label: 'EFFECT.scamper',
+                icon: 'systems/hackmaster5e/styles/icons/dodging.svg',
+                changes: [
+                    {key: 'system.bonus.state.atk', value: '-4', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                ],
+            },
+            sfatigue: {
+                label: 'EFFECT.sfatigue',
+                icon: 'systems/hackmaster5e/styles/icons/stoned-skull.svg',
+                changes: [
+                    {key: 'system.bonus.state.def',    value: '-6',  mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                    {key: 'system.bonus.state.skills', value: '-30', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                ],
+            },
         },
-        gground: {
-            label: 'EFFECT.gground',
-            icon: 'systems/hackmaster5e/styles/icons/swordman.svg',
-            changes: [
-                {key: 'system.bonus.state.atk', value: '-1',  mode: CONST.ACTIVE_EFFECT_MODES.ADD},
-            ],
-        },
-        scamper: {
-            label: 'EFFECT.scamper',
-            icon: 'systems/hackmaster5e/styles/icons/dodging.svg',
-            changes: [
-                {key: 'system.bonus.state.atk', value: '-4',  mode: CONST.ACTIVE_EFFECT_MODES.ADD},
-            ],
-        },
-        sfatigue: {
-            label: 'EFFECT.sfatigue',
-            icon: 'systems/hackmaster5e/styles/icons/stoned-skull.svg',
-            changes: [
-                {key: 'system.bonus.state.def',    value: '-6',  mode: CONST.ACTIVE_EFFECT_MODES.ADD},
-                {key: 'system.bonus.state.skills', value: '-30', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
-            ],
+    },
+    c_effect: {
+        [HMCONST.C_EFFECT_TYPE.NO_DEXDEF]: (actor) => {
+            if (actor.type === 'beast') return -2; // Placeholder
+
+            const {dex} = actor.system.abilities.total;
+            const clamp = HMTABLES.abilitymods.clamp.dex;
+            const dexDerived = dex.value + dex.fvalue / 100;
+            const dexAdj = Math.clamped(dexDerived, clamp.min, clamp.max);
+            const sidx = Math.floor((dexAdj - clamp.min) / clamp.step);
+            const defBonus = HMTABLES.abilitymods.dex[sidx].def;
+            return Math.min(0, -defBonus);
         },
     },
     'tenacity': {
@@ -443,8 +533,22 @@ export const HMTABLES = {
         5: {'tenacity': -8,    'tenacityCf': 0.001},
     },
     'top': {'character': 0.3, 'beast': 0.4},
-    'weapons': {
-        s4c: { spd: 3},
+    weapons: {
+        caps: {
+            std: [
+                HMCONST.SPECIAL.STANDARD,
+                HMCONST.SPECIAL.DEFEND,
+                HMCONST.SPECIAL.GGROUND,
+                HMCONST.SPECIAL.SCAMPER,
+            ],
+            melee: [
+                HMCONST.SPECIAL.FULLPARRY,
+                HMCONST.SPECIAL.AGGRESSIVE,
+                HMCONST.SPECIAL.WITHDRAWL,
+                HMCONST.SPECIAL.CHARGE,
+            ],
+        },
+        s4c: { spd: 3 },
         'scale': {
             [HMCONST.SCALE.TINY]:     {'minspd': 1},
             [HMCONST.SCALE.SMALL]:    {'minspd': 2},

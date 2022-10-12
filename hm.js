@@ -13,7 +13,7 @@ import { HMCombat, HMCombatTracker } from './modules/sys/combat.js';
 import { HMMacro } from './modules/sys/macro.js';
 import { HMSupport } from './modules/sys/support.js';
 import { HMStates, HMActiveEffect } from './modules/sys/effects.js';
-import { MODULE_ID } from './modules/sys/constants.js';
+import { MODULE_ID, HMCONST, HMTABLES } from './modules/sys/constants.js';
 
 import registerHandlebarsHelpers from './modules/sys/helpers.js';
 import preloadHandlebarsTemplates from './modules/sys/partials.js';
@@ -21,7 +21,8 @@ import preloadHandlebarsTemplates from './modules/sys/partials.js';
 import './modules/sys/dice.js';
 
 Hooks.once('init', async () => {
-    game[MODULE_ID] = { HMActor, HMItem, HMWeaponItem, HMSpellItem };
+    game[MODULE_ID] = { HMActor, HMItem, HMWeaponItem, HMSpellItem, HMCONST, HMTABLES };
+
     CONFIG.Actor.documentClass = HMActorFactory;
     CONFIG.Item.documentClass = HMItemFactory;
     CONFIG.Combat.documentClass = HMCombat;
@@ -59,6 +60,8 @@ Hooks.once('ready', async () => {
 Hooks.once('setup', HMStates.setupStatusEffects);
 Hooks.once('devModeReady', HMSupport.devModeReady);
 Hooks.once('dragRuler.ready', HMSupport.dragRuler_ready);
+Hooks.on('applyActiveEffect', HMActiveEffect.applyActiveEffect);
+Hooks.on('createActiveEffect', HMActiveEffect.createActiveEffect);
 Hooks.on('createActor', HMActor.createActor);
 Hooks.on('createToken', HMActor.createToken);
 Hooks.on('createItem', HMItem.createItem);

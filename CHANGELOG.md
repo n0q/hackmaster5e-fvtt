@@ -2,21 +2,30 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.2.20] - 2022-10-12
+### Added
+- Compendium items.
+- Fighting Withdrawl special move.
+- Charge status effect/special move.
+- Defensive Fighting status effect.
+### Changed
+- Improved formatting on dialog forms.
+
 ## [0.2.19] - 2022-10-09
 ### Added
 - Compendium items.
 - Set for Charge weapon capability.
-- Aggressive Attack status effect.
+- Aggressively Attacked status effect/special move.
 ### Changed
-- Added Set for Charge capability to compendium weapons.
+- Set for Charge capability set on weapons compendium.
 - Status effect names are in past tense.
 - Gave Ground and Scampered Back toggle off after actor makes an attack.
 
 ## [0.2.18] - 2022-09-26
 ### Added
 - Compendium items.
-- Give Ground status effect.
-- Scamper Back status effect.
+- Give Ground status effect/special move.
+- Scamper Back status effect/special move.
 ### Changed
 - Magic always uses combat encounter's round for timing purposes.
 - Spell chat cards are more explicit about weapon resets.
@@ -25,7 +34,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - Compendium items.
 - Spell Fatigue status effect.
-- Full Parry status effect.
+- Full Parry status effect/special move.
 - Status effects auto apply/delete.
 ### Fixed
 - Weapon capabilities could bleed to other weapons under certain circumstances.
@@ -36,7 +45,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Fixed
 - Character class hp reroll tracking (v10 regression)
 
-## [0.2.15] - 2022-09-04
+## [0.2.15] - 2022-09-04 [YANKED]
 ### Added
 - Compendium items.
 - Foundry v10 API support.
@@ -129,7 +138,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Fixed
 - Spellcast ui regression.
 
-## [0.2.6] - 2022-04-27
+## [0.2.6] - 2022-04-27 [YANKED]
 ### Added
 - Can specify skill check difficulty.
 - Language hotbar macros.

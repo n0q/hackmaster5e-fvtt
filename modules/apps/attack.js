@@ -17,6 +17,14 @@ function getSpeed(ranged, wData, specialMove=0) {
     };
 }
 
+function getDefense(effects) {
+    if (!effects) return HMCONST.DEFENSE.DEFENSE0;
+    const dList = Object.values(HMTABLES.effects.defense);
+    const fxSet = new Set(effects.map((fx) => fx.getFlag('core', 'statusId')));
+    const [dKey] = new Set([...(new Set(dList))].filter((x) => fxSet.has(x)));
+    return dList.indexOf(dKey) + 1;
+}
+
 export class AttackPrompt extends HMPrompt {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
@@ -29,6 +37,7 @@ export class AttackPrompt extends HMPrompt {
         super(dialogData, options);
         const weapon = dialogData.weapons[0];
         const capList = this.getCapList(weapon, dialogData?.caller);
+        const defense = getDefense(dialogData?.caller.effects);
 
         const wData = weapon.system;
         const ranged = wData.ranged.checked;
@@ -37,12 +46,14 @@ export class AttackPrompt extends HMPrompt {
         mergeObject(this.dialogData, {
             capList,
             specialMove: 0,
+            defense,
             ranged,
             spd,
             widx: 0,
             range: 0,
             advance: dialogData.inCombat,
             SPECIAL: HMCONST.SPECIAL,
+            charge: HMCONST.SPECIAL.CHARGE4,
         });
     }
 
@@ -64,12 +75,16 @@ export class AttackPrompt extends HMPrompt {
     }
 
     get dialogResp() {
-        const {button, spd} = this.dialogData;
+        const {button, charge, spd, widx} = this.dialogData;
+        let specialMove = Number(this.dialogData.specialMove);
+        if (specialMove === HMCONST.SPECIAL.CHARGE) specialMove = Number(charge);
+
         const dialogResp = {
-            widx: this.dialogData.widx,
-            specialMove: Number(this.dialogData.specialMove),
+            widx,
+            specialMove,
+            defense: Number(this.dialogData.defense),
             range: Number(this.dialogData.range),
-            bonus: parseInt(this.dialogData.bonus, 10) || 0,
+            bonus: Number(this.dialogData.bonus) || 0,
             advance: this.dialogData.advance ? spd[button] : false,
             button,
         };

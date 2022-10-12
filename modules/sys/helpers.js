@@ -41,6 +41,7 @@ export default function registerHandlebarsHelpers() {
     });
 
     Handlebars.registerHelper('eq', (a, b) => { return a == b });
+    Handlebars.registerHelper('neq', (a, b) => { return a != b });
 
     Handlebars.registerHelper("ishalf", (a, b)   => {
         return a === Math.floor(b/2);
