@@ -25,7 +25,7 @@
             <select name='charge' class='bind' data-prop='charge' data-render=true>
                 {{selectOptions (findConfigObj 'chargeSpd') selected=charge localize=true}}
             </select>
-            {{else if (and (neq SPECIAL.AGGRESSIVE specialMove) (neq SPECIAL.FULLPARRY specialMove))}}
+            {{else if (and inCombat (neq SPECIAL.AGGRESSIVE specialMove) (neq SPECIAL.FULLPARRY specialMove))}}
             <label>{{localize 'Defense'}}</label>
             <select name='defense' class='bind' data-prop='defense' data-render=true>
                 {{selectOptions (findConfigObj 'defense') selected=defense localize=true}}
