@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+### Changed
+- Defensive fighting option is only offered in combat.
+### Fixed
+- Attack rolls work outside of combat, again.
+
 ## [0.2.20] - 2022-10-12
 ### Added
 - Compendium items.

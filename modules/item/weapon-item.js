@@ -189,15 +189,17 @@ export class HMWeaponItem extends HMItem {
 
         const {SPECIAL} = HMCONST;
 
-        // Full Parry, Defensive Fighting exclusivity.
-        specialMove === SPECIAL.FULLPARRY
-            ? setStatusEffectOnToken(comData, 'fullparry', dialogResp.resp.advance)
-            : await unsetStatusEffectOnToken(comData, 'fullparry');
+        if (active) {
+            // Full Parry, Defensive Fighting exclusivity.
+            specialMove === SPECIAL.FULLPARRY
+                ? setStatusEffectOnToken(comData, 'fullparry', dialogResp.resp.advance)
+                : await unsetStatusEffectOnToken(comData, 'fullparry');
 
-        const dList = Object.values(HMTABLES.effects.defense);
-        if (defense) dList.splice(defense -1, 1);
-        for (let i = 0; i < dList.length; i++) await unsetStatusEffectOnToken(comData, dList[i]);
-        if (defense) await setStatusEffectOnToken(comData, HMTABLES.effects.defense[defense]);
+            const dList = Object.values(HMTABLES.effects.defense);
+            if (defense) dList.splice(defense -1, 1);
+            for (let i=0; i < dList.length; i++) await unsetStatusEffectOnToken(comData, dList[i]);
+            if (defense) await setStatusEffectOnToken(comData, HMTABLES.effects.defense[defense]);
+        }
 
         let roll;
         if (dialogResp.resp.button !== 'declare') {
