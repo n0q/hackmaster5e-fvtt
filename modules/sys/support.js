@@ -21,6 +21,7 @@ export class HMSupport {
                 // PoolTerms contain sets of terms we need to evaluate.
                 if (roll.terms[i]?.rolls) {
                     for (let j = 0; j < roll.terms[i].rolls.length; j++) {
+                        // eslint-disable-next-line
                         normalize(roll.terms[i].rolls[j], --r);
                     }
                 }
@@ -49,7 +50,7 @@ export class HMSupport {
             getRanges(token) {
                 const {combat} = game;
                 if (!combat) return [];
-                const {round} = combat.data;
+                const {round} = combat;
                 if (!round) return [];
                 const {movespd} = token.actor;
                 movespd.push(Infinity);
@@ -84,9 +85,9 @@ export class HMSupport {
                     if (!combat) return [];
                     const combatant = combat.getCombatantByToken(token.id);
                     if (!combatant) return [];
-                    const dragRulerFlags = combatant.data.flags.dragRuler;
+                    const dragRulerFlags = combatant.flags.dragRuler;
                     if (!dragRulerFlags) return [];
-                    if (combat.data.round > dragRulerFlags.trackedRound) return [];
+                    if (combat.round > dragRulerFlags.trackedRound) return [];
                     return dragRulerFlags.passedWaypoints ?? [];
                 }
 
@@ -105,7 +106,7 @@ export class HMSupport {
 
                     const combatant = game.combat.getCombatantByToken(movedToken.id);
                     const movedFlag = combatant.getFlag(MODULE_ID, 'moved') || {};
-                    const roundCurrent = game.combat.data.round;
+                    const roundCurrent = game.combat.round;
                     movedFlag[roundCurrent] = moved;
                     combatant.setFlag(MODULE_ID, 'moved', movedFlag);
                 });
