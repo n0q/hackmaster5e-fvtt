@@ -15,10 +15,17 @@
     </span>
     <section class='grid-2col' style='gap: 0 20px;'>
         <span class='form-group'>
-            <label>{{localize 'Defense'}} Die</label>
-            <select name='defense' class='bind' data-prop='defDie' data-render=true style='max-width: 6em;'>
+            {{#if (eq SPECIAL.RDEFEND specialMove)}}
+            <label>{{localize 'HM.dialog.getRangedDefend'}}</label>
+            <select name='defense' class='bind' data-prop='defDie' data-render=true style='max-width: 7em;'>
+                {{selectOptions (findConfigObj 'defDieRanged') selected=defDie localize=true}}
+            </select>
+            {{else}}
+            <label>{{localize 'HM.dialog.getDefendDie'}}</label>
+            <select name='defense' class='bind' data-prop='defDie' data-render=true style='max-width: 7em;'>
                 {{selectOptions (findConfigObj 'defDie') selected=defDie localize=true}}
             </select>
+            {{/if}}
         </span>
         <span class='form-group'>
             <label>{{localize 'HM.bonus'}}</label>

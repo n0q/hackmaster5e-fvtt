@@ -100,8 +100,9 @@ export const HMCONST = {
         CHARGE4:    18,
         CHARGE2:    19,
         DEFEND:     64,
-        GGROUND:    65,
-        SCAMPER:    66,
+        RDEFEND:    65,
+        GGROUND:    66,
+        SCAMPER:    67,
     },
 };
 
@@ -341,6 +342,7 @@ export const HMTABLES = {
         },
         def: {
             [HMCONST.SPECIAL.DEFEND]:  '@resp.defdie + @bonus.total.def     + @resp.bonus',
+            [HMCONST.SPECIAL.RDEFEND]: '@resp.defdie                        + @resp.bonus',
             [HMCONST.SPECIAL.SCAMPER]: '@resp.defdie + @bonus.total.def + 5 + @resp.bonus',
             [HMCONST.SPECIAL.GGROUND]: '@resp.defdie + @bonus.total.def + 5 + @resp.bonus',
         },
@@ -550,6 +552,7 @@ export const HMTABLES = {
             std: [
                 HMCONST.SPECIAL.STANDARD,
                 HMCONST.SPECIAL.DEFEND,
+                HMCONST.SPECIAL.RDEFEND,
                 HMCONST.SPECIAL.GGROUND,
                 HMCONST.SPECIAL.SCAMPER,
             ],
