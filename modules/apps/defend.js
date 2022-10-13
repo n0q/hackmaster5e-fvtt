@@ -17,7 +17,7 @@ function getSpeed(ranged, wData, specialMove=0) {
 export class DefendPrompt extends HMPrompt {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
-            template: 'systems/hackmaster5e/templates/dialog/getDefend.hbs',
+            template: 'systems/hackmaster5e/templates/dialog/defend.hbs',
             id: 'attackPrompt',
         });
     }
@@ -33,7 +33,8 @@ export class DefendPrompt extends HMPrompt {
 
         mergeObject(this.dialogData, {
             capList,
-            specialMove: 0,
+            specialMove: HMCONST.SPECIAL.STANDARD,
+            defDie: HMCONST.DIE.D20P,
             ranged,
             spd,
             widx: 0,
@@ -61,9 +62,10 @@ export class DefendPrompt extends HMPrompt {
     }
 
     get dialogResp() {
-        const {button, spd} = this.dialogData;
+        const {button, spd, defDie} = this.dialogData;
         const specialMove = Number(this.dialogData.specialMove);
         const dialogResp = {
+            defdie: HMTABLES.die[defDie],
             widx: this.dialogData.widx,
             specialMove,
             range: Number(this.dialogData.range),

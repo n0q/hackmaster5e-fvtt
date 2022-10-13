@@ -224,6 +224,13 @@ idx.defense = {
     [HMCONST.DEFENSE.DEFENSE4]: 'HM.defenseSelect.defense4',
 };
 
+idx.defDie = {
+    [HMCONST.DIE.D20P]:     'd20p',
+    [HMCONST.DIE.D20PM4]:   'd20p - 4',
+    [HMCONST.DIE.D12P]:     'd12p',
+    [HMCONST.DIE.D8P]:      'd8p',
+};
+
 idx.range = {
     0: 'HM.rangeSelect.short',
     4: 'HM.rangeSelect.medium',

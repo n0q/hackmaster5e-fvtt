@@ -19,6 +19,12 @@ export const HMCONST = {
     C_EFFECT_TYPE: {
         NO_DEXDEF: 0,
     },
+    DIE: {
+        D20P:   0,
+        D20PM4: 1,
+        D12P:   2,
+        D8P:    3,
+    },
     DEFENSE: {
         DEFENSE0: 0,
         DEFENSE1: 1,
@@ -334,9 +340,9 @@ export const HMTABLES = {
             'shieldbstab': '@dmg.shield + @bonus.total.dmg + @actorbonus.total.back + @resp.bonus',
         },
         def: {
-            [HMCONST.SPECIAL.DEFEND]:  'd20p + @bonus.total.def     + @resp.bonus',
-            [HMCONST.SPECIAL.SCAMPER]: 'd20p + @bonus.total.def + 5 + @resp.bonus',
-            [HMCONST.SPECIAL.GGROUND]: 'd20p + @bonus.total.def + 5 + @resp.bonus',
+            [HMCONST.SPECIAL.DEFEND]:  '@resp.defdie + @bonus.total.def     + @resp.bonus',
+            [HMCONST.SPECIAL.SCAMPER]: '@resp.defdie + @bonus.total.def + 5 + @resp.bonus',
+            [HMCONST.SPECIAL.GGROUND]: '@resp.defdie + @bonus.total.def + 5 + @resp.bonus',
         },
         'ratk': {
             'standard': 'd20p + @bonus.total.atk - @resp.range + @resp.bonus',
@@ -387,6 +393,12 @@ export const HMTABLES = {
             const base = (lidx * 10) + 30;
             return prepped ? base : base * 2;
         },
+    },
+    die: {
+        [HMCONST.DIE.D20P]:     'd20p',
+        [HMCONST.DIE.D20PM4]:   'd20p - 4',
+        [HMCONST.DIE.D12P]:     'd12p',
+        [HMCONST.DIE.D8P]:      'd8p',
     },
     'movespd': {
         [HMCONST.MOVE.CRAWL]:   2.5,

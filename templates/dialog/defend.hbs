@@ -13,10 +13,18 @@
         {{selectOptions capList selected=specialMove localize=true}}
         </select>
     </span>
-    <span class="form-group">
-        <label>{{localize "HM.bonus"}}</label>
-        <input name='bonus' value='{{bonus}}' class='focus bind' data-prop='bonus' placeholder=0 type='number'/>
-    </span>
+    <section class='grid-2col' style='gap: 0 20px;'>
+        <span class='form-group'>
+            <label>{{localize 'Defense'}} Die</label>
+            <select name='defense' class='bind' data-prop='defDie' data-render=true style='max-width: 6em;'>
+                {{selectOptions (findConfigObj 'defDie') selected=defDie localize=true}}
+            </select>
+        </span>
+        <span class='form-group'>
+            <label>{{localize 'HM.bonus'}}</label>
+            <input name='bonus' value='{{bonus}}' class='focus bind' data-prop='bonus' placeholder=0 type='number'/>
+        </span>
+    </section>
     <section class='dialog-buttons'>
         <button type='submit' class='dialog-button normal default'
             data-prop='defend'
