@@ -2,8 +2,13 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [0.2.21] - 2022-10-13
+### Added
+- Compendium items.
+- Defense die choice in defense dialogs.
+- Ranged defense option in defense dialog.
 ### Changed
+- Replaced Fighter class icon.
 - Defensive fighting option is only offered in combat.
 ### Fixed
 - Attack rolls work outside of combat, again.

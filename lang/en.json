@@ -80,6 +80,12 @@
             "defense4":     "+4 / -8 ATK"
         },
 
+        "rangedDefSelect": {
+            "stationary":   "Stationary",
+            "moving":       "Moving"
+        },
+
+
         "handednessSelect": {
             "right":        "Right",
             "left":         "Left",
@@ -141,6 +147,7 @@
             "agg":      "Aggressive Attack",
             "charge":   "Charge",
             "def":      "Standard Defense",
+            "rdef":     "Ranged Defense",
             "jab":      "Jab Attack",
             "flee":     "Fleeing Opponent",
             "fparry":   "Full Parry",
@@ -229,6 +236,8 @@
             "getChargeSpdBody":  "Speed",
             "getDamageTitle":    "Roll for Damage",
             "getDefendTitle":    "Roll a Defense",
+            "getDefendDie":      "Defense Die",
+            "getRangedDefend":   "Activity Level",
             "getSaveTitle":      "Save",
             "getSkillTitle1":    "Skill Check",
             "getSkillTitle2":    "Skill Checks",

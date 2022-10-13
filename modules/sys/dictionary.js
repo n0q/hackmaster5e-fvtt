@@ -87,6 +87,7 @@ idx.special = {
     [HMCONST.SPECIAL.FLEEING]:    'HM.specSelect.flee',
     [HMCONST.SPECIAL.SET4CHARGE]: 'HM.specSelect.s4c',
     [HMCONST.SPECIAL.DEFEND]:     'HM.specSelect.def',
+    [HMCONST.SPECIAL.RDEFEND]:    'HM.specSelect.rdef',
     [HMCONST.SPECIAL.SCAMPER]:    'HM.specSelect.sback',
     [HMCONST.SPECIAL.GGROUND]:    'HM.specSelect.ggnd',
     [HMCONST.SPECIAL.FULLPARRY]:  'HM.specSelect.fparry',
@@ -222,6 +223,18 @@ idx.defense = {
     [HMCONST.DEFENSE.DEFENSE2]: 'HM.defenseSelect.defense2',
     [HMCONST.DEFENSE.DEFENSE3]: 'HM.defenseSelect.defense3',
     [HMCONST.DEFENSE.DEFENSE4]: 'HM.defenseSelect.defense4',
+};
+
+idx.defDie = {
+    [HMCONST.DIE.D20P]:     'd20p',
+    [HMCONST.DIE.D20PM4]:   'd20p - 4',
+    [HMCONST.DIE.D12P]:     'd12p',
+    [HMCONST.DIE.D8P]:      'd8p',
+};
+
+idx.defDieRanged = {
+    [HMCONST.DIE.D20P]:     'HM.rangedDefSelect.moving',
+    [HMCONST.DIE.D12P]:     'HM.rangedDefSelect.stationary',
 };
 
 idx.range = {
