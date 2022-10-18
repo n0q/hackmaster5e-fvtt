@@ -1,5 +1,4 @@
 import { HMActorSheet } from './actor-sheet.js';
-import { HMTABLES } from '../sys/constants.js';
 
 export class HMCharacterActorSheet extends HMActorSheet {
     /** @override */

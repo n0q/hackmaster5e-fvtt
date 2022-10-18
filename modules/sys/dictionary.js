@@ -1,4 +1,3 @@
-import { HMCONST } from './constants.js';
 export const idx = {};
 
 // Dictionaries
@@ -235,6 +234,13 @@ idx.defDie = {
 idx.defDieRanged = {
     [HMCONST.DIE.D20P]:     'HM.rangedDefSelect.moving',
     [HMCONST.DIE.D12P]:     'HM.rangedDefSelect.stationary',
+};
+
+idx.encumbrance = {
+    [HMCONST.ENCUMBRANCE.NONE]:     'HM.encumbSelect.none',
+    [HMCONST.ENCUMBRANCE.LIGHT]:    'HM.encumbSelect.light',
+    [HMCONST.ENCUMBRANCE.MEDIUM]:   'HM.encumbSelect.medium',
+    [HMCONST.ENCUMBRANCE.HEAVY]:    'HM.encumbSelect.heavy',
 };
 
 idx.range = {

@@ -20,6 +20,12 @@
         text-align: right;
     }
 
+    .flex-space-between {
+        select { height: 20px; }
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 }
     
 .card {

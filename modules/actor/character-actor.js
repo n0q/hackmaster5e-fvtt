@@ -1,5 +1,5 @@
+import { MODULE_ID } from '../sys/constants.js';
 import { HMActor } from './actor.js';
-import { HMCONST, HMTABLES } from '../sys/constants.js';
 
 export class HMCharacterActor extends HMActor {
     prepareBaseData() {
@@ -8,6 +8,7 @@ export class HMCharacterActor extends HMActor {
         this.setCClass();
         this.setAbilities();
         this.setAbilityBonuses();
+        this.setEncumbrance();
         this.setBonusTotal();
     }
 
@@ -15,7 +16,6 @@ export class HMCharacterActor extends HMActor {
         super.prepareDerivedData();
         this.setBonusTotal();
         this.setExtras();
-        this.setEncumbrance();
     }
 
     get movespd() {
@@ -30,52 +30,61 @@ export class HMCharacterActor extends HMActor {
         return movespd;
     }
 
+    get encumbrance() {
+        const {idx} = this.system.abilities.total.str;
+        return HMTABLES.abilitymods.encumbrance[idx];
+    }
+
     setAbilities() {
         const {abilities} = this.system;
-
         const total = {};
-        for (const stat in abilities.base) {
+
+        Object.keys(abilities.base).forEach((stat) => {
             let value = 0;
             let fvalue = 0;
-            for (const row in abilities) {
-                if (row === 'total') { continue; }
-                value  += abilities[row][stat].value;
-                fvalue += abilities[row][stat].fvalue;
-            }
+
+            Object.keys(abilities).forEach((vector) => {
+                if (vector === 'total') { return; }
+                value  += abilities[vector][stat].value;
+                fvalue += abilities[vector][stat].fvalue;
+            });
+
             value += Math.floor(fvalue / 100);
             fvalue = ((fvalue % 100) + 100) % 100;
-            total[stat] = {value, fvalue};
-        }
+
+            const clamp = HMTABLES.abilitymods.clamp[stat];
+            const statSum = value + fvalue / 100;
+            const statAdj = Math.clamped(statSum, clamp.min, clamp.max);
+            const idx = Math.floor((statAdj - clamp.min) / clamp.step);
+
+            total[stat] = {value, fvalue, idx};
+        });
         abilities.total = total;
     }
 
     setAbilityBonuses() {
         const {system} = this;
-        const aData = system.abilities.total;
+        const {total} = system.abilities;
 
         const stats        = {};
         const abilityBonus = {};
 
-        for (const statName in aData) {
-            // TODO: Convert this into a function, as it's also used in HMTABLES.
-            const clamp = HMTABLES.abilitymods.clamp[statName];
-            const statDerived = aData[statName].value + aData[statName].fvalue / 100;
-            const statAdj = Math.clamped(statDerived, clamp.min, clamp.max);
-
-            const sidx = Math.floor((statAdj - clamp.min) / clamp.step);
-            const bonusTable = HMTABLES.abilitymods[statName][sidx];
+        Object.keys(total).forEach((statName) => {
+            const {idx} = total[statName];
+            const bonusTable = HMTABLES.abilitymods[statName][idx];
             abilityBonus[statName] = bonusTable;
-            for (const key in bonusTable) {
-                if (bonusTable.hasOwnProperty(key)) {
-                    stats[key] = (stats?.[key] || 0) + bonusTable[key];
-                    if (key === 'chamod') { aData.cha.value += stats[key] || 0; }
-                }
-            }
-        }
 
-        stats.hp     = aData.con.value;
-        stats.poison = aData.con.value;
-        stats.trauma = Math.floor(aData.con.value / 2);
+            Object.keys(bonusTable).forEach((key) => {
+                if (Object.prototype.hasOwnProperty.call(bonusTable, key)) {
+                    stats[key] = (stats?.[key] || 0) + bonusTable[key];
+                    if (key === 'chamod') { total.cha.value += stats[key] || 0; }
+                }
+            });
+        });
+
+        stats.hp     = total.con.value;
+        stats.poison = total.con.value;
+        stats.trauma = Math.floor(total.con.value / 2);
 
         system.bonus.stats = stats;
         system.hmsheet ? system.hmsheet.bonus = abilityBonus
@@ -115,6 +124,9 @@ export class HMCharacterActor extends HMActor {
         const {priors} = this.system;
         const total = carried + HMTABLES.weight(priors.bmi, priors.height) || 0.0;
         this.system.encumb = {carried, effective, total};
+
+        const penalty = this.getFlag(MODULE_ID, 'encumbrance') || 0;
+        this.system.bonus.encumb = HMTABLES.encumbrance[penalty];
     }
 
     async setCClass() {

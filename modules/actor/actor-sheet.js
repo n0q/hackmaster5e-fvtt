@@ -1,8 +1,7 @@
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMRollMgr } from '../mgr/rollmgr.js';
-import { idx } from '../sys/dictionary.js';
-import { HMTABLES, MODULE_ID } from '../sys/constants.js';
+import { MODULE_ID } from '../sys/constants.js';
 
 export class HMActorSheet extends ActorSheet {
     /** @override */
@@ -179,6 +178,7 @@ export class HMActorSheet extends ActorSheet {
         html.find('.button').click(this._onClick.bind(this));
         html.find('.rollable').click(this._onRoll.bind(this));
         html.find('.editable').change(this._onEdit.bind(this));
+        html.find('.selectable').change(this._onSelect.bind(this));
 
         // Drag events for macros.
         if (this.actor.isOwner) {
@@ -258,6 +258,14 @@ export class HMActorSheet extends ActorSheet {
         event.preventDefault();
         const item = this._getOwnedItem(this._getItemId(event));
         item.onClick(event);
+    }
+
+    async _onSelect(ev) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        const {dataset, value} = ev.currentTarget;
+        const {flag} = dataset;
+        if (flag) this.actor.setFlag(MODULE_ID, flag, value);
     }
 
     async _onEdit(ev) {
