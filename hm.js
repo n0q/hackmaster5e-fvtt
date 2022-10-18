@@ -21,7 +21,9 @@ import preloadHandlebarsTemplates from './modules/sys/partials.js';
 import './modules/sys/dice.js';
 
 Hooks.once('init', async () => {
-    game[MODULE_ID] = { HMActor, HMItem, HMWeaponItem, HMSpellItem, HMCONST, HMTABLES };
+    game[MODULE_ID] = { HMActor, HMItem, HMWeaponItem, HMSpellItem };
+    window.HMCONST = HMCONST;
+    window.HMTABLES = HMTABLES;
 
     CONFIG.Actor.documentClass = HMActorFactory;
     CONFIG.Item.documentClass = HMItemFactory;
