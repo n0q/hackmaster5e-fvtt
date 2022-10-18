@@ -1,5 +1,5 @@
 $actor-gridgap: 4px;
-$actor-portrait-dim: 150px;
+$actor-portrait-dim: 130px;
 $actor-saves-dim: 150px;
 $actor-wounds-dim: 180px;
 $actor-logo-dim: 40%;
@@ -42,6 +42,7 @@ $character-width: 820px;
         .header-portrait {
             font-size: 1.25em;
             img {
+                border: $card_border solid black;
                 flex: 0 0 $actor-portrait-dim;
                 max-width: $actor-portrait-dim;
                 max-height: $actor-portrait-dim;

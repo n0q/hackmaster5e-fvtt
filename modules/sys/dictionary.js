@@ -1,3 +1,4 @@
+import { HMCONST } from './constants.js'; // eslint-disable-line
 export const idx = {};
 
 // Dictionaries
