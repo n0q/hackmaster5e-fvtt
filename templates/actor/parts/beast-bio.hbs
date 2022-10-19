@@ -1,18 +1,38 @@
 <ol class='beast-bio'>
     <section class='traits'>
         <label class='resource-label'>{{localize 'HM.description'}}</label>
-        {{editor data.system.bio.desc target="system.bio.desc" button=true owner=owner editable=editable}}
+        {{editor
+            data.system.bio.desc
+            target="system.bio.desc"
+            button=true
+            editable=editable
+        }}
     </section>
     <section class='wealth'>
         <label class='resource-label'>{{localize 'HM.tactics'}}</label>
-        {{editor data.system.bio.tactics target="system.bio.tactics" button=true owner=owner editable=editable}}
+        {{editor
+            data.system.bio.tactics
+            target="system.bio.tactics"
+            button=true
+            editable=editable
+        }}
     </section>
     <section class='history'>
         <label class='resource-label'>{{localize 'HM.habitat'}}</label>
-        {{editor data.system.bio.habitat target="system.bio.habitat" button=true owner=owner editable=editable}}
+        {{editor
+            data.system.bio.habitat
+            target="system.bio.habitat"
+            button=true
+            engine="prosemirror"
+        }}
     </section>
     <section class='family'>
         <label class='resource-label'>{{localize 'HM.ecology'}}</label>
-        {{editor data.system.bio.ecology target="system.bio.ecology" button=true owner=owner editable=editable}}
+        {{editor
+            data.system.bio.ecology
+            target="system.bio.ecology"
+            button=true
+            editable=editable
+        }}
     </section>
 </ol>
