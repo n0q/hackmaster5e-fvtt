@@ -19,8 +19,6 @@ module.exports = {
         'game': false,
         'PoolTerm': false,
         'DOMPurify': false,
-        'HMCONST': false,
-        'HMTABLES': false,
     },
     'rules': {
         'import/extensions': 'off',

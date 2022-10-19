@@ -1,4 +1,5 @@
 import { HMActorSheet } from './actor-sheet.js';
+import { HMTABLES } from '../sys/constants.js';
 
 export class HMCharacterActorSheet extends HMActorSheet {
     /** @override */
@@ -8,6 +9,7 @@ export class HMCharacterActorSheet extends HMActorSheet {
             width: 835,
             height: 945,
             tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'skills' }],
+            tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'biography' }],
         });
     }
 

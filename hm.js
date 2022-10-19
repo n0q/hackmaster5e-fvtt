@@ -13,7 +13,7 @@ import { HMCombat, HMCombatTracker } from './modules/sys/combat.js';
 import { HMMacro } from './modules/sys/macro.js';
 import { HMSupport } from './modules/sys/support.js';
 import { HMStates, HMActiveEffect } from './modules/sys/effects.js';
-import { MODULE_ID, HMCONST, HMTABLES } from './modules/sys/constants.js';
+import { MODULE_ID } from './modules/sys/constants.js';
 
 import registerHandlebarsHelpers from './modules/sys/helpers.js';
 import preloadHandlebarsTemplates from './modules/sys/partials.js';
@@ -22,8 +22,6 @@ import './modules/sys/dice.js';
 
 Hooks.once('init', async () => {
     game[MODULE_ID] = { HMActor, HMItem, HMWeaponItem, HMSpellItem };
-    window.HMCONST = HMCONST;
-    window.HMTABLES = HMTABLES;
 
     CONFIG.Actor.documentClass = HMActorFactory;
     CONFIG.Item.documentClass = HMItemFactory;

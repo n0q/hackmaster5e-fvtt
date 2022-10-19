@@ -1,7 +1,7 @@
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMRollMgr } from '../mgr/rollmgr.js';
-import { MODULE_ID } from '../sys/constants.js';
+import { HMTABLES, MODULE_ID } from '../sys/constants.js';
 
 export class HMActorSheet extends ActorSheet {
     /** @override */

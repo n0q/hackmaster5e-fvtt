@@ -1,4 +1,4 @@
-import { MODULE_ID } from '../sys/constants.js';
+import { HMCONST, HMTABLES } from '../sys/constants.js';
 import { HMItem, advanceClock, setStatusEffectOnToken, unsetStatusEffectOnToken } from './item.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
