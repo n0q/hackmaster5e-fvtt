@@ -74,10 +74,6 @@ export class HMActorSheet extends ActorSheet {
                  > `${game.i18n.localize(b.name)} ${b.system.specialty.value || ''}` ? 1 : -1;
         }
 
-        function spellsort(a, b) {
-            return a.name > b.name || Number(a.system.lidx) > Number(b.system.lidx) ? 1 : -1;
-        }
-
         skills.sort(skillsort);
         langs.sort(skillsort);
 
@@ -91,7 +87,10 @@ export class HMActorSheet extends ActorSheet {
         actorData.wounds = wounds;
         actorData.armors = armors;
         actorData.gear = gear;
-        actorData.spells = spells.sort(spellsort);
+        actorData.spells = spells.sort(
+            (a, b) => Number(a.system.lidx) - Number(b.system.lidx) || a.name.localeCompare(b.name),
+        );
+
         actorData.weapons = weapons;
 
         const slevels = [];
