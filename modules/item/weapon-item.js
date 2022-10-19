@@ -1,9 +1,8 @@
-import { HMTABLES, HMCONST } from '../sys/constants.js';
+import { HMCONST, HMTABLES } from '../sys/constants.js';
 import { HMItem, advanceClock, setStatusEffectOnToken, unsetStatusEffectOnToken } from './item.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
 import { HMRollMgr } from '../mgr/rollmgr.js';
-// import { HMStates } from '../sys/effects.js';
 
 export class HMWeaponItem extends HMItem {
     get minspd() {
@@ -58,15 +57,17 @@ export class HMWeaponItem extends HMItem {
         delete bonus.qual;
 
         const cclass    = {};
+        const encumb    = {};
         const misc      = {};
         const race      = {};
         const stats     = {};
         const state     = {};
-        const classData = actorData.bonus.class;
-        const miscData  = actorData.bonus.misc;
-        const statsData = actorData.bonus.stats;
-        const raceData  = actorData.bonus.race;
-        const stateData = actorData.bonus.state;
+        const classData  = actorData.bonus.class;
+        const encumbData = actorData.bonus.encumb;
+        const miscData   = actorData.bonus.misc;
+        const statsData  = actorData.bonus.stats;
+        const raceData   = actorData.bonus.race;
+        const stateData  = actorData.bonus.state;
 
         const spec      = {};
         const profTable = HMTABLES.weapons.noprof;
@@ -81,6 +82,7 @@ export class HMWeaponItem extends HMItem {
                                        : profTable.table[wSkill] * profTable.vector[j++];
             spec[key]   = profBonus || 0;
             cclass[key] = classData?.[key] || 0;
+            encumb[key]  = encumbData?.[key] || 0;
             misc[key]   = miscData?.[key] || 0;
             race[key]   = raceData?.[key] || 0;
             stats[key]  = statsData?.[key] || 0;
@@ -112,10 +114,11 @@ export class HMWeaponItem extends HMItem {
         Object.values(state).every((a) => a === 0)   ? delete bonus.state : bonus.state  = state;
 
         if (isCharacter) {
-            Object.values(stats).every((a) => a === 0)  ? delete bonus.stats : bonus.stats = stats;
-            Object.values(cclass).every((a) => a === 0) ? delete bonus.class : bonus.class = cclass;
-            Object.values(race).every((a) => a === 0)   ? delete bonus.race  : bonus.race  = race;
-            Object.values(spec).every((a) => a === 0)   ? delete bonus.spec  : bonus.spec  = spec;
+            Object.values(stats).every((a) => a === 0)  ? delete bonus.stats  : bonus.stats = stats;
+            Object.values(encumb).every((a) => a === 0) ? delete bonus.encumb : bonus.encumb = encumb;
+            Object.values(cclass).every((a) => a === 0) ? delete bonus.class  : bonus.class = cclass;
+            Object.values(race).every((a) => a === 0)   ? delete bonus.race   : bonus.race  = race;
+            Object.values(spec).every((a) => a === 0)   ? delete bonus.spec   : bonus.spec  = spec;
         }
 
         Object.keys(bonus.total).forEach((key) => {

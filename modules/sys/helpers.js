@@ -40,6 +40,13 @@ export default function registerHandlebarsHelpers() {
         return getProperty(vector, arg2);
     });
 
+    Handlebars.registerHelper('encumbranceSelect', (opts) => {
+        const {encumbrance} = opts.data.root.actor;
+        const label = idx.encumbrance;
+        return {...encumbrance.map((x, i) => `${game.i18n.localize(label[i])} (${x} lbs.)`)};
+    });
+
+    Handlebars.registerHelper('getFlag', (scope, key, opts) => opts.data.root.actor.getFlag(scope, key));
     Handlebars.registerHelper('eq', (a, b) => { return a == b });
     Handlebars.registerHelper('neq', (a, b) => { return a != b });
 

@@ -1,7 +1,6 @@
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMRollMgr } from '../mgr/rollmgr.js';
-import { idx } from '../sys/dictionary.js';
 import { HMTABLES, MODULE_ID } from '../sys/constants.js';
 
 export class HMActorSheet extends ActorSheet {
@@ -75,10 +74,6 @@ export class HMActorSheet extends ActorSheet {
                  > `${game.i18n.localize(b.name)} ${b.system.specialty.value || ''}` ? 1 : -1;
         }
 
-        function spellsort(a, b) {
-            return a.name > b.name || Number(a.system.lidx) > Number(b.system.lidx) ? 1 : -1;
-        }
-
         skills.sort(skillsort);
         langs.sort(skillsort);
 
@@ -92,7 +87,10 @@ export class HMActorSheet extends ActorSheet {
         actorData.wounds = wounds;
         actorData.armors = armors;
         actorData.gear = gear;
-        actorData.spells = spells.sort(spellsort);
+        actorData.spells = spells.sort(
+            (a, b) => Number(a.system.lidx) - Number(b.system.lidx) || a.name.localeCompare(b.name),
+        );
+
         actorData.weapons = weapons;
 
         const slevels = [];
@@ -179,6 +177,7 @@ export class HMActorSheet extends ActorSheet {
         html.find('.button').click(this._onClick.bind(this));
         html.find('.rollable').click(this._onRoll.bind(this));
         html.find('.editable').change(this._onEdit.bind(this));
+        html.find('.selectable').change(this._onSelect.bind(this));
 
         // Drag events for macros.
         if (this.actor.isOwner) {
@@ -258,6 +257,14 @@ export class HMActorSheet extends ActorSheet {
         event.preventDefault();
         const item = this._getOwnedItem(this._getItemId(event));
         item.onClick(event);
+    }
+
+    async _onSelect(ev) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        const {dataset, value} = ev.currentTarget;
+        const {flag} = dataset;
+        if (flag) this.actor.setFlag(MODULE_ID, flag, value);
     }
 
     async _onEdit(ev) {

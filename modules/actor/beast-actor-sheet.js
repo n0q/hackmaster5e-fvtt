@@ -5,8 +5,8 @@ export class HMBeastActorSheet extends HMActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             classes: ['hackmaster', 'sheet', 'actor'],
-            width: 640,
-            height: 800,
+            width: 665,
+            height: 770,
             tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'overview' }],
         });
     }

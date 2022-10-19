@@ -4,12 +4,6 @@
     padding: 0;
     overflow-y: auto;
 
-    input {
-        margin-top: 1px;
-        width: 2em;
-        margin-right: 2px;
-    }
-
     .card-controls {
         text-align: right;
         margin-right: 2px;
@@ -20,6 +14,12 @@
         text-align: right;
     }
 
+    .flex-space-between {
+        select { height: 20px; }
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 }
     
 .card {
@@ -34,6 +34,12 @@
     .hide { @include hide; }
 
     @include table-basic;
+
+    input {
+        margin-top: 1px;
+        width: 2em;
+        margin-right: 2px;
+    }
 
     > section {
         padding: 5px;

@@ -136,6 +136,20 @@
             "shield": "Shield"
         },
 
+        "encumbSelect": {
+            "none":   "None",
+            "light":  "Light",
+            "medium": "Medium",
+            "heavy":  "Heavy"
+        },
+
+        "encumbRow": {
+            "scale":        "Scale Weight",
+            "carried":      "Carried Load",
+            "effective":    "Effective Load",
+            "penalty":      "Penalty"
+        },
+
         "sizeSelect": {
             "tiny":   "Tiny",
             "small":  "Small",

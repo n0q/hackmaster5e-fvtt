@@ -1,21 +1,27 @@
 <ol class='cards-list'>
-    <li class='table-header'>
     {{#with actor.system.encumb}}
-    <label>
-        {{localize 'HM.scale'}} {{localize 'HM.weight'}}:
-        <b>{{numberFormat total decimals=2}} lbs.</b>
-    </label>
-    <label style='padding-left: 4.2em;'>
-        {{localize 'HM.carried'}} {{localize 'HM.load'}}:
-        <b>{{numberFormat carried decimals=2}} lbs.</b>
-    </label>
-    <label style='padding-left: 4.2em;'>
-        {{localize 'HM.effective'}} {{localize 'HM.encumbrance'}}:
-        <b>{{numberFormat effective decimals=2}} lbs.</b>
-    </label>
-    {{/with}}
+    <li class='flex-space-between' style='margin-left: 3px; margin-right: 15px;'>
+        <label>
+            {{localize 'HM.encumbRow.scale'}}:
+            <b>{{numberFormat total decimals=2}} lbs.</b>
+        </label>
+        <label>
+            {{localize 'HM.encumbRow.carried'}}:
+            <b>{{numberFormat carried decimals=2}} lbs.</b>
+        </label>
+        <label>
+            {{localize 'HM.encumbRow.effective'}}:
+            <b>{{numberFormat effective decimals=2}} lbs.</b>
+        </label>
+        <label>
+            {{localize 'HM.encumbRow.penalty'}}:
+            <select class='selectable' name='encumbrance' data-flag='encumbrance'>
+                {{selectOptions (encumbranceSelect) selected=(getFlag 'hackmaster5e' 'encumbrance')}}
+            </select>
+        </label>
     </li>
-    <section class='scrollable' style='height: 31rem;'>
+    {{/with}}
+    <section class='scrollable' style='height: 32rem;'>
     {{#each actor.gear.weapons}}
         {{#unless system.innate}}
             {{> 'systems/hackmaster5e/templates/actor/cards/item.hbs' }}

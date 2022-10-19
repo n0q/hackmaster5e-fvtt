@@ -1,9 +1,10 @@
-$actor-gridgap: 4px;
-$actor-portrait-dim: 150px;
+$actor-gridgap-h: 4px;
+$actor-gridgap-v: 2px;
+$actor-portrait-dim: 130px;
 $actor-saves-dim: 150px;
 $actor-wounds-dim: 180px;
 $actor-logo-dim: 40%;
-$beast-width: 620px;
+$beast-width: 650px;
 $character-width: 820px;
 
 #beast-sheet {
@@ -27,7 +28,7 @@ $character-width: 820px;
 .actor-sheet {
     display: grid;
     width: $character-width;
-    grid-gap: $actor-gridgap;
+    grid-gap: $actor-gridgap-v $actor-gridgap-h;
     grid-template-rows: repeat(4, min-content);
 
     >header {
@@ -35,13 +36,14 @@ $character-width: 820px;
         grid-template-columns: 1fr $actor-logo-dim;
         column-gap: $padding-md;
         overflow: hidden;
-        padding-bottom: $padding-sm;
+        padding-bottom: 0;
         border-bottom: 1px solid #AAA;
         margin-bottom: $padding-sm;
 
         .header-portrait {
             font-size: 1.25em;
             img {
+                border: $card_border solid black;
                 flex: 0 0 $actor-portrait-dim;
                 max-width: $actor-portrait-dim;
                 max-height: $actor-portrait-dim;
@@ -85,7 +87,7 @@ $character-width: 820px;
 
 .sheet-middle {
     display: grid;
-    grid-gap: $actor-gridgap;
+    grid-gap: $actor-gridgap-h;
     width: inherit;
     padding-right: $padding-sm;
     grid-template-columns: $actor-portrait-dim $actor-saves-dim 1fr $actor-saves-dim $actor-wounds-dim;
@@ -101,6 +103,12 @@ $character-width: 820px;
         }
     }
 
+    .middle-stats {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+    }
+
     .abilities {
         display: flex;
         flex-direction: column;
@@ -111,7 +119,6 @@ $character-width: 820px;
         grid-template-columns: 60% 40%;
         align-items: end;
         column-gap: 10px;
-
         >span {
             text-align: end;
             font-size: 22px;

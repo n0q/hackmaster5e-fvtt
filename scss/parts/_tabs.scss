@@ -1,15 +1,15 @@
 .tabs {
-  height: 40px;
-  border-top: 1px solid #AAA;
-  border-bottom: 1px solid #AAA;
+    height: 25px;
+    border-top: 1px solid #AAA;
+    border-bottom: 1px solid #AAA;
 
-  .item {
-    line-height: 40px;
-    font-weight: bold;
-  }
+    .item {
+        line-height: 10px;
+        font-weight: bold;
+    }
 
-  .item.active {
-    text-decoration: underline;
-    text-shadow: none;
-  }
+    .item.active {
+        text-decoration: underline;
+        text-shadow: none;
+    }
 }

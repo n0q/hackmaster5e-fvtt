@@ -2,6 +2,18 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.2.22] - 2022-10-19
+### Added
+- Compendium items.
+- Encumbrance dropdown in inventory tab.
+- Encumbrance effects.
+### Changed
+- Decreased actor sheet height.
+- Adjusted actor sheet stat alignments.
+- Fixed capitalization of Great Sword.
+### Fixed
+- Spells are sorted by level, then name.
+
 ## [0.2.21] - 2022-10-13
 ### Added
 - Compendium items.

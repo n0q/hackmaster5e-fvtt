@@ -19,10 +19,24 @@
     }
 }
 
+.statdisplay {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    border: 2px solid;
+    border-radius: 5px;
+    width: auto;
+    margin: 2px;
+    text-align: center;
+    >.value {
+        font-size: 18px;
+    }
+}
+
 .category {
     display: grid;
     grid-template-rows: 1fr 1fr;
     grid-template-columns: 3em 1fr;
+    grid-column: span 2;
     border: 2px solid;
     border-radius: 5px;
     width: auto;
