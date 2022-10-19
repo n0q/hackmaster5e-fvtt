@@ -11,22 +11,22 @@
     <label for='system.fame.bracket' class='bracket'>{{localize (findConfigValue 'fame' system.fame.bracket)}}</label>
 </figure>
 {{/if}}
-{{#if system.hp.tenacity}}
-<figure class='fraction' style='width: auto;'>
-    <label for='system.hp.tenacity' class='resource-label'>{{localize 'HM.tenacity'}}</label>
-    {{system.hp.tenacity}} 
-</figure>
-{{/if}}
 {{#if system.hp.top}}
-<figure class='fraction' style='width: auto;'>
-    <label for='system.fame.value' class='resource-label'>{{localize 'HM.top'}}</label>
-    {{system.hp.top}} 
+<figure class='statdisplay'>
+    <span class='resource-label'>{{localize 'HM.top'}}</span>
+    <span class='value'>{{system.hp.top}}</span> 
 </figure>
 {{/if}}
 {{#if system.bonus.total.init includeZero=true}}
-<figure class='fraction' style='width: auto;'>
-    <label for='system.bonus.total.init' class='resource-label'>{{localize 'HM.init'}}</label>
-    {{system.bonus.total.init}}
+<figure class='statdisplay'>
+    <span class='resource-label'>{{localize 'HM.init'}}</span>
+    <span class='value'>{{system.bonus.total.init}}</span>
+</figure>
+{{/if}}
+{{#if system.hp.tenacity}}
+<figure class='statdisplay'>
+    <span class='resource-label'>{{localize 'HM.tenacity'}}</span>
+    <span class='value'>{{system.hp.tenacity}}</span>
 </figure>
 {{/if}}
 {{/with}}

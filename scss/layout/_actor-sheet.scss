@@ -4,7 +4,7 @@ $actor-portrait-dim: 130px;
 $actor-saves-dim: 150px;
 $actor-wounds-dim: 180px;
 $actor-logo-dim: 40%;
-$beast-width: 620px;
+$beast-width: 650px;
 $character-width: 820px;
 
 #beast-sheet {
@@ -36,7 +36,7 @@ $character-width: 820px;
         grid-template-columns: 1fr $actor-logo-dim;
         column-gap: $padding-md;
         overflow: hidden;
-        padding-bottom: $padding-sm;
+        padding-bottom: 0;
         border-bottom: 1px solid #AAA;
         margin-bottom: $padding-sm;
 
@@ -101,6 +101,12 @@ $character-width: 820px;
         >section {
             height: 24ex;
         }
+    }
+
+    .middle-stats {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(4, 1fr);
     }
 
     .abilities {

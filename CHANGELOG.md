@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Encumbrance effects.
 ### Changed
 - Decreased actor sheet height.
+- Adjusted actor sheet stat alignments.
 ### Fixed
 - Spells are sorted by level, then name.
 
