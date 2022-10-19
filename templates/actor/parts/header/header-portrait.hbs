@@ -2,7 +2,7 @@
 <span class="flexrow">
     <img src="{{img}}" data-edit="img" title="{{name}}"/>
     <div>
-        <input class="name" name="name" type="text" value="{{name}}" placeholder="Name"/>
+        <input class='name' name='name' type='text' value='{{name}}' placeholder='Name' data-lpignore='true'/>
     {{#if (eq type 'character')}}
         <div>
         {{localize (concat 'HM.alignmentShort.' system.priors.alignment)}}
