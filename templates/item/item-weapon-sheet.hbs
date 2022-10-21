@@ -13,8 +13,8 @@
 
         {{#with data}}
         <div class='tab attributes newform' data-group='primary' data-tab='attributes'>
-            <div class='grid-2col' style='grid-template-columns: 40% 1fr;'>
-                <section name='options'>
+            <div class='grid-2col' style='grid-template-columns: 40% 1fr; padding-top: 5px;'>
+                <section name='options' style='padding-right: 10px; border-right: 1px solid;'>
                     <span class='form-option'>
                         <label class='resource-label'>{{localize 'HM.reach'}}:</label>
                         <input type='number' name='system.reach' value='{{system.reach}}'>
@@ -72,7 +72,7 @@
                         <input type='checkbox' name='system.innate' {{checked system.innate}}/>
                     </span>
                 </section>
-                <section name='foobar'>
+                <section name='specifics'>
                     <span class='form-option'>
                        <label class='resource-label'>{{localize 'HM.proficiency'}}</label>
                        <input type='text' style='width: 12em;' name='system.proficiency'
@@ -89,8 +89,8 @@
                         <input type='text' style='width: 12em;' name='system.dmg.shield'
                             value='{{system.dmg.shield}}' data-dtype='String'/>
                     </span>
-                    <hr>
                     {{#if system.ranged.checked}}
+                    <hr>
                     <span class='grid-2col'>
                         <label class='resource-label'>{{localize 'HM.ranged'}}</label>
                         <span class='form-option'>
@@ -125,6 +125,7 @@
                             value='{{system.ranged.timing.recover}}' data-dtype='Number'>
                     </span>
                     {{else if system.jab.checked}}
+                    <hr>
                     <span class='grid-2col'>
                         <label class='resource-label'>{{localize 'HM.jab'}}</label>
                         <span class='form-option'>
