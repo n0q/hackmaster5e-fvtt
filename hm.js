@@ -7,6 +7,7 @@ import { HMWeaponItem } from './modules/item/weapon-item.js';
 import { HMSpellItem } from './modules/item/spell-item.js';
 import { HMItemFactory } from './modules/item/item-factory.js';
 import { HMItemSheet } from './modules/item/item-sheet.js';
+import { HMArmorItemSheet } from './modules/item/armor-item-sheet.js';
 import { HMWeaponItemSheet } from './modules/item/weapon-item-sheet.js';
 import { HMChatMgr } from './modules/mgr/chatmgr.js';
 import { HMCombat, HMCombatTracker } from './modules/sys/combat.js';
@@ -37,6 +38,7 @@ Hooks.once('init', async () => {
 
     Items.unregisterSheet('core', ItemSheet);
     Items.registerSheet('hackmaster', HMItemSheet, {makeDefault: true});
+    Items.registerSheet('hackmaster', HMArmorItemSheet, {types: ['armor'], makeDefault: true});
     Items.registerSheet('hackmaster', HMWeaponItemSheet, {types: ['weapon'], makeDefault: true});
 
     registerHandlebarsHelpers();
