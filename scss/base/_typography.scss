@@ -8,15 +8,32 @@
 }
 
 @font-face {
-  font-family: 'Gentium';
-  font-style: normal;
-  font-weight: normal;
-  line-height: 1.6;
-  word-spacing: 0.5px; 
-  letter-spacing: 0.6px;
-  src: local(''), url('../styles/fonts/GenBkBasR.woff2') format('woff2');
+    font-family: 'Gentium';
+    font-style: normal;
+    font-weight: normal;
+    src: local(''), url('../styles/fonts/GenBkBasR.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Gentium';
+    font-style: italic;
+    font-weight: normal;
+    src: local(''), url('../styles/fonts/GenBkBasI.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Gentium';
+    font-style: normal;
+    font-weight: bold;
+    src: local(''), url('../styles/fonts/GenBkBasB.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Gentium';
+    font-style: italic;
+    font-weight: bold;
+    src: local(''), url('../styles/fonts/GenBkBasBI.woff2') format('woff2');
 }
 
 $font-primary: 'Korinan', 'Gentium', 'Roboto', serif;
 $font-primary-size: 16px;
-$font-primary: 'Korinan', 'Gentium', 'Roboto', serif;
