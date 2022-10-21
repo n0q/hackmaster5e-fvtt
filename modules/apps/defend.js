@@ -34,7 +34,7 @@ export class DefendPrompt extends HMPrompt {
         mergeObject(this.dialogData, {
             capList,
             specialMove: HMCONST.SPECIAL.STANDARD,
-            defDie: HMCONST.DIE.D20P,
+            defDie: wData.defdie,
             ranged,
             spd,
             widx: 0,

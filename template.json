@@ -195,6 +195,7 @@
             "caps": {},
             "qn": 0,
             "reach": 0,
+            "defdie": 0,
             "ranged": {"checked": false}
         },
 
