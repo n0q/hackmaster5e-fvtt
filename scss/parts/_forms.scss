@@ -6,6 +6,37 @@
     }
 }
 
+.newform {
+    .form-data {
+        display: flex;
+        flex: row nowrap;
+        justify-content: space-between;
+        input[type="text"],
+        input[type="number"] {
+            width: 4em;
+            min-width: 4em;
+            text-align: right;
+            height: 1.25em;
+        }
+    }
+
+    .form-option {
+        display: flex;
+        flex: row nowrap;
+        justify-content: space-between;
+        input[type="text"],
+        input[type="number"] {
+            width: 4em;
+            height: 1.75em;
+        }
+        select {
+            height: 1.75em;
+            min-width: 8em;
+            width: 8em;
+        }
+    }
+}
+
 .item-form {
     font-family: $font-primary;
     display: grid;
