@@ -30,7 +30,17 @@ Hooks.once('init', async () => {
     CONFIG.ui.combat = HMCombatTracker;
     CONFIG.Macro.documentClass = HMMacro;
     CONFIG.ActiveEffect.documentClass = HMActiveEffect;
-    CONFIG.canvasTextStyle._fontFamily = 'Gentium';
+    CONFIG.canvasTextStyle.fontFamily = 'Gentium';
+
+    CONFIG.fontDefinitions['Gentium'] = {
+        editor: true,
+        fonts: [
+            {urls: ['systems/hackmaster5e/styles/fonts/GenBkBasR.woff2']},
+            {urls: ['systems/hackmaster5e/styles/fonts/GenBkBasB.woff2'], weight: 700},
+            {urls: ['systems/hackmaster5e/styles/fonts/GenBkBasI.woff2'], style: 'italic'},
+            {urls: ['systems/hackmaster5e/styles/fonts/GenBkBasBI.woff2'], style: 'italic', weight: 700},
+        ]
+    };
 
     Actors.unregisterSheet('core', ActorSheet);
     Actors.registerSheet('hackmaster', HMCharacterActorSheet, {types: ['character'], makeDefault: true});
