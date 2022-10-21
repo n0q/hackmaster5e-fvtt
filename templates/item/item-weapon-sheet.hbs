@@ -49,6 +49,12 @@
                         </select>
                     </span>
                     <span class='form-option'>
+                        <label class='resource-label'>{{localize 'HM.defense'}}:</label>
+                        <select name='system.defdie' data-dtype='{{system.defdie}}'>
+                            {{selectOptions (findConfigObj 'defDie') selected=system.defdie}}
+                        </select>
+                    </span>
+                    <span class='form-option'>
                         <label class='resource-label'>{{localize 'HM.jab'}}</label>
                         <input type='checkbox' name='system.jab.checked'
                             {{#if system.ranged.checked}}disabled{{/if}} {{checked system.jab.checked}}/>
@@ -129,7 +135,7 @@
                     <span class='grid-2col'>
                         <label class='resource-label'>{{localize 'HM.jab'}}</label>
                         <span class='form-option'>
-                            <label class='resource-label'>{{localize 'HM.speed'}}: </label>
+                            <label class='resource-label' style='padding-left: 1.5em;'>{{localize 'HM.speed'}}: </label>
                             <input type='number' class='editable' value={{system.bonus.base.jspd}}
                                 data-item-prop='system.bonus.base.jspd' data-dtype='Number'/>
                         </span>
