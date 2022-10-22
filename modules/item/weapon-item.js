@@ -192,7 +192,7 @@ export class HMWeaponItem extends HMItem {
 
         const {SPECIAL} = HMCONST;
 
-        if (active) {
+        if (active && opt.isCombatant) {
             // Full Parry, Defensive Fighting exclusivity.
             specialMove === SPECIAL.FULLPARRY
                 ? setStatusEffectOnToken(comData, 'fullparry', dialogResp.resp.advance)
