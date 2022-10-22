@@ -7,7 +7,10 @@ export class HMBeastActorSheet extends HMActorSheet {
             classes: ['hackmaster', 'sheet', 'actor'],
             width: 665,
             height: 770,
-            tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'overview' }],
+            tabs: [
+                { navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'overview'    },
+                { navSelector: '.bio-tabs',   contentSelector: '.bio-body',   initial: 'description' },
+            ],
         });
     }
 

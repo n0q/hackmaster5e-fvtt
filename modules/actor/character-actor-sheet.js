@@ -8,7 +8,10 @@ export class HMCharacterActorSheet extends HMActorSheet {
             classes: ['hackmaster', 'sheet', 'actor'],
             width: 835,
             height: 941,
-            tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'skills' }],
+            tabs: [
+                { navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'skills' },
+                { navSelector: '.bio-tabs',   contentSelector: '.bio-body',   initial: 'wealth' },
+            ],
         });
     }
 
