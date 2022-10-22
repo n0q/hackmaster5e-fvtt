@@ -5,8 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 ### Added
 - Default defense die per weapon.
+- Jab damage formula autocalculation.
 ### Changed
-- Fixed inaccuracies in weapon compendium.
+- Updated weapons compendium.
 - Redesigned various item sheets.
 - Item text editor uses prosemirror.
 
