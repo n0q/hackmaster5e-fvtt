@@ -1,38 +1,24 @@
-<ol class='beast-bio'>
-    <section class='traits'>
-        <label class='resource-label'>{{localize 'HM.description'}}</label>
-        {{editor
-            data.system.bio.desc
-            target="system.bio.desc"
-            button=true
-            editable=editable
-        }}
-    </section>
-    <section class='wealth'>
-        <label class='resource-label'>{{localize 'HM.tactics'}}</label>
-        {{editor
-            data.system.bio.tactics
-            target="system.bio.tactics"
-            button=true
-            editable=editable
-        }}
-    </section>
-    <section class='history'>
-        <label class='resource-label'>{{localize 'HM.habitat'}}</label>
-        {{editor
-            data.system.bio.habitat
-            target="system.bio.habitat"
-            button=true
-            editable=editable
-        }}
-    </section>
-    <section class='family'>
-        <label class='resource-label'>{{localize 'HM.ecology'}}</label>
-        {{editor
-            data.system.bio.ecology
-            target="system.bio.ecology"
-            button=true
-            editable=editable
-        }}
-    </section>
-</ol>
+<nav class='bio-tabs tabs' data-group='primary'>
+    <a class='item' data-tab='desc'>{{localize 'HM.description'}}</a>
+    <a class='item' data-tab='tactics'>{{localize 'HM.tactics'}}</a>
+    <a class='item' data-tab='habitat'>{{localize 'HM.habitat'}}</a>
+    <a class='item' data-tab='ecology'>{{localize 'HM.ecology'}}</a>
+</nav>
+
+<section class='bio-body' style='grid-template-rows: 14rem;'>
+    <div class='tab desc' data-group='primary' data-tab='desc' style='min-height: 20em;'>
+        {{editor data.system.bio.desc target="system.bio.desc" button=true editable=editable engine="prosemirror"}}
+    </div>
+
+    <div class='tab tactics' data-group='primary' data-tab='tactics' style='min-height: 20em;'>
+        {{editor data.system.bio.tactics target="system.bio.tactics" button=true editable=editable engine="prosemirror"}}
+    </div>
+
+    <div class='tab habitat' data-group='primary' data-tab='habitat' style='min-height: 20em;'>
+        {{editor data.system.bio.habitat target="system.bio.habitat" button=true editable=editable engine="prosemirror"}}
+    </div>
+
+    <div class='tab ecology' data-group='primary' data-tab='ecology' style='min-height: 20em;'>
+        {{editor data.system.bio.ecology target="system.bio.ecology" button=true editable=editable engine="prosemirror"}}
+    </div>
+</section>
