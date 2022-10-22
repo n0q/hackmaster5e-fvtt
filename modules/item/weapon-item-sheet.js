@@ -6,7 +6,7 @@ export class HMWeaponItemSheet extends HMItemSheet {
         return mergeObject(super.defaultOptions, {
             classes: ['hackmaster', 'sheet', 'item'],
             width: 680,
-            height: 500,
+            height: 525,
             tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'description' }],
         });
     }
