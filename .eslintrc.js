@@ -21,6 +21,7 @@ module.exports = {
         'DOMPurify': false,
     },
     'rules': {
+        'brace-style': ["error", "1tbs", { "allowSingleLine": true }],
         'import/extensions': 'off',
         'import/prefer-default-export': 'off',
         'import/newline-after-import': 'off',
