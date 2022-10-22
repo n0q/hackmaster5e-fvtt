@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+### Changed
+- Updated weapons compendium.
+### Fixed
+- 'Sticky' speed weapon sheet input.
+- Non-combatants unable to attack while combat is active.
+
 ## [0.2.23] - 2022-10-22
 ### Added
 - Default defense die per weapon.
