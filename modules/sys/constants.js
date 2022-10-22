@@ -82,6 +82,7 @@ export const HMCONST = {
         BACKSTAB:       1,
         DOUBLE:         2,
         NOPENETRATE:    3,
+        HALVE:          4,
     },
     SCALE: {
         TINY:     1,

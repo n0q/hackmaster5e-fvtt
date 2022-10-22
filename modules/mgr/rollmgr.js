@@ -20,9 +20,15 @@ function convertDamageFormula(stringTerms, operation=new Set()) {
             }
 
             if (!terms[i].isDeterministic && terms[i].faces) {
-                const {faces, modifiers} = terms[i];
+                const {faces, modifiers, number} = terms[i];
 
                 if (oper.has(FORMULA_MOD.DOUBLE)) terms[i].number *= 2;
+
+                if (oper.has(FORMULA_MOD.HALVE)) {
+                    number > 1
+                        ? terms[i].number = Math.floor(number / 2)
+                        : terms[i].faces  = Math.max(Math.floor(faces / 2), 1);
+                }
 
                 if (oper.has(FORMULA_MOD.BACKSTAB)) {
                     const mIdx = modifiers.indexOf('p');
@@ -64,10 +70,15 @@ export class HMRollMgr {
         if (dataset.dialog === 'dmg') {
             const {SPECIAL, FORMULA_MOD} = HMCONST;
             const opSet = new Set();
-            if (specialMove === SPECIAL.BACKSTAB)   opSet.add(FORMULA_MOD.BACKSTAB);    else
-            if (specialMove === SPECIAL.FLEEING)    opSet.add(FORMULA_MOD.BACKSTAB);    else
-            if (specialMove === SPECIAL.SET4CHARGE) opSet.add(FORMULA_MOD.DOUBLE);
-            if (defense)                            opSet.add(FORMULA_MOD.NOPENETRATE);
+            const {autoFormula} = resp.resp;
+
+            if (specialMove === SPECIAL.JAB && autoFormula) opSet.add(FORMULA_MOD.HALVE);    else
+            if (specialMove === SPECIAL.BACKSTAB)           opSet.add(FORMULA_MOD.BACKSTAB); else
+            if (specialMove === SPECIAL.FLEEING)            opSet.add(FORMULA_MOD.BACKSTAB); else
+            if (specialMove === SPECIAL.SET4CHARGE)         opSet.add(FORMULA_MOD.DOUBLE);
+
+            if (defense)                                    opSet.add(FORMULA_MOD.NOPENETRATE);
+
             const terms = convertDamageFormula(r.terms, opSet);
             return Roll.fromTerms(terms).evaluate({async: true});
         }
