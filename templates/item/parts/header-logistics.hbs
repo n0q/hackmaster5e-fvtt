@@ -10,30 +10,30 @@
     <span class='form-data'>
         <label class='resource-label'>{{localize 'HM.qty'}}</label>
         {{#if (eq type 'item')}}
-            <input type='number' name='system.qty' value='{{system.qty}}' data-dtype='Number'/>
+            <input class='autoselect' type='number' name='system.qty' value='{{system.qty}}' data-dtype='Number'/>
         {{else}}
-            <input type='number' readonly value='1'/>
+            <input type='number' disabled value='1'/>
         {{/if}}
     </span>
     <span class='form-data'>
         <label class='resource-label'>{{localize 'HM.weight'}}</label>
-        <input type='number' name='system.weight' value='{{system.weight}}' data-dtype='Number'/>
+        <input class='autoselect' type='number' name='system.weight' value='{{system.weight}}' data-dtype='Number'/>
     </span>
     <span class='form-data'>
         <label class='resource-label'>{{localize 'HM.price'}}</label>
-        <input type='text' name='system.price' value='{{system.price}}' data-dtype='String'/>
+        <input class='autoselect' type='text' name='system.price' value='{{system.price}}' data-dtype='String'/>
     </span>
     <span class='form-data'>
         <label class='resource-label'>{{localize 'HM.avail.low'}}</label>
-        <input type='number' name='system.avail.low' value='{{system.avail.low}}' data-dtype='Number'/>
+        <input class='autoselect' type='number' name='system.avail.low' value='{{system.avail.low}}' data-dtype='Number'/>
     </span>
     <span class='form-data'>
         <label class='resource-label'>{{localize 'HM.avail.med'}}</label>
-        <input type='number' name='system.avail.med' value='{{system.avail.med}}' data-dtype='Number'/>
+        <input class='autoselect' type='number' name='system.avail.med' value='{{system.avail.med}}' data-dtype='Number'/>
     </span>
     <span class='form-data'>
         <label class='resource-label'>{{localize 'HM.avail.high'}}</label>
-        <input type='number' name='system.avail.high' value='{{system.avail.high}}' data-dtype='Number'/>
+        <input class='autoselect' type='number' name='system.avail.high' value='{{system.avail.high}}' data-dtype='Number'/>
     </span>
 </section>
 {{/with}}
