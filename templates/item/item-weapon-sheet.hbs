@@ -17,21 +17,21 @@
                 <section name='options' style='padding-right: 10px; border-right: 1px solid;'>
                     <span class='form-option'>
                         <label class='resource-label'>{{localize 'HM.reach'}}</label>
-                        <input class='autoselect' type='number' name='system.reach' value='{{system.reach}}'/>
+                        <input type='number' name='system.reach' value='{{system.reach}}'/>
                     </span>
                     <span class='form-option'>
                         <label class='resource-label'>{{localize 'HM.ability.str'}}</label>
-                        <input class='autoselect' type='number' name='system.req.str' value='{{system.req.str}}'/>
+                        <input type='number' name='system.req.str' value='{{system.req.str}}'/>
                     </span>
                     <span class='form-option'>
                         <label class='resource-label'>{{localize 'HM.speed'}}</label>
-                        <input class='autoselect' type='number' class='editable' value={{system.bonus.base.spd}}
+                        <input type='number' class='editable' value={{system.bonus.base.spd}}
                             {{#if system.ranged.checked}}disabled{{/if}}
                             data-item-prop='system.bonus.base.spd' data-dtype='Number'/>
                     </span>
                     <span class='form-option'>
                         <label class='resource-label'>{{localize 'HM.quality'}}</label>
-                        <input class='autoselect' type='number' class='editable' value='{{system.qn}}'
+                        <input type='number' class='editable' value='{{system.qn}}'
                             data-item-prop='system.qn' data-dtype='Number'/>
                     </span>
                     <span class='form-option'>
@@ -111,27 +111,27 @@
                     <br>
                     <span class='form-option'>
                         <label class='resource-label'>{{localize 'HM.load'}}</label>
-                        <input type='number' class='timing autoselect' name='system.ranged.timing.load'
+                        <input type='number' class='timing' name='system.ranged.timing.load'
                             value='{{system.ranged.timing.load}}' data-dtype='Number'/>
                     </span>
                     <span class='form-option'>
                         <label class='resource-label'>{{localize 'HM.draw'}}/Spin/Crank</label>
-                        <input type='number' class='timing autoselect' name='system.ranged.timing.draw'
+                        <input type='number' class='timing' name='system.ranged.timing.draw'
                             value='{{system.ranged.timing.draw}}' data-dtype='Number'/>
                     </span>
                     <span class='form-option'>
                         <label class='resource-label'>{{localize 'HM.aim'}}</label>
-                        <input type='number' class='timing autoselect' name='system.ranged.timing.aim'
+                        <input type='number' class='timing' name='system.ranged.timing.aim'
                             value='{{system.ranged.timing.aim}}' data-dtype='Number'/>
                     </span>
                     <span class='form-option'>
                         <label class='resource-label'>{{localize 'HM.fire'}}</label>
-                        <input type='number' class='timing autoselect' name='system.ranged.timing.fire'
+                        <input type='number' class='timing' name='system.ranged.timing.fire'
                             value='{{system.ranged.timing.fire}}' data-dtype='Number'/>
                     </span>
                     <span class='form-option'>
                         <label class='resource-label'>{{localize 'HM.recover'}}</label>
-                        <input type='number' class='timing autoselect' name='system.ranged.timing.recover'
+                        <input type='number' class='timing' name='system.ranged.timing.recover'
                             value='{{system.ranged.timing.recover}}' data-dtype='Number'/>
                     </span>
                     {{else if system.jab.checked}}
@@ -140,7 +140,7 @@
                         <label class='resource-label'>{{localize 'HM.jab'}}</label>
                         <span class='form-option'>
                             <label class='resource-label' style='padding-left: 1.5em;'>{{localize 'HM.speed'}}: </label>
-                            <input type='number' class='editable autoselect' value={{system.bonus.base.jspd}}
+                            <input type='number' class='editable' value={{system.bonus.base.jspd}}
                                 data-item-prop='system.bonus.base.jspd' data-dtype='Number'/>
                         </span>
                     </span>
