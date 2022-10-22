@@ -4,6 +4,7 @@ $max_grid_cols: 12;
         display: grid;
         grid-column: span $i / span $i;
         grid-template-columns: repeat($i, minmax(0, 1fr));
+        grid-gap: $padding-sm $padding-md;
         margin: 0;
         padding: 0;
     }

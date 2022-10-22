@@ -193,8 +193,10 @@
             "dmg":  {"normal": "", "shield": "", "type": "hacking"},
             "jab":  {"normal": "", "shield": "", "checked": false},
             "caps": {},
+            "req": {"str": 0},
             "qn": 0,
             "reach": 0,
+            "defdie": 0,
             "ranged": {"checked": false}
         },
 

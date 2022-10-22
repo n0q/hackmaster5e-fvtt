@@ -7,6 +7,7 @@ import { HMWeaponItem } from './modules/item/weapon-item.js';
 import { HMSpellItem } from './modules/item/spell-item.js';
 import { HMItemFactory } from './modules/item/item-factory.js';
 import { HMItemSheet } from './modules/item/item-sheet.js';
+import { HMArmorItemSheet } from './modules/item/armor-item-sheet.js';
 import { HMWeaponItemSheet } from './modules/item/weapon-item-sheet.js';
 import { HMChatMgr } from './modules/mgr/chatmgr.js';
 import { HMCombat, HMCombatTracker } from './modules/sys/combat.js';
@@ -29,7 +30,17 @@ Hooks.once('init', async () => {
     CONFIG.ui.combat = HMCombatTracker;
     CONFIG.Macro.documentClass = HMMacro;
     CONFIG.ActiveEffect.documentClass = HMActiveEffect;
-    CONFIG.canvasTextStyle._fontFamily = 'Gentium';
+    CONFIG.canvasTextStyle.fontFamily = 'Gentium';
+
+    CONFIG.fontDefinitions['Gentium'] = {
+        editor: true,
+        fonts: [
+            {urls: ['systems/hackmaster5e/styles/fonts/GenBkBasR.woff2']},
+            {urls: ['systems/hackmaster5e/styles/fonts/GenBkBasB.woff2'], weight: 700},
+            {urls: ['systems/hackmaster5e/styles/fonts/GenBkBasI.woff2'], style: 'italic'},
+            {urls: ['systems/hackmaster5e/styles/fonts/GenBkBasBI.woff2'], style: 'italic', weight: 700},
+        ]
+    };
 
     Actors.unregisterSheet('core', ActorSheet);
     Actors.registerSheet('hackmaster', HMCharacterActorSheet, {types: ['character'], makeDefault: true});
@@ -37,6 +48,7 @@ Hooks.once('init', async () => {
 
     Items.unregisterSheet('core', ItemSheet);
     Items.registerSheet('hackmaster', HMItemSheet, {makeDefault: true});
+    Items.registerSheet('hackmaster', HMArmorItemSheet, {types: ['armor'], makeDefault: true});
     Items.registerSheet('hackmaster', HMWeaponItemSheet, {types: ['weapon'], makeDefault: true});
 
     registerHandlebarsHelpers();

@@ -46,6 +46,8 @@ export class HMItemSheet extends ItemSheet {
         if (!this.options.editable) return;
 
         html.find('.editable').change(this._onEdit.bind(this));
+
+        $(document).ready(() => $('.autoselect').focus(function autoselect() { $(this).select(); }));
     }
 
     async _onEdit(ev) {

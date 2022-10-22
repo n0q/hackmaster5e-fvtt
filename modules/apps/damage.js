@@ -47,23 +47,33 @@ export class DamagePrompt extends HMPrompt {
         const shieldHit = this.dialogData.shieldHit === 'true';
         const jabbed   = specialMove === HMCONST.SPECIAL.JAB;
         const backstab = specialMove === HMCONST.SPECIAL.BACKSTAB;
+        const {weapons, widx} = this.dialogData;
         let formulaType;
+        let autoFormula = false;
 
-        /* eslint 'space-in-parens': 0 */
+        if (jabbed) {
+            const {normal, shield} = weapons[widx].system.jab;
+            const autoStd    = (!normal || normal === 'auto');
+            const autoShield = (!shield || shield === 'auto');
+
+            if (!shieldHit) { formulaType = autoStd    ? 'standard' : 'jab';       } else
+            if  (shieldHit) { formulaType = autoShield ? 'shield'   : 'shieldjab'; }
+            autoFormula = autoStd || autoShield;
+        } else
+
         if (backstab && !shieldHit) { formulaType = 'bstab';       } else
         if (backstab &&  shieldHit) { formulaType = 'shieldbstab'; } else
-        if (!jabbed  && !shieldHit) { formulaType = 'standard';    } else
-        if (!jabbed  &&  shieldHit) { formulaType = 'shield';      } else
-        if ( jabbed  && !shieldHit) { formulaType = 'jab';         } else
-        if ( jabbed  &&  shieldHit) { formulaType = 'shieldjab';   }
+        if             (!shieldHit) { formulaType = 'standard';    } else
+        if              (shieldHit) { formulaType = 'shield';      }
 
         const dialogResp = {
-            widx: this.dialogData.widx,
+            widx,
             bonus: parseInt(this.dialogData.bonus, 10) || 0,
             defense: this.dialogData?.caller.fightingDefensively,
             specialMove,
             shieldHit,
             formulaType,
+            autoFormula,
         };
         return dialogResp;
     }

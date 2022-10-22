@@ -1,6 +1,6 @@
 import { HMTABLES, HMCONST } from '../sys/constants.js';
 
-function convertDamageFormula(stringTerms, operation=null) {
+function convertDamageFormula(stringTerms, operation=new Set()) {
     const {FORMULA_MOD} = HMCONST;
     const setComparator = (sterms, oper, r=5) => {
         if (r < 0) return;
@@ -10,22 +10,32 @@ function convertDamageFormula(stringTerms, operation=null) {
             // PoolTerms contain sets of terms we need to evaluate.
             if (terms[i].rolls) {
                 for (let j = 0; j < terms[i].rolls.length; j++) {
-                    // eslint-disable-next-line
-                    const subTerms = setComparator(terms[i].rolls[j].terms, oper, --r);
+                    const subTerms = setComparator(terms[i].rolls[j].terms, oper, r - 1);
                     if (subTerms) terms[i].rolls[j] = Roll.fromTerms(Roll.simplifyTerms(subTerms));
                 }
+
                 const {modifiers} = terms[i];
                 terms[i] = PoolTerm.fromRolls(terms[i].rolls);
                 terms[i].modifiers = modifiers;
             }
 
             if (!terms[i].isDeterministic && terms[i].faces) {
-                const {faces, modifiers} = terms[i];
-                if (oper.includes(FORMULA_MOD.DOUBLE)) terms[i].number *= 2;
-                else if (oper.includes(FORMULA_MOD.BACKSTAB)) {
+                const {faces, modifiers, number} = terms[i];
+
+                if (oper.has(FORMULA_MOD.DOUBLE)) terms[i].number *= 2;
+
+                if (oper.has(FORMULA_MOD.HALVE)) {
+                    number > 1
+                        ? terms[i].number = Math.floor(number / 2)
+                        : terms[i].faces  = Math.max(Math.floor(faces / 2), 1);
+                }
+
+                if (oper.has(FORMULA_MOD.BACKSTAB)) {
                     const mIdx = modifiers.indexOf('p');
                     if (!Number.isNaN(mIdx)) terms[i].modifiers[mIdx] = `p>${faces - 2}`;
-                } else if (oper.includes(FORMULA_MOD.NOPENETRATE)) {
+                }
+
+                if (oper.has(FORMULA_MOD.NOPENETRATE)) {
                     const mIdx = modifiers.indexOf('p');
                     if (!Number.isNaN(mIdx)) terms[i].modifiers.splice(mIdx, 1);
                 }
@@ -59,12 +69,17 @@ export class HMRollMgr {
 
         if (dataset.dialog === 'dmg') {
             const {SPECIAL, FORMULA_MOD} = HMCONST;
-            const operation = [];
-            if (specialMove === SPECIAL.BACKSTAB)   operation.push(FORMULA_MOD.BACKSTAB); else
-            if (specialMove === SPECIAL.FLEEING)    operation.push(FORMULA_MOD.BACKSTAB); else
-            if (specialMove === SPECIAL.SET4CHARGE) operation.push(FORMULA_MOD.DOUBLE);
-            if (defense)                            operation.push(FORMULA_MOD.NOPENETRATE);
-            const terms = convertDamageFormula(r.terms, operation);
+            const opSet = new Set();
+            const {autoFormula} = resp.resp;
+
+            if (specialMove === SPECIAL.JAB && autoFormula) opSet.add(FORMULA_MOD.HALVE);    else
+            if (specialMove === SPECIAL.BACKSTAB)           opSet.add(FORMULA_MOD.BACKSTAB); else
+            if (specialMove === SPECIAL.FLEEING)            opSet.add(FORMULA_MOD.BACKSTAB); else
+            if (specialMove === SPECIAL.SET4CHARGE)         opSet.add(FORMULA_MOD.DOUBLE);
+
+            if (defense)                                    opSet.add(FORMULA_MOD.NOPENETRATE);
+
+            const terms = convertDamageFormula(r.terms, opSet);
             return Roll.fromTerms(terms).evaluate({async: true});
         }
 

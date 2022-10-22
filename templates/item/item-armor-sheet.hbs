@@ -1,85 +1,73 @@
-<form class="{{cssClass}}" autocomplete="off">
-    {{> "systems/hackmaster5e/templates/item/parts/header-logistics.hbs" }}
+<form class='{{cssClass}}' autocomplete='off'>
+    {{> 'systems/hackmaster5e/templates/item/parts/header-logistics.hbs' }}
 
-    <nav class="sheet-tabs tabs" data-group="primary">
-        <a class="item" data-tab="description">Description</a>
-        <a class="item" data-tab="attributes">Attributes</a>
+    <nav class='sheet-tabs tabs' data-group='primary'>
+        <a class='item' data-tab='description'>Description</a>
+        <a class='item' data-tab='attributes'>Attributes</a>
     </nav>
 
-    <section class="sheet-body">
-        <div class="tab" data-group="primary" data-tab="description">
-            {{> "systems/hackmaster5e/templates/item/parts/description.hbs" }}
+    <section class='sheet-body'>
+        <div class='tab' data-group='primary' data-tab='description'>
+            {{> 'systems/hackmaster5e/templates/item/parts/description.hbs' }}
         </div>
 
-        <div class="tab attributes" data-group="primary" data-tab="attributes">
-            <div class="item-form">
-                {{#with data}} 
-                <div class="sidepanel">
-                    <div class="options-block">
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.dr"}}</label>
-                            <input type="number" class="editable" value="{{system.bonus.base.dr}}"
-                                data-item-prop="system.bonus.base.dr"
-                                data-dtype="Number"/>
-                        </div>
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.def"}}</label>
-                            <input type="number" class="editable" value="{{system.bonus.base.def}}"
-                                data-item-prop="system.bonus.base.def"
-                                data-dtype="Number"/>
-                        </div>
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.init"}}</label>
-                            <input type="number" class="editable" value="{{system.bonus.base.init}}"
-                                data-item-prop="system.bonus.base.init"
-                                data-dtype="Number"/>
-                        </div>
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.speed"}}</label>
-                            <input type="number" class="editable" value="{{system.bonus.base.spd}}"
-                                data-item-prop="system.bonus.base.spd"
-                                data-dtype="Number"/>
-                        </div>
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.move"}}</label>
-                            <input type="text" class="editable" value="{{pct system.bonus.base.move}}"
-                                style='width: 2.5rem; text-align: right;'
-                                data-item-prop="system.bonus.base.move"
-                                data-dtype="Percent"/>
-                        </div>
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.shield"}}</label>
-                            <input type="checkbox" name="system.shield.checked" {{checked system.shield.checked}}/>
-                        </div>
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.quality"}}</label>
-                            <input type="number" class="editable" value="{{system.qn}}"
-                                data-item-prop="system.qn"
-                                data-dtype="Number"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="sidepanel">
-                    <div class="options-block">
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.proficiency"}}</label>
-                            <input type="text" name="system.proficiency" value="{{system.proficiency}}"
-                            data-dtype="String"/>
-                        </div>
-                        {{#if shield.checked}}{{else}}
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.armortype"}}</label>
-                            <select name="system.armortype">
-                                {{#select system.armortype}}{{#each (findConfigObj "armortype") as |type t|}}
-                                    <option value="{{t}}">{{localize type}}</option>
-                                {{/each}}{{/select}}
-                            </select>
-                        </div>
-                        {{/if}}
-                    </div>
-                </div>
-                {{/with}}
+        {{#with data}} 
+        <div class='tab attributes newform' data-group='primary' data-tab='attributes'>
+            <div class='grid-2col' style='grid-template-columns: 40% 1fr; padding-top: 5px;'>
+                <section name='options' style='padding-right: 10px; border-right: 1px solid;'>
+                    <span class='form-option'>
+                        <label class='resource-label'>{{localize 'HM.dr'}}</label>
+                        <input type='number' class='editable autoselect' value='{{system.bonus.base.dr}}'
+                            data-item-prop='system.bonus.base.dr' data-dtype='Number'/>
+                    </span>
+                    <span class='form-option'>
+                        <label class='resource-label'>{{localize 'HM.def'}}</label>
+                        <input type='number' class='editable autoselect' value='{{system.bonus.base.def}}'
+                            data-item-prop='system.bonus.base.def' data-dtype='Number'/>
+                    </span>
+                    <span class='form-option'>
+                        <label class='resource-label'>{{localize 'HM.init'}}</label>
+                        <input type='number' class='editable autoselect' value='{{system.bonus.base.init}}'
+                            data-item-prop='system.bonus.base.init' data-dtype='Number'/>
+                    </span>
+                    <span class='form-option'>
+                        <label class='resource-label'>{{localize 'HM.speed'}}</label>
+                        <input type='number' class='editable autoselect' value='{{system.bonus.base.spd}}'
+                            data-item-prop='system.bonus.base.spd' data-dtype='Number'/>
+                    </span>
+                    <span class='form-option'>
+                        <label class='resource-label'>{{localize 'HM.move'}}</label>
+                        <input type='text' class='editable autoselect' value='{{pct system.bonus.base.move}}'
+                            data-item-prop='system.bonus.base.move' data-dtype='Percent'/>
+                    </span>
+                    <span class='form-option'>
+                        <label class='resource-label'>{{localize 'HM.quality'}}</label>
+                        <input type='number' class='editable autoselect' value='{{system.qn}}'
+                            data-item-prop='system.qn' data-dtype='Number'/>
+                    </span>
+                    <span class='form-option'>
+                        <label class='resource-label'>{{localize 'HM.shield'}}</label>
+                        <input type='checkbox' name='system.shield.checked' {{checked system.shield.checked}}/>
+                    </span>
+                </section>
+                <section name='specifics'>
+                    <span class='form-option'>
+                        <label class='resource-label'>{{localize 'HM.proficiency'}}</label>
+                        <input type='text' style='width: 12em;' name='system.proficiency'
+                            value='{{system.proficiency}}' data-dtype='String'/>
+                    </span>
+                    {{#unless system.shield.checked}}
+                    <hr>
+                    <span class='form-option'>
+                        <label class='resource-label'>{{localize 'HM.armortype'}}</label>
+                        <select name='system.armortype' data-dtype='{{system.armortype}}'>
+                            {{selectOptions (findConfigObj 'armortype') selected=system.armortype localize=true}}
+                        </select>
+                    </span>
+                    {{/unless}}
+                </section>
             </div>
-        </div> 
+        </div>
+        {{/with}}
     </section>
 </form>
