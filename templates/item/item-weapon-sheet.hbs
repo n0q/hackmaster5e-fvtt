@@ -16,8 +16,12 @@
             <div class='grid-2col' style='grid-template-columns: 40% 1fr; padding-top: 5px;'>
                 <section name='options' style='padding-right: 10px; border-right: 1px solid;'>
                     <span class='form-option'>
-                        <label class='resource-label'>{{localize 'HM.reach'}}:</label>
+                        <label class='resource-label'>{{localize 'HM.reach'}}</label>
                         <input type='number' name='system.reach' value='{{system.reach}}'>
+                    </span>
+                    <span class='form-option'>
+                        <label class='resource-label'>{{localize 'HM.ability.str'}}</label>
+                        <input type='number' name='system.req.str' value='{{system.req.str}}'>
                     </span>
                     <span class='form-option'>
                         <label class='resource-label'>{{localize 'HM.speed'}}</label>
@@ -31,25 +35,25 @@
                             data-item-prop='system.qn' data-dtype='Number'/>
                     </span>
                     <span class='form-option'>
-                        <label class='resource-label'>{{localize 'HM.type'}}:</label>
+                        <label class='resource-label'>{{localize 'HM.type'}}</label>
                         <select name='system.dmg.type' data-dtype='{{system.dmg.type}}'>
                             {{selectOptions (findConfigObj 'physdmgtype') selected=system.dmg.type localize=true}}
                         </select>
                     </span>
                     <span class='form-option'>
-                        <label class='resource-label'>{{localize 'HM.skill'}}:</label>
+                        <label class='resource-label'>{{localize 'HM.skill'}}</label>
                         <select name='system.skill' data-dtype='{{system.skill}}'>
                             {{selectOptions (findConfigObj 'weaponskill') selected=system.skill localize=true}}
                         </select>
                     </span>
                     <span class='form-option'>
-                        <label class='resource-label'>{{localize 'HM.size'}}:</label>
+                        <label class='resource-label'>{{localize 'HM.size'}}</label>
                         <select name='system.scale' {{#if system.innate}}disabled{{/if}} data-dtype='{{system.scale}}'>
                             {{selectOptions (findConfigObj 'scale') selected=system.scale localize=true}}
                         </select>
                     </span>
                     <span class='form-option'>
-                        <label class='resource-label'>{{localize 'HM.defense'}}:</label>
+                        <label class='resource-label'>{{localize 'HM.defense'}}</label>
                         <select name='system.defdie' data-dtype='{{system.defdie}}'>
                             {{selectOptions (findConfigObj 'defDie') selected=system.defdie}}
                         </select>

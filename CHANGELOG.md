@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - Default defense die per weapon.
 - Jab damage formula autocalculation.
+- Min strength weapon requirement (currently for display only).
 ### Changed
 - Updated weapons compendium.
 - Redesigned various item sheets.
