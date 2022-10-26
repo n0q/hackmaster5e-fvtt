@@ -610,6 +610,10 @@
         "misc":         "Misc"
     },
 
+    "CONTROLS": {
+        "reachview":    "Reach View"
+    },
+
     "COMBAT": {
         "Round":        "Count",
         "Rounds":       "Counts"

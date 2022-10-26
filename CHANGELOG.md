@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+### Added
+- Melee reach/threat range display.
+- "all-tokens" reach display toggle control. 
+
 ## [0.2.24] - 2022-10-22
 ### Changed
 - Updated weapons compendium.
