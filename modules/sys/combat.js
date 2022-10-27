@@ -49,58 +49,70 @@ export class HMCombat extends Combat {
 
     static async preDeleteCombat(combat) {
         const combatants = combat.turns;
+
         combatants.forEach((x) => {
             const effects = x.actor.effects.filter((y) => y.isTemporary
-                                                       && y.disabled
-                                                       && y.duration.combat.id === combat.id);
+                                                       && y.disabled);
+                                                    // && y.duration.combat.id === combat.id);
             effects.forEach((effect) => x.actor.deleteEmbeddedDocuments('ActiveEffect', [effect.id]));
         });
+    }
+
+    static async createCombatant(combatant) {
+        const {tokenId} = combatant;
+        const token = game.canvas.tokens.placeables.find((x) => x.id === tokenId);
+        if (token) token.drawReach();
+    }
+
+    static async deleteCombatant(combatant) {
+        const {tokenId} = combatant;
+        const token = game.canvas.tokens.placeables.find((x) => x.id === tokenId);
+        if (token) token.drawReach();
     }
 }
 
 export class HMCombatTracker extends CombatTracker {
     static get defaultOptions() {
         const opt = super.defaultOptions;
-        opt.title = "Count Up";
+        opt.title = game.i18n.localize('HM.countup');
         return opt;
     }
 
-    static renderCombatTracker(tracker, html, data) {
-        removeTurnControls(html);
-        DoubleclickSetsInitiative(html);
-
-        function removeTurnControls(html) {
-            if (!html.find("[data-control='nextTurn']").length) return;
-            html.find("[data-control='nextTurn']")[0].remove();
-            html.find("[data-control='previousTurn']")[0].remove();
-            html.find(".active").removeClass("active");
+    static renderCombatTracker(_tracker, html) {
+        function removeTurnControls(html) { // eslint-disable-line
+            if (!html.find('[data-control=\'nextTurn\']').length) return;
+            html.find('[data-control=\'nextTurn\']')[0].remove();
+            html.find('[data-control=\'previousTurn\']')[0].remove();
+            html.find('.active').removeClass('active');
         }
 
-        function DoubleclickSetsInitiative(html) {
+        function DoubleclickSetsInitiative(html) { // eslint-disable-line
             html.find('.token-initiative').off('dblclick').on('dblclick', HMCombatTracker._onInitiativeDblClick);
-            for (let combatant of html.find('#combat-tracker li.combatant')) {
+            for (const combatant of html.find('#combat-tracker li.combatant')) {
                 if (combatant.classList.contains('active')) break;
                 combatant.classList.add('turn-done');
             }
         }
+
+        removeTurnControls(html);
+        DoubleclickSetsInitiative(html);
     }
 
-    // Adapted from FurnaceCombatQoL
     static _onInitiativeDblClick(event) {
         event.stopPropagation();
         event.preventDefault();
-        let html = $(event.target).closest(".combatant");
-        let cid = html.data("combatant-id");
-        let combatant = game.combat.combatants.get(cid);
+        const html = $(event.target).closest('.combatant');
+        const cid = html.data('combatant-id');
+        const combatant = game.combat.combatants.get(cid);
         if (!combatant.isOwner) return;
 
-        let initiative = html.find(".token-initiative");
-        let input = $(`<input type="number" class="initiative" value="${combatant.initiative}"/>`);
-        initiative.off("dblclick");
+        const initiative = html.find('.token-initiative');
+        const input = $(`<input type="number" class="initiative" value="${combatant.initiative}"/>`);
+        initiative.off('dblclick');
         initiative.empty().append(input);
         input.focus().select();
-        input.on('change', ev => combatant.update({ _id: cid, initiative: input.val() }));
-        input.on('focusout', ev => game.combats.render());
+        input.on('change', () => combatant.update({ _id: cid, initiative: input.val() }));
+        input.on('focusout', () => game.combats.render());
     }
 
     // Shorting out mousedown events on token initiative so dblclicks
