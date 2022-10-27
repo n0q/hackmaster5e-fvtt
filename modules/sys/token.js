@@ -45,7 +45,8 @@ export class HMToken extends Token {
     async drawReach(hovered=false) {
         this.reach.removeChildren().forEach((c) => c.destroy());
         const reach = getReach(this.actor);
-        if ((!hovered && !reach.visible) && !game.user.showAllThreats) return;
+        if (!hovered && !reach.visible && !game.user.showAllThreats) return;
+        if (!this.combatant) return;
 
         if (reach) {
             const gfx = this.reach.addChild(new PIXI.Graphics());

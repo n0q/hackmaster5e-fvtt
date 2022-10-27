@@ -455,6 +455,7 @@
         "combat":       "Combat",
         "components":   "Components",
         "cost":         "Cost",
+        "countup":      "Count Up",
         "custom":       "Custom",
         "critical":     "Critical",
         "critfail":     "Critical Failure",

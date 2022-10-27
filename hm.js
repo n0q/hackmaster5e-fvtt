@@ -34,14 +34,14 @@ Hooks.once('init', async () => {
     CONFIG.ActiveEffect.documentClass = HMActiveEffect;
     CONFIG.canvasTextStyle.fontFamily = 'Gentium';
 
-    CONFIG.fontDefinitions['Gentium'] = {
+    CONFIG.fontDefinitions.Gentium = {
         editor: true,
         fonts: [
             {urls: ['systems/hackmaster5e/styles/fonts/GenBkBasR.woff2']},
             {urls: ['systems/hackmaster5e/styles/fonts/GenBkBasB.woff2'], weight: 700},
             {urls: ['systems/hackmaster5e/styles/fonts/GenBkBasI.woff2'], style: 'italic'},
             {urls: ['systems/hackmaster5e/styles/fonts/GenBkBasBI.woff2'], style: 'italic', weight: 700},
-        ]
+        ],
     };
 
     Actors.unregisterSheet('core', ActorSheet);
@@ -77,14 +77,16 @@ Hooks.once('dragRuler.ready', HMSupport.dragRuler_ready);
 Hooks.on('applyActiveEffect', HMActiveEffect.applyActiveEffect);
 Hooks.on('createActiveEffect', HMActiveEffect.createActiveEffect);
 Hooks.on('createActor', HMActor.createActor);
-Hooks.on('canvasReady', () => canvas.tokens.placeables.forEach((t) => t.draw()));
 Hooks.on('createToken', HMActor.createToken);
 Hooks.on('hoverToken', (token, state) => token.drawReach(state));
 Hooks.on('createItem', HMItem.createItem);
 Hooks.on('updateItem', HMWeaponItem.updateItem);
 Hooks.on('renderChatMessage', HMChatMgr.renderChatMessage);
 Hooks.on('updateCombat', HMCombat.updateCombat);
+Hooks.on('createCombatant', HMCombat.createCombatant);
+Hooks.on('deleteCombatant', HMCombat.deleteCombatant);
 Hooks.on('preDeleteCombat', HMCombat.preDeleteCombat);
+Hooks.on('deleteCombat', () => canvas.tokens.placeables.forEach((t) => t.drawReach()));
 Hooks.on('renderCombatTracker', HMCombatTracker.renderCombatTracker);
 Hooks.on('renderSceneControls', HMToken.renderSceneControls);
 Hooks.on('getSceneControlButtons', HMToken.getSceneControlButtons);
