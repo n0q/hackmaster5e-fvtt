@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - Melee reach/threat range display.
 - "all-tokens" reach display toggle control. 
+### Changed
+- Redesigned race item sheet.
 
 ## [0.2.24] - 2022-10-22
 ### Changed
