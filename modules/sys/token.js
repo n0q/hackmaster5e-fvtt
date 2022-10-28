@@ -11,12 +11,13 @@ function newReach(distance, color, visible) {
 }
 
 function getReach(actor) {
-    const weapon = actor.itemTypes.weapon
-        .find((a) => a.system.state === HMCONST.ITEM_STATE.EQUIPPED);
+    // TODO: Users should be able to manually select a weapon.
+    const weapons = actor.itemTypes.weapon.filter((a) => !a.system.ranged.checked);
+    const weapon = weapons.find((a) => a.system.state === HMCONST.ITEM_STATE.EQUIPPED)
+                ?? weapons.find((a) => a.system.innate);
+    if (!weapon) return [];
 
-    if (!weapon || weapon.system.ranged.checked) return [];
-
-    const reach = (weapon.system.reach || 0) + (actor.system.bonus.total.reach || 0);
+    const reach = (weapon.system.reach || 0) + (actor.system.bonus.total?.reach || 0);
     const distance = Math.max(reach, 0) + (game.canvas.scene.grid.distance / 2);
 
     let color;
