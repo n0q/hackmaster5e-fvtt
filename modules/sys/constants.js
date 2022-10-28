@@ -69,6 +69,13 @@ export const HMCONST = {
         SPRINT: 4,
     },
     RANGED: {
+        REACH: {
+            MINIMUM: 0,
+            SHORT:   1,
+            MEDIUM:  2,
+            LONG:    3,
+            EXTREME: 4,
+        },
         TIMER: {
             AIM:     0,
             LOAD:    1,
@@ -401,8 +408,8 @@ export const HMTABLES = {
             [HMCONST.SPECIAL.SCAMPER]: '@resp.defdie + @bonus.total.def + 5 + @resp.bonus',
             [HMCONST.SPECIAL.GGROUND]: '@resp.defdie + @bonus.total.def + 5 + @resp.bonus',
         },
-        'ratk': {
-            'standard': 'd20p + @bonus.total.atk - @resp.range + @resp.bonus',
+        ratk: {
+            [HMCONST.SPECIAL.STANDARD]: 'd20p + @bonus.total.atk - @resp.reachmod + @resp.bonus',
         },
         'save': {
             'dodge':    'd20p +  @bonus.total.dodge    + @resp.bonus',
@@ -614,7 +621,7 @@ export const HMTABLES = {
             ],
         },
         s4c: { spd: 3 },
-        'scale': {
+        scale: {
             [HMCONST.SCALE.TINY]:     {'minspd': 1},
             [HMCONST.SCALE.SMALL]:    {'minspd': 2},
             [HMCONST.SCALE.MEDIUM]:   {'minspd': 3},
@@ -624,20 +631,20 @@ export const HMTABLES = {
             [HMCONST.SCALE.ENORMOUS]: {'minspd': 8},
             [HMCONST.SCALE.COLOSSAL]: {'minspd': 15},
         },
-        'ranged': {
-            'penalty': {
-                'short':    0,
-                'medium':  -4,
-                'long':    -6,
-                'extreme': -8,
+        ranged: {
+            reach: {
+                [HMCONST.RANGED.REACH.SHORT]:    0,
+                [HMCONST.RANGED.REACH.MEDIUM]:   4,
+                [HMCONST.RANGED.REACH.LONG]:     6,
+                [HMCONST.RANGED.REACH.EXTREME]:  8,
             },
-            'minspd': (timing) => {
+            minspd: (timing) => {
                 if (!timing) return 4;
                 let minRoF = 0;
                 Object.keys(timing).forEach((i) => { if (timing[i]) minRoF++; });
                 return minRoF;
             },
-            'timing': (timing, base) => {
+            timing: (timing, base) => {
                 if (!timing) return {base, declare: base, shoot: 0};
 
                 const mod = (x, y) => ((x % y) + y) % y;

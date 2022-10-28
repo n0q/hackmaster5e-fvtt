@@ -40,10 +40,11 @@ export default function registerHandlebarsHelpers() {
         return getProperty(vector, arg2);
     });
 
-    Handlebars.registerHelper('encumbranceSelect', (opts) => {
-        const {encumbrance} = opts.data.root.actor;
-        const label = idx.encumbrance;
-        return {...encumbrance.map((x, i) => `${game.i18n.localize(label[i])} (${x} lbs.)`)};
+    Handlebars.registerHelper('mapSelect', (obj1, obj2, suffix) => {
+        let cross = Array.isArray(obj1) ? obj1 : Object.values(obj1);
+        let label = idx[obj2];
+
+        return {...cross.map((x, i) => `${game.i18n.localize(label[i])} (${x} ${suffix})`)};
     });
 
     Handlebars.registerHelper('getFlag', (scope, key, opts) => opts.data.root.actor.getFlag(scope, key));

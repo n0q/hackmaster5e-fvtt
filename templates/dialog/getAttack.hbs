@@ -18,7 +18,11 @@
             {{#if ranged}}
             <label>{{localize 'HM.dialog.getAttackRangeBody'}}</label>
             <select name='range' class='bind' data-prop='range' data-render=true>
-                {{selectOptions (findConfigObj 'range') selected=range localize=true}}
+                {{#select range}}{{#each (mapSelect reach 'reach' 'ft')}}
+                    {{#unless @first}}
+                    <option value='{{@index}}'>{{localize this}}</option>
+                    {{/unless}}
+                {{/each}}{{/select}}
             </select>
             {{else if (eq SPECIAL.CHARGE specialMove)}}
             <label>{{localize 'HM.dialog.getChargeSpdBody'}}</label>
