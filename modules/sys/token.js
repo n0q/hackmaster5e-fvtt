@@ -22,13 +22,24 @@ function getReach(actor) {
 
     let color;
     let visible;
+    const defaultColor = '#ffffff';
 
     if (actor.hasPlayerOwner) {
-        const owner = game.users.find((a) => a.character?.id === actor.id);
-        color = owner.color;
-        visible = game.userId === owner.id;
+        let owner = game.users.find((a) => a.character?.id === actor.id);
+        if (!owner) {
+            const userId = Object.entries(actor.ownership).find((a) => {
+                const [uid, pl] = a;
+                const isOwner = pl === CONST.DOCUMENT_PERMISSION_LEVELS.OWNER;
+                const isGM = game.users.get(uid)?.isGM;
+                return isOwner && !isGM && uid !== 'default';
+            })[0];
+            owner = game.users.get(userId);
+        }
+
+        color = owner?.color ?? defaultColor;
+        visible = game.userId === owner?.id;
     } else {
-        color = '#ffffff';
+        color = defaultColor;
         visible = game.user.isGM;
     }
 
