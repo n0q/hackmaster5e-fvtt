@@ -14,7 +14,7 @@ function getReach(actor) {
     const weapon = actor.itemTypes.weapon
         .find((a) => a.system.state === HMCONST.ITEM_STATE.EQUIPPED);
 
-    if (!weapon) return [];
+    if (!weapon || weapon.system.ranged.checked) return [];
 
     const reach = (weapon.system.reach || 0) + (actor.system.bonus.total.reach || 0);
     const distance = Math.max(reach, 0) + (game.canvas.scene.grid.distance / 2);

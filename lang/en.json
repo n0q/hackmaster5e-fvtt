@@ -202,10 +202,11 @@
         },
 
         "rangeSelect": {
-            "short":    "Short",
-            "medium":   "Medium",
+            "extreme":  "Extreme",
             "long":     "Long",
-            "extreme":  "Extreme"
+            "medium":   "Medium",
+            "minimum":  "Minimum",
+            "short":    "Short"
         },
 
         "saves": {
@@ -603,6 +604,7 @@
         "verydifficult": "Very Difficult",
         "wealth":       "Wealth",
         "weapon":       "Weapon",
+        "wranges":      "Weapon Ranges",
         "weight":       "Weight",
         "wound":        "Wound",
 

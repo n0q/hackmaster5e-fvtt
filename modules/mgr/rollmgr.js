@@ -30,14 +30,14 @@ function convertDamageFormula(stringTerms, operation=new Set()) {
                         : terms[i].faces  = Math.max(Math.floor(faces / 2), 1);
                 }
 
-                if (oper.has(FORMULA_MOD.BACKSTAB)) {
-                    const mIdx = modifiers.indexOf('p');
-                    if (!Number.isNaN(mIdx)) terms[i].modifiers[mIdx] = `p>${faces - 2}`;
-                }
-
                 if (oper.has(FORMULA_MOD.NOPENETRATE)) {
                     const mIdx = modifiers.indexOf('p');
                     if (!Number.isNaN(mIdx)) terms[i].modifiers.splice(mIdx, 1);
+                }
+
+                if (oper.has(FORMULA_MOD.BACKSTAB)) {
+                    const mIdx = modifiers.indexOf('p');
+                    if (!Number.isNaN(mIdx)) terms[i].modifiers[mIdx] = `p>${faces - 2}`;
                 }
             }
         }

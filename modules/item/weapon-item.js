@@ -184,11 +184,14 @@ export class HMWeaponItem extends HMItem {
         const dialogResp = await dialogMgr.getDialog(dataset, actor, opt);
 
         const {specialMove, defense} = dialogResp.resp;
-        const {atk} = HMTABLES.formula;
-        dataset.formula = specialMove < 16 ? atk[HMCONST.SPECIAL.STANDARD] : atk[specialMove];
 
-        const ranged = dialogResp.context.system.ranged.checked;
-        if (ranged) dataset.dialog = 'ratk';
+        if (dialogResp.resp.ranged) {
+            dataset.dialog = 'ratk';
+            dataset.formula = HMTABLES.formula.ratk[specialMove];
+        } else {
+            const {atk} = HMTABLES.formula;
+            dataset.formula = specialMove < 16 ? atk[HMCONST.SPECIAL.STANDARD] : atk[specialMove];
+        }
 
         const {SPECIAL} = HMCONST;
 
