@@ -8,10 +8,12 @@ import { HMSpellItem } from './modules/item/spell-item.js';
 import { HMItemFactory } from './modules/item/item-factory.js';
 import { HMItemSheet } from './modules/item/item-sheet.js';
 import { HMArmorItemSheet } from './modules/item/armor-item-sheet.js';
+import { HMRaceItemSheet } from './modules/item/race-item-sheet.js';
 import { HMWeaponItemSheet } from './modules/item/weapon-item-sheet.js';
 import { HMChatMgr } from './modules/mgr/chatmgr.js';
 import { HMCombat, HMCombatTracker } from './modules/sys/combat.js';
 import { HMMacro } from './modules/sys/macro.js';
+import { HMToken } from './modules/sys/token.js';
 import { HMSupport } from './modules/sys/support.js';
 import { HMStates, HMActiveEffect } from './modules/sys/effects.js';
 import { MODULE_ID } from './modules/sys/constants.js';
@@ -27,19 +29,20 @@ Hooks.once('init', async () => {
     CONFIG.Actor.documentClass = HMActorFactory;
     CONFIG.Item.documentClass = HMItemFactory;
     CONFIG.Combat.documentClass = HMCombat;
+    CONFIG.Token.objectClass = HMToken;
     CONFIG.ui.combat = HMCombatTracker;
     CONFIG.Macro.documentClass = HMMacro;
     CONFIG.ActiveEffect.documentClass = HMActiveEffect;
     CONFIG.canvasTextStyle.fontFamily = 'Gentium';
 
-    CONFIG.fontDefinitions['Gentium'] = {
+    CONFIG.fontDefinitions.Gentium = {
         editor: true,
         fonts: [
             {urls: ['systems/hackmaster5e/styles/fonts/GenBkBasR.woff2']},
             {urls: ['systems/hackmaster5e/styles/fonts/GenBkBasB.woff2'], weight: 700},
             {urls: ['systems/hackmaster5e/styles/fonts/GenBkBasI.woff2'], style: 'italic'},
             {urls: ['systems/hackmaster5e/styles/fonts/GenBkBasBI.woff2'], style: 'italic', weight: 700},
-        ]
+        ],
     };
 
     Actors.unregisterSheet('core', ActorSheet);
@@ -49,6 +52,7 @@ Hooks.once('init', async () => {
     Items.unregisterSheet('core', ItemSheet);
     Items.registerSheet('hackmaster', HMItemSheet, {makeDefault: true});
     Items.registerSheet('hackmaster', HMArmorItemSheet, {types: ['armor'], makeDefault: true});
+    Items.registerSheet('hackmaster', HMRaceItemSheet, {types: ['race'], makeDefault: true});
     Items.registerSheet('hackmaster', HMWeaponItemSheet, {types: ['weapon'], makeDefault: true});
 
     registerHandlebarsHelpers();
@@ -76,10 +80,17 @@ Hooks.on('applyActiveEffect', HMActiveEffect.applyActiveEffect);
 Hooks.on('createActiveEffect', HMActiveEffect.createActiveEffect);
 Hooks.on('createActor', HMActor.createActor);
 Hooks.on('createToken', HMActor.createToken);
+Hooks.on('hoverToken', (token, state) => token.drawReach(state));
 Hooks.on('createItem', HMItem.createItem);
+Hooks.on('updateItem', HMWeaponItem.updateItem);
 Hooks.on('renderChatMessage', HMChatMgr.renderChatMessage);
 Hooks.on('updateCombat', HMCombat.updateCombat);
+Hooks.on('createCombatant', HMCombat.createCombatant);
+Hooks.on('deleteCombatant', HMCombat.deleteCombatant);
 Hooks.on('preDeleteCombat', HMCombat.preDeleteCombat);
+Hooks.on('deleteCombat', () => canvas.tokens.placeables.forEach((t) => t.drawReach()));
 Hooks.on('renderCombatTracker', HMCombatTracker.renderCombatTracker);
+Hooks.on('renderSceneControls', HMToken.renderSceneControls);
+Hooks.on('getSceneControlButtons', HMToken.getSceneControlButtons);
 Hooks.on('hotbarDrop', HMMacro.hotbarDrop);
 Hooks.on('diceSoNiceRollStart', HMSupport.diceSoNiceRollStart);

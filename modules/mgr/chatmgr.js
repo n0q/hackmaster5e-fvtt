@@ -295,7 +295,7 @@ export class HMChatMgr {
                 const speedRow  = `${game.i18n.localize('HM.speed')}:
                                 <b>${item.system.bonus.total.spd}</b>`;
                 const rangeRow  = `${game.i18n.localize('HM.range')}:
-                                <b>${game.i18n.localize(idx.range[dialogResp.resp.range])}</b>`;
+                                <b>${game.i18n.localize(idx.reach[dialogResp.resp.reach])}</b>`;
 
                 let specialRow = '';
                 const sumDice = getDiceSum(roll);

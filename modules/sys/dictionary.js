@@ -1,4 +1,4 @@
-import { HMCONST } from './constants.js'; // eslint-disable-line
+import { HMCONST } from './constants.js';
 export const idx = {};
 
 // Dictionaries
@@ -244,11 +244,12 @@ idx.encumbrance = {
     [HMCONST.ENCUMBRANCE.HEAVY]:    'HM.encumbSelect.heavy',
 };
 
-idx.range = {
-    0: 'HM.rangeSelect.short',
-    4: 'HM.rangeSelect.medium',
-    6: 'HM.rangeSelect.long',
-    8: 'HM.rangeSelect.extreme',
+idx.reach = {
+    [HMCONST.RANGED.REACH.MINIMUM]: 'HM.rangeSelect.minimum',
+    [HMCONST.RANGED.REACH.SHORT]:   'HM.rangeSelect.short',
+    [HMCONST.RANGED.REACH.MEDIUM]:  'HM.rangeSelect.medium',
+    [HMCONST.RANGED.REACH.LONG]:    'HM.rangeSelect.long',
+    [HMCONST.RANGED.REACH.EXTREME]: 'HM.rangeSelect.extreme',
 };
 
 idx.scale = {

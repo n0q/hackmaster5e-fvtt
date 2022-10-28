@@ -41,6 +41,7 @@ export class AttackPrompt extends HMPrompt {
 
         const wData = weapon.system;
         const ranged = wData.ranged.checked;
+        const reach = wData.ranged?.reach ?? wData.reach;
         const spd = getSpeed(ranged, wData);
 
         mergeObject(this.dialogData, {
@@ -48,9 +49,10 @@ export class AttackPrompt extends HMPrompt {
             specialMove: 0,
             defense,
             ranged,
+            reach,
             spd,
             widx: 0,
-            range: 0,
+            range: HMCONST.RANGED.REACH.SHORT,
             advance: dialogData.inCombat,
             SPECIAL: HMCONST.SPECIAL,
             charge: HMCONST.SPECIAL.CHARGE4,
@@ -63,11 +65,13 @@ export class AttackPrompt extends HMPrompt {
         const weapon  = weapons[widx];
         const wData   = weapon.system;
         const ranged  = wData.ranged.checked;
+        const reach   = wData.ranged?.reach ?? wData.reach;
         const capList = this.getCapList(weapons[widx], caller);
 
         if (!(specialMove in capList)) specialMove = Object.keys(capList)[0];
 
         this.dialogData.ranged = ranged;
+        this.dialogData.reach = reach;
         this.dialogData.spd = getSpeed(ranged, wData, specialMove);
         this.dialogData.specialMove = specialMove;
         this.dialogData.capList = capList;
@@ -75,7 +79,7 @@ export class AttackPrompt extends HMPrompt {
     }
 
     get dialogResp() {
-        const {button, charge, spd, widx} = this.dialogData;
+        const {button, charge, spd, weapons, widx} = this.dialogData;
         let specialMove = Number(this.dialogData.specialMove);
         if (specialMove === HMCONST.SPECIAL.CHARGE) specialMove = Number(charge);
 
@@ -83,7 +87,9 @@ export class AttackPrompt extends HMPrompt {
             widx,
             specialMove,
             defense: Number(this.dialogData.defense),
-            range: Number(this.dialogData.range),
+            ranged: !!weapons[widx].system.ranged.checked,
+            reach: Number(this.dialogData.range),
+            reachmod: HMTABLES.weapons.ranged.reach[this.dialogData.range],
             bonus: Number(this.dialogData.bonus) || 0,
             advance: this.dialogData.advance ? spd[button] : false,
             button,

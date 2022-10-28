@@ -197,7 +197,10 @@
             "qn": 0,
             "reach": 0,
             "defdie": 0,
-            "ranged": {"checked": false}
+            "ranged": {
+                "checked": false,
+                "reach": {"0": 5, "1": 0, "2": 0, "3": 0, "4": 0}
+            }
         },
 
         "wound": {

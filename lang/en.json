@@ -202,10 +202,11 @@
         },
 
         "rangeSelect": {
-            "short":    "Short",
-            "medium":   "Medium",
+            "extreme":  "Extreme",
             "long":     "Long",
-            "extreme":  "Extreme"
+            "medium":   "Medium",
+            "minimum":  "Minimum",
+            "short":    "Short"
         },
 
         "saves": {
@@ -455,6 +456,7 @@
         "combat":       "Combat",
         "components":   "Components",
         "cost":         "Cost",
+        "countup":      "Count Up",
         "custom":       "Custom",
         "critical":     "Critical",
         "critfail":     "Critical Failure",
@@ -602,12 +604,17 @@
         "verydifficult": "Very Difficult",
         "wealth":       "Wealth",
         "weapon":       "Weapon",
+        "wranges":      "Weapon Ranges",
         "weight":       "Weight",
         "wound":        "Wound",
 
         "raw":          "Raw",
         "racial":       "Racial",
         "misc":         "Misc"
+    },
+
+    "CONTROLS": {
+        "reachview":    "Reach View"
     },
 
     "COMBAT": {

@@ -2,6 +2,16 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.2.25] - 2022-10-28
+### Added
+- Melee reach/threat range visual display.
+- Control button to toggle reach/threat display mode.
+- Ranged reach support.
+### Changed
+- Redesigned race item sheet.
+- Weapon sheets have a place for ranged weapon ranges.
+- Fixed inaccuracies in weapons compendium.
+
 ## [0.2.24] - 2022-10-22
 ### Changed
 - Updated weapons compendium.

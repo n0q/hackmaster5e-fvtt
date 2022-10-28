@@ -7,6 +7,15 @@
 }
 
 .newform {
+    .bold {
+        font-weight: bold;
+    }
+
+    .col_rborder {
+        padding-right: $padding-md;
+        border-right: 1px solid;
+    }
+
     .form-data {
         display: flex;
         flex: row nowrap;
@@ -25,12 +34,19 @@
         flex: row nowrap;
         justify-content: space-between;
         align-items: center;
+
         input[type="text"],
         input[type="number"] {
             width: 4em;
             height: 1.75em;
             text-align: center;
         }
+
+        input[readonly] {
+            background: none;
+            border: none;
+        }
+
         select {
             height: 1.75em;
             min-width: 8em;
