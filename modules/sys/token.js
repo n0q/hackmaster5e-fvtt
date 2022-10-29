@@ -87,9 +87,9 @@ export class HMToken extends Token {
             h *= unit;
 
             const color = Color.from(reach.color);
-
+            const hoverOpacity = hovered ? reach.opacity * 3 : reach.opacity * 2;
             gfx.beginFill(color, reach.opacity)
-                .lineStyle(1, color, reach.opacity * 2)
+                .lineStyle(1, color, hoverOpacity)
                 .drawEllipse(cx, cy, w, h)
                 .drawEllipse(cx, cy, w2, h2)
                 .endFill();
