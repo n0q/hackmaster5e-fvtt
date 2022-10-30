@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 - Reach/threat ranges highlight on mouseover.
 - Set mechanical state to ranged weapons in compendium.
+- Altered default size of character class sheets.
 ### Fixed
 - Threat ranges not displaying for certain player-owned actors.
 
