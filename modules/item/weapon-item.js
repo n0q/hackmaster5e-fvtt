@@ -1,4 +1,4 @@
-import { HMCONST, HMTABLES } from '../sys/constants.js';
+import { MODULE_ID, HMCONST, HMTABLES } from '../sys/constants.js';
 import { HMItem, advanceClock, setStatusEffectOnToken, unsetStatusEffectOnToken } from './item.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
@@ -148,6 +148,14 @@ export class HMWeaponItem extends HMItem {
         const {SPECIAL} = HMCONST;
         const {system} = this;
         return system.caps?.[SPECIAL.BACKSTAB]?.checked || false;
+    }
+
+    async onClick(ev) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        const {dataset} = ev.currentTarget;
+        if (dataset.op === 'setFlag') await this.actor.setFlag(MODULE_ID, dataset.key, dataset.value);
+        if (dataset.redraw) this.actor.getActiveTokens().forEach((t) => t.drawReach());
     }
 
     // TODO: This needs a refactor, but it's too soon to do so. We should

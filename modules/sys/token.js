@@ -1,4 +1,4 @@
-import { HMCONST } from './constants.js';
+import { MODULE_ID, HMCONST } from './constants.js';
 
 function newReach(distance, color, visible) {
     return {
@@ -11,9 +11,12 @@ function newReach(distance, color, visible) {
 }
 
 function getReach(actor) {
-    // TODO: Users should be able to manually select a weapon.
+    const reachHint = actor.getFlag(MODULE_ID, 'reachHint');
     const weapons = actor.itemTypes.weapon.filter((a) => !a.system.ranged.checked);
-    const weapon = weapons.find((a) => a.system.state === HMCONST.ITEM_STATE.EQUIPPED)
+    const {ITEM_STATE} = HMCONST;
+
+    const weapon = weapons.find((a) => a.system.state >=  ITEM_STATE.EQUIPPED && a.id === reachHint)
+                ?? weapons.find((a) => a.system.state === ITEM_STATE.EQUIPPED)
                 ?? weapons.find((a) => a.system.innate);
     if (!weapon) return [];
 
