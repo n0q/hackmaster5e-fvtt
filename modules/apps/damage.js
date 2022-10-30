@@ -1,5 +1,5 @@
 import { HMPrompt } from './prompt.js';
-import { HMCONST } from '../sys/constants.js';
+import { HMCONST, HMTABLES } from '../sys/constants.js';
 
 export class DamagePrompt extends HMPrompt {
     static get defaultOptions() {
@@ -13,11 +13,14 @@ export class DamagePrompt extends HMPrompt {
         super(dialogData, options);
         const weapon = dialogData.weapons[0];
         const capList = this.getCapList(weapon, dialogData?.caller);
+        const wData = weapon.system;
+        const canStrBonus = wData.ranged.checked ? !wData.ranged?.mechanical : false;
 
         mergeObject(this.dialogData, {
             capList,
             specialMove: 0,
             widx: 0,
+            canStrBonus,
         });
     }
 
@@ -35,8 +38,12 @@ export class DamagePrompt extends HMPrompt {
         let {specialMove} = this.dialogData;
         const capList = this.getCapList(weapons[widx], caller);
 
+        const wData = weapons[widx].system;
+        const canStrBonus = wData.ranged.checked ? !wData.ranged?.mechanical : false;
+
         if (!(specialMove in capList)) specialMove = Object.keys(capList)[0];
 
+        this.dialogData.canStrBonus = canStrBonus;
         this.dialogData.specialMove = specialMove;
         this.dialogData.capList = capList;
         super.update(options);
@@ -47,7 +54,10 @@ export class DamagePrompt extends HMPrompt {
         const shieldHit = this.dialogData.shieldHit === 'true';
         const jabbed   = specialMove === HMCONST.SPECIAL.JAB;
         const backstab = specialMove === HMCONST.SPECIAL.BACKSTAB;
-        const {weapons, widx} = this.dialogData;
+        const {caller, strBonus, weapons, widx} = this.dialogData;
+        const wData = weapons[widx].system;
+        let bonus = parseInt(this.dialogData.bonus, 10) || 0;
+
         let formulaType;
         let autoFormula = false;
 
@@ -66,9 +76,14 @@ export class DamagePrompt extends HMPrompt {
         if             (!shieldHit) { formulaType = 'standard';    } else
         if              (shieldHit) { formulaType = 'shield';      }
 
+        if (strBonus && wData.ranged.checked && !wData.ranged?.mechanical) {
+            const strBonusValue = caller.getAbilityBonus('str', 'dmg');
+            bonus += Math.max(0, strBonusValue);
+        }
+
         const dialogResp = {
             widx,
-            bonus: parseInt(this.dialogData.bonus, 10) || 0,
+            bonus,
             defense: this.dialogData?.caller.fightingDefensively,
             specialMove,
             shieldHit,

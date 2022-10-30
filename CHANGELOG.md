@@ -2,6 +2,18 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+### Added
+- Non-mechanical ranged weapon types can do additional strength damage.
+- Weapon cards have a button to indicate/select which weapon displays reach.
+- Weapon cards display ranged weapon range breakdown.
+### Changed
+- Reach/threat ranges highlight on mouseover.
+- Set mechanical state to ranged weapons in compendium.
+- Altered default size of character class sheets.
+### Fixed
+- Threat ranges not displaying for certain player-owned actors.
+
 ## [0.2.25] - 2022-10-28
 ### Added
 - Melee reach/threat range visual display.

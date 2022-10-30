@@ -1,4 +1,4 @@
-import { HMCONST } from './constants.js';
+import { MODULE_ID, HMCONST } from './constants.js';
 
 function newReach(distance, color, visible) {
     return {
@@ -11,24 +11,39 @@ function newReach(distance, color, visible) {
 }
 
 function getReach(actor) {
-    // TODO: Users should be able to manually select a weapon.
+    const reachHint = actor.getFlag(MODULE_ID, 'reachHint');
     const weapons = actor.itemTypes.weapon.filter((a) => !a.system.ranged.checked);
-    const weapon = weapons.find((a) => a.system.state === HMCONST.ITEM_STATE.EQUIPPED)
+    const {ITEM_STATE} = HMCONST;
+
+    const weapon = weapons.find((a) => a.system.state >=  ITEM_STATE.EQUIPPED && a.id === reachHint)
+                ?? weapons.find((a) => a.system.state === ITEM_STATE.EQUIPPED)
                 ?? weapons.find((a) => a.system.innate);
     if (!weapon) return [];
+    if (weapon.id !== reachHint) actor.setFlag(MODULE_ID, 'reachHint', weapon.id);
 
     const reach = (weapon.system.reach || 0) + (actor.system.bonus.total?.reach || 0);
     const distance = Math.max(reach, 0) + (game.canvas.scene.grid.distance / 2);
 
     let color;
     let visible;
+    const defaultColor = '#ffffff';
 
     if (actor.hasPlayerOwner) {
-        const owner = game.users.find((a) => a.character?.id === actor.id);
-        color = owner.color;
-        visible = game.userId === owner.id;
+        let owner = game.users.find((a) => a.character?.id === actor.id);
+        if (!owner) {
+            const userId = Object.entries(actor.ownership).find((a) => {
+                const [uid, pl] = a;
+                const isOwner = pl === CONST.DOCUMENT_PERMISSION_LEVELS.OWNER;
+                const isGM = game.users.get(uid)?.isGM;
+                return isOwner && !isGM && uid !== 'default';
+            })[0];
+            owner = game.users.get(userId);
+        }
+
+        color = owner?.color ?? defaultColor;
+        visible = game.userId === owner?.id;
     } else {
-        color = '#ffffff';
+        color = defaultColor;
         visible = game.user.isGM;
     }
 
@@ -76,9 +91,9 @@ export class HMToken extends Token {
             h *= unit;
 
             const color = Color.from(reach.color);
-
+            const hoverOpacity = hovered ? reach.opacity * 3 : reach.opacity * 2;
             gfx.beginFill(color, reach.opacity)
-                .lineStyle(1, color, reach.opacity * 2)
+                .lineStyle(1, color, hoverOpacity)
                 .drawEllipse(cx, cy, w, h)
                 .drawEllipse(cx, cy, w2, h2)
                 .endFill();

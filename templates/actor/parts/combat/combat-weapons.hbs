@@ -1,4 +1,8 @@
+{{#if (eq actor.type 'character')}}
+<ol class='cards-list scrollable' style='height: 32rem;'>
+{{else}}
 <ol class='cards-list'>
+{{/if}}
     {{#if actor.weapons.equipped.length}}
     <label class='resource-label'>{{localize 'HM.thingState.equipped'}}</label>
         {{#each actor.weapons.equipped}}

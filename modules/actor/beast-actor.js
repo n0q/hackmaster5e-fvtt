@@ -45,4 +45,9 @@ export class HMBeastActor extends HMActor {
         delete hp.tenacity;
         if (tenacity > 0) hp.tenacity = tenacity;
     }
+
+    getAbilityBonus() {
+        // Placeholder value.
+        return 2;
+    }
 }

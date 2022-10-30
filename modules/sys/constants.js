@@ -589,9 +589,7 @@ export const HMTABLES = {
     },
     c_effect: {
         [HMCONST.C_EFFECT_TYPE.NO_DEXDEF]: (actor) => {
-            if (actor.type === 'beast') return -2; // Placeholder
-            const {idx} = actor.system.abilities.total.dex;
-            const defBonus = HMTABLES.abilitymods.dex[idx].def;
+            const defBonus = actor.getAbilityBonus('dex', 'def');
             return Math.min(0, -defBonus);
         },
     },
