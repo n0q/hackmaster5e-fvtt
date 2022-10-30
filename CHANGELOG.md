@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [0.2.26] - 2022-10-30
 ### Added
 - Non-mechanical ranged weapon types can do additional strength damage.
 - Weapon cards have a button to indicate/select which weapon displays reach.
