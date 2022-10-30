@@ -36,7 +36,19 @@
     </summary>
     <section class='hide' toggle>
         <div class='card-expanded'>
-            <div></div>
+            {{#if system.ranged.checked}}
+            <table class='table-basic'>
+                <tbody>
+                    {{#each (findConfigObj 'reach')}}
+                    <tr>
+                        <th scope='row'>{{localize this}}:</th>
+                        <td>{{lookup ../system.ranged.reach @index}} ft.</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+            {{else}}<div></div>
+            {{/if}}
             <span class='secondary-controls'>
             {{#unless system.ranged.checked}}
                 <span>
