@@ -1,7 +1,10 @@
-<section class="base-combat grid-2col">
-    <section "combat-weapons">
-        {{> "systems/hackmaster5e/templates/actor/parts/combat/combat-weapons.hbs"}}
+<section class='base-combat grid-2col'
+    {{#if (eq actor.type 'beast')}} style='grid-template-columns: 55% 1fr;'{{/if}}
+    >
+    <section>
+        {{> 'systems/hackmaster5e/templates/actor/parts/combat/combat-weapons.hbs'}}
     </section>
-    <section "combat-armor">
-        {{> "systems/hackmaster5e/templates/actor/parts/combat/combat-armors.hbs"}}
+    <section>
+        {{> 'systems/hackmaster5e/templates/actor/parts/combat/combat-armors.hbs'}}
     </section>
+</section>

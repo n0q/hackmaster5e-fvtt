@@ -52,14 +52,15 @@
             </span>
             <span class='secondary-controls'>
             {{#unless system.ranged.checked}}
-                    <label>{{localize 'HM.reach'}}: {{system.adjReach}}</label>
+                    <label>{{localize 'HM.reach'}}: {{system.adjReach}} ft.</label>
                     <i class='txtbutton far fa-circle-dot' title='Show Reach' name='reachHint'
                         data-item-id='{{_id}}'
                         data-op='setFlag'
                         data-key='reachHint'
                         data-value='{{_id}}'
                         data-redraw=true
-                       {{#if (eq _id (getFlag 'hackmaster5e' 'reachHint'))}}data-enabled{{/if}}>
+                       {{#if (eq _id (getFlag 'hackmaster5e' 'reachHint'))}}data-enabled{{/if}}
+                       {{#if (eq system.state 1)}}style='visibility: hidden;'{{/if}}>
                     </i>
             {{/unless}}
             </span>

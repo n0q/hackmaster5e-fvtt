@@ -74,6 +74,8 @@
         width: auto;
         border-collapse: collapse;
         border: none;
+        height: 0;
+        min-height: auto;
 
         th {
             padding: 2px;
