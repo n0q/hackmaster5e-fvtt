@@ -175,6 +175,7 @@ export class HMActorSheet extends ActorSheet {
 
         // Interactables
         html.find('.button').click(this._onClick.bind(this));
+        html.find('.txtbutton').click(this._onClick.bind(this));
         html.find('.rollable').click(this._onRoll.bind(this));
         html.find('.editable').change(this._onEdit.bind(this));
         html.find('.selectable').change(this._onSelect.bind(this));

@@ -35,10 +35,23 @@
         {{/if}}
     </summary>
     <section class='hide' toggle>
-        <div class='splitview'>
-            <div>
-                {{localize 'HM.reach'}}: {{system.adjReach}}    
-            </div>
+        <div class='card-expanded'>
+            <div></div>
+            <span class='secondary-controls'>
+            {{#unless system.ranged.checked}}
+                <span>
+                    <label>{{localize 'HM.reach'}}: {{system.adjReach}}</label>
+                    <i class='txtbutton far fa-circle-dot' title='Show Reach' name='reachHint'
+                        data-item-id='{{_id}}'
+                        data-op='setFlag'
+                        data-key='reachHint'
+                        data-value='{{_id}}'
+                        data-redraw=true
+                       {{#if (eq _id (getFlag 'hackmaster5e' 'reachHint'))}}data-enabled{{/if}}>
+                    </i>
+                </span>
+            {{/unless}}
+            </span>
             <table class='table-basic'>
                 <thead>
                     <tr>

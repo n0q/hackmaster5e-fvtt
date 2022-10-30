@@ -44,11 +44,6 @@
     > section {
         padding: 5px;
         
-        .splitview {
-            display: grid;
-            grid-template-columns: 1fr auto;
-        }
-
         input[type=number] {
             background: transparent;
             border: 1px solid;
@@ -119,6 +114,28 @@
                 height: 100%;
                 border-right: $card_border solid $c-grey;
             }
+        }
+    }
+
+    .card-expanded {
+        display: grid;
+        grid-template-columns: 1fr auto auto;
+        column-gap: 5px;
+
+        >:nth-child(-n+2) {
+            padding-top: $padding-sm; 
+        }
+
+        >:nth-last-child(2) {
+            border-right: $vert-break;
+            padding-right: $padding-sm;
+        }
+
+        .secondary-controls {
+            display: grid;
+            justify-content: center;
+            align-items: center;
+            grid-template-rows: repeat(5, 1fr);
         }
     }
 
