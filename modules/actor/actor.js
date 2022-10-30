@@ -136,4 +136,9 @@ export class HMActor extends Actor {
             await actor.update({'data.hp': hp});
         }
     }
+
+    getAbilityBonus() {
+        const cName = this.constructor.name;
+        console.error(`${cName} does not have a getAbilityBonus() function.`);
+    }
 }

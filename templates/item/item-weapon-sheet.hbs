@@ -22,12 +22,14 @@
                     <span class='form-option'>
                         <label class='resource-label'>{{localize 'HM.speed'}}</label>
                         <input type='number' class='editable' value={{system.bonus.base.spd}}
-                            {{#if system.ranged.checked}}disabled{{/if}}
-                            data-item-prop='system.bonus.base.spd' data-dtype='Number'/>
+                            data-item-prop='system.bonus.base.spd' data-dtype='Number'
+                            {{#if system.ranged.checked}}disabled{{/if}} />
                     </span>
                     <span class='form-option'>
                         <label class='resource-label'>{{localize 'HM.reach'}}</label>
-                        <input type='number' name='system.reach' value='{{system.reach}}'/>
+                        <input type='number' name='system.reach' value='{{system.reach}}'
+                            {{#if system.ranged.checked}}disabled{{/if}} />
+                            
                     </span>
                     <span class='form-option'>
                         <label class='resource-label'>{{localize 'HM.quality'}}</label>
@@ -147,6 +149,13 @@
                                 <input type='number' class='timing' name='system.ranged.timing.recover'
                                     value='{{system.ranged.timing.recover}}' data-dtype='Number'/>
                             </span>
+                        </span>
+                    </span>
+                    <hr>
+                    <span class='grid-2col'>
+                        <span class='form-option' style='padding-right: 10px;'>
+                            <label class='resource-label'>{{localize 'HM.mechanical'}}</label>
+                            <input type='checkbox' name='system.ranged.mechanical' {{checked system.ranged.mechanical}}/>
                         </span>
                     </span>
                     {{else if system.jab.checked}}

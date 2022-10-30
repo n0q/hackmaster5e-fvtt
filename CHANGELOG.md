@@ -4,10 +4,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 ### Added
+- Non-mechanical ranged weapon types can do additional strength damage.
 - Weapon cards have a button to indicate/select which weapon displays reach.
 - Weapon cards display ranged weapon range breakdown.
 ### Changed
 - Reach/threat ranges highlight on mouseover.
+- Set mechanical state to ranged weapons in compendium.
 ### Fixed
 - Threat ranges not displaying for certain player-owned actors.
 
