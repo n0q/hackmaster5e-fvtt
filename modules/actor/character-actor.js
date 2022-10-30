@@ -173,4 +173,9 @@ export class HMCharacterActor extends HMActor {
         Object.entries(races.slice(0, races.length -1))
             .map((a) => this.items.get(a[1].id).delete());
     }
+
+    getAbilityBonus(ability, bonus) {
+        const {idx} = this.system.abilities.total[ability];
+        return HMTABLES.abilitymods[ability][idx][bonus];
+    }
 }
