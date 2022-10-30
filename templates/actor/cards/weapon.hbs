@@ -36,22 +36,22 @@
     </summary>
     <section class='hide' toggle>
         <div class='card-expanded'>
+            <span>
             {{#if system.ranged.checked}}
-            <table class='table-basic'>
-                <tbody>
-                    {{#each (findConfigObj 'reach')}}
-                    <tr>
-                        <th scope='row'>{{localize this}}:</th>
-                        <td>{{lookup ../system.ranged.reach @index}} ft.</td>
-                    </tr>
-                    {{/each}}
-                </tbody>
-            </table>
-            {{else}}<div></div>
+                <table class='table-basic'>
+                    <tbody>
+                        {{#each (findConfigObj 'reach')}}
+                        <tr>
+                            <th scope='row'>{{localize this}}:</th>
+                            <td width='99%'>{{lookup ../system.ranged.reach @index}} ft.</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
             {{/if}}
+            </span>
             <span class='secondary-controls'>
             {{#unless system.ranged.checked}}
-                <span>
                     <label>{{localize 'HM.reach'}}: {{system.adjReach}}</label>
                     <i class='txtbutton far fa-circle-dot' title='Show Reach' name='reachHint'
                         data-item-id='{{_id}}'
@@ -61,7 +61,6 @@
                         data-redraw=true
                        {{#if (eq _id (getFlag 'hackmaster5e' 'reachHint'))}}data-enabled{{/if}}>
                     </i>
-                </span>
             {{/unless}}
             </span>
             <table class='table-basic'>

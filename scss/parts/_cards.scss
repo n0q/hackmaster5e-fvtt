@@ -120,22 +120,17 @@
     .card-expanded {
         display: grid;
         grid-template-columns: 1fr auto auto;
-        column-gap: 5px;
-
-        >:nth-child(-n+2) {
-            padding-top: $padding-sm; 
-        }
-
-        >:nth-last-child(2) {
-            border-right: $vert-break;
-            padding-right: $padding-sm;
-        }
+        column-gap: $padding-sm;
 
         .secondary-controls {
             display: grid;
-            justify-content: center;
+            padding-top: $padding-sm;
+            border-right: $vert-break;
+            padding-right: $padding-sm;
             align-items: center;
+            grid-template-columns: auto 1fr;
             grid-template-rows: repeat(5, 1fr);
+            column-gap: $padding-sm;
         }
     }
 
