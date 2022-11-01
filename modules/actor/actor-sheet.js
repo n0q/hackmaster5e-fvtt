@@ -22,25 +22,23 @@ export class HMActorSheet extends ActorSheet {
         return data;
     }
 
-    // TODO: This function is a mess and needs a refactor.
     _prepareBaseItems(sheetData) {
         const actorData = sheetData.actor;
 
-        const uskills = [];
-        const skills = [];
-        const langs = [];
-        const wounds = [];
         const gear = {
             'weapons': [],
             'armors':  [],
             'items':   [],
         };
-        const spells = [];
+
+        const {spell} = actorData.itemTypes;
+
         const armors = {
             'owned':    [],
             'carried':  [],
             'equipped': [],
         };
+
         const weapons = {
             'owned':    [],
             'carried':  [],
@@ -48,28 +46,37 @@ export class HMActorSheet extends ActorSheet {
             'innate':   [],
         };
 
-        for (const i of sheetData.items) {
-            if (i.type === 'skill') {
-                if (i.system.language) { langs.push(i); } else {
-                    if (actorData.type === 'character') {
-                        i.system.universal ? uskills.push(i) : skills.push(i);
-                    } else { skills.push(i); }
-                }
-            } else
-            if (i.type === 'armor') {
-                gear.armors.push(i);
-                const state = HMTABLES.itemstate[(i.system.state)];
-                armors[state].push(i);
-            } else
-            if (i.type === 'weapon') {
-                gear.weapons.push(i);
-                const state = HMTABLES.itemstate[(i.system.state)];
-                weapons[state].push(i);
-            } else
-            if (i.type === 'wound')  { wounds.push(i);     } else
-            if (i.type === 'item')   { gear.items.push(i); } else
-            if (i.type === 'spell')  { spells.push(i);     }
-        }
+        const uskills = [];
+        const skills = [];
+        const langs = [];
+
+        actorData.itemTypes.skill.forEach((i) => {
+            if (i.system.language) {
+                langs.push(i);
+                return;
+            }
+
+            if (actorData.type !== 'character' || !i.system.universal) {
+                skills.push(i);
+                return;
+            }
+
+            uskills.push(i);
+        });
+
+        actorData.itemTypes.armor.forEach((i) => {
+            gear.armors.push(i);
+            const state = HMTABLES.itemstate[(i.system.state)];
+            armors[state].push(i);
+        });
+
+        actorData.itemTypes.weapon.forEach((i) => {
+            gear.weapons.push(i);
+            const state = HMTABLES.itemstate[(i.system.state)];
+            weapons[state].push(i);
+        });
+
+        gear.items = actorData.itemTypes.item;
 
         // Sort
         function skillsort(a, b) {
@@ -80,21 +87,13 @@ export class HMActorSheet extends ActorSheet {
         skills.sort(skillsort);
         langs.sort(skillsort);
 
-        if (actorData.type === 'character') {
-            uskills.sort(skillsort);
-            actorData.skills = {skills, uskills, langs};
-        } else {
-            actorData.skills = {skills, langs};
-        }
-
-        actorData.wounds = wounds;
+        actorData.skills = {skills, uskills, langs};
         actorData.armors = armors;
+        actorData.weapons = weapons;
         actorData.gear = gear;
-        actorData.spells = spells.sort(
+        actorData.spells = spell.sort(
             (a, b) => Number(a.system.lidx) - Number(b.system.lidx) || a.name.localeCompare(b.name),
         );
-
-        actorData.weapons = weapons;
 
         const slevels = [];
             for (let i=0; i < actorData.spells.length; i++) {
@@ -105,31 +104,7 @@ export class HMActorSheet extends ActorSheet {
         actorData.slevels = slevels.sort();
 
         // If sheet has only one spell level, the controls are locked.
-        if (slevels.length == 1) {
-            actorData.system.cslevel = actorData.slevels[0];
-        }
-    }
-
-    async _prepareCharacterItems(sheetData) {
-        const actorData = sheetData.actor;
-
-        // Initialize containers.
-        const profs = [];
-        let race = null;
-        let cclass = null;
-
-        // Iterate through items, allocating to containers
-        for (const i of sheetData.items) {
-            i.img = i.img || DEFAULT_TOKEN;
-            if (i.type === 'cclass')      { cclass = i;    } else
-            if (i.type === 'proficiency') { profs.push(i); } else
-            if (i.type === 'race')        { race = i;      }
-        }
-
-        // Assign
-        actorData.cclass = cclass;
-        actorData.profs = profs;
-        actorData.race = race;
+        if (slevels.length === 1) actorData.system.cslevel = actorData.slevels[0];
     }
 
     /** @override */
