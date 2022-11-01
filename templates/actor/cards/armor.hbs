@@ -7,7 +7,7 @@
             </label>
         </header>
     </summary>
-    <section class='hide' toggle>
+    <section class='{{toggleSwitch _id invert=true}}' toggle>
         <div class='card-expanded'>
             <div></div><div></div>
             <table class="table-basic">
@@ -15,7 +15,7 @@
                     <tr>
                         <th scope="col"></th>
                         {{#each system.bonus.total}}
-                        <th scope="col"><label class="resource-label">{{@key}}</label></th>
+                        <th scope="col"><label class="loud-label">{{@key}}</label></th>
                         {{/each}}
                     </tr>
                 </thead>

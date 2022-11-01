@@ -34,7 +34,7 @@
         </section>
         {{/if}}
     </summary>
-    <section class='hide' toggle>
+    <section class='{{toggleSwitch _id}}' toggle>
         <div class='card-expanded'>
             <span>
             {{#if system.ranged.checked}}
@@ -69,7 +69,7 @@
                     <tr>
                         <th scope='col'></th>
                         {{#each system.bonus.total}}{{#unless (eq @key 'jspd')}}
-                        <th scope='col'><label class='resource-label'>{{@key}}</label></th>
+                        <th scope='col'><label class='loud-label'>{{@key}}</label></th>
                         {{/unless}}{{/each}}
                     </tr>
                 </thead>

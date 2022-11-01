@@ -4,6 +4,8 @@ import { HMRollMgr } from '../mgr/rollmgr.js';
 import { HMTABLES, MODULE_ID } from '../sys/constants.js';
 
 export class HMActorSheet extends ActorSheet {
+    visibleItemId = {};
+
     /** @override */
     get template() {
         const path = 'systems/hackmaster5e/templates/actor';
@@ -23,6 +25,7 @@ export class HMActorSheet extends ActorSheet {
     // TODO: This function is a mess and needs a refactor.
     _prepareBaseItems(sheetData) {
         const actorData = sheetData.actor;
+
         const uskills = [];
         const skills = [];
         const langs = [];
@@ -225,9 +228,14 @@ export class HMActorSheet extends ActorSheet {
 
     async _onToggle(ev) {
         ev.preventDefault();
+        const cId = this._getItemId(ev);
+
+        const tState = !this.visibleItemId[cId];
+        this.visibleItemId[cId] = tState;
+
         const element = ev.currentTarget;
-        const target  = $(element).parent().find("[toggle]");
-        $(target).toggleClass("hide");
+        const target  = $(element).parent().find('[toggle]');
+        $(target).toggleClass('hide');
     }
 
     // Toggle between an item being equipped, carried, or stored.
