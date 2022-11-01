@@ -11,15 +11,15 @@
         {{/each}}
     </span>
     <span class='scrollable' style='height: 30.5rem; margin-top: -2px;'>
-        {{#if skills}}
+        {{#if oskills}}
         <header class='resource-label'>{{localize 'HM.SKILLS.oskills'}}</header>
-            {{#each skills}}
+            {{#each oskills}}
                 {{> 'systems/hackmaster5e/templates/actor/cards/skill.hbs' }}
             {{/each}}
         {{/if}}
-        {{#if langs}}
+        {{#if iskills}}
         <header class='resource-label' style='padding-top: 6px;'>{{localize 'HM.SKILLS.lskills'}}</header>
-            {{#each langs}}
+            {{#each iskills}}
                 {{> 'systems/hackmaster5e/templates/actor/cards/skill.hbs' }}
             {{/each}}
         {{/if}}
