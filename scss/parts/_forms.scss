@@ -12,6 +12,16 @@
         border-right: 1px solid;
     }
 
+    @include table-basic;
+    table {
+        input[type="text"],
+        input[type="number"] {
+            min-width: 3em;
+            width: 3em;
+        }
+    }
+
+
     .form-data {
         display: flex;
         flex: row nowrap;
