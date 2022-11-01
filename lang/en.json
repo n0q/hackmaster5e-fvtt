@@ -620,6 +620,11 @@
         "misc":         "Misc"
     },
 
+    "ACTOR": {
+        "TypeBeast":        "Beast",
+        "TypeCharacter":    "Character"
+    },
+
     "CONTROLS": {
         "reachview":    "Reach View"
     },
@@ -640,6 +645,18 @@
         "gground":      "Gave Ground",
         "scamper":      "Scampered Back",
         "sfatigue":     "Spell Fatigued"
+    },
+    
+    "ITEM": {
+        "TypeArmor":        "Armor",
+        "TypeCclass":       "Character Class",
+        "TypeItem":         "Item",
+        "TypeProficiency":  "Proficiency",
+        "TypeRace":         "Race",
+        "TypeSkill":        "Skill",
+        "TypeSpell":        "Spell",
+        "TypeWeapon":       "Weapon",
+        "TypeWound":        "Wound"
     },
 
     "dragRuler": {

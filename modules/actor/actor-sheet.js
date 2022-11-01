@@ -25,43 +25,24 @@ export class HMActorSheet extends ActorSheet {
     _prepareBaseItems(sheetData) {
         const actorData = sheetData.actor;
 
-        const gear = {
-            'weapons': [],
-            'armors':  [],
-            'items':   [],
-        };
-
         const {spell} = actorData.itemTypes;
-
-        const armors = {
-            'owned':    [],
-            'carried':  [],
-            'equipped': [],
-        };
-
-        const weapons = {
-            'owned':    [],
-            'carried':  [],
-            'equipped': [],
-            'innate':   [],
-        };
-
-        const uskills = [];
-        const skills = [];
-        const langs = [];
+        const gear = {weapons: [], armors: [], items: []};
+        const armors = {owned: [], carried: [], equipped: []};
+        const weapons = {owned: [], carried: [], equipped: [], innate: []};
+        const skills = {uskills: [], oskills: [], iskills: []};
 
         actorData.itemTypes.skill.forEach((i) => {
             if (i.system.language) {
-                langs.push(i);
+                skills.iskills.push(i);
                 return;
             }
 
             if (actorData.type !== 'character' || !i.system.universal) {
-                skills.push(i);
+                skills.oskills.push(i);
                 return;
             }
 
-            uskills.push(i);
+            skills.uskills.push(i);
         });
 
         actorData.itemTypes.armor.forEach((i) => {
@@ -78,16 +59,14 @@ export class HMActorSheet extends ActorSheet {
 
         gear.items = actorData.itemTypes.item;
 
-        // Sort
         function skillsort(a, b) {
             return `${game.i18n.localize(a.name)} ${a.system.specialty.value || ''}`
                  > `${game.i18n.localize(b.name)} ${b.system.specialty.value || ''}` ? 1 : -1;
         }
 
-        skills.sort(skillsort);
-        langs.sort(skillsort);
+        Object.keys(skills).forEach((skillType) => skills[skillType].sort(skillsort));
 
-        actorData.skills = {skills, uskills, langs};
+        actorData.skills = skills;
         actorData.armors = armors;
         actorData.weapons = weapons;
         actorData.gear = gear;
