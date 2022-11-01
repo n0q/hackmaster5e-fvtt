@@ -158,4 +158,6 @@ $character-width: 820px;
     min-height: 0;
     overflow-y: auto;
     padding-right: 1.5%;
+    overflow: scroll;
+    overflow: overlay; // depreciated in moz
 }

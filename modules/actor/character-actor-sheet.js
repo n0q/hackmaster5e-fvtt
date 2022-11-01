@@ -7,7 +7,7 @@ export class HMCharacterActorSheet extends HMActorSheet {
         return mergeObject(super.defaultOptions, {
             classes: ['hackmaster', 'sheet', 'actor'],
             width: 835,
-            height: 941,
+            height: 930,
             tabs: [
                 { navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'skills' },
                 { navSelector: '.bio-tabs',   contentSelector: '.bio-body',   initial: 'wealth' },
