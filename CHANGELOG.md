@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+### Changed
+- Re-styled character class sheet.
+- Character sheet style improvements.
+### Fixed
+- Toggle-able sections of the sheet no longer slam down on your fingers.
+
 ## [0.2.26] - 2022-10-30
 ### Added
 - Non-mechanical ranged weapon types can do additional strength damage.

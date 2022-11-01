@@ -22,6 +22,13 @@ export default function registerHandlebarsHelpers() {
         return DOMPurify.sanitize(str);
     });
 
+    Handlebars.registerHelper('toggleSwitch', (id, opts) => {
+        const {visibleItemId} = opts.data.root.document.sheet;
+        let visible = !!visibleItemId[id];
+        if (!!opts.hash.invert) visible = !visible;
+        if (!visible) return 'hide';
+    });
+
     Handlebars.registerHelper('findConfigValue', (obj, key) => {
         LOGGER.trace(`Calling findConfigValue Helper | Arg1:${obj} Arg2:${key}`);
         if (obj in idx) return idx[obj][key];

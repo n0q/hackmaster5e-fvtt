@@ -407,6 +407,12 @@
             "tracking":          "Tracking"
         },
 
+        "SKILLS": {
+            "uskills":      "Universal Skills",
+            "oskills":      "Other Skills",
+            "lskills":      "Languages"
+        },
+
         "atk":  "atk",
         "def":  "def",
         "dmg":  "dmg",
@@ -597,6 +603,7 @@
         "target":       "Target",
         "timer":        "Timer",
         "total":        "Total",
+        "traumabonus":  "Trauma Bonus",
         "type":         "Type",
         "unequipped":   "Unequipped",
         "unprepared":   "Unprepared",
@@ -612,6 +619,11 @@
         "raw":          "Raw",
         "racial":       "Racial",
         "misc":         "Misc"
+    },
+
+    "ACTOR": {
+        "TypeBeast":        "Beast",
+        "TypeCharacter":    "Character"
     },
 
     "CONTROLS": {
@@ -634,6 +646,18 @@
         "gground":      "Gave Ground",
         "scamper":      "Scampered Back",
         "sfatigue":     "Spell Fatigued"
+    },
+    
+    "ITEM": {
+        "TypeArmor":        "Armor",
+        "TypeCclass":       "Character Class",
+        "TypeItem":         "Item",
+        "TypeProficiency":  "Proficiency",
+        "TypeRace":         "Race",
+        "TypeSkill":        "Skill",
+        "TypeSpell":        "Spell",
+        "TypeWeapon":       "Weapon",
+        "TypeWound":        "Wound"
     },
 
     "dragRuler": {

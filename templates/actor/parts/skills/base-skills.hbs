@@ -1,25 +1,28 @@
 <ol class='skills-list grid-3col'>
     {{#with actor.skills}}
-    <div>
-        <label class='skill-header'>Universal Skills</label>
+    <span>
+        <header class='resource-label'>{{localize 'HM.SKILLS.uskills'}}</header>
         {{#each uskills}}
-            {{#if (ishalf @index ../uskills.length)}}</div><div>{{/if}}
+            {{#if (ishalf @index ../uskills.length)}}
+    </span>
+    <span>
+            {{/if}}
             {{> 'systems/hackmaster5e/templates/actor/cards/skill.hbs' }}
         {{/each}}
-    </div>
-    <div class='scrollable' style='height: 30.5rem;'>
-        {{#if skills}}
-        <label class='skill-header'>Other Skills</label>
-            {{#each skills}}
+    </span>
+    <span class='scrollable' style='height: 30.5rem; margin-top: -2px;'>
+        {{#if oskills}}
+        <header class='resource-label'>{{localize 'HM.SKILLS.oskills'}}</header>
+            {{#each oskills}}
                 {{> 'systems/hackmaster5e/templates/actor/cards/skill.hbs' }}
             {{/each}}
         {{/if}}
-        {{#if langs}}
-        <label class='skill-header'>Languages</label>
-            {{#each langs}}
+        {{#if iskills}}
+        <header class='resource-label' style='padding-top: 6px;'>{{localize 'HM.SKILLS.lskills'}}</header>
+            {{#each iskills}}
                 {{> 'systems/hackmaster5e/templates/actor/cards/skill.hbs' }}
             {{/each}}
         {{/if}}
-    </div>
+    </span>
     {{/with}}
 </ol>

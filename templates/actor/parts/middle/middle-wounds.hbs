@@ -10,7 +10,7 @@
     </div>
 </li>
 <section class='hmstyle scrollable'>
-{{#each actor.wounds}}
+{{#each actor.itemTypes.wound}}
     <li class='item flexrow tablerow' data-item-id='{{_id}}'>
         <label class='button' data-action='decHp'>{{system.hp}}</label>
         <label class='button' data-action='decTimer'>{{system.timer}}</label>
