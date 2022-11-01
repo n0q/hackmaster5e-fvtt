@@ -5,15 +5,15 @@
                 <img src='{{img}}' title='{{name}}' width='24' height='24'/>
                 <h4>
                     {{localize name}}
-                    {{#if system.specialty.checked}}
-                        {{#if system.specialty.value}}({{system.specialty.value}}){{/if}}
+                    {{#if (and system.specialty.checked system.specialty.value)}}
+                        ({{system.specialty.value}})
                     {{/if}}
                 </h4>
             </label>
         </header>
         <section>
         {{#if system.language}}
-           <div toggle class='rollable button' title='Verbal'
+           <div toggle class='rollable button {{toggleSwitch _id invert=true}}' title='Verbal'
                    data-dialog='skill'
                    data-skill-type='language'
                    data-formula-type='language'
@@ -21,7 +21,7 @@
                    {{system.bonus.total.verbal}}
                </div>
                {{#if system.bonus.total.literacy}}
-            <div toggle class='rollable button' title='Literacy'
+            <div toggle class='rollable button {{toggleSwitch _id invert=true}}' title='Literacy'
                    data-dialog='skill'
                    data-skill-type='literacy'
                    data-formula-type='literacy'
@@ -30,7 +30,7 @@
                </div>
                {{/if}}
         {{else}}
-            <div toggle class='rollable button'
+            <div toggle class='rollable button {{toggleSwitch _id invert=true}}'
                 data-dialog='skill'
                 data-skill-type='skill'
                 data-formula-type='skill'
@@ -38,12 +38,12 @@
                 {{system.bonus.total.value}}
             </div>
         {{/if}}
-            <div class='hide item-controls' toggle>
+            <div class='{{toggleSwitch _id}} item-controls' toggle>
                 <a class='item-control item-delete' title='Remove Skill'><i class='fas fa-trash'></i></a>
             </div>
         </section>
     </summary>
-    <article class='hide' toggle>
+    <article class='{{toggleSwitch _id}}' toggle>
     {{#if system.language}}
         <div class='form-group' style='gap: 10px;'>
             <label>{{localize 'HM.literacy'}}:</label>
