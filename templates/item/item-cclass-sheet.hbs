@@ -1,108 +1,110 @@
-<form class="{{cssClass}}" autocomplete="off">
-    {{> "systems/hackmaster5e/templates/item/parts/header.hbs" }}
+<form class='{{cssClass}}' autocomplete='off'>
+    {{> 'systems/hackmaster5e/templates/item/parts/header.hbs' }}
 
-    <nav class="sheet-tabs tabs" data-group="primary">
-        <a class="item" data-tab="description">Description</a>
-        <a class="item" data-tab="attributes">Attributes</a>
-        <a class="item" data-tab="config">Config</a>
+    <nav class='sheet-tabs tabs' data-group='primary'>
+        <a class='item' data-tab='description'>Description</a>
+        <a class='item' data-tab='attributes'>Attributes</a>
+        <a class='item' data-tab='config'>Config</a>
     </nav>
 
-    <section class="sheet-body">
-        <div class="tab" data-group="primary" data-tab="description">
-            {{> "systems/hackmaster5e/templates/item/parts/description.hbs" }}
-        </div>
-        {{#with data}}
-        <div class="tab attributes" data-group="primary" data-tab="attributes">
-            <div class="item-form">
-                <div class="sidepanel">
-                    <div class="options-block">
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.level"}}</label>
-                            <input type="number" name="system.level" value="{{system.level}}" data-dtype="Number"/>
-                        </div>
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.hp"}}</label>
-                            <input type="number" value="{{system.bonus.hp}}" readonly="true">
-                        </div>
-                    </div>
-                </div>
-                <table class="table-basic">
-                    <thead>
-                        <tr>
-                            <th scope="col"><label class="resource-label">{{localize "HM.level"}}</label></th>
-                            <th scope="col"><label class="resource-label">{{localize "HM.die"}}</label></th>
-                            <th scope="col"><label class="resource-label">{{localize "HM.hp"}}</label></th>
-                            <th scope="col"></th>
-                        <tr>
-                    </thead>
-                    <tbody>
-                        {{#each system.ptable as |level lkey|}}
-                            {{#if (gte ../system.level lkey)}}
-                        <tr>
-                            <td>{{lkey}}</td>
-                            <td>{{level.hp.die}}</td>
-                            <td><input type="number" name="system.ptable.{{lkey}}.hp.value" value="{{level.hp.value}}" data-dtype="Number"/></td>
-                            <td>{{#if level.hp.reroll}}(reroll){{/if}}</td>
-                        </tr>
-                            {{/if}}
-                        {{/each}}
-                    </tbody>
-                </table>
-            </div>
+    <section class='sheet-body'>
+        <div class='tab' data-group='primary' data-tab='description'>
+            {{> 'systems/hackmaster5e/templates/item/parts/description.hbs' }}
         </div>
 
-        <div class="tab" data-group="primary" data-tab="config">
-            <div class="item-form">
-                <div class="sidepanel">
-                    <div class="options-block">
-                        <div class="options-row">
-                            <label>Trauma Bonus</label>
-                            <input type="number" name="system.top_cf" value="{{system.top_cf}}" data-dtype="Float"/>
-                        </div>
-                        {{#each system.features as |feature key|}}
-                        <div class="options-row">
-                            <label>{{localize (findConfigValue "itemCClass" key)}}</label>
-                            <input type="checkbox" name="system.features.{{@key}}" {{checked feature}}/>
-                        </div>
-                        {{/each}}
-                    </div>
-                </div>
-                <table class='table-basic'>
-                    <thead>
-                        <tr>
-                            <th scope='col'></th>
-                            <th scope='col'>HDie</th>
-                            <th scope='col'>Reroll</th>
-                            {{#each system.features as |enabled feature|}}{{#if enabled}}
-                            <th scope='col'>{{localize (findConfigValue 'classFeatureTable' feature)}}</th>
-                            {{/if}}{{/each}}
-                        </tr>
-                        <tbody>
-                        {{#each system.ptable as |level lkey|}}
+        {{#with data}}
+
+        <div class='tab attributes newform' data-group='primary' data-tab='attributes'>
+            <div class='grid-2col'>
+                <section class='col_rborder'>
+                    <span class='form-option'>
+                        <label class='resource-label'>{{localize 'HM.level'}}</label>
+                        <input type='number' name='system.level' value='{{system.level}}' data-dtype='Number'/>
+                    </span>
+                    <span class='form-option'>
+                        <label class='resource-label'>{{localize 'HM.hp'}}</label>
+                        <input type='number' value='{{system.bonus.hp}}' readonly='true'>
+                    </span>
+                </section>
+                <section>
+                    <table>
+                        <thead>
                             <tr>
-                                <th scope='row'>{{lkey}}</th>
-                                <td>
-                                    <input type='text' name='system.ptable.{{lkey}}.hp.die'
-                                    style='width:1em;' value='{{level.hp.die}}' data-dtype='String'/>
-                                </td>
-                                <td>
-                                    <input type='checkbox' name='system.ptable.{{lkey}}.hp.reroll' {{checked level.hp.reroll}}/>
-                                </td>
-                                {{#each ../system.features as |enabled feature|}}
-                                    {{#if enabled}}
-                                    <td>
-                                        <input name='system.ptable.{{lkey}}.{{feature}}.value'
-                                        value='{{#with (lookup level feature)}}{{value}}{{/with}}'
-                                               {{#if (eq feature 'back')}}type='text'
-                                               {{else}}type='number' data-dtype='Number'{{/if}}/>
-                                    </td>
-                                    {{/if}}
-                                {{/each}}
-                            </tr>
-                        {{/each}}
+                                <th scope='col'><label class='resource-label'>{{localize 'HM.level'}}</label></th>
+                                <th scope='col'><label class='resource-label'>{{localize 'HM.die'}}</label></th>
+                                <th scope='col'><label class='resource-label'>{{localize 'HM.hp'}}</label></th>
+                                <th scope='col'></th>
+                            <tr>
+                        </thead>
                         <tbody>
-                    </thead>
-                </table>
+                            {{#each system.ptable as |level lkey|}}{{#if (gte ../system.level lkey)}}
+                            <tr>
+                                <td>{{lkey}}</td>
+                                <td>{{level.hp.die}}</td>
+                                <td>
+                                    <input type='number' name='system.ptable.{{lkey}}.hp.value'
+                                        value='{{level.hp.value}}' data-dtype='Number'/>
+                                </td>
+                                <td>{{#if level.hp.reroll}}(reroll){{/if}}</td>
+                            </tr>
+                            {{/if}}{{/each}}
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </div>
+        <div class='tab newform' data-group='primary' data-tab='config'>
+            <div class='grid-2col' style='grid-template-columns: 40% 1fr;'>
+                <section name='options' class='col_rborder' style='padding-top: 5px;'>
+                    <span class='form-option'>
+                        <label>{{localize 'HM.traumabonus'}}</label>
+                        <input type='number' name='system.top_cf' value='{{system.top_cf}}' data-dtype='Float'/>
+                    </span>
+                    {{#each system.features as |feature key|}}
+                    <span class='form-option'>
+                        <label>{{localize (findConfigValue 'itemCClass' key)}}</label>
+                        <input type='checkbox' name='system.features.{{@key}}' {{checked feature}}/>
+                    </span>
+                    {{/each}}
+                </section>
+                <section name='pTable'>
+                    <table class='table-basic'>
+                        <thead>
+                            <tr>
+                                <th scope='col'></th>
+                                <th scope='col'>HDie</th>
+                                <th scope='col'>Reroll</th>
+                                {{#each system.features as |enabled feature|}}{{#if enabled}}
+                                <th scope='col'>{{localize (findConfigValue 'classFeatureTable' feature)}}</th>
+                                {{/if}}{{/each}}
+                            </tr>
+                            <tbody>
+                            {{#each system.ptable as |level lkey|}}
+                                <tr>
+                                    <th scope='row'>{{lkey}}</th>
+                                    <td>
+                                        <input type='text' name='system.ptable.{{lkey}}.hp.die'
+                                        style='width:1em;' value='{{level.hp.die}}' data-dtype='String'/>
+                                    </td>
+                                    <td>
+                                        <input type='checkbox' name='system.ptable.{{lkey}}.hp.reroll' {{checked level.hp.reroll}}/>
+                                    </td>
+                                    {{#each ../system.features as |enabled feature|}}
+                                        {{#if enabled}}
+                                        <td>
+                                            <input name='system.ptable.{{lkey}}.{{feature}}.value'
+                                            value='{{#with (lookup level feature)}}{{value}}{{/with}}'
+                                                   {{#if (eq feature 'back')}}type='text'
+                                                   {{else}}type='number' data-dtype='Number'{{/if}}/>
+                                        </td>
+                                        {{/if}}
+                                    {{/each}}
+                                </tr>
+                            {{/each}}
+                            <tbody>
+                        </thead>
+                    </table>
+                </section>
             </div>
         </div>
         {{/with}}
