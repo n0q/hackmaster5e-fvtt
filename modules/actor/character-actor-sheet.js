@@ -1,6 +1,15 @@
 import { HMActorSheet } from './actor-sheet.js';
 import { HMTABLES } from '../sys/constants.js';
 
+function prepareCharacterItems(sheetData) {
+    const {actor} = sheetData;
+    const {itemTypes} = actor;
+
+    // Assign
+    actor.race = itemTypes.race?.[0];
+    actor.cclass = itemTypes.cclass?.[0];
+}
+
 export class HMCharacterActorSheet extends HMActorSheet {
     /** @override */
     static get defaultOptions() {
@@ -19,7 +28,7 @@ export class HMCharacterActorSheet extends HMActorSheet {
     getData() {
         const data = super.getData();
 
-        this._prepareCharacterItems(data);
+        prepareCharacterItems(data);
         return data;
     }
 
