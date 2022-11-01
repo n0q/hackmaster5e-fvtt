@@ -22,6 +22,12 @@
     }
 }
     
+    .expanded {
+        grid-row-start: 1;
+        grid-row-end: span 2;
+        background: grey;
+    }
+
 .card {
     border: $card_border solid $c-grey;
     border-top-left-radius: $card-border-radius; 
@@ -39,6 +45,7 @@
         margin-top: 1px;
         width: 2em;
         margin-right: 2px;
+        text-align: center;
     }
 
     > section {

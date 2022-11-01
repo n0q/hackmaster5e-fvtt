@@ -407,6 +407,12 @@
             "tracking":          "Tracking"
         },
 
+        "SKILLS": {
+            "uskills":      "Universal Skills",
+            "oskills":      "Other Skills",
+            "lskills":      "Languages"
+        },
+
         "atk":  "atk",
         "def":  "def",
         "dmg":  "dmg",

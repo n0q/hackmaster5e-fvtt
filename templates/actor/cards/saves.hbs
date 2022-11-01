@@ -7,12 +7,9 @@
                 <h4 class="card-name">{{localize (findConfigValue "saves" @this)}}</h4>
             </label>
         </header>
-        <div class="statblock">
-            <input class="rollable" type="number" value="{{findBonus 'total' this}}" readonly="true"
-                data-dialog="save"
-                data-formula-type="{{this}}"
-            />
-        </div>
+        <input class="rollable" type="number" value="{{findBonus 'total' this}}" readonly="true"
+            data-dialog="save" data-formula-type="{{this}}"
+        /> 
     </summary>
 </li>
 {{/if}}

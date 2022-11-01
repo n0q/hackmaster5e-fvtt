@@ -1,13 +1,14 @@
 .skills-list {
     list-style: none;
-    margin: 7px 0;
+    margin: -3px 0;
     padding: 0;
     overflow-y: auto;
 
-    .skill-header {
-        font-weight: bold;
-        text-transform: uppercase;
-        line-height: 25px;
+    >span {
+        .resource-label {
+            padding-top: 9px;
+            padding-bottom: 2px;
+        }
     }
 
     section {
@@ -16,10 +17,7 @@
         .button {
             border: 1px solid;
             border-radius: 2px;
-            width: 1.5em;
-            text-align: right;
+            width: 1.75em;
         }
     }
-
 }
-
