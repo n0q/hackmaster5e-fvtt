@@ -11,6 +11,7 @@ function newReach(distance, color, visible) {
 }
 
 function getReach(actor) {
+    if (!actor) return null;
     const reachHint = actor.getFlag(MODULE_ID, 'reachHint');
     const weapons = actor.itemTypes.weapon.filter((a) => !a.system.ranged.checked);
     const {ITEM_STATE} = HMCONST;
@@ -18,7 +19,7 @@ function getReach(actor) {
     const weapon = weapons.find((a) => a.system.state >=  ITEM_STATE.EQUIPPED && a.id === reachHint)
                 ?? weapons.find((a) => a.system.state === ITEM_STATE.EQUIPPED)
                 ?? weapons.find((a) => a.system.innate);
-    if (!weapon) return [];
+    if (!weapon) return null;
     if (weapon.id !== reachHint) actor.setFlag(MODULE_ID, 'reachHint', weapon.id);
 
     const reach = (weapon.system.reach || 0) + (actor.system.bonus.total?.reach || 0);
