@@ -1,13 +1,6 @@
 /* eslint no-shadow: ["error", {"allow": ["HMCONST", "HMTABLES]}] */
 export const MODULE_ID = 'hackmaster5e';
 
-export const MACRO_VERS = {
-    'getAttack': 4,
-    'getDamage': 4,
-    'getDefend': 4,
-    'setWound':  2,
-};
-
 // TODO: ITEM_STATE and itemstate are the same table.
 export const HMCONST = {
     DEFAULT_ICON: 'icons/magic/symbols/question-stone-yellow.webp',

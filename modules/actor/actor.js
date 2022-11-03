@@ -1,4 +1,5 @@
 import { HMTABLES } from '../sys/constants.js';
+import { HMDialogMgr } from '../mgr/dialogmgr.js';
 
 export class HMActor extends Actor {
     prepareBaseData() {
@@ -140,5 +141,28 @@ export class HMActor extends Actor {
     getAbilityBonus() {
         const cName = this.constructor.name;
         console.error(`${cName} does not have a getAbilityBonus() function.`);
+    }
+
+    async addWound(amount) {
+        let woundData = {hp: amount, timer: amount};
+
+        if (!amount) {
+            const dataset = {dialog: 'wound'};
+            const dialogMgr = new HMDialogMgr();
+            const dialogResp = await dialogMgr.getDialog(dataset);
+            woundData = dialogResp.data;
+        }
+
+        const {hp} = woundData;
+        if (hp < 1) return {hp: 0};
+        const iData = {name: 'New Wound', type: 'wound', data: woundData};
+
+        try {
+            await Item.create(iData, {parent: this});
+        } catch (error) {
+            return {error, hp};
+        }
+
+        return {hp};
     }
 }

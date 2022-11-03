@@ -119,4 +119,9 @@ export class HMToken extends Token {
         const {placeables} = canvas.tokens;
         if (placeables.length) placeables.forEach((t) => t.drawReach());
     }
+
+    async addWound(amount) {
+        if (!this.actor) return false;
+        return this.actor.addWound(amount);
+    }
 }
