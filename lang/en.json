@@ -618,7 +618,12 @@
 
         "raw":          "Raw",
         "racial":       "Racial",
-        "misc":         "Misc"
+        "misc":         "Misc",
+
+        "UI": {
+            "showreach":    "Show Reach",
+            "tequipped":    "Toggle Equipped"
+        }
     },
 
     "ACTOR": {

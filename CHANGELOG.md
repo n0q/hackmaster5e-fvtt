@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+### Added
+- Button to toggle weapon equip state from Combat tab.
 ### Fixed
 - Scrollable sections of the character sheet no longer reset.
 - Possible crash due to token redraws in rare circumstances.

@@ -128,15 +128,21 @@
         grid-template-columns: 1fr auto auto;
         column-gap: $padding-sm;
 
+        .reach,
         .secondary-controls {
             display: grid;
             padding-top: $padding-sm;
-            border-right: $vert-break;
-            padding-right: $padding-sm;
             align-items: center;
-            grid-template-columns: auto 1fr;
+            justify-self: start;
+            grid-template-columns: 1fr auto;
             grid-template-rows: repeat(5, 1fr);
             column-gap: $padding-sm;
+        }
+
+        .secondary-controls {
+            border-right: $vert-break;
+            padding-right: $padding-sm;
+            grid-template-columns: 1fr;
         }
     }
 
