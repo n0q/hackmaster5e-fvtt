@@ -36,8 +36,8 @@
     </summary>
     <section class='{{toggleSwitch _id}}' toggle>
         <div class='card-expanded'>
-            <span>
             {{#if system.ranged.checked}}
+            <span>
                 <table class='table-basic'>
                     <tbody>
                         {{#each (findConfigObj 'reach')}}
@@ -48,21 +48,30 @@
                         {{/each}}
                     </tbody>
                 </table>
+            {{else}}
+            <span class='reach'>
+                <label>{{localize 'HM.reach'}}: {{system.adjReach}} ft.</label>
+                <i class='txtbutton far fa-circle-dot' title='{{localize 'HM.UI.showreach'}}' name='reachHint'
+                    data-item-id='{{_id}}'
+                    data-op='setFlag'
+                    data-key='reachHint'
+                    data-value='{{_id}}'
+                    data-redraw=true
+                   {{#if (eq _id (getFlag 'hackmaster5e' 'reachHint'))}}data-enabled{{/if}}
+                   {{#if (eq system.state 1)}}style='visibility: hidden;'{{/if}}>
+                </i>
             {{/if}}
             </span>
             <span class='secondary-controls'>
-            {{#unless system.ranged.checked}}
-                    <label>{{localize 'HM.reach'}}: {{system.adjReach}} ft.</label>
-                    <i class='txtbutton far fa-circle-dot' title='Show Reach' name='reachHint'
-                        data-item-id='{{_id}}'
-                        data-op='setFlag'
-                        data-key='reachHint'
-                        data-value='{{_id}}'
-                        data-redraw=true
-                       {{#if (eq _id (getFlag 'hackmaster5e' 'reachHint'))}}data-enabled{{/if}}
-                       {{#if (eq system.state 1)}}style='visibility: hidden;'{{/if}}>
-                    </i>
-            {{/unless}}
+                <i class='txtbutton far fa-arrow-down-arrow-up' title='{{localize 'HM.UI.tequipped'}}' name='toggleEquip'
+                    data-item-id='{{_id}}'
+                    data-op='setProperty'
+                    data-key='system.state'
+                    data-value='{{#if (eq system.state 2)}}1{{else}}2{{/if}}'
+                    data-dtype='Number'
+                    data-enabled
+                   {{#if (eq system.state 3)}}style='visibility: hidden;'{{/if}}>
+                </i>
             </span>
             <table class='table-basic'>
                 <thead>
