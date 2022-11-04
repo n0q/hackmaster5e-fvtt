@@ -132,6 +132,7 @@ export class HMItem extends Item {
         const chatmgr = new HMChatMgr();
         const cardtype = HMCONST.CARD_TYPE.ALERT;
         const dataset = {context: item, top, wound};
+        if (parent.type === 'beast') dataset.hidden = true;
         const card = await chatmgr.getCard({cardtype, dataset});
         await ChatMessage.create(card);
 
