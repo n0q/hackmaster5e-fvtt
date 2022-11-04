@@ -2,6 +2,16 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.2.28] - 2022-11-03
+### Added
+- Button to toggle weapon equip state from Combat tab.
+### Changed
+- Beast auto ToP check no longer publicly announced to table.
+### Fixed
+- Scrollable sections of the character sheet no longer reset position on redraw.
+- Possible crash due to token redraws in rare circumstances.
+- Revised Inflict Wound macro.
+
 ## [0.2.27] - 2022-11-01
 ### Changed
 - Compendium items.

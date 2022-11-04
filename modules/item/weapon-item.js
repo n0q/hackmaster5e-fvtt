@@ -100,7 +100,6 @@ export class HMWeaponItem extends HMItem {
         }
 
         if (ranged.checked) {
-            // TODO: Provide flag to use strength damage or not.
             stats.dmg = 0;
             cclass.spd = Math.min(cclass.spd, classData?.spdr || cclass.spd);
         } else {
@@ -155,6 +154,11 @@ export class HMWeaponItem extends HMItem {
         ev.stopPropagation();
         const {dataset} = ev.currentTarget;
         if (dataset.op === 'setFlag') await this.actor.setFlag(MODULE_ID, dataset.key, dataset.value);
+        if (dataset.op === 'setProperty') {
+            const {key} = dataset;
+            const value = dataset.dtype === 'Number' ? Number(dataset.value) : dataset.value;
+            this.update({[key]: value});
+        }
         if (dataset.redraw) this.actor.getActiveTokens().forEach((t) => t.drawReach());
     }
 
