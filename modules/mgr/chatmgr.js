@@ -64,17 +64,17 @@ async function saveExtendedTrauma(content, roll) {
     return {content: label + exContent, rolls};
 }
 
+function getGMs() {
+    return game.users.reduce((arr, u) => {
+        if (u.isGM) arr.push(u.id);
+        return arr;
+    }, []);
+}
+
 async function createInitNote(dataset) {
     const template = 'systems/hackmaster5e/templates/chat/initNote.hbs';
     const content = await renderTemplate(template, dataset);
-
-    let whisper;
-    if (dataset?.hidden) {
-        whisper = game.users.reduce((arr, u) => {
-            if (u.isGM) arr.push(u.id);
-            return arr;
-        }, []);
-    }
+    const whisper = dataset?.hidden ? getGMs() : undefined;
     return {content, whisper};
 }
 
@@ -144,7 +144,8 @@ async function createToPAlert(dataset) {
     const template = 'systems/hackmaster5e/templates/chat/top.hbs';
     const content = await renderTemplate(template, dataset);
     const flavor = dataset.context.parent.name;
-    return {content, flavor};
+    const whisper = dataset?.hidden ? getGMs() : undefined;
+    return {content, flavor, whisper};
 }
 
 function getSpecialMoveFlavor(resp) {
