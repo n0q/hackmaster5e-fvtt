@@ -26,14 +26,18 @@ import preloadHandlebarsTemplates from './modules/sys/partials.js';
 Hooks.once('init', async () => {
     game[MODULE_ID] = { HMActor, HMItem, HMWeaponItem, HMSpellItem };
 
+    CONFIG.ActiveEffect.documentClass = HMActiveEffect;
     CONFIG.Actor.documentClass = HMActorFactory;
-    CONFIG.Item.documentClass = HMItemFactory;
     CONFIG.Combat.documentClass = HMCombat;
+    CONFIG.Item.documentClass = HMItemFactory;
+    CONFIG.Macro.documentClass = HMMacro;
+
     CONFIG.Dice.terms.d = HMDie;
+    const diceTypesIdx = CONFIG.Dice.types.findIndex((x) => x.DENOMINATION === 'd');
+    if (diceTypesIdx > -1) CONFIG.Dice.types[diceTypesIdx] = HMDie;
+
     CONFIG.Token.objectClass = HMToken;
     CONFIG.ui.combat = HMCombatTracker;
-    CONFIG.Macro.documentClass = HMMacro;
-    CONFIG.ActiveEffect.documentClass = HMActiveEffect;
     CONFIG.canvasTextStyle.fontFamily = 'Gentium';
 
     CONFIG.fontDefinitions.Gentium = {
