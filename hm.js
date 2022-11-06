@@ -13,6 +13,7 @@ import { HMRaceItemSheet } from './modules/item/race-item-sheet.js';
 import { HMWeaponItemSheet } from './modules/item/weapon-item-sheet.js';
 import { HMChatMgr } from './modules/mgr/chatmgr.js';
 import { HMCombat, HMCombatTracker } from './modules/sys/combat.js';
+import { HMDie } from './modules/sys/dice.js';
 import { HMMacro } from './modules/sys/macro.js';
 import { HMToken } from './modules/sys/token.js';
 import { HMSupport } from './modules/sys/support.js';
@@ -22,14 +23,13 @@ import { MODULE_ID } from './modules/sys/constants.js';
 import registerHandlebarsHelpers from './modules/sys/helpers.js';
 import preloadHandlebarsTemplates from './modules/sys/partials.js';
 
-import './modules/sys/dice.js';
-
 Hooks.once('init', async () => {
     game[MODULE_ID] = { HMActor, HMItem, HMWeaponItem, HMSpellItem };
 
     CONFIG.Actor.documentClass = HMActorFactory;
     CONFIG.Item.documentClass = HMItemFactory;
     CONFIG.Combat.documentClass = HMCombat;
+    CONFIG.Dice.terms.d = HMDie;
     CONFIG.Token.objectClass = HMToken;
     CONFIG.ui.combat = HMCombatTracker;
     CONFIG.Macro.documentClass = HMMacro;
