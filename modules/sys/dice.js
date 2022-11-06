@@ -1,7 +1,7 @@
 export class HMDie extends Die {
     static MODIFIERS = {...this.MODIFIERS, p: 'penetrate'};
 
-    roll({minimize=false, maximize=false, faces=false, adjust=false}={}) {
+    roll({minimize=false, maximize=false, faces=false, offset=false}={}) {
         const roll = super.roll({minimize, maximize});
         this.results[this.results.length -1] = roll;
 
@@ -10,15 +10,15 @@ export class HMDie extends Die {
             roll.result = Math.ceil(CONFIG.Dice.randomUniform() * faces);
         }
 
-        if (adjust) {
-            roll.adjust = adjust;
-            roll.result += adjust;
+        if (offset) {
+            roll.offset = offset;
+            roll.result += offset;
         }
         return roll;
     }
 
     penetrate(modifier, {recursive=true}={}) {
-        // Match the "explode" or "explode once" modifier
+        // Match the "penetrate" modifier
         const rgx = /p([0-9]+)?([<>=]+)?([0-9]+)?/i;
         const match = modifier.match(rgx);
         if (!match) return false;
@@ -33,17 +33,17 @@ export class HMDie extends Die {
         // Determine target values
         target = Number.isNumeric(target) ? parseInt(target, 10) : this.faces;
         comparison = comparison || '=';
+        if (target === 1) max = 0;
 
-        // Determine the number of allowed explosions
+        // Determine the number of allowed penetrations
         max = Number.isNumeric(max) ? parseInt(max, 10) : null;
 
         // Dice decay
-
         let pFaces = false;
         if (this.faces === 100) { pFaces = 20; } else
         if (this.faces === 20)  { pFaces = 6;  }
 
-        // Recursively explode until there are no remaining results to explode
+        // Recursively penetrate until there are no remaining results to penetrate
         let checked = 0;
         const initial = this.results.length;
         while (checked < this.results.length) {
@@ -51,13 +51,14 @@ export class HMDie extends Die {
             checked++;
             if (!r.active) continue;
 
-            // Maybe we have run out of explosions
+            // Maybe we have run out of penetrations
             if ((max !== null) && (max <= 0)) break;
 
-            // Determine whether to explode the result and roll again!
-            if (DiceTerm.compareResult(r.result - (r?.adjust || 0), comparison, target)) {
+            // Determine whether to penetrate the result and roll again!
+            if (r.faces) target = r.faces;
+            if (DiceTerm.compareResult(r.result - (r?.offset || 0), comparison, target)) {
                 r.penetrated = true;
-                this.roll({faces: pFaces, adjust: -1});
+                this.roll({faces: pFaces, offset: -1});
                 if (max !== null) max -= 1;
             }
 
@@ -69,10 +70,11 @@ export class HMDie extends Die {
 
     getResultCSS(result) {
         const resultCopy = deepClone(result);
-        resultCopy.result -= resultCopy?.adjust || 0;
+        resultCopy.result -= resultCopy?.offset || 0;
         const rv = super.getResultCSS(resultCopy);
         rv[1] = `d${result.faces ?? this.faces}`;
-        rv[5] = resultCopy.penetrated ? 'exploded' : rv[5];
+        rv[5] = resultCopy.penetrated ? 'penetrated' : rv[5];
+        rv[8] = resultCopy.result === (resultCopy.faces ?? this.faces) ? 'max' : null;
         return rv;
     }
 }
