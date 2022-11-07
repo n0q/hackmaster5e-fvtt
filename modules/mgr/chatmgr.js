@@ -306,32 +306,31 @@ export class HMChatMgr {
         }
 
         if (dataset.dialog === 'def') {
-            let flavor = `${game.i18n.localize('HM.defense')}
-                          ${game.i18n.localize('HM.roll')}`;
+            let flavor = game.i18n.localize('HM.CHAT.def');
             flavor    += getSpecialMoveFlavor(dialogResp.resp);
 
-            let content = await roll.render({flavor});
-
-            const weaponRow = `${game.i18n.localize('HM.weapon')}:
-                            <b>${item.name}</b>`;
+            const rollContent = await roll.render({flavor});
 
             let specialRow = '';
             const sumDice = getDiceSum(roll);
-            if (sumDice >=  20) { specialRow += '<b>Perfect!</b>';     } else
-            if (sumDice === 19) { specialRow += '<b>Near Perfect</b>'; } else
-            if (sumDice === 18) { specialRow += '<b>Superior</b>';     } else
-            if (sumDice === 1)  { specialRow += '<b>Fumble</b>';       }
+            if (sumDice >=  20) { specialRow += 'Perfect!';     } else
+            if (sumDice === 19) { specialRow += 'Near Perfect'; } else
+            if (sumDice === 18) { specialRow += 'Superior';     } else
+            if (sumDice === 1)  { specialRow += 'Fumble';       }
 
-            const faShield = '<i class="fas fa-shield-alt"></i>';
             const dr = caller.drObj;
-            const drRow = `DR: <b>${dr.armor} + ${faShield}${dr.shield}</b>`;
-            content = `${weaponRow}<br>${drRow}<br>${specialRow}<br>${content}`;
+
+            const template = 'systems/hackmaster5e/templates/chat/defend.hbs';
+            const {resp, context} = dialogResp;
+            const templateData = {resp, dr, specialRow, context};
+            const resultContent = await renderTemplate(template, templateData);
+            const content = resultContent + rollContent;
             return {content};
         }
+        return false;
     }
 
-   /* eslint-disable */ //
-    static async renderChatMessage(_app, html, _data) {
+    static async renderChatMessage(_app, html) {
         if (!html.find('.hm-chat-note').length) return;
 
         html.css('padding', '0px');
@@ -340,5 +339,4 @@ export class HMChatMgr {
         html.find('.whisper-to').remove();
         if (!game.user.isGM) html.find('a').remove();
     }
-    /* eslint-enable */ //
 }

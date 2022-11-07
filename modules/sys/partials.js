@@ -43,6 +43,7 @@ export default function preloadHandlebarsTemplates() {
         'systems/hackmaster5e/templates/chat/attack.hbs',
         'systems/hackmaster5e/templates/chat/check.hbs',
         'systems/hackmaster5e/templates/chat/declare.hbs',
+        'systems/hackmaster5e/templates/chat/defend.hbs',
         'systems/hackmaster5e/templates/chat/initNote.hbs',
         'systems/hackmaster5e/templates/chat/top.hbs',
         'systems/hackmaster5e/templates/chat/trauma.hbs',

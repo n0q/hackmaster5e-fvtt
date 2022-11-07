@@ -73,6 +73,7 @@
         },
 
         "CHAT": {
+            "def":  "Defense Roll",
             "matk": "Melee Attack Roll",
             "ratk": "Ranged Attack Roll"
         },
