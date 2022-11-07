@@ -106,6 +106,7 @@ export const HMCONST = {
         CHARGE:     18,
         CHARGE4:    18,
         CHARGE2:    19,
+        RSTANDARD:  32,
         DEFEND:     64,
         RDEFEND:    65,
         GGROUND:    66,
@@ -386,6 +387,7 @@ export const HMTABLES = {
             [HMCONST.SPECIAL.CHARGE2]:    'd20p + @bonus.total.atk + 2 + @resp.bonus',
             [HMCONST.SPECIAL.CHARGE4]:    'd20p + @bonus.total.atk + 4 + @resp.bonus',
             [HMCONST.SPECIAL.WITHDRAWL]:  'd20p + @bonus.total.atk - 2 + @resp.bonus',
+            [HMCONST.SPECIAL.RSTANDARD]:  'd20p + @bonus.total.atk - @resp.reachmod + @resp.bonus',
         },
         'dmg': {
             'standard':    '@dmg.normal + @bonus.total.dmg + @resp.bonus',
@@ -598,17 +600,20 @@ export const HMTABLES = {
     weapons: {
         caps: {
             std: [
-                HMCONST.SPECIAL.STANDARD,
                 HMCONST.SPECIAL.DEFEND,
                 HMCONST.SPECIAL.RDEFEND,
                 HMCONST.SPECIAL.GGROUND,
                 HMCONST.SPECIAL.SCAMPER,
             ],
             melee: [
+                HMCONST.SPECIAL.STANDARD,
                 HMCONST.SPECIAL.FULLPARRY,
                 HMCONST.SPECIAL.AGGRESSIVE,
                 HMCONST.SPECIAL.WITHDRAWL,
                 HMCONST.SPECIAL.CHARGE,
+            ],
+            ranged: [
+                HMCONST.SPECIAL.RSTANDARD,
             ],
         },
         s4c: { spd: 3 },

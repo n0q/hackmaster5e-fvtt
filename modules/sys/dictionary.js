@@ -86,6 +86,7 @@ idx.special = {
     [HMCONST.SPECIAL.BACKSTAB]:   'HM.specSelect.stab',
     [HMCONST.SPECIAL.FLEEING]:    'HM.specSelect.flee',
     [HMCONST.SPECIAL.SET4CHARGE]: 'HM.specSelect.s4c',
+    [HMCONST.SPECIAL.RSTANDARD]:  'HM.specSelect.rstd',
     [HMCONST.SPECIAL.DEFEND]:     'HM.specSelect.def',
     [HMCONST.SPECIAL.RDEFEND]:    'HM.specSelect.rdef',
     [HMCONST.SPECIAL.SCAMPER]:    'HM.specSelect.sback',
