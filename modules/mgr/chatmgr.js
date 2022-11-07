@@ -230,7 +230,6 @@ export class HMChatMgr {
                     cData = await createDamageCard(dataset);
                     break;
                 case 'atk':
-                case 'ratk':
                 case 'def':
                     cData = await this._createWeaponCard(roll, dataset, dialogResp);
                     break;
@@ -284,75 +283,50 @@ export class HMChatMgr {
             return {content};
         }
 
-        switch (dataset.dialog) {
-            case 'ratk': {
-                const flavor = `${game.i18n.localize('HM.ranged')}
-                                ${game.i18n.localize('HM.attack')}
-                                ${game.i18n.localize('HM.roll')}`;
-                let content = await roll.render({flavor});
+        if (dataset.dialog === 'atk') {
+            let flavor = item.system.ranged.checked
+                ? game.i18n.localize('HM.CHAT.ratk')
+                : game.i18n.localize('HM.CHAT.matk');
 
-                const weaponRow = `${game.i18n.localize('HM.weapon')}:
-                                <b>${item.name}</b>`;
-                const speedRow  = `${game.i18n.localize('HM.speed')}:
-                                <b>${item.system.bonus.total.spd}</b>`;
-                const rangeRow  = `${game.i18n.localize('HM.range')}:
-                                <b>${game.i18n.localize(idx.reach[dialogResp.resp.reach])}</b>`;
+            flavor += getSpecialMoveFlavor(dialogResp.resp);
+            const rollContent = await roll.render({flavor});
 
-                let specialRow = '';
-                const sumDice = getDiceSum(roll);
-                if (sumDice >=  20) { specialRow += '<b>Critical!</b>';        } else
-                if (sumDice === 19) { specialRow += '<b>Near Perfect</b>';     } else
-                if (sumDice === 1)  { specialRow += '<b>Potential Fumble</b>'; }
+            let specialRow = '';
+            const sumDice = getDiceSum(roll);
+            if (sumDice >=  20) { specialRow += 'Critical!';        } else
+            if (sumDice === 19) { specialRow += 'Near Perfect';     } else
+            if (sumDice === 1)  { specialRow += 'Potential Fumble'; }
 
-                content = `${weaponRow}<br>${speedRow}<br>${rangeRow}<br>${specialRow}<br>${content}`;
-                return {content};
-            }
+            const template = 'systems/hackmaster5e/templates/chat/attack.hbs';
+            const {resp, context} = dialogResp;
+            const templateData = {resp, specialRow, context};
+            const resultContent = await renderTemplate(template, templateData);
+            const content = resultContent + rollContent;
+            return {content};
+        }
 
-            case 'atk': {
-                let flavor = `${game.i18n.localize('HM.melee')}
-                              ${game.i18n.localize('HM.attack')}
-                              ${game.i18n.localize('HM.roll')}`;
-                flavor += getSpecialMoveFlavor(dialogResp.resp);
-                const rollContent = await roll.render({flavor});
+        if (dataset.dialog === 'def') {
+            let flavor = `${game.i18n.localize('HM.defense')}
+                          ${game.i18n.localize('HM.roll')}`;
+            flavor    += getSpecialMoveFlavor(dialogResp.resp);
 
-                let specialRow = '';
-                const sumDice = getDiceSum(roll);
-                if (sumDice >=  20) { specialRow += 'Critical!';        } else
-                if (sumDice === 19) { specialRow += 'Near Perfect';     } else
-                if (sumDice === 1)  { specialRow += 'Potential Fumble'; }
+            let content = await roll.render({flavor});
 
-                const template = 'systems/hackmaster5e/templates/chat/attack.hbs';
-                const {resp, context} = dialogResp;
-                const templateData = {resp, specialRow, context};
-                const resultContent = await renderTemplate(template, templateData);
-                const content = resultContent + rollContent;
-                return {content};
-            }
+            const weaponRow = `${game.i18n.localize('HM.weapon')}:
+                            <b>${item.name}</b>`;
 
-            case 'def': {
-                let flavor = `${game.i18n.localize('HM.defense')}
-                              ${game.i18n.localize('HM.roll')}`;
-                flavor    += getSpecialMoveFlavor(dialogResp.resp);
+            let specialRow = '';
+            const sumDice = getDiceSum(roll);
+            if (sumDice >=  20) { specialRow += '<b>Perfect!</b>';     } else
+            if (sumDice === 19) { specialRow += '<b>Near Perfect</b>'; } else
+            if (sumDice === 18) { specialRow += '<b>Superior</b>';     } else
+            if (sumDice === 1)  { specialRow += '<b>Fumble</b>';       }
 
-                let content = await roll.render({flavor});
-
-                const weaponRow = `${game.i18n.localize('HM.weapon')}:
-                                <b>${item.name}</b>`;
-
-                let specialRow = '';
-                const sumDice = getDiceSum(roll);
-                if (sumDice >=  20) { specialRow += '<b>Perfect!</b>';     } else
-                if (sumDice === 19) { specialRow += '<b>Near Perfect</b>'; } else
-                if (sumDice === 18) { specialRow += '<b>Superior</b>';     } else
-                if (sumDice === 1)  { specialRow += '<b>Fumble</b>';       }
-
-                const faShield = '<i class="fas fa-shield-alt"></i>';
-                const dr = caller.drObj;
-                const drRow = `DR: <b>${dr.armor} + ${faShield}${dr.shield}</b>`;
-                content = `${weaponRow}<br>${drRow}<br>${specialRow}<br>${content}`;
-                return {content};
-            }
-            default:
+            const faShield = '<i class="fas fa-shield-alt"></i>';
+            const dr = caller.drObj;
+            const drRow = `DR: <b>${dr.armor} + ${faShield}${dr.shield}</b>`;
+            content = `${weaponRow}<br>${drRow}<br>${specialRow}<br>${content}`;
+            return {content};
         }
     }
 

@@ -72,6 +72,11 @@
             "back": "Backstab"
         },
 
+        "CHAT": {
+            "matk": "Melee Attack Roll",
+            "ratk": "Ranged Attack Roll"
+        },
+
         "defenseSelect": {
             "defense0":     "Standard",
             "defense1":     "+1 / -2 ATK",
@@ -161,6 +166,7 @@
             "agg":      "Aggressive Attack",
             "charge":   "Charge",
             "def":      "Standard Defense",
+            "rstd":     "Ranged Attack",
             "rdef":     "Ranged Defense",
             "jab":      "Jab Attack",
             "flee":     "Fleeing Opponent",

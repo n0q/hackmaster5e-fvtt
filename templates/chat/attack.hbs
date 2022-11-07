@@ -2,9 +2,12 @@
 {{localize 'HM.speed'}}:
 {{#with context.system.bonus.total}}
     {{#if (eq ../resp.specialMove 1)}}
-{{spd}}(<b>{{jspd}}</b>)<br>
+        {{spd}}(<b>{{jspd}}</b>)<br>
     {{else}}
-<b>{{spd}}</b>{{#if jspd}}({{jspd}}){{/if}}<br>
+        <b>{{spd}}</b>{{#if jspd}}({{jspd}}){{/if}}<br>
     {{/if}}
 {{/with}}
+{{#if context.system.ranged.checked}}
+    {{localize 'HM.range'}}: <b>{{localize (findConfigValue 'reach' resp.reach)}}</b><br>
+{{/if}}
 <b>{{specialRow}}</b>

@@ -139,7 +139,9 @@ export class HMWeaponItem extends HMItem {
         const capsArr = Object.keys(caps).filter((key) => caps[key].checked).map((x) => Number(x));
         capsArr.push(...HMTABLES.weapons.caps.std);
         if (jab.checked) capsArr.push(SPECIAL.JAB);
-        if (!ranged.checked) capsArr.push(...HMTABLES.weapons.caps.melee);
+        ranged.checked ? capsArr.push(...HMTABLES.weapons.caps.ranged)
+                       : capsArr.push(...HMTABLES.weapons.caps.melee);
+
         return capsArr.sort();
     }
 
@@ -196,14 +198,8 @@ export class HMWeaponItem extends HMItem {
         const dialogResp = await dialogMgr.getDialog(dataset, actor, opt);
 
         const {specialMove, defense} = dialogResp.resp;
-
-        if (dialogResp.resp.ranged) {
-            dataset.dialog = 'ratk';
-            dataset.formula = HMTABLES.formula.ratk[specialMove];
-        } else {
-            const {atk} = HMTABLES.formula;
-            dataset.formula = specialMove < 16 ? atk[HMCONST.SPECIAL.STANDARD] : atk[specialMove];
-        }
+        const {atk} = HMTABLES.formula;
+        dataset.formula = specialMove < 16 ? atk[HMCONST.SPECIAL.STANDARD] : atk[specialMove];
 
         const {SPECIAL} = HMCONST;
 
