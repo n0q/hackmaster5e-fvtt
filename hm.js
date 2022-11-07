@@ -32,6 +32,7 @@ Hooks.once('init', async () => {
     CONFIG.Item.documentClass = HMItemFactory;
     CONFIG.Macro.documentClass = HMMacro;
 
+
     CONFIG.Dice.terms.d = HMDie;
     const diceTypesIdx = CONFIG.Dice.types.findIndex((x) => x.DENOMINATION === 'd');
     if (diceTypesIdx > -1) CONFIG.Dice.types[diceTypesIdx] = HMDie;
@@ -99,4 +100,4 @@ Hooks.on('renderCombatTracker', HMCombatTracker.renderCombatTracker);
 Hooks.on('renderSceneControls', HMToken.renderSceneControls);
 Hooks.on('getSceneControlButtons', HMToken.getSceneControlButtons);
 Hooks.on('hotbarDrop', HMMacro.hotbarDrop);
-Hooks.on('diceSoNiceRollStart', HMSupport.diceSoNiceRollStart);
+// Hooks.on('diceSoNiceRollStart', HMSupport.diceSoNiceRollStart);

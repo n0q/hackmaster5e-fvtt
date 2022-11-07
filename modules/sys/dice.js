@@ -1,7 +1,13 @@
 export class HMDie extends Die {
     static MODIFIERS = {...this.MODIFIERS, p: 'penetrate'};
 
-    roll({minimize=false, maximize=false, faces=false, offset=false}={}) {
+    get total() {
+        const rv = super.total;
+        if (!rv) return rv;
+        return this.results.reduce((t, r) => t + (r.offset ?? 0), rv);
+    }
+
+    roll({minimize=false, maximize=false, offset=false, faces=false}={}) {
         const roll = super.roll({minimize, maximize});
         this.results[this.results.length -1] = roll;
 
@@ -10,10 +16,8 @@ export class HMDie extends Die {
             roll.result = Math.ceil(CONFIG.Dice.randomUniform() * faces);
         }
 
-        if (offset) {
-            roll.offset = offset;
-            roll.result += offset;
-        }
+        if (offset) roll.offset = offset;
+        this.results[this.results.length -1].length = this.results.length;
         return roll;
     }
 
@@ -46,6 +50,7 @@ export class HMDie extends Die {
         // Recursively penetrate until there are no remaining results to penetrate
         let checked = 0;
         const initial = this.results.length;
+
         while (checked < this.results.length) {
             const r = this.results[checked];
             checked++;
@@ -56,7 +61,8 @@ export class HMDie extends Die {
 
             // Determine whether to penetrate the result and roll again!
             if (r.faces) target = r.faces;
-            if (DiceTerm.compareResult(r.result - (r?.offset || 0), comparison, target)) {
+
+            if (DiceTerm.compareResult(r.result, comparison, target)) {
                 r.penetrated = true;
                 this.roll({faces: pFaces, offset: -1});
                 if (max !== null) max -= 1;
@@ -68,13 +74,15 @@ export class HMDie extends Die {
         }
     }
 
+    getResultLabel(result) {
+        return String(result.result + (result?.offset || 0));
+    }
+
     getResultCSS(result) {
-        const resultCopy = deepClone(result);
-        resultCopy.result -= resultCopy?.offset || 0;
-        const rv = super.getResultCSS(resultCopy);
+        const rv = super.getResultCSS(result);
         rv[1] = `d${result.faces ?? this.faces}`;
-        rv[5] = resultCopy.penetrated ? 'penetrated' : rv[5];
-        rv[8] = resultCopy.result === (resultCopy.faces ?? this.faces) ? 'max' : null;
+        rv[5] = result.penetrated ? 'penetrated' : rv[5];
+        rv[8] = result.result === (result.faces ?? this.faces) ? 'max' : null;
         return rv;
     }
 }
