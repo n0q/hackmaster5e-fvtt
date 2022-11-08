@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 - Changed "die penetrated" indicator icon.
 - Altered weapon damage chat cards.
+- Weapon reach is brighter than before on hover.
 ### Fixed
 - ToP correctly rounds down instead of up.
 - Possible crash due to token redraws in rare circumstances.
