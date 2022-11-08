@@ -2,9 +2,10 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-### [Unreleased]
+### [0.2.29] - 2022-11-07
 ### Added
 - Incapacitated status effect.
+- Compendium items.
 ### Changed
 - Changed "die penetrated" indicator icon.
 - Altered weapon damage chat cards.
@@ -23,8 +24,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Revised Inflict Wound macro.
 
 ## [0.2.27] - 2022-11-01
-### Changed
+### Added
 - Compendium items.
+### Changed
 - Re-styled character class sheet.
 - Character sheet style improvements.
 ### Fixed
