@@ -62,43 +62,41 @@ export class HMToken extends Token {
     async drawReach(hovered=false) {
         this.reach.removeChildren().forEach((c) => c.destroy());
         const reach = getReach(this.actor);
+        if (!this.combatant || !reach) return;
         if (!hovered && !reach.visible && !game.user.showAllThreats) return;
-        if (!this.combatant) return;
 
-        if (reach) {
-            const gfx = this.reach.addChild(new PIXI.Graphics());
-            if (canvas.interface.reverseMaskfilter) {
-                gfx.filters = [canvas.interface.reverseMaskfilter];
-            }
-
-            const squareGrid = canvas.scene.grid.type === CONST.GRID_TYPES.SQUARE;
-            const dim = canvas.dimensions;
-            const unit = dim.size / dim.distance;
-            const [cx, cy] = [this.w / 2, this.h / 2];
-            const {width, height} = this.document;
-
-            let [w, h] = [reach.distance, reach.distance];
-
-            if (squareGrid) {
-                w += (width  * dim.distance) / 2;
-                h += (height * dim.distance) / 2;
-            } else {
-                w += ((width - 1)  * dim.distance) / 2;
-                h += ((height - 1) * dim.distance) / 2;
-            }
-
-            const [w2, h2] = [(w + 5) * unit, (h + 5) * unit];
-            w *= unit;
-            h *= unit;
-
-            const color = Color.from(reach.color);
-            const hoverOpacity = hovered ? reach.opacity * 3 : reach.opacity * 2;
-            gfx.beginFill(color, reach.opacity)
-                .lineStyle(1, color, hoverOpacity)
-                .drawEllipse(cx, cy, w, h)
-                .drawEllipse(cx, cy, w2, h2)
-                .endFill();
+        const gfx = this.reach.addChild(new PIXI.Graphics());
+        if (canvas.interface.reverseMaskfilter) {
+            gfx.filters = [canvas.interface.reverseMaskfilter];
         }
+
+        const squareGrid = canvas.scene.grid.type === CONST.GRID_TYPES.SQUARE;
+        const dim = canvas.dimensions;
+        const unit = dim.size / dim.distance;
+        const [cx, cy] = [this.w / 2, this.h / 2];
+        const {width, height} = this.document;
+
+        let [w, h] = [reach.distance, reach.distance];
+
+        if (squareGrid) {
+            w += (width  * dim.distance) / 2;
+            h += (height * dim.distance) / 2;
+        } else {
+            w += ((width - 1)  * dim.distance) / 2;
+            h += ((height - 1) * dim.distance) / 2;
+        }
+
+        const [w2, h2] = [(w + 5) * unit, (h + 5) * unit];
+        w *= unit;
+        h *= unit;
+
+        const color = Color.from(reach.color);
+        const hoverOpacity = hovered ? reach.opacity * 4 : reach.opacity * 2;
+        gfx.beginFill(color, reach.opacity)
+            .lineStyle(1, color, hoverOpacity)
+            .drawEllipse(cx, cy, w, h)
+            .drawEllipse(cx, cy, w2, h2)
+            .endFill();
     }
 
     static getSceneControlButtons(controls) {
