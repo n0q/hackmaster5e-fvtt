@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 - ToP is rounded down instead of up.
 - Changed "die penetrated" indicator icon.
+### Fixed
+- Possible crash due to token redraws in rare circumstances.
 
 ## [0.2.28] - 2022-11-03
 ### Added
