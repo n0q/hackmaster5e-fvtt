@@ -215,14 +215,17 @@ export class HMWeaponItem extends HMItem {
             if (defense) await setStatusEffectOnToken(comData, HMTABLES.effects.defense[defense]);
         }
 
-        let roll;
         if (dialogResp.resp.button !== 'declare') {
             const rollMgr = new HMRollMgr();
-            roll = await rollMgr.getRoll(dataset, dialogResp);
+            dataset.roll = await rollMgr.getRoll(dataset, dialogResp);
         }
 
+        dataset.resp = dialogResp.resp;
+        dataset.context = dialogResp.context;
+        dataset.caller = actor;
+
         const chatMgr = new HMChatMgr();
-        const card = await chatMgr.getCard({roll, dataset, dialogResp});
+        const card = await chatMgr.getCard({dataset});
         await ChatMessage.create(card);
 
         if (dialogResp.resp.advance) await advanceClock(comData, dialogResp, true);
@@ -306,10 +309,13 @@ export class HMWeaponItem extends HMItem {
         dataset.formula = HMTABLES.formula.def[dialogResp.resp.specialMove];
 
         const rollMgr = new HMRollMgr();
-        const roll = await rollMgr.getRoll(dataset, dialogResp);
+        dataset.roll = await rollMgr.getRoll(dataset, dialogResp);
+        dataset.resp = dialogResp.resp;
+        dataset.context = dialogResp.context;
+        dataset.caller = actor;
 
         const chatMgr = new HMChatMgr();
-        const card = await chatMgr.getCard({roll, dataset, dialogResp});
+        const card = await chatMgr.getCard({dataset});
         await ChatMessage.create(card);
 
         if (opt.isCombatant) {
