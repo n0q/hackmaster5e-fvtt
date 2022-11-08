@@ -11,6 +11,25 @@ function getDiceSum(roll) {
     return sum;
 }
 
+function getSpecialMoveFlavor(resp) {
+    const mods = [];
+    const {specialMove, shieldHit, defense} = resp;
+    const {SPECIAL} = HMCONST;
+    if (specialMove === SPECIAL.AGGRESSIVE) mods.push(game.i18n.localize('HM.aggressive'));
+    if (specialMove === SPECIAL.BACKSTAB) mods.push(game.i18n.localize('HM.backstab'));
+    if (specialMove === SPECIAL.CHARGE2) mods.push(`${game.i18n.localize('HM.charged')} +2`);
+    if (specialMove === SPECIAL.CHARGE4) mods.push(`${game.i18n.localize('HM.charged')} +4`);
+    if (specialMove === SPECIAL.FLEEING) mods.push(game.i18n.localize('HM.fleeing'));
+    if (specialMove === SPECIAL.GGROUND) mods.push(game.i18n.localize('EFFECT.gground'));
+    if (specialMove === SPECIAL.JAB) mods.push(game.i18n.localize('HM.jab'));
+    if (specialMove === SPECIAL.SCAMPER) mods.push(game.i18n.localize('EFFECT.scamper'));
+    if (specialMove === SPECIAL.SET4CHARGE) mods.push(game.i18n.localize('HM.specSelect.s4c'));
+    if (specialMove === SPECIAL.WITHDRAWL) mods.push(game.i18n.localize('HM.specSelect.wdrawl'));
+    if (defense) mods.push(game.i18n.localize('HM.defensive'));
+    if (shieldHit) mods.push(game.i18n.localize('HM.blocked'));
+    return mods.length ? ` (${mods.join(', ')})` : '';
+}
+
 async function saveExtendedTrauma(content, roll) {
     const rolls = [roll];
     let exContent = content;
@@ -76,6 +95,57 @@ async function createInitNote(dataset) {
     const content = await renderTemplate(template, dataset);
     const whisper = dataset?.hidden ? getGMs() : undefined;
     return {content, whisper};
+}
+
+async function createAttackCard(dataset) {
+    const {caller, context, roll, resp} = dataset;
+
+    if (resp?.button === 'declare') {
+        const template = 'systems/hackmaster5e/templates/chat/declare.hbs';
+        const content = await renderTemplate(template, dataset);
+        return {content, flavor: caller.name};
+    }
+
+    let flavor = context.system.ranged.checked
+        ? game.i18n.localize('HM.CHAT.ratk')
+        : game.i18n.localize('HM.CHAT.matk');
+
+    flavor += getSpecialMoveFlavor(resp);
+    const rollContent = await roll.render({flavor});
+
+    let specialRow = '';
+    const sumDice = getDiceSum(roll);
+    if (sumDice >=  20) { specialRow += 'Critical!';        } else
+    if (sumDice === 19) { specialRow += 'Near Perfect';     } else
+    if (sumDice === 1)  { specialRow += 'Potential Fumble'; }
+
+    const template = 'systems/hackmaster5e/templates/chat/attack.hbs';
+    const templateData = {resp, specialRow, context};
+    const resultContent = await renderTemplate(template, templateData);
+    const content = resultContent + rollContent;
+    return {content, roll, flavor: caller.name};
+}
+
+async function createDefenseCard(dataset) {
+    const {caller, context, roll, resp} = dataset;
+
+    const flavor = game.i18n.localize('HM.CHAT.def') + getSpecialMoveFlavor(resp);
+    const rollContent = await roll.render({flavor});
+
+    let specialRow = '';
+    const sumDice = getDiceSum(roll);
+    if (sumDice >=  20) { specialRow += 'Perfect!';     } else
+    if (sumDice === 19) { specialRow += 'Near Perfect'; } else
+    if (sumDice === 18) { specialRow += 'Superior';     } else
+    if (sumDice === 1)  { specialRow += 'Fumble';       }
+
+    const dr = caller.drObj;
+
+    const template = 'systems/hackmaster5e/templates/chat/defend.hbs';
+    const templateData = {resp, dr, specialRow, context};
+    const resultContent = await renderTemplate(template, templateData);
+    const content = resultContent + rollContent;
+    return {content, roll, flavor: caller.name};
 }
 
 async function createSaveCard(roll, dataset, dialogResp) {
@@ -148,38 +218,20 @@ async function createToPAlert(dataset) {
     return {content, flavor, whisper};
 }
 
-function getSpecialMoveFlavor(resp) {
-    const mods = [];
-    const {specialMove, shieldHit, defense} = resp;
-    const {SPECIAL} = HMCONST;
-    if (specialMove === SPECIAL.AGGRESSIVE) mods.push(game.i18n.localize('HM.aggressive'));
-    if (specialMove === SPECIAL.BACKSTAB) mods.push(game.i18n.localize('HM.backstab'));
-    if (specialMove === SPECIAL.CHARGE2) mods.push(`${game.i18n.localize('HM.charged')} +2`);
-    if (specialMove === SPECIAL.CHARGE4) mods.push(`${game.i18n.localize('HM.charged')} +4`);
-    if (specialMove === SPECIAL.FLEEING) mods.push(game.i18n.localize('HM.fleeing'));
-    if (specialMove === SPECIAL.GGROUND) mods.push(game.i18n.localize('EFFECT.gground'));
-    if (specialMove === SPECIAL.JAB) mods.push(game.i18n.localize('HM.jab'));
-    if (specialMove === SPECIAL.SCAMPER) mods.push(game.i18n.localize('EFFECT.scamper'));
-    if (specialMove === SPECIAL.SET4CHARGE) mods.push(game.i18n.localize('HM.specSelect.s4c'));
-    if (specialMove === SPECIAL.WITHDRAWL) mods.push(game.i18n.localize('HM.specSelect.wdrawl'));
-    if (defense) mods.push(game.i18n.localize('HM.defensive'));
-    if (shieldHit) mods.push(game.i18n.localize('HM.blocked'));
-    return mods.length ? ` (${mods.join(', ')})` : '';
-}
-
 async function createDamageCard(dataset) {
     const {caller, context, roll, resp} = dataset;
-    const dmgsrc = context.system.ranged.checked
-        ? game.i18n.localize('HM.ranged')
-        : game.i18n.localize('HM.melee');
-    const dmgrollTxt = `${game.i18n.localize('HM.damage')} ${game.i18n.localize('HM.roll')}`;
 
-    let flavor = `${dmgsrc} ${dmgrollTxt}`;
+    let flavor = context.system.ranged.checked
+        ? game.i18n.localize('HM.CHAT.rdmg')
+        : game.i18n.localize('HM.CHAT.mdmg');
+
     flavor += getSpecialMoveFlavor(resp);
-    const weaponRow = `${game.i18n.localize('HM.weapon')}: <b>${context.name}</b>`;
+    const rollContent = await roll.render({flavor});
 
-    let content = await roll.render({flavor});
-    content = `${weaponRow}<p>${content}`;
+    const template = 'systems/hackmaster5e/templates/chat/damage.hbs';
+    const templateData = {resp, context};
+    const resultContent = await renderTemplate(template, templateData);
+    const content = resultContent + rollContent;
     return {content, roll, flavor: caller.name};
 }
 
@@ -230,8 +282,10 @@ export class HMChatMgr {
                     cData = await createDamageCard(dataset);
                     break;
                 case 'atk':
+                    cData = await createAttackCard(dataset);
+                    break;
                 case 'def':
-                    cData = await this._createWeaponCard(roll, dataset, dialogResp);
+                    cData = await createDefenseCard(dataset);
                     break;
                 case 'cast':
                     cData = await createSpellCard(dataset);
@@ -271,63 +325,6 @@ export class HMChatMgr {
         }
 
         return {...chatData, ...options};
-    }
-
-    async _createWeaponCard(roll, dataset, dialogResp) {
-        const {caller} = dialogResp;
-        const item = dialogResp.context;
-
-        if (dialogResp.resp?.button === 'declare') {
-            const template = 'systems/hackmaster5e/templates/chat/declare.hbs';
-            const content = await renderTemplate(template, dialogResp);
-            return {content};
-        }
-
-        if (dataset.dialog === 'atk') {
-            let flavor = item.system.ranged.checked
-                ? game.i18n.localize('HM.CHAT.ratk')
-                : game.i18n.localize('HM.CHAT.matk');
-
-            flavor += getSpecialMoveFlavor(dialogResp.resp);
-            const rollContent = await roll.render({flavor});
-
-            let specialRow = '';
-            const sumDice = getDiceSum(roll);
-            if (sumDice >=  20) { specialRow += 'Critical!';        } else
-            if (sumDice === 19) { specialRow += 'Near Perfect';     } else
-            if (sumDice === 1)  { specialRow += 'Potential Fumble'; }
-
-            const template = 'systems/hackmaster5e/templates/chat/attack.hbs';
-            const {resp, context} = dialogResp;
-            const templateData = {resp, specialRow, context};
-            const resultContent = await renderTemplate(template, templateData);
-            const content = resultContent + rollContent;
-            return {content};
-        }
-
-        if (dataset.dialog === 'def') {
-            let flavor = game.i18n.localize('HM.CHAT.def');
-            flavor    += getSpecialMoveFlavor(dialogResp.resp);
-
-            const rollContent = await roll.render({flavor});
-
-            let specialRow = '';
-            const sumDice = getDiceSum(roll);
-            if (sumDice >=  20) { specialRow += 'Perfect!';     } else
-            if (sumDice === 19) { specialRow += 'Near Perfect'; } else
-            if (sumDice === 18) { specialRow += 'Superior';     } else
-            if (sumDice === 1)  { specialRow += 'Fumble';       }
-
-            const dr = caller.drObj;
-
-            const template = 'systems/hackmaster5e/templates/chat/defend.hbs';
-            const {resp, context} = dialogResp;
-            const templateData = {resp, dr, specialRow, context};
-            const resultContent = await renderTemplate(template, templateData);
-            const content = resultContent + rollContent;
-            return {content};
-        }
-        return false;
     }
 
     static async renderChatMessage(_app, html) {
