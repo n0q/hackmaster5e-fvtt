@@ -2,6 +2,18 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+### [0.2.29] - 2022-11-07
+### Added
+- Incapacitated status effect.
+- Compendium items.
+### Changed
+- Changed "die penetrated" indicator icon.
+- Altered weapon damage chat cards.
+- Weapon reach is brighter than before on hover.
+### Fixed
+- ToP correctly rounds down instead of up.
+- Possible crash due to token redraws in rare circumstances.
+
 ## [0.2.28] - 2022-11-03
 ### Added
 - Button to toggle weapon equip state from Combat tab.
@@ -13,8 +25,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Revised Inflict Wound macro.
 
 ## [0.2.27] - 2022-11-01
-### Changed
+### Added
 - Compendium items.
+### Changed
 - Re-styled character class sheet.
 - Character sheet style improvements.
 ### Fixed

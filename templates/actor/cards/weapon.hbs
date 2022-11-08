@@ -19,18 +19,17 @@
             {{/if}}
                 data-dialog='dmg'
                 data-formula-type='standard'
-                data-item-id='{{_id}}'>
+                data-item-id='{{_id}}'
+             />
             {{#if system.ranged.checked}}
             <img class='rollable imgbutton' src='{{findConfigValue 'combatImg' 'ratk'}}' height='36' title='Ranged Attack'
-                data-dialog='ratk'
-                data-formula-type='standard'
-                data-item-id='{{_id}}'>
             {{else}}
             <img class='rollable imgbutton' src='{{findConfigValue 'combatImg' 'atk'}}' height='36' title='Attack'
+            {{/if}}
                 data-dialog='atk'
                 data-formula-type='standard'
-                data-item-id='{{_id}}'>
-            {{/if}}
+                data-item-id='{{_id}}'
+             />
         </section>
         {{/if}}
     </summary>

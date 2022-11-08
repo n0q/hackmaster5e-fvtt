@@ -13,6 +13,7 @@ import { HMRaceItemSheet } from './modules/item/race-item-sheet.js';
 import { HMWeaponItemSheet } from './modules/item/weapon-item-sheet.js';
 import { HMChatMgr } from './modules/mgr/chatmgr.js';
 import { HMCombat, HMCombatTracker } from './modules/sys/combat.js';
+import { HMDie } from './modules/sys/dice.js';
 import { HMMacro } from './modules/sys/macro.js';
 import { HMToken } from './modules/sys/token.js';
 import { HMSupport } from './modules/sys/support.js';
@@ -22,18 +23,22 @@ import { MODULE_ID } from './modules/sys/constants.js';
 import registerHandlebarsHelpers from './modules/sys/helpers.js';
 import preloadHandlebarsTemplates from './modules/sys/partials.js';
 
-import './modules/sys/dice.js';
-
 Hooks.once('init', async () => {
     game[MODULE_ID] = { HMActor, HMItem, HMWeaponItem, HMSpellItem };
 
+    CONFIG.ActiveEffect.documentClass = HMActiveEffect;
     CONFIG.Actor.documentClass = HMActorFactory;
-    CONFIG.Item.documentClass = HMItemFactory;
     CONFIG.Combat.documentClass = HMCombat;
+    CONFIG.Item.documentClass = HMItemFactory;
+    CONFIG.Macro.documentClass = HMMacro;
+
+
+    CONFIG.Dice.terms.d = HMDie;
+    const diceTypesIdx = CONFIG.Dice.types.findIndex((x) => x.DENOMINATION === 'd');
+    if (diceTypesIdx > -1) CONFIG.Dice.types[diceTypesIdx] = HMDie;
+
     CONFIG.Token.objectClass = HMToken;
     CONFIG.ui.combat = HMCombatTracker;
-    CONFIG.Macro.documentClass = HMMacro;
-    CONFIG.ActiveEffect.documentClass = HMActiveEffect;
     CONFIG.canvasTextStyle.fontFamily = 'Gentium';
 
     CONFIG.fontDefinitions.Gentium = {
@@ -95,4 +100,4 @@ Hooks.on('renderCombatTracker', HMCombatTracker.renderCombatTracker);
 Hooks.on('renderSceneControls', HMToken.renderSceneControls);
 Hooks.on('getSceneControlButtons', HMToken.getSceneControlButtons);
 Hooks.on('hotbarDrop', HMMacro.hotbarDrop);
-Hooks.on('diceSoNiceRollStart', HMSupport.diceSoNiceRollStart);
+// Hooks.on('diceSoNiceRollStart', HMSupport.diceSoNiceRollStart);

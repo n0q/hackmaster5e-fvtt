@@ -72,6 +72,14 @@
             "back": "Backstab"
         },
 
+        "CHAT": {
+            "def":  "Defense Roll",
+            "matk": "Melee Attack Roll",
+            "ratk": "Ranged Attack Roll",
+            "mdmg": "Melee Damage Roll",
+            "rdmg": "Ranged Damage Roll"
+        },
+
         "defenseSelect": {
             "defense0":     "Standard",
             "defense1":     "+1 / -2 ATK",
@@ -161,6 +169,7 @@
             "agg":      "Aggressive Attack",
             "charge":   "Charge",
             "def":      "Standard Defense",
+            "rstd":     "Ranged Attack",
             "rdef":     "Ranged Defense",
             "jab":      "Jab Attack",
             "flee":     "Fleeing Opponent",
@@ -649,6 +658,7 @@
         "defense4":     "Defensively Fighting +4",
         "fullparry":    "Full Parried",
         "gground":      "Gave Ground",
+        "incap":        "Incapacitated",
         "scamper":      "Scampered Back",
         "sfatigue":     "Spell Fatigued"
     },
