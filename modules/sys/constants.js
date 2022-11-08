@@ -580,6 +580,10 @@ export const HMTABLES = {
                     {key: 'system.bonus.state.skills', value: '-30', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
                 ],
             },
+            incap: {
+                label: 'EFFECT.incap',
+                icon: 'systems/hackmaster5e/styles/icons/nailed-head.svg',
+            },
         },
     },
     c_effect: {

@@ -658,6 +658,7 @@
         "defense4":     "Defensively Fighting +4",
         "fullparry":    "Full Parried",
         "gground":      "Gave Ground",
+        "incap":        "Incapacitated",
         "scamper":      "Scampered Back",
         "sfatigue":     "Spell Fatigued"
     },
