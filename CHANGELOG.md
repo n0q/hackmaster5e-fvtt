@@ -4,8 +4,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### [Unreleased]
 ### Fixed
-- Non-GM players were not seeing arrows in init update chat cards.
+- Non-GM users can now see arrows in init update chat cards.
 - Full Parry and Set for Charge no longer show as Ranged Attacks when declared.
+- Non-GM users can no longer advance initiative.
 
 ### [0.2.29] - 2022-11-07
 ### Added
