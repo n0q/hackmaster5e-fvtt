@@ -101,8 +101,9 @@ async function createAttackCard(dataset) {
     const {caller, context, roll, resp} = dataset;
 
     if (resp?.button === 'declare') {
+        const {SPECIAL} = HMCONST;
         const template = 'systems/hackmaster5e/templates/chat/declare.hbs';
-        const content = await renderTemplate(template, dataset);
+        const content = await renderTemplate(template, {context, resp, SPECIAL});
         return {content, flavor: caller.name};
     }
 
