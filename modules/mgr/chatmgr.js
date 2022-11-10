@@ -334,6 +334,6 @@ export class HMChatMgr {
         html.find('.message-sender').text('');
         html.find('.message-metadata')[0].style.display = 'none';
         html.find('.whisper-to').remove();
-        if (!game.user.isGM) html.find('a').remove();
+        if (!game.user.isGM) html.find('.message-delete').remove();
     }
 }
