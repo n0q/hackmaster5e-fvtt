@@ -165,4 +165,32 @@ export class HMActor extends Actor {
 
         return {hp};
     }
+
+    async modifyTokenAttribute(attribute, value, isDelta=false, isBar=true) {
+        super.modifyTokenAttribute(attribute, value, isDelta, isBar);
+        if (attribute !== 'hp') return;
+
+        const hpCurrent = this.system.hp.value;
+        const delta = isDelta ? value : value - hpCurrent;
+
+        if (delta > 0) {
+            const wounds = this.itemTypes.wound.filter((a) => a.system.hp > 0);
+            const woundsTotal = wounds.reduce((acc, x) => x.system.hp + acc, 0);
+            const healMax = Math.min(delta, woundsTotal);
+
+            let healedTotal = 0;
+            let r = wounds.length * healMax;
+            const healValues = new Array(wounds.length).fill(0);
+            for (let i = 0; healedTotal < healMax; i = ++i % wounds.length) {
+                if (!r--) break;
+                if (healValues[i] < wounds[i].system.hp) {
+                    healValues[i]++;
+                    healedTotal++;
+                }
+            }
+            for (let i = 0; i < wounds.length; i++) await wounds[i].setHp({value: -healValues[i]});
+        } else await this.addWound(-delta);
+
+        this.setHP();
+    }
 }

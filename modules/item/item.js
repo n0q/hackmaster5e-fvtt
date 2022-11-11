@@ -52,25 +52,6 @@ export class HMItem extends Item {
         return HMTABLES.itemstate[state];
     }
 
-    onClick(event) {
-        const itemType = this.type;
-        if (itemType === 'wound') { this.WoundAction(event); }
-    }
-
-    async WoundAction(event) {
-        const element = event.currentTarget;
-        const {dataset} = element;
-        const itemData = this.system;
-
-        let {hp, timer, treated} = itemData;
-
-        if (dataset.action === 'decTimer') timer--;
-        if (dataset.action === 'decHp' || timer < 1) timer = --hp;
-
-        if (hp < 0) return this.delete();
-        await this.update({'system': {hp, timer, treated}});
-    }
-
     // TODO: The first half of this function could be a lot neater.
     static async rollSkill({skillName, specialty=null, caller, itemId}) {
         const callers = [];
