@@ -35,10 +35,14 @@ export default function registerHandlebarsHelpers() {
         return 'INVALID_KEY';
     });
 
-    Handlebars.registerHelper('findConfigObj', (obj) => {
-        LOGGER.trace(`Calling findConfigObj Helper | Arg1:${obj}`);
-        if (obj in idx) return idx[obj];
-        return 'INVALID_LIST';
+    Handlebars.registerHelper('findConfigObj', (obj, opts) => {
+        const {omit} = opts.hash;
+        if (obj in idx) {
+            if (!omit) return idx[obj];
+            const {[omit]: _, ...filteredObj} = idx[obj];
+            return filteredObj;
+        }
+        return 'INVALID_KEY';
     });
 
     Handlebars.registerHelper('findBonus', (arg1, arg2, opts) => {
