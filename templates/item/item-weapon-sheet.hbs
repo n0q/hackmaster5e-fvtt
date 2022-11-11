@@ -51,7 +51,7 @@
                     <span class='form-option'>
                         <label class='resource-label'>{{localize 'HM.size'}}</label>
                         <select name='system.scale' {{#if system.innate}}disabled{{/if}} data-dtype='{{system.scale}}'>
-                            {{selectOptions (findConfigObj 'scale') selected=system.scale localize=true}}
+                            {{selectOptions (findConfigObj 'scale' omit='0') selected=system.scale localize=true}}
                         </select>
                     </span>
                     <span class='form-option'>
