@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### [Unreleased]
+### Changed
+- Actor HP can be altered directly from token HUD.
 ### Fixed
 - Non-GM users can now see arrows in init update chat cards.
 - Full Parry and Set for Charge no longer show as Ranged Attacks when declared.
