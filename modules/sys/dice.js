@@ -17,7 +17,6 @@ export class HMDie extends Die {
         }
 
         if (offset) roll.offset = offset;
-        this.results[this.results.length -1].length = this.results.length;
         return roll;
     }
 
