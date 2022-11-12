@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### [Unreleased]
 ### Added
 - Critical Hit macro.
+- Text animation on critical hit.
 ### Changed
 - Actor HP can be altered directly from token HUD without a macro.
 ### Fixed

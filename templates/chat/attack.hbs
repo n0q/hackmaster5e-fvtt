@@ -10,4 +10,4 @@
 {{#if context.system.ranged.checked}}
     {{localize 'HM.range'}}: <b>{{localize (findConfigValue 'reach' resp.reach)}}</b><br>
 {{/if}}
-<b>{{specialRow}}</b>
+<span {{#if shake}}class='hm-shake'{{/if}}><b>{{specialRow}}</b></span>

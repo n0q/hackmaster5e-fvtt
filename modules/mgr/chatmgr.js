@@ -144,7 +144,8 @@ async function createAttackCard(dataset) {
     if (sumDice === 1)  { specialRow += 'Potential Fumble'; }
 
     const template = 'systems/hackmaster5e/templates/chat/attack.hbs';
-    const templateData = {resp, specialRow, context};
+    const shake = sumDice >= 20;
+    const templateData = {resp, specialRow, context, shake};
     const resultContent = await renderTemplate(template, templateData);
     const content = resultContent + rollContent;
     return {content, roll, flavor: caller.name};
