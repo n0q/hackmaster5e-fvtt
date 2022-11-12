@@ -133,6 +133,10 @@ export class HMItem extends Item {
             await ChatMessage.create(topcard);
         }
     }
+
+    onClick() {
+        return this.id;
+    }
 }
 
 export async function advanceClock(comData, dialogResp, smartInit=false) {
