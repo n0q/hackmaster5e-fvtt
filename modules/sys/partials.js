@@ -42,6 +42,7 @@ export default function preloadHandlebarsTemplates() {
 
         'systems/hackmaster5e/templates/chat/attack.hbs',
         'systems/hackmaster5e/templates/chat/check.hbs',
+        'systems/hackmaster5e/templates/chat/crit.hbs',
         'systems/hackmaster5e/templates/chat/damage.hbs',
         'systems/hackmaster5e/templates/chat/declare.hbs',
         'systems/hackmaster5e/templates/chat/defend.hbs',
@@ -58,6 +59,7 @@ export default function preloadHandlebarsTemplates() {
         'systems/hackmaster5e/templates/dialog/getAbility.hbs',
         'systems/hackmaster5e/templates/dialog/getAttack.hbs',
         'systems/hackmaster5e/templates/dialog/cast.hbs',
+        'systems/hackmaster5e/templates/dialog/crit.hbs',
         'systems/hackmaster5e/templates/dialog/getDamage.hbs',
         'systems/hackmaster5e/templates/dialog/defend.hbs',
         'systems/hackmaster5e/templates/dialog/getSave.hbs',

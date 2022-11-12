@@ -1,4 +1,5 @@
 import { HMTABLES, HMCONST } from '../sys/constants.js';
+import {CRITTABLE} from '../sys/crits.js';
 import { idx } from '../sys/dictionary.js';
 
 function getDiceSum(roll) {
@@ -95,6 +96,28 @@ async function createInitNote(dataset) {
     const content = await renderTemplate(template, dataset);
     const whisper = dataset?.hidden ? getGMs() : undefined;
     return {content, whisper};
+}
+
+async function createCritCard(dataset) {
+    const {caller, roll, resp} = dataset;
+
+    const critHitString = game.i18n.localize('HM.chatCard.critHit');
+    const dmgTypeString = game.i18n.localize(idx.dmgType[resp.dmgType]);
+    const rollFlavor = `${critHitString} (${dmgTypeString})`;
+    const rollContent = await roll.render({flavor: rollFlavor});
+
+    const rollIdx = CRITTABLE.rollIdx.findIndex((x) => x >= roll.total);
+    const sevIdx = CRITTABLE.sevIdx.findIndex((x) => x >= resp.severity);
+    const critData = {
+        result: CRITTABLE[rollIdx][resp.dmgType][sevIdx],
+        location: CRITTABLE[rollIdx].label,
+        side: roll.total % 2,
+    };
+
+    const template = 'systems/hackmaster5e/templates/chat/crit.hbs';
+    const resultContent = await renderTemplate(template, {resp, critData});
+    const content = resultContent + rollContent;
+    return {content, roll, flavor: caller?.name};
 }
 
 async function createAttackCard(dataset) {
@@ -293,6 +316,9 @@ export class HMChatMgr {
                     break;
                 case 'skill':
                     cData = await createSkillCard(dataset);
+                    break;
+                case 'crit':
+                    cData = await createCritCard(dataset);
                     break;
                 case 'save':
                     cData = await createSaveCard(roll, dataset, dialogResp);

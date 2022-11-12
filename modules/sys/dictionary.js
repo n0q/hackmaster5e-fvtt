@@ -156,6 +156,12 @@ idx.physdmgtype = {
     'puncturing': 'HM.physDmgSelect.puncturing',
 };
 
+idx.dmgType = {
+    [HMCONST.DMGTYPE.CRUSHING]:   'HM.dmgType.crushing',
+    [HMCONST.DMGTYPE.HACKING]:    'HM.dmgType.hacking',
+    [HMCONST.DMGTYPE.PUNCTURING]: 'HM.dmgType.puncturing',
+};
+
 idx.weaponskill = {
     'minimal': 'HM.weaponskillSelect.minimal',
     'low':     'HM.weaponskillSelect.low',

@@ -1,0 +1,14 @@
+{{localize 'HM.type'}}:
+<b>{{localize (findConfigValue 'dmgType' resp.dmgType)}}</b><br>
+{{localize 'HM.severity'}}:
+<b>{{resp.severity}}</b><br>
+{{localize 'HM.location'}}:
+<b>{{critData.location}}</b><br>
+{{localize 'HM.side'}}:
+{{#if critData.side}}
+    <b>{{localize 'HM.secondary'}}</b>
+{{else}}
+    <b>{{localize 'HM.primary'}}</b>
+{{/if}}
+<hr>
+{{critData.result}}
