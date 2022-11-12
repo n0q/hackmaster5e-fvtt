@@ -35,7 +35,9 @@ Hooks.once('init', async () => {
 
     CONFIG.Dice.terms.d = HMDie;
     const diceTypesIdx = CONFIG.Dice.types.findIndex((x) => x.DENOMINATION === 'd');
-    if (diceTypesIdx > -1) CONFIG.Dice.types[diceTypesIdx] = HMDie;
+    diceTypesIdx > -1
+        ? CONFIG.Dice.types[diceTypesIdx] = HMDie
+        : CONFIG.Dice.types.push(HMDie);
 
     CONFIG.Token.objectClass = HMToken;
     CONFIG.ui.combat = HMCombatTracker;
