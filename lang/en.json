@@ -688,6 +688,11 @@
         "TypeWound":        "Wound"
     },
 
+    "SETTINGS": {
+        "reachOpacity":     "Reach Opacity",
+        "reachOpacityHint": "Opacity level of weapon reach and threat range."
+    },
+
     "dragRuler": {
         "current":      "current"
     }
