@@ -59,9 +59,9 @@ export class HMRollMgr {
     // TODO: Refactor.
     async _stdRoll(dataset, dialogResp=null) {
         const resp = dialogResp ? dialogResp : dataset.resp;
-        resp.actorbonus = resp?.caller.system.bonus;
+        resp.actorbonus = resp?.caller?.system?.bonus ?? 0;
         const formula = Roll.replaceFormulaData(dataset.formula, resp);
-        const data = dialogResp ? dialogResp.context.system : null;
+        const data = dialogResp ? dialogResp?.context?.system : null;
         const r = new Roll(formula, data);
 
         const specialMove = resp?.resp?.specialMove;

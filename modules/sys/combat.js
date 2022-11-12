@@ -1,6 +1,23 @@
 /* eslint max-classes-per-file: ['error', 2] */
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
 
+function onInitiativeDblClick(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    const html = $(event.target).closest('.combatant');
+    const cid = html.data('combatant-id');
+    const combatant = game.combat.combatants.get(cid);
+    if (!combatant.isOwner) return;
+
+    const initiative = html.find('.token-initiative');
+    const input = $(`<input type="number" class="initiative" value="${combatant.initiative}"/>`);
+    initiative.off('dblclick');
+    initiative.empty().append(input);
+    input.focus().select();
+    input.on('change', () => combatant.update({ _id: cid, initiative: input.val() }));
+    input.on('focusout', () => game.combats.render());
+}
+
 export class HMCombat extends Combat {
     nextTurn() { return this.nextRound(); }
 
@@ -79,40 +96,23 @@ export class HMCombatTracker extends CombatTracker {
     }
 
     static renderCombatTracker(_tracker, html) {
-        function removeTurnControls(html) { // eslint-disable-line
-            if (!html.find('[data-control=\'nextTurn\']').length) return;
-            html.find('[data-control=\'nextTurn\']')[0].remove();
-            html.find('[data-control=\'previousTurn\']')[0].remove();
-            html.find('.active').removeClass('active');
+        function removeTurnControls(combatDocument) {
+            if (!combatDocument.find('[data-control=\'nextTurn\']').length) return;
+            combatDocument.find('[data-control=\'nextTurn\']').each((_, el) => el.remove());
+            combatDocument.find('[data-control=\'previousTurn\']')[0].remove();
+            combatDocument.find('.active').removeClass('active');
         }
 
-        function DoubleclickSetsInitiative(html) { // eslint-disable-line
-            html.find('.token-initiative').off('dblclick').on('dblclick', HMCombatTracker._onInitiativeDblClick);
-            for (const combatant of html.find('#combat-tracker li.combatant')) {
-                if (combatant.classList.contains('active')) break;
-                combatant.classList.add('turn-done');
-            }
+        function DoubleclickSetsInitiative(combatDocument) {
+            combatDocument.find('.token-initiative').off('dblclick').on('dblclick', onInitiativeDblClick);
+            combatDocument.find('#combat-tracker li.combatant').each((_, el) => {
+                if (el.classList.contains('active')) return;
+                el.classList.add('turn-done');
+            });
         }
 
         removeTurnControls(html);
         DoubleclickSetsInitiative(html);
-    }
-
-    static _onInitiativeDblClick(event) {
-        event.stopPropagation();
-        event.preventDefault();
-        const html = $(event.target).closest('.combatant');
-        const cid = html.data('combatant-id');
-        const combatant = game.combat.combatants.get(cid);
-        if (!combatant.isOwner) return;
-
-        const initiative = html.find('.token-initiative');
-        const input = $(`<input type="number" class="initiative" value="${combatant.initiative}"/>`);
-        initiative.off('dblclick');
-        initiative.empty().append(input);
-        input.focus().select();
-        input.on('change', () => combatant.update({ _id: cid, initiative: input.val() }));
-        input.on('focusout', () => game.combats.render());
     }
 
     // Shorting out mousedown events on token initiative so dblclicks

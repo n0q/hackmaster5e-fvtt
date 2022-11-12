@@ -5,7 +5,7 @@ function newReach(distance, color, visible) {
         distance,
         color,
         visible,
-        opacity: 0.1,
+        opacity: game.settings.get(MODULE_ID, 'reachOpacity'),
         id: randomID(),
     };
 }

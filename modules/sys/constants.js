@@ -18,6 +18,11 @@ export const HMCONST = {
         D12P:   2,
         D8P:    3,
     },
+    DMGTYPE: {
+        CRUSHING:   0,
+        HACKING:    1,
+        PUNCTURING: 2,
+    },
     DEFENSE: {
         DEFENSE0: 0,
         DEFENSE1: 1,

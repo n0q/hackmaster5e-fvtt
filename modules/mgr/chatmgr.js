@@ -1,4 +1,5 @@
 import { HMTABLES, HMCONST } from '../sys/constants.js';
+import {CRITTABLE} from '../sys/crits.js';
 import { idx } from '../sys/dictionary.js';
 
 function getDiceSum(roll) {
@@ -97,12 +98,35 @@ async function createInitNote(dataset) {
     return {content, whisper};
 }
 
+async function createCritCard(dataset) {
+    const {caller, roll, resp} = dataset;
+
+    const critHitString = game.i18n.localize('HM.chatCard.critHit');
+    const dmgTypeString = game.i18n.localize(idx.dmgType[resp.dmgType]);
+    const rollFlavor = `${critHitString} (${dmgTypeString})`;
+    const rollContent = await roll.render({flavor: rollFlavor});
+
+    const rollIdx = CRITTABLE.rollIdx.findIndex((x) => x >= roll.total);
+    const sevIdx = CRITTABLE.sevIdx.findIndex((x) => x >= resp.severity);
+    const critData = {
+        result: CRITTABLE[rollIdx][resp.dmgType][sevIdx],
+        location: CRITTABLE[rollIdx].label,
+        side: roll.total % 2,
+    };
+
+    const template = 'systems/hackmaster5e/templates/chat/crit.hbs';
+    const resultContent = await renderTemplate(template, {resp, critData});
+    const content = resultContent + rollContent;
+    return {content, roll, flavor: caller?.name};
+}
+
 async function createAttackCard(dataset) {
     const {caller, context, roll, resp} = dataset;
 
     if (resp?.button === 'declare') {
+        const {SPECIAL} = HMCONST;
         const template = 'systems/hackmaster5e/templates/chat/declare.hbs';
-        const content = await renderTemplate(template, dataset);
+        const content = await renderTemplate(template, {context, resp, SPECIAL});
         return {content, flavor: caller.name};
     }
 
@@ -120,7 +144,8 @@ async function createAttackCard(dataset) {
     if (sumDice === 1)  { specialRow += 'Potential Fumble'; }
 
     const template = 'systems/hackmaster5e/templates/chat/attack.hbs';
-    const templateData = {resp, specialRow, context};
+    const shake = sumDice >= 20;
+    const templateData = {resp, specialRow, context, shake};
     const resultContent = await renderTemplate(template, templateData);
     const content = resultContent + rollContent;
     return {content, roll, flavor: caller.name};
@@ -293,6 +318,9 @@ export class HMChatMgr {
                 case 'skill':
                     cData = await createSkillCard(dataset);
                     break;
+                case 'crit':
+                    cData = await createCritCard(dataset);
+                    break;
                 case 'save':
                     cData = await createSaveCard(roll, dataset, dialogResp);
                     break;
@@ -334,6 +362,6 @@ export class HMChatMgr {
         html.find('.message-sender').text('');
         html.find('.message-metadata')[0].style.display = 'none';
         html.find('.whisper-to').remove();
-        if (!game.user.isGM) html.find('a').remove();
+        if (!game.user.isGM) html.find('.message-delete').remove();
     }
 }

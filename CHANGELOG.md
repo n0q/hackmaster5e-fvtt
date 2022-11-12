@@ -2,6 +2,20 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+### [0.2.30] - 2022-11-12
+### Added
+- Critical Hit macro.
+- Text animation on critical hit.
+- Client setting to control reach/threat display opacity level.
+### Changed
+- Actor HP can be altered directly from token HUD without a macro.
+### Fixed
+- Non-GM users can now see arrows in init update chat cards.
+- Full Parry and Set for Charge no longer show as Ranged Attacks when declared.
+- Non-GM users can no longer advance initiative.
+- Set text color to white for doubleclick init change on popout version of init tracker.
+- No longer possible to set a weapon size to 'Custom'.
+
 ### [0.2.29] - 2022-11-07
 ### Added
 - Incapacitated status effect.

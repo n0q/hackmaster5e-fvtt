@@ -19,6 +19,7 @@ import { HMToken } from './modules/sys/token.js';
 import { HMSupport } from './modules/sys/support.js';
 import { HMStates, HMActiveEffect } from './modules/sys/effects.js';
 import { MODULE_ID } from './modules/sys/constants.js';
+import { registerSystemSettings } from './modules/sys/settings.js';
 
 import registerHandlebarsHelpers from './modules/sys/helpers.js';
 import preloadHandlebarsTemplates from './modules/sys/partials.js';
@@ -35,7 +36,9 @@ Hooks.once('init', async () => {
 
     CONFIG.Dice.terms.d = HMDie;
     const diceTypesIdx = CONFIG.Dice.types.findIndex((x) => x.DENOMINATION === 'd');
-    if (diceTypesIdx > -1) CONFIG.Dice.types[diceTypesIdx] = HMDie;
+    diceTypesIdx > -1
+        ? CONFIG.Dice.types[diceTypesIdx] = HMDie
+        : CONFIG.Dice.types.push(HMDie);
 
     CONFIG.Token.objectClass = HMToken;
     CONFIG.ui.combat = HMCombatTracker;
@@ -64,6 +67,7 @@ Hooks.once('init', async () => {
 
     registerHandlebarsHelpers();
     preloadHandlebarsTemplates();
+    registerSystemSettings();
 });
 
 Hooks.once('ready', async () => {
