@@ -1,8 +1,24 @@
 import { MODULE_ID, HMCONST, HMTABLES } from '../sys/constants.js';
+import { CRITTABLE } from '../sys/crits.js';
 import { HMItem, advanceClock, setStatusEffectOnToken, unsetStatusEffectOnToken } from './item.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
 import { HMRollMgr } from '../mgr/rollmgr.js';
+
+function getCaller(caller=null) {
+    let actor;
+    let token;
+    if (!caller) {
+        [token] = canvas.tokens.controlled;
+        actor   = token?.actor;
+    } else if (caller.isToken) {
+        actor   = caller;
+        token   = caller.token;
+    } else {
+        actor = caller;
+    }
+    return {actor, token};
+}
 
 export class HMWeaponItem extends HMItem {
     get minspd() {
@@ -269,6 +285,25 @@ export class HMWeaponItem extends HMItem {
         dataset.resp = dialogResp.resp;
         dataset.context = dialogResp.context;
         dataset.caller = actor;
+
+        const chatMgr = new HMChatMgr();
+        const card = await chatMgr.getCard({dataset});
+        await ChatMessage.create(card);
+    }
+
+    static async rollCrit({caller} = {}) {
+        const {actor} = getCaller(caller);
+
+        const dataset = {dialog : 'crit', caller: actor};
+        const dialogMgr = new HMDialogMgr();
+        const dialogResp = await dialogMgr.getDialog(dataset, actor);
+        const {resp} = dialogResp;
+
+        dataset.formula = CRITTABLE.formula(resp.atkSize, resp.defSize);
+        dataset.resp = resp;
+
+        const rollMgr = new HMRollMgr();
+        dataset.roll = await rollMgr.getRoll(dataset, dialogResp);
 
         const chatMgr = new HMChatMgr();
         const card = await chatMgr.getCard({dataset});

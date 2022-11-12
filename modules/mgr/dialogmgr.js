@@ -1,9 +1,10 @@
 import { HMCONST } from '../sys/constants.js';
 import { AttackPrompt } from '../apps/attack.js';
+import { CastPrompt } from '../apps/cast.js';
+import { CritPrompt } from '../apps/crit.js';
 import { DamagePrompt } from '../apps/damage.js';
 import { DefendPrompt } from '../apps/defend.js';
 import { SkillPrompt } from '../apps/skill.js';
-import { CastPrompt } from '../apps/cast.js';
 
 function getDialogData() {
     return {
@@ -73,6 +74,22 @@ async function getCastDialog(dataset, caller, opt) {
     return dialogResp;
 }
 
+async function getCritDialog(dataset, caller) {
+    const dialogResp = {caller};
+    const dialogData = getDialogData();
+    dialogData.caller = caller;
+
+    const title = caller
+        ? `${caller.name}: ${game.i18n.localize('HM.dialog.getCritTitle')}`
+        : `${game.i18n.localize('HM.dialog.getCritTitle')}`;
+    dialogResp.resp = await new Promise((resolve) => {
+        const options = {resolve, title};
+        new CritPrompt(dialogData, options).render(true);
+    });
+
+    return dialogResp;
+}
+
 async function getDamageDialog(dataset, caller) {
     const dialogResp = {caller};
     const dialogData = getWeapons(caller, dataset?.itemId);
@@ -127,6 +144,7 @@ export class HMDialogMgr {
         if (name === 'ability') return this.getAbilityDialog(dataset, caller);
         if (name === 'atk')     return      getAttackDialog(dataset, caller, opt);
         if (name === 'cast')    return      getCastDialog(dataset, caller, opt);
+        if (name === 'crit')    return      getCritDialog(dataset, caller);
         if (name === 'ratk')    return      getAttackDialog(dataset, caller);
         if (name === 'def')     return      getDefendDialog(dataset, caller);
         if (name === 'dmg')     return      getDamageDialog(dataset, caller);

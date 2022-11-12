@@ -88,6 +88,12 @@
             "defense4":     "+4 / -8 ATK"
         },
 
+        "dmgType": {
+            "crushing":     "Crushing",
+            "hacking":      "Hacking",
+            "puncturing":   "Puncturing"
+        },
+
         "rangedDefSelect": {
             "stationary":   "Stationary",
             "moving":       "Moving"
@@ -258,6 +264,7 @@
             "getAbilityButtonR": "Ability Check",
             "getCastTitle":      "Cast a Spell",
             "getChargeSpdBody":  "Speed",
+            "getCritTitle":      "Roll for Critical",
             "getDamageTitle":    "Roll for Damage",
             "getDefendTitle":    "Roll a Defense",
             "getDefendDie":      "Defense Die",
@@ -277,6 +284,7 @@
         },
 
         "chatCard": {
+            "critHit":     "Critical Hit",
             "wcreset":     "Weapon count reset",
             "toplimitPre": "Damage exceeds",
             "top":         "Threshold of Pain"
@@ -540,6 +548,7 @@
         "literacy":     "Literacy",
         "literate":     "Literate",
         "load":         "Load",
+        "location":     "Location",
         "luck":         "Luck",
         "mage":         "Mage",
         "magic":        "Magic",
@@ -561,6 +570,7 @@
         "prayer":       "Prayer",
         "preparing":    "Preparing",
         "price":        "Price",
+        "primary":      "Primary",
         "private":      "Private",
         "prepared":     "Prepared",
         "proficiency":  "Proficiency",
@@ -591,6 +601,9 @@
         "setup":        "Setup",
         "sex":          "Sex",
         "s4c":          "Set for Charge",
+        "secondary":    "Secondary",
+        "severity":     "Severity",
+        "side":         "Side",
         "size":         "Size",
         "shield":       "Shield",
         "slow":         "Slow",
