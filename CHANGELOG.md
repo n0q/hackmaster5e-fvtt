@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+### [Unreleased]
+### Fixed
+- Races with a custom size no longer default to 'Tiny' when delivering crits.
+
 ### [0.2.30] - 2022-11-12
 ### Added
 - Critical Hit macro.

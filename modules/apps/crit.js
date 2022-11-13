@@ -20,7 +20,7 @@ export class CritPrompt extends HMPrompt {
         const {caller} = dialogData;
         const callerRace = caller?.itemTypes?.race[0] ?? undefined;
 
-        const atkSize = callerRace ? callerRace.system.scale.hp : HMCONST.SCALE.MEDIUM;
+        const atkSize = callerRace ? callerRace.getScale('hp') : HMCONST.SCALE.MEDIUM;
         const defSize = HMCONST.SCALE.MEDIUM;
         const [atkRoll, defRoll] = [0, 0];
         mergeObject(this.dialogData, {
