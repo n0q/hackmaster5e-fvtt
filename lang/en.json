@@ -646,6 +646,11 @@
         "UI": {
             "showreach":    "Show Reach",
             "tequipped":    "Toggle Equipped"
+        },
+
+        "CRIT": {
+            "left":     "Left",
+            "right":    "Right"
         }
     },
 
