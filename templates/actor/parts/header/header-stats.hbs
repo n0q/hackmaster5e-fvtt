@@ -1,7 +1,7 @@
 <img src='systems/hackmaster5e/styles/assets/logo_gs_txt.png'>
 <i class='logo-corner far fa-registered'></i>
 {{#with data}}
-<figure class='fraction'>
+<figure class='fraction {{#unless system.hp.max}}disabled{{/unless}}'>
     <label for='system.hp.value' class='resource-label'>{{localize 'HM.hp'}}</label>
     <label for='system.hp.value'>{{system.hp.value}}</label>
     <div class='divisor'></div>
@@ -14,6 +14,7 @@
     <div class='divisor'></div>
     <label for='system.sp.max'>{{system.sp.max}}</label>
 </figure>
+    {{#if (eq type 'character')}}
 <figure class='fraction {{#unless system.luck.max}}disabled{{/unless}}'>
     <label for='system.luck.value' class='resource-label'>{{localize 'HM.luck'}}</label>
     <input type='number' name='system.luck.value' value='{{system.luck.value}}' onwheel='this.blur()' data-dtype='Number'
@@ -33,4 +34,5 @@
         <input class='value' type='number' name='system.bp' value='{{system.bp}}' onwheel='this.blur()' data-dtype='Number'/>
     </span>
 </figure>
+    {{/if}}
 {{/with}}
