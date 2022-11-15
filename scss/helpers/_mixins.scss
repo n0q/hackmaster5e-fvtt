@@ -103,7 +103,12 @@
     }
 }
 
-@mixin text-glow {
-    font-weight: bold;
-    text-shadow: $shad-red;
+@mixin text-glow($mode:'') {
+    @if $mode=='reset' {
+        font-weight: initial;
+        text-shadow: initial;
+    } @else {
+        font-weight: bold;
+        text-shadow: $shad-red;
+    }
 }

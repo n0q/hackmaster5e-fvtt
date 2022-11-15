@@ -16,7 +16,11 @@
         "url": "https://raw.githubusercontent.com/n0q/hackmaster5e-fvtt/main/header.jpg",
         "caption": "Hackmaster"
     }],
-    "esmodules": ["node_modules/dompurify/dist/purify.js", "hm.js"],
+    "esmodules": [
+        "node_modules/dompurify/dist/purify.js",
+        "greensock/esm/all.js",
+        "hm.js"
+    ],
     "styles": ["styles/hackmaster.css"],
     "packs": [
         {
