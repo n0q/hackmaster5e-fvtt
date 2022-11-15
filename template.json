@@ -110,7 +110,9 @@
                 "spdm": false,
                 "spdr": false,
                 "init": false,
-                "back": false},
+                "back": false,
+                "luck": false
+            },
             "ptable": {}
         },
 

@@ -146,6 +146,7 @@ export class HMCharacterActor extends HMActor {
     setExtras() {
         const {system} = this;
         system.sp.max = system.bonus.total?.sp || 0;
+        system.luck.max = system.bonus.total?.luck || 0;
         const cclass = this.items.find((a) => a.type === 'cclass');
         if (!cclass) return;
 

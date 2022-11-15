@@ -377,6 +377,7 @@ export const HMTABLES = {
             'spdm': {value: null},
             'spdr': {value: null},
             'init': {value: null},
+            'luck': {value: null},
         },
     },
     encumbrance: {
