@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### [Unreleased]
 ### Added
 - BP is tracked on front of character sheet.
+- Maximum Luck now tracked by character class items.
 ### Changed
 - Formatting fixes.
 ### Fixed

@@ -69,7 +69,8 @@
             "spdm": "MSpeed",
             "spdr": "RSpeed",
             "init": "Init",
-            "back": "Backstab"
+            "back": "Backstab",
+            "luck": "Luck"
         },
 
         "CHAT": {
