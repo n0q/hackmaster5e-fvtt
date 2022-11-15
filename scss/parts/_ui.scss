@@ -90,9 +90,20 @@
     align-items: center;
     border: 2px solid;
     border-radius: 5px;
-    width: 5.5em;
     margin: 2px;
     margin-bottom: auto;
+    height: 3.5rem;
+
+    .large { font-size: $font-lg; }
+
+    &.disabled {
+        color: var(--color-text-dark-inactive);
+        .divisor { background: var(--color-text-dark-inactive); }
+        input:disabled {
+            color: var(--color-text-dark-inactive);
+            &:hover { @include text-glow('reset'); }
+        }
+    }
 
     input {
         border: none;
@@ -100,14 +111,13 @@
         box-shadow: unset;
         text-align: center;
         height: $font-primary-size;
-        &:hover {
-            @include text-glow;
-        }
+        &:hover { @include text-glow; }
     }
 
     label {
         text-align: center;
         width: 5em;
+        height: $font-primary-size;
     }
 
     >.divisor {

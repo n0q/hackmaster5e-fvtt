@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### [Unreleased]
+### Added
+- BP is tracked on front of character sheet.
+### Changed
+- Formatting fixes.
 ### Fixed
 - Races with a custom size no longer default to 'Tiny' when delivering crits.
 
