@@ -2,11 +2,12 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-### [Unreleased]
+### [0.2.31] - 2022-11-15
 ### Added
 - BP tracked on front of character sheet.
 - Maximum Luck tracked by character class items.
 - Maximum EP automatically tracked.
+- Compendium items.
 ### Changed
 - Formatting fixes.
 - Updated Thief for Luck points in class compendium.
