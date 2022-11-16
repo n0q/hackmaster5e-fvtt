@@ -28,9 +28,10 @@
             "templates": ["base", "priors"],
             "hp":    {"value": 0, "max": 0},
             "luck":  {"value": 0, "max": 0},
-            "ep":    {"value": 0, "max": 400},
+            "ep":    {"value": 0, "max": 0},
             "honor": {"value": 0, "bracket": 0},
             "fame":  {"value": 0, "bracket": 0},
+            "bp": 40,
             "abilities": {
                 "total": null,
                 "base": {
@@ -109,7 +110,9 @@
                 "spdm": false,
                 "spdr": false,
                 "init": false,
-                "back": false},
+                "back": false,
+                "luck": false
+            },
             "ptable": {}
         },
 

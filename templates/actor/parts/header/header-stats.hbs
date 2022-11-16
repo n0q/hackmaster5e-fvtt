@@ -1,34 +1,38 @@
-<img src="systems/hackmaster5e/styles/assets/logo_gs_txt.png">
-<i class="logo-corner far fa-registered"></i>
+<img src='systems/hackmaster5e/styles/assets/logo_gs_txt.png'>
+<i class='logo-corner far fa-registered'></i>
 {{#with data}}
-<section>
+<figure class='fraction {{#unless system.hp.max}}disabled{{/unless}}'>
+    <label for='system.hp.value' class='resource-label'>{{localize 'HM.hp'}}</label>
+    <label for='system.hp.value'>{{system.hp.value}}</label>
+    <div class='divisor'></div>
+    <label for='system.hp.max'>{{#if system.hp.max}}{{system.hp.max}}{{else}}0{{/if}}</label>
+</figure>
+<figure class='fraction {{#unless system.sp.max}}disabled{{/unless}}'>
+    <label for='system.sp.value' class='resource-label'>{{localize 'HM.sp'}}</label>
+    <input type='number' name='system.sp.value'  value='{{system.sp.value}}' onwheel='this.blur()' data-dtype='Number'
+           {{#unless system.sp.max}}disabled{{/unless}}/>
+    <div class='divisor'></div>
+    <label for='system.sp.max'>{{system.sp.max}}</label>
+</figure>
     {{#if (eq type 'character')}}
-    <figure class="fraction">
-        <label for="system.ep.value" class="resource-label">{{localize "HM.ep"}}</label>
-        <input type="number" name="system.ep.value" value="{{system.ep.value}}" onwheel="this.blur()" data-dtype="Number"/>
-        <div class="divisor"></div>
-        <input type="number" name="system.ep.max" value="{{system.ep.max}}" data-dtype="Number"/>
-    </figure>
+<figure class='fraction {{#unless system.luck.max}}disabled{{/unless}}'>
+    <label for='system.luck.value' class='resource-label'>{{localize 'HM.luck'}}</label>
+    <input type='number' name='system.luck.value' value='{{system.luck.value}}' onwheel='this.blur()' data-dtype='Number'
+           {{#unless system.luck.max}}disabled{{/unless}}/>
+    <div class='divisor'></div>
+    <label for='system.luck.max'>{{system.luck.max}}</label>
+</figure>
+<figure class='fraction'>
+    <label for='system.ep.value' class='resource-label'>{{localize 'HM.ep'}}</label>
+    <input type='number' name='system.ep.value' value='{{system.ep.value}}' onwheel='this.blur()' data-dtype='Number'/>
+    <div class='divisor'></div>
+    <label for='system.ep.max'>{{system.ep.max}}</label>
+</figure>
+<figure class='fraction'>
+    <label for='system.bp' class='resource-label'>{{localize 'HM.bp'}}</label>
+    <span class='large'>
+        <input class='value' type='number' name='system.bp' value='{{system.bp}}' onwheel='this.blur()' data-dtype='Number'/>
+    </span>
+</figure>
     {{/if}}
-    <figure class="fraction">
-        <label for="system.hp.value" class="resource-label">{{localize "HM.hp"}}</label>
-        <label for="system.hp.value">{{system.hp.value}}</label>
-        <div class="divisor"></div>
-        <label for="system.hp.max">{{#if system.hp.max}}{{system.hp.max}}{{else}}0{{/if}}</label>
-    </figure>
-    <figure class="fraction">
-        <label for="system.sp.value" class="resource-label">{{localize "HM.sp"}}</label>
-        <input type="number" name="system.sp.value" value="{{system.sp.value}}" onwheel="this.blur()" data-dtype="Number"/>
-        <div class="divisor"></div>
-        <label for="system.sp.max">{{system.sp.max}}</label>
-    </figure>
-    {{#if (eq ../actor.type 'character')}}
-    <figure class="fraction">
-        <label for="system.luck.value" class="resource-label">{{localize "HM.luck"}}</label>
-        <input type="number" name="system.luck.value" value="{{system.luck.value}}" onwheel="this.blur()" data-dtype="Number"/>
-        <div class="divisor"></div>
-        <input type="number" name="system.luck.max" value="{{system.luck.max}}" data-dtype="Number"/>
-    </figure>
-    {{/if}}
-</section>
 {{/with}}

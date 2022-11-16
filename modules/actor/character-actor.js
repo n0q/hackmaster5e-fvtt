@@ -139,6 +139,9 @@ export class HMCharacterActor extends HMActor {
         const objData = cclass.system;
         if (objData.level > 0) system.bonus.class = objData.bonus;
 
+        const {level} = cclass.system;
+        system.ep.max = HMTABLES.cclass.epMax[level];
+
         Object.entries(cclasses.slice(0, cclasses.length -1))
             .map((a) => this.items.get(a[1].id).delete());
     }
@@ -146,6 +149,7 @@ export class HMCharacterActor extends HMActor {
     setExtras() {
         const {system} = this;
         system.sp.max = system.bonus.total?.sp || 0;
+        system.luck.max = system.bonus.total?.luck || 0;
         const cclass = this.items.find((a) => a.type === 'cclass');
         if (!cclass) return;
 

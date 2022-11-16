@@ -69,7 +69,8 @@
             "spdm": "MSpeed",
             "spdr": "RSpeed",
             "init": "Init",
-            "back": "Backstab"
+            "back": "Backstab",
+            "luck": "Luck"
         },
 
         "CHAT": {
@@ -645,6 +646,11 @@
         "UI": {
             "showreach":    "Show Reach",
             "tequipped":    "Toggle Equipped"
+        },
+
+        "CRIT": {
+            "left":     "Left",
+            "right":    "Right"
         }
     },
 

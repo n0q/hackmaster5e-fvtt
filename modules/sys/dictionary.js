@@ -53,6 +53,7 @@ idx.classFeatureTable = {
     'spdr': 'HM.classFeatureTable.spdr',
     'init': 'HM.classFeatureTable.init',
     'back': 'HM.classFeatureTable.back',
+    'luck': 'HM.classFeatureTable.luck',
 };
 
 idx.handedness = {
@@ -201,6 +202,7 @@ idx.itemCClass = {
     'spdr': 'HM.spdrbonus',
     'spdm': 'HM.spdmbonus',
     'back': 'HM.backstab',
+    'luck': 'HM.luck',
 };
 
 idx.itemTypes = {
@@ -303,7 +305,7 @@ idx.savesImg = {
     'foa':      'icons/skills/movement/figure-running-gray.webp',
     'fos':      'icons/magic/control/buff-strength-muscle-damage.webp',
     'mental':   'icons/skills/wounds/anatomy-organ-brain-pink-red.webp',
-    'morale':   'icons/skills/social/wave-halt-stop.webp',
+    'morale':   'icons/sundries/flags/banner-flag-white.webp',
     'poison':   'icons/skills/toxins/poison-bottle-corked-fire-green.webp',
     'physical': 'icons/skills/wounds/anatomy-bone-joint.webp',
     'tenacity': 'icons/magic/control/fear-fright-white.webp',
