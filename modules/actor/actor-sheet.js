@@ -216,10 +216,16 @@ export class HMActorSheet extends ActorSheet {
         await this.actor.updateEmbeddedDocuments('Item', [{_id:item.id, data:item.system}]);
     }
 
-    _onClick(event) {
-        event.preventDefault();
-        const item = this._getOwnedItem(this._getItemId(event));
-        item.onClick(event);
+    _onClick(ev) {
+        ev.preventDefault();
+        const item = this._getOwnedItem(this._getItemId(ev));
+        item.onClick(ev);
+        const {dataset} = ev.currentTarget;
+        if (dataset.toggle) {
+            const id = this._getItemId(ev);
+            const {visibleItemId} = this;
+            visibleItemId[id] = !visibleItemId[id];
+        }
     }
 
     async _onSelect(ev) {

@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+### [Unreleased]
+### Changed
+- Weapon cards close after toggling equipped status.
+
 ### [0.2.31] - 2022-11-15
 ### Added
 - BP tracked on front of character sheet.
