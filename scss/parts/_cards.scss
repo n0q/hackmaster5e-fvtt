@@ -128,21 +128,20 @@
         grid-template-columns: 1fr auto auto;
         column-gap: $padding-sm;
 
-        .reach,
+        .reach, 
         .secondary-controls {
-            display: grid;
             padding-top: $padding-sm;
-            align-items: center;
-            justify-self: start;
-            grid-template-columns: 1fr auto;
-            grid-template-rows: repeat(5, 1fr);
-            column-gap: $padding-sm;
         }
 
         .secondary-controls {
+            display: grid;
+            align-items: start;
+            justify-self: start;
+            grid-template-columns: 1fr;
+            grid-template-rows: repeat(4, 1fr);
             border-right: $vert-break;
             padding-right: $padding-sm;
-            grid-template-columns: 1fr;
+            column-gap: $padding-sm;
         }
     }
 
