@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### [Unreleased]
 ### Changed
 - Weapon cards close after toggling equipped status.
+- Formatting fixes.
 
 ### [0.2.31] - 2022-11-15
 ### Added

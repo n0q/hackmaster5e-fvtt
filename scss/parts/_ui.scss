@@ -135,8 +135,9 @@
     border: 1px solid var(--color-border-light-2);
     border-radius: 5px;
     text-align: center;
-    min-width: 24px;
     font-size: 20px;
+    width: calc(20px + 2 * (4px + 1px));
+    height: calc(20px + 2 * (4px + 1px));
     cursor: pointer;
 
     &[data-enabled] {
