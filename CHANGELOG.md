@@ -2,12 +2,14 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-### [Unreleased]
+## [Unreleased]
 ### Changed
 - Weapon cards close after toggling equipped status.
 - Formatting fixes.
+### Fixed
+- Beast skills/languages omitted from sheets.
 
-### [0.2.31] - 2022-11-15
+## [0.2.31] - 2022-11-15
 ### Added
 - BP tracked on front of character sheet.
 - Maximum Luck tracked by character class items.
@@ -20,7 +22,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Fixed
 - Races with a custom size no longer default to 'Tiny' when delivering crits.
 
-### [0.2.30] - 2022-11-12
+## [0.2.30] - 2022-11-12
 ### Added
 - Critical Hit macro.
 - Text animation on critical hit.
@@ -34,7 +36,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Set text color to white for doubleclick init change on popout version of init tracker.
 - No longer possible to set a weapon size to 'Custom'.
 
-### [0.2.29] - 2022-11-07
+## [0.2.29] - 2022-11-07
 ### Added
 - Incapacitated status effect.
 - Compendium items.

@@ -7,7 +7,7 @@ export class HMSkillItem extends HMItem {
 
     prepareDerivedData() {
         super.prepareDerivedData();
-        if (!this.actor?.system?.abilities) return;
+        if (!this.actor) return;
 
         const actorData = this.actor.system;
         const {bonus, relevant, universal} = this.system;
@@ -27,6 +27,7 @@ export class HMSkillItem extends HMItem {
                 bonus.stats = {value, 'literacy': value, 'verbal': value};
             } else { delete bonus.stats; }
         }
+
         for (const key in bonus.total) {
             let sum = -bonus.total[key];
             for (const state in bonus) { sum += (bonus[state][key] || 0); }
