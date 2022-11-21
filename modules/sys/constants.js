@@ -112,6 +112,10 @@ export const HMCONST = {
         CHARGE4:    18,
         CHARGE2:    19,
         RSTANDARD:  32,
+        SNAPSHOT:   33,
+        LOAD:       34,
+        DRAW:       35,
+        AIM:        36,
         DEFEND:     64,
         RDEFEND:    65,
         GGROUND:    66,
@@ -415,7 +419,8 @@ export const HMTABLES = {
             [HMCONST.SPECIAL.CHARGE2]:    'd20p + @bonus.total.atk + 2 + @resp.bonus',
             [HMCONST.SPECIAL.CHARGE4]:    'd20p + @bonus.total.atk + 4 + @resp.bonus',
             [HMCONST.SPECIAL.WITHDRAWL]:  'd20p + @bonus.total.atk - 2 + @resp.bonus',
-            [HMCONST.SPECIAL.RSTANDARD]:  'd20p + @bonus.total.atk - @resp.reachmod + @resp.bonus',
+            [HMCONST.SPECIAL.RSTANDARD]:  'd20p + @bonus.total.atk     - @resp.reachmod + @resp.bonus',
+            [HMCONST.SPECIAL.SNAPSHOT]:   'd20p + @bonus.total.atk - 6 - @resp.reachmod + @resp.bonus',
         },
         'dmg': {
             'standard':    '@dmg.normal + @bonus.total.dmg + @resp.bonus',
@@ -646,6 +651,10 @@ export const HMTABLES = {
             ],
             ranged: [
                 HMCONST.SPECIAL.RSTANDARD,
+                HMCONST.SPECIAL.SNAPSHOT,
+                HMCONST.SPECIAL.LOAD,
+                HMCONST.SPECIAL.DRAW,
+                HMCONST.SPECIAL.AIM,
             ],
         },
         s4c: { spd: 3 },
@@ -709,7 +718,15 @@ export const HMTABLES = {
 
                 const shoot   = (timingNew.fire    || 0)
                               + (timingNew.recover || 0);
-                return {base, declare, shoot};
+
+                const specialMove = {
+                    [HMCONST.SPECIAL.RSTANDARD]: declare,
+                    [HMCONST.SPECIAL.SNAPSHOT]:  declare - timingNew.aim,
+                    [HMCONST.SPECIAL.LOAD]:      timingNew.load,
+                    [HMCONST.SPECIAL.DRAW]:      timingNew.draw,
+                    [HMCONST.SPECIAL.AIM]:       timingNew.aim,
+                };
+                return {base, declare, shoot, ...specialMove};
             },
         },
         'noprof': {

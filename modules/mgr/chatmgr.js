@@ -26,6 +26,10 @@ function getSpecialMoveFlavor(resp) {
     if (specialMove === SPECIAL.SCAMPER) mods.push(game.i18n.localize('EFFECT.scamper'));
     if (specialMove === SPECIAL.SET4CHARGE) mods.push(game.i18n.localize('HM.specSelect.s4c'));
     if (specialMove === SPECIAL.WITHDRAWL) mods.push(game.i18n.localize('HM.specSelect.wdrawl'));
+    if (specialMove === SPECIAL.SNAPSHOT) mods.push(game.i18n.localize('HM.specSelect.snap'));
+    if (specialMove === SPECIAL.LOAD) mods.push(game.i18n.localize('HM.loading'));
+    if (specialMove === SPECIAL.DRAW) mods.push(game.i18n.localize('HM.drawing'));
+    if (specialMove === SPECIAL.AIM) mods.push(game.i18n.localize('HM.aiming'));
     if (defense) mods.push(game.i18n.localize('HM.defensive'));
     if (shieldHit) mods.push(game.i18n.localize('HM.blocked'));
     return mods.length ? ` (${mods.join(', ')})` : '';
@@ -125,8 +129,9 @@ async function createAttackCard(dataset) {
 
     if (resp?.button === 'declare') {
         const {SPECIAL} = HMCONST;
+        const specialFlavor = getSpecialMoveFlavor(resp);
         const template = 'systems/hackmaster5e/templates/chat/declare.hbs';
-        const content = await renderTemplate(template, {context, resp, SPECIAL});
+        const content = await renderTemplate(template, {context, resp, specialFlavor, SPECIAL});
         return {content, flavor: caller.name};
     }
 
