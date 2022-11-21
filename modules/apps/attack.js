@@ -43,10 +43,13 @@ export class AttackPrompt extends HMPrompt {
         const ranged = wData.ranged.checked;
         const reach = wData.ranged?.reach ?? wData.reach;
         const spd = getSpeed(ranged, wData);
+        if (ranged) spd.declareMode = spd.declare;
+        const {SPECIAL} = HMCONST;
 
         mergeObject(this.dialogData, {
             capList,
-            specialMove: 0,
+            canShoot: true,
+            specialMove: ranged ? SPECIAL.RSTANDARD : SPECIAL.STANDARD,
             defense,
             ranged,
             reach,
@@ -54,21 +57,27 @@ export class AttackPrompt extends HMPrompt {
             widx: 0,
             range: HMCONST.RANGED.REACH.SHORT,
             advance: dialogData.inCombat,
-            SPECIAL: HMCONST.SPECIAL,
-            charge: HMCONST.SPECIAL.CHARGE4,
+            SPECIAL,
+            charge: SPECIAL.CHARGE4,
         });
     }
 
     update(options) {
         const {weapons, widx, caller} = this.dialogData;
-        let {specialMove} = this.dialogData;
+        const {SPECIAL} = HMCONST;
+        let specialMove = Number(this.dialogData.specialMove);
         const weapon  = weapons[widx];
         const wData   = weapon.system;
         const ranged  = wData.ranged.checked;
         const reach   = wData.ranged?.reach ?? wData.reach;
         const capList = this.getCapList(weapons[widx], caller);
 
+        // This is broken.
         if (!(specialMove in capList)) specialMove = Object.keys(capList)[0];
+
+        this.dialogData.canShoot = ranged
+            ? [SPECIAL.RSTANDARD, SPECIAL.SNAPSHOT].includes(Number(specialMove))
+            : false;
 
         this.dialogData.ranged = ranged;
         this.dialogData.reach = reach;
@@ -80,18 +89,22 @@ export class AttackPrompt extends HMPrompt {
 
     get dialogResp() {
         const {button, charge, spd, weapons, widx} = this.dialogData;
+
         let specialMove = Number(this.dialogData.specialMove);
         if (specialMove === HMCONST.SPECIAL.CHARGE) specialMove = Number(charge);
+
+        const ranged = !!weapons[widx].system.ranged.checked;
+        const advance = ranged ? spd[specialMove] : spd[button];
 
         const dialogResp = {
             widx,
             specialMove,
             defense: Number(this.dialogData.defense),
-            ranged: !!weapons[widx].system.ranged.checked,
+            ranged,
             reach: Number(this.dialogData.range),
             reachmod: HMTABLES.weapons.ranged.reach[this.dialogData.range],
             bonus: Number(this.dialogData.bonus) || 0,
-            advance: this.dialogData.advance ? spd[button] : false,
+            advance: this.dialogData.advance ? advance : false,
             button,
         };
         return dialogResp;
