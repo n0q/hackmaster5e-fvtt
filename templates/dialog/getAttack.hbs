@@ -54,13 +54,16 @@
         <button type='submit' class='dialog-button normal default' data-button='declare'>
             <span class='hm-clock'>
                 <label>{{localize 'HM.declare'}}</label>
-                {{#if (and advance inCombat)}}<sub>{{spd.declare}}</sub>{{/if}}
+                {{#if (and advance inCombat)}}<sub>{{lookup spd specialMove}}</sub>{{/if}}
             </span>
         </button>
-        <button type='submit' class='dialog-button normal default' data-button='shoot'>
+        <button type='submit' class='dialog-button normal default' data-button='shoot'
+                {{#unless canShoot}}disabled{{/unless}}>
             <span class='hm-clock'>
                 <label>{{localize 'HM.attack'}}</label>
-                {{#if (and advance inCombat)}}<sub>{{spd.shoot}}</sub>{{/if}}
+                {{#if (and advance inCombat canShoot)}}
+                <sub>{{spd.shoot}}</sub>
+                {{/if}}
             </span>
         </button>
         {{else if (eq SPECIAL.SET4CHARGE specialMove)}}

@@ -141,9 +141,6 @@ export class HMCharacterActor extends HMActor {
 
         const {level} = cclass.system;
         system.ep.max = HMTABLES.cclass.epMax[level];
-
-        Object.entries(cclasses.slice(0, cclasses.length -1))
-            .map((a) => this.items.get(a[1].id).delete());
     }
 
     setExtras() {
@@ -164,7 +161,7 @@ export class HMCharacterActor extends HMActor {
         system.fame.value = Math.min(fValue, 999);
     }
 
-    setRace() {
+    async setRace() {
         const {system} = this;
         const races = this.itemTypes.race;
         if (!races.length) return;
@@ -173,9 +170,6 @@ export class HMCharacterActor extends HMActor {
         race.prepareBaseData();
         system.bonus.race     = race.system.bonus;
         system.abilities.race = race.system.abilities;
-
-        Object.entries(races.slice(0, races.length -1))
-            .map((a) => this.items.get(a[1].id).delete());
     }
 
     getAbilityBonus(ability, bonus) {

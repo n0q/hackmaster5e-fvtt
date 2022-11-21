@@ -62,8 +62,10 @@ export default function registerHandlebarsHelpers() {
     Handlebars.registerHelper('eq', (a, b) => { return a == b });
     Handlebars.registerHelper('neq', (a, b) => { return a != b });
 
-    Handlebars.registerHelper("ishalf", (a, b)   => {
-        return a === Math.floor(b/2);
+    Handlebars.registerHelper('isHalf', (a, b, opts) => {
+        return opts.hash.ceil
+            ? a === Math.ceil(b/2)
+            : a === Math.floor(b/2);
     });
 
     Handlebars.registerHelper('pad', (arg1) => {

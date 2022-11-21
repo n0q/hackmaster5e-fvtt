@@ -169,7 +169,6 @@ export class HMWeaponItem extends HMItem {
 
     async onClick(ev) {
         ev.preventDefault();
-        ev.stopPropagation();
         const {dataset} = ev.currentTarget;
         if (dataset.op === 'setFlag') await this.actor.setFlag(MODULE_ID, dataset.key, dataset.value);
         if (dataset.op === 'setProperty') {
