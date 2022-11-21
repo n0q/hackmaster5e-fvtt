@@ -3,11 +3,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+### Added
+- Snapshot ranged attack.
+- Component firing declarations (load/draw/aim).
 ### Changed
 - Weapon cards close after toggling equipped status.
 - Formatting fixes.
 ### Fixed
 - Beast skills/languages omitted from sheets.
+- Weapon speed displaying as NaN in rare situations.
 
 ## [0.2.31] - 2022-11-15
 ### Added

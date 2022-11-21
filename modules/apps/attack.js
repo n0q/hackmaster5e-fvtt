@@ -72,7 +72,6 @@ export class AttackPrompt extends HMPrompt {
         const reach   = wData.ranged?.reach ?? wData.reach;
         const capList = this.getCapList(weapons[widx], caller);
 
-        // This is broken.
         if (!(specialMove in capList)) specialMove = Object.keys(capList)[0];
 
         this.dialogData.canShoot = ranged
