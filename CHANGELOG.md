@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Fixed
 - Beast skills/languages omitted from sheets.
 - Weapon speed displaying as NaN in rare situations.
+- Other users could receive error message when character actor changes race/class.
 
 ## [0.2.31] - 2022-11-15
 ### Added
