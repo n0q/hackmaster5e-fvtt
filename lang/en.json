@@ -177,6 +177,10 @@
             "charge":   "Charge",
             "def":      "Standard Defense",
             "rstd":     "Ranged Attack",
+            "load":     "Load Only",
+            "draw":     "Draw Only",
+            "aim":      "Aim Only",
+            "snap":     "Snapshot",
             "rdef":     "Ranged Defense",
             "jab":      "Jab Attack",
             "flee":     "Fleeing Opponent",
@@ -288,7 +292,8 @@
             "critHit":     "Critical Hit",
             "wcreset":     "Weapon count reset",
             "toplimitPre": "Damage exceeds",
-            "top":         "Threshold of Pain"
+            "top":         "Threshold of Pain",
+            "prepratk":    "Preparing Ranged Attack"
         },
 
         "moveSpds": {
@@ -451,6 +456,7 @@
         "age":          "Age",
         "aggressive":   "Aggressive",
         "aim":          "Aim",
+        "aiming":       "Aiming",
         "alert":        "Alert",
         "alignment":    "Alignment",
         "annointed":    "Annointed",
@@ -492,6 +498,7 @@
         "double":       "Double",
         "doublecritical": "Double Critical",
         "draw":         "Draw",
+        "drawing":      "Drawing",
         "drmod":        "DR Mod",
         "damage":       "Damage",
         "declare":      "Declare",
@@ -549,6 +556,7 @@
         "literacy":     "Literacy",
         "literate":     "Literate",
         "load":         "Load",
+        "loading":      "Loading",
         "location":     "Location",
         "luck":         "Luck",
         "mage":         "Mage",
