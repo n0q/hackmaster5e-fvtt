@@ -44,21 +44,21 @@ export class HMCharacterActor extends HMActor {
         if (!hasArmor) this.system.bonus.armor = {init: -1};
     }
 
-    setAbilities() {
+    setAbilities({adjust, delta}={}) {
         const {abilities} = this.system;
-        const total = {};
+        abilities.total = abilities.total ? abilities.total : {};
 
-        Object.keys(abilities.base).forEach((stat) => {
-            let value = 0;
-            let fvalue = 0;
+        const abilitiesIter = adjust ? [adjust] : Object.keys(abilities.base);
+        abilitiesIter.forEach((stat) => {
+            let [value, fvalue] = [0, 0];
 
             Object.keys(abilities).forEach((vector) => {
-                if (vector === 'total') { return; }
+                if (vector === 'total') return;
                 value  += abilities[vector][stat].value;
                 fvalue += abilities[vector][stat].fvalue;
             });
 
-            value += Math.floor(fvalue / 100);
+            value += Math.floor(fvalue / 100) + (delta || 0);
             fvalue = ((fvalue % 100) + 100) % 100;
 
             const clamp = HMTABLES.abilitymods.clamp[stat];
@@ -66,9 +66,8 @@ export class HMCharacterActor extends HMActor {
             const statAdj = Math.clamped(statSum, clamp.min, clamp.max);
             const idx = Math.floor((statAdj - clamp.min) / clamp.step);
 
-            total[stat] = {value, fvalue, idx};
+            abilities.total[stat] = {value, fvalue, idx};
         });
-        abilities.total = total;
     }
 
     setAbilityBonuses() {
@@ -86,7 +85,7 @@ export class HMCharacterActor extends HMActor {
             Object.keys(bonusTable).forEach((key) => {
                 if (Object.prototype.hasOwnProperty.call(bonusTable, key)) {
                     stats[key] = (stats?.[key] || 0) + bonusTable[key];
-                    if (key === 'chamod') { total.cha.value += stats[key] || 0; }
+                    if (key === 'chamod') this.setAbilities({adjust: 'cha', delta: stats[key]});
                 }
             });
         });
