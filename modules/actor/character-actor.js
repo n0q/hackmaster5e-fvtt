@@ -1,4 +1,4 @@
-import { HMTABLES, MODULE_ID } from '../sys/constants.js';
+import { HMCONST, HMTABLES, MODULE_ID } from '../sys/constants.js';
 import { HMActor } from './actor.js';
 
 export class HMCharacterActor extends HMActor {
@@ -33,6 +33,15 @@ export class HMCharacterActor extends HMActor {
     get encumbrance() {
         const {idx} = this.system.abilities.total.str;
         return HMTABLES.abilitymods.encumbrance[idx];
+    }
+
+    resetBonus() {
+        super.resetBonus();
+        const {ITEM_STATE} = HMCONST;
+        const hasArmor = this.itemTypes.armor.find((a) => a.system.state === ITEM_STATE.EQUIPPED
+                                                      && !a.system.shield.checked);
+
+        if (!hasArmor) this.system.bonus.armor = {init: -1};
     }
 
     setAbilities() {
