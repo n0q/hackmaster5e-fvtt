@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.2.33] - 2022-11-21
+### Fixed
+- Missing dialog for ranged attacks (oops!)
+
 ## [0.2.32] - 2022-11-21
 ### Added
 - Snapshot ranged attack.
@@ -183,7 +187,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - Compendium items.
 - Foundry v10 API support.
-## Removed
+### Removed
 - Foundry v9 API support.
 ### Changed
 - Changed default item icon.
