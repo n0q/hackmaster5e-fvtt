@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 ### Added
 - Character actors gain -1 init bonus while not wearing armor.
+- Dodge bonus to defend dialogs.
 ### Changed
 - Re-styled spell sheet.
 ### Fixed

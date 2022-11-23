@@ -341,6 +341,13 @@ export class HMWeaponItem extends HMItem {
         const dialogMgr = new HMDialogMgr();
         const dialogResp = await dialogMgr.getDialog(dataset, actor);
         dataset.formula = HMTABLES.formula.def[dialogResp.resp.specialMove];
+        const {resp} = dialogResp;
+
+        if (resp.dodge) {
+            resp.dodge = resp.specialMove === HMCONST.SPECIAL.RDEFEND
+                ? Math.max(actor.getAbilityBonus('dex', 'def'), 0)
+                : 1;
+        }
 
         const rollMgr = new HMRollMgr();
         dataset.roll = await rollMgr.getRoll(dataset, dialogResp);
