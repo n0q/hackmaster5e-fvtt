@@ -46,7 +46,7 @@ export class HMCharacterActor extends HMActor {
 
     setAbilities({adjust, delta}={}) {
         const {abilities} = this.system;
-        abilities.total = abilities.total ? abilities.total : {};
+        if (!abilities.total) abilities.total = {};
 
         const abilitiesIter = adjust ? [adjust] : Object.keys(abilities.base);
         abilitiesIter.forEach((stat) => {
@@ -96,7 +96,7 @@ export class HMCharacterActor extends HMActor {
 
         system.bonus.stats = stats;
         system.hmsheet ? system.hmsheet.bonus = abilityBonus
-                       : system.hmsheet = {'bonus': abilityBonus};
+                       : system.hmsheet = {bonus: abilityBonus};
     }
 
     setEncumbrance() {
@@ -137,20 +137,6 @@ export class HMCharacterActor extends HMActor {
         this.system.bonus.encumb = HMTABLES.encumbrance[penalty];
     }
 
-    async setCClass() {
-        const {system} = this;
-        const cclasses = this.itemTypes.cclass;
-        if (!cclasses.length) return;
-
-        const cclass = cclasses[cclasses.length -1];
-        cclass._prepCClassData();
-        const objData = cclass.system;
-        if (objData.level > 0) system.bonus.class = objData.bonus;
-
-        const {level} = cclass.system;
-        system.ep.max = HMTABLES.cclass.epMax[level];
-    }
-
     setExtras() {
         const {system} = this;
         system.sp.max = system.bonus.total?.sp || 0;
@@ -169,13 +155,28 @@ export class HMCharacterActor extends HMActor {
         system.fame.value = Math.min(fValue, 999);
     }
 
-    async setRace() {
+    setCClass() {
+        const {system} = this;
+        const cclasses = this.itemTypes.cclass;
+        if (!cclasses.length) return;
+
+        const cclass = cclasses[0];
+        cclass.prepareBaseData();
+
+        const objData = cclass.system;
+        if (objData.level) system.bonus.class = objData.bonus;
+        const {level} = cclass.system;
+        system.ep.max = HMTABLES.cclass.epMax[level];
+    }
+
+    setRace() {
         const {system} = this;
         const races = this.itemTypes.race;
         if (!races.length) return;
 
-        const race = races[races.length -1];
+        const race = races[0];
         race.prepareBaseData();
+
         system.bonus.race     = race.system.bonus;
         system.abilities.race = race.system.abilities;
     }
