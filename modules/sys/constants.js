@@ -431,10 +431,10 @@ export const HMTABLES = {
             'shieldbstab': '@dmg.shield + @bonus.total.dmg + @actorbonus.total.back + @resp.bonus',
         },
         def: {
-            [HMCONST.SPECIAL.DEFEND]:  '@resp.defdie + @bonus.total.def     + @resp.bonus',
-            [HMCONST.SPECIAL.RDEFEND]: '@resp.defdie                        + @resp.bonus',
-            [HMCONST.SPECIAL.SCAMPER]: '@resp.defdie + @bonus.total.def + 5 + @resp.bonus',
-            [HMCONST.SPECIAL.GGROUND]: '@resp.defdie + @bonus.total.def + 5 + @resp.bonus',
+            [HMCONST.SPECIAL.DEFEND]:  '@resp.defdie + @bonus.total.def + @resp.dodge     + @resp.bonus',
+            [HMCONST.SPECIAL.RDEFEND]: '@resp.defdie                    + @resp.dodge     + @resp.bonus',
+            [HMCONST.SPECIAL.SCAMPER]: '@resp.defdie + @bonus.total.def + @resp.dodge + 5 + @resp.bonus',
+            [HMCONST.SPECIAL.GGROUND]: '@resp.defdie + @bonus.total.def + @resp.dodge + 5 + @resp.bonus',
         },
         ratk: {
             [HMCONST.SPECIAL.STANDARD]: 'd20p + @bonus.total.atk - @resp.reachmod + @resp.bonus',
