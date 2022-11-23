@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 - Re-styled spell sheet.
 - Chat cards declare strength damage bonus to ranged weapon damage rolls.
+- Changed availability index order to match the book.
 ### Fixed
 - Adjusted charisma modifiers were incorrectly applied to characters.
 
