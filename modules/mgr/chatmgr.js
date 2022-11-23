@@ -33,6 +33,7 @@ function getSpecialMoveFlavor(resp) {
     if (defense) mods.push(game.i18n.localize('HM.defensive'));
     if (shieldHit) mods.push(game.i18n.localize('HM.blocked'));
     if (resp.dodge) mods.push(game.i18n.localize('HM.dodged'));
+    if (resp.strBonus) mods.push(game.i18n.localize('HM.ability.str'));
     return mods.length ? ` (${mods.join(', ')})` : '';
 }
 
