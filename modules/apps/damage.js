@@ -83,6 +83,7 @@ export class DamagePrompt extends HMPrompt {
 
         const dialogResp = {
             widx,
+            strBonus,
             bonus,
             defense: this.dialogData?.caller.fightingDefensively,
             specialMove,

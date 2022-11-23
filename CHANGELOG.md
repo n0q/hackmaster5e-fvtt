@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Dodge bonus to defend dialogs.
 ### Changed
 - Re-styled spell sheet.
+- Chat cards declare strength damage bonus to ranged weapon damage rolls.
 ### Fixed
 - Adjusted charisma modifiers were incorrectly applied to characters.
 
