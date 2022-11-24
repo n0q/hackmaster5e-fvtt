@@ -2,6 +2,18 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+
+## [0.2.34] - 2022-11-23
+### Added
+- Character actors gain -1 init bonus while not wearing armor.
+- Dodge bonus to defend dialogs.
+### Changed
+- Re-styled spell sheet.
+- Chat cards declare strength damage bonus to ranged weapon damage rolls.
+- Changed availability index order to match the book.
+### Fixed
+- Adjusted charisma modifiers were incorrectly applied to characters.
+
 ## [0.2.33] - 2022-11-21
 ### Fixed
 - Missing dialog for ranged attacks (oops!)

@@ -10,6 +10,7 @@ import { HMItemSheet } from './modules/item/item-sheet.js';
 import { HMArmorItemSheet } from './modules/item/armor-item-sheet.js';
 import { HMClassItemSheet } from './modules/item/class-item-sheet.js';
 import { HMRaceItemSheet } from './modules/item/race-item-sheet.js';
+import { HMSpellItemSheet } from './modules/item/spell-item-sheet.js';
 import { HMWeaponItemSheet } from './modules/item/weapon-item-sheet.js';
 import { HMChatMgr } from './modules/mgr/chatmgr.js';
 import { HMCombat, HMCombatTracker } from './modules/sys/combat.js';
@@ -32,7 +33,6 @@ Hooks.once('init', async () => {
     CONFIG.Combat.documentClass = HMCombat;
     CONFIG.Item.documentClass = HMItemFactory;
     CONFIG.Macro.documentClass = HMMacro;
-
 
     CONFIG.Dice.terms.d = HMDie;
     const diceTypesIdx = CONFIG.Dice.types.findIndex((x) => x.DENOMINATION === 'd');
@@ -63,6 +63,7 @@ Hooks.once('init', async () => {
     Items.registerSheet('hackmaster', HMArmorItemSheet, {types: ['armor'], makeDefault: true});
     Items.registerSheet('hackmaster', HMClassItemSheet, {types: ['cclass'], makeDefault: true});
     Items.registerSheet('hackmaster', HMRaceItemSheet, {types: ['race'], makeDefault: true});
+    Items.registerSheet('hackmaster', HMSpellItemSheet, {types: ['spell'], makeDefault: true});
     Items.registerSheet('hackmaster', HMWeaponItemSheet, {types: ['weapon'], makeDefault: true});
 
     registerHandlebarsHelpers();

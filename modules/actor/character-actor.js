@@ -1,4 +1,4 @@
-import { HMTABLES, MODULE_ID } from '../sys/constants.js';
+import { HMCONST, HMTABLES, MODULE_ID } from '../sys/constants.js';
 import { HMActor } from './actor.js';
 
 export class HMCharacterActor extends HMActor {
@@ -35,21 +35,30 @@ export class HMCharacterActor extends HMActor {
         return HMTABLES.abilitymods.encumbrance[idx];
     }
 
-    setAbilities() {
-        const {abilities} = this.system;
-        const total = {};
+    resetBonus() {
+        super.resetBonus();
+        const {ITEM_STATE} = HMCONST;
+        const hasArmor = this.itemTypes.armor.find((a) => a.system.state === ITEM_STATE.EQUIPPED
+                                                      && !a.system.shield.checked);
 
-        Object.keys(abilities.base).forEach((stat) => {
-            let value = 0;
-            let fvalue = 0;
+        if (!hasArmor) this.system.bonus.armor = {init: -1};
+    }
+
+    setAbilities({adjust, delta}={}) {
+        const {abilities} = this.system;
+        if (!abilities.total) abilities.total = {};
+
+        const abilitiesIter = adjust ? [adjust] : Object.keys(abilities.base);
+        abilitiesIter.forEach((stat) => {
+            let [value, fvalue] = [0, 0];
 
             Object.keys(abilities).forEach((vector) => {
-                if (vector === 'total') { return; }
+                if (vector === 'total') return;
                 value  += abilities[vector][stat].value;
                 fvalue += abilities[vector][stat].fvalue;
             });
 
-            value += Math.floor(fvalue / 100);
+            value += Math.floor(fvalue / 100) + (delta || 0);
             fvalue = ((fvalue % 100) + 100) % 100;
 
             const clamp = HMTABLES.abilitymods.clamp[stat];
@@ -57,9 +66,8 @@ export class HMCharacterActor extends HMActor {
             const statAdj = Math.clamped(statSum, clamp.min, clamp.max);
             const idx = Math.floor((statAdj - clamp.min) / clamp.step);
 
-            total[stat] = {value, fvalue, idx};
+            abilities.total[stat] = {value, fvalue, idx};
         });
-        abilities.total = total;
     }
 
     setAbilityBonuses() {
@@ -77,7 +85,7 @@ export class HMCharacterActor extends HMActor {
             Object.keys(bonusTable).forEach((key) => {
                 if (Object.prototype.hasOwnProperty.call(bonusTable, key)) {
                     stats[key] = (stats?.[key] || 0) + bonusTable[key];
-                    if (key === 'chamod') { total.cha.value += stats[key] || 0; }
+                    if (key === 'chamod') this.setAbilities({adjust: 'cha', delta: stats[key]});
                 }
             });
         });
@@ -88,7 +96,7 @@ export class HMCharacterActor extends HMActor {
 
         system.bonus.stats = stats;
         system.hmsheet ? system.hmsheet.bonus = abilityBonus
-                       : system.hmsheet = {'bonus': abilityBonus};
+                       : system.hmsheet = {bonus: abilityBonus};
     }
 
     setEncumbrance() {
@@ -129,20 +137,6 @@ export class HMCharacterActor extends HMActor {
         this.system.bonus.encumb = HMTABLES.encumbrance[penalty];
     }
 
-    async setCClass() {
-        const {system} = this;
-        const cclasses = this.itemTypes.cclass;
-        if (!cclasses.length) return;
-
-        const cclass = cclasses[cclasses.length -1];
-        cclass._prepCClassData();
-        const objData = cclass.system;
-        if (objData.level > 0) system.bonus.class = objData.bonus;
-
-        const {level} = cclass.system;
-        system.ep.max = HMTABLES.cclass.epMax[level];
-    }
-
     setExtras() {
         const {system} = this;
         system.sp.max = system.bonus.total?.sp || 0;
@@ -161,13 +155,28 @@ export class HMCharacterActor extends HMActor {
         system.fame.value = Math.min(fValue, 999);
     }
 
-    async setRace() {
+    setCClass() {
+        const {system} = this;
+        const cclasses = this.itemTypes.cclass;
+        if (!cclasses.length) return;
+
+        const cclass = cclasses[0];
+        cclass.prepareBaseData();
+
+        const objData = cclass.system;
+        if (objData.level) system.bonus.class = objData.bonus;
+        const {level} = cclass.system;
+        system.ep.max = HMTABLES.cclass.epMax[level];
+    }
+
+    setRace() {
         const {system} = this;
         const races = this.itemTypes.race;
         if (!races.length) return;
 
-        const race = races[races.length -1];
+        const race = races[0];
         race.prepareBaseData();
+
         system.bonus.race     = race.system.bonus;
         system.abilities.race = race.system.abilities;
     }

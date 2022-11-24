@@ -35,6 +35,7 @@ export class DefendPrompt extends HMPrompt {
             capList,
             specialMove: HMCONST.SPECIAL.STANDARD,
             defDie: wData.defdie,
+            dodge: false,
             ranged,
             spd,
             widx: 0,
@@ -66,6 +67,7 @@ export class DefendPrompt extends HMPrompt {
         const specialMove = Number(this.dialogData.specialMove);
         const dialogResp = {
             defdie: HMTABLES.die[defDie],
+            dodge: this.dialogData.dodge ? this.dialogData.dodge : 0,
             widx: this.dialogData.widx,
             specialMove,
             range: Number(this.dialogData.range),

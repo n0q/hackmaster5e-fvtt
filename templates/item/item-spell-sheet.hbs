@@ -1,65 +1,59 @@
-<form class="{{cssClass}}" autocomplete="off">
-    {{> "systems/hackmaster5e/templates/item/parts/header.hbs" }}
+<form class='{{cssClass}}' autocomplete='off'>
+    {{> 'systems/hackmaster5e/templates/item/parts/header.hbs' }}
 
-    <nav class="sheet-tabs tabs" data-group="primary">
-        <a class="item" data-tab="description">Description</a>
-        <a class="item" data-tab="attributes">Attributes</a>
+    <nav class='sheet-tabs tabs' data-group='primary'>
+        <a class='item' data-tab='description'>Description</a>
+        <a class='item' data-tab='attributes'>Attributes</a>
     </nav>
 
-    <section class="sheet-body">
-        <div class="tab" data-group="primary" data-tab="description">
-            {{> "systems/hackmaster5e/templates/item/parts/description.hbs" }}
+    <section class='sheet-body'>
+        <div class='tab' data-group='primary' data-tab='description'>
+            {{> 'systems/hackmaster5e/templates/item/parts/description.hbs' }}
         </div>
 
-{{#with data}}
-        <div class="tab attributes" data-group="primary" data-tab="attributes">
-            <div class="item-form">
-                <div class="sidepanel">
-                    <div class="options-block">
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.level"}}</label>
-                            <select name="system.lidx">
-                                {{#select system.lidx}}{{#each (findConfigObj "spellLevels") as |type t|}}
-                                <option value="{{t}}">{{localize type}}</option>
-                                {{/each}}{{/select}}
-                            </select>
-                        </div>
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.speed"}}</label>
-                            <input type="number" name="system.speed" value="{{system.speed}}" data-dtype="Number"/>
-                        </div>       
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.prayer"}}</label>
-                            <input type="checkbox" name="system.divine" {{checked system.divine}}/>
-                        </div>
-                    </div>
-                    <div class="options-block">
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.verbal"}}</label>
-                            <input type="checkbox" name="system.component.verbal" {{checked system.component.verbal}}/>
-                        </div>
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.somatic"}}</label>
-                            <input type="checkbox" name="system.component.somatic" {{checked system.component.somatic}}/>
-                        </div>
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.material"}}</label>
-                            <input type="checkbox" name="system.component.material" {{checked system.component.material}}/>
-                        </div>
-    {{#if system.divine}}
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.catalyst"}}</label>
-                            <input type="checkbox" name="system.component.catalyst" {{checked system.component.catalyst}}/>
-                        </div>
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.divine"}}</label>
-                            <input type="checkbox" name="system.component.divine" {{checked system.component.divine}}/>
-                        </div>
-    {{/if}}
-                    </div>
-                </div>
+        {{#with data}}
+        <div class='tab attributes newform' data-group='primary' data-tab='attributes'>
+            <div class='grid-2col' style='grid-template-columns: 40% 1fr; padding-top: 5px;'>
+                <section name='options' style='padding-right: 10px; border-right: 1px solid;'>
+                    <span class='form-option'>
+                        <label class='resource-label'>{{localize 'HM.level'}}</label>
+                        <select name='system.lidx'>
+                            {{selectOptions (findConfigObj 'spellLevels') selected=system.lidx localize=true}}
+                        </select>
+                    </span>
+                    <span class='form-option'>
+                        <label class="resource-label">{{localize "HM.speed"}}</label>
+                        <input type="number" name="system.speed" value="{{system.speed}}" data-dtype="Number"/>
+                    </span>
+                    <span class='form-option'>
+                        <label class="resource-label">{{localize "HM.prayer"}}</label>
+                        <input type="checkbox" name="system.divine" {{checked system.divine}}/>
+                    </span>
+                    <hr>
+                    <span class='form-option'>
+                        <label class='resource-label'>{{localize 'HM.verbal'}}</label>
+                        <input type='checkbox' name='system.component.verbal' {{checked system.component.verbal}}/>
+                    </span>
+                    <span class='form-option'>
+                        <label class='resource-label'>{{localize 'HM.somatic'}}</label>
+                        <input type='checkbox' name='system.component.somatic' {{checked system.component.somatic}}/>
+                    </span>
+                    <span class='form-option'>
+                        <label class='resource-label'>{{localize 'HM.material'}}</label>
+                        <input type='checkbox' name='system.component.material' {{checked system.component.material}}/>
+                    </span>
+                    <span class='form-option'>
+                        <label class='resource-label'>{{localize 'HM.catalyst'}}</label>
+                        <input type='checkbox' name='system.component.catalyst' {{checked system.component.catalyst}}/>
+                    </span>
+                    <span class='form-option'>
+                        <label class='resource-label'>{{localize 'HM.divine'}}</label>
+                        <input type='checkbox' name='system.component.divine' {{checked system.component.divine}} 
+                            {{#unless system.divine}}disabled{{/unless}}/>
+                    </span>
+                </section>
             </div>
         </div>
-{{/with}}
+        {{/with}}
     </section>
 </form>
