@@ -2,7 +2,8 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+
+## [0.2.34] - 2022-11-23
 ### Added
 - Character actors gain -1 init bonus while not wearing armor.
 - Dodge bonus to defend dialogs.
