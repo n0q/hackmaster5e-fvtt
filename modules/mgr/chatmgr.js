@@ -201,7 +201,7 @@ async function createSaveCard(roll, dataset, dialogResp) {
 }
 
 async function createSpellCard(dataset) {
-    const {caller, resp, context} = dataset;
+    const {caller, context, roll, resp} = dataset;
     const {system} = context;
 
     const components = [];
@@ -220,11 +220,21 @@ async function createSpellCard(dataset) {
         }, []);
     }
 
+    const sLevel = game.i18n.localize(`HM.spellLevels.${system.lidx}`);
+    const sType = system.divine
+        ? game.i18n.localize('HM.CHAT.cspell')
+        : game.i18n.localize('HM.CHAT.mspell');
+    const flavor = `${sLevel} ${game.i18n.localize('HM.level')} ${sType}`;
+    const rollContent = roll ? await roll.render({flavor}) : undefined;
+
+    roll ? resp.total = roll.total : resp.flavor = flavor;
     const template = resp.button === 'declare'
         ? 'systems/hackmaster5e/templates/chat/declare.hbs'
         : 'systems/hackmaster5e/templates/chat/spell.hbs';
-    const content = await renderTemplate(template, dataset);
-    return {content, whisper, flavor: caller.name};
+
+    let content = await renderTemplate(template, dataset);
+    if (rollContent) content += rollContent;
+    return {content, whisper, roll, flavor: caller.name};
 }
 
 async function createAbilityCard(roll, dataset) {

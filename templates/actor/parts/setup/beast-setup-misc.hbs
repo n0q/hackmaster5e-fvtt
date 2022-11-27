@@ -1,0 +1,107 @@
+{{#with data}}
+<section class='newform grid-3col'>
+    <span class='col_rborder'>
+        <span class='form-option'>
+            <label class='resource-label'>HP Formula</label>
+            <input type='text' name='system.hp.formula' value='{{system.hp.formula}}' style='width: 8em;' data-dtype='String'/>
+        </span>
+        <span class='form-option'>
+            <label class='resource-label'>{{localize 'HM.size'}}</label>
+            <select name='system.scale' data-dtype='Number'>
+                {{selectOptions (findConfigObj 'scale' omit='0') selected=system.scale localize=true}}
+            </select>
+        </span>
+        <span class='form-option'>
+            <label class='resource-label'>{{localize 'HM.saves.tenacity'}}</label>
+            <select name='system.bonus.misc._idx.tenacity' data-dtype='Number'>
+                {{selectOptions (findConfigObj 'tenacity') selected=system.bonus.misc._idx.tenacity localize=true}}
+            </select>
+        </span>
+        <span class='form-option'>
+            <label class='resource-label'>{{localize 'HM.saves.will'}}</label>
+            <input type='number' name='system.bonus.misc.will' value='{{system.bonus.misc.will}}' data-dtype='Number'/>
+        </span>
+        {{#with system.movespd}}
+            {{#each gnd as |val key|}}
+            <span class='form-option'>
+                <label class='resource-label'>{{localize (concat 'HM.moveSpds.' key)}} {{localize 'HM.speed'}}</label>
+                <input type='number' name='system.movespd.gnd.{{key}}' value='{{val}}' data-dtype='Number'/>
+            </span>
+            {{/each}}
+        {{/with}}
+    </span>
+    <span class='col_rborder'>
+        <span class='form-option'>
+            <label class='resource-label'>{{localize 'HM.spellpoints'}}</label>
+            <input type='number' name='system.bonus.misc.sp' value='{{system.bonus.misc.sp}}' data-dtype='Number'/>
+        </span>
+        <span class='form-option'>
+            <label class='resource-label'>Caster Level</label>
+            <input type='number' name='system.level' value='{{system.level}}' data-dtype='Number'/>
+        </span>
+        <span class='form-option'>
+            <label class='resource-label'>Feat of Strength</label>
+            <input type='number' name='system.bonus.misc.fos' value='{{system.bonus.misc.fos}}' data-dtype='Number'/>
+        </span>
+        <span class='form-option'>
+            <label class='resource-label'>Feat of Agility</label>
+            <input type='number' name='system.bonus.misc.foa' value='{{system.bonus.misc.foa}}' data-dtype='Number'/>
+        </span>
+        <span class='form-option'>
+            <label class='resource-label'>{{localize 'HM.saves.physical'}}</label></th>
+            <input type='number' name='system.bonus.misc.physical' value='{{system.bonus.misc.physical}}' data-dtype='Number'/>
+        </span>
+        <span class='form-option'>
+            <label class='resource-label'>{{localize 'HM.saves.mental'}}</label></th>
+            <input type='number' name='system.bonus.misc.mental' value='{{system.bonus.misc.mental}}' data-dtype='Number'/>
+        </span>
+        <span class='form-option'>
+            <label class='resource-label'>{{localize 'HM.saves.dodge'}}</label></th>
+            <input type='number' name='system.bonus.misc.dodge' value='{{system.bonus.misc.dodge}}' data-dtype='Number'/>
+        </span>
+        <span class='form-option'>
+            <label class='resource-label'>{{localize 'HM.saves.trauma'}}</label>
+            <input type='number' name='system.bonus.misc.trauma' value='{{system.bonus.misc.trauma}}' data-dtype='Number'/>
+        </span>
+        <span class='form-option'>
+             <label class='resource-label'>{{localize 'HM.saves.poison'}}</label>
+             <input type='number' name='system.bonus.misc.poison' value='{{system.bonus.misc.poison}}' data-dtype='Number'/>
+        </span>
+    </span>
+    <span>
+        <span class='form-option'>
+            <label class='resource-label'>{{localize 'HM.statbonus.atk'}}</label>
+            <input type='number' name='system.bonus.misc.atk' value='{{system.bonus.misc.atk}}' data-dtype='Number'/>
+        </span>
+        <span class='form-option'>
+            <label class='resource-label'>{{localize 'HM.statbonus.def'}}</label>
+            <input type='number' name='system.bonus.misc.def' value='{{system.bonus.misc.def}}' data-dtype='Number'/>
+        </span>
+        <span class='form-option'>
+            <label class='resource-label'>{{localize 'HM.statbonus.spd'}}</label>
+            <input type='number' name='system.bonus.misc.spd' value='{{system.bonus.misc.spd}}' data-dtype='Number'/>
+        </span>
+        <span class='form-option'>
+            <label class='resource-label'>{{localize 'HM.statbonus.dmg'}}</label>
+            <input type='number' name='system.bonus.misc.dmg' value='{{system.bonus.misc.dmg}}' data-dtype='Number'/>
+        </span>
+        <span class='form-option'>
+            <label class='resource-label'>{{localize 'HM.statbonus.init'}}</label>
+            <input type='number' name='system.bonus.misc.init' value='{{system.bonus.misc.init}}' data-dtype='Number'/>
+        </span>
+        <span class='form-option'>
+            <label class='resource-label'>{{localize 'HM.dr'}}</label>
+            <input type='number' name='system.bonus.misc.dr' value='{{system.bonus.misc.dr}}' data-dtype='Number'/>
+        </span>
+        <span class='form-option'>
+            <label class='resource-label'>{{localize 'HM.reach'}} Modifier</label>
+            <input type='number' name='system.bonus.misc.reach' value='{{system.bonus.misc.reach}}' data-dtype='Number'/>
+        </span>
+        <span class='form-option'>
+            <label class='resource-label'>{{localize 'HM.spell'}} {{localize 'HM.fatigue'}} <i class='fa fa-hourglass-half'></i></label>
+            <input type='number' name='system.bonus.misc.fatigue' value='{{system.bonus.misc.fatigue}}' data-dtype='Number'/>
+        </span>
+    </span>
+</section>
+{{/with}}
+<hr>

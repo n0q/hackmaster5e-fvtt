@@ -52,6 +52,20 @@
                             {{#unless system.divine}}disabled{{/unless}}/>
                     </span>
                 </section>
+                <section>
+                    <span class='form-option saves'>
+                        <label class='resource-label'>{{localize 'HM.save'}}:</label>
+                        <span>
+                            <select data-save='type'>
+                                {{selectOptions (findConfigObj 'saveSelect') selected=system.save.type localize=true}}
+                            </select>
+                            <label class='bold-label'>/</label>
+                            <select data-save='action' {{#if (lt system.save.type 2)}}disabled{{/if}}>
+                                {{selectOptions (findConfigObj 'saveActionSelect') selected=system.save.action localize=true}}
+                            </select>
+                        </span>
+                    </span>
+                </section>
             </div>
         </div>
         {{/with}}

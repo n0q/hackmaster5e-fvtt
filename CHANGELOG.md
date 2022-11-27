@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.2.35] - 2022-11-27
+### Added
+- Compendium items.
+- Spell item saving throw data (defaults to 'none').
+- Auto-roll saving throws.
+- New beast properties (reach, size, and caster level).
+### Changed
+- Redesigned beast setup section.
+- Added spell saves to mage and clerical spell compendiums.
 
 ## [0.2.34] - 2022-11-23
 ### Added

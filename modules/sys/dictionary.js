@@ -174,6 +174,21 @@ idx.weaponskill = {
     'high':    'HM.weaponskillSelect.high',
 };
 
+idx.saveSelect = {
+    [HMCONST.SAVE.TYPE.NONE]:     'HM.saves.none',
+    [HMCONST.SAVE.TYPE.SPECIAL]:  'HM.saves.special',
+    [HMCONST.SAVE.TYPE.PHYSICAL]: 'HM.saves.physical',
+    [HMCONST.SAVE.TYPE.MENTAL]:   'HM.saves.mental',
+    [HMCONST.SAVE.TYPE.DODGE]:    'HM.saves.dodge',
+};
+
+idx.saveActionSelect = {
+    [HMCONST.SAVE.ACTION.HALF]:     'HM.saves.half',
+    [HMCONST.SAVE.ACTION.NEGATE]:   'HM.saves.negates',
+    [HMCONST.SAVE.ACTION.EVADE]:    'HM.saves.evades',
+    [HMCONST.SAVE.ACTION.SPECIAL]:  'HM.saves.special',
+};
+
 idx.saves = {
     'dodge':    'HM.saves.dodge',
     'fatigue':  'HM.saves.fatigue',

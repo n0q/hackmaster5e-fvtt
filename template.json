@@ -59,6 +59,8 @@
             "templates": ["base"],
             "bio": {"desc": "", "tactics": "", "habitat": "", "ecology": ""},
             "hp": {"value": 0, "max": null, "formula": null},
+            "scale": 3,
+            "level": 1,
             "movespd": {
                 "gnd": {"crawl": 2.5, "walk": 5, "jog": 10, "run": 15, "sprint": 20}
             }
@@ -155,6 +157,7 @@
                 "catalyst": false,
                 "divine":   false
             },
+            "save": {"type": 0, "action": 0},
             "speed":   1,
             "prepped": 0,
             "lidx":    2
