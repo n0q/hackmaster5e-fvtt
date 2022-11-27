@@ -6,7 +6,7 @@
         {{#if resp.schedule}}+ <b>{{resp.schedule}} {{localize 'HM.sp'}}</b>{{/if}}<br>
     {{/unless}}
     {{#if resp.advance}}
-        {{localize 'HM.speed'}}: <b>{{resp.advance}}</b><br>
+        {{localize 'HM.CHAT.ctime'}}: <b>{{resp.advance}}</b><br>
     {{/if}}
 <div class='dice-roll'>
     <div class='dice-flavor'>
@@ -16,7 +16,7 @@
         {{else}}
             {{localize 'HM.mage'}}
         {{/if}}
-            {{localize 'HM.spell'}} ({{toLowerCase (localize 'HM.preparing')}})
+            {{localize 'HM.spell'}} ({{localize 'HM.preparing'}})
     </div>
 </div>
 {{else}}

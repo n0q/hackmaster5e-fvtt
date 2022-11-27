@@ -5,9 +5,26 @@ export class HMSpellItemSheet extends HMItemSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             classes: ['hackmaster', 'sheet', 'item'],
-            width: 500,
+            width: 520,
             height: 390,
             tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'description' }],
         });
+    }
+
+    activateListeners(html) {
+        super.activateListeners(html);
+        if (!this.options.editable) return;
+        html.find('.saves').on('change', this.onSaveEdit.bind(this));
+    }
+
+    async onSaveEdit(ev) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        const {dataset, value} = ev.target;
+
+        let {save} = this.item.system;
+        if (!save) save = {type: 0, action: 0};
+        save[dataset.save] = value;
+        await this.item.update({'system.save': save});
     }
 }

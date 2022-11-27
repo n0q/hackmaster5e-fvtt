@@ -1,6 +1,7 @@
 import { HMItem, advanceClock, setStatusEffectOnToken } from './item.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
+import { HMTABLES } from '../sys/constants.js';
 
 export class HMSpellItem extends HMItem {
     prepareBaseData() {
@@ -70,6 +71,15 @@ export class HMSpellItem extends HMItem {
             caller: dialogResp.caller,
             resp,
         };
+
+        if (resp.button === 'cast') {
+            const level = actor.itemTypes.cclass.length
+                ? caller.itemTypes.cclass[0].system.level
+                : parseInt(caller.system.level, 10) || 1;
+            dataset.roll = await new Roll(HMTABLES.formula.save.target, {level})
+                                         .evaluate({async: true});
+        }
+
         const card = await chatMgr.getCard({dataset});
         await ChatMessage.create(card);
 
