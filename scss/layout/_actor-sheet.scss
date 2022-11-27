@@ -131,10 +131,6 @@ $character-width: 820px;
 }
 
 .base-setup {
-    section {
-        @include common_border;
-    }
-    
     input {
         width: 2em;
     }
