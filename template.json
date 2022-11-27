@@ -59,6 +59,7 @@
             "templates": ["base"],
             "bio": {"desc": "", "tactics": "", "habitat": "", "ecology": ""},
             "hp": {"value": 0, "max": null, "formula": null},
+            "scale": 3,
             "level": 1,
             "movespd": {
                 "gnd": {"crawl": 2.5, "walk": 5, "jog": 10, "run": 15, "sprint": 20}
