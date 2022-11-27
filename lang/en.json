@@ -74,11 +74,15 @@
         },
 
         "CHAT": {
-            "def":  "Defense Roll",
-            "matk": "Melee Attack Roll",
-            "ratk": "Ranged Attack Roll",
-            "mdmg": "Melee Damage Roll",
-            "rdmg": "Ranged Damage Roll"
+            "cspell":   "Clerical Spell",
+            "ctime":    "Casting Time",
+            "def":      "Defense Roll",
+            "matk":     "Melee Attack Roll",
+            "mspell":   "Mage Spell",
+            "ratk":     "Ranged Attack Roll",
+            "mdmg":     "Melee Damage Roll",
+            "rdmg":     "Ranged Damage Roll",
+            "sthrow":   "Saving Throw"
         },
 
         "defenseSelect": {
@@ -230,17 +234,22 @@
         },
 
         "saves": {
-            "fos":      "Strength",
-            "foa":      "Agility",
-            "turning":  "Turning",
-            "morale":   "Morale",
             "dodge":    "Dodge",
+            "evades":   "Evades",
+            "fatigue":  "Fatigue",
+            "foa":      "Agility",
+            "fos":      "Strength",
+            "half":     "Halves",
             "mental":   "Mental",
+            "morale":   "Morale",
+            "negates":  "Negates",
+            "none":     "None",
             "physical": "Physical",
             "poison":   "Poison",
-            "trauma":   "Trauma",
-            "fatigue":  "Fatigue",
+            "special":  "Special",
             "tenacity": "Tenacity",
+            "trauma":   "Trauma",
+            "turning":  "Turning",
             "will":     "Will"
         },
 

@@ -21,3 +21,10 @@
     {{localize 'HM.CHAT.ctime'}}: <b>{{context.system.speed}}</b><br>
     {{/if}}
 {{/unless}}
+{{#unless resp.total}}
+<div class='dice-roll'>
+    <div class='dice-flavor'>
+        {{resp.flavor}}
+    </div>
+</div>
+{{/unless}}

@@ -1,7 +1,7 @@
 import { HMItem, advanceClock, setStatusEffectOnToken } from './item.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
-import { HMTABLES } from '../sys/constants.js';
+import { HMCONST, HMTABLES } from '../sys/constants.js';
 
 export class HMSpellItem extends HMItem {
     prepareBaseData() {
@@ -72,7 +72,8 @@ export class HMSpellItem extends HMItem {
             resp,
         };
 
-        if (resp.button === 'cast') {
+        const {save} = context.system;
+        if (resp.button === 'cast' && save.type > HMCONST.SAVE.TYPE.SPECIAL) {
             const level = actor.itemTypes.cclass.length
                 ? caller.itemTypes.cclass[0].system.level
                 : parseInt(caller.system.level, 10) || 1;
