@@ -18,8 +18,8 @@
     </li>
 {{/with}}
 {{#with actor.cclass}}
-    <li class="card" data-item-id="{{_id}}">
-        <summary>
+    <li class='card hmstyle' data-item-id="{{_id}}">
+        <summary class='toggleswitch'>
             <header>
                 <label for="{{name}}">
                     <div class="item-image"><img src="{{img}}" title="{{name}}" width="28" height="28"/></div>
@@ -33,5 +33,62 @@
                 </div>
             </section>
         </summary>
+        <section class='{{toggleSwitch _id}} card-expanded' style='grid-template-columns: 60% 40%;' toggle>
+            <span style='padding-right: 5px; border-right: 1px solid;'>
+                {{#with system}}
+                <table class='table-basic'>
+                    <tbody>
+                        <tr>
+                            <th scope='row'>{{localize 'HM.level'}}</th>
+                            {{hp}}
+                            <td width='99%'>
+                                <input class='editable' type='number' value={{level}}
+                                    data-item-prop='system.level' data-dtype='Number'/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope='row'>{{localize 'HM.hp'}}</th>
+                            <td width='99%'>{{bonus.hp}}</td>
+                        </tr>
+                        {{#each features}}{{#if this}}
+                        <tr>
+                            <th scope='row'>{{localize (concat 'HM.classFeatureTable.' @key)}}</th>
+                            <td width='99%'>{{lookup ../bonus @key}}</td>
+                        </tr>
+                        {{/if}}{{/each}}
+                    </tbody>
+                </table>
+            </span>
+            <span>
+                <table class='table-basic'>
+                    <thead>
+                        <tr>
+                            <th scope='col'>{{localize 'HM.level'}}</th>
+                            <th scope='col'>{{localize 'HM.die'}}</th>
+                            <th scope='col'>{{localize 'HM.roll'}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each ptable}}
+                        {{#if (gt ../level @index)}}
+                        <tr>
+                            <th scope='row' style='text-align: center;'>{{@key}}</th>
+                            <td style='text-align: left;'>
+                                {{this.hp.die}}
+                                <i class='fa-solid fa-arrow-rotate-right' title='{{localize 'HM.reroll'}}'
+                                   {{#unless this.hp.reroll}}style='visibility: hidden;'{{/unless}}></i>
+                            </td>
+                            <td>
+                                <input type='number' class='editable' name='system.ptable.{{@key}}.hp.value'
+                                       data-item-prop='system.ptable.{{@key}}.hp.value'
+                                       value='{{this.hp.value}}' data-dtype='Number'/>
+                            </td>
+                        </tr>
+                        {{/if}}{{/each}}
+                    </tbody>
+                </table>
+                {{/with}}
+            </span>
+        </section>
     </li>
 {{/with}}
