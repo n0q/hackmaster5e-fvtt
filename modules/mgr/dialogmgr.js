@@ -24,11 +24,9 @@ function getWeapons(actor, itemId) {
         );
     }
 
-    function wsort(a, b) {
-        return a.name > b.name || a.system.state > b.system.state ? 1 : -1;
-    }
-
-    const weapons = weaponList.sort(wsort);
+    const weapons = weaponList.sort(
+        (a, b) => a.system.state - b.system.state || a.name.localeCompare(b.name)
+    );
     return {weapons};
 }
 

@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.2.36] - 2022-11-30
+### Added
+- Beasts compendium.
+### Changed
+- Innate weapons are sorted to the bottom of lists in dropdown menus.
+- Redesigned character setup section.
+### Fixed
+- Adding a token to the map could generate error messages for players.
+
 ## [0.2.35] - 2022-11-27
 ### Added
 - Compendium items.
