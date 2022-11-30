@@ -1,14 +1,14 @@
-<section class="setup grid-2col">
-    <div style='padding-right: 5px; border-right: 1px solid;'>
+<section class="setup grid-2col" style='grid-template-columns: 40% 1fr; margin: 5px;'>
+    <div class='grid-group-left scrollable' style='max-height: 30rem;'>
         {{> "systems/hackmaster5e/templates/actor/parts/setup/setup-classes.hbs" }} 
         <hr>
-        {{> "systems/hackmaster5e/templates/actor/parts/setup/setup-abilities.hbs" }} 
-        <hr>
-        {{> "systems/hackmaster5e/templates/actor/parts/setup/setup-misc.hbs" }} 
+        {{> "systems/hackmaster5e/templates/actor/parts/setup/setup-profs.hbs" }} 
     </div>
     <div>
         {{> "systems/hackmaster5e/templates/actor/parts/setup/setup-priors.hbs" }} 
         <hr>
-        {{> "systems/hackmaster5e/templates/actor/parts/setup/setup-profs.hbs" }} 
+        {{> "systems/hackmaster5e/templates/actor/parts/setup/setup-abilities.hbs" }} 
+        <hr>
+        {{> "systems/hackmaster5e/templates/actor/parts/setup/setup-misc.hbs" }} 
     </div>
 </section>

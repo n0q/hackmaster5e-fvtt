@@ -85,7 +85,7 @@
                 <tbody>
                     {{#each system.bonus}}
                     <tr>
-                        <th scope='row'><label class='resource-label'>{{@key}}</label></td>
+                        <td scope='row'><label class='resource-label'>{{@key}}</label></td>
                         {{#each this}}{{#unless (eq @key 'jspd')}}{{#if (eq @../key 'mod')}}
                         <td>
                             <input class='editable' type='number' value={{this}}

@@ -47,6 +47,12 @@
             text-align: center;
         }
 
+        &.narrow {
+            input[type="number"] {
+                width: 2.2em;
+            }
+        }
+
         input[readonly] {
             background: none;
             border: none;
@@ -192,26 +198,16 @@
 }
 
 .setup {
-    .bonus {
-        display: grid;
-        grid-template-columns: auto 1fr; 
-        align-items: center;
-        column-gap: 5px;
-        row-gap: 2px;
+    .abilities {
+        input {
+            width: 1.5em;
+            height: 16px;
+            padding: 0;
 
-        >.bonus-row {
-            display: flex;
-            flex-flow: row wrap;
-            flex: 1;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid;
-
-            >.bonus-block {
-                display: grid;
-                grid-template-columns: auto 1fr;
-                align-items: center;
-                column-gap: 2px;
+            &:disabled {
+                border: none;
+                background: none;
+                color: inherit;
             }
         }
     }
