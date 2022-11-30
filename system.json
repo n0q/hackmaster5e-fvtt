@@ -24,6 +24,13 @@
     "styles": ["styles/hackmaster.css"],
     "packs": [
         {
+            "label": "Beasts, Basic",
+            "type": "Actor",
+            "name": "hmbbeasts",
+            "path": "packs/beasts-basic.db",
+            "system": "hackmaster5e"
+        },
+        {
             "label": "Armors, Basic",
             "type": "Item",
             "name": "hmbarmors",
