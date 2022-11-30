@@ -20,7 +20,7 @@ function getReach(actor) {
                 ?? weapons.find((a) => a.system.state === ITEM_STATE.EQUIPPED)
                 ?? weapons.find((a) => a.system.innate);
     if (!weapon) return null;
-    if (weapon.id !== reachHint) actor.setFlag(MODULE_ID, 'reachHint', weapon.id);
+    if (weapon.id !== reachHint && actor.isOwner) actor.setFlag(MODULE_ID, 'reachHint', weapon.id);
 
     const reach = (weapon.system.reach || 0) + (actor.system.bonus.total?.reach || 0);
     const distance = Math.max(reach, 0) + (game.canvas.scene.grid.distance / 2);

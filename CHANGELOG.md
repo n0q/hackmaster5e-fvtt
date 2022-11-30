@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+### [Unreleased]
+### Fixed
+- Adding a token to the map could generate error messages for players.
+
 ## [0.2.35] - 2022-11-27
 ### Added
 - Compendium items.
