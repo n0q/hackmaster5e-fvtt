@@ -12,41 +12,47 @@
                 <input type='number' name='system.priors.age' value='{{age}}' data-dtype='Number'/>
             </span>
             <span class='form-option'>
-            <label class='resource-label'>{{localize 'HM.height'}}</label>
-            <input type='number' name='system.priors.height' value='{{height}}' data-dtype='Number'/>
+                <label class='resource-label'>{{localize 'HM.height'}}</label>
+                <input type='number' name='system.priors.height' value='{{height}}' data-dtype='Number'/>
             </span>
             <span class='form-option'>
-            <label class='resource-label'>{{localize 'HM.bmi'}}</label>
-            <input type='number' name='system.priors.bmi' value='{{bmi}}' data-dtype='Number'/>
+                <label class='resource-label'>{{localize 'HM.bmi'}}</label>
+                <input type='number' name='system.priors.bmi' value='{{bmi}}' data-dtype='Number'/>
+            </span>
+            <span class='form-option'>
+                <label class='resource-label'>Patron {{localize 'HM.deity'}}</label>
             </span>
         </span>
         <span>
             <span class='form-option'>
                 <label class='resource-label'>{{localize 'HM.alignment'}}</label>
-                <select name='system.priors.alignment'>
+                <select name='system.priors.alignment' style='width: 10em;'>
                     {{selectOptions (findConfigObj 'alignment') selected=alignment localize=true}}
                 </select>
             </span>
             <span class='form-option'>
                 <label class='resource-label'>{{localize 'HM.handedness'}}</label>
-                <select name='system.priors.handedness'>
+                <select name='system.priors.handedness' style='width: 10em;'>
                     {{selectOptions (findConfigObj 'handedness') selected=handedness localize=true}}
                 </select>
             </span>
             <span class='form-option'>
                 <label class='resource-label'>{{localize 'HM.hair'}}</label>
-                <input type='text' style='width: 8em;' name='system.priors.hair' value='{{hair}}' data-dtype='String'/>
+                <input type='text' style='width: 10em; text-align: left; padding-left: 7px;' name='system.priors.hair'
+                    value='{{hair}}' data-dtype='String'/>
             </span>
             <span class='form-option'>
                 <label class='resource-label'>{{localize 'HM.eyes'}}</label>
-                <input type='text' style='width: 8em;' name='system.priors.eyes' value='{{eyes}}' data-dtype='String'/>
+                <input type='text' style='width: 10em; text-align: left; padding-left: 7px;' name='system.priors.eyes'
+                    value='{{eyes}}' data-dtype='String'/>
+            </span>
+            <span class='form-option'>
+            <input type='text' style='width: 100%;' name='system.priors.gawd' value='{{gawd}}' data-dtype='String'/>
             </span>
         </span>
     </section>
     <section class='newform'>
         <span class='form-option'>
-            <label class='resource-label'>{{localize 'HM.deity'}}</label>
-            <input type='text' style='width: 21em;' name='system.priors.gawd' value='{{gawd}}' data-dtype='String'/>
         </span>
     </section>
 {{/with}}
