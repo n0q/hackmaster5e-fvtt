@@ -1,43 +1,33 @@
-{{#with data}}                
-<section style="common-border">
-    <label class="resource-label">Abilities</label>
-    <div class="setup-abilities">
-        <table class="table-basic">
-            <thead>
-{{#each system.abilities as |rowObj rowKey|}}
-                <th scope="col"></th>
-                <th scope="col">
-                    <label class="resource-label column">{{localize (concat "HM." rowKey)}}</label> 
-                </th>
-{{/each}}
-            </thead>
-            <tbody>
-{{#each system.abilities.total as |statObj statKey|}}            
-                <tr>
-                    <th scope="row">
-                        <label class="loud-label">{{@statKey}}</label> 
-                    </th>
-    {{#each ../system.abilities as |rowObj rowKey|}}
-        {{#if (gt @index 0)}}
-            <td><label class="resource-label">{{#if (eq @index 1)}}={{else}}+{{/if}}</label></td>
-        {{/if}}
-            <td>
-            {{#if (or (eq rowKey "total") (eq rowKey "race"))}}
-                {{lookup (lookup rowObj statKey) 'value'}}
-                    <label class="resource-label">/</label>
-                {{pad (lookup (lookup rowObj statKey) 'fvalue')}}
-            {{else}}
-                <input type="text" name="system.abilities.{{rowKey}}.{{statKey}}.value" title="system.abilities.{{rowKey}}.{{statKey}}.value" 
-                    value="{{lookup (lookup rowObj statKey) 'value'}}" maxlength=2 data-dtype="Number"/>
-                <label class="resource-label">/</label>
-                <input type="text" name="system.abilities.{{rowKey}}.{{statKey}}.fvalue" title="system.abilities.{{rowKey}}.{{statKey}}.fvalue"
-                    value="{{pad (lookup (lookup rowObj statKey) 'fvalue')}}" maxlength=3 data-dtype="Number"/>
-            {{/if}}
-            </td>
-    {{/each}}
-{{/each}}
-            </tbody>
-        </table>
-    </div>
+<label class='resource-label'>Ability Scores</label>
+{{#with data}}
+<section>
+    <table class='table-basic' style='padding-top: 2px;'>
+        <thead>
+            <tr>
+                <th scope='col'></th>
+                {{#each system.abilities.total}}
+                <th scope='col'><label class='loud-label'>{{@key}}</label></th>
+                {{/each}}
+            </tr>
+        </thead>
+        <tbody class='abilities'>
+            {{#each system.abilities as |vector vectorKey|}}
+            <tr>
+                <td scope='row' style='padding-right: 20px;'><label class='resource-label'>{{@vectorKey}}</label></td>
+                {{#each vector}}
+                <td>
+                    <input type='text' name='system.abilities.{{@vectorKey}}.{{@key}}.value' style='text-align: right;'
+                        value='{{lookup (lookup @vector @key) 'value'}}' maxlength=2 data-dtype='Number'
+                        {{#if (or (eq @vectorKey 'total') (eq @vectorKey 'race'))}}disabled{{/if}}/>
+                    <label class='loud-label'>/</label>
+                    <input type='text' name='system.abilities.{{@vectorKey}}.{{@key}}.fvalue'
+                        value='{{pad (lookup (lookup @vector @key) 'fvalue')}}' maxlength=2 data-dtype='Number'
+                        {{#if (or (eq @vectorKey 'total') (eq @vectorKey 'race'))}}disabled{{/if}}/>
+                </td>
+                {{/each}}
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
 </section>
 {{/with}}
