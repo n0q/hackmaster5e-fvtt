@@ -153,6 +153,9 @@ export class HMCharacterActor extends HMActor {
         const fValue = parseInt(system.fame.value, 10) || 0;
         system.fame.bracket = HMTABLES.bracket.fame(fValue) || 0;
         system.fame.value = Math.min(fValue, 999);
+
+        const {priors} = system;
+        priors.weight = HMTABLES.weight(priors.bmi || 0, priors.height || 0);
     }
 
     setCClass() {
