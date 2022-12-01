@@ -4,6 +4,11 @@ function prepareCharacterItems(sheetData) {
     const {actor} = sheetData;
     const {itemTypes} = actor;
 
+    const proficiency = actor.itemTypes.proficiency;
+    actor.proficiency = proficiency.sort(
+        (a, b) => b.system.weapon.checked - a.system.weapon.checked || a.name.localeCompare(b.name),
+    );
+
     // Assign
     actor.race = itemTypes.race?.[0];
     actor.cclass = itemTypes.cclass?.[0];
