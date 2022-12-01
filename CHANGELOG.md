@@ -7,6 +7,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Character class cards (collect them all!).
 ### Removed
 - Invididual HP rolls no longer tracked on class sheet. Use card in setup.
+### Fixed
+- Regression allowed ranged weapons to have inappropriate specializations.
 
 ## [0.2.36] - 2022-11-30
 ### Added
