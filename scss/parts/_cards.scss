@@ -37,6 +37,10 @@
     overflow: visible;
     margin: 3px;
 
+    .toggleswitch header:hover {
+        @include text-glow($shad-1px);
+    }
+
     .hide { @include hide; }
 
     @include table-basic;
