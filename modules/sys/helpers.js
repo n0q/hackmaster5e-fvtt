@@ -14,8 +14,13 @@ export default function registerHandlebarsHelpers() {
         return outStr;
     });
 
-    Handlebars.registerHelper('toLowerCase', function(str) {
-        return str.toLowerCase();
+    Handlebars.registerHelper('toLowerCase', (str) => str.toLowerCase());
+
+    Handlebars.registerHelper('toUpperCase', (str) => {
+        const input = str.toString();
+        const lower = input.toLowerCase();
+        const upper = lower.charAt(0).toUpperCase();
+        return `${upper}${lower.slice(1)}`;
     });
 
     Handlebars.registerHelper('sanitize', function(str) {
