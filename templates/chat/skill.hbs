@@ -1,7 +1,7 @@
 {{#unless (eq formulaType 'opposed')}}
     {{#unless (eq dc 'auto')}}
         {{localize 'HM.target'}}:
-        {{localize (lookup (findConfigObj 'skillLevel') dc)}}
+        <b>{{localize (lookup (findConfigObj 'skillLevel') dc)}}</b>
         <br>
     {{/unless}}
     <b>{{specialRow}}</b>

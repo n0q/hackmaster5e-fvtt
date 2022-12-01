@@ -21,12 +21,6 @@
         align-items: center;
     }
 }
-    
-    .expanded {
-        grid-row-start: 1;
-        grid-row-end: span 2;
-        background: grey;
-    }
 
 .card {
     border: $card_border solid $c-grey;
