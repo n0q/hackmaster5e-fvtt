@@ -45,14 +45,14 @@
                             <label class="resource-label" style="width: 6em;">{{localize "HM.attack"}}:</label>
                             <input type="number" name="system.bonus.atk" value="{{system.bonus.atk}}" data-dtype="Number"/>
                         </div>
-                        {{#if ranged.checked}}{{else}}
+                        {{#if system.ranged.checked}}{{else}}
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.defense"}}:</label>
                             <input type="number" name="system.bonus.def" value="{{system.bonus.def}}"
                             data-dtype="Number"/>
                         </div>
                         {{/if}}
-                        {{#if mechanical.checked}}{{else}}
+                        {{#if system.mechanical.checked}}{{else}}
                         <div class="options-row">
                             <label class="resource-label">{{localize "HM.damage"}}:</label>
                             <input type="number" name="system.bonus.dmg" value="{{system.bonus.dmg}}" data-dtype="Number"/>
