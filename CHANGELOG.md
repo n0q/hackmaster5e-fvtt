@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - Character class cards (collect them all!).
 - Proficiency cards.
+### Changed
+- Proficiency list is alphabetically sorted, with weapons at the front.
 ### Removed
 - Invididual HP rolls no longer tracked on class sheet. Use card in setup.
 ### Fixed
