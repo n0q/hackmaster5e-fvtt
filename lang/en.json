@@ -648,6 +648,7 @@
         "type":         "Type",
         "unequipped":   "Unequipped",
         "unprepared":   "Unprepared",
+        "untrained":    "Untrained",
         "universal":    "Universal",
         "verbal":       "Verbal",
         "verydifficult": "Very Difficult",

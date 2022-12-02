@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - Character class cards (collect them all!).
 - Proficiency cards.
+- Actors who lack a skill may skill check via macro.
 ### Changed
 - Proficiency list is alphabetically sorted, with weapons at the front.
 - Formatting improvements.
