@@ -81,6 +81,14 @@ idx.fame = {
     [HMCONST.FAME.EPIC]:        'HM.fameSelect.epic',
 };
 
+idx.moveSpd = {
+    [HMCONST.MOVE.CRAWL]:       'HM.moveSpds.crawl',
+    [HMCONST.MOVE.WALK]:        'HM.moveSpds.walk',
+    [HMCONST.MOVE.JOG]:         'HM.moveSpds.jog',
+    [HMCONST.MOVE.RUN]:         'HM.moveSpds.run',
+    [HMCONST.MOVE.SPRINT]:      'HM.moveSpds.sprint',
+};
+
 idx.special = {
     [HMCONST.SPECIAL.STANDARD]:   'HM.specSelect.std',
     [HMCONST.SPECIAL.JAB]:        'HM.specSelect.jab',

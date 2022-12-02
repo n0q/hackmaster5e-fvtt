@@ -199,17 +199,19 @@
         },
 
         "statbonus": {
-            "feat":     "Feat",
             "atk":      "Attack",
             "def":      "Defense",
             "dmg":      "Damage",
-            "init":     "Init",
-            "spd":      "Speed",
             "dodge":    "Dodge",
+            "feat":     "Feat",
+            "init":     "Init",
+            "kb":       "Knockback",
             "mental":   "Mental",
+            "morale":   "Morale",
             "physical": "Physical",
-            "turning":  "Turning",
-            "morale":   "Morale"
+            "reach":    "Reach",
+            "spd":      "Speed",
+            "turning":  "Turning"
         },
 
         "avail": {

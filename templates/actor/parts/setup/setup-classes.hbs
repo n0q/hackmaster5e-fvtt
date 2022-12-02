@@ -1,7 +1,7 @@
 <label class="resource-label">Race/Class</label>
 {{#with actor.race}}
-    <li class="card" data-item-id="{{_id}}">
-        <summary>
+    <li class="card hmstyle" data-item-id="{{_id}}">
+        <summary class='toggleswitch'>
             <header>
                 <label for="{{name}}">
                     <div class="item-image"><img src="{{img}}" title="{{name}}" width="28" height="28"/></div>
@@ -15,6 +15,58 @@
                 </div>
             </section>
         </summary>
+        <section class='{{toggleSwitch _id}} card-expanded' style='grid-template-columns: 40% 1fr 25%;' toggle>
+            <span style='padding-right: 5px; border-right: 1px solid;'>
+                {{#with system}}
+                <table class='table-basic'>
+                    <tbody>
+                        <tr>
+                            <th scope='row'>{{localize (concat 'HM.hp')}}</th>
+                            <td width='99%'>{{bonus.hp}}</td>
+                        </tr>
+                        <tr>
+                            <th scope='row'>{{localize (concat 'HM.statbonus.kb')}}</th>
+                            <td width='99%'>{{bonus.kb}}</td>
+                        </tr>
+                        <tr>
+                            <th scope='row'>{{localize (concat 'HM.statbonus.reach')}}</th>
+                            <td width='99%'>{{numberFormat bonus.reach sign=true}}</td>
+                        </tr>
+                        <tr>
+                            <th scope='row'>{{localize (concat 'HM.statbonus.def')}}</th>
+                            <td width='99%'>{{#if bonus.def}}{{bonus.def}}{{else}}0{{/if}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </span>
+            <span style='padding-right: 5px; border-right: 1px solid;'>
+                <table class='table-basic'>
+                    <tbody>
+                        {{#each ../movespd}}
+                        <tr>
+                            <th scope='row'>{{localize (findConfigValue 'moveSpd' @index)}}</th>
+                            <td width='99%'>{{this}}</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </span>
+            <span>
+                <table class='table-basic'>
+                    <tbody>
+                        {{#each ../actor.system.abilities.base}}
+                        <tr>
+                            <th scale='row'>{{localize (concat 'HM.ability_short.' @key)}}</th>
+                            {{#with ../abilities}}
+                            <td width='99%'>{{numberFormat (lookup (lookup this @key) 'value') sign=true}}</td>
+                            {{/with}}
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                {{/with}}
+            </span>
+        </section>
     </li>
 {{/with}}
 {{#with actor.cclass}}
