@@ -4,12 +4,11 @@ Hackmaster for Foundry. Some rough edges here and there, but this should do what
 
 ----
 ## Roadmap
-
-##### 0.2.x: Combat Competency
-Better support for the various particulars of combat in Hackmaster. Combat moves, smarter defense rolls, status effects, initiative manipulation, fatigue, and encumbrance.
-
-##### 0.3.x: Inventory and Talents
+##### 0.3: Inventory and Talents
 A proper, nested inventory system with containers, proper weight management, and more. Better talents which will alter a character's behavior without needing to manually tune miscellanious bonuses.
+
+##### 0.4: Magic and Weapon Effects
+Automatic tracking and handling of spell effects, poisons, and damage types.
 
 ----
 ### Credits and Thanks
