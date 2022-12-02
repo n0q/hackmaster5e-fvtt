@@ -77,9 +77,19 @@
             flex: 0 1 auto;
             border: 0;
             padding: 0;
-            img {
-                margin-left: 5px;
-                margin-right: 5px;
+            &.weapon-controls {
+                img {
+                    max-height: 36px;
+                    margin-left: 2px;
+                    margin-right: 5px;
+                }
+            }   
+            &.spell-controls {
+                img {
+                    max-height: 20px;
+                    margin-left: 2px;
+                    margin-right: 2px;
+                }
             }
         }
     } 
