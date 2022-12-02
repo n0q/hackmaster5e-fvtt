@@ -7,9 +7,9 @@
                 <h4 class="item-name">{{name}}</h4>
             </label>
         </header>
-        <section>
-            <img class="imgbutton spell-prep" src="{{findConfigValue "combatImg" "unprep"}}" height=20 title="Forget">
-            <img class="rollable imgbutton" src="{{findConfigValue "combatImg" "cast"}}" height=20 title="Cast"
+        <section class='spell-controls'>
+            <img class="imgbutton spell-prep" src="{{findConfigValue "combatImg" "unprep"}}" title="Forget">
+            <img class="rollable imgbutton" src="{{findConfigValue "combatImg" "cast"}}" title="Cast"
                 data-dialog="cast"
                 data-item-divine={{system.divine}}
                 data-item-id="{{_id}}">
