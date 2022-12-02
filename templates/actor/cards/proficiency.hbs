@@ -1,5 +1,5 @@
-<li class='card' data-item-id='{{_id}}'>
-    <summary>
+<li class='card hmstyle' data-item-id='{{_id}}'>
+    <summary {{#if system.weapon.checked}}class='toggleswitch'{{/if}}>
         <header>
             <label>
                 <div class='item-image'><img src='{{img}}' title='{{name}}' width='28' height='28'/></div>
@@ -13,4 +13,50 @@
             </div>
         </section>
     </summary>
+    {{#if system.weapon.checked}}
+    <section class='{{toggleSwitch _id}} card-expanded' style='grid-template-columns: 60% 40%;' toggle>
+        <span style='padding-right: 5px; border-right: 1px solid;'>
+            <table class='table-basic'>
+                <tbody>
+                    <tr>
+                        <th scope='row'>{{localize 'HM.type'}}</th>
+                        <td width='99%'>{{localize 'HM.weapon'}}</td>
+                    </tr>
+                    <tr>
+                        <th scope='row'>{{localize 'HM.skill'}}</th>
+                        <td width='99%'>{{localize (concat 'HM.weaponskillSelect.' system.skill)}}</td>
+                    </tr>
+                    <tr>
+                        <th scope='row'>{{localize 'HM.ranged'}}</th>
+                        <td width='99%'>{{toUpperCase system.ranged.checked}}</td>
+                    </tr>
+                    <tr>
+                        <th scope='row'>{{localize 'HM.mechanical'}}</th>
+                        <td width='99%'>{{toUpperCase system.mechanical.checked}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </span>
+        <span>
+            <table class='table-basic' style='margin-right: 5px;'>
+                <tbody>
+                {{#each system.bonus}}
+                    {{#unless (or
+                        (and (eq @key 'def') ../system.ranged.checked)
+                        (and (eq @key 'dmg') ../system.mechanical.checked)
+                    )}}
+                    <tr>
+                        <th scope='row'>{{localize (concat 'HM.statbonus.' @key)}}</th>
+                        <td width='99%'>
+                            <input class='editable' type='number' value={{this}}
+                                   data-item-prop='system.bonus.{{@key}}' data-dtype='Number'/>
+                        </td>
+                    </tr>
+                    {{/unless}}
+                {{/each}}
+                </tbody>
+            </table>
+        </span>
+    </section>
+    {{/if}}
 </li>

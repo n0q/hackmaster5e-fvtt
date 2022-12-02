@@ -121,7 +121,7 @@ async function getDefendDialog(dataset, caller) {
 async function getSkillDialog(dataset, caller) {
     const dialogResp = {caller};
     const dialogData = getDialogData();
-    dialogData.skill = caller.items.get(dataset.itemId);
+    dialogData.skill = dataset.context;
 
     const titlePre = dataset.callers > 1 ? `${dataset.callers}` : `${caller.name}:`;
     const titlePost = dataset.callers > 1

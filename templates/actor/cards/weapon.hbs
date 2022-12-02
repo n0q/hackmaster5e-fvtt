@@ -7,24 +7,24 @@
             </label>
         </header>
         {{#if (gt system.state 1)}}
-        <section>
-            <img class='rollable imgbutton' src='{{findConfigValue 'combatImg' 'def'}}' height='36' title='Defend'
+        <section class='weapon-controls'>
+            <img class='rollable imgbutton' src='{{findConfigValue 'combatImg' 'def'}}' title='Defend'
                 data-dialog='def'
                 data-formula-type='standard'
                 data-item-id='{{_id}}'>
             {{#if system.ranged.checked}}
-            <img class='rollable imgbutton' src='{{findConfigValue 'combatImg' 'rdmg'}}' height='36' title='Ranged Damage'
+            <img class='rollable imgbutton' src='{{findConfigValue 'combatImg' 'rdmg'}}' title='Ranged Damage'
             {{else}}
-            <img class='rollable imgbutton' src='{{findConfigValue 'combatImg' 'dmg'}}' height='36' title='Damage'
+            <img class='rollable imgbutton' src='{{findConfigValue 'combatImg' 'dmg'}}' title='Damage'
             {{/if}}
                 data-dialog='dmg'
                 data-formula-type='standard'
                 data-item-id='{{_id}}'
              />
             {{#if system.ranged.checked}}
-            <img class='rollable imgbutton' src='{{findConfigValue 'combatImg' 'ratk'}}' height='36' title='Ranged Attack'
+            <img class='rollable imgbutton' src='{{findConfigValue 'combatImg' 'ratk'}}' title='Ranged Attack'
             {{else}}
-            <img class='rollable imgbutton' src='{{findConfigValue 'combatImg' 'atk'}}' height='36' title='Attack'
+            <img class='rollable imgbutton' src='{{findConfigValue 'combatImg' 'atk'}}' title='Attack'
             {{/if}}
                 data-dialog='atk'
                 data-formula-type='standard'

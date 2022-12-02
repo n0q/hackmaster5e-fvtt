@@ -2,6 +2,23 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.3.0] - 2022-12-01]
+### Added
+- Compendium items.
+- Character class cards (collect them all!).
+- Proficiency cards.
+- Racial cards.
+- Actors who lack a skill can make skill checks via macro.
+### Changed
+- Proficiency list is alphabetically sorted, with weapons at the front.
+- Formatting improvements.
+### Removed
+- Invididual HP rolls no longer tracked on class sheet. Use card in setup.
+### Fixed
+- Regression allowed ranged weapons to have inappropriate specializations.
+- Display bug causing weight to not display on character sheet in some circumstances.
+- Control UI no longer toggles card visibility state.
+
 ## [0.2.36] - 2022-11-30
 ### Added
 - Beasts compendium.

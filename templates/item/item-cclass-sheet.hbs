@@ -4,7 +4,6 @@
     <nav class='sheet-tabs tabs' data-group='primary'>
         <a class='item' data-tab='description'>Description</a>
         <a class='item' data-tab='attributes'>Attributes</a>
-        <a class='item' data-tab='config'>Config</a>
     </nav>
 
     <section class='sheet-body'>
@@ -13,47 +12,7 @@
         </div>
 
         {{#with data}}
-
-        <div class='tab attributes newform' data-group='primary' data-tab='attributes'>
-            <div class='grid-2col'>
-                <section class='col_rborder'>
-                    <span class='form-option'>
-                        <label class='resource-label'>{{localize 'HM.level'}}</label>
-                        <input type='number' name='system.level' value='{{system.level}}' data-dtype='Number'/>
-                    </span>
-                    <span class='form-option'>
-                        <label class='resource-label'>{{localize 'HM.hp'}}</label>
-                        <input type='number' value='{{system.bonus.hp}}' readonly='true'>
-                    </span>
-                </section>
-                <section>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th scope='col'><label class='resource-label'>{{localize 'HM.level'}}</label></th>
-                                <th scope='col'><label class='resource-label'>{{localize 'HM.die'}}</label></th>
-                                <th scope='col'><label class='resource-label'>{{localize 'HM.hp'}}</label></th>
-                                <th scope='col'></th>
-                            <tr>
-                        </thead>
-                        <tbody>
-                            {{#each system.ptable as |level lkey|}}{{#if (gte ../system.level lkey)}}
-                            <tr>
-                                <td>{{lkey}}</td>
-                                <td>{{level.hp.die}}</td>
-                                <td>
-                                    <input type='number' name='system.ptable.{{lkey}}.hp.value'
-                                        value='{{level.hp.value}}' data-dtype='Number'/>
-                                </td>
-                                <td>{{#if level.hp.reroll}}(reroll){{/if}}</td>
-                            </tr>
-                            {{/if}}{{/each}}
-                        </tbody>
-                    </table>
-                </section>
-            </div>
-        </div>
-        <div class='tab newform' data-group='primary' data-tab='config'>
+        <div class='tab newform' data-group='primary' data-tab='attributes'>
             <div class='grid-2col' style='grid-template-columns: 40% 1fr;'>
                 <section name='options' class='col_rborder' style='padding-top: 5px;'>
                     <span class='form-option'>

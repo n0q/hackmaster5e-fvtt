@@ -47,54 +47,63 @@ export class HMItem extends Item {
 
     // HACK: Temporary measure until future inventory overhaul.
     get invstate() {
-        // TODO: Migrate
         const state = parseInt(this.system.state, 10) || 0;
         return HMTABLES.itemstate[state];
     }
 
-    // TODO: The first half of this function could be a lot neater.
     static async rollSkill({skillName, specialty=null, caller, itemId}) {
         const callers = [];
-        if (caller) {
-            callers.push({caller, context: caller.items.get(itemId)});
-        } else {
+
+        if (caller) callers.push({caller, context: caller.items.get(itemId)});
+        else {
             const actors = canvas.tokens.controlled.map((token) => token.actor);
-            Object.values(actors).forEach(async (actor) => {
-                let context;
-                if (specialty) {
-                    context = actor.items.find((a) => a.type === 'skill'
-                        && skillName === a.name
-                        && specialty === a.system?.specialty?.value);
-                } else {
-                    context = actor.items.find((a) => a.type === 'skill'
-                        && skillName === a.name
-                        && !a.system?.specialty?.value);
+            Object.values(actors).forEach((actor) => {
+                let context = actor.items.find((a) => a.type === 'skill'
+                    && skillName === a.name
+                    && specialty === a.system.specialty.value);
+
+                // Unskilled actor.
+                if (!context) {
+                    const system = deepClone(game.model.Item.skill);
+                    system.untrained = true;
+                    let specname = skillName;
+                    if (specialty) {
+                        system.specialty = {checked: true, value: 0};
+                        specname += ` (${specialty})`;
+                    }
+                    context = {name: skillName, specname, system};
                 }
-                if (!context) return;
                 callers.push({caller: actor, context});
             });
         }
         if (!callers.length) return;
 
+        // NOTE: We don't know if it's a language if none of the callers have the skill.
+        const dialogCaller = callers.find((a) => a.context._id) ?? callers[0];
         const dialogDataset = {
-            dialog:  'skill',
-            itemId:  callers[0].context.id,
+            dialog: 'skill',
+            context: dialogCaller.context,
             callers: callers.length,
         };
 
         const dialogMgr = new HMDialogMgr();
-        const dialogResp = await dialogMgr.getDialog(dialogDataset, callers[0].caller);
+        const dialogResp = await dialogMgr.getDialog(dialogDataset, dialogCaller.caller);
+        const {resp} = dialogResp;
 
         Object.values(callers).forEach(async (callerObj) => {
-            const rollMgr = new HMRollMgr();
             const chatMgr = new HMChatMgr();
             const dataset = {
                 dialog: 'skill',
                 context: callerObj.context,
                 caller:  callerObj.caller,
-                resp:    dialogResp.resp,
+                resp,
             };
-            dataset.roll = await rollMgr.getRoll(dataset, dataset);
+
+            const formula = HMTABLES.formula.skill[resp.formulaType];
+            const {bonus} = callerObj.context.system;
+            const rollData = {resp, bonus};
+            dataset.roll = await new Roll(formula, rollData).evaluate({async: true});
+
             const card = await chatMgr.getCard({dataset});
             await ChatMessage.create(card);
         });

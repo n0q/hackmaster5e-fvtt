@@ -91,7 +91,7 @@ export class HMActorSheet extends ActorSheet {
         super.activateListeners(html);
 
         // ui elements
-        html.find('.toggleswitch').click(this._onToggle.bind(this));
+        html.find('.toggleswitch header').click(this._onToggle.bind(this));
 
         if (!this.options.editable) return;
         // ----------------------------------------------------- //
@@ -188,7 +188,7 @@ export class HMActorSheet extends ActorSheet {
         this.visibleItemId[cId] = tState;
 
         const element = ev.currentTarget;
-        const target  = $(element).parent().find('[toggle]');
+        const target  = $(element).parent().parent().find('[toggle]');
         $(target).toggleClass('hide');
     }
 

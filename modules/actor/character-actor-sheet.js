@@ -1,9 +1,13 @@
 import { HMActorSheet } from './actor-sheet.js';
-import { HMTABLES } from '../sys/constants.js';
 
 function prepareCharacterItems(sheetData) {
     const {actor} = sheetData;
     const {itemTypes} = actor;
+
+    const proficiency = actor.itemTypes.proficiency;
+    actor.proficiency = proficiency.sort(
+        (a, b) => b.system.weapon.checked - a.system.weapon.checked || a.name.localeCompare(b.name),
+    );
 
     // Assign
     actor.race = itemTypes.race?.[0];
@@ -35,9 +39,6 @@ export class HMCharacterActorSheet extends HMActorSheet {
 
     _HMprepareSheet(sheetData) {
         const actorData = sheetData.actor;
-
-        const {priors} = actorData.system;
-        priors.weight = HMTABLES.weight(priors.bmi || 0, priors.height || 0);
 
         // Saves
         const left = ['fos', 'foa', 'turning', 'morale'];

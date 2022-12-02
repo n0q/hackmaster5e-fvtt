@@ -282,9 +282,10 @@ async function createSkillCard(dataset) {
     const {rollMode, formulaType, dc} = dataset.resp;
 
     const skillname = context.specname;
-    const flavor = formulaType === 'opposed'
+    let flavor = formulaType === 'opposed'
         ? `${game.i18n.localize('HM.opposed')} ${skillname} ${game.i18n.localize('HM.skillcheck')}`
         : `${skillname} ${game.i18n.localize(`HM.${formulaType}`)} ${game.i18n.localize('HM.check')}`;
+    if (context.system.untrained) flavor = `${game.i18n.localize('HM.untrained')} ${flavor}`;
     const rollContent = await roll.render({flavor});
 
     let specialRow;
@@ -299,16 +300,14 @@ async function createSkillCard(dataset) {
             }
         } else {
             const success = roll.total + difficulty[dc] < 1;
-            specialRow = success
-                ? game.i18n.localize('HM.passed')
-                : game.i18n.localize('HM.failed');
+            specialRow = game.i18n.localize(success ? 'HM.passed' : 'HM.failed');
         }
     }
 
     const templateData = {dc, specialRow, formulaType};
     const template = 'systems/hackmaster5e/templates/chat/skill.hbs';
-    const resultContent = await renderTemplate(template, templateData);
-    const content = `${resultContent}<p>${rollContent}`;
+    let content = await renderTemplate(template, templateData);
+    content += rollContent;
     return {content, roll, rollMode, flavor: dataset.caller.name};
 }
 
