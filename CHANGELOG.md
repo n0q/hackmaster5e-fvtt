@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Fixed
 - Regression allowed ranged weapons to have inappropriate specializations.
 - Display bug causing weight to not display on character sheet in some circumstances.
+- Control UI no longer toggles card visibility state.
 
 ## [0.2.36] - 2022-11-30
 ### Added
