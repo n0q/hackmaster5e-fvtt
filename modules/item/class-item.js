@@ -26,7 +26,7 @@ export class HMClassItem extends HMItem {
         if (!this.actor?.system) return;
 
         // calculate hp
-        system.level = Math.min(20, Math.max(0, system.level)) || 0;
+        system.level = Math.clamped((system.level || 0), 0, 20);
         const {level} = system;
         if (level < 1) {
             delete system.bonus;
