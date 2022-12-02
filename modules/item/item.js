@@ -57,7 +57,7 @@ export class HMItem extends Item {
         if (caller) callers.push({caller, context: caller.items.get(itemId)});
         else {
             const actors = canvas.tokens.controlled.map((token) => token.actor);
-            Object.values(actors).forEach(async (actor) => {
+            Object.values(actors).forEach((actor) => {
                 let context = actor.items.find((a) => a.type === 'skill'
                     && skillName === a.name
                     && specialty === a.system.specialty.value);
