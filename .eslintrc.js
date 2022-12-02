@@ -17,6 +17,8 @@ module.exports = {
     'globals': {
         '$': false,
         'game': false,
+        'PIXI': false,
+        'Color': false,
         'PoolTerm': false,
         'DOMPurify': false,
     },
@@ -28,6 +30,7 @@ module.exports = {
         'indent': 'off',
         'key-spacing': 'off',
         'no-continue': 'warn',
+        'no-extra-boolean-cast': 'off',
         'no-plusplus': 'off',
         'no-multi-spaces': 'off',
         'no-console': ['error', { allow: ['warn', 'error'] }],
