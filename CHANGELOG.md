@@ -10,8 +10,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Threat ranges failed to display in certain circumstances.
 - Ranged firing speed no longer double-dips.
 - Unpriviledged users no longer recieve error message when token loses status effect.
+- Mage spell casting no longer advances init table.
 
-## [0.3.0] - [2022-12-01]
+## [0.3.0] - 2022-12-01
 ### Added
 - Compendium items.
 - Character class cards (collect them all!).
