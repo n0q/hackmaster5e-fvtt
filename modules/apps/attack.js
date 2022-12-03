@@ -1,6 +1,8 @@
 import { HMPrompt } from './prompt.js';
 import { HMCONST, HMTABLES } from '../sys/constants.js';
 
+// const {SPECIAL} = HMCONST;
+
 function getSpeed(ranged, wData, specialMove=0) {
     const {spd, jspd} = wData.bonus.total;
 
@@ -93,7 +95,7 @@ export class AttackPrompt extends HMPrompt {
         if (specialMove === HMCONST.SPECIAL.CHARGE) specialMove = Number(charge);
 
         const ranged = !!weapons[widx].system.ranged.checked;
-        const advance = ranged ? spd[specialMove] : spd[button];
+        const advance = ranged && button !== 'shoot' ? spd[specialMove] : spd[button];
 
         const dialogResp = {
             widx,

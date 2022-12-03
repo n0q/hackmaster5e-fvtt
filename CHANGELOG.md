@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Talents compendium.
 ## Fixed
 - Threat ranges failed to display in certain circumstances.
+- Ranged firing speed no longer double-dips.
 
 ## [0.3.0] - [2022-12-01]
 ### Added
