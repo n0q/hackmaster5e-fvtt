@@ -52,19 +52,12 @@ export class CastPrompt extends HMPrompt {
 
     get dialogResp() {
         const {button, spd} = this.dialogData;
-        let advance = false;
-        if (this.dialogData.divine) {
-            advance = button === 'cast' ? false : spd.declare;
-        } else {
-            advance = button === 'cast' ? spd.weapon : spd.declare;
-        }
         const dialogResp = {
             sidx: this.dialogData.sidx,
             divine: this.dialogData.divine,
             cost: this.dialogData.cost,
             schedule: parseInt(this.dialogData.schedule, 10) || 0,
-            advance: this.dialogData.advance ? advance : false,
-            sfatigue: button === 'cast' ? spd.cast : false,
+            advance: spd[button],
             private: this.dialogData.private,
             button,
         };

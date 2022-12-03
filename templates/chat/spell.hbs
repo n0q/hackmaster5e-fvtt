@@ -14,9 +14,8 @@
 {{/with}}
 {{#unless context.system.divine}}
     {{#if resp.advance}}
-        {{localize 'HM.spell'}} {{localize 'HM.fatigue'}}: <b>{{resp.sfatigue}}</b>
+        {{localize 'HM.spell'}} {{localize 'HM.fatigue'}}: <b>{{resp.advance}}</b>
         <i>{{toLowerCase (localize 'HM.seconds')}}.</i><br>
-        {{localize 'HM.chatCard.wcreset'}}.<br>
     {{else}}
     {{localize 'HM.CHAT.ctime'}}: <b>{{context.system.speed}}</b><br>
     {{/if}}
