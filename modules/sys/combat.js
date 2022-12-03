@@ -46,12 +46,14 @@ export class HMCombat extends Combat {
         return super.rollInitiative(ids, rollData);
     }
 
-    static async updateCombat(combat) {
+    static async updateCombat(combat, _roundData, _, userId) {
+        if (userId !== game.userId) return;
+
         const combatants = combat.turns;
         combatants.forEach((x) => {
             // Toggle status effects on/off based on their timers.
             const effects = x.actor.effects.filter((y) => y.isTemporary === true);
-            effects.forEach(async (effect) => {
+            effects.map(async (effect) => {
                 const {remaining, startRound} = effect.duration;
                 const started = startRound <= combat.round;
                 if ((!started &&               !effect.disabled)        // Case 1: Before effect
