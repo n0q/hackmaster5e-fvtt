@@ -37,8 +37,8 @@ function getReach(actor) {
                 const isOwner = pl === CONST.DOCUMENT_PERMISSION_LEVELS.OWNER;
                 const isGM = game.users.get(uid)?.isGM;
                 return isOwner && !isGM && uid !== 'default';
-            })[0];
-            owner = game.users.get(userId);
+            })?.[0];
+            owner = userId ? game.users.get(userId) : undefined;
         }
 
         color = owner?.color ?? defaultColor;
