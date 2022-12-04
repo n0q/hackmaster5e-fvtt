@@ -1,7 +1,5 @@
 import { HMPrompt } from './prompt.js';
-import { HMCONST, HMTABLES } from '../sys/constants.js';
-
-// const {SPECIAL} = HMCONST;
+import { HMCONST, HMTABLES } from '../tables/constants.js';
 
 function getSpeed(ranged, wData, specialMove=0) {
     const {spd, jspd} = wData.bonus.total;

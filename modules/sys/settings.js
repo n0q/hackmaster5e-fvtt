@@ -1,4 +1,4 @@
-import { MODULE_ID } from './constants.js';
+import { MODULE_ID } from '../tables/constants.js';
 
 export const registerSystemSettings = () => {
     game.settings.register(MODULE_ID, 'reachOpacity', {
@@ -11,4 +11,4 @@ export const registerSystemSettings = () => {
         range: {min: 0, max: 1, step: 0.05},
         onChange: () => canvas.tokens.placeables.forEach((t) => t.drawReach()),
     });
-}
+};

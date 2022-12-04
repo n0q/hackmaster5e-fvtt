@@ -1,4 +1,4 @@
-import { MODULE_ID } from './constants.js';
+import { MODULE_ID } from '../tables/constants.js';
 import { HMStates, HMActiveEffect } from './effects.js';
 import { HMSupport } from './support.js';
 import { HMActor } from '../actor/actor.js';

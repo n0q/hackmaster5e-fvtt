@@ -1,7 +1,7 @@
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMRollMgr } from '../mgr/rollmgr.js';
-import { HMTABLES, MODULE_ID } from '../sys/constants.js';
+import { HMTABLES, MODULE_ID } from '../tables/constants.js';
 
 export class HMActorSheet extends ActorSheet {
     visibleItemId = {};

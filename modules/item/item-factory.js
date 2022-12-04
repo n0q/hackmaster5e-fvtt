@@ -9,7 +9,7 @@ import { HMSpellItem } from './spell-item.js';
 import { HMTalentItem } from './talent-item.js';
 import { HMWeaponItem } from './weapon-item.js';
 import { HMWoundItem } from './wound-item.js';
-import { MODULE_ID } from '../sys/constants.js';
+import { MODULE_ID } from '../tables/constants.js';
 
 const handler = {
     construct(_actor, args) {

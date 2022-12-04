@@ -1,4 +1,4 @@
-import { MODULE_ID } from './modules/sys/constants.js';
+import { MODULE_ID } from './modules/tables/constants.js';
 import { HMActor } from './modules/actor/actor.js';
 import { HMActorFactory } from './modules/actor/actor-factory.js';
 import { HMBeastActorSheet } from './modules/actor/beast-actor-sheet.js';

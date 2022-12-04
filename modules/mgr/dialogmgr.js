@@ -1,4 +1,4 @@
-import { HMCONST } from '../sys/constants.js';
+import { HMCONST } from '../tables/constants.js';
 import { AttackPrompt } from '../apps/attack.js';
 import { CastPrompt } from '../apps/cast.js';
 import { CritPrompt } from '../apps/crit.js';

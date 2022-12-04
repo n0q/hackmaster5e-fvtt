@@ -111,7 +111,7 @@
                     </tbody>
                 </table>
             </span>
-            <span>
+            <span style='padding-right: 5px;'>
                 <table class='table-basic'>
                     <thead>
                         <tr>
@@ -125,7 +125,7 @@
                         {{#if (gt ../level @index)}}
                         <tr>
                             <th scope='row' style='text-align: center;'>{{@key}}</th>
-                            <td style='text-align: left;'>
+                            <td style='text-align: left;' width='99%'>
                                 {{this.hp.die}}
                                 <i class='fa-solid fa-arrow-rotate-right' title='{{localize 'HM.reroll'}}'
                                    {{#unless this.hp.reroll}}style='visibility: hidden;'{{/unless}}></i>

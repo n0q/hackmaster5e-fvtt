@@ -1,7 +1,7 @@
 import { HMItem, advanceClock, setStatusEffectOnToken } from './item.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
-import { HMCONST, HMTABLES } from '../sys/constants.js';
+import { HMCONST, HMTABLES } from '../tables/constants.js';
 
 export class HMSpellItem extends HMItem {
     prepareBaseData() {

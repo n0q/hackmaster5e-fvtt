@@ -1,5 +1,5 @@
-import { MODULE_ID, HMCONST, HMTABLES } from '../sys/constants.js';
-import { CRITTABLE } from '../sys/crits.js';
+import { MODULE_ID, HMCONST, HMTABLES } from '../tables/constants.js';
+import { CRITTABLE } from '../tables/crits.js';
 import { HMItem, advanceClock, setStatusEffectOnToken, unsetStatusEffectOnToken } from './item.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
