@@ -101,6 +101,13 @@
             "system": "hackmaster5e"
         },
         {
+            "label": "Talents, Basic",
+            "type": "Item",
+            "name": "hmbtalents",
+            "path": "packs/talents-basic.db",
+            "system": "hackmaster5e"
+        },
+        {
             "label": "Weapons, Basic",
             "type": "Item",
             "name": "hmbweapons",
