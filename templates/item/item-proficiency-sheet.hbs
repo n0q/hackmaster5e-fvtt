@@ -2,72 +2,73 @@
     {{> "systems/hackmaster5e/templates/item/parts/header.hbs" }}
 
     <nav class="sheet-tabs tabs" data-group="primary">
+        <a class='item' data-tab='description'>Description</a>
         <a class="item" data-tab="attributes">Attributes</a>
     </nav>
 
     <section class="sheet-body">
-        <div class="tab attributes" data-group="primary" data-tab="attributes">
-            <div class="item-form">
-                {{#with data}}
-                <div class="sidepanel">
-                    <div class="options-block">
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.weapon"}}</label>
-                            <input type="checkbox" name="system.weapon.checked" {{checked system.weapon.checked}}/>
-                        </div>
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.skill"}}:</label>
-                            <select name="system.skill" data-dtype="{{system.skill}}"
-                                {{#unless system.weapon.checked}} disabled {{/unless}}>
-                                {{#select system.skill}}{{#each (findConfigObj "weaponskill") as |type t|}}
-                                <option value="{{t}}">{{localize type}}</option>
-                                {{/each}}{{/select}}
-                            </select>
-                        </div>
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.ranged"}}</label>
-                            <input type="checkbox" name="system.ranged.checked"
-                            {{checked system.ranged.checked}}
-                            {{#unless system.weapon.checked}} disabled {{/unless}}>
-                        </div>
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.mechanical"}}</label>
-                            <input type="checkbox" name="system.mechanical.checked"
-                            {{checked system.mechanical.checked}}
-                            {{#unless (and system.weapon.checked system.ranged.checked)}} disabled {{/unless}}>
-                        </div>
-                    </div>
-                </div>
-                {{#if system.weapon.checked}}
-                <div class="sidepanel">
-                    <div class="options-block">
-                        <div class="options-row">
-                            <label class="resource-label" style="width: 6em;">{{localize "HM.attack"}}:</label>
-                            <input type="number" name="system.bonus.atk" value="{{system.bonus.atk}}" data-dtype="Number"/>
-                        </div>
-                        {{#if system.ranged.checked}}{{else}}
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.defense"}}:</label>
-                            <input type="number" name="system.bonus.def" value="{{system.bonus.def}}"
-                            data-dtype="Number"/>
-                        </div>
-                        {{/if}}
-                        {{#if system.mechanical.checked}}{{else}}
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.damage"}}:</label>
-                            <input type="number" name="system.bonus.dmg" value="{{system.bonus.dmg}}" data-dtype="Number"/>
-                        </div>
-                        {{/if}}
-                        <div class="options-row">
-                            <label class="resource-label">{{localize "HM.speed"}}:</label>
-                            <input type="number" name="system.bonus.spd" value="{{system.bonus.spd}}" data-dtype="Number"/>
-                        </div>
-                    </div>
-                </div>
-                {{/if}}
-                {{/with}}
+        <div class='tab' data-group='primary' data-tab='description'>
+            {{> 'systems/hackmaster5e/templates/item/parts/description.hbs' }}
+        </div>
+        
+        {{#with data}}
+        <div class="tab attributes newform" data-group="primary" data-tab="attributes">
+            <div class='grid-2col' style='grid-template-columns: 30% 1fr; padding-top: 5px;'>
+                <section name='options' class='col_rborder'>
+                    <span class='form-option'>
+                        <label class="resource-label">{{localize "HM.weapon"}}</label>
+                        <input type="checkbox" name="system.weapon.checked" {{checked system.weapon.checked}}/>
+                    </span>
+                </section>
+                <section {{#unless system.weapon.checked}}style='visibility: hidden;'{{/unless}}>
+                    <span class='grid-2col'>
+                        <span>
+                            <span class='form-option' style='padding-right: 5px;'>
+                                <label class="resource-label">{{localize "HM.skill"}}:</label>
+                                <select name='system.skill' data-dtype='{{system.skill}}'
+                                    {{selectOptions (findConfigObj 'weaponskill') selected=system.skill localize=true}}
+                                </select>
+                            </span>
+                            <span class='form-option'>
+                                <label class="resource-label">{{localize "HM.ranged"}}</label>
+                                <input type="checkbox" name="system.ranged.checked" {{checked system.ranged.checked}}>
+                            </span>
+                            <span class='form-option'>
+                                <label class="resource-label">{{localize "HM.mechanical"}}</label>
+                                <input type="checkbox" name="system.mechanical.checked" {{checked system.mechanical.checked}}
+                                    {{#unless system.ranged.checked}} disabled {{/unless}}>
+                            </span>
+                        </span>
+                        <span style='padding-right: 5px; margin-top: -5px;'>
+                            <table class='table-basic'>
+                                <thead>
+                                    <tr>
+                                        <th scope='col'>{{localize 'HM.category'}}</th>
+                                        <th scope='col' style='text-align: right; padding-right: 10px;'>{{localize 'HM.bonus'}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {{#each system.bonus}}
+                                    {{#unless (or
+                                        (and (eq @key 'def') ../system.ranged.checked)
+                                        (and (eq @key 'dmg') ../system.mechanical.checked)
+                                    )}}
+                                     <tr>
+                                        <th scope='row'>{{localize (concat 'HM.statbonus.' @key)}}</th>
+                                        <td width='99%'>
+                                            <input class='editable' type='number' value={{this}}
+                                                   data-item-prop='system.bonus.{{@key}}' data-dtype='Number'/>
+                                        </td>
+                                    </tr>
+                                    {{/unless}}
+                               {{/each}}
+                                </tbody>
+                            </table>
+                        </span>
+                    </span>
+                </section>
             </div>
         </div>
+        {{/with}}
     </section>
 </form>
-
