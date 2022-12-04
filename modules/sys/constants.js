@@ -136,6 +136,10 @@ export const HMCONST = {
         GGROUND:    66,
         SCAMPER:    67,
     },
+    TALENT: {
+        WEAPON: 0,
+        EFFECT: 1,
+    },
 };
 
 // system rules
@@ -487,14 +491,14 @@ export const HMTABLES = {
             return hTable.findIndex((x) => x >= value);
        },
     },
-    'cast': {
-        'timing': (spd, caller) => {
+    cast: {
+        timing: (spd, caller) => {
             const {fatigue} = caller.system.bonus.total;
             const declare = spd;
             const cast = Math.max(spd + 5 + (Number(fatigue) || 0), 1);
             return {declare, cast};
         },
-        'cost': (lidx, prepped) => {
+        cost: (lidx, prepped) => {
             const base = (lidx * 10) + 30;
             return prepped ? base : base * 2;
         },

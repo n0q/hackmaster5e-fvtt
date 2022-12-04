@@ -220,6 +220,11 @@
             "low":  "Low"
         },
 
+        "talentSelect": {
+            "effect":   "Effect",
+            "weapon":   "Weapon"
+        },
+
         "weaponskillSelect": {
             "minimal":  "Minimal",
             "low":      "Low",
@@ -489,6 +494,7 @@
         "carried":      "Carried",
         "cast":         "Cast",
         "catalyst":     "Catalyst",
+        "category":     "Category",
         "charged":      "Charged",
         "check":        "Check",
         "class":        "Class",
@@ -531,6 +537,7 @@
         "eyes":         "Eyes",
         "failed":       "Failed",
         "failure":      "Failure",
+        "false":        "False",
         "fame":         "Fame",
         "family":       "Family",
         "fast":         "Fast",
@@ -607,6 +614,7 @@
         "treated":      "Treated",
         "top":          "ToP",
         "trivial":      "Trivial",
+        "true":         "True",
         "reach":        "Reach",
         "race":         "Race",
         "range":        "Range",
@@ -711,6 +719,7 @@
         "TypeRace":         "Race",
         "TypeSkill":        "Skill",
         "TypeSpell":        "Spell",
+        "TypeTalent":       "Talent",
         "TypeWeapon":       "Weapon",
         "TypeWound":        "Wound"
     },

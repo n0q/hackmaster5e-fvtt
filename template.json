@@ -70,9 +70,9 @@
 
     "Item": {
         "types": [
-            "armor",        "cclass",   "item",
-            "proficiency",  "race",     "skill",
-            "spell",        "weapon",   "wound"
+            "armor",    "cclass",    "item",    "proficiency",
+            "race",     "skill",     "spell",   "talent",
+            "weapon",   "wound"
         ],
 
         "templates": {
@@ -126,6 +126,7 @@
         },
 
         "proficiency": {
+            "templates": ["base"],
             "bonus": {"atk": 0, "def": 0, "dmg": 0, "spd": 0},
             "skill": null,
             "weapon":     {"checked": false},
@@ -184,6 +185,13 @@
                 "lks": false,
                 "cha": false
             }
+        },
+
+        "talent": {
+            "templates": ["base"],
+            "type": 0,
+            "bonus": {"atk": 0, "def": 0, "dmg": 0, "spd": 0},
+            "weapon": {"ranged": false, "mechanical": false}
         },
 
         "weapon": {
