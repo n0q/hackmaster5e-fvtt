@@ -1,5 +1,5 @@
 import { HMPrompt } from './prompt.js';
-import { HMCONST, HMTABLES } from '../sys/constants.js';
+import { HMCONST } from '../tables/constants.js';
 
 export class DamagePrompt extends HMPrompt {
     static get defaultOptions() {

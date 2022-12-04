@@ -1,5 +1,5 @@
 import { HMPrompt } from './prompt.js';
-import { HMTABLES } from '../sys/constants.js';
+import { HMTABLES } from '../tables/constants.js';
 
 function getSpeed(sData, caller) {
     const spd = HMTABLES.cast.timing(sData.speed, caller);

@@ -1,5 +1,5 @@
 import { HMItem } from './item.js';
-import { HMCONST } from '../sys/constants.js';
+import { HMCONST } from '../tables/constants.js';
 
 export class HMTalentItem extends HMItem {
     prepareBaseData() {

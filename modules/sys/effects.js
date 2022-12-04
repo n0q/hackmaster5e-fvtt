@@ -1,5 +1,5 @@
 /* eslint max-classes-per-file: ['error', 2] */
-import { HMTABLES } from './constants.js';
+import { HMTABLES } from '../tables/constants.js';
 
 export class HMStates {
     static async setStatusEffect(token, id, duration=null) {

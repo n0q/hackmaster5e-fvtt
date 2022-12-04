@@ -1,4 +1,4 @@
-import { HMTABLES, HMCONST } from '../sys/constants.js';
+import { HMTABLES, HMCONST } from '../tables/constants.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
 import { HMRollMgr } from '../mgr/rollmgr.js';

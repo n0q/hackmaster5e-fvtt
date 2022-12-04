@@ -1,4 +1,4 @@
-import { HMCONST, HMTABLES, MODULE_ID } from '../sys/constants.js';
+import { HMCONST, HMTABLES, MODULE_ID } from '../tables/constants.js';
 import { HMActor } from './actor.js';
 
 export class HMCharacterActor extends HMActor {

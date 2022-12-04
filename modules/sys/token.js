@@ -1,9 +1,10 @@
-import { MODULE_ID, HMCONST } from './constants.js';
+import { MODULE_ID, HMCONST } from '../tables/constants.js';
 
 function newReach(distance, color, visible) {
     return {
         distance,
         color,
+        foo: 'bar',
         visible,
         opacity: game.settings.get(MODULE_ID, 'reachOpacity'),
         id: randomID(),

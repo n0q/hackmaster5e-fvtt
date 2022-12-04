@@ -1,6 +1,6 @@
 /* eslint no-console:0 */
 /* global game */
-import { MODULE_ID } from './constants.js';
+import { MODULE_ID } from '../tables/constants.js';
 
 export default class LOGGER {
     static _dmode() {
