@@ -7,6 +7,7 @@ export default function preloadHandlebarsTemplates() {
         'systems/hackmaster5e/templates/actor/cards/spell.hbs',
         'systems/hackmaster5e/templates/actor/cards/prepped-spell.hbs',
         'systems/hackmaster5e/templates/actor/cards/proficiency.hbs',
+        'systems/hackmaster5e/templates/actor/cards/talent.hbs',
         'systems/hackmaster5e/templates/actor/cards/weapon.hbs',
 
         'systems/hackmaster5e/templates/actor/parts/middle/base-middle.hbs',
@@ -38,6 +39,7 @@ export default function preloadHandlebarsTemplates() {
         'systems/hackmaster5e/templates/actor/parts/setup/setup-misc.hbs',
         'systems/hackmaster5e/templates/actor/parts/setup/setup-profs.hbs',
         'systems/hackmaster5e/templates/actor/parts/setup/setup-priors.hbs',
+        'systems/hackmaster5e/templates/actor/parts/setup/setup-talents.hbs',
         'systems/hackmaster5e/templates/actor/parts/skills/base-skills.hbs',
 
         'systems/hackmaster5e/templates/chat/attack.hbs',

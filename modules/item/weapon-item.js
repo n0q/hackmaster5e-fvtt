@@ -92,6 +92,12 @@ export class HMWeaponItem extends HMItem {
             return a.type === 'proficiency' && a.name === itemData.proficiency;
         });
 
+        const talent = {};
+        const talentItem = this.actor.itemTypes.talent.find(
+            (a) => a.system.type === HMCONST.TALENT.WEAPON && a.name === itemData.proficiency,
+        );
+        const talentData = talentItem ? talentItem.system.bonus : undefined;
+
         let j = 0;
         for (const key in bonus.total) {
             const profBonus = profItem ? profItem.system.bonus?.[key] || 0
@@ -103,6 +109,7 @@ export class HMWeaponItem extends HMItem {
             race[key]   = raceData?.[key] || 0;
             stats[key]  = statsData?.[key] || 0;
             state[key]  = stateData?.[key] || 0;
+            talent[key] = talentData?.[key] || 0;
 
             // Explicitly allowing multiple armor/shields because we don't support accesories yet.
             for (let i = 0; i < armors.length; i++)  {
@@ -132,8 +139,9 @@ export class HMWeaponItem extends HMItem {
             Object.values(stats).every((a) => a === 0)  ? delete bonus.stats  : bonus.stats = stats;
             Object.values(encumb).every((a) => a === 0) ? delete bonus.encumb : bonus.encumb = encumb;
             Object.values(cclass).every((a) => a === 0) ? delete bonus.class  : bonus.class = cclass;
-            Object.values(race).every((a) => a === 0)   ? delete bonus.race   : bonus.race  = race;
-            Object.values(spec).every((a) => a === 0)   ? delete bonus.spec   : bonus.spec  = spec;
+            Object.values(race).every((a) => a === 0)   ? delete bonus.race   : bonus.race = race;
+            Object.values(spec).every((a) => a === 0)   ? delete bonus.spec   : bonus.spec = spec;
+            Object.values(talent).every((a) => a === 0) ? delete bonus.talent : bonus.talent = talent;
         }
 
         Object.keys(bonus.total).forEach((key) => {

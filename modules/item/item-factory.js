@@ -6,6 +6,7 @@ import { HMProficiencyItem } from './proficiency-item.js';
 import { HMRaceItem } from './race-item.js';
 import { HMSkillItem } from './skill-item.js';
 import { HMSpellItem } from './spell-item.js';
+import { HMTalentItem } from './talent-item.js';
 import { HMWeaponItem } from './weapon-item.js';
 import { HMWoundItem } from './wound-item.js';
 import { MODULE_ID } from '../sys/constants.js';
@@ -19,6 +20,7 @@ const handler = {
         if (args[0]?.type === 'race') return new HMRaceItem(...args);
         if (args[0]?.type === 'skill') return new HMSkillItem(...args);
         if (args[0]?.type === 'spell') return new HMSpellItem(...args);
+        if (args[0]?.type === 'talent') return new HMTalentItem(...args);
         if (args[0]?.type === 'weapon') return new HMWeaponItem(...args);
         if (args[0]?.type === 'wound') return new HMWoundItem(...args);
         throw new Error(MODULE_ID, {type: args[0]?.type});

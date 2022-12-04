@@ -1,0 +1,57 @@
+<li class='card hmstyle' data-item-id='{{_id}}'>
+    <summary class='toggleswitch'>
+        <header>
+            <label>
+                <div class='item-image'><img src='{{img}}' title='{{name}}' width='28' height='28'/></div>
+                <h4 class='item-name'>{{name}}</h4>
+            </label>
+        </header>
+        <section>
+            <div class='card-controls'>
+                <a class='item-control item-edit' title='Edit Item'><i class='fas fa-edit'></i></a>
+                <a class='item-control item-delete' title='Delete Item'><i class='fas fa-trash'></i></a>
+            </div>
+        </section>
+    </summary>
+    <section class='{{toggleSwitch _id}} card-expanded' style='grid-template-columns: 60% 40%;' toggle>
+        <span style='padding-right: 5px; border-right: 1px solid;'>
+        {{#if (eq system.type 0)}}
+            <table class='table-basic'>
+                <tbody>
+                    <tr>
+                        <th scope='row'>{{localize 'HM.type'}}</th>
+                        <td width='99%'>{{localize 'HM.weapon'}}</td>
+                    </tr>
+                    <tr>
+                        <th scope='row'>{{localize 'HM.ranged'}}</th>
+                        <td width='99%'>{{toUpperCase system.weapon.ranged}}</td>
+                    </tr>
+                    <tr>
+                        <th scope='row'>{{localize 'HM.mechanical'}}</th>
+                        <td width='99%'>{{toUpperCase system.weapon.mechanical}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </span>
+        <span>
+            <table class='table-basic' style='margin-right: 5px;'>
+                <tbody>
+                {{#each system.bonus}}
+                    {{#unless (or
+                        (and (eq @key 'def') ../system.weapon.ranged)
+                        (and (eq @key 'dmg') ../system.weapon.mechanical)
+                    )}}
+                    <tr>
+                        <th scope='row'>{{localize (concat 'HM.statbonus.' @key)}}</th>
+                        <td width='99%'>
+                            {{#if this}}{{localize 'HM.true'}}{{else}}{{localize 'HM.false'}}{{/if}}
+                        </td>
+                    </tr>
+                    {{/unless}}
+                {{/each}}
+                </tbody>
+            </table>
+        </span>
+    </section>
+    {{/if}}
+</li>
