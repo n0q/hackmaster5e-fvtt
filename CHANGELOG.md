@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - Weapon talents.
 - Talents compendium.
+### Changed
+- Re-styled proficiency sheet.
 ## Fixed
 - Threat ranges failed to display in certain circumstances.
 - Ranged firing speed no longer double-dips.
