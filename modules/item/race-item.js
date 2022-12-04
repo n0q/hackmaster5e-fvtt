@@ -1,4 +1,4 @@
-import { HMTABLES } from '../sys/constants.js';
+import { HMTABLES } from '../tables/constants.js';
 import { HMItem } from './item.js';
 
 export class HMRaceItem extends HMItem {

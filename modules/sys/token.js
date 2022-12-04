@@ -1,9 +1,10 @@
-import { MODULE_ID, HMCONST } from './constants.js';
+import { MODULE_ID, HMCONST } from '../tables/constants.js';
 
 function newReach(distance, color, visible) {
     return {
         distance,
         color,
+        foo: 'bar',
         visible,
         opacity: game.settings.get(MODULE_ID, 'reachOpacity'),
         id: randomID(),
@@ -37,8 +38,8 @@ function getReach(actor) {
                 const isOwner = pl === CONST.DOCUMENT_PERMISSION_LEVELS.OWNER;
                 const isGM = game.users.get(uid)?.isGM;
                 return isOwner && !isGM && uid !== 'default';
-            })[0];
-            owner = game.users.get(userId);
+            })?.[0];
+            owner = userId ? game.users.get(userId) : undefined;
         }
 
         color = owner?.color ?? defaultColor;

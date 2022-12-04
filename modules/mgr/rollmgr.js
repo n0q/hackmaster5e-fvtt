@@ -1,4 +1,4 @@
-import { HMTABLES, HMCONST } from '../sys/constants.js';
+import { HMTABLES, HMCONST } from '../tables/constants.js';
 
 function convertDamageFormula(stringTerms, operation=new Set()) {
     const {FORMULA_MOD} = HMCONST;

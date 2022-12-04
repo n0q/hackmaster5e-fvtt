@@ -16,27 +16,21 @@
             <div class='grid-2col' style='grid-template-columns: 30% 1fr; padding-top: 5px;'>
                 <section name='options' class='col_rborder'>
                     <span class='form-option'>
+                        <label class="resource-label">{{localize "HM.type"}}</label>
                         <label class="resource-label">{{localize "HM.weapon"}}</label>
-                        <input type="checkbox" name="system.weapon.checked" {{checked system.weapon.checked}}/>
                     </span>
                 </section>
-                <section {{#unless system.weapon.checked}}style='visibility: hidden;'{{/unless}}>
+                <section {{#unless (eq system.type 0)}}style='visibility: hidden;'{{/unless}}>
                     <span class='grid-2col'>
                         <span>
-                            <span class='form-option' style='padding-right: 5px;'>
-                                <label class="resource-label">{{localize "HM.skill"}}:</label>
-                                <select name='system.skill' data-dtype='{{system.skill}}'
-                                    {{selectOptions (findConfigObj 'weaponskill') selected=system.skill localize=true}}
-                                </select>
-                            </span>
                             <span class='form-option'>
                                 <label class="resource-label">{{localize "HM.ranged"}}</label>
-                                <input type="checkbox" name="system.ranged.checked" {{checked system.ranged.checked}}>
+                                <input type="checkbox" name="system.weapon.ranged" {{checked system.weapon.ranged}}>
                             </span>
                             <span class='form-option'>
                                 <label class="resource-label">{{localize "HM.mechanical"}}</label>
-                                <input type="checkbox" name="system.mechanical.checked" {{checked system.mechanical.checked}}
-                                    {{#unless system.ranged.checked}} disabled {{/unless}}>
+                                <input type="checkbox" name="system.weapon.mechanical" {{checked system.weapon.mechanical}}
+                                    {{#unless system.weapon.ranged}} disabled {{/unless}}>
                             </span>
                         </span>
                         <span style='padding-right: 5px; margin-top: -5px;'>
@@ -44,20 +38,20 @@
                                 <thead>
                                     <tr>
                                         <th scope='col'>{{localize 'HM.category'}}</th>
-                                        <th scope='col' style='text-align: right; padding-right: 10px;'>{{localize 'HM.bonus'}}</th>
+                                        <th scope='col' style='text-align: right; padding-right: 5px;'>{{localize 'HM.bonus'}}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 {{#each system.bonus}}
                                     {{#unless (or
-                                        (and (eq @key 'def') ../system.ranged.checked)
-                                        (and (eq @key 'dmg') ../system.mechanical.checked)
+                                        (and (eq @key 'def') ../system.weapon.ranged)
+                                        (and (eq @key 'dmg') ../system.weapon.mechanical)
                                     )}}
                                      <tr>
                                         <th scope='row'>{{localize (concat 'HM.statbonus.' @key)}}</th>
-                                        <td width='99%'>
-                                            <input class='editable' type='number' value={{this}}
-                                                   data-item-prop='system.bonus.{{@key}}' data-dtype='Number'/>
+                                        <td class='button wtalent' width='99%' style='padding-right: 5px;'
+                                            data-prop='system.bonus.{{@key}}' {{#if (eq @key 'spd')}}data-mult=-1{{/if}}>
+                                            {{#if this}}{{localize 'HM.true'}}{{else}}{{localize 'HM.false'}}{{/if}}
                                         </td>
                                     </tr>
                                     {{/unless}}

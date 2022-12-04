@@ -2,7 +2,20 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [0.3.0] - [2022-12-01]
+## [Unreleased]
+### Added
+- Weapon talents.
+- Talents compendium.
+### Changed
+- Re-styled proficiency sheet.
+## Fixed
+- Threat ranges failed to display in certain circumstances.
+- Ranged firing speed no longer double-dips.
+- Unpriviledged users no longer recieve error message when token loses status effect.
+- Mage spell casting no longer advances init table.
+- Adjusted unarmed damage and speed. Replace unarmed innate attacks to fix existing actors.
+
+## [0.3.0] - 2022-12-01
 ### Added
 - Compendium items.
 - Character class cards (collect them all!).

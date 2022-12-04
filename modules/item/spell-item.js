@@ -1,7 +1,7 @@
 import { HMItem, advanceClock, setStatusEffectOnToken } from './item.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
-import { HMCONST, HMTABLES } from '../sys/constants.js';
+import { HMCONST, HMTABLES } from '../tables/constants.js';
 
 export class HMSpellItem extends HMItem {
     prepareBaseData() {
@@ -84,10 +84,11 @@ export class HMSpellItem extends HMItem {
         const card = await chatMgr.getCard({dataset});
         await ChatMessage.create(card);
 
-        if (dialogResp.resp.advance) await advanceClock(comData, dialogResp, false);
-
-        if (opt.isCombatant && dialogResp.resp.sfatigue) {
-            setStatusEffectOnToken(comData, 'sfatigue', dialogResp.resp.sfatigue);
+        if (opt.isCombatant && resp.advance) {
+            await advanceClock(comData, dialogResp, true);
+            if (resp.button === 'cast' && !resp.divine) {
+                setStatusEffectOnToken(comData, 'sfatigue', resp.advance);
+            }
         }
     }
 }

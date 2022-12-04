@@ -1,7 +1,7 @@
 /* global dragRuler */
 /* eslint max-classes-per-file: 0 */
 /* eslint class-methods-use-this: 0 */
-import { MODULE_ID } from './constants.js';
+import { MODULE_ID } from '../tables/constants.js';
 
 export class HMSupport {
     static async devModeReady({ registerPackageDebugFlag }) {

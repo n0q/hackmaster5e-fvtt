@@ -1,4 +1,4 @@
-import { MODULE_ID } from './constants.js';
+import { MODULE_ID } from '../tables/constants.js';
 
 async function createItemMacro(data, slot) {
     if (!game || !game.macros) return;

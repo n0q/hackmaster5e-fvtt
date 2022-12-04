@@ -1,5 +1,5 @@
 import { HMPrompt } from './prompt.js';
-import { HMCONST } from '../sys/constants.js';
+import { HMCONST } from '../tables/constants.js';
 
 function getSeverity({atkRoll, defRoll, dmg, dr}) {
     const attacker = (Number(atkRoll) || 0) + (Number(dmg) || 0);

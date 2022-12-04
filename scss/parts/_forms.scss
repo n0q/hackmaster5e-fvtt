@@ -12,6 +12,12 @@
         border-right: 1px solid;
     }
 
+    .button {
+        &:hover {
+            @include text-glow($shad-1px);
+        }
+    }
+
     @include table-basic;
     table {
         input[type="text"],

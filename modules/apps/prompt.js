@@ -1,6 +1,6 @@
 /* eslint class-methods-use-this: ['error', {'exceptMethods': ['dialogResp', 'getCapList']}] */
-import { idx } from '../sys/dictionary.js';
-import { HMCONST } from '../sys/constants.js';
+import { idx } from '../tables/dictionary.js';
+import { HMCONST } from '../tables/constants.js';
 
 export class HMPrompt extends Application {
     static get defaultOptions() {

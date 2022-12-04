@@ -1,6 +1,6 @@
-import { HMTABLES, HMCONST } from '../sys/constants.js';
-import {CRITTABLE} from '../sys/crits.js';
-import { idx } from '../sys/dictionary.js';
+import { HMTABLES, HMCONST } from '../tables/constants.js';
+import { CRITTABLE } from '../tables/crits.js';
+import { idx } from '../tables/dictionary.js';
 
 function getDiceSum(roll) {
     let sum = 0;
