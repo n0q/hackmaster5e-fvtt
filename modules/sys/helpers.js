@@ -63,7 +63,9 @@ export default function registerHandlebarsHelpers() {
         return {...cross.map((x, i) => `${game.i18n.localize(label[i])} (${x} ${suffix})`)};
     });
 
+    Handlebars.registerHelper('isGM', () => game.user.isGM);
     Handlebars.registerHelper('getFlag', (scope, key, opts) => opts.data.root.actor.getFlag(scope, key));
+    Handlebars.registerHelper('getSetting', (scope, key) => game.settings.get(scope, key));
     Handlebars.registerHelper('eq', (a, b) => { return a == b });
     Handlebars.registerHelper('neq', (a, b) => { return a != b });
 
