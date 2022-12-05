@@ -1,28 +1,37 @@
-<ol class='cards-list'>
+<ol class='cards-list inventory'>
     {{#with actor.system.encumb}}
-    <li class='flex-space-between' style='margin-left: 3px; margin-right: 15px;'>
-        <label>
-            {{localize 'HM.encumbRow.scale'}}:
-            <b>{{numberFormat total decimals=2}} lbs.</b>
-        </label>
-        <label>
-            {{localize 'HM.encumbRow.carried'}}:
-            <b>{{numberFormat carried decimals=2}} lbs.</b>
-        </label>
-        <label>
-            {{localize 'HM.encumbRow.effective'}}:
-            <b>{{numberFormat effective decimals=2}} lbs.</b>
-        </label>
-        <label>
-            {{localize 'HM.encumbRow.penalty'}}:
-            <select class='selectable' name='encumbrance' data-flag='encumbrance'>
-                {{selectOptions (mapSelect @root/actor.encumbrance 'encumbrance' 'lbs.')
-                    selected=(getFlag 'hackmaster5e' 'encumbrance')}}
-            </select>
-        </label>
-    </li>
+    <header>
+        <span class='weights'>
+            <label>
+                {{localize 'HM.encumbRow.scale'}}:
+                <b>{{numberFormat total decimals=2}} lbs.</b>
+            </label>
+            <label>
+                {{localize 'HM.encumbRow.carried'}}:
+                <b>{{numberFormat carried decimals=2}} lbs.</b>
+            </label>
+            <label>
+                {{localize 'HM.encumbRow.effective'}}:
+                <b>{{numberFormat effective decimals=2}} lbs.</b>
+            </label>
+            <label>
+                {{localize 'HM.encumbRow.penalty'}}:
+                <select class='selectable' name='encumbrance' data-flag='encumbrance'>
+                    {{selectOptions (mapSelect @root/actor.encumbrance 'encumbrance' 'lbs.')
+                        selected=(getFlag 'hackmaster5e' 'encumbrance')}}
+                </select>
+            </label>
+        </span>
+        {{#if (or (isGM) (getSetting 'hackmaster5e' 'playerNewItems'))}}
+        <div class='item-controls'>
+            <a class='item-control item-create' title='New Item' data-render='true' data-type='item'>
+                <i class='fas fa-plus'></i>
+            </a>
+        </div>
+        {{/if}}
+    </header>
     {{/with}}
-    <section class='scrollable' style='height: 30.5rem;'>
+    <section class='scrollable' style='height: 30rem;'>
     {{#each actor.gear.weapons}}
         {{#unless system.innate}}
             {{> 'systems/hackmaster5e/templates/actor/cards/item.hbs' }}

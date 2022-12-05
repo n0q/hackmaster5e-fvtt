@@ -1,0 +1,22 @@
+.inventory {
+    > header {
+        margin: 2px 15px 2px 3px;
+        display: grid;
+        grid-template-columns: 1fr min-content;
+
+        > .weights {
+            display: flex;
+            justify-content: space-between;
+            align-self: center;
+
+            select {
+                margin-top: -2px;
+                height: 20px;
+            }
+        }
+
+        > .item-controls {
+            padding-left: $padding-md;
+        }
+    }
+}

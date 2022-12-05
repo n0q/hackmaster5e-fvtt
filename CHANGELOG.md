@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - Status effect-based culling logic for reach display.
 - Formatting improvements.
+- Players can create new items on inventory tab (toggled by game setting).
 ### Fixed
 - Mage spell casting no longer advances init table (for real this time).
 
