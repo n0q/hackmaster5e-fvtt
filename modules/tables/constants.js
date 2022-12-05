@@ -495,8 +495,8 @@ export const HMTABLES = {
         timing: (spd, caller) => {
             const {fatigue} = caller.system.bonus.total;
             const declare = spd;
-            const cast = Math.max(spd + 5 + (Number(fatigue) || 0), 1);
-            return {declare, cast};
+            const sfatigue = Math.max(spd + 5 + (Number(fatigue) || 0), 1);
+            return {declare, sfatigue};
         },
         cost: (lidx, prepped) => {
             const base = (lidx * 10) + 30;

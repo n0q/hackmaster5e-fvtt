@@ -2,11 +2,7 @@ import { HMPrompt } from './prompt.js';
 import { HMTABLES } from '../tables/constants.js';
 
 function getSpeed(sData, caller) {
-    const spd = HMTABLES.cast.timing(sData.speed, caller);
-    if (sData.divine) spd.cast = false;
-    const [weapon] = caller.weapons.equipped;
-    spd.weapon = weapon ? weapon.system.bonus.total.spd : 0;
-    return spd;
+    return HMTABLES.cast.timing(sData.speed, caller);
 }
 
 export class CastPrompt extends HMPrompt {
@@ -51,13 +47,14 @@ export class CastPrompt extends HMPrompt {
     }
 
     get dialogResp() {
-        const {button, spd} = this.dialogData;
+        const {button, spd, divine} = this.dialogData;
         const dialogResp = {
             sidx: this.dialogData.sidx,
-            divine: this.dialogData.divine,
+            divine,
             cost: this.dialogData.cost,
             schedule: parseInt(this.dialogData.schedule, 10) || 0,
             advance: spd[button],
+            sfatigue: !divine && button === 'cast' ? spd.sfatigue : false,
             private: this.dialogData.private,
             button,
         };
