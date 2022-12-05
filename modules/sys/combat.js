@@ -50,9 +50,9 @@ export class HMCombat extends Combat {
         if (userId !== game.userId) return;
 
         const combatants = combat.turns;
-        combatants.forEach((x) => {
+        combatants.forEach((combatant) => {
             // Toggle status effects on/off based on their timers.
-            const effects = x.actor.effects.filter((y) => y.isTemporary === true);
+            const effects = combatant.actor.effects.filter((y) => y.isTemporary === true);
             effects.map(async (effect) => {
                 const {remaining, startRound} = effect.duration;
                 const started = startRound <= combat.round;
@@ -60,6 +60,7 @@ export class HMCombat extends Combat {
                   || (started &&  remaining &&  effect.disabled)        // Case 2: During effect
                   || (started && !remaining && !effect.disabled)) {     // Case 3: After effect
                     await effect.update({disabled: !effect.disabled});
+                    combatant.token._object.drawReach();
                     if (effect.disabled) effect._displayScrollingStatus(false);
                 }
             });

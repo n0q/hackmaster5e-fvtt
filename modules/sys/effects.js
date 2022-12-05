@@ -1,9 +1,16 @@
 /* eslint max-classes-per-file: ['error', 2] */
 import { HMTABLES } from '../tables/constants.js';
 
+export const actorHasEffects = (actor, fxList) => {
+    const {effects} = actor;
+    const actorEffectsList = effects.filter((fx) => !fx.disabled)
+                                    .map((fx) => fx.flags.core.statusId);
+    return actorEffectsList.some((fx) => fxList.indexOf(fx) !== -1);
+};
+
 export class HMStates {
     static async setStatusEffect(token, id, duration=null) {
-        const effects = token.actor.effects;
+        const {effects} = token.actor;
         let effect = effects.find((x) => x.getFlag('core', 'statusId') === id);
         if (!effect) {
             const idx = CONFIG.statusEffects.findIndex((x) => x.id === id);
@@ -13,7 +20,7 @@ export class HMStates {
         if (duration) await effect.update({duration, disabled: false});
     }
 
-    static async setupStatusEffects() {
+    static setupStatusEffects() {
         const {statusEffects} = HMTABLES.effects;
         Object.keys(statusEffects).forEach((key) => {
             const effect = statusEffects[key];
@@ -61,5 +68,6 @@ export class HMActiveEffect extends ActiveEffect {
             const token = await obj.parent.getTokenDocument();
             exclusiveEffects.forEach((effect) => HMStates.unsetStatusEffect(token, effect));
         }
+        token.drawReach();
     }
 }
