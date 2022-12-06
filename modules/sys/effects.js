@@ -1,5 +1,6 @@
 /* eslint max-classes-per-file: ['error', 2] */
 import { HMTABLES } from '../tables/constants.js';
+import { HMSocket, SOCKET_TYPES } from './sockets.js';
 
 export const actorHasEffects = (actor, fxList) => {
     const {effects} = actor;
@@ -10,6 +11,7 @@ export const actorHasEffects = (actor, fxList) => {
 
 export class HMStates {
     static async setStatusEffect(token, id, duration=null) {
+        console.warn('set');
         const {effects} = token.actor;
         let effect = effects.find((x) => x.getFlag('core', 'statusId') === id);
         if (!effect) {
@@ -59,15 +61,26 @@ export class HMActiveEffect extends ActiveEffect {
     }
 
     // Enforces exclusivity if effects are manually set by the user.
-    static async createActiveEffect(obj) {
-        const {statusId} = obj.flags.core;
+    static async createActiveEffect(effect, _data, userId) {
+        if (game.userId !== userId) return;
+
+        const {statusId} = effect.flags.core;
+        const token = await game.canvas.tokens.get(effect.parent.token.id);
         const exclusiveEffects = [...HMTABLES.effects.exclusiveEffects];
         const idx = exclusiveEffects.indexOf(statusId);
         if (idx !== -1) {
             exclusiveEffects.splice(idx, 1);
-            const token = await obj.parent.getTokenDocument();
-            exclusiveEffects.forEach((effect) => HMStates.unsetStatusEffect(token, effect));
+            exclusiveEffects.forEach((fx) => HMStates.unsetStatusEffect(token, fx));
         }
         token.drawReach();
+        HMSocket.emit(SOCKET_TYPES.DRAW_REACH, token.id);
+    }
+
+    static async deleteActiveEffect(effect, _data, userId) {
+        if (game.userId !== userId) return;
+
+        const token = await game.canvas.tokens.get(effect.parent.token.id);
+        token.drawReach();
+        HMSocket.emit(SOCKET_TYPES.DRAW_REACH, token.id);
     }
 }
