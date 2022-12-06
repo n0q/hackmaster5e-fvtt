@@ -23,6 +23,7 @@ function getSpecialMoveFlavor(resp) {
     if (specialMove === SPECIAL.FLEEING) mods.push(game.i18n.localize('HM.fleeing'));
     if (specialMove === SPECIAL.GGROUND) mods.push(game.i18n.localize('EFFECT.gground'));
     if (specialMove === SPECIAL.JAB) mods.push(game.i18n.localize('HM.jab'));
+    if (specialMove === SPECIAL.RDEFEND) mods.push(game.i18n.localize('HM.ranged'));
     if (specialMove === SPECIAL.SCAMPER) mods.push(game.i18n.localize('EFFECT.scamper'));
     if (specialMove === SPECIAL.SET4CHARGE) mods.push(game.i18n.localize('HM.specSelect.s4c'));
     if (specialMove === SPECIAL.WITHDRAWL) mods.push(game.i18n.localize('HM.specSelect.wdrawl'));
