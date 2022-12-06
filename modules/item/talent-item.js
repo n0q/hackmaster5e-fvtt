@@ -19,10 +19,13 @@ export class HMTalentItem extends HMItem {
             if (isMechanical && !isRanged) this.update({'system.weapon.mechanical': false});
 
             const {bonus} = system;
-            const {def, dmg} = bonus;
-            if (isRanged) bonus.def = 0;
+            const {def, dmg, reach} = bonus;
+            if (isRanged) {
+                bonus.def = 0;
+                bonus.reach = 0;
+            }
             if (isMechanical) bonus.dmg = 0;
-            const dirty = bonus.def !== def || bonus.dmg !== dmg;
+            const dirty = bonus.def !== def || bonus.dmg !== dmg || bonus.reach !== reach;
             if (dirty) this.update({'system.bonus': bonus});
         }
     }
