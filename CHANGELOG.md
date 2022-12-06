@@ -4,7 +4,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 ### Added
-- Status effect-based culling logic for reach display.
+- Culling logic for reach display.
 - Formatting improvements.
 - Players can create new items on inventory tab (toggled by game setting).
 ### Fixed

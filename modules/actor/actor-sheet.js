@@ -57,7 +57,7 @@ export class HMActorSheet extends ActorSheet {
             weapons[state].push(i);
         });
 
-        gear.items = actorData.itemTypes.item;
+        gear.items = actorData.itemTypes.item.sort((a, b) => a.name.localeCompare(b.name));
 
         function skillsort(a, b) {
             return `${game.i18n.localize(a.name)} ${a.system.specialty.value || ''}`
