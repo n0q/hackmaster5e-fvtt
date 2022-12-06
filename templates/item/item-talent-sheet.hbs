@@ -45,6 +45,7 @@
                                 {{#each system.bonus}}
                                     {{#unless (or
                                         (and (eq @key 'def') ../system.weapon.ranged)
+                                        (and (eq @key 'reach') ../system.weapon.ranged)
                                         (and (eq @key 'dmg') ../system.weapon.mechanical)
                                     )}}
                                      <tr>

@@ -8,9 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Culling logic for reach display.
 - Formatting improvements.
 - Players can create new items on inventory tab (toggled by game setting).
-- Threat range display synchronizes across clients.
+- Added improved reach to weapon talents.
 ### Fixed
 - Mage spell casting no longer advances init table (for real this time).
+- Threat range display properly synchronizes across clients.
 
 ## [0.3.1] - 2022-12-03
 ### Added
