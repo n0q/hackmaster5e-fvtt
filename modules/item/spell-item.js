@@ -84,11 +84,9 @@ export class HMSpellItem extends HMItem {
         const card = await chatMgr.getCard({dataset});
         await ChatMessage.create(card);
 
-        if (opt.isCombatant && resp.advance) {
-            await advanceClock(comData, dialogResp, true);
-            if (resp.button === 'cast' && !resp.divine) {
-                setStatusEffectOnToken(comData, 'sfatigue', resp.advance);
-            }
+        if (opt.isCombatant) {
+            if (resp.advance) await advanceClock(comData, dialogResp, true);
+            if (resp.sfatigue) setStatusEffectOnToken(comData, 'sfatigue', resp.sfatigue);
         }
     }
 }

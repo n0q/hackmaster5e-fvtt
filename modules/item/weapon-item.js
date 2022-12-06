@@ -4,6 +4,7 @@ import { HMItem, advanceClock, setStatusEffectOnToken, unsetStatusEffectOnToken 
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
 import { HMRollMgr } from '../mgr/rollmgr.js';
+import { HMSocket, SOCKET_TYPES } from '../sys/sockets.js';
 
 function getCaller(caller=null) {
     let actor;
@@ -47,11 +48,15 @@ export class HMWeaponItem extends HMItem {
         const shield      = {};
         const defItems    = this.actor.items.filter((a) => a.type === 'armor'
                                                     && a.invstate === 'equipped');
+        const talentItem  = this.actor.itemTypes.talent.find(
+            (a) => a.system.type === HMCONST.TALENT.WEAPON && a.name === itemData.proficiency,
+        );
 
         if (itemData.innate) itemData.state = HMCONST.ITEM_STATE.INNATE;
         // TODO: Some of this can be relocated to weapon-item-sheet.js.
         const {reach} = this.system;
-        const offset = this.parent.system.bonus.total.reach || 0;
+        let offset = this.parent.system.bonus.total.reach || 0;
+        if (talentItem) offset += (talentItem.system.bonus.reach || 0);
         itemData.adjReach = Math.max(reach + offset, 0) || 0;
 
         // Splitting armor and shields for now, so we can manage stances later.
@@ -93,9 +98,6 @@ export class HMWeaponItem extends HMItem {
         });
 
         const talent = {};
-        const talentItem = this.actor.itemTypes.talent.find(
-            (a) => a.system.type === HMCONST.TALENT.WEAPON && a.name === itemData.proficiency,
-        );
         const talentData = talentItem ? talentItem.system.bonus : undefined;
 
         let j = 0;
@@ -184,7 +186,10 @@ export class HMWeaponItem extends HMItem {
             const value = dataset.dtype === 'Number' ? Number(dataset.value) : dataset.value;
             this.update({[key]: value});
         }
-        if (dataset.redraw) this.actor.getActiveTokens().forEach((t) => t.drawReach());
+        if (dataset.redraw) this.actor.getActiveTokens().map((t) => {
+            t.drawReach();
+            HMSocket.emit(SOCKET_TYPES.DRAW_REACH, t.id);
+        });
     }
 
     // TODO: This needs a refactor, but it's too soon to do so. We should

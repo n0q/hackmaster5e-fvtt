@@ -1,4 +1,5 @@
 import { MODULE_ID, HMCONST } from '../tables/constants.js';
+import { actorHasEffects } from './effects.js';
 
 function newReach(distance, color, visible) {
     return {
@@ -13,6 +14,7 @@ function newReach(distance, color, visible) {
 
 function getReach(actor) {
     if (!actor) return null;
+
     const reachHint = actor.getFlag(MODULE_ID, 'reachHint');
     const weapons = actor.itemTypes.weapon.filter((a) => !a.system.ranged.checked);
     const {ITEM_STATE} = HMCONST;
@@ -23,7 +25,7 @@ function getReach(actor) {
     if (!weapon) return null;
     if (weapon.id !== reachHint && actor.isOwner) actor.setFlag(MODULE_ID, 'reachHint', weapon.id);
 
-    const reach = (weapon.system.reach || 0) + (actor.system.bonus.total?.reach || 0);
+    const reach = (weapon.system.adjReach || 0);
     const distance = Math.max(reach, 0) + (game.canvas.scene.grid.distance / 2);
 
     let color;
@@ -62,8 +64,13 @@ export class HMToken extends Token {
 
     async drawReach(hovered=false) {
         this.reach.removeChildren().forEach((c) => c.destroy());
+        if (!this.combatant) return;
+
+        const eList = ['dead', 'incap', 'unconscious', 'sfatigue', 'sleep'];
+        if (actorHasEffects(this.actor, eList)) return;
+
         const reach = getReach(this.actor);
-        if (!this.combatant || !reach) return;
+        if (!reach) return;
         if (!hovered && !reach.visible && !game.user.showAllThreats) return;
 
         const gfx = this.reach.addChild(new PIXI.Graphics());

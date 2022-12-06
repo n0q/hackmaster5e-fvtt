@@ -2,16 +2,28 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.3.2] - 2022-12-06
+### Added
+- Compendium items.
+- Culling logic for reach display.
+- Players can create new items on inventory tab (toggled by game setting).
+- Improved reach for weapon talents.
+### Changed
+- Formatting improvements.
+### Fixed
+- Mage spell casting no longer advances init table (for real this time).
+- Threat range display properly synchronizes across clients.
+
 ## [0.3.1] - 2022-12-03
 ### Added
 - Weapon talents.
 - Talents compendium.
 ### Changed
 - Re-styled proficiency sheet.
-## Fixed
+### Fixed
 - Threat ranges failed to display in certain circumstances.
 - Ranged firing speed no longer double-dips.
-- Unpriviledged users no longer recieve error message when token loses status effect.
+- Unprivileged users no longer receive error message when token loses status effect.
 - Mage spell casting no longer advances init table.
 - Adjusted unarmed damage and speed. Replace unarmed innate attacks to fix existing actors.
 

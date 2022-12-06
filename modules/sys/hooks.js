@@ -8,6 +8,7 @@ import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMCombat, HMCombatTracker } from './combat.js';
 import { HMToken } from './token.js';
 import { HMMacro } from './macro.js';
+import { handleSocketEvent } from './sockets.js';
 
 async function ready() {
     if (game.modules.get('_dev-mode')?.api?.getPackageDebugValue(MODULE_ID)) {
@@ -30,6 +31,7 @@ export const registerHooks = () => {
     Hooks.once('dragRuler.ready', HMSupport.dragRuler_ready);
     Hooks.on('applyActiveEffect', HMActiveEffect.applyActiveEffect);
     Hooks.on('createActiveEffect', HMActiveEffect.createActiveEffect);
+    Hooks.on('deleteActiveEffect', HMActiveEffect.deleteActiveEffect);
     Hooks.on('createActor', HMActor.createActor);
     Hooks.on('createToken', HMActor.createToken);
     Hooks.on('hoverToken', (token, state) => token.drawReach(state));
@@ -45,5 +47,5 @@ export const registerHooks = () => {
     Hooks.on('renderSceneControls', HMToken.renderSceneControls);
     Hooks.on('getSceneControlButtons', HMToken.getSceneControlButtons);
     Hooks.on('hotbarDrop', HMMacro.hotbarDrop);
-//  Hooks.on('diceSoNiceRollStart', HMSupport.diceSoNiceRollStart);
+    game.socket.on('system.hackmaster5e', handleSocketEvent);
 };

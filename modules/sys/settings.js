@@ -11,4 +11,13 @@ export const registerSystemSettings = () => {
         range: {min: 0, max: 1, step: 0.05},
         onChange: () => canvas.tokens.placeables.forEach((t) => t.drawReach()),
     });
+
+    game.settings.register(MODULE_ID, 'playerNewItems', {
+        name: 'SETTINGS.playerNewItems',
+        hint: 'SETTINGS.playerNewItemsHint',
+        scope: 'world',
+        config: true,
+        type: Boolean,
+        default: true,
+    });
 };

@@ -57,7 +57,7 @@ export class HMActorSheet extends ActorSheet {
             weapons[state].push(i);
         });
 
-        gear.items = actorData.itemTypes.item;
+        gear.items = actorData.itemTypes.item.sort((a, b) => a.name.localeCompare(b.name));
 
         function skillsort(a, b) {
             return `${game.i18n.localize(a.name)} ${a.system.specialty.value || ''}`
@@ -160,20 +160,19 @@ export class HMActorSheet extends ActorSheet {
 
     async _onItemCreate(ev) {
         ev.preventDefault();
-        const element = ev.currentTarget;
-        const dataset = element.dataset;
-        const type = dataset.type;
-        const name = `New ${type.capitalize()}`;
+        const {dataset} = ev.currentTarget;
+        const {type} = dataset;
+        const itemName = `New ${type.capitalize()}`;
 
-        let data;
+        const itemData = {name: itemName, type};
         if (dataset.dialog) {
             const dialogMgr = new HMDialogMgr();
             const dialogResp = await dialogMgr.getDialog(dataset, this.actor);
-            data = dialogResp.data;
+            itemData.data = dialogResp.data;
         }
 
-        const itemData = {name, type, data};
-        return await Item.create(itemData, {parent: this.actor});
+        const newItem = await Item.create(itemData, {parent: this.actor});
+        if (dataset.render === 'true') newItem.sheet.render(true);
     }
 
     _updateOwnedItem(item) {

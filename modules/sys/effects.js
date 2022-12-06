@@ -1,9 +1,18 @@
 /* eslint max-classes-per-file: ['error', 2] */
 import { HMTABLES } from '../tables/constants.js';
+import { HMSocket, SOCKET_TYPES } from './sockets.js';
+
+export const actorHasEffects = (actor, fxList) => {
+    const {effects} = actor;
+    const actorEffectsList = effects.filter((fx) => !fx.disabled)
+                                    .map((fx) => fx.flags.core.statusId);
+    return actorEffectsList.some((fx) => fxList.indexOf(fx) !== -1);
+};
 
 export class HMStates {
     static async setStatusEffect(token, id, duration=null) {
-        const effects = token.actor.effects;
+        console.warn('set');
+        const {effects} = token.actor;
         let effect = effects.find((x) => x.getFlag('core', 'statusId') === id);
         if (!effect) {
             const idx = CONFIG.statusEffects.findIndex((x) => x.id === id);
@@ -13,7 +22,7 @@ export class HMStates {
         if (duration) await effect.update({duration, disabled: false});
     }
 
-    static async setupStatusEffects() {
+    static setupStatusEffects() {
         const {statusEffects} = HMTABLES.effects;
         Object.keys(statusEffects).forEach((key) => {
             const effect = statusEffects[key];
@@ -52,14 +61,28 @@ export class HMActiveEffect extends ActiveEffect {
     }
 
     // Enforces exclusivity if effects are manually set by the user.
-    static async createActiveEffect(obj) {
-        const {statusId} = obj.flags.core;
+    static createActiveEffect(effect, _data, userId) {
+        if (game.userId !== userId) return;
+
+        const {statusId} = effect.flags.core;
+
+        const token = effect.parent.getActiveTokens().shift();
         const exclusiveEffects = [...HMTABLES.effects.exclusiveEffects];
         const idx = exclusiveEffects.indexOf(statusId);
         if (idx !== -1) {
             exclusiveEffects.splice(idx, 1);
-            const token = await obj.parent.getTokenDocument();
-            exclusiveEffects.forEach((effect) => HMStates.unsetStatusEffect(token, effect));
+            exclusiveEffects.forEach((fx) => HMStates.unsetStatusEffect(token, fx));
         }
+
+        token.drawReach();
+        HMSocket.emit(SOCKET_TYPES.DRAW_REACH, token.id);
+    }
+
+    static deleteActiveEffect(effect, _data, userId) {
+        if (game.userId !== userId) return;
+
+        const token = effect.parent.getActiveTokens().shift();
+        token.drawReach();
+        HMSocket.emit(SOCKET_TYPES.DRAW_REACH, token.id);
     }
 }

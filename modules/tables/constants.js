@@ -1,5 +1,6 @@
 /* eslint no-shadow: ["error", {"allow": ["HMCONST", "HMTABLES]}] */
 export const MODULE_ID = 'hackmaster5e';
+export const SYSTEM_SOCKET = `system.${MODULE_ID}`;
 
 // TODO: ITEM_STATE and itemstate are the same table.
 export const HMCONST = {
@@ -495,8 +496,8 @@ export const HMTABLES = {
         timing: (spd, caller) => {
             const {fatigue} = caller.system.bonus.total;
             const declare = spd;
-            const cast = Math.max(spd + 5 + (Number(fatigue) || 0), 1);
-            return {declare, cast};
+            const sfatigue = Math.max(spd + 5 + (Number(fatigue) || 0), 1);
+            return {declare, sfatigue};
         },
         cost: (lidx, prepped) => {
             const base = (lidx * 10) + 30;

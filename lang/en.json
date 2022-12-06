@@ -529,6 +529,7 @@
         "difficult":    "Difficult",
         "divine":       "Divine",
         "dodge":        "Dodge",
+        "dmgtype":      "Damage Type",
         "duration":     "Duration",
         "ecology":      "Ecology",
         "easy":         "Easy",
@@ -725,8 +726,10 @@
     },
 
     "SETTINGS": {
-        "reachOpacity":     "Reach Opacity",
-        "reachOpacityHint": "Opacity level of weapon reach and threat range."
+        "playerNewItems":       "Player New Items",
+        "playerNewItemsHint":   "Allow players to create new items from the inventory tab.",
+        "reachOpacity":         "Reach Opacity",
+        "reachOpacityHint":     "Opacity level of weapon reach and threat range."
     },
 
     "dragRuler": {
