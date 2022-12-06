@@ -1,5 +1,6 @@
 /* eslint max-classes-per-file: ['error', 2] */
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
+import { HMSocket, SOCKET_TYPES } from './sockets.js';
 
 function onInitiativeDblClick(event) {
     event.stopPropagation();
@@ -61,6 +62,9 @@ export class HMCombat extends Combat {
                   || (started && !remaining && !effect.disabled)) {     // Case 3: After effect
                     await effect.update({disabled: !effect.disabled});
                     combatant.token._object.drawReach();
+                    const {tokenId} = combatant;
+                    HMSocket.emit(SOCKET_TYPES.DRAW_REACH, tokenId);
+
                     if (effect.disabled) effect._displayScrollingStatus(false);
                 }
             });

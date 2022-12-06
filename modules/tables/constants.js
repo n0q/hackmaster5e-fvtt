@@ -1,5 +1,6 @@
 /* eslint no-shadow: ["error", {"allow": ["HMCONST", "HMTABLES]}] */
 export const MODULE_ID = 'hackmaster5e';
+export const SYSTEM_SOCKET = `system.${MODULE_ID}`;
 
 // TODO: ITEM_STATE and itemstate are the same table.
 export const HMCONST = {

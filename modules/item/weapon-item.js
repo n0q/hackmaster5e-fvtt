@@ -4,6 +4,7 @@ import { HMItem, advanceClock, setStatusEffectOnToken, unsetStatusEffectOnToken 
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMDialogMgr } from '../mgr/dialogmgr.js';
 import { HMRollMgr } from '../mgr/rollmgr.js';
+import { HMSocket, SOCKET_TYPES } from '../sys/sockets.js';
 
 function getCaller(caller=null) {
     let actor;
@@ -184,7 +185,10 @@ export class HMWeaponItem extends HMItem {
             const value = dataset.dtype === 'Number' ? Number(dataset.value) : dataset.value;
             this.update({[key]: value});
         }
-        if (dataset.redraw) this.actor.getActiveTokens().forEach((t) => t.drawReach());
+        if (dataset.redraw) this.actor.getActiveTokens().map((t) => {
+            t.drawReach();
+            HMSocket.emit(SOCKET_TYPES.DRAW_REACH, t.id);
+        });
     }
 
     // TODO: This needs a refactor, but it's too soon to do so. We should
