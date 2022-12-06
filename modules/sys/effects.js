@@ -61,25 +61,27 @@ export class HMActiveEffect extends ActiveEffect {
     }
 
     // Enforces exclusivity if effects are manually set by the user.
-    static async createActiveEffect(effect, _data, userId) {
+    static createActiveEffect(effect, _data, userId) {
         if (game.userId !== userId) return;
 
         const {statusId} = effect.flags.core;
-        const token = await game.canvas.tokens.get(effect.parent.token.id);
+
+        const token = effect.parent.getActiveTokens().shift();
         const exclusiveEffects = [...HMTABLES.effects.exclusiveEffects];
         const idx = exclusiveEffects.indexOf(statusId);
         if (idx !== -1) {
             exclusiveEffects.splice(idx, 1);
             exclusiveEffects.forEach((fx) => HMStates.unsetStatusEffect(token, fx));
         }
+
         token.drawReach();
         HMSocket.emit(SOCKET_TYPES.DRAW_REACH, token.id);
     }
 
-    static async deleteActiveEffect(effect, _data, userId) {
+    static deleteActiveEffect(effect, _data, userId) {
         if (game.userId !== userId) return;
 
-        const token = await game.canvas.tokens.get(effect.parent.token.id);
+        const token = effect.parent.getActiveTokens().shift();
         token.drawReach();
         HMSocket.emit(SOCKET_TYPES.DRAW_REACH, token.id);
     }
