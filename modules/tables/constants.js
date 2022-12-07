@@ -334,7 +334,7 @@ export const HMTABLES = {
             5:  { turning: -4, morale: -2 },
             6:  { turning: -3, morale: -2 },
             7:  { turning: -2, morale: -1 },
-            8:  { turning:  1, morale: -1 },
+            8:  { turning: -1, morale: -1 },
             9:  { turning:  0, morale:  0 },
             10: { turning:  1, morale:  1 },
             11: { turning:  2, morale:  1 },
@@ -468,6 +468,7 @@ export const HMTABLES = {
             tenacity: 'd20p +  @bonus.total.tenacity + @resp.bonus',
             trauma:   'd20  - (@bonus.total.trauma   + @resp.bonus)',
             turning:  'd20p +  @bonus.total.turning  + @resp.bonus',
+            will:     'd20p +  @bonus.total.will     + @resp.bonus',
         },
         'skill': {
             'skill':    'd100 - (@resp.bonus + @bonus.total.value)',
