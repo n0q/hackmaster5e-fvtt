@@ -68,7 +68,7 @@ export class HMClassItem extends HMItem {
         // grab the level data off the ptable
         const {features} = system;
         Object.keys(features).forEach((idx) => {
-            bonus[idx] = features[idx] ? pTable[level][idx].value || 0 : 0;
+            bonus[idx] = features[idx] ? pTable[level]?.[idx]?.value || 0 : 0;
         });
 
         system.bonus = bonus;
