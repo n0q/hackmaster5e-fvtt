@@ -397,6 +397,7 @@ export const HMTABLES = {
             hp:   {value: null, die: null, reroll: false},
             sp:   {value: null},
             atk:  {value: null},
+            def:  {value: null},
             spd:  {value: null},
             spdm: {value: null},
             spdr: {value: null},

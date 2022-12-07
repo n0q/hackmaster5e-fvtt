@@ -109,6 +109,7 @@
             "features": {
                 "sp":   false,
                 "atk":  false,
+                "def":  false,
                 "spd":  false,
                 "spdm": false,
                 "spdr": false,
