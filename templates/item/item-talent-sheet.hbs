@@ -50,8 +50,7 @@
                                     )}}
                                      <tr>
                                         <th scope='row'>{{localize (concat 'HM.statbonus.' @key)}}</th>
-                                        <td class='button wtalent' width='99%' style='padding-right: 5px;'
-                                            data-prop='system.bonus.{{@key}}' {{#if (eq @key 'spd')}}data-mult=-1{{/if}}>
+                                        <td class='button wtalent' width='99%' style='padding-right: 5px;' data-key='{{@key}}'>
                                             {{#if this}}{{localize 'HM.true'}}{{else}}{{localize 'HM.false'}}{{/if}}
                                         </td>
                                     </tr>

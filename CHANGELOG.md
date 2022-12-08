@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 ### Added
 - Defense property for character classes.
+- Weapon talents can be manipulated via their card.
+### Changed
+- Talents sorted alphabetically.
 ### Fixed
 - Inaccuracy in charisma stat table.
 - Broken will saves.

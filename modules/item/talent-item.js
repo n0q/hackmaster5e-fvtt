@@ -29,4 +29,16 @@ export class HMTalentItem extends HMItem {
             if (dirty) this.update({'system.bonus': bonus});
         }
     }
+
+    setWeaponTalent(key) {
+        const {bonus} = this.system;
+        const value = Number(!bonus[key]);
+        bonus[key] = key === 'spd' ? -value : value;
+        this.update({'system.bonus': bonus});
+    }
+
+    onClick(ev) {
+        const {dataset} = ev.currentTarget;
+        if (dataset.key) this.setWeaponTalent(dataset.key);
+    }
 }

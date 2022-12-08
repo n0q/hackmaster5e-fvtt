@@ -17,11 +17,9 @@ export class HMTalentItemSheet extends HMItemSheet {
         html.find('.wtalent').click(this.onSetWeaponTalent.bind(this));
     }
 
-    async onSetWeaponTalent(ev) {
+    onSetWeaponTalent(ev) {
         ev.preventDefault();
         const {dataset} = ev.currentTarget;
-        const value = Number(!getProperty(this.item, dataset.prop));
-        const valueUpdate = dataset.mult ? dataset.mult * value : value;
-        await this.item.update({[dataset.prop]: valueUpdate});
+        if (dataset.key) this.item.setWeaponTalent(dataset.key);
     }
 }
