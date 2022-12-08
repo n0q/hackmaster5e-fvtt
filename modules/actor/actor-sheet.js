@@ -74,6 +74,8 @@ export class HMActorSheet extends ActorSheet {
             (a, b) => Number(a.system.lidx) - Number(b.system.lidx) || a.name.localeCompare(b.name),
         );
 
+        actorData.talents = actorData.itemTypes.talent.sort((a, b) => a.name.localeCompare(b.name));
+
         const slevels = [];
             for (let i=0; i < actorData.spells.length; i++) {
                 const lidx = Number(actorData.spells[i].system.lidx);
