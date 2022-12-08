@@ -39,11 +39,12 @@
                 {{#each system.bonus}}
                     {{#unless (or
                         (and (eq @key 'def') ../system.weapon.ranged)
+                        (and (eq @key 'reach') ../system.weapon.ranged)
                         (and (eq @key 'dmg') ../system.weapon.mechanical)
                     )}}
                     <tr>
                         <th scope='row'>{{localize (concat 'HM.statbonus.' @key)}}</th>
-                        <td width='99%'>
+                        <td class='button wtalent' width='99%' data-key='{{@key}}'>
                             {{#if this}}{{localize 'HM.true'}}{{else}}{{localize 'HM.false'}}{{/if}}
                         </td>
                     </tr>
