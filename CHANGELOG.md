@@ -2,8 +2,9 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [0.3.3] - 2022-12-11
 ### Added
+- Compendium items.
 - Defense property for character classes.
 - Weapon talents can be manipulated via their card.
 ### Changed
@@ -11,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Fixed
 - Inaccuracy in charisma stat table.
 - Broken will saves.
+- Ability scores with 100 fractional points were parsed incorrectly.
 
 ## [0.3.2] - 2022-12-06
 ### Added

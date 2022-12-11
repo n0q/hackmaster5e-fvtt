@@ -48,12 +48,14 @@ export class HMCharacterActor extends HMActor {
         const {abilities} = this.system;
         if (!abilities.total) abilities.total = {};
 
+        // Looks adjusts Charisma, so we will need to do a second pass.
         const abilitiesIter = adjust ? [adjust] : Object.keys(abilities.base);
         abilitiesIter.forEach((stat) => {
-            let [value, fvalue] = [0, 0];
+            let {value, fvalue} = abilities.base[stat];
+            fvalue = (fvalue + 99) % 100;
 
             Object.keys(abilities).forEach((vector) => {
-                if (vector === 'total') return;
+                if (vector === 'total' || vector === 'base') return;
                 value  += abilities[vector][stat].value;
                 fvalue += abilities[vector][stat].fvalue;
             });
@@ -62,10 +64,11 @@ export class HMCharacterActor extends HMActor {
             fvalue = ((fvalue % 100) + 100) % 100;
 
             const clamp = HMTABLES.abilitymods.clamp[stat];
-            const statSum = value + fvalue / 100;
+            const statSum = value + (fvalue / 100);
             const statAdj = Math.clamped(statSum, clamp.min, clamp.max);
             const idx = Math.floor((statAdj - clamp.min) / clamp.step);
 
+            fvalue = (fvalue + 101) % 100;
             abilities.total[stat] = {value, fvalue, idx};
         });
     }

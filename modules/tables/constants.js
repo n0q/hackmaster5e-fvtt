@@ -147,10 +147,10 @@ export const HMCONST = {
 export const HMTABLES = {
     abilitymods: {
         clamp: {
-            str: { min: 1.01, step: 0.5, max: 20.51 },
+            str: { min: 1.00, step: 0.5, max: 20.50 },
             int: { min: 1,    step: 1,   max: 20    },
             wis: { min: 1,    step: 1,   max: 20    },
-            dex: { min: 3.01, step: 0.5, max: 20.51 },
+            dex: { min: 3.00, step: 0.5, max: 20.50 },
             con: { min: 1,    step: 1,   max: 22    },
             lks: { min: 1,    step: 1,   max: 20    },
             cha: { min: 1,    step: 1,   max: 22    },
