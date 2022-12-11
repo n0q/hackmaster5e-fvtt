@@ -147,10 +147,10 @@ export const HMCONST = {
 export const HMTABLES = {
     abilitymods: {
         clamp: {
-            str: { min: 1.01, step: 0.5, max: 20.51 },
+            str: { min: 1.00, step: 0.5, max: 20.50 },
             int: { min: 1,    step: 1,   max: 20    },
             wis: { min: 1,    step: 1,   max: 20    },
-            dex: { min: 3.01, step: 0.5, max: 20.51 },
+            dex: { min: 3.00, step: 0.5, max: 20.50 },
             con: { min: 1,    step: 1,   max: 22    },
             lks: { min: 1,    step: 1,   max: 20    },
             cha: { min: 1,    step: 1,   max: 22    },
@@ -334,7 +334,7 @@ export const HMTABLES = {
             5:  { turning: -4, morale: -2 },
             6:  { turning: -3, morale: -2 },
             7:  { turning: -2, morale: -1 },
-            8:  { turning:  1, morale: -1 },
+            8:  { turning: -1, morale: -1 },
             9:  { turning:  0, morale:  0 },
             10: { turning:  1, morale:  1 },
             11: { turning:  2, morale:  1 },
@@ -397,6 +397,7 @@ export const HMTABLES = {
             hp:   {value: null, die: null, reroll: false},
             sp:   {value: null},
             atk:  {value: null},
+            def:  {value: null},
             spd:  {value: null},
             spdm: {value: null},
             spdr: {value: null},
@@ -468,6 +469,7 @@ export const HMTABLES = {
             tenacity: 'd20p +  @bonus.total.tenacity + @resp.bonus',
             trauma:   'd20  - (@bonus.total.trauma   + @resp.bonus)',
             turning:  'd20p +  @bonus.total.turning  + @resp.bonus',
+            will:     'd20p +  @bonus.total.will     + @resp.bonus',
         },
         'skill': {
             'skill':    'd100 - (@resp.bonus + @bonus.total.value)',

@@ -90,6 +90,10 @@
             height: 18px;
         }
 
+        .button:hover {
+            @include text-glow($shad-1px);
+        }
+
         input[type=text], 
         input[type=number] {
             height: 16px;

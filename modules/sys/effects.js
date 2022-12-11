@@ -11,7 +11,6 @@ export const actorHasEffects = (actor, fxList) => {
 
 export class HMStates {
     static async setStatusEffect(token, id, duration=null) {
-        console.warn('set');
         const {effects} = token.actor;
         let effect = effects.find((x) => x.getFlag('core', 'statusId') === id);
         if (!effect) {

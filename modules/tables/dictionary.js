@@ -48,6 +48,7 @@ idx.alignment = {
 idx.classFeatureTable = {
     'sp':   'HM.classFeatureTable.sp',
     'atk':  'HM.classFeatureTable.atk',
+    'def':  'HM.classFeatureTable.def',
     'spd':  'HM.classFeatureTable.spd',
     'spdm': 'HM.classFeatureTable.spdm',
     'spdr': 'HM.classFeatureTable.spdr',
@@ -225,6 +226,7 @@ idx.itemCClass = {
     'sp':   'HM.spellpoints',
     'init': 'HM.initbonus',
     'atk':  'HM.atkbonus',
+    'def':  'HM.defbonus',
     'spd':  'HM.spdbonus',
     'spdr': 'HM.spdrbonus',
     'spdm': 'HM.spdmbonus',

@@ -31,6 +31,8 @@ export class HMWeaponItem extends HMItem {
 
     prepareBaseData() {
         super.prepareBaseData();
+        const {mod} = this.system.bonus;
+        Object.keys(mod).forEach((key) => { if (!mod[key]) mod[key] = 0; });
     }
 
     prepareDerivedData() {
