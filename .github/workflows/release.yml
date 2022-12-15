@@ -27,7 +27,7 @@ jobs:
           npm ci
           gulp sass
           npm prune --production    
-          zip -r ./system.zip hm.js system.json template.json LICENSE README.md fonts/ lang/ modules/ node_modules/ packs/ styles/ templates/
+          zip -r ./system.zip hm.js system.json template.json LICENSE README.md fonts/ lang/ modules/ packs/ styles/ templates/
 
     # Create a release for this specific version
     - name: Update Release with Files
