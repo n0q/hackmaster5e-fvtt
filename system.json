@@ -18,7 +18,6 @@
     }],
     "socket": true,
     "esmodules": [
-        "node_modules/dompurify/dist/purify.js",
         "greensock/esm/all.js",
         "hm.js"
     ],
