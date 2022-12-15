@@ -8,8 +8,5 @@
     "gulp-dart-sass": "^1.0.2",
     "gulp-eslint-new": "^1.4.2",
     "sass": "^1.35.1"
-  },
-  "dependencies": {
-    "dompurify": "^2.2.9"
   }
 }

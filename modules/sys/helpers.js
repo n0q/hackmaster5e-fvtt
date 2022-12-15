@@ -23,10 +23,6 @@ export default function registerHandlebarsHelpers() {
         return `${upper}${lower.slice(1)}`;
     });
 
-    Handlebars.registerHelper('sanitize', function(str) {
-        return DOMPurify.sanitize(str);
-    });
-
     Handlebars.registerHelper('toggleSwitch', (id, opts) => {
         const {visibleItemId} = opts.data.root.document.sheet;
         let visible = !!visibleItemId[id];
