@@ -1,4 +1,4 @@
-import { MODULE_ID } from '../tables/constants.js';
+import { MODULE_ID, SYSTEM_SOCKET } from '../tables/constants.js';
 import { HMStates, HMActiveEffect } from './effects.js';
 import { HMSupport } from './support.js';
 import { HMActor } from '../actor/actor.js';
@@ -47,5 +47,5 @@ export const registerHooks = () => {
     Hooks.on('renderSceneControls', HMToken.renderSceneControls);
     Hooks.on('getSceneControlButtons', HMToken.getSceneControlButtons);
     Hooks.on('hotbarDrop', HMMacro.hotbarDrop);
-    game.socket.on('system.hackmaster5e', handleSocketEvent);
+    game.socket.on(SYSTEM_SOCKET, handleSocketEvent);
 };
