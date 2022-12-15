@@ -2,11 +2,9 @@ import LOGGER from './logger.js';
 import idx from '../tables/dictionary.js';
 
 export default function registerHandlebarsHelpers() {
-    LOGGER.log("Calling Register Handlebars Helpers");
-
     Handlebars.registerHelper('concat', function() {
-        var outStr = '';
-        for (var arg in arguments) {
+        let outStr = '';
+        for (const arg in arguments) {
             if (typeof arguments[arg] != 'object') {
                 outStr += arguments[arg];
             }
@@ -53,8 +51,8 @@ export default function registerHandlebarsHelpers() {
     });
 
     Handlebars.registerHelper('mapSelect', (obj1, obj2, suffix) => {
-        let cross = Array.isArray(obj1) ? obj1 : Object.values(obj1);
-        let label = idx[obj2];
+        const cross = Array.isArray(obj1) ? obj1 : Object.values(obj1);
+        const label = idx[obj2];
 
         return {...cross.map((x, i) => `${game.i18n.localize(label[i])} (${x} ${suffix})`)};
     });
@@ -62,8 +60,8 @@ export default function registerHandlebarsHelpers() {
     Handlebars.registerHelper('isGM', () => game.user.isGM);
     Handlebars.registerHelper('getFlag', (scope, key, opts) => opts.data.root.actor.getFlag(scope, key));
     Handlebars.registerHelper('getSetting', (scope, key) => game.settings.get(scope, key));
-    Handlebars.registerHelper('eq', (a, b) => { return a == b });
-    Handlebars.registerHelper('neq', (a, b) => { return a != b });
+    Handlebars.registerHelper('eq', (a, b) => a == b);
+    Handlebars.registerHelper('neq', (a, b) => a != b);
 
     Handlebars.registerHelper('isHalf', (a, b, opts) => {
         return opts.hash.ceil
@@ -82,8 +80,8 @@ export default function registerHandlebarsHelpers() {
         return `${pct}%`;
     });
 
-    Handlebars.registerHelper("repeat", function (count, opts) {
-        let str = "";
+    Handlebars.registerHelper('repeat', function (count, opts) {
+        let str = '';
 
         if (count) {
             for (let i = 0; i < count; i++) {
