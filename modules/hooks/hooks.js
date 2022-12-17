@@ -1,14 +1,14 @@
 import { MODULE_ID, SYSTEM_SOCKET } from '../tables/constants.js';
-import { HMStates, HMActiveEffect } from './effects.js';
-import { HMSupport } from './support.js';
+import { HMStates, HMActiveEffect } from '../sys/effects.js';
+import { HMSupport } from '../sys/support.js';
 import { HMActor } from '../actor/actor.js';
-import { HMItem } from '../item/item.js';
 import { HMWeaponItem } from '../item/weapon-item.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
-import { HMCombat, HMCombatTracker } from './combat.js';
-import { HMToken } from './token.js';
-import { HMMacro } from './macro.js';
-import { handleSocketEvent } from './sockets.js';
+import { HMCombat, HMCombatTracker } from '../sys/combat.js';
+import { HMToken } from '../sys/token.js';
+import { HMMacro } from '../sys/macro.js';
+import { handleSocketEvent } from '../sys/sockets.js';
+import { HMItemHooks } from './item-hooks.js';
 
 async function ready() {
     if (game.modules.get('_dev-mode')?.api?.getPackageDebugValue(MODULE_ID)) {
@@ -35,7 +35,8 @@ export const registerHooks = () => {
     Hooks.on('createActor', HMActor.createActor);
     Hooks.on('createToken', HMActor.createToken);
     Hooks.on('hoverToken', (token, state) => token.drawReach(state));
-    Hooks.on('createItem', HMItem.createItem);
+    Hooks.on('createItem', HMItemHooks.createItem);
+    Hooks.on('preCreateItem', HMItemHooks.preCreateItem);
     Hooks.on('updateItem', HMWeaponItem.updateItem);
     Hooks.on('renderChatMessage', HMChatMgr.renderChatMessage);
     Hooks.on('updateCombat', HMCombat.updateCombat);

@@ -21,7 +21,7 @@ import { HMMacro } from './modules/sys/macro.js';
 import { HMToken } from './modules/sys/token.js';
 import { HMActiveEffect } from './modules/sys/effects.js';
 import { registerSystemSettings } from './modules/sys/settings.js';
-import { registerHooks } from './modules/sys/hooks.js';
+import { registerHooks } from './modules/hooks/hooks.js';
 import registerHandlebarsHelpers from './modules/sys/helpers.js';
 import preloadHandlebarsTemplates from './modules/sys/partials.js';
 
