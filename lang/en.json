@@ -333,6 +333,7 @@
         },
 
         "spellLevels": {
+            "all":  "All Levels",
             "0":    "Apprentice",
             "1":    "Journeyman",
             "2":    "First",
