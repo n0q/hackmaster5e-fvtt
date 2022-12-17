@@ -1,9 +1,9 @@
-<label class="resource-label">{{localize "HM.prepared"}} {{localize "HM.spells"}}</label>
-<select style="visibility: hidden;"></select>
-<ol class="card-list">
+<label class='resource-label'>{{localize 'HM.prepared'}} {{localize 'HM.spells'}}</label>
+<select style='visibility: hidden;'></select>
+<ol class='card-list scrollable' style='height: 29rem;'>
 {{#each actor.spells}}
     {{#repeat system.prepped}}
-        {{> "systems/hackmaster5e/templates/actor/cards/prepped-spell.hbs" }}
+        {{> 'systems/hackmaster5e/templates/actor/cards/prepped-spell.hbs' }}
     {{/repeat}}
 {{/each}}
 </ol>
