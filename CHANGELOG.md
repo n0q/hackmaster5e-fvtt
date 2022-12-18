@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 ### Added
 - Sort Spell Library by 'all'.
+### Changed
+- Combat macros default to user's active character is no token is active.
 ### Fixed
 - Compendium inaccuracies.
 - No longer possible to add the same weapon talent twice.
