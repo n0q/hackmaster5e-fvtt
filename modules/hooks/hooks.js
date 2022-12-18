@@ -1,5 +1,5 @@
 import { MODULE_ID, SYSTEM_SOCKET } from '../tables/constants.js';
-import { HMStates, HMActiveEffect } from '../sys/effects.js';
+import { HMActiveEffectHooks } from './effect-hooks.js';
 import { HMSupport } from '../sys/support.js';
 import { HMActor } from '../actor/actor.js';
 import { HMWeaponItem } from '../item/weapon-item.js';
@@ -26,12 +26,12 @@ async function ready() {
 
 export const registerHooks = () => {
     Hooks.once('ready', ready);
-    Hooks.once('setup', HMStates.setupStatusEffects);
+    Hooks.once('setup', HMActiveEffectHooks.setupStatusEffects);
     Hooks.once('devModeReady', HMSupport.devModeReady);
     Hooks.once('dragRuler.ready', HMSupport.dragRuler_ready);
-    Hooks.on('applyActiveEffect', HMActiveEffect.applyActiveEffect);
-    Hooks.on('createActiveEffect', HMActiveEffect.createActiveEffect);
-    Hooks.on('deleteActiveEffect', HMActiveEffect.deleteActiveEffect);
+    Hooks.on('applyActiveEffect', HMActiveEffectHooks.applyActiveEffect);
+    Hooks.on('createActiveEffect', HMActiveEffectHooks.createActiveEffect);
+    Hooks.on('deleteActiveEffect', HMActiveEffectHooks.deleteActiveEffect);
     Hooks.on('createActor', HMActor.createActor);
     Hooks.on('createToken', HMActor.createToken);
     Hooks.on('hoverToken', (token, state) => token.drawReach(state));
