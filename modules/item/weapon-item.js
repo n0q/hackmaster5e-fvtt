@@ -20,7 +20,8 @@ function fromCaller(caller=null) {
     }
 
     // Last resort
-    if (!actor && !game.user.isGM && game.user.character) {
+    const smartSelect = game.settings.get(MODULE_ID, 'smartSelect');
+    if (!actor && !game.user.isGM && game.user.character && smartSelect) {
         actor = game.user.character;
         [token] = actor.getActiveTokens();
     }
