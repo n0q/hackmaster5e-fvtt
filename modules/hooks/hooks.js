@@ -1,14 +1,14 @@
 import { MODULE_ID, SYSTEM_SOCKET } from '../tables/constants.js';
-import { HMStates, HMActiveEffect } from './effects.js';
-import { HMSupport } from './support.js';
+import { HMActiveEffectHooks } from './effect-hooks.js';
+import { HMSupport } from '../sys/support.js';
 import { HMActor } from '../actor/actor.js';
-import { HMItem } from '../item/item.js';
 import { HMWeaponItem } from '../item/weapon-item.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
-import { HMCombat, HMCombatTracker } from './combat.js';
-import { HMToken } from './token.js';
-import { HMMacro } from './macro.js';
-import { handleSocketEvent } from './sockets.js';
+import { HMCombat, HMCombatTracker } from '../sys/combat.js';
+import { HMToken } from '../sys/token.js';
+import { HMMacro } from '../sys/macro.js';
+import { handleSocketEvent } from '../sys/sockets.js';
+import { HMItemHooks } from './item-hooks.js';
 
 async function ready() {
     if (game.modules.get('_dev-mode')?.api?.getPackageDebugValue(MODULE_ID)) {
@@ -26,16 +26,17 @@ async function ready() {
 
 export const registerHooks = () => {
     Hooks.once('ready', ready);
-    Hooks.once('setup', HMStates.setupStatusEffects);
+    Hooks.once('setup', HMActiveEffectHooks.setupStatusEffects);
     Hooks.once('devModeReady', HMSupport.devModeReady);
     Hooks.once('dragRuler.ready', HMSupport.dragRuler_ready);
-    Hooks.on('applyActiveEffect', HMActiveEffect.applyActiveEffect);
-    Hooks.on('createActiveEffect', HMActiveEffect.createActiveEffect);
-    Hooks.on('deleteActiveEffect', HMActiveEffect.deleteActiveEffect);
+    Hooks.on('applyActiveEffect', HMActiveEffectHooks.applyActiveEffect);
+    Hooks.on('createActiveEffect', HMActiveEffectHooks.createActiveEffect);
+    Hooks.on('deleteActiveEffect', HMActiveEffectHooks.deleteActiveEffect);
     Hooks.on('createActor', HMActor.createActor);
     Hooks.on('createToken', HMActor.createToken);
     Hooks.on('hoverToken', (token, state) => token.drawReach(state));
-    Hooks.on('createItem', HMItem.createItem);
+    Hooks.on('createItem', HMItemHooks.createItem);
+    Hooks.on('preCreateItem', HMItemHooks.preCreateItem);
     Hooks.on('updateItem', HMWeaponItem.updateItem);
     Hooks.on('renderChatMessage', HMChatMgr.renderChatMessage);
     Hooks.on('updateCombat', HMCombat.updateCombat);

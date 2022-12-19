@@ -2,6 +2,16 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.3.5] - 2022-12-18
+### Added
+- Sort Spell Library by 'all'.
+- Smart Select setting to use active character if no token is selected.
+### Changed
+- Combat macros default to user's active character if no token is selected.
+### Fixed
+- Compendium inaccuracies.
+- No longer possible to add the same weapon talent twice.
+
 ## [0.3.4] - 2022-12-15
 ### Changed
 - Resolved compat issue with a hosting provider.

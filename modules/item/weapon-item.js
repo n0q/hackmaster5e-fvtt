@@ -6,7 +6,7 @@ import { HMDialogMgr } from '../mgr/dialogmgr.js';
 import { HMRollMgr } from '../mgr/rollmgr.js';
 import { HMSocket, SOCKET_TYPES } from '../sys/sockets.js';
 
-function getCaller(caller=null) {
+function fromCaller(caller=null) {
     let actor;
     let token;
     if (!caller) {
@@ -17,6 +17,13 @@ function getCaller(caller=null) {
         token   = caller.token;
     } else {
         actor = caller;
+    }
+
+    // Last resort
+    const smartSelect = game.settings.get(MODULE_ID, 'smartSelect');
+    if (!actor && !game.user.isGM && game.user.character && smartSelect) {
+        actor = game.user.character;
+        [token] = actor.getActiveTokens();
     }
     return {actor, token};
 }
@@ -197,18 +204,8 @@ export class HMWeaponItem extends HMItem {
     // TODO: This needs a refactor, but it's too soon to do so. We should
     // give this a second look after combat variants are introduced.
     static async rollAttack({weapon, caller}={}) {
-        let actor;
-        let token;
-        if (!caller) {
-            [token] = canvas.tokens.controlled;
-            actor   = token.actor;
-        } else if (caller.isToken) {
-            actor   = caller;
-            token   = caller.token;
-        } else {
-            actor = caller;
-        }
-        if (!token && !actor) return;
+        const {actor, token} = fromCaller(caller);
+        if (!actor && !token) return;
 
         const opt = {isCombatant: false};
         const comData = {};
@@ -275,18 +272,8 @@ export class HMWeaponItem extends HMItem {
     }
 
     static async rollDamage({weapon, caller}={}) {
-        let actor;
-        let token;
-        if (!caller) {
-            [token] = canvas.tokens.controlled;
-            actor   = token.actor;
-        } else if (caller.isToken) {
-            actor   = caller;
-            token   = caller.token;
-        } else {
-            actor = caller;
-        }
-        if (!token && !actor) return;
+        const {actor} = fromCaller(caller);
+        if (!actor) return;
 
         const dialog = 'dmg';
         const dataset = {dialog, itemId: weapon};
@@ -306,7 +293,7 @@ export class HMWeaponItem extends HMItem {
     }
 
     static async rollCrit({caller} = {}) {
-        const {actor} = getCaller(caller);
+        const {actor} = fromCaller(caller);
 
         const dataset = {dialog : 'crit', caller: actor};
         const dialogMgr = new HMDialogMgr();
@@ -325,18 +312,8 @@ export class HMWeaponItem extends HMItem {
     }
 
     static async rollDefend({weapon, caller}={}) {
-        let actor;
-        let token;
-        if (!caller) {
-            [token] = canvas.tokens.controlled;
-            actor   = token.actor;
-        } else if (caller.isToken) {
-            actor   = caller;
-            token   = caller.token;
-        } else {
-            actor = caller;
-        }
-        if (!token && !actor) return;
+        const {actor, token} = fromCaller(caller);
+        if (!actor && !token) return;
 
         const opt = {isCombatant: false};
         const comData = {};
