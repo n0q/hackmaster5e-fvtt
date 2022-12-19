@@ -12,6 +12,15 @@ export const registerSystemSettings = () => {
         onChange: () => canvas.tokens.placeables.forEach((t) => t.drawReach()),
     });
 
+    game.settings.register(MODULE_ID, 'smartSelect', {
+        name: 'SETTINGS.smartSelect',
+        hint: 'SETTINGS.smartSelectHint',
+        scope: 'client',
+        config: true,
+        type: Boolean,
+        default: true,
+    });
+
     game.settings.register(MODULE_ID, 'playerNewItems', {
         name: 'SETTINGS.playerNewItems',
         hint: 'SETTINGS.playerNewItemsHint',
