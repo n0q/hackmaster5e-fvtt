@@ -1,4 +1,4 @@
-import { HMDialogMgr } from '../mgr/dialogmgr.js';
+import { HMDialogFactory} from '../dialog/dialog-factory.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMRollMgr } from '../mgr/rollmgr.js';
 import { HMTABLES, MODULE_ID } from '../tables/constants.js';
@@ -165,8 +165,7 @@ export class HMActorSheet extends ActorSheet {
 
         const itemData = {name: itemName, type};
         if (dataset.dialog) {
-            const dialogMgr = new HMDialogMgr();
-            const dialogResp = await dialogMgr.getDialog(dataset, this.actor);
+            const dialogResp = await HMDialogFactory(dataset, this.actor);
             itemData.data = dialogResp.data;
         }
 
@@ -288,8 +287,7 @@ export class HMActorSheet extends ActorSheet {
         }
 
         if (dataset.dialog) {
-            const dialogMgr = new HMDialogMgr();
-            const dialogResp = await dialogMgr.getDialog(dataset, actor);
+            const dialogResp = await HMDialogFactory(dataset, actor);
 
             let roll = null;
             if (dataset.formula || dataset.formulaType) {

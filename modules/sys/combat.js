@@ -1,5 +1,5 @@
 /* eslint max-classes-per-file: ['error', 2] */
-import { HMDialogMgr } from '../mgr/dialogmgr.js';
+import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { HMSocket, SOCKET_TYPES } from './sockets.js';
 
 function onInitiativeDblClick(event) {
@@ -26,8 +26,7 @@ export class HMCombat extends Combat {
 
     async _getInitiativeDie(ids) {
         const caller = ids.length ? this.combatants.get(ids[0]).actor : null;
-        const dialogMgr = new HMDialogMgr();
-        const dialogResp = await dialogMgr.getDialog({dialog: 'initdie'}, caller);
+        const dialogResp = await HMDialogFactory({dialog: 'initdie'}, caller);
         return dialogResp.resp.die;
     }
 

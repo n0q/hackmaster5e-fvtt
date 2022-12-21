@@ -1,6 +1,6 @@
 import { HMTABLES, HMCONST } from '../tables/constants.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
-import { HMDialogMgr } from '../mgr/dialogmgr.js';
+import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { HMStates } from '../sys/effects.js';
 
 // Remember: Items may not alter Actors under any circumstances.
@@ -85,8 +85,7 @@ export class HMItem extends Item {
             callers: callers.length,
         };
 
-        const dialogMgr = new HMDialogMgr();
-        const dialogResp = await dialogMgr.getDialog(dialogDataset, dialogCaller.caller);
+        const dialogResp = await HMDialogFactory(dialogDataset, dialogCaller.caller);
         const {resp} = dialogResp;
 
         Object.values(callers).forEach(async (callerObj) => {
