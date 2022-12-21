@@ -2,7 +2,7 @@ import { MODULE_ID, HMCONST, HMTABLES } from '../tables/constants.js';
 import { CRITTABLE } from '../tables/crits.js';
 import { HMItem, advanceClock, setStatusEffectOnToken, unsetStatusEffectOnToken } from './item.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
-import { HMDialogMgr } from '../mgr/dialogmgr.js';
+import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { HMRollMgr } from '../mgr/rollmgr.js';
 import { HMSocket, SOCKET_TYPES } from '../sys/sockets.js';
 
@@ -221,8 +221,7 @@ export class HMWeaponItem extends HMItem {
 
         const dialog = 'atk';
         const dataset = {dialog, itemId: weapon};
-        const dialogMgr = new HMDialogMgr();
-        const dialogResp = await dialogMgr.getDialog(dataset, actor, opt);
+        const dialogResp = await HMDialogFactory(dataset, actor, opt);
 
         const {specialMove, defense} = dialogResp.resp;
         const {atk} = HMTABLES.formula;
@@ -277,9 +276,7 @@ export class HMWeaponItem extends HMItem {
 
         const dialog = 'dmg';
         const dataset = {dialog, itemId: weapon};
-
-        const dialogMgr = new HMDialogMgr();
-        const dialogResp = await dialogMgr.getDialog(dataset, actor);
+        const dialogResp = await HMDialogFactory(dataset, actor);
 
         const rollMgr = new HMRollMgr();
         dataset.roll = await rollMgr.getRoll(dataset, dialogResp);
@@ -296,8 +293,7 @@ export class HMWeaponItem extends HMItem {
         const {actor} = fromCaller(caller);
 
         const dataset = {dialog : 'crit', caller: actor};
-        const dialogMgr = new HMDialogMgr();
-        const dialogResp = await dialogMgr.getDialog(dataset, actor);
+        const dialogResp = await HMDialogFactory(dataset, actor);
         const {resp} = dialogResp;
 
         dataset.formula = CRITTABLE.formula(resp.atkSize, resp.defSize);
@@ -329,9 +325,7 @@ export class HMWeaponItem extends HMItem {
 
         const dialog = 'def';
         const dataset = {dialog, itemId: weapon};
-
-        const dialogMgr = new HMDialogMgr();
-        const dialogResp = await dialogMgr.getDialog(dataset, actor);
+        const dialogResp = await HMDialogFactory(dataset, actor);
         dataset.formula = HMTABLES.formula.def[dialogResp.resp.specialMove];
         const {resp} = dialogResp;
 

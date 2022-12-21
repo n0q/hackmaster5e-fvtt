@@ -1,6 +1,6 @@
 import { HMItem, advanceClock, setStatusEffectOnToken } from './item.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
-import { HMDialogMgr } from '../mgr/dialogmgr.js';
+import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { HMCONST, HMTABLES } from '../tables/constants.js';
 
 export class HMSpellItem extends HMItem {
@@ -41,9 +41,7 @@ export class HMSpellItem extends HMItem {
         const dialog = 'cast';
         const dialogDataset = {dialog, itemId: spell};
         dialogDataset.isNPC = comData?.combatant?.isNPC || false;
-
-        const dialogMgr = new HMDialogMgr();
-        const dialogResp = await dialogMgr.getDialog(dialogDataset, actor, opt);
+        const dialogResp = await HMDialogFactory(dialogDataset, actor, opt);
 
         const {resp} = dialogResp;
         const context = actor.items.get(spell);

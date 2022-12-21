@@ -1,5 +1,5 @@
 import { HMTABLES } from '../tables/constants.js';
-import { HMDialogMgr } from '../mgr/dialogmgr.js';
+import { HMDialogFactory } from '../dialog/dialog-factory.js';
 
 export class HMActor extends Actor {
     prepareBaseData() {
@@ -148,8 +148,7 @@ export class HMActor extends Actor {
 
         if (!amount) {
             const dataset = {dialog: 'wound'};
-            const dialogMgr = new HMDialogMgr();
-            const dialogResp = await dialogMgr.getDialog(dataset);
+            const dialogResp = await HMDialogFactory(dataset);
             woundData = dialogResp.data;
         }
 
