@@ -293,7 +293,8 @@ export class HMActorSheet extends ActorSheet {
             let {formula} = dataset;
             const {formulaType} = dataset;
             if (formulaType) formula = HMTABLES.formula[dialog][formulaType];
-            if (formula) cData.roll = await new Roll(formula, dialogResp).evaluate({async: true});
+            const rollContext = {...dialogResp.context.system, resp: dialogResp.resp};
+            if (formula) cData.roll = await new Roll(formula, rollContext).evaluate({async: true});
 
             const chatMgr = new HMChatMgr();
             const card = await chatMgr.getCard(cData);

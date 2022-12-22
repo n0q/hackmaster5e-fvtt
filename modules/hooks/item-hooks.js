@@ -1,6 +1,5 @@
-import { HMCONST } from '../tables/constants.js';
+import { HMCONST, HMTABLES } from '../tables/constants.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
-import { HMRollMgr } from '../mgr/rollmgr.js';
 
 export class HMItemHooks {
     static async createItem(item, _options, userId) {
@@ -22,16 +21,14 @@ export class HMItemHooks {
 
             // Auto-roll for beasts.
             if (parent.type === 'beast') {
+                const formula = HMTABLES.formula.save.trauma;
+                const dialogResp = {caller: parent, context: parent};
+                const roll = await new Roll(formula, parent.system).evaluate({async: true});
+                dataset.resp = {caller: parent};
                 dataset.dialog = 'save';
                 dataset.formulaType = 'trauma';
 
-                const rollMgr = new HMRollMgr();
-                const dialogResp = {caller: parent, context: parent};
-                dataset.resp = {caller: parent};
-
-                const roll = await rollMgr.getRoll(dataset, dialogResp);
-                const rollMode = 'gmroll';
-                dialogResp.resp = {rollMode};
+                dialogResp.resp = {rollMode: 'gmroll'};
                 const topcard = await chatmgr.getCard({dataset, roll, dialogResp});
                 await ChatMessage.create(topcard);
             }
