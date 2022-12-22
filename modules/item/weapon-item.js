@@ -3,7 +3,7 @@ import { CRITTABLE } from '../tables/crits.js';
 import { HMItem, advanceClock, setStatusEffectOnToken, unsetStatusEffectOnToken } from './item.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMDialogFactory } from '../dialog/dialog-factory.js';
-import { HMRollMgr } from '../mgr/rollmgr.js';
+import { transformDamageFormula } from '../sys/utils.js';
 import { HMSocket, SOCKET_TYPES } from '../sys/sockets.js';
 
 function fromCaller(caller=null) {
@@ -195,10 +195,13 @@ export class HMWeaponItem extends HMItem {
             const value = dataset.dtype === 'Number' ? Number(dataset.value) : dataset.value;
             this.update({[key]: value});
         }
-        if (dataset.redraw) this.actor.getActiveTokens().map((t) => {
-            t.drawReach();
-            HMSocket.emit(SOCKET_TYPES.DRAW_REACH, t.id);
-        });
+
+        if (dataset.redraw) {
+            this.actor.getActiveTokens().forEach((t) => {
+                t.drawReach();
+                HMSocket.emit(SOCKET_TYPES.DRAW_REACH, t.id);
+            });
+        }
     }
 
     // TODO: This needs a refactor, but it's too soon to do so. We should
@@ -222,39 +225,38 @@ export class HMWeaponItem extends HMItem {
         const dialog = 'atk';
         const dataset = {dialog, itemId: weapon};
         const dialogResp = await HMDialogFactory(dataset, actor, opt);
-
-        const {specialMove, defense} = dialogResp.resp;
-        const {atk} = HMTABLES.formula;
-        dataset.formula = specialMove < 16 ? atk[HMCONST.SPECIAL.STANDARD] : atk[specialMove];
+        const {context, resp} = dialogResp;
 
         const {SPECIAL} = HMCONST;
+        const {specialMove, defense} = resp;
 
+        // Full Parry, Defensive Fighting exclusivity.
         if (active && opt.isCombatant) {
-            // Full Parry, Defensive Fighting exclusivity.
             specialMove === SPECIAL.FULLPARRY
-                ? setStatusEffectOnToken(comData, 'fullparry', dialogResp.resp.advance)
+                ? setStatusEffectOnToken(comData, 'fullparry', resp.advance)
                 : await unsetStatusEffectOnToken(comData, 'fullparry');
 
             const dList = Object.values(HMTABLES.effects.defense);
             if (defense) dList.splice(defense -1, 1);
-            for (let i=0; i < dList.length; i++) await unsetStatusEffectOnToken(comData, dList[i]);
-            if (defense) await setStatusEffectOnToken(comData, HMTABLES.effects.defense[defense]);
+            dList.map((sfx) => unsetStatusEffectOnToken(comData, sfx));
+            if (defense) setStatusEffectOnToken(comData, HMTABLES.effects.defense[defense]);
         }
 
         if (dialogResp.resp.button !== 'declare') {
-            const rollMgr = new HMRollMgr();
-            dataset.roll = await rollMgr.getRoll(dataset, dialogResp);
+            const {atk} = HMTABLES.formula;
+            const formula = specialMove < 16 ? atk[SPECIAL.STANDARD] : atk[specialMove];
+            const rollContext = {resp, ...context.system};
+            dataset.roll = await new Roll(formula, rollContext).evaluate({async: true});
         }
 
-        dataset.resp = dialogResp.resp;
-        dataset.context = dialogResp.context;
+        dataset.resp = resp;
+        dataset.context = context;
         dataset.caller = actor;
 
         const chatMgr = new HMChatMgr();
         const card = await chatMgr.getCard({dataset});
         await ChatMessage.create(card);
-
-        if (dialogResp.resp.advance) await advanceClock(comData, dialogResp, true);
+        if (resp.advance) await advanceClock(comData, dialogResp, true);
 
         if (opt.isCombatant) {
             unsetStatusEffectOnToken(comData, 'gground');
@@ -277,11 +279,29 @@ export class HMWeaponItem extends HMItem {
         const dialog = 'dmg';
         const dataset = {dialog, itemId: weapon};
         const dialogResp = await HMDialogFactory(dataset, actor);
+        const {context, resp} = dialogResp;
 
-        const rollMgr = new HMRollMgr();
-        dataset.roll = await rollMgr.getRoll(dataset, dialogResp);
-        dataset.resp = dialogResp.resp;
-        dataset.context = dialogResp.context;
+        const {SPECIAL, FORMULA_MOD} = HMCONST;
+        const {autoFormula, defense, formulaType, specialMove} = resp;
+        const formula = HMTABLES.formula.dmg[formulaType];
+
+        // Formula transform
+        const opSet = new Set();
+        if (specialMove === SPECIAL.JAB && autoFormula) opSet.add(FORMULA_MOD.HALVE);    else
+        if (specialMove === SPECIAL.BACKSTAB)           opSet.add(FORMULA_MOD.BACKSTAB); else
+        if (specialMove === SPECIAL.FLEEING)            opSet.add(FORMULA_MOD.BACKSTAB); else
+        if (specialMove === SPECIAL.SET4CHARGE)         opSet.add(FORMULA_MOD.DOUBLE);
+        if (defense)                                    opSet.add(FORMULA_MOD.NOPENETRATE);
+
+        const rollContext = {resp, ...context.system};
+        rollContext.bonus.total.back = actor.system.bonus.total.back;
+
+        const r = new Roll(formula, rollContext);
+        const terms = transformDamageFormula(r.terms, opSet);
+        dataset.roll = await Roll.fromTerms(terms).evaluate({async: true});
+
+        dataset.resp = resp;
+        dataset.context = context;
         dataset.caller = actor;
 
         const chatMgr = new HMChatMgr();
@@ -295,12 +315,10 @@ export class HMWeaponItem extends HMItem {
         const dataset = {dialog : 'crit', caller: actor};
         const dialogResp = await HMDialogFactory(dataset, actor);
         const {resp} = dialogResp;
-
-        dataset.formula = CRITTABLE.formula(resp.atkSize, resp.defSize);
         dataset.resp = resp;
 
-        const rollMgr = new HMRollMgr();
-        dataset.roll = await rollMgr.getRoll(dataset, dialogResp);
+        const formula = CRITTABLE.formula(resp.atkSize, resp.defSize);
+        dataset.roll = await new Roll(formula).evaluate({async: true});
 
         const chatMgr = new HMChatMgr();
         const card = await chatMgr.getCard({dataset});
@@ -326,8 +344,7 @@ export class HMWeaponItem extends HMItem {
         const dialog = 'def';
         const dataset = {dialog, itemId: weapon};
         const dialogResp = await HMDialogFactory(dataset, actor);
-        dataset.formula = HMTABLES.formula.def[dialogResp.resp.specialMove];
-        const {resp} = dialogResp;
+        const {context, resp} = dialogResp;
 
         if (resp.dodge) {
             resp.dodge = resp.specialMove === HMCONST.SPECIAL.RDEFEND
@@ -335,10 +352,12 @@ export class HMWeaponItem extends HMItem {
                 : 1;
         }
 
-        const rollMgr = new HMRollMgr();
-        dataset.roll = await rollMgr.getRoll(dataset, dialogResp);
-        dataset.resp = dialogResp.resp;
-        dataset.context = dialogResp.context;
+        const formula = HMTABLES.formula.def[resp.specialMove];
+        const rollContext = {resp, ...context.system};
+        dataset.roll = await new Roll(formula, rollContext).evaluate({async: true});
+
+        dataset.resp = resp;
+        dataset.context = context;
         dataset.caller = actor;
 
         const chatMgr = new HMChatMgr();
