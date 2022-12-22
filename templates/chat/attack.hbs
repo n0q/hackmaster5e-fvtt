@@ -1,5 +1,7 @@
 {{localize 'HM.weapon'}}: <b>{{context.name}}</b><br>
+{{#unless context.system.ranged.checked}}
 {{localize 'HM.reach'}}: <b>{{context.system.adjReach}}</b> ft.<br>
+{{/unless}}
 {{localize 'HM.speed'}}:
 {{#with context.system.bonus.total}}
     {{#if (eq ../resp.specialMove 1)}}
