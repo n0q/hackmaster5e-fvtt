@@ -1,4 +1,4 @@
-import { HMDialogFactory} from '../dialog/dialog-factory.js';
+import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMTABLES, MODULE_ID } from '../tables/constants.js';
 
@@ -99,8 +99,8 @@ export class HMActorSheet extends ActorSheet {
 
         // Update Inventory Item
         html.find('.item-edit').click(ev => {
-            const li = $(ev.currentTarget).parents(".card, .item");
-            const item = this.actor.items.get(li.data("itemId"));
+            const li = $(ev.currentTarget).parents('.card, .item');
+            const item = this.actor.items.get(li.data('itemId'));
             item.sheet.render(true);
         });
 
@@ -139,22 +139,23 @@ export class HMActorSheet extends ActorSheet {
         if (this.actor.isOwner) {
             let handler = ev => this._onDragStart(ev);
             html.find('li.item').each((i, li) => {
-                if (li.classList.contains("inventory-header")) return;
-                li.setAttribute("draggable", true);
-                li.addEventListener("dragstart", handler, false);
+                if (li.classList.contains('inventory-header')) return;
+                li.setAttribute('draggable', true);
+                li.addEventListener('dragstart', handler, false);
             });
         }
     }
 
     // Getters
     _getItemId(event) {
-        let id = $(event.currentTarget).parents(".card, .item").attr("data-item-id");
-        if (typeof id === "undefined") id = $(event.currentTarget).attr("data-item-id");
+        let id = $(event.currentTarget).parents('.card, .item').attr('data-item-id');
+        if (typeof id === 'undefined') id = $(event.currentTarget).attr('data-item-id');
         return id;
     }
 
     _getOwnedItem(itemId) { return this.actor.items.get(itemId); }
-    _getObjProp(event) { return $(event.currentTarget).attr("data-item-prop"); }
+
+    _getObjProp(event) { return $(event.currentTarget).attr('data-item-prop'); }
 
     async _onItemCreate(ev) {
         ev.preventDefault();
@@ -173,7 +174,7 @@ export class HMActorSheet extends ActorSheet {
     }
 
     _updateOwnedItem(item) {
-        return this.actor.updateEmbeddedDocuments("Item", item.data);
+        return this.actor.updateEmbeddedDocuments('Item', item.data);
     }
 
     async _onToggle(ev) {
@@ -254,7 +255,7 @@ export class HMActorSheet extends ActorSheet {
             setProperty(item, itemProp, targetValue);
 
             // TODO: Update only the altered property.
-           await this.actor.updateEmbeddedDocuments("Item", [{_id:item.id, data:item.system}]);
+           await this.actor.updateEmbeddedDocuments('Item', [{_id:item.id, data:item.system}]);
         }
     }
 
