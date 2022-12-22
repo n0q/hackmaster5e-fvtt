@@ -1,6 +1,5 @@
 import { HMDialogFactory} from '../dialog/dialog-factory.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
-import { HMRollMgr } from '../mgr/rollmgr.js';
 import { HMTABLES, MODULE_ID } from '../tables/constants.js';
 
 export class HMActorSheet extends ActorSheet {
@@ -264,40 +263,43 @@ export class HMActorSheet extends ActorSheet {
         ev.stopPropagation();
         const element = ev.currentTarget;
         const {dataset} = element;
+        const {dialog} = dataset;
         const {actor} = this;
 
-        if (dataset.dialog === 'atk' || dataset.dialog === 'ratk') {
+        if (dialog === 'atk') {
             return game[MODULE_ID].HMWeaponItem.rollAttack({weapon: dataset.itemId, caller: actor});
         }
 
-        if (dataset.dialog === 'dmg') {
+        if (dialog === 'dmg') {
             return game[MODULE_ID].HMWeaponItem.rollDamage({weapon: dataset.itemId, caller: actor});
         }
 
-        if (dataset.dialog === 'def') {
+        if (dialog === 'def') {
             return game[MODULE_ID].HMWeaponItem.rollDefend({weapon: dataset.itemId, caller: actor});
         }
 
-        if (dataset.dialog === 'skill') {
+        if (dialog === 'skill') {
             return game[MODULE_ID].HMItem.rollSkill({itemId: dataset.itemId, caller: actor});
         }
 
-        if (dataset.dialog === 'cast') {
+        if (dialog === 'cast') {
             return game[MODULE_ID].HMSpellItem.rollSpell({spell: dataset.itemId, caller: actor});
         }
 
-        if (dataset.dialog) {
+        if (dialog) {
             const dialogResp = await HMDialogFactory(dataset, actor);
+            const cData = {dataset, dialogResp};
 
-            let roll = null;
-            if (dataset.formula || dataset.formulaType) {
-                const rollMgr = new HMRollMgr();
-                roll = await rollMgr.getRoll(dataset, dialogResp);
-            }
+            let {formula} = dataset;
+            const {formulaType} = dataset;
+            if (formulaType) formula = HMTABLES.formula[dialog][formulaType];
+            if (formula) cData.roll = await new Roll(formula, dialogResp).evaluate({async: true});
 
             const chatMgr = new HMChatMgr();
-            const card = await chatMgr.getCard({roll, dataset, dialogResp});
+            const card = await chatMgr.getCard(cData);
             return ChatMessage.create(card);
         }
+
+        return false;
     }
 }
