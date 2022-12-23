@@ -2,11 +2,12 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [0.3.6] - 2022-12-22
 ### Fixed
 - Cleaned up ranged attack chat cards.
 - Cleaned up beast ToP notification.
 - No longer possible for quality armor to provide a positive defense bonus.
+- Compendium inaccuracies.
 
 ## [0.3.5] - 2022-12-18
 ### Added
