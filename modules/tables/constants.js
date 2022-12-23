@@ -444,12 +444,12 @@ export const HMTABLES = {
             [HMCONST.SPECIAL.SNAPSHOT]:   'd20p + @bonus.total.atk - @resp.reachmod - 6 + @resp.bonus',
         },
         dmg: {
-            standard:    '@dmg.normal + @bonus.total.dmg                          + @resp.bonus',
-            shield:      '@dmg.shield + @bonus.total.dmg                          + @resp.bonus',
-            jab:         '@jab.normal + @bonus.total.dmg                          + @resp.bonus',
-            shieldjab:   '@jab.shield + @bonus.total.dmg                          + @resp.bonus',
-            bstab:       '@dmg.normal + @bonus.total.dmg + @actorbonus.total.back + @resp.bonus',
-            shieldbstab: '@dmg.shield + @bonus.total.dmg + @actorbonus.total.back + @resp.bonus',
+            standard:    '@dmg.normal + @bonus.total.dmg                     + @resp.bonus',
+            shield:      '@dmg.shield + @bonus.total.dmg                     + @resp.bonus',
+            jab:         '@jab.normal + @bonus.total.dmg                     + @resp.bonus',
+            shieldjab:   '@jab.shield + @bonus.total.dmg                     + @resp.bonus',
+            bstab:       '@dmg.normal + @bonus.total.dmg + @bonus.total.back + @resp.bonus',
+            shieldbstab: '@dmg.shield + @bonus.total.dmg + @bonus.total.back + @resp.bonus',
         },
         def: {
             [HMCONST.SPECIAL.DEFEND]:  '@resp.defdie + @bonus.total.def + @resp.dodge     + @resp.bonus',

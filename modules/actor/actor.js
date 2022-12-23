@@ -1,5 +1,5 @@
 import { HMTABLES } from '../tables/constants.js';
-import { HMDialogMgr } from '../mgr/dialogmgr.js';
+import { HMDialogFactory } from '../dialog/dialog-factory.js';
 
 export class HMActor extends Actor {
     prepareBaseData() {
@@ -96,48 +96,6 @@ export class HMActor extends Actor {
         return {armor, shield};
     }
 
-    static async createActor(actor, _options, userId) {
-        if (game.user.id !== userId) return;
-        if (actor.items.size || actor.type === 'beast') { return; }
-
-        const skillPack = game.packs.get('hackmaster5e.uskills');
-        const skillIndex = await skillPack.getIndex();
-        const itemList = [];
-
-        /* eslint no-await-in-loop: 0 */
-        for (const idx of skillIndex) {
-            const skill = await skillPack.getDocument(idx._id);
-            const translated = game.i18n.localize(skill.name);
-            if (translated !== '') { skill.name = translated; }
-            itemList.push(skill);
-        }
-
-        const innatePack = game.packs.get('hackmaster5e.hmbinnate');
-        const innateIndex = await innatePack.getIndex();
-        const id = innateIndex.getName('Unarmed')._id;
-        const unarmed = await innatePack.getDocument(id);
-        itemList.push(unarmed);
-
-        await actor.createEmbeddedDocuments('Item', itemList);
-    }
-
-    // Populate hp.max for beast tokens.
-    static async createToken(token, _options, userId) {
-        if (game.user.id !== userId) return;
-        const {actor} = token;
-        if (actor.type !== 'beast' || actor.system.hp.max || userId !== game.user.id) return;
-
-        const {hp} = actor.system;
-        const {formula} = hp;
-        if (Roll.validate(formula)) {
-            const r = new Roll(formula);
-            await r.evaluate({'async': true});
-            hp.value = r.total;
-            hp.max = r.total;
-            await actor.update({'data.hp': hp});
-        }
-    }
-
     getAbilityBonus() {
         const cName = this.constructor.name;
         console.error(`${cName} does not have a getAbilityBonus() function.`);
@@ -148,8 +106,7 @@ export class HMActor extends Actor {
 
         if (!amount) {
             const dataset = {dialog: 'wound'};
-            const dialogMgr = new HMDialogMgr();
-            const dialogResp = await dialogMgr.getDialog(dataset);
+            const dialogResp = await HMDialogFactory(dataset);
             woundData = dialogResp.data;
         }
 

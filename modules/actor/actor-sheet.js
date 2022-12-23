@@ -1,6 +1,5 @@
-import { HMDialogMgr } from '../mgr/dialogmgr.js';
+import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
-import { HMRollMgr } from '../mgr/rollmgr.js';
 import { HMTABLES, MODULE_ID } from '../tables/constants.js';
 
 export class HMActorSheet extends ActorSheet {
@@ -100,8 +99,8 @@ export class HMActorSheet extends ActorSheet {
 
         // Update Inventory Item
         html.find('.item-edit').click(ev => {
-            const li = $(ev.currentTarget).parents(".card, .item");
-            const item = this.actor.items.get(li.data("itemId"));
+            const li = $(ev.currentTarget).parents('.card, .item');
+            const item = this.actor.items.get(li.data('itemId'));
             item.sheet.render(true);
         });
 
@@ -140,22 +139,23 @@ export class HMActorSheet extends ActorSheet {
         if (this.actor.isOwner) {
             let handler = ev => this._onDragStart(ev);
             html.find('li.item').each((i, li) => {
-                if (li.classList.contains("inventory-header")) return;
-                li.setAttribute("draggable", true);
-                li.addEventListener("dragstart", handler, false);
+                if (li.classList.contains('inventory-header')) return;
+                li.setAttribute('draggable', true);
+                li.addEventListener('dragstart', handler, false);
             });
         }
     }
 
     // Getters
     _getItemId(event) {
-        let id = $(event.currentTarget).parents(".card, .item").attr("data-item-id");
-        if (typeof id === "undefined") id = $(event.currentTarget).attr("data-item-id");
+        let id = $(event.currentTarget).parents('.card, .item').attr('data-item-id');
+        if (typeof id === 'undefined') id = $(event.currentTarget).attr('data-item-id');
         return id;
     }
 
     _getOwnedItem(itemId) { return this.actor.items.get(itemId); }
-    _getObjProp(event) { return $(event.currentTarget).attr("data-item-prop"); }
+
+    _getObjProp(event) { return $(event.currentTarget).attr('data-item-prop'); }
 
     async _onItemCreate(ev) {
         ev.preventDefault();
@@ -165,8 +165,7 @@ export class HMActorSheet extends ActorSheet {
 
         const itemData = {name: itemName, type};
         if (dataset.dialog) {
-            const dialogMgr = new HMDialogMgr();
-            const dialogResp = await dialogMgr.getDialog(dataset, this.actor);
+            const dialogResp = await HMDialogFactory(dataset, this.actor);
             itemData.data = dialogResp.data;
         }
 
@@ -175,7 +174,7 @@ export class HMActorSheet extends ActorSheet {
     }
 
     _updateOwnedItem(item) {
-        return this.actor.updateEmbeddedDocuments("Item", item.data);
+        return this.actor.updateEmbeddedDocuments('Item', item.data);
     }
 
     async _onToggle(ev) {
@@ -256,7 +255,7 @@ export class HMActorSheet extends ActorSheet {
             setProperty(item, itemProp, targetValue);
 
             // TODO: Update only the altered property.
-           await this.actor.updateEmbeddedDocuments("Item", [{_id:item.id, data:item.system}]);
+           await this.actor.updateEmbeddedDocuments('Item', [{_id:item.id, data:item.system}]);
         }
     }
 
@@ -265,41 +264,44 @@ export class HMActorSheet extends ActorSheet {
         ev.stopPropagation();
         const element = ev.currentTarget;
         const {dataset} = element;
+        const {dialog} = dataset;
         const {actor} = this;
 
-        if (dataset.dialog === 'atk' || dataset.dialog === 'ratk') {
+        if (dialog === 'atk') {
             return game[MODULE_ID].HMWeaponItem.rollAttack({weapon: dataset.itemId, caller: actor});
         }
 
-        if (dataset.dialog === 'dmg') {
+        if (dialog === 'dmg') {
             return game[MODULE_ID].HMWeaponItem.rollDamage({weapon: dataset.itemId, caller: actor});
         }
 
-        if (dataset.dialog === 'def') {
+        if (dialog === 'def') {
             return game[MODULE_ID].HMWeaponItem.rollDefend({weapon: dataset.itemId, caller: actor});
         }
 
-        if (dataset.dialog === 'skill') {
+        if (dialog === 'skill') {
             return game[MODULE_ID].HMItem.rollSkill({itemId: dataset.itemId, caller: actor});
         }
 
-        if (dataset.dialog === 'cast') {
+        if (dialog === 'cast') {
             return game[MODULE_ID].HMSpellItem.rollSpell({spell: dataset.itemId, caller: actor});
         }
 
-        if (dataset.dialog) {
-            const dialogMgr = new HMDialogMgr();
-            const dialogResp = await dialogMgr.getDialog(dataset, actor);
+        if (dialog) {
+            const dialogResp = await HMDialogFactory(dataset, actor);
+            const cData = {dataset, dialogResp};
 
-            let roll = null;
-            if (dataset.formula || dataset.formulaType) {
-                const rollMgr = new HMRollMgr();
-                roll = await rollMgr.getRoll(dataset, dialogResp);
-            }
+            let {formula} = dataset;
+            const {formulaType} = dataset;
+            if (formulaType) formula = HMTABLES.formula[dialog][formulaType];
+            const rollContext = {...dialogResp.context.system, resp: dialogResp.resp};
+            if (formula) cData.roll = await new Roll(formula, rollContext).evaluate({async: true});
 
             const chatMgr = new HMChatMgr();
-            const card = await chatMgr.getCard({roll, dataset, dialogResp});
+            const card = await chatMgr.getCard(cData);
             return ChatMessage.create(card);
         }
+
+        return false;
     }
 }
