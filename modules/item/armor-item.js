@@ -10,6 +10,15 @@ export class HMArmorItem extends HMItem {
         super.prepareDerivedData();
     }
 
+    get quality() {
+        const vector = super.quality;
+        if (!this.system.shield.checked) {
+            const {def} = this.system.bonus.base;
+            vector.def = Math.min(vector.def, -def);
+        }
+        return vector;
+    }
+
     _prepArmorData({setBonus=true}={}) {
         if (!this.actor?.system) return;
 
