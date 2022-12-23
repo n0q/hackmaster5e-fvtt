@@ -1,7 +1,8 @@
 import { MODULE_ID, SYSTEM_SOCKET } from '../tables/constants.js';
 import { HMActiveEffectHooks } from './effect-hooks.js';
 import { HMSupport } from '../sys/support.js';
-import { HMActor } from '../actor/actor.js';
+import { HMActorHooks } from './actor-hooks.js';
+import { HMTokenHooks } from './token-hooks.js';
 import { HMWeaponItem } from '../item/weapon-item.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMCombat, HMCombatTracker } from '../sys/combat.js';
@@ -32,8 +33,8 @@ export const registerHooks = () => {
     Hooks.on('applyActiveEffect', HMActiveEffectHooks.applyActiveEffect);
     Hooks.on('createActiveEffect', HMActiveEffectHooks.createActiveEffect);
     Hooks.on('deleteActiveEffect', HMActiveEffectHooks.deleteActiveEffect);
-    Hooks.on('createActor', HMActor.createActor);
-    Hooks.on('createToken', HMActor.createToken);
+    Hooks.on('createActor', HMActorHooks.createActor);
+    Hooks.on('createToken', HMTokenHooks.createToken);
     Hooks.on('hoverToken', (token, state) => token.drawReach(state));
     Hooks.on('createItem', HMItemHooks.createItem);
     Hooks.on('preCreateItem', HMItemHooks.preCreateItem);
