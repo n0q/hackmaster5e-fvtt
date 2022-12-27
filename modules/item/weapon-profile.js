@@ -48,17 +48,18 @@ export class HMWeaponProfile extends foundry.abstract.DataModel {
 
         const {system} = this.weapon;
         const {base} = system.bonus;
-        const {skill, proficiency} = system;
+        const {skill, proficiency, ranged} = system;
 
         const profItem = this.actor.itemTypes.proficiency
             .find((a) => a.name === proficiency && a.system.weapon.checked);
-        const {profTable} = HMTABLES.weapons;
+        const {noProf} = HMTABLES.weapons;
 
         const spec = {};
+        const vector = ranged.checked ? noProf.weaponType.ranged : noProf.weaponType.melee;
         Object.keys(base).forEach((stat, i) => {
             spec[stat] = profItem
                 ? profItem.system.bonus[stat] || 0
-                : profTable.table[skill] * profTable.vector[i];
+                : noProf.skill[skill] * vector[i];
         });
 
         return spec;
@@ -99,12 +100,11 @@ export class HMWeaponProfile extends foundry.abstract.DataModel {
             const spd = this._getWeaponSpeed(bonusObj[vector]);
             if (reach) reachOffset += reach;
 
-            // TODO: Only strength bonuses should be omitted from mechanical weapons.
             if (atk || def || dmg || spd) {
                 bonus[vector] = {
                     atk:   atk || 0,
                     def:   def || 0,
-                    dmg:   isMechanical ? 0 : dmg || 0,
+                    dmg:   isMechanical && vector === 'stats' ? 0 : dmg || 0,
                     spd:   spd || 0,
                 };
             }
