@@ -1,6 +1,6 @@
 import { HMTABLES } from '../tables/constants.js';
 import { HMDialogFactory } from '../dialog/dialog-factory.js';
-import { HMWeaponProfile } from '../item/profiles/weapon-profile.js';
+import { HMWeaponProfile } from '../item/weapon-profile.js';
 
 export class HMActor extends Actor {
     prepareBaseData() {
