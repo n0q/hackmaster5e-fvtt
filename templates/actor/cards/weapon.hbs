@@ -1,4 +1,4 @@
-<li class='card hmstyle' data-item-id='{{_id}}'>
+<li class='card hmstyle' data-item-id='{{_id}}' data-toggle-id='{{weaponId}}'>
     <summary class='toggleswitch'>
         <header>
             <label for='{{name}}'>
@@ -34,7 +34,7 @@
         </section>
         {{/if}}
     </summary>
-    <section class='{{toggleSwitch _id}}' toggle>
+    <section class='{{toggleSwitch weaponId}}' toggle>
         <div class='card-expanded'>
             {{#if system.ranged.checked}}
             <span>
