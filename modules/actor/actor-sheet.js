@@ -147,16 +147,14 @@ export class HMActorSheet extends ActorSheet {
     }
 
     // Getters
-    _getItemId(ev) {
-        let id = $(ev.currentTarget).attr('data-item-id');
-        if (typeof id === 'undefined') id = $(ev.currentTarget).parents('.card, .item').attr('data-item-id');
-        return id;
+    _getItemId(ev, attr='data-item-id') {
+        const el = ev.currentTarget;
+        return $(el).attr(attr) || $(el).parents('.card, .item').attr(attr);
     }
 
     _getOwnedItem(itemId) {
         const {actor} = this;
-        const obj = actor.items.get(itemId) ?? actor.wprofiles.get(itemId);
-        return obj;
+        return actor.items.get(itemId) ?? actor.wprofiles.get(itemId);
     }
 
     _getObjProp(event) { return $(event.currentTarget).attr('data-item-prop'); }
@@ -183,7 +181,7 @@ export class HMActorSheet extends ActorSheet {
 
     async _onToggle(ev) {
         ev.preventDefault();
-        const cId = this._getItemId(ev);
+        const cId = this._getItemId(ev, 'data-toggle-id') ?? this._getItemId(ev);
 
         const tState = !this.visibleItemId[cId];
         this.visibleItemId[cId] = tState;
