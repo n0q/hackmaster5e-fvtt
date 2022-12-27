@@ -25,7 +25,8 @@ function getReach(actor) {
     if (!weapon) return null;
     if (weapon.id !== reachHint && actor.isOwner) actor.setFlag(MODULE_ID, 'reachHint', weapon.id);
 
-    const reach = (weapon.system.adjReach || 0);
+    const wProfile = actor.wprofiles.get(weapon.profileId);
+    const reach = (wProfile.system.reach || 0);
     const distance = Math.max(reach, 0) + (game.canvas.scene.grid.distance / 2);
 
     let color;

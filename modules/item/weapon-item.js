@@ -29,143 +29,28 @@ function fromCaller(caller=null) {
 }
 
 export class HMWeaponItem extends HMItem {
-    get minspd() {
-        const {system} = this;
-        const ranged = system.ranged.checked;
-        if (ranged) return HMTABLES.weapons.ranged.minspd(system.ranged.timing);
-        return HMTABLES.weapons.scale[system.scale].minspd;
-    }
-
     prepareBaseData() {
         super.prepareBaseData();
-        const {mod} = this.system.bonus;
+        const {total, base, mod} = this.system.bonus;
+
+        const {quality} = this;
+        Object.assign(base, {atk: 0, def: 0, dmg: 0});
         Object.keys(mod).forEach((key) => { if (!mod[key]) mod[key] = 0; });
+        this.system.bonus = {total, base, quality, mod};
     }
 
     prepareDerivedData() {
         super.prepareDerivedData();
         if (!this.actor?.system) return;
 
-        const actorData   = this.actor.system;
-        const itemData    = this.system;
-
-        const {jab, ranged} = itemData;
-        const isCharacter = this.actor.type === 'character';
-        const armors      = [];
-        const shields     = [];
-        const armor       = {};
-        const shield      = {};
-        const defItems    = this.actor.items.filter((a) => a.type === 'armor'
-                                                    && a.invstate === 'equipped');
-        const talentItem  = this.actor.itemTypes.talent.find(
-            (a) => a.system.type === HMCONST.TALENT.WEAPON && a.name === itemData.proficiency,
-        );
-
-        if (itemData.innate) itemData.state = HMCONST.ITEM_STATE.INNATE;
-        // TODO: Some of this can be relocated to weapon-item-sheet.js.
-        const {reach} = this.system;
-        let offset = this.parent.system.bonus.total.reach || 0;
-        if (talentItem) offset += (talentItem.system.bonus.reach || 0);
-        itemData.adjReach = Math.max(reach + offset, 0) || 0;
-
-        // Splitting armor and shields for now, so we can manage stances later.
-        for (let i = 0; i < defItems.length; i++) {
-            const defItem = defItems[i];
-            const defData = defItem.system;
-            // Without having finer control over prepData order, we must force a prep here.
-            defItem.prepareData({setBonus: false});
-            defData.shield.checked ? shields.push(defItem) : armors.push(defItem);
-        }
-
-        const {bonus}   = itemData;
-
-        // Migration target.
-        const qual      = this.quality;
-        bonus.base.atk  = qual.atk;
-        bonus.base.def  = qual.def;
-        bonus.base.dmg  = qual.dmg;
-        delete bonus.qual;
-
-        const cclass    = {};
-        const encumb    = {};
-        const misc      = {};
-        const race      = {};
-        const stats     = {};
-        const state     = {};
-        const classData  = actorData.bonus.class;
-        const encumbData = actorData.bonus.encumb;
-        const miscData   = actorData.bonus.misc;
-        const statsData  = actorData.bonus.stats;
-        const raceData   = actorData.bonus.race;
-        const stateData  = actorData.bonus.state;
-
-        const spec      = {};
-        const profTable = HMTABLES.weapons.noprof;
-        const wSkill    = itemData.skill;
-        const profItem  = this.actor.items.find((a) => {
-            return a.type === 'proficiency' && a.name === itemData.proficiency;
+        const {bonus} = this.system;
+        const {total} = bonus;
+        Object.keys(total).forEach((stat) => {
+            total[stat] = Object.keys(bonus)
+                                .filter((vector) => vector !== 'mod')
+                                .reduce((sum, vector) => sum + (bonus[vector][stat] || 0),
+                                    -total[stat] || 0);
         });
-
-        const talent = {};
-        const talentData = talentItem ? talentItem.system.bonus : undefined;
-
-        let j = 0;
-        for (const key in bonus.total) {
-            const profBonus = profItem ? profItem.system.bonus?.[key] || 0
-                                       : profTable.table[wSkill] * profTable.vector[j++];
-            spec[key]   = profBonus || 0;
-            cclass[key] = classData?.[key] || 0;
-            encumb[key]  = encumbData?.[key] || 0;
-            misc[key]   = miscData?.[key] || 0;
-            race[key]   = raceData?.[key] || 0;
-            stats[key]  = statsData?.[key] || 0;
-            state[key]  = stateData?.[key] || 0;
-            talent[key] = talentData?.[key] || 0;
-
-            // Explicitly allowing multiple armor/shields because we don't support accesories yet.
-            for (let i = 0; i < armors.length; i++)  {
-                const armorData = armors[i].system.bonus.total;
-                armor[key] = (armor[key] || 0) + (armorData[key] || 0);
-            }
-            for (let i = 0; i < shields.length; i++)  {
-                const shieldData = shields[i].system.bonus.total;
-                shield[key] = (shield[key] || 0) + (shieldData[key] || 0);
-            }
-        }
-
-        if (ranged.checked) {
-            stats.dmg = 0;
-            cclass.spd = Math.min(cclass.spd, classData?.spdr || cclass.spd);
-        } else {
-            cclass.spd = Math.min(cclass.spd, classData?.spdm || cclass.spd);
-        }
-
-        // TODO: Build a new system.bonus rather than clean the old one.
-        Object.values(armor).every((a) => a === 0)  ? delete bonus.armor  : bonus.armor  = armor;
-        Object.values(shield).every((a) => a === 0) ? delete bonus.shield : bonus.shield = shield;
-        Object.values(misc).every((a) => a === 0)   ? delete bonus.misc   : bonus.misc   = misc;
-        Object.values(state).every((a) => a === 0)   ? delete bonus.state : bonus.state  = state;
-
-        if (isCharacter) {
-            Object.values(stats).every((a) => a === 0)  ? delete bonus.stats  : bonus.stats = stats;
-            Object.values(encumb).every((a) => a === 0) ? delete bonus.encumb : bonus.encumb = encumb;
-            Object.values(cclass).every((a) => a === 0) ? delete bonus.class  : bonus.class = cclass;
-            Object.values(race).every((a) => a === 0)   ? delete bonus.race   : bonus.race = race;
-            Object.values(spec).every((a) => a === 0)   ? delete bonus.spec   : bonus.spec = spec;
-            Object.values(talent).every((a) => a === 0) ? delete bonus.talent : bonus.talent = talent;
-        }
-
-        Object.keys(bonus.total).forEach((key) => {
-            let sum = -bonus.total[key];
-            for (const state in bonus) { sum += bonus[state][key]; }
-            bonus.total[key] = sum;
-        });
-
-        bonus.total.spd = Math.max(this.minspd, bonus.total.spd);
-        if (jab.checked) {
-            const jspd = bonus.total.spd + (bonus.base.jspd - bonus.base.spd);
-            bonus.total.jspd = Math.max(this.minspd, jspd);
-        }
     }
 
     get capabilities() {
