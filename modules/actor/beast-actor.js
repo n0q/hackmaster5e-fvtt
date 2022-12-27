@@ -12,6 +12,7 @@ export class HMBeastActor extends HMActor {
         this.setBonusTotal();
         this.setSP();
         this.setHP();
+        this.prepareWeaponProfiles();
     }
 
     get movespd() {
@@ -46,8 +47,6 @@ export class HMBeastActor extends HMActor {
         if (tenacity > 0) hp.tenacity = tenacity;
     }
 
-    getAbilityBonus() {
-        // Placeholder value.
-        return 2;
-    }
+    // Placeholder value.
+    getAbilityBonus() { return 2; }
 }

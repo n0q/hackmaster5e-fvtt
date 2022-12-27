@@ -1,5 +1,6 @@
 import { HMTABLES } from '../tables/constants.js';
 import { HMDialogFactory } from '../dialog/dialog-factory.js';
+import { HMWeaponProfile } from '../item/profiles/weapon-profile.js';
 
 export class HMActor extends Actor {
     prepareBaseData() {
@@ -53,6 +54,18 @@ export class HMActor extends Actor {
         const topCf = HMTABLES.top[type] + (system.bonus.total.top || 0);
         const top   = Math.floor(max * topCf);
         system.hp = {max, value, top};
+    }
+
+    prepareWeaponProfiles() {
+        this.wprofiles = new Collection();
+        this.itemTypes.weapon.forEach((weapon) => {
+            const _id = foundry.utils.randomID();
+            weapon.profileId = _id;
+            const profileData = {name: weapon.name, weapon, actor: this, _id};
+            const profile = new HMWeaponProfile(profileData);
+            profile.evaluateProfile();
+            this.wprofiles.set(profile.id, profile);
+        });
     }
 
     setBonusTotal() {

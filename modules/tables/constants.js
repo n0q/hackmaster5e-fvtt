@@ -749,14 +749,14 @@ export const HMTABLES = {
                 return {base, declare, shoot, ...specialMove};
             },
         },
-        'noprof': {
-            'table': {
-                'minimal': -1,
-                'low':     -2,
-                'medium':  -4,
-                'high':    -6,
+        profTable: {
+            table: {
+                minimal: -1,
+                low:     -2,
+                medium:  -4,
+                high:    -6,
             },
-            'vector': [1, 1, 1, -1],
+            vector: [1, 1, 1, -1],
         },
     },
     'weight': (bmi, height) => {

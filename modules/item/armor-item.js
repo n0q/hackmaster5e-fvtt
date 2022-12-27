@@ -1,9 +1,9 @@
 import { HMItem } from './item.js';
 
 export class HMArmorItem extends HMItem {
-    prepareBaseData(options={}) {
+    prepareBaseData() {
         super.prepareBaseData();
-        this._prepArmorData(options);
+        this._prepArmorData();
     }
 
     prepareDerivedData() {

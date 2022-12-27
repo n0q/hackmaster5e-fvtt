@@ -16,12 +16,9 @@ function getDialogData() {
 function getWeapons(actor, itemId) {
     let weaponList = [];
     if (itemId) {
-        weaponList.push(actor.items.get(itemId));
+        weaponList.push(actor.wprofiles.get(itemId));
     } else {
-        weaponList = actor.items.filter(
-            (a) => a.type === 'weapon'
-            && HMCONST.ITEM_STATE.EQUIPPED <= a.system.state,
-        );
+        weaponList = actor.wprofiles.filter((a) => HMCONST.ITEM_STATE.EQUIPPED <= a.system.state);
     }
 
     const weapons = weaponList.sort(

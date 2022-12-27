@@ -11,14 +11,14 @@ export class HMItem extends Item {
     static DEFAULT_ICON = HMCONST.DEFAULT_ICON;
 
     /** @override */
-    prepareData(options={}) {
-        this.prepareBaseData(options);
+    prepareData() {
+        this.prepareBaseData();
         super.prepareEmbeddedDocuments();
         this.prepareDerivedData();
     }
 
     /** @override */
-    prepareBaseData(options={}) {
+    prepareBaseData() {
         super.prepareBaseData();
     }
 
@@ -33,7 +33,7 @@ export class HMItem extends Item {
         const {bonus, qn} = system;
         const values = HMTABLES.quality[qKey].map((a) => a * qn);
         const keys = Object.keys(bonus.total);
-        return Object.fromEntries(keys.map((_, i) => [keys[i], values[i]]));
+        return Object.fromEntries(keys.map((_, i) => [keys[i], values[i] ?? 0]));
     }
 
     get specname() {

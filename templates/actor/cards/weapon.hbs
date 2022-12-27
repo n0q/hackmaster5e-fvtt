@@ -11,7 +11,8 @@
             <img class='rollable imgbutton' src='{{findConfigValue 'combatImg' 'def'}}' title='Defend'
                 data-dialog='def'
                 data-formula-type='standard'
-                data-item-id='{{_id}}'>
+                data-item-id='{{_id}}'
+            />
             {{#if system.ranged.checked}}
             <img class='rollable imgbutton' src='{{findConfigValue 'combatImg' 'rdmg'}}' title='Ranged Damage'
             {{else}}
@@ -20,7 +21,7 @@
                 data-dialog='dmg'
                 data-formula-type='standard'
                 data-item-id='{{_id}}'
-             />
+            />
             {{#if system.ranged.checked}}
             <img class='rollable imgbutton' src='{{findConfigValue 'combatImg' 'ratk'}}' title='Ranged Attack'
             {{else}}
@@ -49,21 +50,21 @@
                 </table>
             {{else}}
             <span class='reach'>
-                <label>{{localize 'HM.reach'}}: {{system.adjReach}} ft.</label>
+                <label>{{localize 'HM.reach'}}: {{system.reach}} ft.</label>
                 <i class='txtbutton far fa-circle-dot' title='{{localize 'HM.UI.showreach'}}' name='reachHint'
-                    data-item-id='{{_id}}'
+                    data-item-id='{{weaponId}}'
                     data-op='setFlag'
                     data-key='reachHint'
-                    data-value='{{_id}}'
+                    data-value='{{weaponId}}'
                     data-redraw=true
-                   {{#if (eq _id (getFlag 'hackmaster5e' 'reachHint'))}}data-enabled{{/if}}
+                   {{#if (eq weaponId (getFlag 'hackmaster5e' 'reachHint'))}}data-enabled{{/if}}
                    {{#if (eq system.state 1)}}style='visibility: hidden;'{{/if}}>
                 </i>
             {{/if}}
             </span>
             <span class='secondary-controls'>
                 <i class='txtbutton far fa-arrow-down-arrow-up' title='{{localize 'HM.UI.tequipped'}}' name='toggleEquip'
-                    data-item-id='{{_id}}'
+                    data-item-id='{{weaponId}}'
                     data-op='setProperty'
                     data-key='system.state'
                     data-value='{{#if (eq system.state 2)}}1{{else}}2{{/if}}'
@@ -90,11 +91,17 @@
                         <td>
                             <input class='editable' type='number' value={{this}}
                                 data-item-prop='system.bonus.mod.{{@key}}'
-                                data-dtype='Number' />
+                                data-item-id='{{../../weaponId}}' data-dtype='Number' />
                         </td>
                         {{else}}
                         <td>
-                            {{this}}{{#if
+                            {{#if
+                                (and ../../system.ranged.checked
+                                     this
+                                    (eq @key 'dmg')
+                                    (eq @../key 'total')
+                                )
+                            }}<super>*</super>{{/if}}{{this}}{{#if
                                 (and ../../system.jab.checked
                                     (eq @key 'spd')
                                         (or

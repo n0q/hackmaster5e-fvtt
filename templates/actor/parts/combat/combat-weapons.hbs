@@ -5,22 +5,22 @@
 {{/if}}
     {{#if actor.weapons.equipped.length}}
     <label class='resource-label'>{{localize 'HM.thingState.equipped'}}</label>
-        {{#each actor.weapons.equipped}}
+        {{#each actor.wprofiles}}{{#if (eq system.state 2)}}
             {{> 'systems/hackmaster5e/templates/actor/cards/weapon.hbs' }}
-        {{/each}}
+        {{/if}}{{/each}}
     <br>
     {{/if}}
     {{#if actor.weapons.innate.length}}
     <label class='resource-label'>{{localize 'HM.thingState.innate'}}</label>
-        {{#each actor.weapons.innate}}
+       {{#each actor.wprofiles}}{{#if (eq system.state 3)}}
             {{> 'systems/hackmaster5e/templates/actor/cards/weapon.hbs' }}
-        {{/each}}
+        {{/if}}{{/each}}
     <br>
     {{/if}}
     {{#if actor.weapons.carried.length}}
     <label class='resource-label'>{{localize 'HM.thingState.carried'}}</label>
-        {{#each actor.weapons.carried}}
+        {{#each actor.wprofiles}}{{#if (eq system.state 1)}}
             {{> 'systems/hackmaster5e/templates/actor/cards/weapon.hbs' }}
-        {{/each}}
+        {{/if}}{{/each}}
     {{/if}}
 </ol>
