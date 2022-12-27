@@ -749,14 +749,17 @@ export const HMTABLES = {
                 return {base, declare, shoot, ...specialMove};
             },
         },
-        profTable: {
-            table: {
+        noProf: {
+            skill: {
                 minimal: -1,
                 low:     -2,
                 medium:  -4,
                 high:    -6,
             },
-            vector: [1, 1, 1, -1],
+            weaponType: {
+                melee:  [1, 1, 1, -1],
+                ranged: [1, 0, 0, -1],
+            },
         },
     },
     'weight': (bmi, height) => {

@@ -4,7 +4,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 ### Fixed
-- Innate attacks could be misplaced in some circumstances.
+- Innate attacks weapons could be misplaced in some circumstances.
+- Using a ranged weapon without proficiency no longer penalizes defense or damage.
 
 ## [0.3.6] - 2022-12-22
 ### Added
