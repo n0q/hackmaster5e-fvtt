@@ -1,4 +1,4 @@
-import { HMCONST, HMTABLES } from '../../tables/constants.js';
+import { HMCONST, HMTABLES } from '../tables/constants.js';
 
 export class HMWeaponProfile extends foundry.abstract.DataModel {
     constructor(...args) {
