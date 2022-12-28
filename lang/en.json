@@ -300,7 +300,7 @@
             "setWoundTitle":     "Inflict Wound",
             "setWoundBody":      "Wound HP",
             "specialMove":       "Special Move",
-            "strBonus":          "Strength bonus",
+            "strBonus":          "Moved 10+ feet/s",
             "warnSP":            "Insufficient points to cast this spell.",
             "warnMulti":         "Multiple tokens selected. Using <b>"
         },

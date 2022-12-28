@@ -4,27 +4,28 @@ import { HMChatMgr } from '../mgr/chatmgr.js';
 export class HMItemHooks {
     static async createItem(item, _options, userId) {
         if (game.user.id !== userId) return;
-        const {parent, type} = item;
+        if (!item.parent) return;
+        const {type} = item;
 
-        if (type === 'wound' && parent) {
-            if (!parent.system.bonus.total.trauma) return;
-            const {top} = parent.system.hp;
+        if (type === 'wound' && item.parent) {
+            if (!item.parent.system.bonus.total.trauma) return;
+            const {top} = item.parent.system.hp;
             const wound = item.system.hp;
             if (!top || top >= wound) return;
 
             const chatmgr = new HMChatMgr();
             const cardtype = HMCONST.CARD_TYPE.ALERT;
             const dataset = {context: item, top, wound};
-            if (parent.type === 'beast') dataset.hidden = true;
+            if (item.parent.type === 'beast') dataset.hidden = true;
             const card = await chatmgr.getCard({cardtype, dataset});
             await ChatMessage.create(card);
 
             // Auto-roll for beasts.
-            if (parent.type === 'beast') {
+            if (item.parent.type === 'beast') {
                 const formula = HMTABLES.formula.save.trauma;
-                const dialogResp = {caller: parent, context: parent};
-                const roll = await new Roll(formula, parent.system).evaluate({async: true});
-                dataset.resp = {caller: parent};
+                const dialogResp = {caller: item.parent, context: item.parent};
+                const roll = await new Roll(formula, item.parent.system).evaluate({async: true});
+                dataset.resp = {caller: item.parent};
                 dataset.dialog = 'save';
                 dataset.formulaType = 'trauma';
 
@@ -33,11 +34,11 @@ export class HMItemHooks {
                 await ChatMessage.create(topcard);
             }
         } else if (type === 'race' || type === 'cclass') {
-            const itemList = parent.itemTypes[type];
+            const itemList = item.parent.itemTypes[type];
             if (!itemList.length) return;
 
             Object.entries(itemList.slice(0, itemList.length -1))
-                .map((a) => parent.items.get(a[1].id).delete());
+                .map((a) => item.parent.items.get(a[1].id).delete());
         }
     }
 

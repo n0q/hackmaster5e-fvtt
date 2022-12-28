@@ -1,4 +1,3 @@
-import LOGGER from './logger.js';
 import idx from '../tables/dictionary.js';
 
 export default function registerHandlebarsHelpers() {
@@ -29,7 +28,6 @@ export default function registerHandlebarsHelpers() {
     });
 
     Handlebars.registerHelper('findConfigValue', (obj, key) => {
-        LOGGER.trace(`Calling findConfigValue Helper | Arg1:${obj} Arg2:${key}`);
         if (obj in idx) return idx[obj][key];
         return 'INVALID_KEY';
     });

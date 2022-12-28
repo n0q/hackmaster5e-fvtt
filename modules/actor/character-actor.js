@@ -16,6 +16,7 @@ export class HMCharacterActor extends HMActor {
         super.prepareDerivedData();
         this.setBonusTotal();
         this.setExtras();
+        this.prepareWeaponProfiles();
     }
 
     get movespd() {

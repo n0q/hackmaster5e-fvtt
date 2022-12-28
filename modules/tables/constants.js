@@ -19,6 +19,16 @@ export const HMCONST = {
         D12P:   2,
         D8P:    3,
     },
+    DMGFORM: {
+        STD:         0,
+        SHIELD:      1,
+        RSTD:        2,
+        SHIELDRSTD:  3,
+        JAB:         4,
+        JABSHIELD:   5,
+        BSTAB:       8,
+        BSTABSHIELD: 9,
+    },
     DMGTYPE: {
         CRUSHING:   0,
         HACKING:    1,
@@ -444,12 +454,14 @@ export const HMTABLES = {
             [HMCONST.SPECIAL.SNAPSHOT]:   'd20p + @bonus.total.atk - @resp.reachmod - 6 + @resp.bonus',
         },
         dmg: {
-            standard:    '@dmg.normal + @bonus.total.dmg                     + @resp.bonus',
-            shield:      '@dmg.shield + @bonus.total.dmg                     + @resp.bonus',
-            jab:         '@jab.normal + @bonus.total.dmg                     + @resp.bonus',
-            shieldjab:   '@jab.shield + @bonus.total.dmg                     + @resp.bonus',
-            bstab:       '@dmg.normal + @bonus.total.dmg + @bonus.total.back + @resp.bonus',
-            shieldbstab: '@dmg.shield + @bonus.total.dmg + @bonus.total.back + @resp.bonus',
+            [HMCONST.DMGFORM.STD]:         '@dmg.normal + @bonus.total.dmg                     + @resp.bonus',
+            [HMCONST.DMGFORM.SHIELD]:      '@dmg.shield + @bonus.total.dmg                     + @resp.bonus',
+            [HMCONST.DMGFORM.RSTD]:        '@dmg.normal + @derived.dmg                         + @resp.bonus',
+            [HMCONST.DMGFORM.SHIELDRSTD]:  '@dmg.shield + @derived.dmg                         + @resp.bonus',
+            [HMCONST.DMGFORM.JAB]:         '@jab.normal + @bonus.total.dmg                     + @resp.bonus',
+            [HMCONST.DMGFORM.SHIELDJAB]:   '@jab.shield + @bonus.total.dmg                     + @resp.bonus',
+            [HMCONST.DMGFORM.BSTAB]:       '@dmg.normal + @bonus.total.dmg + @bonus.total.back + @resp.bonus',
+            [HMCONST.DMGFORM.BSTABSHIELD]: '@dmg.shield + @bonus.total.dmg + @bonus.total.back + @resp.bonus',
         },
         def: {
             [HMCONST.SPECIAL.DEFEND]:  '@resp.defdie + @bonus.total.def + @resp.dodge     + @resp.bonus',
@@ -749,14 +761,17 @@ export const HMTABLES = {
                 return {base, declare, shoot, ...specialMove};
             },
         },
-        'noprof': {
-            'table': {
-                'minimal': -1,
-                'low':     -2,
-                'medium':  -4,
-                'high':    -6,
+        noProf: {
+            skill: {
+                minimal: -1,
+                low:     -2,
+                medium:  -4,
+                high:    -6,
             },
-            'vector': [1, 1, 1, -1],
+            weaponType: {
+                melee:  [1, 1, 1, -1],
+                ranged: [1, 0, 0, -1],
+            },
         },
     },
     'weight': (bmi, height) => {

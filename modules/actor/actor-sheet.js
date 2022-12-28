@@ -138,7 +138,7 @@ export class HMActorSheet extends ActorSheet {
         // Drag events for macros.
         if (this.actor.isOwner) {
             let handler = ev => this._onDragStart(ev);
-            html.find('li.item').each((i, li) => {
+            html.find('li.item').each((_i, li) => {
                 if (li.classList.contains('inventory-header')) return;
                 li.setAttribute('draggable', true);
                 li.addEventListener('dragstart', handler, false);
@@ -147,13 +147,15 @@ export class HMActorSheet extends ActorSheet {
     }
 
     // Getters
-    _getItemId(event) {
-        let id = $(event.currentTarget).parents('.card, .item').attr('data-item-id');
-        if (typeof id === 'undefined') id = $(event.currentTarget).attr('data-item-id');
-        return id;
+    _getItemId(ev, attr='data-item-id') {
+        const el = ev.currentTarget;
+        return $(el).attr(attr) || $(el).parents('.card, .item').attr(attr);
     }
 
-    _getOwnedItem(itemId) { return this.actor.items.get(itemId); }
+    _getOwnedItem(itemId) {
+        const {actor} = this;
+        return actor.items.get(itemId) ?? actor.wprofiles.get(itemId);
+    }
 
     _getObjProp(event) { return $(event.currentTarget).attr('data-item-prop'); }
 
@@ -179,7 +181,7 @@ export class HMActorSheet extends ActorSheet {
 
     async _onToggle(ev) {
         ev.preventDefault();
-        const cId = this._getItemId(ev);
+        const cId = this._getItemId(ev, 'data-toggle-id') ?? this._getItemId(ev);
 
         const tState = !this.visibleItemId[cId];
         this.visibleItemId[cId] = tState;
@@ -240,6 +242,7 @@ export class HMActorSheet extends ActorSheet {
         const element = ev.currentTarget;
         const dataset = element.dataset;
         const item    = this._getOwnedItem(this._getItemId(ev));
+
         if (dataset.itemProp) {
             const {itemProp, dtype} = dataset;
             let targetValue = ev.target.value;

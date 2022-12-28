@@ -11,19 +11,19 @@ export class HMClassItem extends HMItem {
         super.prepareDerivedData();
     }
 
-    async _prepCClassData() {
+    _prepCClassData() {
         const {system} = this;
         const pTable = system.ptable;
 
         // initialize new cclass object ptable
         if (Object.entries(pTable).length === 0) {
             const {pData} = HMTABLES.cclass;
-            for (let i = 1; i < 21; i++) pTable[i] = deepClone(pData);
-            if (Object.entries(pTable).length) return;
-            await this.update({'system.ptable': pTable});
+            for (let z = 1; z < 21; z++) pTable[z] = deepClone(pData);
+            this.update({'system.ptable': pTable});
+            return;
         }
 
-        if (!this.actor?.system) return;
+        if (!this.actor) return;
 
         // calculate hp
         system.level = Math.clamped((system.level || 0), 0, 20);
