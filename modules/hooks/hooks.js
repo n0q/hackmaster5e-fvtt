@@ -5,9 +5,9 @@ import { HMActorHooks } from './actor-hooks.js';
 import { HMChatHooks } from './chat-hooks.js';
 import { HMItemHooks } from './item-hooks.js';
 import { HMMacroHooks } from './macro-hooks.js';
+import { HMSceneControlHooks } from './scene-hooks.js';
 import { HMTokenHooks } from './token-hooks.js';
 import { HMCombat, HMCombatTracker } from '../sys/combat.js';
-import { HMToken } from '../sys/token.js';
 import { handleSocketEvent } from '../sys/sockets.js';
 
 async function ready() {
@@ -45,8 +45,8 @@ export const registerHooks = () => {
     Hooks.on('preDeleteCombat', HMCombat.preDeleteCombat);
     Hooks.on('deleteCombat', () => canvas.tokens.placeables.forEach((t) => t.drawReach()));
     Hooks.on('renderCombatTracker', HMCombatTracker.renderCombatTracker);
-    Hooks.on('renderSceneControls', HMToken.renderSceneControls);
-    Hooks.on('getSceneControlButtons', HMToken.getSceneControlButtons);
+    Hooks.on('renderSceneControls', HMSceneControlHooks.renderSceneControls);
+    Hooks.on('getSceneControlButtons', HMSceneControlHooks.getSceneControlButtons);
     Hooks.on('hotbarDrop', HMMacroHooks.hotbarDrop);
     game.socket.on(SYSTEM_SOCKET, handleSocketEvent);
 };
