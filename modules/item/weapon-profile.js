@@ -77,7 +77,7 @@ export class HMWeaponProfile extends foundry.abstract.DataModel {
         return talentItem ? talentItem.system.bonus : {};
     }
 
-    evaluateProfile() {
+    evaluate() {
         const [actor, weapon] = [this.actor, this.weapon];
         const weaponBonus = weapon.system.bonus;
         const actorBonus = actor.system.bonus;
@@ -89,11 +89,12 @@ export class HMWeaponProfile extends foundry.abstract.DataModel {
         const {ranged} = this.system;
         const isMechanical = ranged.checked && ranged.mechanical;
 
+        let reachOffset = 0;
+
         const spec = this._getSpecialization();
         const talent = this._getWeaponTalent();
-
-        let reachOffset = 0;
         const bonusObj = {...actorBonus, spec, talent};
+
         Object.keys(bonusObj).sort().forEach((vector) => {
             if (vector === 'total') return;
             const {atk, def, dmg, reach} = bonusObj[vector];

@@ -63,7 +63,7 @@ export class HMActor extends Actor {
             weapon.profileId = _id;
             const profileData = {name: weapon.name, weapon, actor: this, _id};
             const profile = new HMWeaponProfile(profileData);
-            profile.evaluateProfile();
+            profile.evaluate();
             this.wprofiles.set(profile.id, profile);
         });
     }
