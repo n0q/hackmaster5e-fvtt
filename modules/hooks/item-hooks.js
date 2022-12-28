@@ -51,4 +51,10 @@ export class HMItemHooks {
         }
         return true;
     }
+
+    static updateItem(...args) {
+        const item = args[0];
+        if (item.type !== 'weapon' || !item.actor) return;
+        item.actor.getActiveTokens().forEach((x) => x.drawReach());
+    }
 }
