@@ -32,7 +32,7 @@ async function createItemMacro(data, slot) {
     if (macro) game.user?.assignHotbarMacro(macro, slot);
 }
 
-export class HMMacro extends Macro {
+export class HMMacroHooks {
     static hotbarDrop(_bar, data, slot) {
         if (data.type === 'Item') {
             createItemMacro(data, slot);
