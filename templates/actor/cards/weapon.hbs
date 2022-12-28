@@ -96,8 +96,9 @@
                         {{else}}
                         <td>
                             {{#if
-                                (and ../../system.ranged.checked
-                                     this
+                                (and this ../../system.ranged.checked
+                                    (not ../../system.ranged.mechanical)
+                                    (gt this 0)
                                     (eq @key 'dmg')
                                     (eq @../key 'total')
                                 )

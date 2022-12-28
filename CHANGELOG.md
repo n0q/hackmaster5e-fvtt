@@ -3,8 +3,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+### Changed
+- Improved logic for applying strength bonus to non-mechanical ranged weapons.
 ### Fixed
-- Innate attacks weapons could be misplaced in some circumstances.
+- Innate weapons items could be misplaced in some circumstances.
 - Using a ranged weapon without proficiency no longer penalizes defense or damage.
 
 ## [0.3.6] - 2022-12-22

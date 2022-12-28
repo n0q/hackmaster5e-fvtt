@@ -50,41 +50,33 @@ export class DamagePrompt extends HMPrompt {
     }
 
     get dialogResp() {
-        const specialMove = Number(this.dialogData.specialMove);
-        const shieldHit = this.dialogData.shieldHit === 'true';
-        const jabbed   = specialMove === HMCONST.SPECIAL.JAB;
-        const backstab = specialMove === HMCONST.SPECIAL.BACKSTAB;
-        const {caller, strBonus, weapons, widx} = this.dialogData;
+        const {DMGFORM, SPECIAL} = HMCONST;
+        const {addStrBonus, weapons, widx} = this.dialogData;
         const wData = weapons[widx].system;
-        let bonus = parseInt(this.dialogData.bonus, 10) || 0;
+        const specialMove  = Number(this.dialogData.specialMove);
+        const shieldHit    = this.dialogData.shieldHit === 'true';
+        const isJab        = specialMove === SPECIAL.JAB;
+        const isBackstab   = specialMove === SPECIAL.BACKSTAB;
+        const isRanged     = wData.ranged.checked;
 
-        let formulaType;
         let autoFormula = false;
+        let formulaType = shieldHit ? DMGFORM.SHIELD : DMGFORM.STD;
 
-        if (jabbed) {
-            const {normal, shield} = weapons[widx].system.jab;
-            const autoStd    = (!normal || normal === 'auto');
-            const autoShield = (!shield || shield === 'auto');
+        if (isBackstab) { formulaType += DMGFORM.BSTAB; } else
+        if (isRanged)   { formulaType += DMGFORM.RSTD; } else
+        if (isJab) {
+            const {jab} = weapons[widx].system.jab;
+            const jabFormula = shieldHit ? jab?.shield : jab?.normal;
 
-            if (!shieldHit) { formulaType = autoStd    ? 'standard' : 'jab';       } else
-            if  (shieldHit) { formulaType = autoShield ? 'shield'   : 'shieldjab'; }
-            autoFormula = autoStd || autoShield;
-        } else
-
-        if (backstab && !shieldHit) { formulaType = 'bstab';       } else
-        if (backstab &&  shieldHit) { formulaType = 'shieldbstab'; } else
-        if             (!shieldHit) { formulaType = 'standard';    } else
-        if              (shieldHit) { formulaType = 'shield';      }
-
-        if (strBonus && wData.ranged.checked && !wData.ranged?.mechanical) {
-            const strBonusValue = caller.getAbilityBonus('str', 'dmg');
-            bonus += Math.max(0, strBonusValue);
+            jabFormula && jabFormula !== 'auto'
+                ? formulaType += DMGFORM.JAB
+                : autoFormula = true;
         }
 
         const dialogResp = {
             widx,
-            strBonus,
-            bonus,
+            addStrBonus,
+            bonus: parseInt(this.dialogData.bonus, 10) || 0,
             defense: this.dialogData?.caller.fightingDefensively,
             specialMove,
             shieldHit,

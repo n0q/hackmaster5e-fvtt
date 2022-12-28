@@ -167,8 +167,18 @@ export class HMWeaponItem extends HMItem {
         const {context, resp} = dialogResp;
 
         const {SPECIAL, FORMULA_MOD} = HMCONST;
-        const {autoFormula, defense, formulaType, specialMove} = resp;
+        const {addStrBonus, autoFormula, defense, formulaType, specialMove} = resp;
         const formula = HMTABLES.formula.dmg[formulaType];
+
+        const getDerivedDamageBonus = (strDmg, totalDmg, checked) => {
+            if (checked && strDmg < 0)  return {dmg: totalDmg - strDmg};
+            if (!checked && strDmg > 0) return {dmg: totalDmg - strDmg};
+            return {dmg: totalDmg};
+        };
+
+        const wDmg = context.system.bonus.total.dmg;
+        const actorDmg = actor.getAbilityBonus('str', 'dmg');
+        const derived = getDerivedDamageBonus(actorDmg, wDmg, addStrBonus);
 
         // Formula transform
         const opSet = new Set();
@@ -178,7 +188,7 @@ export class HMWeaponItem extends HMItem {
         if (specialMove === SPECIAL.SET4CHARGE)         opSet.add(FORMULA_MOD.DOUBLE);
         if (defense)                                    opSet.add(FORMULA_MOD.NOPENETRATE);
 
-        const rollContext = {resp, ...context.system};
+        const rollContext = {resp, derived, ...context.system};
         rollContext.bonus.total.back = actor.system.bonus.total.back;
 
         const r = new Roll(formula, rollContext);
