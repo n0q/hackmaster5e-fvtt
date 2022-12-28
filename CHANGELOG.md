@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.3.8] - 2022-12-28
+### Fixed
+- Skill macro generation.
+
 ## [0.3.7] - 2022-12-28
 ### Changed
 - Improved logic for applying strength bonus to non-mechanical ranged weapons.

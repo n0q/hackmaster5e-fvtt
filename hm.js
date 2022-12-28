@@ -17,7 +17,6 @@ import { HMTalentItemSheet } from './modules/item/sheets/talent-item-sheet.js';
 import { HMWeaponItemSheet } from './modules/item/sheets/weapon-item-sheet.js';
 import { HMCombat, HMCombatTracker } from './modules/sys/combat.js';
 import { HMDie } from './modules/sys/dice.js';
-import { HMMacro } from './modules/sys/macro.js';
 import { HMToken } from './modules/sys/token.js';
 import { HMActiveEffect } from './modules/sys/effects.js';
 import { registerSystemSettings } from './modules/sys/settings.js';
@@ -46,7 +45,6 @@ function registerConfig() {
     CONFIG.Actor.documentClass = HMActorFactory;
     CONFIG.Combat.documentClass = HMCombat;
     CONFIG.Item.documentClass = HMItemFactory;
-    CONFIG.Macro.documentClass = HMMacro;
 
     CONFIG.Dice.terms.d = HMDie;
     const diceTypesIdx = CONFIG.Dice.types.findIndex((x) => x.DENOMINATION === 'd');

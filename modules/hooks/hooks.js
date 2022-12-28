@@ -4,11 +4,10 @@ import { HMSupport } from '../sys/support.js';
 import { HMActorHooks } from './actor-hooks.js';
 import { HMChatHooks } from './chat-hooks.js';
 import { HMItemHooks } from './item-hooks.js';
+import { HMMacroHooks } from './macro-hooks.js';
 import { HMTokenHooks } from './token-hooks.js';
-import { HMWeaponItem } from '../item/weapon-item.js';
 import { HMCombat, HMCombatTracker } from '../sys/combat.js';
 import { HMToken } from '../sys/token.js';
-import { HMMacro } from '../sys/macro.js';
 import { handleSocketEvent } from '../sys/sockets.js';
 
 async function ready() {
@@ -38,7 +37,7 @@ export const registerHooks = () => {
     Hooks.on('hoverToken', (token, state) => token.drawReach(state));
     Hooks.on('createItem', HMItemHooks.createItem);
     Hooks.on('preCreateItem', HMItemHooks.preCreateItem);
-    Hooks.on('updateItem', HMWeaponItem.updateItem);
+    Hooks.on('updateItem', HMItemHooks.updateItem);
     Hooks.on('renderChatMessage', HMChatHooks.renderChatMessage);
     Hooks.on('updateCombat', HMCombat.updateCombat);
     Hooks.on('createCombatant', HMCombat.createCombatant);
@@ -48,6 +47,6 @@ export const registerHooks = () => {
     Hooks.on('renderCombatTracker', HMCombatTracker.renderCombatTracker);
     Hooks.on('renderSceneControls', HMToken.renderSceneControls);
     Hooks.on('getSceneControlButtons', HMToken.getSceneControlButtons);
-    Hooks.on('hotbarDrop', HMMacro.hotbarDrop);
+    Hooks.on('hotbarDrop', HMMacroHooks.hotbarDrop);
     game.socket.on(SYSTEM_SOCKET, handleSocketEvent);
 };

@@ -91,8 +91,7 @@ export class HMWeaponItem extends HMItem {
         }
     }
 
-    // TODO: This needs a refactor, but it's too soon to do so. We should
-    // give this a second look after combat variants are introduced.
+    // TODO: Refactor
     static async rollAttack({weapon, caller}={}) {
         const {actor, token} = fromCaller(caller);
         if (!actor && !token) return;
@@ -272,11 +271,5 @@ export class HMWeaponItem extends HMItem {
                 setStatusEffectOnToken(comData, 'scamper');
             }
         }
-    }
-
-    static updateItem(...args) {
-        const item = args[0];
-        if (item.type !== 'weapon' || !item.actor) return;
-        item.actor.getActiveTokens().forEach((x) => x.drawReach());
     }
 }
