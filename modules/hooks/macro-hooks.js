@@ -9,10 +9,10 @@ async function createItemMacro(data, slot) {
     const {system, img} = item;
     const {specialty} = system;
     const args = {skillName: item.name};
-    if (specialty.checked) args.specialty = DOMPurify.sanitize(specialty.value);
+    if (specialty.checked) args.specialty = specialty.value;
     const command = `game.${MODULE_ID}.HMItem.rollSkill(${JSON.stringify(args)});`;
 
-    const fullName = DOMPurify.sanitize(item.specname);
+    const fullName = item.specname;
 
     let macro = game.macros.contents.find((a) => a.name === fullName);
     if (!macro) {
@@ -32,7 +32,7 @@ async function createItemMacro(data, slot) {
     if (macro) game.user?.assignHotbarMacro(macro, slot);
 }
 
-export class HMMacro extends Macro {
+export class HMMacroHooks {
     static hotbarDrop(_bar, data, slot) {
         if (data.type === 'Item') {
             createItemMacro(data, slot);
