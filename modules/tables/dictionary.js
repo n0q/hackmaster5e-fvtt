@@ -222,6 +222,11 @@ idx.skillLevel = {
     'verydifficult': 'HM.skillDiffSelect.verydifficult',
 };
 
+idx.talentSelect = {
+    [HMCONST.TALENT.WEAPON]:    'HM.talentSelect.weapon',
+    [HMCONST.TALENT.EFFECT]:    'HM.talentSelect.effect',
+};
+
 idx.itemCClass = {
     'sp':   'HM.spellpoints',
     'init': 'HM.initbonus',
@@ -267,6 +272,7 @@ idx.defDie = {
     [HMCONST.DIE.D20P]:     'd20p',
     [HMCONST.DIE.D20PM4]:   'd20p - 4',
     [HMCONST.DIE.D12P]:     'd12p',
+    [HMCONST.DIE.D10P]:     'd10p',
     [HMCONST.DIE.D8P]:      'd8p',
 };
 
