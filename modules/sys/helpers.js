@@ -1,13 +1,13 @@
 import idx from '../tables/dictionary.js';
 
-export default function registerHandlebarsHelpers() {
-    Handlebars.registerHelper('concat', function() {
+export const registerHandlebarsHelpers = () => {
+    Handlebars.registerHelper('concat', (...args) => {
         let outStr = '';
-        for (const arg in arguments) {
-            if (typeof arguments[arg] != 'object') {
-                outStr += arguments[arg];
+        args.forEach((arg) => {
+            if (typeof arg !== 'object') {
+                outStr += arg;
             }
-        }
+        });
         return outStr;
     });
 
@@ -25,6 +25,7 @@ export default function registerHandlebarsHelpers() {
         let visible = !!visibleItemId[id];
         if (!!opts.hash.invert) visible = !visible;
         if (!visible) return 'hide';
+        return undefined;
     });
 
     Handlebars.registerHelper('findConfigValue', (obj, key) => {
@@ -78,7 +79,7 @@ export default function registerHandlebarsHelpers() {
         return `${pct}%`;
     });
 
-    Handlebars.registerHelper('repeat', function (count, opts) {
+    Handlebars.registerHelper('repeat', function _(count, opts) {
         let str = '';
 
         if (count) {
@@ -86,10 +87,7 @@ export default function registerHandlebarsHelpers() {
                 const data = {index: i};
                 str += opts.fn(this, data);
             }
-        } else {
-            str = opts.inverse(this);
-        }
-
+        } else str = opts.inverse(this);
         return str;
     });
-}
+};

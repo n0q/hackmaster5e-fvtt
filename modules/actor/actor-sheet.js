@@ -2,6 +2,11 @@ import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMCONST, HMTABLES, MODULE_ID } from '../tables/constants.js';
 
+function getItemId(ev, attr='data-item-id') {
+    const el = ev.currentTarget;
+    return $(el).attr(attr) || $(el).parents('.card, .item').attr(attr);
+}
+
 export class HMActorSheet extends ActorSheet {
     visibleItemId = {};
 
@@ -107,7 +112,7 @@ export class HMActorSheet extends ActorSheet {
         html.find('.item-create').click(this._onItemCreate.bind(this));
 
         // Update Inventory Item
-        html.find('.item-edit').click(ev => {
+        html.find('.item-edit').click((ev) => {
             const li = $(ev.currentTarget).parents('.card, .item');
             const item = this.actor.items.get(li.data('itemId'));
             item.sheet.render(true);
@@ -146,7 +151,7 @@ export class HMActorSheet extends ActorSheet {
 
         // Drag events for macros.
         if (this.actor.isOwner) {
-            let handler = ev => this._onDragStart(ev);
+            const handler = (ev) => this._onDragStart(ev);
             html.find('li.item').each((_i, li) => {
                 if (li.classList.contains('inventory-header')) return;
                 li.setAttribute('draggable', true);
@@ -156,17 +161,10 @@ export class HMActorSheet extends ActorSheet {
     }
 
     // Getters
-    _getItemId(ev, attr='data-item-id') {
-        const el = ev.currentTarget;
-        return $(el).attr(attr) || $(el).parents('.card, .item').attr(attr);
-    }
-
     _getOwnedItem(itemId) {
         const {actor} = this;
         return actor.items.get(itemId) ?? actor.wprofiles.get(itemId);
     }
-
-    _getObjProp(event) { return $(event.currentTarget).attr('data-item-prop'); }
 
     async _onItemCreate(ev) {
         ev.preventDefault();
@@ -190,7 +188,7 @@ export class HMActorSheet extends ActorSheet {
 
     async _onToggle(ev) {
         ev.preventDefault();
-        const cId = this._getItemId(ev, 'data-toggle-id') ?? this._getItemId(ev);
+        const cId = getItemId(ev, 'data-toggle-id') ?? getItemId(ev);
 
         const tState = !this.visibleItemId[cId];
         this.visibleItemId[cId] = tState;
@@ -227,11 +225,11 @@ export class HMActorSheet extends ActorSheet {
 
     _onClick(ev) {
         ev.preventDefault();
-        const item = this._getOwnedItem(this._getItemId(ev));
+        const item = this._getOwnedItem(getItemId(ev));
         item.onClick(ev);
         const {dataset} = ev.currentTarget;
         if (dataset.toggle) {
-            const id = this._getItemId(ev);
+            const id = getItemId(ev);
             const {visibleItemId} = this;
             visibleItemId[id] = !visibleItemId[id];
         }
@@ -250,7 +248,7 @@ export class HMActorSheet extends ActorSheet {
         ev.stopPropagation();
         const element = ev.currentTarget;
         const dataset = element.dataset;
-        const item    = this._getOwnedItem(this._getItemId(ev));
+        const item    = this._getOwnedItem(getItemId(ev));
 
         if (dataset.itemProp) {
             const {itemProp, dtype} = dataset;

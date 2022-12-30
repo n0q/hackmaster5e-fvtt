@@ -19,8 +19,8 @@ export class HMActor extends Actor {
     prepareEmbeddedDocuments() {
         const embeddedTypes = this.constructor.metadata.embedded || {};
         for (const collectionName of Object.values(embeddedTypes)) {
-            for (let e of this[collectionName]) e._safePrepareData();
-            if (collectionName == 'effects') this.applyActiveEffects();
+            for (const e of this[collectionName]) e._safePrepareData();
+            if (collectionName === 'effects') this.applyActiveEffects();
         }
     }
 
@@ -49,11 +49,11 @@ export class HMActor extends Actor {
         if (max === 0) return;
         let value = max;
         const wounds = this.items.filter((a) => a.type === 'wound');
-        Object.keys(wounds).forEach((a) => value -= wounds[a].system.hp);
+        Object.keys(wounds).forEach((a) => { value -= wounds[a].system.hp; });
 
         const topCf = HMTABLES.top[type] + (system.bonus.total.top || 0);
-        const top   = Math.floor(max * topCf);
-        system.hp = {max, value, top};
+        const topValue = Math.floor(max * topCf);
+        system.hp = {max, value, top: topValue};
     }
 
     prepareWeaponProfiles() {
