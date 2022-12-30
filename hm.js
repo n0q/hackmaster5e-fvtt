@@ -21,8 +21,8 @@ import { HMToken } from './modules/sys/token.js';
 import { HMActiveEffect } from './modules/sys/effects.js';
 import { registerSystemSettings } from './modules/sys/settings.js';
 import { registerHooks } from './modules/hooks/hooks.js';
-import registerHandlebarsHelpers from './modules/sys/helpers.js';
-import preloadHandlebarsTemplates from './modules/sys/partials.js';
+import { registerHandlebarsHelpers } from './modules/sys/helpers.js';
+import { preloadHandlebarsTemplates } from './modules/sys/templates.js';
 
 function registerSheets() {
     Actors.unregisterSheet('core', ActorSheet);
