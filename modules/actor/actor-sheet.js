@@ -1,6 +1,6 @@
 import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
-import { HMTABLES, MODULE_ID } from '../tables/constants.js';
+import { HMCONST, HMTABLES, MODULE_ID } from '../tables/constants.js';
 
 export class HMActorSheet extends ActorSheet {
     visibleItemId = {};
@@ -52,8 +52,17 @@ export class HMActorSheet extends ActorSheet {
 
         actorData.itemTypes.weapon.forEach((i) => {
             gear.weapons.push(i);
-            const state = HMTABLES.itemstate[(i.system.state)];
-            weapons[state].push(i);
+
+            const {INNATE} = HMCONST.ITEM_STATE;
+            const {innate, state} = i.system;
+            if (state !== INNATE && innate) {
+                // Stopgap until inventory overhaul.
+                i.update({'system.state': INNATE});
+                weapons[HMTABLES.itemstate[INNATE]].push(i);
+            } else {
+                const itemState = HMTABLES.itemstate[(i.system.state)];
+                weapons[itemState].push(i);
+            }
         });
 
         gear.items = actorData.itemTypes.item.sort((a, b) => a.name.localeCompare(b.name));
