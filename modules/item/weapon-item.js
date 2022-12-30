@@ -37,8 +37,6 @@ export class HMWeaponItem extends HMItem {
         Object.assign(base, {atk: 0, def: 0, dmg: 0});
         Object.keys(mod).forEach((key) => { if (!mod[key]) mod[key] = 0; });
         this.system.bonus = {total, base, quality, mod};
-        const {INNATE} = HMCONST.ITEM_STATE;
-        if (this.system.state !== INNATE && this.system.innate) this.update({'system.state': INNATE});
     }
 
     prepareDerivedData() {
