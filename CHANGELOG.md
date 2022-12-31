@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - d10p defense die.
 ### Fixed
 - Error messages when adding innate weapons.
+- Broken jab and (hopefully) reach display in chat logs.
 
 ## [0.3.8] - 2022-12-28
 ### Fixed
