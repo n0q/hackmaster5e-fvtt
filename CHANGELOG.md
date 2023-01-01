@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 ### Added
 - d10p defense die.
+### Changed
+- Backstab-capable characters are offered backstab damage regardless of weapon type.
 ### Fixed
 - Error messages when adding innate weapons.
 - Broken jab and (hopefully) reach display in chat logs.
