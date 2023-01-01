@@ -176,6 +176,14 @@ idx.dmgType = {
     [HMCONST.DMGTYPE.PUNCTURING]: 'HM.dmgType.puncturing',
 };
 
+idx.effectModes = {
+    [CONST.ACTIVE_EFFECT_MODES.ADD]:       'EFFECT.MODE_ADD',
+    [CONST.ACTIVE_EFFECT_MODES.UPGRADE]:   'EFFECT.MODE_UPGRADE',
+    [CONST.ACTIVE_EFFECT_MODES.DOWNGRADE]: 'EFFECT.MODE_DOWNGRADE',
+    [CONST.ACTIVE_EFFECT_MODES.OVERRIDE]:  'EFFECT.MODE_OVERRIDE',
+    [CONST.ACTIVE_EFFECT_MODES.MULTIPLY]:  'EFFECT.MODE_MULTIPLY',
+};
+
 idx.weaponskill = {
     'minimal': 'HM.weaponskillSelect.minimal',
     'low':     'HM.weaponskillSelect.low',

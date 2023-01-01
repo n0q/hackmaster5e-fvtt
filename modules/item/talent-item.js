@@ -13,20 +13,29 @@ export class HMTalentItem extends HMItem {
 
     _prepTalentData() {
         const {system} = this;
-        if (Number(system.type) !== HMCONST.TALENT.WEAPON) return;
-        const [isMechanical, isRanged] = [system.weapon.mechanical, system.weapon.ranged];
-        if (isMechanical || isRanged) {
-            if (isMechanical && !isRanged) this.update({'system.weapon.mechanical': false});
+        const type = Number(system.type);
 
-            const {bonus} = system;
-            const {def, dmg, reach} = bonus;
-            if (isRanged) {
-                bonus.def = 0;
-                bonus.reach = 0;
+        if (type === HMCONST.TALENT.WEAPON) {
+            const [isMechanical, isRanged] = [system.weapon.mechanical, system.weapon.ranged];
+            if (isMechanical || isRanged) {
+                if (isMechanical && !isRanged) this.update({'system.weapon.mechanical': false});
+
+                const {bonus} = system;
+                const {def, dmg, reach} = bonus;
+                if (isRanged) {
+                    bonus.def = 0;
+                    bonus.reach = 0;
+                }
+                if (isMechanical) bonus.dmg = 0;
+                const dirty = bonus.def !== def || bonus.dmg !== dmg || bonus.reach !== reach;
+                if (dirty) this.update({'system.bonus': bonus});
             }
-            if (isMechanical) bonus.dmg = 0;
-            const dirty = bonus.def !== def || bonus.dmg !== dmg || bonus.reach !== reach;
-            if (dirty) this.update({'system.bonus': bonus});
+            if (this.effects.size) this.effects.forEach((fx) => fx.delete());
+        } else if (type === HMCONST.TALENT.EFFECT) {
+            if (this.effects.size) return;
+            const changes = [{key: '', value: '0', mode: CONST.ACTIVE_EFFECT_MODES.ADD}];
+            const aeData = {label: this.name, changes};
+            this.createEmbeddedDocuments('ActiveEffect', [aeData]);
         }
     }
 
