@@ -10,7 +10,6 @@ export class HMActor extends Actor {
 
     prepareDerivedData() {
         super.prepareDerivedData();
-        this.setHP();
     }
 
     /** @override */
@@ -74,7 +73,7 @@ export class HMActor extends Actor {
 
         const multiply = ['move'];
         for (const vector in bonus) {
-            if (vector === 'total') { continue; }
+            if (vector === 'total') continue;
 
             // Dereference indexed key/val pairs;
             if (bonus[vector]?._idx) {
@@ -99,6 +98,14 @@ export class HMActor extends Actor {
                 }
             }
         }
+
+        Object.keys(total)
+            .filter((stat) => Number.isNumeric(total[stat]) && !Number.isInteger(total[stat]))
+            .forEach((stat) => {
+                const parsed = parseFloat(total[stat]);
+                total[stat] = parseFloat(parsed.toPrecision(5));
+            });
+
         bonus.total = total;
     }
 

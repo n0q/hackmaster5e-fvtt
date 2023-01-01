@@ -20,13 +20,9 @@ export class HMActiveEffectHooks {
 
     static createActiveEffect(effect, _data, userId) {
         if (game.userId !== userId) return;
-        if (effect.parent.type === 'talent') {
-            console.warn('hello');
-            console.warn(effect);
-            return;
-        }
+        if (!effect.flags.core) return;
 
-        // Enforces exclusivity if effects are manually set by the user.
+        // Enforces exclusivity if status effects are manually set by the user.
         const {statusId} = effect.flags.core;
         const token = effect.parent.getActiveTokens().shift();
         const exclusiveEffects = [...HMTABLES.effects.exclusiveEffects];
@@ -42,7 +38,7 @@ export class HMActiveEffectHooks {
 
     static deleteActiveEffect(effect, _data, userId) {
         if (game.userId !== userId) return;
-        if (effect.transfer) return;
+        if (!effect.flags.core) return;
 
         const token = effect.parent.getActiveTokens().shift();
         token.drawReach();
