@@ -42,6 +42,7 @@ export class HMActiveEffectHooks {
 
     static deleteActiveEffect(effect, _data, userId) {
         if (game.userId !== userId) return;
+        if (effect.transfer) return;
 
         const token = effect.parent.getActiveTokens().shift();
         token.drawReach();

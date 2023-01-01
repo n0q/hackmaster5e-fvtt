@@ -17,10 +17,14 @@
                 <section name='options' class='col_rborder'>
                     <span class='form-option'>
                         <label class="resource-label">{{localize "HM.type"}}</label>
-                        <label class="resource-label">{{localize "HM.weapon"}}</label>
+                        <select name='system.type'>
+                            {{selectOptions (findConfigObj 'talentSelect') selected=system.type localize=true}}
+                        </select>
                     </span>
                 </section>
-                <section {{#unless (eq system.type 0)}}style='visibility: hidden;'{{/unless}}>
+
+                {{#if (eq system.type 0)}}
+                <section name='weapon-talent'>
                     <span class='grid-2col'>
                         <span>
                             <span class='form-option'>
@@ -61,6 +65,40 @@
                         </span>
                     </span>
                 </section>
+
+                {{else}}
+                <section name='effect-talent'>
+                    {{#each effects}}
+                    <table class='table-basic' align="left" style='margin-top: 0;'>
+                        <thead><tr data-effect-id={{_id}}>
+                            <th scope='col' width='99%' style='text-align: left; padding-left: 5px;'>{{localize 'HM.UI.key'}}</th>
+                            <th scope='col'>{{localize 'HM.UI.value'}}</th>
+                            <th scope='col' style='text-align: left; padding-left: 5px;'>{{localize 'HM.UI.mode'}}</th>
+                            <th scope='col' class='button add-effect'><i class='fas fa-plus'></i></th>
+                        </tr></thead>
+                        <tbody>
+                            {{#each changes}}
+                            <tr data-effect-id={{../_id}} data-effect-idx={{@index}}>
+                                <td width='99%'><span class='max-width'>
+                                    <input type='text' class='edit-effect' value='{{key}}' style='text-align: left;'
+                                           data-edit-key='key'> 
+                                </span></td>
+                                <td>
+                                    <input type='text' class='edit-effect' value='{{value}}' style='text-align: left;'
+                                        data-edit-key='value'>
+                                </td>
+                                <td><select name='mode' class='edit-effect' data-edit-key='mode'>
+                                    {{selectOptions (findConfigObj 'effectModes') selected=mode localize=true}}
+                                </select></td>
+                                <td class='button delete-effect' {{#if (eq ../changes.length 1)}}disabled{{/if}}>
+                                    <i class='fas fa-trash'></i>
+                                </td>
+                            </tr>
+                            {{/each}}{{/each}}
+                        </tbody>
+                    </table>
+                </section>
+                {{/if}}
             </div>
         </div>
         {{/with}}
