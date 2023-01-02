@@ -45,6 +45,12 @@ export class DefendPrompt extends HMPrompt {
         });
     }
 
+    getCapList(weapon, actor=null) {
+        const capsObj = super.getCapList(weapon, actor);
+        delete capsObj[HMCONST.SPECIAL.BACKSTAB];
+        return capsObj;
+    }
+
     update(options) {
         const {weapons, widx, caller} = this.dialogData;
         let {specialMove} = this.dialogData;

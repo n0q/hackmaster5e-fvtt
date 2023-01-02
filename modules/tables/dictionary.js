@@ -176,6 +176,14 @@ idx.dmgType = {
     [HMCONST.DMGTYPE.PUNCTURING]: 'HM.dmgType.puncturing',
 };
 
+idx.effectModes = {
+    [CONST.ACTIVE_EFFECT_MODES.ADD]:       'EFFECT.MODE_ADD',
+    [CONST.ACTIVE_EFFECT_MODES.UPGRADE]:   'EFFECT.MODE_UPGRADE',
+    [CONST.ACTIVE_EFFECT_MODES.DOWNGRADE]: 'EFFECT.MODE_DOWNGRADE',
+    [CONST.ACTIVE_EFFECT_MODES.OVERRIDE]:  'EFFECT.MODE_OVERRIDE',
+    [CONST.ACTIVE_EFFECT_MODES.MULTIPLY]:  'EFFECT.MODE_MULTIPLY',
+};
+
 idx.weaponskill = {
     'minimal': 'HM.weaponskillSelect.minimal',
     'low':     'HM.weaponskillSelect.low',
@@ -220,6 +228,11 @@ idx.skillLevel = {
     'average':       'HM.skillDiffSelect.average',
     'difficult':     'HM.skillDiffSelect.difficult',
     'verydifficult': 'HM.skillDiffSelect.verydifficult',
+};
+
+idx.talentSelect = {
+    [HMCONST.TALENT.WEAPON]:    'HM.talentSelect.weapon',
+    [HMCONST.TALENT.EFFECT]:    'HM.talentSelect.effect',
 };
 
 idx.itemCClass = {
@@ -267,6 +280,7 @@ idx.defDie = {
     [HMCONST.DIE.D20P]:     'd20p',
     [HMCONST.DIE.D20PM4]:   'd20p - 4',
     [HMCONST.DIE.D12P]:     'd12p',
+    [HMCONST.DIE.D10P]:     'd10p',
     [HMCONST.DIE.D8P]:      'd8p',
 };
 

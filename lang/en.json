@@ -678,12 +678,20 @@
 
         "UI": {
             "showreach":    "Show Reach",
-            "tequipped":    "Toggle Equipped"
+            "tequipped":    "Toggle Equipped",
+            "key":          "Key",
+            "label":        "Label",
+            "mode":         "Mode",
+            "value":        "Value"
         },
 
         "CRIT": {
             "left":     "Left",
             "right":    "Right"
+        },
+
+        "NOTIFY": {
+            "talentCharOnly":  "Talents are currently incompatible with Beast actors." 
         }
     },
 

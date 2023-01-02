@@ -20,7 +20,7 @@ export class HMPrompt extends Application {
 
     getCapList(weapon, actor=null) {
         const isDefend = this.constructor.name === 'DefendPrompt';
-        const ranged = weapon.system.ranged.checked;
+        const isRanged = weapon.system.ranged.checked;
 
         const capsArr = isDefend
             ? weapon.capabilities.filter((x) => x >= 64)
@@ -29,10 +29,8 @@ export class HMPrompt extends Application {
         const {special} = idx;
         const capsObj = Object.fromEntries(capsArr.map((x) => [x, special[x]]));
 
-        if (actor.canBackstab && !ranged && !isDefend) {
+        if (actor.canBackstab && !isRanged) {
             capsObj[HMCONST.SPECIAL.FLEEING] = special[HMCONST.SPECIAL.FLEEING];
-        } else {
-            delete capsObj[HMCONST.SPECIAL.BACKSTAB];
         }
 
         return capsObj;

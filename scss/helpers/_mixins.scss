@@ -90,8 +90,19 @@
             height: 18px;
         }
 
-        .button:hover {
-            @include text-glow($shad-1px);
+        .button[disabled] {
+            color: var(--color-text-dark-inactive);
+            &:hover { @include text-glow('reset'); }
+        }
+
+        .max-width {
+            display: block;
+            overflow: hidden;
+
+            >input[type] {
+                width: 100%;
+                box-sizing: border-box;
+            }
         }
 
         input[type=text], 

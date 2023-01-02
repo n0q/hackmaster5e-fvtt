@@ -1,7 +1,7 @@
 /* eslint max-classes-per-file: ['error', 2] */
 export const actorHasEffects = (actor, fxList) => {
     const {effects} = actor;
-    const actorEffectsList = effects.filter((fx) => !fx.disabled)
+    const actorEffectsList = effects.filter((fx) => !fx.disabled && fx.flags.core)
                                     .map((fx) => fx.flags.core.statusId);
     return actorEffectsList.some((fx) => fxList.indexOf(fx) !== -1);
 };

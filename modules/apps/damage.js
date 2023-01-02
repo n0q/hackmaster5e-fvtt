@@ -1,5 +1,6 @@
 import { HMPrompt } from './prompt.js';
 import { HMCONST } from '../tables/constants.js';
+import { idx } from '../tables/dictionary.js';
 
 export class DamagePrompt extends HMPrompt {
     static get defaultOptions() {
@@ -26,10 +27,13 @@ export class DamagePrompt extends HMPrompt {
 
     getCapList(weapon, actor=null) {
         const capsObj = super.getCapList(weapon, actor);
-        delete capsObj[HMCONST.SPECIAL.AGGRESSIVE];
-        delete capsObj[HMCONST.SPECIAL.FULLPARRY];
-        delete capsObj[HMCONST.SPECIAL.WITHDRAWL];
-        delete capsObj[HMCONST.SPECIAL.CHARGE];
+        const {SPECIAL} = HMCONST;
+        const {special} = idx;
+        delete capsObj[SPECIAL.AGGRESSIVE];
+        delete capsObj[SPECIAL.FULLPARRY];
+        delete capsObj[SPECIAL.WITHDRAWL];
+        delete capsObj[SPECIAL.CHARGE];
+        if (actor.canBackstab) capsObj[SPECIAL.BACKSTAB] = special[SPECIAL.BACKSTAB];
         return capsObj;
     }
 

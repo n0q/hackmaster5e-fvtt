@@ -37,8 +37,6 @@ export class HMWeaponItem extends HMItem {
         Object.assign(base, {atk: 0, def: 0, dmg: 0});
         Object.keys(mod).forEach((key) => { if (!mod[key]) mod[key] = 0; });
         this.system.bonus = {total, base, quality, mod};
-        const {INNATE} = HMCONST.ITEM_STATE;
-        if (this.system.state !== INNATE && this.system.innate) this.update({'system.state': INNATE});
     }
 
     prepareDerivedData() {
@@ -181,6 +179,10 @@ export class HMWeaponItem extends HMItem {
         const actorDmg = actor.getAbilityBonus('str', 'dmg');
         const derived = getDerivedDamageBonus(actorDmg, wDmg, addStrBonus);
 
+        const contextSystem = deepClone(context.system);
+        contextSystem.bonus.total.back = actor.system.bonus.total.back;
+        const rollContext = {resp, derived, ...contextSystem};
+
         // Formula transform
         const opSet = new Set();
         if (specialMove === SPECIAL.JAB && autoFormula) opSet.add(FORMULA_MOD.HALVE);    else
@@ -188,9 +190,6 @@ export class HMWeaponItem extends HMItem {
         if (specialMove === SPECIAL.FLEEING)            opSet.add(FORMULA_MOD.BACKSTAB); else
         if (specialMove === SPECIAL.SET4CHARGE)         opSet.add(FORMULA_MOD.DOUBLE);
         if (defense)                                    opSet.add(FORMULA_MOD.NOPENETRATE);
-
-        const rollContext = {resp, derived, ...context.system};
-        rollContext.bonus.total.back = actor.system.bonus.total.back;
 
         const r = new Roll(formula, rollContext);
         const terms = transformDamageFormula(r.terms, opSet);

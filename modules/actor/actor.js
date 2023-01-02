@@ -10,7 +10,6 @@ export class HMActor extends Actor {
 
     prepareDerivedData() {
         super.prepareDerivedData();
-        this.setHP();
     }
 
     /** @override */
@@ -19,8 +18,8 @@ export class HMActor extends Actor {
     prepareEmbeddedDocuments() {
         const embeddedTypes = this.constructor.metadata.embedded || {};
         for (const collectionName of Object.values(embeddedTypes)) {
-            for (let e of this[collectionName]) e._safePrepareData();
-            if (collectionName == 'effects') this.applyActiveEffects();
+            for (const e of this[collectionName]) e._safePrepareData();
+            if (collectionName === 'effects') this.applyActiveEffects();
         }
     }
 
@@ -49,11 +48,11 @@ export class HMActor extends Actor {
         if (max === 0) return;
         let value = max;
         const wounds = this.items.filter((a) => a.type === 'wound');
-        Object.keys(wounds).forEach((a) => value -= wounds[a].system.hp);
+        Object.keys(wounds).forEach((a) => { value -= wounds[a].system.hp; });
 
         const topCf = HMTABLES.top[type] + (system.bonus.total.top || 0);
-        const top   = Math.floor(max * topCf);
-        system.hp = {max, value, top};
+        const topValue = Math.floor(max * topCf);
+        system.hp = {max, value, top: topValue};
     }
 
     prepareWeaponProfiles() {
@@ -74,7 +73,7 @@ export class HMActor extends Actor {
 
         const multiply = ['move'];
         for (const vector in bonus) {
-            if (vector === 'total') { continue; }
+            if (vector === 'total') continue;
 
             // Dereference indexed key/val pairs;
             if (bonus[vector]?._idx) {
@@ -99,6 +98,14 @@ export class HMActor extends Actor {
                 }
             }
         }
+
+        Object.keys(total)
+            .filter((stat) => Number.isNumeric(total[stat]) && !Number.isInteger(total[stat]))
+            .forEach((stat) => {
+                const parsed = parseFloat(total[stat]);
+                total[stat] = parseFloat(parsed.toPrecision(5));
+            });
+
         bonus.total = total;
     }
 

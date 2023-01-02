@@ -17,7 +17,8 @@ export const HMCONST = {
         D20P:   0,
         D20PM4: 1,
         D12P:   2,
-        D8P:    3,
+        D10P:   3,
+        D8P:    4,
     },
     DMGFORM: {
         STD:         0,
@@ -521,6 +522,7 @@ export const HMTABLES = {
     die: {
         [HMCONST.DIE.D20P]:     'd20p',
         [HMCONST.DIE.D20PM4]:   'd20p - 4',
+        [HMCONST.DIE.D10P]:     'd10p',
         [HMCONST.DIE.D12P]:     'd12p',
         [HMCONST.DIE.D8P]:      'd8p',
     },

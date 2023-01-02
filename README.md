@@ -17,4 +17,4 @@ Automatic tracking and handling of spell effects, poisons, and damage types.
 - **[Kenzer and Company](https://kenzerco.com/)** for granting permission to undertake this project.
 
 #### Legal
-**[Hackmaster](https://kenzerco.com/hackmaster/)** is (C) Copyright 2001-2022 Kenzer and Company.  The Hackmaster name, rules and trademarks are used here with permission and under license.  Kenzer and Company reserves all other rights.
+**[Hackmaster](https://kenzerco.com/hackmaster/)** is (C) Copyright 2001-2023 Kenzer and Company.  The Hackmaster name, rules and trademarks are used here with permission and under license.  Kenzer and Company reserves all other rights.
