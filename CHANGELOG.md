@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - d10p defense die.
 - Limited support for non-weapon talents (more to come).
+- Compendium items.
 ### Changed
 - Backstab-capable characters are offered backstab damage regardless of weapon type.
 - Compendium inaccuracies.
