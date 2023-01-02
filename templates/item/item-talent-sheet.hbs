@@ -17,7 +17,8 @@
                 <section name='options' class='col_rborder'>
                     <span class='form-option'>
                         <label class="resource-label">{{localize "HM.type"}}</label>
-                        <select name='system.type'>
+                        <select name='system.type' {{#if @root.item.parent}}disabled{{/if}}>
+                        
                             {{selectOptions (findConfigObj 'talentSelect') selected=system.type localize=true}}
                         </select>
                     </span>
@@ -65,32 +66,35 @@
                         </span>
                     </span>
                 </section>
-
                 {{else}}
                 <section name='effect-talent'>
                     {{#each effects}}
-                    <table class='table-basic' align="left" style='margin-top: 0;'>
+                    <table class='table-basic' disabled align="left" style='margin-top: 0;'>
                         <thead><tr data-effect-id={{_id}}>
                             <th scope='col' width='99%' style='text-align: left; padding-left: 5px;'>{{localize 'HM.UI.key'}}</th>
                             <th scope='col'>{{localize 'HM.UI.value'}}</th>
                             <th scope='col' style='text-align: left; padding-left: 5px;'>{{localize 'HM.UI.mode'}}</th>
-                            <th scope='col' class='button add-effect'><i class='fas fa-plus'></i></th>
+                            <th scope='col' class='button add-effect' {{#if @root.item.parent}}disabled{{/if}}>
+                                <i class='fas fa-plus'></i>
+                            </th>
                         </tr></thead>
                         <tbody>
                             {{#each changes}}
                             <tr data-effect-id={{../_id}} data-effect-idx={{@index}}>
                                 <td width='99%'><span class='max-width'>
                                     <input type='text' class='edit-effect' value='{{key}}' style='text-align: left;'
-                                           data-edit-key='key'> 
+                                        {{#if @root.item.parent}}disabled{{/if}} data-edit-key='key'> 
                                 </span></td>
                                 <td>
                                     <input type='text' class='edit-effect' value='{{value}}' style='text-align: left;'
-                                        data-edit-key='value'>
+                                        {{#if @root.item.parent}}disabled{{/if}} data-edit-key='value'>
                                 </td>
-                                <td><select name='mode' class='edit-effect' data-edit-key='mode'>
+                                <td>
+                                    <select name='mode' class='edit-effect' data-edit-key='mode'
+                                        {{#if @root.item.parent}}disabled{{/if}}>
                                     {{selectOptions (findConfigObj 'effectModes') selected=mode localize=true}}
                                 </select></td>
-                                <td class='button delete-effect' {{#if (eq ../changes.length 1)}}disabled{{/if}}>
+                                <td class='button delete-effect' {{#if (or (eq ../changes.length 1) @root.item.parent)}}disabled{{/if}}>
                                     <i class='fas fa-trash'></i>
                                 </td>
                             </tr>

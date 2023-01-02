@@ -34,6 +34,8 @@ export class HMTalentItemSheet extends HMItemSheet {
     async onAddEffectTalent(ev) {
         ev.preventDefault();
         ev.stopPropagation();
+        if ($(ev.currentTarget).attr('disabled')) return;
+
         const {item} = this;
         const effect = item.effects.get(getRowAttr(ev, 'data-effect-id'));
         const {changes} = effect;
@@ -45,8 +47,9 @@ export class HMTalentItemSheet extends HMItemSheet {
     async onDeleteEffectTalent(ev) {
         ev.preventDefault();
         ev.stopPropagation();
-        const {item} = this;
+        if ($(ev.currentTarget).attr('disabled')) return;
 
+        const {item} = this;
         const eIdx = Number(getRowAttr(ev, 'data-effect-idx'));
         const effect = item.effects.get(getRowAttr(ev, 'data-effect-id'));
         const {changes} = effect;
