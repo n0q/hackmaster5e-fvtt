@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Limited support for non-weapon talents (more to come).
 ### Changed
 - Backstab-capable characters are offered backstab damage regardless of weapon type.
+- Compendium inaccuracies.
 ### Fixed
 - Error messages when adding innate weapons.
 - Broken jab and (hopefully) reach display in chat logs.
