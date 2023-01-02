@@ -52,6 +52,13 @@
             "system": "hackmaster5e"
         },
         {
+            "label": "Documentation",
+            "type": "JournalEntry",
+            "name": "hmdocs",
+            "path": "packs/documentation.db",
+            "system": "hackmaster5e"
+        },
+        {
             "label": "Gear, Basic",
             "type": "Item",
             "name": "hmbgear",
