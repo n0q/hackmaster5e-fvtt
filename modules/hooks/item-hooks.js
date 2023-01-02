@@ -44,10 +44,19 @@ export class HMItemHooks {
 
     static preCreateItem(item, data, _opt, userId) {
         if (game.user.id !== userId || !item.parent) return true;
-        if (data.type === 'talent' && data.system.type === HMCONST.TALENT.WEAPON) {
-            const actor = item.parent;
-            const dupes = actor.itemTypes.talent.find((a) => a.name === data.name);
-            return !dupes;
+        if (data.type === 'talent') {
+            if (item.parent.type !== 'character') {
+                const msg = game.i18n.localize('HM.NOTIFY.talentCharOnly');
+                ui.notifications.error(msg);
+                return false;
+            }
+
+            if (Number(data.system.type) === HMCONST.TALENT.WEAPON) {
+                const actor = item.parent;
+                const dupes = actor.itemTypes.talent.find((a) => a.name === data.name);
+                console.warn([actor, dupes]);
+                return !dupes;
+            }
         }
         return true;
     }
