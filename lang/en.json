@@ -688,6 +688,10 @@
         "CRIT": {
             "left":     "Left",
             "right":    "Right"
+        },
+
+        "NOTIFY": {
+            "talentCharOnly":  "Talents are currently incompatible with Beast actors." 
         }
     },
 
