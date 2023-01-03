@@ -39,8 +39,9 @@ export class HMWeaponProfile extends foundry.abstract.DataModel {
 
     _getWeaponSpeed(vector) {
         const {spd, spdm, spdr} = vector;
-        if (spd) return spd || 0;
-        return this.system.ranged.checked ? spdr || 0 : spdm || 0;
+        return this.system.ranged.checked
+            ? (spd || 0) + (spdr || 0)
+            : (spd || 0) + (spdm || 0);
     }
 
     _getSpecialization() {
@@ -65,16 +66,21 @@ export class HMWeaponProfile extends foundry.abstract.DataModel {
         return spec;
     }
 
-    _getWeaponTalent() {
+    _getWeaponTalent(bonus) {
         if (this.actor.type === 'beast') return {};
+        if (this.actor.name !== 'Sven Bloodaxe') return {};
 
-        const {system} = this.weapon;
-        const {proficiency} = system;
-
-        const talentItem = this.actor.itemTypes.talent
+        const {proficiency} = this.weapon.system;
+        const itemTalent = this.actor.itemTypes.talent
             .find((a) => a.name === proficiency && a.system.type === HMCONST.TALENT.WEAPON);
+        const total = itemTalent ? itemTalent.system.bonus : {};
 
-        return talentItem ? talentItem.system.bonus : {};
+        if (!bonus) return total;
+        Object.keys(bonus).forEach((stat) => {
+            total[stat] = (total[stat] || 0) + (bonus[stat] || 0);
+        });
+
+        return total;
     }
 
     evaluate() {
@@ -92,7 +98,7 @@ export class HMWeaponProfile extends foundry.abstract.DataModel {
         let reachOffset = 0;
 
         const spec = this._getSpecialization();
-        const talent = this._getWeaponTalent();
+        const talent = this._getWeaponTalent(actorBonus.talent);
         const bonusObj = {...actorBonus, spec, talent};
 
         Object.keys(bonusObj).sort().forEach((vector) => {
