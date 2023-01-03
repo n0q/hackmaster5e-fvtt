@@ -70,8 +70,9 @@ export class HMWeaponProfile extends foundry.abstract.DataModel {
         if (this.actor.type === 'beast') return {};
 
         const {proficiency} = this.weapon.system;
-        const itemTalent = this.actor.itemTypes.talent
-            .find((a) => a.name === proficiency && a.system.type === HMCONST.TALENT.WEAPON);
+        const itemTalent = this.actor.itemTypes.talent.find(
+            (a) => a.name === proficiency && a.system.type === HMCONST.TALENT.WEAPON,
+        );
         const total = itemTalent ? itemTalent.system.bonus : {};
 
         if (!bonus) return total;
