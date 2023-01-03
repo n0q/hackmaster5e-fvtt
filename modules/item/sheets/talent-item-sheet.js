@@ -83,5 +83,6 @@ export class HMTalentItemSheet extends HMItemSheet {
         const {editKey} = dataset;
         changes[eIdx][editKey] = ev.target.value;
         await effect.update({changes});
+        await item.update({'system.changes': changes}); // This is a backup, in case user changes type.
     }
 }
