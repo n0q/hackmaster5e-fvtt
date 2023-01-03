@@ -4,7 +4,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 ### Fixed
-- Global combat bonus talents were not counted correctly.
+- Actor talents add to weapon talents.
 
 ## [0.3.9] - 2023-01-02
 ### Added

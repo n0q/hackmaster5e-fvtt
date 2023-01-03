@@ -68,7 +68,6 @@ export class HMWeaponProfile extends foundry.abstract.DataModel {
 
     _getWeaponTalent(bonus) {
         if (this.actor.type === 'beast') return {};
-        if (this.actor.name !== 'Sven Bloodaxe') return {};
 
         const {proficiency} = this.weapon.system;
         const itemTalent = this.actor.itemTypes.talent
