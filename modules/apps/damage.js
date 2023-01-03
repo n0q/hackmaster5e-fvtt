@@ -29,11 +29,12 @@ export class DamagePrompt extends HMPrompt {
         const capsObj = super.getCapList(weapon, actor);
         const {SPECIAL} = HMCONST;
         const {special} = idx;
+        const ranged = weapon.system.ranged.checked;
         delete capsObj[SPECIAL.AGGRESSIVE];
         delete capsObj[SPECIAL.FULLPARRY];
         delete capsObj[SPECIAL.WITHDRAWL];
         delete capsObj[SPECIAL.CHARGE];
-        if (actor.canBackstab) capsObj[SPECIAL.BACKSTAB] = special[SPECIAL.BACKSTAB];
+        if (actor.canBackstab && !ranged) capsObj[SPECIAL.BACKSTAB] = special[SPECIAL.BACKSTAB];
         return capsObj;
     }
 
