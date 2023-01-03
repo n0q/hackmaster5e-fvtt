@@ -4,11 +4,11 @@ import { HMCONST } from '../tables/constants.js';
 export class HMTalentItem extends HMItem {
     prepareBaseData() {
         super.prepareBaseData();
+        this._prepTalentData();
     }
 
     prepareDerivedData() {
         super.prepareDerivedData();
-        this._prepTalentData();
     }
 
     _prepTalentData() {
@@ -17,12 +17,16 @@ export class HMTalentItem extends HMItem {
 
         if (type === HMCONST.TALENT.WEAPON) {
             const {weapon} = system;
-            const [isMechanical, isRanged] = [weapon.mechanical, weapon.ranged];
+            const isRanged = weapon.ranged;
+            let isMechanical = weapon.mechanical;
+
             if (isMechanical || isRanged) {
-                if (isMechanical && !isRanged) this.update({'system.weapon.mechanical': false});
+                if (isMechanical && !isRanged) {
+                    weapon.mechanical = false;
+                    isMechanical = false;
+                }
 
                 const {bonus} = system;
-                // const {def, dmg, reach} = bonus;
                 if (isRanged) {
                     bonus.def = 0;
                     bonus.reach = 0;
@@ -33,7 +37,8 @@ export class HMTalentItem extends HMItem {
             if (this.effects.size) this.effects.forEach((fx) => fx.delete());
         } else if (type === HMCONST.TALENT.EFFECT) {
             if (this.effects.size) return;
-            const changes = this.system.changes ?? [{key: '', value: '0', mode: CONST.ACTIVE_EFFECT_MODES.ADD}];
+            const defaultEffect = [{key: '', value: '0', mode: CONST.ACTIVE_EFFECT_MODES.ADD}];
+            const changes = this.system.changes ?? defaultEffect;
             const aeData = {label: this.name, changes};
             this.createEmbeddedDocuments('ActiveEffect', [aeData]);
         }
