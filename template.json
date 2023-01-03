@@ -192,6 +192,7 @@
             "templates": ["base"],
             "type": 0,
             "bonus": {"atk": 0, "def": 0, "dmg": 0, "spd": 0, "reach": 0},
+            "changes": null,
             "weapon": {"ranged": false, "mechanical": false}
         },
 

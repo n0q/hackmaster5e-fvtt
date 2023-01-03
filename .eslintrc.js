@@ -29,6 +29,7 @@ module.exports = {
         'import/newline-after-import': 'off',
         'indent': 'off',
         'key-spacing': 'off',
+        'no-bitwise': 'off',
         'no-continue': 'warn',
         'no-extra-boolean-cast': 'off',
         'no-plusplus': 'off',

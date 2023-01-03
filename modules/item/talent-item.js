@@ -16,24 +16,29 @@ export class HMTalentItem extends HMItem {
         const type = Number(system.type);
 
         if (type === HMCONST.TALENT.WEAPON) {
-            const [isMechanical, isRanged] = [system.weapon.mechanical, system.weapon.ranged];
+            const {weapon} = system;
+            const isRanged = weapon.ranged;
+            let isMechanical = weapon.mechanical;
+
             if (isMechanical || isRanged) {
-                if (isMechanical && !isRanged) this.update({'system.weapon.mechanical': false});
+                if (isMechanical && !isRanged) {
+                    weapon.mechanical = false;
+                    isMechanical = false;
+                }
 
                 const {bonus} = system;
-                const {def, dmg, reach} = bonus;
                 if (isRanged) {
                     bonus.def = 0;
                     bonus.reach = 0;
                 }
                 if (isMechanical) bonus.dmg = 0;
-                const dirty = bonus.def !== def || bonus.dmg !== dmg || bonus.reach !== reach;
-                if (dirty) this.update({'system.bonus': bonus});
             }
+
             if (this.effects.size) this.effects.forEach((fx) => fx.delete());
         } else if (type === HMCONST.TALENT.EFFECT) {
             if (this.effects.size) return;
-            const changes = [{key: '', value: '0', mode: CONST.ACTIVE_EFFECT_MODES.ADD}];
+            const defaultEffect = [{key: '', value: '0', mode: CONST.ACTIVE_EFFECT_MODES.ADD}];
+            const changes = this.system.changes ?? defaultEffect;
             const aeData = {label: this.name, changes};
             this.createEmbeddedDocuments('ActiveEffect', [aeData]);
         }

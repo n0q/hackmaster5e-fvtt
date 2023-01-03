@@ -28,6 +28,17 @@ function fromCaller(caller=null) {
     return {actor, token};
 }
 
+function getDerivedDamageBonus(actor, context, running) {
+    const wBonus = context.system.bonus.total.dmg;
+    const {mechanical} = context.system.ranged;
+    if (mechanical) return {dmg: wBonus};
+
+    const strBonus = actor.getAbilityBonus('str', 'dmg');
+    if (running && strBonus < 0)  return {dmg: wBonus - strBonus};
+    if (!running && strBonus > 0) return {dmg: wBonus - strBonus};
+    return {dmg: wBonus};
+}
+
 export class HMWeaponItem extends HMItem {
     prepareBaseData() {
         super.prepareBaseData();
@@ -165,19 +176,13 @@ export class HMWeaponItem extends HMItem {
         const dialogResp = await HMDialogFactory(dataset, actor);
         const {context, resp} = dialogResp;
 
-        const {SPECIAL, FORMULA_MOD} = HMCONST;
+        const {SPECIAL, DMGFORM, FORMULA_MOD} = HMCONST;
         const {addStrBonus, autoFormula, defense, formulaType, specialMove} = resp;
         const formula = HMTABLES.formula.dmg[formulaType];
 
-        const getDerivedDamageBonus = (strDmg, totalDmg, checked) => {
-            if (checked && strDmg < 0)  return {dmg: totalDmg - strDmg};
-            if (!checked && strDmg > 0) return {dmg: totalDmg - strDmg};
-            return {dmg: totalDmg};
-        };
-
-        const wDmg = context.system.bonus.total.dmg;
-        const actorDmg = actor.getAbilityBonus('str', 'dmg');
-        const derived = getDerivedDamageBonus(actorDmg, wDmg, addStrBonus);
+        const derived = formulaType & DMGFORM.RSTD
+            ? getDerivedDamageBonus(actor, context, addStrBonus)
+            : undefined;
 
         const contextSystem = deepClone(context.system);
         contextSystem.bonus.total.back = actor.system.bonus.total.back;

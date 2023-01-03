@@ -2,7 +2,15 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [0.3.9] - 2023-01-02
+## [0.3.10] - 2023-01-03
+### Changed
+- Talents store their effects when turned into weapon talents.
+### Fixed
+- Actor talents properly add to weapon talents.
+- No longer offer backstab dmg to ranged weapons.
+- Ranged weapon strength damage logic.
+
+## [0.3.9] - 2023-01-01
 ### Added
 - d10p defense die.
 - Limited support for non-weapon talents (more to come).
