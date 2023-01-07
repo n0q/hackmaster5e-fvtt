@@ -5,7 +5,7 @@
     {{#if (eq ../resp.specialMove 1)}}
         {{spd}}(<b>{{jspd}}</b>)<br>
     {{else}}
-        <b>{{spd}}</b>{{#if jspd}}({{jspd}}){{/if}}<br>
+        <b>{{spd}}</b>{{#if ../context.system.jab.checked}}({{jspd}}){{/if}}<br>
     {{/if}}
 {{/with}}
 <b>{{specialRow}}</b>
