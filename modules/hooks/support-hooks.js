@@ -3,7 +3,7 @@
 /* eslint class-methods-use-this: 0 */
 import { MODULE_ID } from '../tables/constants.js';
 
-export class HMSupport {
+export class HMSupportHooks {
     static async devModeReady({ registerPackageDebugFlag }) {
         registerPackageDebugFlag(MODULE_ID);
     }
