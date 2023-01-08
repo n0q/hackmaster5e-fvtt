@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+### Changed
+- New combatant initiative adjusted by current init count.
 ### Fixed
 - Damage cards listed jab speed for weapons without jab.
 
