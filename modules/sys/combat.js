@@ -31,13 +31,14 @@ export class HMCombat extends Combat {
     }
 
     async rollInitiative(ids, {formula=null, updateTurn=true, messageOptions={}}={}) {
+        const {round} = this;
         let initFormula = formula;
         if (!initFormula) {
             const initDie = await this._getInitiativeDie(ids);
             if (initDie) {
-                initFormula = `${initDie} + ${game.system.initiative}`;
+                initFormula = `{${initDie} + ${game.system.initiative}, 1}kh + ${round}`;
             } else {
-                initFormula = '1';
+                initFormula = `${Math.max(round, 1)}`;
                 messageOptions.sound = null;
             }
         }

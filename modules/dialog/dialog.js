@@ -148,16 +148,16 @@ export class HMDialog {
             content: await renderTemplate(template, dialogData),
             buttons: {
                 getdie: {
-                    label: 'Roll',
+                    label: game.i18n.localize('HM.roll'),
                     callback: () => ({die: document.getElementById('choices').value}),
                 },
                 start: {
-                    label: 'Set to One',
+                    label: game.i18n.localize('HM.immediate'),
                     callback: () => ({die: false}),
                 },
             },
             default: 'getdie',
-        }, {width: 400});
+        }, {width: 300});
 
         return dialogResp;
     }
