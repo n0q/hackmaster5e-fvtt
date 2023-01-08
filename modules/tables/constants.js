@@ -480,7 +480,7 @@ export const HMTABLES = {
             poison:   'd20p +  @bonus.total.poison   + @resp.bonus',
             target:   'd20p +  @level',
             tenacity: 'd20p +  @bonus.total.tenacity + @resp.bonus',
-            trauma:   '@talent.trauma.die - (@bonus.total.trauma + @resp.bonus)',
+            trauma:   '@talent.die.trauma - (@bonus.total.trauma + @resp.bonus)',
             turning:  'd20p +  @bonus.total.turning  + @resp.bonus',
             will:     'd20p +  @bonus.total.will     + @resp.bonus',
         },
