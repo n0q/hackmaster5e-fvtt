@@ -10,7 +10,6 @@ export class HMBeastActorSheet extends HMActorSheet {
             scrollY: ['.scrollable'],
             tabs: [
                 { navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'overview'    },
-                { navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'setup'    },
                 { navSelector: '.bio-tabs',   contentSelector: '.bio-body',   initial: 'description' },
             ],
         });
