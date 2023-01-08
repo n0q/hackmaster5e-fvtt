@@ -1,6 +1,6 @@
 import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
-import { HMCONST, HMTABLES, MODULE_ID } from '../tables/constants.js';
+import { HMCONST, HMTABLES, SYSTEM_ID } from '../tables/constants.js';
 
 function getItemId(ev, attr='data-item-id') {
     const el = ev.currentTarget;
@@ -240,7 +240,7 @@ export class HMActorSheet extends ActorSheet {
         ev.stopPropagation();
         const {dataset, value} = ev.currentTarget;
         const {flag} = dataset;
-        if (flag) this.actor.setFlag(MODULE_ID, flag, value);
+        if (flag) this.actor.setFlag(SYSTEM_ID, flag, value);
     }
 
     async _onEdit(ev) {
@@ -278,23 +278,23 @@ export class HMActorSheet extends ActorSheet {
         const {actor} = this;
 
         if (dialog === 'atk') {
-            return game[MODULE_ID].HMWeaponItem.rollAttack({weapon: dataset.itemId, caller: actor});
+            return game[SYSTEM_ID].HMWeaponItem.rollAttack({weapon: dataset.itemId, caller: actor});
         }
 
         if (dialog === 'dmg') {
-            return game[MODULE_ID].HMWeaponItem.rollDamage({weapon: dataset.itemId, caller: actor});
+            return game[SYSTEM_ID].HMWeaponItem.rollDamage({weapon: dataset.itemId, caller: actor});
         }
 
         if (dialog === 'def') {
-            return game[MODULE_ID].HMWeaponItem.rollDefend({weapon: dataset.itemId, caller: actor});
+            return game[SYSTEM_ID].HMWeaponItem.rollDefend({weapon: dataset.itemId, caller: actor});
         }
 
         if (dialog === 'skill') {
-            return game[MODULE_ID].HMItem.rollSkill({itemId: dataset.itemId, caller: actor});
+            return game[SYSTEM_ID].HMItem.rollSkill({itemId: dataset.itemId, caller: actor});
         }
 
         if (dialog === 'cast') {
-            return game[MODULE_ID].HMSpellItem.rollSpell({spell: dataset.itemId, caller: actor});
+            return game[SYSTEM_ID].HMSpellItem.rollSpell({spell: dataset.itemId, caller: actor});
         }
 
         if (dialog) {

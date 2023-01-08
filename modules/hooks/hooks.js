@@ -1,4 +1,4 @@
-import { MODULE_ID, SYSTEM_SOCKET } from '../tables/constants.js';
+import { SYSTEM_ID, SYSTEM_SOCKET } from '../tables/constants.js';
 import { HMActiveEffectHooks } from './effect-hooks.js';
 import { HMActorHooks } from './actor-hooks.js';
 import { HMChatHooks } from './chat-hooks.js';
@@ -38,7 +38,7 @@ export const registerHooks = () => {
 };
 
 async function ready() {
-    if (game.modules.get('_dev-mode')?.api?.getPackageDebugValue(MODULE_ID)) {
+    if (game.modules.get('_dev-mode')?.api?.getPackageDebugValue(SYSTEM_ID)) {
         const tItem = game.items.contents.find((a) => a.name === 'test');
         if (tItem) { tItem.sheet.render(true); }
         const tActor = game.actors.contents.find((a) => a.name === 'test');

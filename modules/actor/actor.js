@@ -1,10 +1,12 @@
-import { HMTABLES } from '../tables/constants.js';
+import { HMTABLES, SYSTEM_ID } from '../tables/constants.js';
+import { ACTORTABLE } from '../tables/actor-table.js';
 import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { HMWeaponProfile } from '../item/weapon-profile.js';
 
 export class HMActor extends Actor {
     prepareBaseData() {
         super.prepareBaseData();
+        this[SYSTEM_ID] = deepClone(ACTORTABLE);
         this.resetBonus();
     }
 
