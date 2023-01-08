@@ -2,7 +2,7 @@ export const HMACTOR_TUNABLES = {
     flag: {
         dodge: false,
     },
-    trauma: {
-        die: 'd20p',
+    die: {
+        trauma: 'd20p',
     },
 };
