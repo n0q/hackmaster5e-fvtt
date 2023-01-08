@@ -1,4 +1,4 @@
-import { MODULE_ID } from './modules/tables/constants.js';
+import { SYSTEM_ID } from './modules/tables/constants.js';
 import { HMActor } from './modules/actor/actor.js';
 import { HMActorFactory } from './modules/actor/actor-factory.js';
 import { HMBeastActorSheet } from './modules/actor/beast-actor-sheet.js';
@@ -68,7 +68,7 @@ function registerConfig() {
 }
 
 Hooks.once('init', async () => {
-    game[MODULE_ID] = { HMActor, HMItem, HMWeaponItem, HMSpellItem };
+    game[SYSTEM_ID] = { HMActor, HMItem, HMWeaponItem, HMSpellItem };
 
     registerConfig();
     registerSheets();

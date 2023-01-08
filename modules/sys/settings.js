@@ -1,7 +1,7 @@
-import { MODULE_ID } from '../tables/constants.js';
+import { SYSTEM_ID } from '../tables/constants.js';
 
 export const registerSystemSettings = () => {
-    game.settings.register(MODULE_ID, 'reachOpacity', {
+    game.settings.register(SYSTEM_ID, 'reachOpacity', {
         name: 'SETTINGS.reachOpacity',
         hint: 'SETTINGS.reachOpacityHint',
         scope: 'client',
@@ -12,7 +12,7 @@ export const registerSystemSettings = () => {
         onChange: () => canvas.tokens.placeables.forEach((t) => t.drawReach()),
     });
 
-    game.settings.register(MODULE_ID, 'smartSelect', {
+    game.settings.register(SYSTEM_ID, 'smartSelect', {
         name: 'SETTINGS.smartSelect',
         hint: 'SETTINGS.smartSelectHint',
         scope: 'client',
@@ -21,7 +21,7 @@ export const registerSystemSettings = () => {
         default: true,
     });
 
-    game.settings.register(MODULE_ID, 'playerNewItems', {
+    game.settings.register(SYSTEM_ID, 'playerNewItems', {
         name: 'SETTINGS.playerNewItems',
         hint: 'SETTINGS.playerNewItemsHint',
         scope: 'world',

@@ -1,7 +1,7 @@
-import { MODULE_ID } from '../tables/constants.js';
+import { SYSTEM_ID } from '../tables/constants.js';
 
 export const preloadHandlebarsTemplates = () => {
-    const templatePath = `systems/${MODULE_ID}/templates`;
+    const templatePath = `systems/${SYSTEM_ID}/templates`;
     loadTemplates([
         `${templatePath}/actor/cards/armor.hbs`,
         `${templatePath}/actor/cards/item.hbs`,

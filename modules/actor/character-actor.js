@@ -1,4 +1,4 @@
-import { HMCONST, HMTABLES, MODULE_ID } from '../tables/constants.js';
+import { HMCONST, HMTABLES, SYSTEM_ID } from '../tables/constants.js';
 import { HMActor } from './actor.js';
 
 export class HMCharacterActor extends HMActor {
@@ -138,7 +138,7 @@ export class HMCharacterActor extends HMActor {
         const total = carried + HMTABLES.weight(priors.bmi, priors.height) || 0.0;
         this.system.encumb = {carried, effective, total};
 
-        const penalty = this.getFlag(MODULE_ID, 'encumbrance') || 0;
+        const penalty = this.getFlag(SYSTEM_ID, 'encumbrance') || 0;
         this.system.bonus.encumb = HMTABLES.encumbrance[penalty];
     }
 

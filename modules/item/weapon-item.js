@@ -1,4 +1,4 @@
-import { MODULE_ID, HMCONST, HMTABLES } from '../tables/constants.js';
+import { SYSTEM_ID, HMCONST, HMTABLES } from '../tables/constants.js';
 import { CRITTABLE } from '../tables/crits.js';
 import { HMItem, advanceClock, setStatusEffectOnToken, unsetStatusEffectOnToken } from './item.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
@@ -20,7 +20,7 @@ function fromCaller(caller=null) {
     }
 
     // Last resort
-    const smartSelect = game.settings.get(MODULE_ID, 'smartSelect');
+    const smartSelect = game.settings.get(SYSTEM_ID, 'smartSelect');
     if (!actor && !game.user.isGM && game.user.character && smartSelect) {
         actor = game.user.character;
         [token] = actor.getActiveTokens();
@@ -85,7 +85,7 @@ export class HMWeaponItem extends HMItem {
     async onClick(ev) {
         ev.preventDefault();
         const {dataset} = ev.currentTarget;
-        if (dataset.op === 'setFlag') await this.actor.setFlag(MODULE_ID, dataset.key, dataset.value);
+        if (dataset.op === 'setFlag') await this.actor.setFlag(SYSTEM_ID, dataset.key, dataset.value);
         if (dataset.op === 'setProperty') {
             const {key} = dataset;
             const value = dataset.dtype === 'Number' ? Number(dataset.value) : dataset.value;

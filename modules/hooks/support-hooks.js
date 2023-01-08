@@ -1,11 +1,11 @@
 /* global dragRuler */
 /* eslint max-classes-per-file: 0 */
 /* eslint class-methods-use-this: 0 */
-import { MODULE_ID } from '../tables/constants.js';
+import { SYSTEM_ID } from '../tables/constants.js';
 
 export class HMSupportHooks {
     static async devModeReady({ registerPackageDebugFlag }) {
-        registerPackageDebugFlag(MODULE_ID);
+        registerPackageDebugFlag(SYSTEM_ID);
     }
 
     static async diceSoNiceRollStart(_messageId, context) {
@@ -51,7 +51,7 @@ export class HMSupportHooks {
 
                 const combatant = combat.getCombatantByToken(token.id);
                 if (!combatant) return [];
-                const movedFlag = combatant.getFlag(MODULE_ID, 'moved');
+                const movedFlag = combatant.getFlag(SYSTEM_ID, 'moved');
                 const moved = movedFlag?.[round - 1] || 0;
 
                 const colormask = [0, 1, 2, 'unreachable', 'unreachable', 2, 1];
@@ -98,13 +98,13 @@ export class HMSupportHooks {
                     const moved = Math.round(distances.reduce((sum, a) => sum + a, 0) * 1e4) / 1e4;
 
                     const combatant = game.combat.getCombatantByToken(movedToken.id);
-                    const movedFlag = combatant.getFlag(MODULE_ID, 'moved') || {};
+                    const movedFlag = combatant.getFlag(SYSTEM_ID, 'moved') || {};
                     const roundCurrent = game.combat.round;
                     movedFlag[roundCurrent] = moved;
-                    combatant.setFlag(MODULE_ID, 'moved', movedFlag);
+                    combatant.setFlag(SYSTEM_ID, 'moved', movedFlag);
                 });
             }
         }
-        dragRuler.registerSystem(MODULE_ID, HMSpeedProvider);
+        dragRuler.registerSystem(SYSTEM_ID, HMSpeedProvider);
     }
 }

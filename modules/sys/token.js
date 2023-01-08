@@ -1,4 +1,4 @@
-import { MODULE_ID, HMCONST } from '../tables/constants.js';
+import { SYSTEM_ID, HMCONST } from '../tables/constants.js';
 import { actorHasEffects } from './effects.js';
 
 function newReach(distance, color, visible) {
@@ -7,7 +7,7 @@ function newReach(distance, color, visible) {
         color,
         foo: 'bar',
         visible,
-        opacity: game.settings.get(MODULE_ID, 'reachOpacity'),
+        opacity: game.settings.get(SYSTEM_ID, 'reachOpacity'),
         id: randomID(),
     };
 }
@@ -15,7 +15,7 @@ function newReach(distance, color, visible) {
 function getReach(actor) {
     if (!actor) return null;
 
-    const reachHint = actor.getFlag(MODULE_ID, 'reachHint');
+    const reachHint = actor.getFlag(SYSTEM_ID, 'reachHint');
     const weapons = actor.itemTypes.weapon.filter((a) => !a.system.ranged.checked);
     const {ITEM_STATE} = HMCONST;
 
@@ -23,7 +23,7 @@ function getReach(actor) {
                 ?? weapons.find((a) => a.system.state === ITEM_STATE.EQUIPPED)
                 ?? weapons.find((a) => a.system.innate);
     if (!weapon) return null;
-    if (weapon.id !== reachHint && actor.isOwner) actor.setFlag(MODULE_ID, 'reachHint', weapon.id);
+    if (weapon.id !== reachHint && actor.isOwner) actor.setFlag(SYSTEM_ID, 'reachHint', weapon.id);
 
     const wProfile = actor.wprofiles.get(weapon.profileId);
     const reach = (wProfile.system.reach || 0);

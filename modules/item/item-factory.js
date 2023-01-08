@@ -9,7 +9,7 @@ import { HMSpellItem } from './spell-item.js';
 import { HMTalentItem } from './talent-item.js';
 import { HMWeaponItem } from './weapon-item.js';
 import { HMWoundItem } from './wound-item.js';
-import { MODULE_ID } from '../tables/constants.js';
+import { SYSTEM_ID } from '../tables/constants.js';
 
 const handler = {
     construct(_actor, args) {
@@ -23,7 +23,7 @@ const handler = {
         if (args[0]?.type === 'talent') return new HMTalentItem(...args);
         if (args[0]?.type === 'weapon') return new HMWeaponItem(...args);
         if (args[0]?.type === 'wound') return new HMWoundItem(...args);
-        throw new Error(MODULE_ID, {type: args[0]?.type});
+        throw new Error(SYSTEM_ID, {type: args[0]?.type});
     },
 };
 
