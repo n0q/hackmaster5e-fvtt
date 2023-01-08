@@ -31,10 +31,12 @@
             <label>{{localize 'HM.bonus'}}</label>
             <input name='bonus' value='{{bonus}}' class='focus bind' data-prop='bonus' placeholder=0 type='number'/>
         </span>
+        {{#if canDodge}}
         <span class='form-group'>
             <label>{{localize 'HM.dodge'}}?</label>
             <input type='checkbox' class='bind' data-prop='dodge' {{checked dodge}}>
         </span>
+        {{/if}}
     </section>
     <section class='dialog-buttons'>
         <button type='submit' class='dialog-button normal default'

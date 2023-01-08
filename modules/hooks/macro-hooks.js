@@ -1,4 +1,4 @@
-import { MODULE_ID } from '../tables/constants.js';
+import { SYSTEM_ID } from '../tables/constants.js';
 
 async function createItemMacro(data, slot) {
     if (!game || !game.macros) return;
@@ -10,7 +10,7 @@ async function createItemMacro(data, slot) {
     const {specialty} = system;
     const args = {skillName: item.name};
     if (specialty.checked) args.specialty = specialty.value;
-    const command = `game.${MODULE_ID}.HMItem.rollSkill(${JSON.stringify(args)});`;
+    const command = `game.${SYSTEM_ID}.HMItem.rollSkill(${JSON.stringify(args)});`;
 
     const fullName = item.specname;
 

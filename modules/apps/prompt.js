@@ -29,7 +29,7 @@ export class HMPrompt extends Application {
         const {special} = idx;
         const capsObj = Object.fromEntries(capsArr.map((x) => [x, special[x]]));
 
-        if (actor.canBackstab && !isRanged) {
+        if (actor.canBackstab && !isRanged && !isDefend) {
             capsObj[HMCONST.SPECIAL.FLEEING] = special[HMCONST.SPECIAL.FLEEING];
         }
 
