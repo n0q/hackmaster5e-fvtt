@@ -49,6 +49,10 @@
             {{/if}}
         </div>
         {{/with}}
+    {{else if (eq type 'beast')}}
+        <div>
+            <label class="bold-label">{{localize 'HM.epvalue'}}</label>: {{system.ep.value}}
+        </div>
     {{/if}}
     </div>
 </span>

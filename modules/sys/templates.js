@@ -37,6 +37,7 @@ export const preloadHandlebarsTemplates = () => {
         `${templatePath}/actor/parts/setup/base-setup.hbs`,
         `${templatePath}/actor/parts/setup/beast-base-setup.hbs`,
         `${templatePath}/actor/parts/setup/beast-setup-misc.hbs`,
+        `${templatePath}/actor/parts/setup/beast-setup-yield.hbs`,
         `${templatePath}/actor/parts/setup/setup-abilities.hbs`,
         `${templatePath}/actor/parts/setup/setup-classes.hbs`,
         `${templatePath}/actor/parts/setup/setup-misc.hbs`,
