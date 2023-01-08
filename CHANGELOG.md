@@ -3,10 +3,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+### Added
+- Limited support for non-weapon talents (more to come).
+- Compendium items.
 ### Changed
 - New combatant initiative adjusted by current init count.
 ### Fixed
 - Damage cards listed jab speed for weapons without jab.
+- Offered fleeing opponent attack to defenders.
 
 ## [0.3.10] - 2023-01-03
 ### Changed

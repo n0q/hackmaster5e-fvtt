@@ -34,6 +34,7 @@ module.exports = {
         'no-extra-boolean-cast': 'off',
         'no-plusplus': 'off',
         'no-multi-spaces': 'off',
+        'no-use-before-define': ["error", { "functions": false }],
         'no-console': ['error', { allow: ['warn', 'error'] }],
         'no-shadow': ['error', { 'builtinGlobals': true, 'hoist': 'all', 'allow': ['event'] }],
         'no-underscore-dangle': 'off',

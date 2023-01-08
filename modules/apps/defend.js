@@ -1,5 +1,5 @@
 import { HMPrompt } from './prompt.js';
-import { HMCONST, HMTABLES } from '../tables/constants.js';
+import { HMCONST, HMTABLES, SYSTEM_ID } from '../tables/constants.js';
 
 function getSpeed(ranged, wData, specialMove=0) {
     const {spd, jspd} = wData.bonus.total;
@@ -24,9 +24,11 @@ export class DefendPrompt extends HMPrompt {
 
     constructor(dialogData, options) {
         super(dialogData, options);
-        const weapon = dialogData.weapons[0];
-        const capList = this.getCapList(weapon, dialogData?.caller);
+        const [weapon] = dialogData.weapons;
+        const {caller} = dialogData;
 
+        const capList = this.getCapList(weapon, caller);
+        const canDodge = caller[SYSTEM_ID].talent.flag.dodge;
         const wData = weapon.system;
         const ranged = wData.ranged.checked;
         const spd = getSpeed(ranged, wData);
@@ -35,7 +37,8 @@ export class DefendPrompt extends HMPrompt {
             capList,
             specialMove: HMCONST.SPECIAL.STANDARD,
             defDie: wData.defdie,
-            dodge: false,
+            canDodge: canDodge || caller.type === 'beast',
+            dodge: canDodge,
             ranged,
             spd,
             widx: 0,
