@@ -108,15 +108,18 @@
             "bonus": null,
             "top_cf": 0.01,
             "features": {
-                "sp":   false,
-                "atk":  false,
-                "def":  false,
-                "spd":  false,
-                "spdm": false,
-                "spdr": false,
-                "init": false,
-                "back": false,
-                "luck": false
+                "sp":    false,
+                "atk":   false,
+                "def":   false,
+                "spd":   false,
+                "spdm":  false,
+                "spdr":  false,
+                "init":  false,
+                "back":  false,
+                "luck":  false
+            },
+            "caps": {
+                "fcast": false
             },
             "ptable": {}
         },
