@@ -236,15 +236,16 @@ idx.talentSelect = {
 };
 
 idx.itemCClass = {
-    'sp':   'HM.spellpoints',
-    'init': 'HM.initbonus',
-    'atk':  'HM.atkbonus',
-    'def':  'HM.defbonus',
-    'spd':  'HM.spdbonus',
-    'spdr': 'HM.spdrbonus',
-    'spdm': 'HM.spdmbonus',
-    'back': 'HM.backstab',
-    'luck': 'HM.luck',
+    sp:    'HM.spellpoints',
+    init:  'HM.initbonus',
+    atk:   'HM.atkbonus',
+    def:   'HM.defbonus',
+    spd:   'HM.spdbonus',
+    spdr:  'HM.spdrbonus',
+    spdm:  'HM.spdmbonus',
+    back:  'HM.backstab',
+    fcast: 'HM.freecast',
+    luck:  'HM.luck',
 };
 
 idx.itemTypes = {

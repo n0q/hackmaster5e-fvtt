@@ -25,6 +25,13 @@
                         <input type='checkbox' name='system.features.{{@key}}' {{checked feature}}/>
                     </span>
                     {{/each}}
+                    <hr>
+                    {{#each system.caps as |cap key|}}
+                    <span class='form-option'>
+                        <label>{{localize (findConfigValue 'itemCClass' key)}}</label>
+                        <input type='checkbox' name='system.caps.{{@key}}' {{checked cap}}/>
+                    </span>
+                    {{/each}}
                 </section>
                 <section name='pTable'>
                     <table class='table-basic'>
