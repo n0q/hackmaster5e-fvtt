@@ -2,6 +2,67 @@ import { HMTABLES, HMCONST } from '../tables/constants.js';
 import { CRITTABLE } from '../tables/crits.js';
 import { idx } from '../tables/dictionary.js';
 
+export class HMChatMgr {
+    constructor() { this._user = game.user.id; }
+
+    // This is out of control. We want: getCard(dataset, options)
+    async getCard({cardtype=HMCONST.CARD_TYPE.ROLL, roll, dataset, dialogResp=null, options}) {
+        let cData;
+        if (cardtype === HMCONST.CARD_TYPE.ROLL) {
+            switch (dataset.dialog) {
+                case 'dmg':
+                    cData = await createDamageCard(dataset);
+                    break;
+                case 'atk':
+                    cData = await createAttackCard(dataset);
+                    break;
+                case 'def':
+                    cData = await createDefenseCard(dataset);
+                    break;
+                case 'cast':
+                    cData = await createSpellCard(dataset);
+                    break;
+                case 'skill':
+                    cData = await createSkillCard(dataset);
+                    break;
+                case 'crit':
+                    cData = await createCritCard(dataset);
+                    break;
+                case 'save':
+                    cData = await createSaveCard(roll, dataset, dialogResp);
+                    break;
+                case 'ability':
+                    cData = dialogResp.resp.save
+                        ? await createSaveCard(roll, dataset, dialogResp)
+                        : await createAbilityCard(roll, dataset);
+                    break;
+                default:
+            }
+        } else if (cardtype === HMCONST.CARD_TYPE.ALERT) {
+            cData = await createToPAlert(dataset);
+        } else if (cardtype === HMCONST.CARD_TYPE.NOTE) {
+            cData = await createInitNote(dataset);
+        }
+
+        const chatData = {
+            user:    this._user,
+            flavor:  cData?.flavor || dialogResp?.caller?.name,
+            content: cData.content,
+            type:    cData?.type || CONST.CHAT_MESSAGE_TYPES.OTHER,
+            whisper: cData?.whisper,
+        };
+
+        if (roll || dataset?.roll) {
+            chatData.rolls     = [cData?.roll || roll];
+            chatData.rollMode = cData.rollMode ? cData.rollMode : game.settings.get('core', 'rollMode');
+            chatData.type     = CONST.CHAT_MESSAGE_TYPES.ROLL;
+            chatData.sound    = CONFIG.sounds.dice;
+        }
+
+        return {...chatData, ...options};
+    }
+}
+
 function getDiceSum(roll) {
     let sum = 0;
     for (let i = 0; i < roll.terms.length; i++) {
@@ -52,7 +113,7 @@ async function saveExtendedTrauma(content, roll) {
         context.status  = 'HM.incapacitated';
         context.special = 'HM.failed';
 
-        if (getDiceSum(roll) === 20) {
+        if (getDiceSum(roll) > 19) {
             let newroll = await new Roll('5d6p').evaluate({async: true});
             rolls.push(newroll);
             let flavor = `${game.i18n.localize('HM.knockout')} ${game.i18n.localize('HM.duration')}`;
@@ -310,65 +371,4 @@ async function createSkillCard(dataset) {
     let content = await renderTemplate(template, templateData);
     content += rollContent;
     return {content, roll, rollMode, flavor: dataset.caller.name};
-}
-
-export class HMChatMgr {
-    constructor() { this._user = game.user.id; }
-
-    // This is out of control. We want: getCard(dataset, options)
-    async getCard({cardtype=HMCONST.CARD_TYPE.ROLL, roll, dataset, dialogResp=null, options}) {
-        let cData;
-        if (cardtype === HMCONST.CARD_TYPE.ROLL) {
-            switch (dataset.dialog) {
-                case 'dmg':
-                    cData = await createDamageCard(dataset);
-                    break;
-                case 'atk':
-                    cData = await createAttackCard(dataset);
-                    break;
-                case 'def':
-                    cData = await createDefenseCard(dataset);
-                    break;
-                case 'cast':
-                    cData = await createSpellCard(dataset);
-                    break;
-                case 'skill':
-                    cData = await createSkillCard(dataset);
-                    break;
-                case 'crit':
-                    cData = await createCritCard(dataset);
-                    break;
-                case 'save':
-                    cData = await createSaveCard(roll, dataset, dialogResp);
-                    break;
-                case 'ability':
-                    cData = dialogResp.resp.save
-                        ? await createSaveCard(roll, dataset, dialogResp)
-                        : await createAbilityCard(roll, dataset);
-                    break;
-                default:
-            }
-        } else if (cardtype === HMCONST.CARD_TYPE.ALERT) {
-            cData = await createToPAlert(dataset);
-        } else if (cardtype === HMCONST.CARD_TYPE.NOTE) {
-            cData = await createInitNote(dataset);
-        }
-
-        const chatData = {
-            user:    this._user,
-            flavor:  cData?.flavor || dialogResp?.caller?.name,
-            content: cData.content,
-            type:    cData?.type || CONST.CHAT_MESSAGE_TYPES.OTHER,
-            whisper: cData?.whisper,
-        };
-
-        if (roll || dataset?.roll) {
-            chatData.rolls     = [cData?.roll || roll];
-            chatData.rollMode = cData.rollMode ? cData.rollMode : game.settings.get('core', 'rollMode');
-            chatData.type     = CONST.CHAT_MESSAGE_TYPES.ROLL;
-            chatData.sound    = CONFIG.sounds.dice;
-        }
-
-        return {...chatData, ...options};
-    }
 }
