@@ -118,6 +118,9 @@
                 "back": false,
                 "luck": false
             },
+            "caps": {
+                "fcast": false
+            },
             "ptable": {}
         },
 

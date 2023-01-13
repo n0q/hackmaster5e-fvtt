@@ -1,10 +1,6 @@
 import { HMPrompt } from './prompt.js';
 import { HMTABLES } from '../tables/constants.js';
 
-function getSpeed(sData, caller) {
-    return HMTABLES.cast.timing(sData.speed, caller);
-}
-
 export class CastPrompt extends HMPrompt {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
@@ -18,13 +14,11 @@ export class CastPrompt extends HMPrompt {
         const {caller} = dialogData;
         const spell = dialogData.spells[0];
         const sData = spell.system;
-        const spd = getSpeed(sData, caller);
         const {divine, lidx, prepped} = sData;
-        const cost = HMTABLES.cast.cost(lidx, prepped);
 
         mergeObject(this.dialogData, {
-            cost,
-            spd,
+            cost: getSpellCost(sData, caller),
+            spd: getSpellSpeed(sData, caller),
             divine,
             advance: dialogData.inCombat,
             sidx: 0,
@@ -37,10 +31,10 @@ export class CastPrompt extends HMPrompt {
         const {spells, sidx, caller} = this.dialogData;
         const spell = spells[sidx];
         const sData = spell.system;
-        const {divine, lidx, prepped} = sData;
+        const {divine, lidx} = sData;
 
-        this.dialogData.cost = HMTABLES.cast.cost(lidx, prepped);
-        this.dialogData.spd = getSpeed(sData, caller);
+        this.dialogData.cost = getSpellCost(sData, caller);
+        this.dialogData.spd = getSpellSpeed(sData, caller);
         this.dialogData.divine = divine;
         this.dialogData.lidx = lidx;
         super.update(options);
@@ -64,4 +58,15 @@ export class CastPrompt extends HMPrompt {
     activateListeners(html) {
         super.activateListeners(html);
     }
+}
+
+function getSpellSpeed(sData, caller) {
+    return HMTABLES.cast.timing(sData.speed, caller);
+}
+
+function getSpellCost(sData, caller) {
+    const {lidx, prepped} = sData;
+    const [callerClass] = caller.itemTypes.cclass;
+    const freeCast = callerClass ? callerClass.system.caps.fcast : false;
+    return freeCast ? 0 : HMTABLES.cast.cost(lidx, prepped);
 }

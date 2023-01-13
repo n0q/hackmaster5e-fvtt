@@ -182,6 +182,7 @@ idx.effectModes = {
     [CONST.ACTIVE_EFFECT_MODES.DOWNGRADE]: 'EFFECT.MODE_DOWNGRADE',
     [CONST.ACTIVE_EFFECT_MODES.OVERRIDE]:  'EFFECT.MODE_OVERRIDE',
     [CONST.ACTIVE_EFFECT_MODES.MULTIPLY]:  'EFFECT.MODE_MULTIPLY',
+    [CONST.ACTIVE_EFFECT_MODES.CUSTOM]:    'EFFECT.MODE_CUSTOM',
 };
 
 idx.weaponskill = {
@@ -236,15 +237,16 @@ idx.talentSelect = {
 };
 
 idx.itemCClass = {
-    'sp':   'HM.spellpoints',
-    'init': 'HM.initbonus',
-    'atk':  'HM.atkbonus',
-    'def':  'HM.defbonus',
-    'spd':  'HM.spdbonus',
-    'spdr': 'HM.spdrbonus',
-    'spdm': 'HM.spdmbonus',
-    'back': 'HM.backstab',
-    'luck': 'HM.luck',
+    sp:    'HM.spellpoints',
+    init:  'HM.initbonus',
+    atk:   'HM.atkbonus',
+    def:   'HM.defbonus',
+    spd:   'HM.spdbonus',
+    spdr:  'HM.spdrbonus',
+    spdm:  'HM.spdmbonus',
+    back:  'HM.backstab',
+    fcast: 'HM.freecast',
+    luck:  'HM.luck',
 };
 
 idx.itemTypes = {
