@@ -13,6 +13,7 @@
         <a class="item" data-tab="spells">{{localize "HM.spells"}}</a>
         <a class="item" data-tab="inventory">{{localize "HM.inventory"}}</a>
         <a class="item" data-tab="biography">{{localize "HM.biography"}}</a>
+        <a class="item" data-tab="effects">{{localize "HM.effects"}}</a>
         <a class="item" data-tab="setup">{{localize "HM.setup"}}</a>
     </nav>
 
@@ -35,6 +36,10 @@
 
         <div class="tab biography" data-group="primary" data-tab="biography">
             {{> "systems/hackmaster5e/templates/actor/parts/bio.hbs"}}
+        </div>
+
+        <div class="tab base-effects" data-group="primary" data-tab="effects">
+            {{> "systems/hackmaster5e/templates/actor/parts/effects/base-effects.hbs"}}
         </div>
 
         <div class="tab base-setup" data-group="primary" data-tab="setup">

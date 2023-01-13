@@ -2,11 +2,6 @@ import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMCONST, HMTABLES, SYSTEM_ID } from '../tables/constants.js';
 
-function getItemId(ev, attr='data-item-id') {
-    const el = ev.currentTarget;
-    return $(el).attr(attr) || $(el).parents('.card, .item').attr(attr);
-}
-
 export class HMActorSheet extends ActorSheet {
     visibleItemId = {};
 
@@ -163,7 +158,9 @@ export class HMActorSheet extends ActorSheet {
     // Getters
     _getOwnedItem(itemId) {
         const {actor} = this;
-        return actor.items.get(itemId) ?? actor.wprofiles.get(itemId);
+        return actor.items.get(itemId)
+            ?? actor.effects.get(itemId)
+            ?? actor.wprofiles.get(itemId);
     }
 
     async _onItemCreate(ev) {
@@ -316,4 +313,9 @@ export class HMActorSheet extends ActorSheet {
 
         return false;
     }
+}
+
+function getItemId(ev, attr='data-item-id') {
+    const el = ev.currentTarget;
+    return $(el).attr(attr) || $(el).parents('.card, .item').attr(attr);
 }

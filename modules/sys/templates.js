@@ -24,6 +24,7 @@ export const preloadHandlebarsTemplates = () => {
         `${templatePath}/actor/parts/combat/base-combat.hbs`,
         `${templatePath}/actor/parts/combat/combat-armors.hbs`,
         `${templatePath}/actor/parts/combat/combat-weapons.hbs`,
+        `${templatePath}/actor/parts/effects/base-effects.hbs`,
         `${templatePath}/actor/parts/header/base-header.hbs`,
         `${templatePath}/actor/parts/header/header-stats.hbs`,
         `${templatePath}/actor/parts/header/header-portrait.hbs`,
