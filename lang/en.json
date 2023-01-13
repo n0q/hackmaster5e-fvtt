@@ -595,6 +595,7 @@
         "modifier":     "Modifier",
         "move":         "Move",
         "movece":       "Move Coeff",
+        "none":         "None",
         "normal":       "Normal",
         "opposed":      "Opposed",
         "overview":     "Overview",
@@ -683,6 +684,7 @@
         "misc":         "Misc",
 
         "UI": {
+            "duration":     "Duration",
             "showreach":    "Show Reach",
             "tequipped":    "Toggle Equipped",
             "key":          "Key",

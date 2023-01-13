@@ -5,6 +5,7 @@
         <th style='text-align: left;'>{{localize 'HM.type'}}</th>
         <th style='text-align: left;'>{{localize 'HM.UI.key'}}</th>
         <th style='text-align: left;'>{{localize 'HM.UI.value'}}</th>
+        <th style='text-align: left;'>{{localize 'HM.UI.duration'}}</th>
         <th style='text-align: left;'>{{localize 'HM.UI.mode'}}</th>
         <th style='text-align: left;'>{{localize 'HM.disabled'}}</th>
     </thead>
@@ -18,13 +19,31 @@
             {{/if}}
         </td>
         <td>{{key}}</td>
-        <td>{{value}}</td>
-        <td>{{localize (findConfigValue 'effectModes' mode)}}</td>
-        {{#if ../flags.core.statusId}}<td></td>{{else}}
-        <td class='button' style='text-align: left;' data-item-id={{../id}}>
-            {{localize (concat 'HM.' ../disabled)}}
+        <td>{{#if mode}}{{value}}
+            {{else}}{{../hackmaster5e.customChanges}}
+            {{/if}}
         </td>
+        <td>{{#with ../duration}}
+            {{#if remaining includeZero=true}}
+                {{remaining}}
+                {{#if (eq remaining 1)}}
+                    {{toLowerCase (localize 'HM.second')}}
+                {{else}}
+                    {{toLowerCase (localize 'HM.seconds')}}
+                {{/if}}
+            {{else}}
+                {{localize 'HM.none'}}
+            {{/if}}
+            {{/with}}
+        </td>
+        <td>{{localize (findConfigValue 'effectModes' mode)}}</td>
+        {{#if ../flags.core.statusId}}
+        <td style='text-align: left;'>
+        {{else}}
+        <td class='button' style='text-align: left;' data-item-id={{../id}}>
         {{/if}}
+        {{localize (concat 'HM.' ../disabled)}}
+        </td>
     </tr>
     {{/each}}
 {{/with}}{{/each}}
