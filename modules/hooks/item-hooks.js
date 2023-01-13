@@ -54,7 +54,6 @@ export class HMItemHooks {
             if (Number(data.system.type) === HMCONST.TALENT.WEAPON) {
                 const actor = item.parent;
                 const dupes = actor.itemTypes.talent.find((a) => a.name === data.name);
-                console.warn([actor, dupes]);
                 return !dupes;
             }
         }
