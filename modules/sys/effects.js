@@ -42,4 +42,9 @@ export class HMActiveEffect extends ActiveEffect {
         }
         return d;
     }
+
+    onClick() {
+        const {disabled} = this;
+        this.update({disabled: !disabled});
+    }
 }
