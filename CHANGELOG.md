@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [0.3.13] - 2023-01-13
 ### Added
 - Character Class option for free mage spell casting.
 - Effects tab for Character Actors.
