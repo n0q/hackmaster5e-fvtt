@@ -73,6 +73,7 @@
                         <thead><tr data-effect-id={{_id}}>
                             <th scope='col' width='99%' style='text-align: left; padding-left: 5px;'>{{localize 'HM.UI.key'}}</th>
                             <th scope='col'>{{localize 'HM.UI.value'}}</th>
+                            <th scope='col'>{{localize 'HM.UI.priority'}}</th>
                             <th scope='col' style='text-align: left; padding-left: 5px;'>{{localize 'HM.UI.mode'}}</th>
                             <th scope='col' class='button add-effect' {{#if @root.item.parent}}disabled{{/if}}>
                                 <i class='fas fa-plus'></i>
@@ -88,6 +89,10 @@
                                 <td>
                                     <input type='text' class='edit-effect' value='{{value}}' style='text-align: left;'
                                         {{#if @root.item.parent}}disabled{{/if}} data-edit-key='value'>
+                                </td>
+                                <td>
+                                    <input type='number' class='edit-effect' value='{{priority}}' style='text-align: left;'
+                                        {{#if @root.item.parent}}disabled{{/if}} data-edit-key='priority'>
                                 </td>
                                 <td>
                                     <select name='mode' class='edit-effect' data-edit-key='mode'

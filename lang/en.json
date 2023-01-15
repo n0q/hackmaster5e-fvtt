@@ -685,11 +685,12 @@
 
         "UI": {
             "duration":     "Duration",
-            "showreach":    "Show Reach",
-            "tequipped":    "Toggle Equipped",
             "key":          "Key",
             "label":        "Label",
             "mode":         "Mode",
+            "priority":     "Pri",
+            "showreach":    "Show Reach",
+            "tequipped":    "Toggle Equipped",
             "value":        "Value"
         },
 

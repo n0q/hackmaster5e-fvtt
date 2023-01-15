@@ -50,12 +50,17 @@ export class HMActiveEffectHooks {
 function applyCustomActiveEffect(mode, actor, modeArgs) {
     const {MODE} = HMCONST.CFX;
     if (Number(mode) === MODE.ABILITY_BONUS) return modeAbilityBonus(actor, modeArgs);
+    if (Number(mode) === MODE.GET_PROPERTY) return modeGetProperty(actor, modeArgs);
     return 0;
 }
 
 function modeAbilityBonus(actor, [ability, bonus, mode]) {
     const {OPT} = HMCONST.CFX;
-    const value = actor.getAbilityBonus(ability, bonus);
+    const value = Number(actor.getAbilityBonus(ability, bonus)) || 0;
     if (Number(mode) === OPT.SUBTRACT) return Math.min(0, -value);
     return value;
+}
+
+function modeGetProperty(actor, [prop]) {
+    return foundry.utils.getProperty(actor, prop) ?? 0;
 }

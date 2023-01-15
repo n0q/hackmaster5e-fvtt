@@ -10,7 +10,7 @@ export class HMTalentItemSheet extends HMItemSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             classes: ['hackmaster', 'sheet', 'item'],
-            width: 580,
+            width: 640,
             height: 380,
             tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'attributes' }],
         });

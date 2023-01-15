@@ -5,4 +5,7 @@ export const HMACTOR_TUNABLES = {
     die: {
         trauma: 'd20',
     },
+    sfatigue: {
+        def: -6,
+    },
 };
