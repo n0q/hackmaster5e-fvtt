@@ -10,8 +10,15 @@ export const HMCONST = {
         ALERT: 1,
         NOTE:  2,
     },
-    C_EFFECT_TYPE: {
-        NO_DEXDEF: 0,
+    CFX: {
+        MODE: {
+            ABILITY_BONUS: 0,
+            FOOBAR:        1,
+        },
+        OPT: {
+            ADD:      0,
+            SUBTRACT: 1,
+        },
     },
     DIE: {
         D20P:   0,
@@ -614,8 +621,16 @@ export const HMTABLES = {
             charge: {
                 label: 'EFFECT.charge',
                 icon: 'systems/hackmaster5e/styles/icons/shield-bash.svg',
-                changes: [
-                    {key: 'system.bonus.state.def', value: HMCONST.C_EFFECT_TYPE.NO_DEXDEF, mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM},
+                changes: [{
+                    key: 'system.bonus.state.def',
+                    value: [
+                        HMCONST.CFX.MODE.ABILITY_BONUS,
+                        'dex',
+                        'def',
+                        HMCONST.CFX.OPT.SUBTRACT,
+                    ],
+                    mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
+                },
                 ],
             },
             fullparry: {
@@ -651,12 +666,6 @@ export const HMTABLES = {
                 label: 'EFFECT.incap',
                 icon: 'systems/hackmaster5e/styles/icons/nailed-head.svg',
             },
-        },
-    },
-    c_effect: {
-        [HMCONST.C_EFFECT_TYPE.NO_DEXDEF]: (actor) => {
-            const defBonus = actor.getAbilityBonus('dex', 'def');
-            return Math.min(0, -defBonus);
         },
     },
     'tenacity': {

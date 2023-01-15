@@ -1,4 +1,4 @@
-import { HMTABLES } from '../tables/constants.js';
+import { HMCONST, HMTABLES } from '../tables/constants.js';
 import { HMStates } from '../sys/effects.js';
 import { HMSocket, SOCKET_TYPES } from '../sys/sockets.js';
 
@@ -12,8 +12,9 @@ export class HMActiveEffectHooks {
         });
     }
 
-    static async applyActiveEffect(actor, change, current, mdelta, changes) {
-        const delta = HMTABLES.c_effect[mdelta](actor);
+    static async applyActiveEffect(actor, change, current, metadata, changes) {
+        const [mode, ...modeArgs] = metadata.split(',');
+        const delta = applyCustomActiveEffect(mode, actor, modeArgs);
         const update = current + delta;
         changes[change.key] = update; // eslint-disable-line
     }
@@ -44,4 +45,17 @@ export class HMActiveEffectHooks {
         token.drawReach();
         HMSocket.emit(SOCKET_TYPES.DRAW_REACH, token.id);
     }
+}
+
+function applyCustomActiveEffect(mode, actor, modeArgs) {
+    const {MODE} = HMCONST.CFX;
+    if (Number(mode) === MODE.ABILITY_BONUS) return modeAbilityBonus(actor, modeArgs);
+    return 0;
+}
+
+function modeAbilityBonus(actor, [ability, bonus, mode]) {
+    const {OPT} = HMCONST.CFX;
+    const value = actor.getAbilityBonus(ability, bonus);
+    if (Number(mode) === OPT.SUBTRACT) return Math.min(0, -value);
+    return value;
 }
