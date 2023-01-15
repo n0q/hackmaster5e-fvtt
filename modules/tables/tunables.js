@@ -7,5 +7,6 @@ export const HMACTOR_TUNABLES = {
     },
     sfatigue: {
         def: -6,
+        basespd: 5,
     },
 };
