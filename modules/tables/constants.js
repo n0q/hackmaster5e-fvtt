@@ -13,7 +13,7 @@ export const HMCONST = {
     CFX: {
         MODE: {
             ABILITY_BONUS: 0,
-            FOOBAR:        1,
+            GET_PROPERTY:  1,
         },
         OPT: {
             ADD:      0,
@@ -658,7 +658,14 @@ export const HMTABLES = {
                 label: 'EFFECT.sfatigue',
                 icon: 'systems/hackmaster5e/styles/icons/stoned-skull.svg',
                 changes: [
-                    {key: 'system.bonus.state.def',    value: '-6',  mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                    {
+                        key: 'system.bonus.state.def',
+                        value: [
+                            HMCONST.CFX.MODE.GET_PROPERTY,
+                            `${SYSTEM_ID}.talent.sfatigue.def`,
+                        ],
+                        mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
+                    },
                     {key: 'system.bonus.state.skills', value: '-30', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
                 ],
             },
