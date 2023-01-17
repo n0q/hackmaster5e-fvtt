@@ -3,7 +3,6 @@ import { HMActor } from './actor.js';
 export class HMBeastActor extends HMActor {
     prepareBaseData() {
         super.prepareBaseData();
-        this.setBonusTotal();
     }
 
     prepareDerivedData() {
