@@ -9,7 +9,6 @@ export class HMCharacterActor extends HMActor {
         this.setAbilities();
         this.setAbilityBonuses();
         this.setEncumbrance();
-        this.setBonusTotal();
     }
 
     prepareDerivedData() {
