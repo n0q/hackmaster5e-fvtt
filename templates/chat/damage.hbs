@@ -1,5 +1,11 @@
 {{localize 'HM.weapon'}}: <b>{{context.name}}</b><br>
 {{localize 'HM.dmgtype'}}: <b>{{toUpperCase context.system.dmg.type}}</b><br>
+{{#with caller.system.bonus.total}}
+    {{#if (and assn (not ../context.system.ranged.checked))}}
+        {{localize 'HM.CCLASS.OPT.assn'}}:
+        <b>{{assn}}</b><br>
+    {{/if}}
+{{/with}}
 {{localize 'HM.speed'}}:
 {{#with context.system.bonus.total}}
     {{#if (eq ../resp.specialMove 1)}}

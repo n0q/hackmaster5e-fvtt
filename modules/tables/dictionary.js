@@ -46,15 +46,16 @@ idx.alignment = {
 };
 
 idx.classFeatureTable = {
-    'sp':   'HM.classFeatureTable.sp',
-    'atk':  'HM.classFeatureTable.atk',
-    'def':  'HM.classFeatureTable.def',
-    'spd':  'HM.classFeatureTable.spd',
-    'spdm': 'HM.classFeatureTable.spdm',
-    'spdr': 'HM.classFeatureTable.spdr',
-    'init': 'HM.classFeatureTable.init',
-    'back': 'HM.classFeatureTable.back',
-    'luck': 'HM.classFeatureTable.luck',
+    assn: 'HM.CCLASS.TABLE.assn',
+    atk:  'HM.CCLASS.TABLE.atk',
+    back: 'HM.CCLASS.TABLE.back',
+    def:  'HM.CCLASS.TABLE.def',
+    init: 'HM.CCLASS.TABLE.init',
+    luck: 'HM.CCLASS.TABLE.luck',
+    sp:   'HM.CCLASS.TABLE.sp',
+    spd:  'HM.CCLASS.TABLE.spd',
+    spdm: 'HM.CCLASS.TABLE.spdm',
+    spdr: 'HM.CCLASS.TABLE.spdr',
 };
 
 idx.handedness = {
@@ -237,16 +238,17 @@ idx.talentSelect = {
 };
 
 idx.itemCClass = {
-    sp:    'HM.spellpoints',
-    init:  'HM.initbonus',
-    atk:   'HM.atkbonus',
-    def:   'HM.defbonus',
-    spd:   'HM.spdbonus',
-    spdr:  'HM.spdrbonus',
-    spdm:  'HM.spdmbonus',
-    back:  'HM.backstab',
-    fcast: 'HM.freecast',
-    luck:  'HM.luck',
+    sp:    'HM.CCLASS.OPT.sp',
+    init:  'HM.CCLASS.OPT.init',
+    atk:   'HM.CCLASS.OPT.atk',
+    def:   'HM.CCLASS.OPT.def',
+    spd:   'HM.CCLASS.OPT.spd',
+    spdr:  'HM.CCLASS.OPT.spdr',
+    spdm:  'HM.CCLASS.OPT.spdm',
+    back:  'HM.CCLASS.OPT.back',
+    fcast: 'HM.CCLASS.OPT.fcast',
+    luck:  'HM.CCLASS.OPT.luck',
+    assn:  'HM.CCLASS.OPT.assn',
 };
 
 idx.itemTypes = {
