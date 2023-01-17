@@ -333,7 +333,7 @@ async function createDamageCard(dataset) {
     const rollContent = await roll.render({flavor});
 
     const template = 'systems/hackmaster5e/templates/chat/damage.hbs';
-    const templateData = {resp, context};
+    const templateData = {resp, context, caller};
     const resultContent = await renderTemplate(template, templateData);
     const content = resultContent + rollContent;
     return {content, roll, flavor: caller.name};

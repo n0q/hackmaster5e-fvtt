@@ -168,18 +168,21 @@ export class HMDialog {
         dialogResp.resp = await Dialog.wait({
             render: () => focusById('hp'),
             title: game.i18n.localize('HM.dialog.setWoundTitle'),
-            content: await renderTemplate('systems/hackmaster5e/templates/dialog/setWound.hbs'),
+            content: await renderTemplate('systems/hackmaster5e/templates/dialog/wound.hbs'),
             buttons: {
                 wound: {
                     label: game.i18n.localize('HM.dialog.setWoundTitle'),
-                    callback: () => ({'value': parseInt(document.getElementById('hp').value, 10) || 0}),
+                    callback: () => ({
+                        value: parseInt(document.getElementById('hp').value, 10) || 0,
+                        assn: parseInt(document.getElementById('assn').value, 10) || 0,
+                    }),
                 },
             },
             default: 'wound',
         }, {width: 175});
 
-        const {value} = dialogResp.resp;
-        dialogResp.data = {hp: value, timer: value};
+        const {assn, value} = dialogResp.resp;
+        dialogResp.data = {hp: value, timer: value, assn};
         return dialogResp;
     }
 

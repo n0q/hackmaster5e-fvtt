@@ -123,8 +123,8 @@ export class HMActor extends Actor {
         console.error(`${cName} does not have a getAbilityBonus() function.`);
     }
 
-    async addWound(amount) {
-        let woundData = {hp: amount, timer: amount};
+    async addWound(amount, topIgnore=0) {
+        let woundData = {hp: amount, timer: amount, assn: topIgnore};
 
         if (!amount) {
             const dataset = {dialog: 'wound'};
@@ -132,7 +132,7 @@ export class HMActor extends Actor {
             woundData = dialogResp.data;
         }
 
-        const {hp} = woundData;
+        const {hp, assn} = woundData;
         if (hp < 1) return {hp: 0};
         const iData = {name: 'New Wound', type: 'wound', data: woundData};
 
@@ -142,7 +142,7 @@ export class HMActor extends Actor {
             return {error, hp};
         }
 
-        return {hp};
+        return {hp, assn};
     }
 
     async modifyTokenAttribute(attribute, value, isDelta=false, isBar=true) {
