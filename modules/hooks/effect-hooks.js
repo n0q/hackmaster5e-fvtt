@@ -57,7 +57,8 @@ function applyCustomActiveEffect(mode, actor, modeArgs) {
 function modeAbilityBonus(actor, [ability, bonus, mode]) {
     const {OPT} = HMCONST.CFX;
     const value = Number(actor.getAbilityBonus(ability, bonus)) || 0;
-    if (Number(mode) === OPT.SUBTRACT) return Math.min(0, -value);
+    if (Number(mode) === OPT.BONUS) return Math.max(0, value);
+    if (Number(mode) === OPT.MALUS) return Math.min(0, -value);
     return value;
 }
 

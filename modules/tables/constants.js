@@ -16,8 +16,9 @@ export const HMCONST = {
             GET_PROPERTY:  1,
         },
         OPT: {
-            ADD:      0,
-            SUBTRACT: 1,
+            RAW:   0,
+            BONUS: 1,
+            MALUS: 2,
         },
     },
     DIE: {
@@ -628,7 +629,7 @@ export const HMTABLES = {
                         HMCONST.CFX.MODE.ABILITY_BONUS,
                         'dex',
                         'def',
-                        HMCONST.CFX.OPT.SUBTRACT,
+                        HMCONST.CFX.OPT.MALUS,
                     ],
                     mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
                 },
