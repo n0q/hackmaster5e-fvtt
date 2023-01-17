@@ -116,7 +116,8 @@
                 "spdr": false,
                 "init": false,
                 "back": false,
-                "luck": false
+                "luck": false,
+                "assn": false
             },
             "caps": {
                 "fcast": false

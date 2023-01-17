@@ -72,7 +72,7 @@ export const preloadHandlebarsTemplates = () => {
         `${templatePath}/dialog/getSave.hbs`,
         `${templatePath}/dialog/getSkill.hbs`,
         `${templatePath}/dialog/getInitDie.hbs`,
-        `${templatePath}/dialog/setWound.hbs`,
+        `${templatePath}/dialog/wound.hbs`,
         `${templatePath}/dialog/parts/getRollMode.hbs`,
     ]);
 };

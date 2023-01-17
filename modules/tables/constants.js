@@ -10,8 +10,16 @@ export const HMCONST = {
         ALERT: 1,
         NOTE:  2,
     },
-    C_EFFECT_TYPE: {
-        NO_DEXDEF: 0,
+    CFX: {
+        MODE: {
+            ABILITY_BONUS: 0,
+            GET_PROPERTY:  1,
+        },
+        OPT: {
+            RAW:   0,
+            BONUS: 1,
+            MALUS: 2,
+        },
     },
     DIE: {
         D20P:   0,
@@ -510,8 +518,9 @@ export const HMTABLES = {
     cast: {
         timing: (spd, caller) => {
             const {fatigue} = caller.system.bonus.total;
+            const {basespd} = caller[SYSTEM_ID].talent.sfatigue;
             const declare = spd;
-            const sfatigue = Math.max(spd + 5 + (Number(fatigue) || 0), 1);
+            const sfatigue = Math.max(spd + basespd + (Number(fatigue) || 0), 1);
             return {declare, sfatigue};
         },
         cost: (lidx, prepped) => {
@@ -614,8 +623,16 @@ export const HMTABLES = {
             charge: {
                 label: 'EFFECT.charge',
                 icon: 'systems/hackmaster5e/styles/icons/shield-bash.svg',
-                changes: [
-                    {key: 'system.bonus.state.def', value: HMCONST.C_EFFECT_TYPE.NO_DEXDEF, mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM},
+                changes: [{
+                    key: 'system.bonus.state.def',
+                    value: [
+                        HMCONST.CFX.MODE.ABILITY_BONUS,
+                        'dex',
+                        'def',
+                        HMCONST.CFX.OPT.MALUS,
+                    ],
+                    mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
+                },
                 ],
             },
             fullparry: {
@@ -643,7 +660,14 @@ export const HMTABLES = {
                 label: 'EFFECT.sfatigue',
                 icon: 'systems/hackmaster5e/styles/icons/stoned-skull.svg',
                 changes: [
-                    {key: 'system.bonus.state.def',    value: '-6',  mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                    {
+                        key: 'system.bonus.state.def',
+                        value: [
+                            HMCONST.CFX.MODE.GET_PROPERTY,
+                            `${SYSTEM_ID}.talent.sfatigue.def`,
+                        ],
+                        mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
+                    },
                     {key: 'system.bonus.state.skills', value: '-30', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
                 ],
             },
@@ -651,12 +675,6 @@ export const HMTABLES = {
                 label: 'EFFECT.incap',
                 icon: 'systems/hackmaster5e/styles/icons/nailed-head.svg',
             },
-        },
-    },
-    c_effect: {
-        [HMCONST.C_EFFECT_TYPE.NO_DEXDEF]: (actor) => {
-            const defBonus = actor.getAbilityBonus('dex', 'def');
-            return Math.min(0, -defBonus);
         },
     },
     'tenacity': {

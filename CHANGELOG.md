@@ -2,6 +2,16 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.3.14] - 2023-01-17
+### Added
+- Priority field for effect talents.
+- Improved caster talent support.
+- ToP Penetration class feature.
+### Changed
+- Damage cards specify ToP Penetration.
+- Wound dialogs request ToP Penetration level.
+- Updated Inflict Wound macro to handle ToP penetration across multiple tokens.
+
 ## [0.3.13] - 2023-01-13
 ### Added
 - Character Class option for free mage spell casting.

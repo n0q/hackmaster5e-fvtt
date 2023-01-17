@@ -9,13 +9,14 @@ export class HMItemHooks {
 
         if (type === 'wound' && item.parent) {
             if (!item.parent.system.bonus.total.trauma) return;
-            const {top} = item.parent.system.hp;
-            const wound = item.system.hp;
-            if (!top || top >= wound) return;
+            const hpToP = item.parent.system.hp.top;
+
+            const {assn, hp} = item.system;
+            if (!hpToP || hpToP >= hp + assn) return;
 
             const chatmgr = new HMChatMgr();
             const cardtype = HMCONST.CARD_TYPE.ALERT;
-            const dataset = {context: item, top, wound};
+            const dataset = {context: item, top:hpToP, wound: hp};
             if (item.parent.type === 'beast') dataset.hidden = true;
             const card = await chatmgr.getCard({cardtype, dataset});
             await ChatMessage.create(card);
