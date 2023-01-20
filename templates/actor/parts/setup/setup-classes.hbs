@@ -104,7 +104,7 @@
                         </tr>
                         {{#each features}}{{#if this}}
                         <tr>
-                            <th scope='row'>{{localize (concat 'HM.classFeatureTable.' @key)}}</th>
+                            <th scope='row'>{{localize (findConfigValue 'classFeatureTable' @key)}}</th>
                             <td width='99%'>{{lookup ../bonus @key}}</td>
                         </tr>
                         {{/if}}{{/each}}
