@@ -30,7 +30,7 @@
             "hp":    {"value": 0, "max": 0},
             "luck":  {"value": 0, "max": 0},
             "ep":    {"value": 0, "max": 0},
-            "honor": {"value": 0, "bracket": 0},
+            "honor": {"value": 10, "bracket": 2},
             "fame":  {"value": 0, "bracket": 0},
             "bp": 40,
             "abilities": {

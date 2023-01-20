@@ -9,6 +9,7 @@ export class HMCharacterActor extends HMActor {
         this.setAbilities();
         this.setAbilityBonuses();
         this.setEncumbrance();
+        this.setHonor();
     }
 
     prepareDerivedData() {
@@ -141,18 +142,27 @@ export class HMCharacterActor extends HMActor {
         this.system.bonus.encumb = HMTABLES.encumbrance[penalty];
     }
 
+    setHonor() {
+        const cclass = this.items.find((a) => a.type === 'cclass');
+        if (!cclass) return;
+
+        const {system} = this;
+        const {level} = cclass.system;
+        const hValue = parseInt(system.honor.value, 10) || 0;
+
+        const bracket = HMTABLES.bracket.honor(level, hValue) || 0;
+        const value = Math.min(hValue, 999);
+        system.honor = {bracket, value};
+
+        if (bracket < HMCONST.HONOR.LOW) {
+            system.bonus.honor = HMTABLES.bracket.dishonor();
+        }
+    }
+
     setExtras() {
         const {system} = this;
         system.sp.max = system.bonus.total?.sp || 0;
         system.luck.max = system.bonus.total?.luck || 0;
-        const cclass = this.items.find((a) => a.type === 'cclass');
-        if (!cclass) return;
-
-        const {level} = cclass.system;
-
-        const hValue = parseInt(system.honor.value, 10) || 0;
-        system.honor.bracket = HMTABLES.bracket.honor(level, hValue) || 0;
-        system.honor.value = Math.min(hValue, 999);
 
         const fValue = parseInt(system.fame.value, 10) || 0;
         system.fame.bracket = HMTABLES.bracket.fame(fValue) || 0;
