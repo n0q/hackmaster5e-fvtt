@@ -28,10 +28,16 @@ export class HMSkillItem extends HMItem {
             } else { delete bonus.stats; }
         }
 
-        for (const key in bonus.total) {
-            let sum = -bonus.total[key];
-            for (const state in bonus) { sum += (bonus[state][key] || 0); }
-            bonus.total[key] = sum + (actorData.bonus?.state?.skills || 0);
-        }
+        const actorBonus = actorData.bonus;
+        const stateBonus = actorBonus?.state?.skills || 0;
+        const honorBonus = actorBonus?.honor?.skills || 0;
+        bonus.state = {value: stateBonus, literacy: stateBonus, verbal: stateBonus};
+        bonus.honor = {value: honorBonus, literacy: honorBonus, verbal: honorBonus};
+
+        Object.keys(bonus.total).forEach((key) => {
+            bonus.total[key] = Object.keys(bonus)
+                                .filter((v) => v !== 'total')
+                                .reduce((acc, value) => acc + bonus[value][key] || 0, 0);
+        });
     }
 }
