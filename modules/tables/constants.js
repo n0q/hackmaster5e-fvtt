@@ -499,12 +499,12 @@ export const HMTABLES = {
             'literacy': 'd100 - (@resp.bonus + @bonus.total.literacy)',
         },
     },
-    'bracket': {
-        'fame': (value) => {
+    bracket: {
+        fame: (value) => {
             const fTable = [0, 10, 20, 70, 100, 200, Infinity];
             return fTable.findIndex((x) => x >= value);
         },
-        'honor': (level, value) => {
+        honor: (level, value) => {
             const hTable = [0,
                             3 + level * 2,
                             6 + level * 4,
@@ -513,7 +513,24 @@ export const HMTABLES = {
                                             Infinity,
             ];
             return hTable.findIndex((x) => x >= value);
-       },
+        },
+        dishonor: () => ({
+                atk:        -1,
+                def:        -1,
+                dmg:        -1,
+                spd:         1,
+                init:        1,
+                fos:        -1,
+                foa:        -1,
+                morale:     -1,
+                turning:    -1,
+                physical:   -1,
+                mental:     -1,
+                dodge:      -1,
+                trauma:     -1,
+                poison:     -1,
+                skills:     -5,
+            }),
     },
     cast: {
         timing: (spd, caller) => {
