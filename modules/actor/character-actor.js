@@ -71,6 +71,7 @@ export class HMCharacterActor extends HMActor {
             const idx = Math.floor((statAdj - clamp.min) / clamp.step);
 
             fvalue = (fvalue + 101) % 100;
+            if (value < 1) [value, fvalue] = [1, 1];
             abilities.total[stat] = {value, fvalue, idx};
         });
     }

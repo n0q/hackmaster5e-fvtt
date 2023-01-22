@@ -7,6 +7,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Status icon improperly rendered under Firefox.
 - Beast autoToP regression.
 - Race movement speed display blow-out in some situations.
+- Extended character width of ability scores to 3.
+- Minimum ability score is now 1/01.
 
 ### [0.3.15] - 2023-01-20
 ### Added
