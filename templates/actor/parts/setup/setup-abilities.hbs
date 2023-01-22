@@ -17,11 +17,11 @@
                 {{#each vector}}
                 <td>
                     <input type='text' name='system.abilities.{{@vectorKey}}.{{@key}}.value' style='text-align: right;'
-                        value='{{lookup (lookup @vector @key) 'value'}}' maxlength=2 data-dtype='Number'
+                        value='{{lookup (lookup @vector @key) 'value'}}' maxlength=3 data-dtype='Number'
                         {{#unless (or (eq @vectorKey 'base') (eq @vectorKey 'misc'))}}disabled{{/unless}}/>
                     <label class='loud-label'>/</label>
                     <input type='text' name='system.abilities.{{@vectorKey}}.{{@key}}.fvalue'
-                        value='{{pad (lookup (lookup @vector @key) 'fvalue')}}' maxlength=2 data-dtype='Number'
+                        value='{{pad (lookup (lookup @vector @key) 'fvalue')}}' maxlength=3 data-dtype='Number'
                         {{#unless (or (eq @vectorKey 'base') (eq @vectorKey 'misc'))}}disabled{{/unless}}/>
                 </td>
                 {{/each}}
