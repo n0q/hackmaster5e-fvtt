@@ -15,8 +15,8 @@ export class HMRaceItem extends HMItem {
     }
 
     get movespd() {
-        const raceMove = this.system.bonus.move || 0;
-        return Object.values(HMTABLES.movespd).map((x) => x * raceMove);
+        const {move} = this.system.bonus || 1;
+        return Object.values(HMTABLES.movespd).map((x) => parseFloat((x * move).toPrecision(3)));
     }
 
     getScale(key) {

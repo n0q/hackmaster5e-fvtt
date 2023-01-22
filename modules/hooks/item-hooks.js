@@ -25,7 +25,11 @@ export class HMItemHooks {
             if (item.parent.type === 'beast') {
                 const formula = HMTABLES.formula.save.trauma;
                 const dialogResp = {caller: item.parent, context: item.parent};
-                const roll = await new Roll(formula, item.parent.system).evaluate({async: true});
+                const {system, hackmaster5e} = item.parent;
+
+                const rollContext = {...system, talent: hackmaster5e.talent};
+                const roll = await new Roll(formula, rollContext).evaluate({async: true});
+
                 dataset.resp = {caller: item.parent};
                 dataset.dialog = 'save';
                 dataset.formulaType = 'trauma';

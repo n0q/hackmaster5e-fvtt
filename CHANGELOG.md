@@ -2,6 +2,16 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+### [0.3.16] - 2023-01-22
+### Changed
+- Skill macros respect smart select.
+### Fixed
+- Status icon improperly rendered under Firefox.
+- Beast autoToP regression.
+- Race movement speed display blow-out in some situations.
+- Extended character width of ability scores to 3.
+- Minimum ability score is now 1/01.
+
 ### [0.3.15] - 2023-01-20
 ### Added
 - Dishonorable characters are properly punished.
