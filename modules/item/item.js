@@ -1,4 +1,4 @@
-import { HMTABLES, HMCONST } from '../tables/constants.js';
+import { HMTABLES, HMCONST, SYSTEM_ID } from '../tables/constants.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { HMStates } from '../sys/effects.js';
@@ -55,7 +55,14 @@ export class HMItem extends Item {
 
         if (caller) callers.push({caller, context: caller.items.get(itemId)});
         else {
-            const actors = canvas.tokens.controlled.map((token) => token.actor);
+            let actors = canvas.tokens.controlled.map((token) => token.actor);
+
+            const smartSelect = game.settings.get(SYSTEM_ID, 'smartSelect');
+            if (!actors.length && smartSelect) {
+                const {character} = game.user;
+                if (character) actors.push(character);
+            }
+
             Object.values(actors).forEach((actor) => {
                 let context = actor.items.find((a) => a.type === 'skill'
                     && skillName === a.name
