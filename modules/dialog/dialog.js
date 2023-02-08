@@ -4,6 +4,7 @@ import { CastPrompt } from '../apps/cast.js';
 import { CritPrompt } from '../apps/crit.js';
 import { DamagePrompt } from '../apps/damage.js';
 import { DefendPrompt } from '../apps/defend.js';
+import { FumblePrompt } from '../apps/fumble.js';
 import { SkillPrompt } from '../apps/skill.js';
 
 function getDialogData() {
@@ -69,6 +70,22 @@ export class HMDialog {
         dialogResp.resp = await new Promise((resolve) => {
             const options = {resolve, title};
             new CastPrompt(dialogData, options).render(true);
+        });
+
+        return dialogResp;
+    }
+
+    static async getFumbleDialog(_dataset, caller) {
+        const dialogResp = {caller};
+        const dialogData = getDialogData();
+        dialogData.caller = caller;
+
+        const title = caller
+            ? `${caller.name}: ${game.i18n.localize('HM.dialog.getFumbleTitle')}`
+            : `${game.i18n.localize('HM.dialog.getFumbleTitle')}`;
+        dialogResp.resp = await new Promise((resolve) => {
+            const options = {resolve, title};
+            new FumblePrompt(dialogData, options).render(true);
         });
 
         return dialogResp;
