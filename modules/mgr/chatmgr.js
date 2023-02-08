@@ -28,6 +28,9 @@ export class HMChatMgr {
                 case 'crit':
                     cData = await createCritCard(dataset);
                     break;
+                case 'fumble':
+                    cData = await createFumbleCard(dataset);
+                    break;
                 case 'save':
                     cData = await createSaveCard(roll, dataset, dialogResp);
                     break;
@@ -53,7 +56,7 @@ export class HMChatMgr {
         };
 
         if (roll || dataset?.roll) {
-            chatData.rolls     = [cData?.roll || roll];
+            chatData.rolls    = Array.isArray(roll) ? roll : [cData?.roll || roll];
             chatData.rollMode = cData.rollMode ? cData.rollMode : game.settings.get('core', 'rollMode');
             chatData.type     = CONST.CHAT_MESSAGE_TYPES.ROLL;
             chatData.sound    = CONFIG.sounds.dice;
@@ -164,6 +167,27 @@ async function createInitNote(dataset) {
     const content = await renderTemplate(template, dataset);
     const whisper = dataset?.hidden ? getGMs() : undefined;
     return {content, whisper};
+}
+
+async function createFumbleCard(dataset) {
+    const {resp} = dataset;
+    const {results} = resp;
+
+    const template = 'systems/hackmaster5e/templates/chat/fumble.hbs';
+    const resultContent = await renderTemplate(template, {resp});
+
+    const rolls = results.map((r) => r.roll);
+
+    const typeStr = resp.type ? game.i18n.localize('HM.ranged') : game.i18n.localize('HM.melee');
+    const fumbleStr = game.i18n.localize('HM.fumble');
+    const innateStr = resp.innate ? `(${game.i18n.localize('HM.innate')})` : '';
+    const flavor=`${typeStr} ${fumbleStr} ${innateStr}`;
+    const rollContent = await Promise.all(rolls.map(
+        async (r, i) => (i ? r.render() : r.render({flavor})),
+    ));
+
+    const content = resultContent + rollContent;
+    return {content, roll: rolls};
 }
 
 async function createCritCard(dataset) {
