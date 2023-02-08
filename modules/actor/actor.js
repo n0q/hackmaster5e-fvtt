@@ -6,6 +6,7 @@ import { HMWeaponProfile } from '../item/weapon-profile.js';
 export class HMActor extends Actor {
     prepareBaseData() {
         super.prepareBaseData();
+        if (this.type === 'worksheet') return;
         this[SYSTEM_ID] = {talent: deepClone(HMACTOR_TUNABLES)};
         this.resetBonus();
     }
