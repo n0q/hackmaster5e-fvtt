@@ -1,0 +1,27 @@
+<form class='hackmaster'>
+    <section class='grid-2col' style='gap: 0 20px;'>
+        <span class='form-group'>
+            <label>{{localize 'HM.attack'}} Roll</label>
+            <input name='atk' value='{{atk}}' class='bind' data-prop='atk' type='number'/>
+        </span>
+        <span class='form-group'>
+            <label>{{localize 'HM.defense'}} Roll</label>
+            <input name='def' value='{{def}}' class='bind' data-prop='def' type='number'/>
+        </span>
+    </section>
+    <section class='grid-2col' style='gap: 0 20px;'>
+        <span class='form-group'>
+            <label>{{localize 'HM.ranged'}}?</label>
+            <input type='checkbox' class='bind' data-prop='type' {{checked type}}>
+        </span>
+        <span class='form-group'>
+            <label>{{localize 'HM.innate'}}?</label>
+            <input type='checkbox' class='bind' data-prop='innate' {{checked innate}}>
+        </span>
+    </section>
+    <section class='dialog-buttons'>
+        <button type='submit' class='dialog-button normal default'>
+            {{localize 'HM.roll'}}
+        </button>
+    </section>
+</form>

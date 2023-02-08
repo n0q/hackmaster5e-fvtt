@@ -1,0 +1,41 @@
+import { HMPrompt } from './prompt.js';
+
+export class FumblePrompt extends HMPrompt {
+    static get defaultOptions() {
+        return mergeObject(super.defaultOptions, {
+            template: 'systems/hackmaster5e/templates/dialog/fumble.hbs',
+            id: 'fumblePrompt',
+        });
+    }
+
+    constructor(dialogData, options) {
+        super(dialogData, options);
+
+        const [atk, def] = [0, 0];
+        foundry.utils.mergeObject(this.dialogData, {
+            atk,
+            def,
+            type: 0,
+            innate: false,
+        });
+    }
+
+    update(options) {
+        super.update(options);
+    }
+
+    get dialogResp() {
+        const {atk, def, innate, type} = this.dialogData;
+        const dialogResp = {
+            atk: Number(atk),
+            def: Number(def),
+            type: +type,
+            innate,
+        };
+        return dialogResp;
+    }
+
+    activateListeners(html) {
+        super.activateListeners(html);
+    }
+}

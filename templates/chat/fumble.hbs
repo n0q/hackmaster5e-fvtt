@@ -1,0 +1,12 @@
+{{localize 'HM.attack'}}: <b>{{resp.atk}}</b><br>
+{{localize 'HM.defense'}}: <b>{{resp.def}}</b>
+{{#each resp.results}}
+<hr>
+{{localize 'HM.result'}}:
+<b>{{localize (concat 'HM.FUMBLE.type.' ../resp.type '.' typeIdx)}}</b><br>
+{{#if (lt typeIdx 10)}}
+{{localize 'HM.details'}}:
+<b>{{localize (concat 'HM.FUMBLE.label.' ../resp.type '.' rollIdx)}}</b><br>
+{{/if}}
+{{/each}}
+{{#if resp.freeAttack}}<hr><b>{{localize 'HM.chatCard.fcounter'}}</b>{{/if}}

@@ -8,6 +8,7 @@ export const HMDialogFactory = (dataset, caller=null, opt={}) => {
     if (dialog === 'crit') return HMDialog.getCritDialog(dataset, caller);
     if (dialog === 'def') return HMDialog.getDefendDialog(dataset, caller);
     if (dialog === 'dmg') return HMDialog.getDamageDialog(dataset, caller);
+    if (dialog === 'fumble') return HMDialog.getFumbleDialog(dataset, caller);
     if (dialog === 'initdie') return HMDialog.getInitDieDialog(caller);
     if (dialog === 'save') return HMDialog.getSaveDialog(dataset, caller);
     if (dialog === 'skill') return HMDialog.getSkillDialog(dataset, caller);

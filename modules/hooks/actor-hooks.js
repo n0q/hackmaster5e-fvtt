@@ -1,7 +1,7 @@
 export class HMActorHooks {
     static async createActor(actor, _options, userId) {
         if (game.user.id !== userId) return;
-        if (actor.items.size || actor.type === 'beast') return;
+        if (actor.items.size || actor.type !== 'character') return;
 
         const skillPack = game.packs.get('hackmaster5e.uskills');
         const itemList = await skillPack.getDocuments();

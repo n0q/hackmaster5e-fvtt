@@ -1,5 +1,6 @@
 import { SYSTEM_ID, HMCONST, HMTABLES } from '../tables/constants.js';
 import { CRITTABLE } from '../tables/crits.js';
+import { FUMBLETABLE } from '../tables/fumbles.js';
 import { HMItem, advanceClock, setStatusEffectOnToken, unsetStatusEffectOnToken } from './item.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMDialogFactory } from '../dialog/dialog-factory.js';
@@ -203,6 +204,26 @@ export class HMWeaponItem extends HMItem {
         dataset.resp = resp;
         dataset.context = context;
         dataset.caller = actor;
+
+        const chatMgr = new HMChatMgr();
+        const card = await chatMgr.getCard({dataset});
+        await ChatMessage.create(card);
+    }
+
+    static async rollFumble({caller} = {}) {
+        const {actor} = fromCaller(caller);
+
+        const dataset = {dialog : 'fumble', caller: actor};
+        const dialogResp = await HMDialogFactory(dataset, actor);
+        dataset.resp = dialogResp.resp;
+
+        const {atk, def, innate, type} = dataset.resp;
+        const formula = FUMBLETABLE.formula(atk, def);
+        const results = await FUMBLETABLE.evaluate(formula, type, innate);
+        if (!results) return;
+
+        dataset.resp.results = results;
+        dataset.resp.freeAttack = !!(results[0].roll.total % 2);
 
         const chatMgr = new HMChatMgr();
         const card = await chatMgr.getCard({dataset});
