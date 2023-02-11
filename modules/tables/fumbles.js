@@ -10,29 +10,18 @@ export const FUMBLETABLE = {
         return mod ? `d1000 + ${mod}` : false;
     },
 
-    evaluate: async (formula, type, innate, r=3) => {
-        if (!formula || r < 1) return false;
+    evaluate: async (formula, type, innate) => {
+        if (!formula) return false;
 
         const roll = await new Roll(formula).evaluate({async: true});
         let rollIdx = FUMBLETABLE.rollIdx[type].findIndex((x) => x >= roll.total);
         const typeIdx = FUMBLETABLE.typeIdx[type].findIndex((x) => x >= roll.total);
 
-        // Innate
-        if (type === FCONST.MELEE && (rollIdx > 11 && rollIdx < 21)) rollIdx = 99;
-        if (type === FCONST.RANGED && (rollIdx > 10 && rollIdx < 16)) rollIdx = 99;
-
-        let results = [{roll, typeIdx, rollIdx}];
-
-        const depth = r - 1;
-        if (!depth) return results;
-        if (typeIdx > 9) {
-            results = results.concat(await FUMBLETABLE.evaluate(formula, type, depth));
-            results = results.concat(await FUMBLETABLE.evaluate(formula, type, depth));
+        if (innate) {
+            if (type === FCONST.MELEE && (rollIdx > 11 && rollIdx < 21)) rollIdx = 99;
+            if (type === FCONST.RANGED && (rollIdx > 10 && rollIdx < 16)) rollIdx = 99;
         }
-        if (typeIdx > 10) {
-            results = results.concat(await FUMBLETABLE.evaluate(formula, type, depth));
-        }
-        return results;
+        return {roll, typeIdx, rollIdx};
     },
 
     rollIdx: {
@@ -52,7 +41,7 @@ export const FUMBLETABLE = {
              463,  508,  562,  580,  589,  616,  630,  644,  658,  672,
              686,  694,  698,  704,  708,  712,  716,  722,  728,  733,
              738,  743,  748,  753,  763,  768,  744,  864,  941,  964,
-             982, 1044,  1100, 1200, Infinity,
+             982, 1044, 1100, 1200, Infinity,
         ],
     },
 

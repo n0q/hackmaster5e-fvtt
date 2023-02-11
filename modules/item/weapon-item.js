@@ -222,8 +222,10 @@ export class HMWeaponItem extends HMItem {
         const results = await FUMBLETABLE.evaluate(formula, type, innate);
         if (!results) return;
 
-        dataset.resp.results = results;
-        dataset.resp.freeAttack = !!(results[0].roll.total % 2);
+        dataset.roll = results.roll;
+        dataset.resp.rollIdx = results.rollIdx;
+        dataset.resp.typeIdx = results.typeIdx;
+        dataset.resp.freeAttack = !!(dataset.roll.total % 2);
 
         const chatMgr = new HMChatMgr();
         const card = await chatMgr.getCard({dataset});
