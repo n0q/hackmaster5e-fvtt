@@ -225,11 +225,11 @@ export class HMWeaponItem extends HMItem {
         dataset.roll = results.roll;
         dataset.resp.rollIdx = results.rollIdx;
         dataset.resp.typeIdx = results.typeIdx;
-        dataset.resp.sprain = results.sprain;
+        dataset.resp.comp = results.comp;
         dataset.resp.freeAttack = !!(dataset.roll.total % 2);
 
-        if (dataset.resp.sprain) {
-            dataset.resp.sprainRoll = await new Roll('d6').evaluate({async: true});
+        if (dataset.resp.comp) {
+            dataset.resp.compRoll = await new Roll('d6').evaluate({async: true});
         }
 
         const chatMgr = new HMChatMgr();

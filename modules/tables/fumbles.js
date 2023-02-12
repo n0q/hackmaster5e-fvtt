@@ -1,7 +1,7 @@
 const FCONST = {
-    SPRAIN: {
-        TEAR:   1,
-        TENDON: 2,
+    COMPLICATION: {
+        STRAIN: 1,
+        SPRAIN: 2,
     },
     TYPE: {
         MELEE:  0,
@@ -28,16 +28,16 @@ export const FUMBLETABLE = {
             if (type === FCONST.TYPE.RANGED && (rollIdx > 10 && rollIdx < 16)) rollIdx = 99;
         }
 
-        let sprain = false;
+        let comp = false;
         if (type === FCONST.TYPE.MELEE) {
-            if (rollIdx > 25 && rollIdx < 46) sprain = FCONST.SPRAIN.TEAR;
-            if (rollIdx > 45 && rollIdx < 64) sprain = FCONST.SPRAIN.TENDON;
+            if (rollIdx > 25 && rollIdx < 46) comp = FCONST.COMPLICATION.STRAIN;
+            if (rollIdx > 45 && rollIdx < 64) comp = FCONST.COMPLICATION.SPRAIN;
         } else {
-            if (rollIdx > 20 && rollIdx < 29) sprain = FCONST.SPRAIN.TEAR;
-            if (rollIdx > 28 && rollIdx < 37) sprain = FCONST.SPRAIN.TENDON;
+            if (rollIdx > 20 && rollIdx < 29) comp = FCONST.COMPLICATION.STRAIN;
+            if (rollIdx > 28 && rollIdx < 37) comp = FCONST.COMPLICATION.SPRAIN;
         }
 
-        return {roll, typeIdx, rollIdx, sprain};
+        return {roll, typeIdx, rollIdx, comp};
     },
 
     rollIdx: {

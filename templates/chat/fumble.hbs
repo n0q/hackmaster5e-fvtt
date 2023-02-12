@@ -5,11 +5,18 @@
     {{localize 'HM.result'}}:
     <b>{{localize (concat 'HM.FUMBLE.type.' type '.' typeIdx)}}</b><br>
     {{#if (lt typeIdx 10)}}
-        {{localize 'HM.details'}}:
-        <b>{{{localize (concat 'HM.FUMBLE.label.' type '.' rollIdx)}}}</b><br>
+        {{#if comp}}
+            {{localize 'HM.injury'}}:
+            <b>{{localize (concat 'HM.FUMBLE.injury.' comp)}}</b><br>
+            {{localize 'HM.location'}}: 
+            <b>{{{localize (concat 'HM.FUMBLE.label.' type '.' rollIdx)}}}</b><br>
+        {{else}}
+            {{localize 'HM.details'}}:
+            <b>{{{localize (concat 'HM.FUMBLE.label.' type '.' rollIdx)}}}</b><br>
+        {{/if}}
     {{/if}}
-    {{#if (eq sprainRoll.total 1)}}{{localize 'HM.complication'}}: 
-    <b>{{localize (concat 'HM.FUMBLE.sprain.' sprain)}}</b><br>
+    {{#if (eq compRoll.total 1)}}{{localize 'HM.comp'}}: 
+    <b>{{localize (concat 'HM.FUMBLE.comp.' comp)}}</b><br>
     {{/if}}
     {{#if freeAttack}}<hr><b>{{localize 'HM.chatCard.fcounter'}}</b>{{/if}}
 {{/with}}
