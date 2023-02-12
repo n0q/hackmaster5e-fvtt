@@ -180,9 +180,9 @@ async function createFumbleCard(dataset) {
     flavor += resp.innate ? ` (${game.i18n.localize('HM.innate')})` : '';
     let rollContent = await roll.render({flavor});
 
-    if (resp.sprain) {
-        const sprainFlavor = game.i18n.localize('HM.chatCard.sprainroll');
-        rollContent += await resp.sprainRoll.render({flavor: sprainFlavor});
+    if (resp.comp) {
+        const compFlavor = game.i18n.localize('HM.chatCard.comproll');
+        rollContent += await resp.compRoll.render({flavor: compFlavor});
     }
 
     const content = resultContent + rollContent;

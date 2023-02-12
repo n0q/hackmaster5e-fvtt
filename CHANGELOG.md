@@ -4,7 +4,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### [Unreleased]
 ### Added
-- Fumble complications due to sprains.
+- Fumble complications due to strains/sprains.
+### Changed
+- Autofocus on fumble dialogs.
 ### Fixed
 - Fumbles no longer default to innate tables.
 ### Removed

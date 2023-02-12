@@ -304,7 +304,7 @@
             "fcounter":     "Free Counter-Attack",
             "mfumble":      "Melee Fumble",
             "rfumble":      "Ranged Fumble",
-            "sprainroll":   "Sprain Check"
+            "comproll":     "Sprain/Strain Check"
         },
 
         "moveSpds": {
@@ -499,6 +499,7 @@
         "confirmation": "Confirmation",
         "combat":       "Combat",
         "components":   "Components",
+        "comp":         "Complication",
         "cost":         "Cost",
         "countup":      "Count Up",
         "custom":       "Custom",
@@ -557,6 +558,7 @@
         "hit":          "Hit",
         "honor":        "Honor",
         "initmod":      "Init Mod",
+        "injury":       "Injury",
         "immediate":    "Immediate",
         "incapacitated": "Incapacitated",
         "indefinitely": "Indefinitely",
@@ -719,7 +721,11 @@
         },
 
         "FUMBLE": {
-            "sprain": {
+            "injury": {
+                "1":    "Sprain/Hyperextension",
+                "2":    "Strain/Pull"
+            },
+            "comp": {
                 "1":    "Muscle Tear",
                 "2":    "Torn Ligament or Tendon"
             },
