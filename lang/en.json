@@ -296,12 +296,15 @@
         },
 
         "chatCard": {
-            "critHit":     "Critical Hit",
-            "wcreset":     "Weapon count reset",
-            "toplimitPre": "Damage exceeds",
-            "top":         "Threshold of Pain",
-            "prepratk":    "Preparing Ranged Attack",
-            "fcounter":    "Free Counter-Attack"
+            "critHit":      "Critical Hit",
+            "wcreset":      "Weapon count reset",
+            "toplimitPre":  "Damage exceeds",
+            "top":          "Threshold of Pain",
+            "prepratk":     "Preparing Ranged Attack",
+            "fcounter":     "Free Counter-Attack",
+            "mfumble":      "Melee Fumble",
+            "rfumble":      "Ranged Fumble",
+            "comproll":     "Sprain/Strain Check"
         },
 
         "moveSpds": {
@@ -492,9 +495,11 @@
         "class":        "Class",
         "clerical":     "Clerical",
         "comatose":     "Comatose",
+        "complication": "Complication",
         "confirmation": "Confirmation",
         "combat":       "Combat",
         "components":   "Components",
+        "comp":         "Complication",
         "cost":         "Cost",
         "countup":      "Count Up",
         "custom":       "Custom",
@@ -553,6 +558,7 @@
         "hit":          "Hit",
         "honor":        "Honor",
         "initmod":      "Init Mod",
+        "injury":       "Injury",
         "immediate":    "Immediate",
         "incapacitated": "Incapacitated",
         "indefinitely": "Indefinitely",
@@ -715,12 +721,20 @@
         },
 
         "FUMBLE": {
+            "injury": {
+                "1":    "Sprain/Hyperextension",
+                "2":    "Strain/Pull"
+            },
+            "comp": {
+                "1":    "Muscle Tear",
+                "2":    "Torn Ligament or Tendon"
+            },
             "label": {
                 "0": {
                     "0":    "No special ill effect",
                     "1":    "Sweat in your eyes, -1 to accuracy for 10 seconds",
                     "2":    "Blood in your eyes, -3 to accuracy for 10 seconds",
-                    "3":    "Random nearby* ally is Automatically hit (by their opponent) and ally's weapon count resets",
+                    "3":    "Random nearby<sup>*</sup> ally is Automatically hit (by their opponent) and ally's weapon count resets",
                     "4":    "Distracted by ally or opponent; add [[d4p]] seconds wait time before next attack and -4 penalty to Defense whilst so distracted",
                     "5":    "Boot/footgear breaks, -1 to attack and defense until repaired or discarded",
                     "6":    "Backpack, pouch or other container strap breaks, -1 to attack and defense until item repaired or discarded",
@@ -781,7 +795,7 @@
                     "61":   "neck",
                     "62":   "hip",
                     "63":   "abs",
-                    "64":   "Automatically inflict damage to a random nearby* ally; roll damage dice, add strength bonus or penalty (though no bonuses from talents or specialization), attempt Feat of Agility check (vs. [[d20p]]) to deliver only half damage.",
+                    "64":   "Automatically inflict damage to a random nearby<sup>*</sup> ally; roll damage dice, add strength bonus or penalty (though no bonuses from talents or specialization), attempt Feat of Agility check (vs. [[d20p]]) to deliver only half damage.",
                     "65":   "Drop weapon at feet",
                     "66":   "Drop weapon 2 feet away",
                     "67":   "Drop weapon 3 feet away",
@@ -806,7 +820,7 @@
                     "0":    "No special ill effect",
                     "1":    "Sweat in your eyes, -1 to accuracy for 10 seconds",
                     "2":    "Blood in your eyes, -3 to accuracy for 10 seconds",
-                    "3":    "Arrows whistles by head of random ally in field of fire*. Distraction causes him to be automatically hit (by his opponent) and his weapon count resets.",
+                    "3":    "Arrows whistles by head of random ally in field of fire<sup>*</sup>. Distraction causes him to be automatically hit (by his opponent) and his weapon count resets.",
                     "4":    "Distracted by glare; add [[d4p]] seconds wait time before next shot and -4 penalty to Accuracy whilst so distracted",
                     "5":    "Boot/footgear breaks, -1 to accuracy until repaired or discarded",
                     "6":    "Backpack, pouch, or other container strap breaks, -1 to accuracy until item repaired or discarded",
@@ -820,7 +834,7 @@
                     "14":   "Limb badly cracked, -50% to damage",
                     "15":   "Limb broken (useless)",
                     "16":   "Overextend: [[d4]] seconds penalty to next shot",
-                    "17":   "Graze nearest ally in field of fire*: Though insufficient to cause a wound, bewildered distraction causes them to suffer a +[[d6]] seconds penalty to next attack and a [[-d4 - 1]] Attack penalty on next roll; if ally is arcane spellcaster in midst of casting a spell this counts as \"Caster struck by blow absorbed by body armor\" for purposes of Spell Mishaps",
+                    "17":   "Graze nearest ally in field of fire<sup>*</sup>: Though insufficient to cause a wound, bewildered distraction causes them to suffer a +[[d6]] seconds penalty to next attack and a [[-d4 - 1]] Attack penalty on next roll; if ally is arcane spellcaster in midst of casting a spell this counts as \"Caster struck by blow absorbed by body armor\" for purposes of Spell Mishaps",
                     "18":   "Off balance: +[[d4]] seconds to next shot",
                     "19":   "Really Overextend: +[[d4]] seconds penalty to next shot",
                     "20":   "Slip: make Feat of Agility check (vs. [[d20p + 6]]) or fall prone plus -6 to all defense and attack rolls for 10 seconds. Righting oneself requires 3 seconds plus time to gather dropped objects.",
@@ -841,7 +855,7 @@
                     "35":   "shoulder, left",
                     "36":   "shoulder, right",
                     "37":   "neck",
-                    "38":   "Automatically hit a random ally in field of fire*; roll normal damage dice (add strength if applicable though no specialization or talent bonuses)",
+                    "38":   "Automatically hit a random ally in field of fire<sup>*</sup>; roll normal damage dice (add strength if applicable though no specialization or talent bonuses)",
                     "39":   "Drop bow at feet",
                     "40":   "Drop bow 2 feet away",
                     "41":   "Drop bow 3 feet away",

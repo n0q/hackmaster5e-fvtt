@@ -1,6 +1,12 @@
 const FCONST = {
-    MELEE: 0,
-    RANGED: 1,
+    COMPLICATION: {
+        STRAIN: 1,
+        SPRAIN: 2,
+    },
+    TYPE: {
+        MELEE:  0,
+        RANGED: 1,
+    },
 };
 
 export const FUMBLETABLE = {
@@ -10,33 +16,32 @@ export const FUMBLETABLE = {
         return mod ? `d1000 + ${mod}` : false;
     },
 
-    evaluate: async (formula, type, innate, r=3) => {
-        if (!formula || r < 1) return false;
+    evaluate: async (formula, type, innate) => {
+        if (!formula) return false;
 
         const roll = await new Roll(formula).evaluate({async: true});
         let rollIdx = FUMBLETABLE.rollIdx[type].findIndex((x) => x >= roll.total);
         const typeIdx = FUMBLETABLE.typeIdx[type].findIndex((x) => x >= roll.total);
 
-        // Innate
-        if (type === FCONST.MELEE && (rollIdx > 11 && rollIdx < 21)) rollIdx = 99;
-        if (type === FCONST.RANGED && (rollIdx > 10 && rollIdx < 16)) rollIdx = 99;
-
-        let results = [{roll, typeIdx, rollIdx}];
-
-        const depth = r - 1;
-        if (!depth) return results;
-        if (typeIdx > 9) {
-            results = results.concat(await FUMBLETABLE.evaluate(formula, type, depth));
-            results = results.concat(await FUMBLETABLE.evaluate(formula, type, depth));
+        if (innate) {
+            if (type === FCONST.TYPE.MELEE && (rollIdx > 11 && rollIdx < 21)) rollIdx = 99;
+            if (type === FCONST.TYPE.RANGED && (rollIdx > 10 && rollIdx < 16)) rollIdx = 99;
         }
-        if (typeIdx > 10) {
-            results = results.concat(await FUMBLETABLE.evaluate(formula, type, depth));
+
+        let comp = false;
+        if (type === FCONST.TYPE.MELEE) {
+            if (rollIdx > 25 && rollIdx < 46) comp = FCONST.COMPLICATION.STRAIN;
+            if (rollIdx > 45 && rollIdx < 64) comp = FCONST.COMPLICATION.SPRAIN;
+        } else {
+            if (rollIdx > 20 && rollIdx < 29) comp = FCONST.COMPLICATION.STRAIN;
+            if (rollIdx > 28 && rollIdx < 37) comp = FCONST.COMPLICATION.SPRAIN;
         }
-        return results;
+
+        return {roll, typeIdx, rollIdx, comp};
     },
 
     rollIdx: {
-        [FCONST.MELEE]: [
+        [FCONST.TYPE.MELEE]: [
              200,  216,  232,  247,  263,  276,  318,  343,  364,  370,
              398,  463,  472,  508,  517,  526,  535,  553,  571,  580,
              616,  630,  644,  658,  672,  688,  690,  692,  694,  696,
@@ -47,17 +52,17 @@ export const FUMBLETABLE = {
             1010, 1015, 1020, 1024, 1028, 1031, 1034, 1037, 1039, 1041,
             1100, 1200, Infinity,
         ],
-        [FCONST.RANGED]: [
+        [FCONST.TYPE.RANGED]: [
              200,  216,  232,  247,  263,  276,  318,  343,  364,  370,
              463,  508,  562,  580,  589,  616,  630,  644,  658,  672,
              686,  694,  698,  704,  708,  712,  716,  722,  728,  733,
              738,  743,  748,  753,  763,  768,  744,  864,  941,  964,
-             982, 1044,  1100, 1200, Infinity,
+             982, 1044, 1100, 1200, Infinity,
         ],
     },
 
     typeIdx: {
-        [FCONST.MELEE]: [200, 263, 398, 436, 616, 688, 774, 864, 1044, 1100, 1200, Infinity],
-        [FCONST.RANGED]: [200, 263, 398, 616, 688, 774, 864, 995, 1044, 1100, 1200, Infinity],
+        [FCONST.TYPE.MELEE]: [200, 263, 398, 436, 616, 688, 774, 864, 1044, 1100, 1200, Infinity],
+        [FCONST.TYPE.RANGED]: [200, 263, 398, 616, 688, 774, 864, 995, 1044, 1100, 1200, Infinity],
     },
 };
