@@ -175,11 +175,15 @@ async function createFumbleCard(dataset) {
     const template = 'systems/hackmaster5e/templates/chat/fumble.hbs';
     const resultContent = await renderTemplate(template, {resp});
 
-    const typeStr = resp.type ? game.i18n.localize('HM.ranged') : game.i18n.localize('HM.melee');
-    const fumbleStr = game.i18n.localize('HM.fumble');
-    const innateStr = resp.innate ? `(${game.i18n.localize('HM.innate')})` : '';
-    const flavor=`${typeStr} ${fumbleStr} ${innateStr}`;
-    const rollContent = await roll.render({flavor});
+    const typeStr = resp.type ? 'HM.chatCard.rfumble' : 'HM.chatCard.mfumble';
+    let flavor = game.i18n.localize(typeStr);
+    flavor += resp.innate ? ` (${game.i18n.localize('HM.innate')})` : '';
+    let rollContent = await roll.render({flavor});
+
+    if (resp.sprain) {
+        const sprainFlavor = game.i18n.localize('HM.chatCard.sprainroll');
+        rollContent += await resp.sprainRoll.render({flavor: sprainFlavor});
+    }
 
     const content = resultContent + rollContent;
     return {content, roll};

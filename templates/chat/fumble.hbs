@@ -8,5 +8,8 @@
         {{localize 'HM.details'}}:
         <b>{{{localize (concat 'HM.FUMBLE.label.' type '.' rollIdx)}}}</b><br>
     {{/if}}
+    {{#if (eq sprainRoll.total 1)}}{{localize 'HM.complication'}}: 
+    <b>{{localize (concat 'HM.FUMBLE.sprain.' sprain)}}</b><br>
+    {{/if}}
     {{#if freeAttack}}<hr><b>{{localize 'HM.chatCard.fcounter'}}</b>{{/if}}
 {{/with}}
