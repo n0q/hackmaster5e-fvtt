@@ -11,10 +11,9 @@ export class FumblePrompt extends HMPrompt {
     constructor(dialogData, options) {
         super(dialogData, options);
 
-        const [atk, def] = [0, 0];
         foundry.utils.mergeObject(this.dialogData, {
-            atk,
-            def,
+            atk: undefined,
+            def: undefined,
             type: 0,
             innate: false,
         });
