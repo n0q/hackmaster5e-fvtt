@@ -31,13 +31,10 @@ export class CritPrompt extends HMPrompt {
             dmg: 0,
             dr: 0,
             dmgType: HMCONST.DMGTYPE.CRUSHING,
-            canCrit: atkRoll > defRoll,
         });
     }
 
     update(options) {
-        const {atkRoll, defRoll} = this.dialogData;
-        this.dialogData.canCrit = Number(atkRoll) > Number(defRoll);
         super.update(options);
     }
 

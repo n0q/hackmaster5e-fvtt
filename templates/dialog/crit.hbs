@@ -12,7 +12,7 @@
     <section class='grid-2col' style='gap: 0 20px;'>
         <span class='form-group'>
             <label>{{localize 'HM.size'}}</label>
-            <select name='atkSize' class='bind' data-prop='atkSize'>
+            <select name='atkSize' class='bind focus' data-prop='atkSize'>
                 {{selectOptions (findConfigObj 'scale' omit='0') selected=atkSize localize=true}}
             </select>
         </span>
@@ -26,11 +26,11 @@
     <section class='grid-2col' style='gap: 0 20px;'>
         <span class='form-group'>
             <label>{{localize 'HM.attack'}} Roll</label>
-            <input name='atkRoll' value='{{atkRoll}}' class='bind' data-prop='atkRoll' data-render=true type='number'/>
+            <input name='atkRoll' value='{{atkRoll}}' class='bind' data-prop='atkRoll' type='number'/>
         </span>
         <span class='form-group'>
             <label>{{localize 'HM.defense'}} Roll</label>
-            <input name='defRoll' value='{{defRoll}}' class='bind' data-prop='defRoll' data-render=true type='number'/>
+            <input name='defRoll' value='{{defRoll}}' class='bind' data-prop='defRoll' type='number'/>
         </span>
     </section>
     <section class='grid-2col' style='gap: 0 20px;'>
@@ -50,7 +50,7 @@
         </select>
     </span>
     <section class='dialog-buttons'>
-        <button type='submit' class='dialog-button normal default' {{#unless canCrit}}disabled{{/unless}}
+        <button type='submit' class='dialog-button normal default'
             data-prop='shieldHit'
             data-value=false
             data-render=false>
