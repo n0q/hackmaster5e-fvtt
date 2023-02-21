@@ -790,7 +790,7 @@ export const HMTABLES = {
 
                 const specialMove = {
                     [HMCONST.SPECIAL.RSTANDARD]: declare,
-                    [HMCONST.SPECIAL.SNAPSHOT]:  declare - timingNew.aim,
+                    [HMCONST.SPECIAL.SNAPSHOT]:  timingNew.load,
                     [HMCONST.SPECIAL.LOAD]:      timingNew.load,
                     [HMCONST.SPECIAL.DRAW]:      timingNew.draw,
                     [HMCONST.SPECIAL.AIM]:       timingNew.aim,
