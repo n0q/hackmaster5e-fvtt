@@ -245,6 +245,7 @@ export class HMWeaponItem extends HMItem {
         const {resp} = dialogResp;
         dataset.resp = resp;
 
+        if (resp.atkRoll <= resp.defRoll) return;
         const formula = CRITTABLE.formula(resp.atkSize, resp.defSize);
         dataset.roll = await new Roll(formula).evaluate({async: true});
 
