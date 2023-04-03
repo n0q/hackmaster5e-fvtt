@@ -57,7 +57,7 @@ export class HMClassItem extends HMItem {
         }
 
         const bonus = {
-            'hp':       hp + Math.max(...hpStack),
+            'hp':       hp + Math.max(...hpStack) + (system.hp || 0),
             'turning':  level,
             'dodge':    level,
             'mental':   level,

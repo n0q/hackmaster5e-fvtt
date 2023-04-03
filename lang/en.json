@@ -680,6 +680,7 @@
                 "assn":     "ToP Penetration",
                 "atk":      "Attack Bonus",
                 "back":     "Backstab",
+                "hp":       "Bonus HP",
                 "def":      "Defense Bonus",
                 "fcast":    "Free Mage Spell Casting",
                 "hprof":    "Half Non-Proficienty Penalies",
