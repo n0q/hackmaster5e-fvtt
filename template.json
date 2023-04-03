@@ -120,7 +120,8 @@
                 "assn": false
             },
             "caps": {
-                "fcast": false
+                "fcast": false,
+                "hprof": false
             },
             "ptable": {}
         },
