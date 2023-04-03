@@ -682,6 +682,7 @@
                 "back":     "Backstab",
                 "def":      "Defense Bonus",
                 "fcast":    "Free Mage Spell Casting",
+                "hprof":    "Half Non-Proficienty Penalies",
                 "init":     "Initiative Bonus",
                 "luck":     "Luck Points",
                 "sp":       "Spell Points",
