@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Class option for bonus HP.
 ### Changed
 - Character Actor sheet display improvements.
+### Fixed
+- Under certain circumstances, a talent could interact with other talents.
 
 ### [0.3.20] - 2023-02-21
 ### Fixed
