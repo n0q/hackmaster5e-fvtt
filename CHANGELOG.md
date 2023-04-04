@@ -2,6 +2,16 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+### [0.3.21] - 2023-04-04
+### Added
+- Class option for receiving half penalty for non-proficient weapon use.
+- Class option for bonus HP.
+### Changed
+- Character Actor sheet display improvements.
+### Fixed
+- Under certain circumstances, talents could interact with other talents.
+- Compendium inaccuracies.
+
 ### [0.3.20] - 2023-02-21
 ### Fixed
 - Snapshot timing no longer accounts for draw time.

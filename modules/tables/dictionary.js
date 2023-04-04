@@ -247,6 +247,7 @@ idx.itemCClass = {
     spdm:  'HM.CCLASS.OPT.spdm',
     back:  'HM.CCLASS.OPT.back',
     fcast: 'HM.CCLASS.OPT.fcast',
+    hprof: 'HM.CCLASS.OPT.hprof',
     luck:  'HM.CCLASS.OPT.luck',
     assn:  'HM.CCLASS.OPT.assn',
 };

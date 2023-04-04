@@ -53,6 +53,13 @@
             text-align: center;
         }
 
+        &.rjust {
+            input[type="number"] {
+                text-align: right;
+                padding-right: 5px;
+            }
+        }
+
         &.narrow {
             input[type="number"] {
                 width: 2.2em;

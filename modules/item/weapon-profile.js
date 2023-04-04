@@ -55,12 +55,17 @@ export class HMWeaponProfile extends foundry.abstract.DataModel {
             .find((a) => a.name === proficiency && a.system.weapon.checked);
         const {noProf} = HMTABLES.weapons;
 
+        const vector = ranged.checked
+            ? noProf.weaponType.ranged
+            : noProf.weaponType.melee;
+        const [classItem] = this.actor.itemTypes.cclass;
+        const profCf = classItem.system.caps.hprof ? 0.5 : 1.0;
+
         const spec = {};
-        const vector = ranged.checked ? noProf.weaponType.ranged : noProf.weaponType.melee;
         Object.keys(base).forEach((stat, i) => {
             spec[stat] = profItem
                 ? profItem.system.bonus[stat] || 0
-                : noProf.skill[skill] * vector[i];
+                : parseInt(noProf.skill[skill] * vector[i] * profCf, 10);
         });
 
         return spec;

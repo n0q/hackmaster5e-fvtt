@@ -107,6 +107,7 @@
             "level": 1,
             "bonus": null,
             "top_cf": 0.01,
+            "hp": 0,
             "features": {
                 "sp":   false,
                 "atk":  false,
@@ -120,7 +121,8 @@
                 "assn": false
             },
             "caps": {
-                "fcast": false
+                "fcast": false,
+                "hprof": false
             },
             "ptable": {}
         },
