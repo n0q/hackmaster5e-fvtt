@@ -38,9 +38,10 @@ export class HMSupportHooks {
             return dsnTerms;
         };
 
-        const srcTerms = Roll.simplifyTerms(context.roll.terms);
         const dsnRoll = context.roll.clone();
         const dsnTerms = Roll.simplifyTerms(dsnRoll.terms);
+        const srcTerms = Roll.simplifyTerms(context.roll.terms);
+
         dsnRoll.terms = dsnDecay(srcTerms, dsnTerms);
         context.dsnRoll = dsnRoll;
     }
@@ -58,14 +59,15 @@ export class HMSupportHooks {
             getRanges(token) {
                 const {combat} = game;
                 if (!combat) return [];
-                const {round} = combat;
-                if (!round) return [];
+
+                const {round} = game?.combat;
+                const combatant = combat.getCombatantByToken(token.id);
+                if (!combatant || !round) return [];
+
                 const {movespd} = token.actor;
                 movespd.push(Infinity);
                 movespd[0] = 0;
 
-                const combatant = combat.getCombatantByToken(token.id);
-                if (!combatant) return [];
                 const movedFlag = combatant.getFlag(SYSTEM_ID, 'moved');
                 const moved = movedFlag?.[round - 1] || 0;
 
