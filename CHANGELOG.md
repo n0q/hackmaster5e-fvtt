@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Fixed
 - DsN correctly displays dice decay.
 - Typos
+- Threat range correction for scenes with square grid.
 
 ### [0.3.21] - 2023-04-04
 ### Added
