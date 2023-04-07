@@ -15,6 +15,7 @@ export const registerHooks = () => {
     Hooks.once('setup', HMActiveEffectHooks.setupStatusEffects);
     Hooks.once('devModeReady', HMSupportHooks.devModeReady);
     Hooks.once('dragRuler.ready', HMSupportHooks.dragRuler_ready);
+    Hooks.on('diceSoNiceRollStart', HMSupportHooks.diceSoNiceRollStart);
     Hooks.on('applyActiveEffect', HMActiveEffectHooks.applyActiveEffect);
     Hooks.on('createActiveEffect', HMActiveEffectHooks.createActiveEffect);
     Hooks.on('deleteActiveEffect', HMActiveEffectHooks.deleteActiveEffect);

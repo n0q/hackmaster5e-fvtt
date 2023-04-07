@@ -2,32 +2,47 @@
 /* eslint max-classes-per-file: 0 */
 /* eslint class-methods-use-this: 0 */
 import { SYSTEM_ID } from '../tables/constants.js';
+import { HMDie } from '../sys/dice.js';
 
 export class HMSupportHooks {
     static async devModeReady({ registerPackageDebugFlag }) {
         registerPackageDebugFlag(SYSTEM_ID);
     }
 
-    static async diceSoNiceRollStart(_messageId, context) {
-        const normalize = (roll, r=1000) => {
-            if (r < 0) return;
+    static async diceSoNiceRollStart(_, context) {
+        const dsnDecay = (terms, dsnTerms, newTerms=[], r=5) => {
+            if (r < 0) return false;
 
-            for (let i = 0; i < roll.terms.length; i++) {
-                // PoolTerms contain sets of terms we need to evaluate.
-                if (roll.terms[i]?.rolls) {
-                    for (let j = 0; j < roll.terms[i].rolls.length; j++) {
-                        normalize(roll.terms[i].rolls[j], r - 1);
+            terms.forEach((term, i) => {
+                const dsnTerm = dsnTerms[i];
+                if (term.rolls) {
+                    term.rolls.forEach((rolls, j) => {
+                        dsnDecay(term.rolls[j].terms, dsnTerm.rolls[j].terms, newTerms, r - 1);
+                    });
+                }
+
+                dsnTerm.results = foundry.utils.deepClone(term.results);
+
+                if (!dsnTerm.isDeterministic && dsnTerm.faces >= 20) {
+                    const offsetIdx = dsnTerm.results.findIndex((x) => x.offset);
+                    if (offsetIdx !== -1) {
+                        const results = dsnTerm.results.splice(offsetIdx);
+                        const faces = results[0].faces ? results[0].faces : dsnTerm.faces;
+                        const newTerm = new HMDie({faces, results});
+                        newTerms.push(newTerm);
                     }
                 }
+            });
 
-                // Add 1 to penetration dice so DsN shows actual die throws.
-                for (let j = 0; j < roll.terms[i]?.results?.length; j++) {
-                    const result = roll.terms[i].results[j];
-                    if (result.offset) result.result -= result.offset;
-                }
-            }
+            if (r === 5) dsnTerms = dsnTerms.concat(newTerms); // eslint-disable-line
+            return dsnTerms;
         };
-        normalize(context.roll);
+
+        const srcTerms = Roll.simplifyTerms(context.roll.terms);
+        const dsnRoll = context.roll.clone();
+        const dsnTerms = Roll.simplifyTerms(dsnRoll.terms);
+        dsnRoll.terms = dsnDecay(srcTerms, dsnTerms);
+        context.dsnRoll = dsnRoll;
     }
 
     static async dragRuler_ready(SpeedProvider) {
