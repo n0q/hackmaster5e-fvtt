@@ -1,7 +1,9 @@
 <ol class='skills-list grid-3col'>
     {{#with actor.skills}}
     <span>
+        {{#if (isEven uskills.length)}}
         <header class='resource-label'>{{localize 'HM.SKILLS.uskills'}}</header>
+        {{/if}}
         {{#each uskills}}
             {{#if (isHalf @index ../uskills.length)}}
     </span>

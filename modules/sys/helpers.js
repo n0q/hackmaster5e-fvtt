@@ -61,6 +61,7 @@ export const registerHandlebarsHelpers = () => {
     Handlebars.registerHelper('getSetting', (scope, key) => game.settings.get(scope, key));
     Handlebars.registerHelper('eq', (a, b) => a == b);
     Handlebars.registerHelper('neq', (a, b) => a != b);
+    Handlebars.registerHelper('isEven', (a) => (((a % 2) + 2) % 2));
 
     Handlebars.registerHelper('isHalf', (a, b, opts) => {
         return opts.hash.ceil
