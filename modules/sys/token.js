@@ -27,7 +27,11 @@ function getReach(actor) {
 
     const wProfile = actor.wprofiles.get(weapon.profileId);
     const reach = (wProfile.system.reach || 0);
-    const distance = Math.max(reach, 0) + (game.canvas.scene.grid.distance / 2);
+
+    // TODO: This works okay for gridless and square. Falls flat on hex grids.
+    let distance = Math.max(reach, 0);
+    const isGridless = canvas.scene.grid.type === CONST.GRID_TYPES.GRIDLESS;
+    if (isGridless) distance += (game.canvas.scene.grid.distance / 2);
 
     let color;
     let visible;
