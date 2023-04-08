@@ -683,7 +683,7 @@
                 "hp":       "Bonus HP",
                 "def":      "Defense Bonus",
                 "fcast":    "Free Mage Spell Casting",
-                "hprof":    "Half Non-Proficienty Penalies",
+                "hprof":    "Half Non-Proficienty Penalties",
                 "init":     "Initiative Bonus",
                 "luck":     "Luck Points",
                 "sp":       "Spell Points",
