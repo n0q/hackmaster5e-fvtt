@@ -2,14 +2,14 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-### [Unreleased]
+### [0.3.22] - 2023-04-08
 ### Changed
-- Universal skills display nicer if actor has an even number of them.
+- 'Universal Skills' header is omitted when character actor has even number of uskills.
 ### Fixed
-- DsN correctly displays dice decay.
-- Typos
-- Threat range correction for scenes with square grid.
+- DsN displays penetration dice decay.
+- Threat range correction for scenes with square grids.
 - Weapon talents could fail to function under certain circumstances.
+- Typos
 
 ### [0.3.21] - 2023-04-04
 ### Added
