@@ -39,10 +39,12 @@ export class HMSupportHooks {
         };
 
         const dsnRoll = context.roll.clone();
+
         const dsnTerms = Roll.simplifyTerms(dsnRoll.terms);
         const srcTerms = Roll.simplifyTerms(context.roll.terms);
-
         dsnRoll.terms = dsnDecay(srcTerms, dsnTerms);
+
+        dsnRoll.ghost = context.roll.ghost;
         context.dsnRoll = dsnRoll;
     }
 
