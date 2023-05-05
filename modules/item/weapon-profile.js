@@ -59,7 +59,8 @@ export class HMWeaponProfile extends foundry.abstract.DataModel {
             ? noProf.weaponType.ranged
             : noProf.weaponType.melee;
         const [classItem] = this.actor.itemTypes.cclass;
-        const profCf = classItem.system.caps.hprof ? 0.5 : 1.0;
+        const hprof = classItem ? classItem.system.caps.hprof : false;
+        const profCf = hprof ? 0.5 : 1.0;
 
         const spec = {};
         Object.keys(base).forEach((stat, i) => {
