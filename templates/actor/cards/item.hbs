@@ -1,4 +1,4 @@
-<li class='card hmstyle' data-item-id='{{_id}}'>
+<li class='card hmstyle' data-item-id='{{_id}}' data-container-id={{container._id}}>
     <summary>
         <header>
             <label for='{{name}}'>
@@ -29,7 +29,7 @@
 {{#if system.type}}
 <section style='padding-left: 30px;'>
     {{#each hmContents}}
-    {{> 'systems/hackmaster5e/templates/actor/cards/item.hbs' }}
+    {{>'systems/hackmaster5e/templates/actor/cards/item.hbs'}}
     {{/each}}
 </section>
 {{/if}}

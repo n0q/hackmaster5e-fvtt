@@ -109,14 +109,33 @@ export class HMActorSheet extends ActorSheet {
         // Update Inventory Item
         html.find('.item-edit').click((ev) => {
             const li = $(ev.currentTarget).parents('.card, .item');
-            const item = this.actor.items.get(li.data('itemId'));
-            item.sheet.render(true);
+            const itemId = li.data('itemId');
+            const item = this.actor.items.get(itemId);
+
+            if (item) {
+                item.sheet.render(true);
+            } else {
+                // Maybe the item is in a container.
+                const containerId = li.data('containerId');
+                const container = this.actor.items.get(containerId);
+                const {hmContents} = container;
+                const child = hmContents.find((a) => a._id === itemId);
+                child.sheet.render(true);
+            }
         });
 
         // Delete Item
         html.find('.item-delete').click((ev) => {
             const li = $(ev.currentTarget).parents('.card, .item');
-            const item = this.actor.items.get(li.data('itemId'));
+            const itemId = li.data('itemId');
+            let item = this.actor.items.get(itemId);
+            if (!item) {
+                const containerId = li.data('containerId');
+                const container = this.actor.items.get(containerId);
+                const {hmContents} = container;
+                item = hmContents.find((a) => a._id === itemId);
+            }
+
             const title = `${game.i18n.localize('HM.confirmation')}: ${item.name}`;
             const content = `<p>${game.i18n.localize('HM.dialog.deleteBody')} <b>${item.name}</b>?</p>`;
 
