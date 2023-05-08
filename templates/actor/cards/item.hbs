@@ -20,9 +20,16 @@
                 </div>
                 {{#unless system.innate}}
                 <div>{{#if (eq type 'item')}}{{system.qty}}x{{/if}}</div>
-                <span>{{numberFormat system.weight decimals=2}} lbs.</span>
+                <span>{{numberFormat weightTotal decimals=2}} lbs.</span>
                 {{/unless}}
             </div>
         </section>
     </summary>
 </li>
+{{#if system.type}}
+<section style='padding-left: 30px;'>
+    {{#each hmContents}}
+    {{> 'systems/hackmaster5e/templates/actor/cards/item.hbs' }}
+    {{/each}}
+</section>
+{{/if}}

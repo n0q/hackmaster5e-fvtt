@@ -21,6 +21,13 @@ export const HMCONST = {
             MALUS: 2,
         },
     },
+    CONTAINER: {
+        TYPE: {
+            NONE:       0,
+            WEIGHT:     1,
+            QUANTITY:   2,
+        },
+    },
     DIE: {
         D20P:   0,
         D20PM4: 1,

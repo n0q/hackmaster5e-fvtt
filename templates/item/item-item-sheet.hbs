@@ -11,21 +11,25 @@
             {{> "systems/hackmaster5e/templates/item/parts/description.hbs" }}
         </div>
 
-{{#with data}}
-        <div class="tab attributes" data-group="primary" data-tab="attributes">
-            <div class="item-form">
-                <div class="sidepanel">
-                    <div class="options-block">
-                        <label class="resource-label">{{localize "HM.quality"}}</label>
-                        <select name="system.qidx" data-dtype="{{system.qidx}}">
-                        {{#select system.qidx}}{{#each (findConfigObj "qidx") as |type t|}}
-                            <option value="{{t}}">{{localize type}}</option>
-                        {{/each}}{{/select}}
+        {{#with data}}
+        <div class='tab attributes newform' data-group='primary' data-tab='attributes'>
+            <div class='grid-2col' style='grid-template-columns: 40% 1fr; padding-top: 5px;'>
+                <section name='options' class='col_rborder'>
+                    <span class='form-option'>
+                        <label class='resource-label'>{{localize 'HM.quality'}}</label>
+                        <select name='system.qidx' data-dtype='{{system.qidx}}'>
+                            {{selectOptions (findConfigObj 'qidx') selected=system.qidx localize=true}}
                         </select>
-                    </div>
-                </div>
+                    </span>
+                    <span class='form-option'>
+                        <label class='resource-label'>{{localize 'HM.container'}}</label>
+                        <select name='system.type' data-dtype='{{system.type}}'>
+                            {{selectOptions (findConfigObj 'containerType') selected=system.type localize=true}}
+                        </select>
+                    </span>
+                </section>
             </div>
         </div> 
-{{/with}}
+        {{/with}}
     </section>
 </form>

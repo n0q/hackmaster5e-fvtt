@@ -44,6 +44,14 @@ export class HMItem extends Item {
         return rawName;
     }
 
+    get weightTotal() {
+        let weightInner = 0.0;
+        if (this.system.manifest?.length) {
+            weightInner = this.hmContents.reduce((acc, item) => acc + item.weightTotal, 0);
+        }
+        return this.system.weight * (this.system.qty || 1) + weightInner;
+    }
+
     // HACK: Temporary measure until future inventory overhaul.
     get invstate() {
         const state = parseInt(this.system.state, 10) || 0;

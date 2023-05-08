@@ -58,6 +58,12 @@ idx.classFeatureTable = {
     spdr: 'HM.CCLASS.TABLE.spdr',
 };
 
+idx.containerType = {
+    [HMCONST.CONTAINER.TYPE.NONE]:      'No',
+    [HMCONST.CONTAINER.TYPE.WEIGHT]:    'Weight',
+    [HMCONST.CONTAINER.TYPE.QUANTITY]:  'Quantity',
+};
+
 idx.handedness = {
     'right':        'HM.handednessSelect.right',
     'left':         'HM.handednessSelect.left',

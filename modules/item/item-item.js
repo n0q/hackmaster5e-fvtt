@@ -18,4 +18,9 @@ export class HMItemItem extends HMItem {
         const newqty = Math.max(1, parseInt(qty, 10)) || 1;
         this.update({'system.qty': newqty});
     }
+
+    get hmContents() {
+        const mData = this.system.manifest.map((a) => JSON.parse(a));
+        return mData.map((a) => new CONFIG.Item.documentClass(a));
+    }
 }
