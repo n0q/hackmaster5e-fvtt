@@ -33,4 +33,50 @@ export const HMContainer = {
         const root = actor.items.get(rootId);
         return BFS(root, containerId);
     },
+
+    pull: (container, id) => {
+        const idx = container.hmContents.findIndex((a) => a._id === id);
+        const {manifest} = container.system;
+        const [itemString] = manifest.splice(idx, 1);
+        container.update({'system.manifest': manifest});
+        return itemString;
+    },
+
+    push: (container, itemString) => {
+        const {manifest} = container.system;
+        manifest.push(itemString);
+        container.update({'system.manifest': manifest});
+    },
+
+    serialize: (actor, id) => {
+        const item = actor.items.get(id);
+        const itemString = JSON.stringify(item);
+        item.delete();
+        return itemString;
+    },
+
+    deserialize: (actor, itemString) => {
+        const itemJson = JSON.parse(itemString);
+        actor.createEmbeddedDocuments('Item', [itemJson]);
+    },
+
+    moveToContainer: (actor, currentTarget) => {
+        const li = $(currentTarget).parents('.card');
+        const itemId = li.data('itemId');
+        const destId = currentTarget.value;
+        const sourceId = li.data('containerId');
+
+        const conList = HMContainer.getContainers(actor);
+
+        const sourceCon = conList.find((a) => a._id === sourceId);
+        const destCon = conList.find((a) => a._id === destId);
+
+        const item = sourceCon
+            ? HMContainer.pull(sourceCon, itemId)
+            : HMContainer.serialize(actor, itemId);
+
+        destCon
+            ? HMContainer.push(destCon, item)
+            : HMContainer.deserialize(actor, item);
+    },
 };

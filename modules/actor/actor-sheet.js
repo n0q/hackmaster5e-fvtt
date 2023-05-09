@@ -125,7 +125,6 @@ export class HMActorSheet extends ActorSheet {
                 if (!container) {
                     // We have to go deeper.
                     const rootId = li.data('rootId');
-                    console.warn('hello');
                     container = HMContainer.getChildContainer(rootId, containerId, this.actor);
                 }
                 const {hmContents} = container;
@@ -269,8 +268,9 @@ export class HMActorSheet extends ActorSheet {
         ev.preventDefault();
         ev.stopPropagation();
         const {dataset, value} = ev.currentTarget;
-        const {flag} = dataset;
+        const {flag, oper} = dataset;
         if (flag) this.actor.setFlag(SYSTEM_ID, flag, value);
+        if (oper) HMContainer.moveToContainer(this.actor, ev.currentTarget);
     }
 
     async _onEdit(ev) {

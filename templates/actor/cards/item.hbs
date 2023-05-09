@@ -1,4 +1,4 @@
-<li class='card hmstyle' data-item-id='{{_id}}' data-container-id={{container._id}} data-root-id={{container.rootId}}>
+<li class='card hmstyle' data-item-id='{{_id}}' data-container-id='{{container._id}}' data-root-id='{{container.rootId}}'>
     <summary>
         <header>
             <label for='{{name}}'>
@@ -14,7 +14,7 @@
             <div class='inventory-details'>
                 <div>
                     {{#unless system.innate}}
-                    <select class='selectable' name='foobar'>
+                    <select class='selectable' name='container' data-oper='containerMove'>
                         {{selectOptions (delete @root.actor.containers _id) selected=container._id}}
                     </select>
                     {{/unless}}
