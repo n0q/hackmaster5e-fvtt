@@ -28,17 +28,18 @@ export class HMItem extends Item {
     }
 
     /** @override */
-    async delete(context={}) {
+    async delete(...args) {
         const {_id, container} = this;
         if (container) {
             let {manifest} = container.system;
             manifest = manifest.filter((a) => JSON.parse(a)._id !== _id);
             container.update({'system.manifest': manifest});
-        } else super.delete(context);
+        } else super.delete(...args);
     }
 
     /** @override */
-    async update(data={}, context={}) {
+    async update(...args) {
+        const [data] = args;
         const {_id, container} = this;
         if (container) {
             const cIdx = container._manifestData.findIndex((a) => a._id === _id);
@@ -46,7 +47,7 @@ export class HMItem extends Item {
             const {manifest} = container.system;
             manifest[cIdx] = JSON.stringify(this);
             container.update({'system.manifest': manifest});
-        } else super.update(data, context);
+        } else super.update(...args);
     }
 
     get quality() {

@@ -38,6 +38,23 @@ export class HMActor extends Actor {
         return fxList.map((x) => dList.indexOf(x) >= 0).some((y) => y);
     }
 
+    /*
+    get containers() {
+        const {item} = this.itemTypes;
+        const {MAX_DEPTH, TYPE} = HMCONST.CONTAINER;
+
+        const search = (root, r=MAX_DEPTH) => {
+            if (r < 0) return [];
+
+            const nodes = root.filter((a) => Number(a.system?.type) > TYPE.NONE);
+            return nodes.reduce((acc, node) => {
+                const children = search(node.hmContents, r - 1);
+                return acc.concat(children);
+            }, nodes);
+        };
+        return search(item);
+    }
+*/
     resetBonus() {
         const {system} = this;
         const {misc} = system.bonus;

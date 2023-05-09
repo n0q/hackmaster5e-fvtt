@@ -80,6 +80,11 @@ export const registerHandlebarsHelpers = () => {
         return `${pct}%`;
     });
 
+    Handlebars.registerHelper('delete', (arg1, arg2) => {
+        const {[arg2]: _, ...deleted} = arg1;
+        return deleted;
+    });
+
     Handlebars.registerHelper('repeat', function _(count, opts) {
         let str = '';
 

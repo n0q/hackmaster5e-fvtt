@@ -22,10 +22,11 @@ export const HMCONST = {
         },
     },
     CONTAINER: {
+        MAX_DEPTH: 2,
         TYPE: {
-            NONE:       0,
-            WEIGHT:     1,
-            QUANTITY:   2,
+            NONE:     0,
+            WEIGHT:   1,
+            QUANTITY: 2,
         },
     },
     DIE: {

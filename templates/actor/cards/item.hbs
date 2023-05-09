@@ -12,11 +12,16 @@
                 <a class='item-control item-delete' title='Delete Item'><i class='fas fa-trash'></i></a>
             </div>
             <div class='inventory-details'>
-                <span>
-                    {{localize (findConfigValue 'itemTypes' type)}}
-                </span>
-                <div class='item-control location {{#unless (eq system.state 3)}}item-state button{{/unless}}'>
-                    {{localize (findConfigValue 'thingState' system.state)}}
+                <div>
+                    {{#unless system.innate}}
+                    <select class='selectable' name='foobar'>
+                        {{selectOptions (delete @root.actor.containers _id) selected=container._id}}
+                    </select>
+                    {{/unless}}
+                </div>
+                <div>{{localize (findConfigValue 'itemTypes' type)}}</div>
+                <div class='item-control location {{#unless (or container (eq system.state 3))}}item-state button {{/unless}}'>
+                    {{#unless container}}{{localize (findConfigValue 'thingState' system.state)}}{{/unless}}
                 </div>
                 {{#unless system.innate}}
                 <div>{{#if (eq type 'item')}}{{system.qty}}x{{/if}}</div>
