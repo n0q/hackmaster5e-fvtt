@@ -117,7 +117,12 @@ export class HMActorSheet extends ActorSheet {
             } else {
                 // Maybe the item is in a container.
                 const containerId = li.data('containerId');
-                const container = this.actor.items.get(containerId);
+                let container = this.actor.items.get(containerId);
+                if (!container) {
+                    // We have to go deeper.
+                    const rootId = li.data('rootId');
+                    container = getContainer(rootId, containerId, this.actor);
+                }
                 const {hmContents} = container;
                 const child = hmContents.find((a) => a._id === itemId);
                 child.sheet.render(true);
@@ -131,7 +136,11 @@ export class HMActorSheet extends ActorSheet {
             let item = this.actor.items.get(itemId);
             if (!item) {
                 const containerId = li.data('containerId');
-                const container = this.actor.items.get(containerId);
+                let container = this.actor.items.get(containerId);
+                if (!container) {
+                    const rootId = li.data('rootId');
+                    container = getContainer(rootId, containerId, this.actor);
+                }
                 const {hmContents} = container;
                 item = hmContents.find((a) => a._id === itemId);
             }
@@ -337,4 +346,22 @@ export class HMActorSheet extends ActorSheet {
 function getItemId(ev, attr='data-item-id') {
     const el = ev.currentTarget;
     return $(el).attr(attr) || $(el).parents('.card, .item').attr(attr);
+}
+
+function getContainer(rootId, containerId, actor) {
+    const BFS = (rootNode, targetId) => {
+        const {hmContents} = rootNode;
+        const sibling = hmContents.find((node) => node._id === targetId);
+        if (sibling) return sibling;
+
+        let child;
+        for (let i = 0; i < hmContents.length; i++) {
+            child = BFS(hmContents[i], targetId);
+            if (child) break;
+        }
+        return child;
+    };
+
+    const root = actor.items.get(rootId);
+    return BFS(root, containerId);
 }

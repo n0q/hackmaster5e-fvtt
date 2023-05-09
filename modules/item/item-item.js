@@ -19,13 +19,14 @@ export class HMItemItem extends HMItem {
         this.update({'system.qty': newqty});
     }
 
-    get mData() {
+    get _manifestData() {
         return this.system.manifest.map((a) => JSON.parse(a));
     }
 
     get hmContents() {
-        return this.mData.map((a) => {
+        return this._manifestData.map((a) => {
             const item = new CONFIG.Item.documentClass(a);
+            item.rootId = this.rootId ? this.rootId : this._id;
             item.container = this;
             return item;
         });

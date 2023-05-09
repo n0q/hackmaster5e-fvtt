@@ -41,12 +41,12 @@ export class HMItem extends Item {
     async update(data={}, context={}) {
         const {_id, container} = this;
         if (container) {
-            const cIdx = container.mData.findIndex((a) => a._id === _id);
+            const cIdx = container._manifestData.findIndex((a) => a._id === _id);
             this.updateSource(data);
             const {manifest} = container.system;
             manifest[cIdx] = JSON.stringify(this);
             container.update({'system.manifest': manifest});
-        } await super.update(data, context);
+        } else super.update(data, context);
     }
 
     get quality() {
