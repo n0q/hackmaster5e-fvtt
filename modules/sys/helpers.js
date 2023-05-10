@@ -80,6 +80,20 @@ export const registerHandlebarsHelpers = () => {
         return `${pct}%`;
     });
 
+    Handlebars.registerHelper('getValidContainers', (containers, thisId, opts) => {
+        const {[thisId]: _, ...selectObj} = containers;
+        const {containerMap} = opts.data.root.actor;
+        const srcKeys = Object.keys(selectObj);
+        const children = containerMap[thisId];
+        if (!children) return containers;
+
+        const validKeys = srcKeys.filter((a) => !containerMap[thisId].includes(a));
+        return validKeys.reduce((acc, i) => {
+            acc[i] = containers[i];
+            return acc;
+        }, {});
+    });
+
     Handlebars.registerHelper('delete', (arg1, arg2) => {
         const {[arg2]: _, ...deleted} = arg1;
         return deleted;

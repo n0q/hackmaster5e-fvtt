@@ -258,9 +258,10 @@
         },
 
         "itemTypes": {
-            "armor":    "Armor",
-            "item":     "Item",
-            "weapon":   "Weapon"
+            "armor":     "Armor",
+            "container": "Container",
+            "item":      "Item",
+            "weapon":    "Weapon"
         },
 
         "dialog": {

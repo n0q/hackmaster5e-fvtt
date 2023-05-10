@@ -15,11 +15,17 @@
                 <div>
                     {{#unless system.innate}}
                     <select class='selectable' name='container' data-oper='containerMove'>
-                        {{selectOptions (delete @root.actor.containers _id) selected=container._id}}
+                        {{selectOptions (getValidContainers @root.actor.containers _id) selected=container._id}}
                     </select>
                     {{/unless}}
                 </div>
-                <div>{{localize (findConfigValue 'itemTypes' type)}}</div>
+                <div>
+                    {{#if (and (eq type 'item') (gt system.type 0))}}
+                        {{localize (findConfigValue 'itemTypes' 'container')}}
+                    {{else}}
+                        {{localize (findConfigValue 'itemTypes' type)}}
+                    {{/if}}
+                </div>
                 <div class='item-control location {{#unless (or container (eq system.state 3))}}item-state button {{/unless}}'>
                     {{#unless container}}{{localize (findConfigValue 'thingState' system.state)}}{{/unless}}
                 </div>

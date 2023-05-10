@@ -17,6 +17,32 @@ export const HMContainer = {
         return search(item);
     },
 
+    getContainerMap: (containers) => {
+        // const {MAX_DEPTH, TYPE} = HMCONST.CONTAINER;
+        const {TYPE} = HMCONST.CONTAINER;
+
+        const preOrder = (rootNodes, cList={}) => {
+            rootNodes.forEach((node) => {
+                const {hmContents} = node;
+                const children = hmContents.filter((a) => a.type === 'item' && Number(a.system.type) > TYPE.NONE);
+
+                preOrder(children, cList);
+
+                if (children.length) {
+                    cList[node._id] = children.reduce((acc, child) => (
+                        cList[child._id]
+                            ? acc.concat(cList[child._id])
+                            : acc
+                        ), children.map((a) => a._id));
+                }
+            });
+            return cList;
+        };
+
+        const roots = containers.filter((a) => !a.container);
+        return preOrder(roots);
+    },
+
     getChildContainer: (rootId, containerId, actor) => {
         const BFS = (rootNode, targetId) => {
             const {hmContents} = rootNode;

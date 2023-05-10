@@ -31,8 +31,9 @@ export class HMActorSheet extends ActorSheet {
         const skills = {uskills: [], oskills: [], iskills: []};
 
         const containers = HMContainer.getContainers(actor);
-        const containerMap = containers.map((a) => [a._id, a.name]);
-        actor.containers = Object.fromEntries([[null, '']].concat(containerMap));
+        actor.containerMap = HMContainer.getContainerMap(containers);
+        const containerList = containers.map((a) => [a._id, a.name]);
+        actor.containers = Object.fromEntries([[null, '']].concat(containerList));
 
         actor.itemTypes.skill.forEach((i) => {
             if (i.system.language) {
