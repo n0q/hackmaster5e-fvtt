@@ -89,10 +89,12 @@
             },
 
             "container": {
-                "type": 0,
-                "capacity": {"max": 0},
-                "provider": false,
-                "manifest": []
+                "container": {
+                    "enabled": false,
+                    "type": 0,
+                    "capacity": {"max": 0},
+                    "_manifest": []
+                }
             }
         },
 

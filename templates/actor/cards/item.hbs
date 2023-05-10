@@ -20,7 +20,7 @@
                     {{/unless}}
                 </div>
                 <div>
-                    {{#if (and (eq type 'item') (gt system.type 0))}}
+                    {{#if system.container.enabled}}
                         {{localize (findConfigValue 'itemTypes' 'container')}}
                     {{else}}
                         {{localize (findConfigValue 'itemTypes' type)}}
@@ -37,7 +37,7 @@
         </section>
     </summary>
 </li>
-{{#if system.type}}
+{{#if system.container.enabled}}
 <section style='padding-left: 15px;'>
     {{#each hmContents}}
     {{>'systems/hackmaster5e/templates/actor/cards/item.hbs'}}

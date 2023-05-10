@@ -20,7 +20,7 @@ export class HMItemItem extends HMItem {
     }
 
     get _manifestData() {
-        return this.system.manifest.map((a) => JSON.parse(a));
+        return this.system.container._manifest.map((a) => JSON.parse(a));
     }
 
     get hmContents() {

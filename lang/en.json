@@ -502,6 +502,7 @@
         "comp":         "Complication",
         "confirmation": "Confirmation",
         "container":    "Container",
+        "contype":      "Container type",
         "cost":         "Cost",
         "countup":      "Count Up",
         "custom":       "Custom",

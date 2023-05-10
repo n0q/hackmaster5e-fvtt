@@ -3,12 +3,12 @@ import { HMCONST } from '../tables/constants.js';
 export const HMContainer = {
     getContainers: (actor) => {
         const {item} = actor.itemTypes;
-        const {MAX_DEPTH, TYPE} = HMCONST.CONTAINER;
+        const {MAX_DEPTH} = HMCONST.CONTAINER;
 
         const search = (root, r=MAX_DEPTH) => {
             if (r < 0) return [];
 
-            const nodes = root.filter((a) => Number(a.system?.type) > TYPE.NONE);
+            const nodes = root.filter((a) => a.system?.container?.enabled);
             return nodes.reduce((acc, node) => {
                 const children = search(node.hmContents, r - 1);
                 return acc.concat(children);
@@ -18,15 +18,15 @@ export const HMContainer = {
     },
 
     getContainerMap: (containers) => {
-        // const {MAX_DEPTH, TYPE} = HMCONST.CONTAINER;
-        const {TYPE} = HMCONST.CONTAINER;
+        const {MAX_DEPTH} = HMCONST.CONTAINER;
+        const preOrder = (rootNodes, cList={}, r=MAX_DEPTH) => {
+            if (r < 0) return cList;
 
-        const preOrder = (rootNodes, cList={}) => {
             rootNodes.forEach((node) => {
                 const {hmContents} = node;
-                const children = hmContents.filter((a) => a.type === 'item' && Number(a.system.type) > TYPE.NONE);
+                const children = hmContents.filter((a) => a.system?.container?.enabled);
 
-                preOrder(children, cList);
+                preOrder(children, cList, r - 1);
 
                 if (children.length) {
                     cList[node._id] = children.reduce((acc, child) => (
@@ -62,16 +62,16 @@ export const HMContainer = {
 
     pull: (container, id) => {
         const idx = container.hmContents.findIndex((a) => a._id === id);
-        const {manifest} = container.system;
-        const [itemString] = manifest.splice(idx, 1);
-        container.update({'system.manifest': manifest});
+        const {_manifest} = container.system.container;
+        const [itemString] = _manifest.splice(idx, 1);
+        container.update({'system.container._manifest': _manifest});
         return itemString;
     },
 
     push: (container, itemString) => {
-        const {manifest} = container.system;
-        manifest.push(itemString);
-        container.update({'system.manifest': manifest});
+        const {_manifest} = container.system.container;
+        _manifest.push(itemString);
+        container.update({'system.container._manifest': _manifest});
     },
 
     serialize: (actor, id) => {

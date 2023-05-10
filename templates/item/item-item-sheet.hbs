@@ -23,10 +23,18 @@
                     </span>
                     <span class='form-option'>
                         <label class='resource-label'>{{localize 'HM.container'}}</label>
-                        <select name='system.type' data-dtype='{{system.type}}'>
-                            {{selectOptions (findConfigObj 'containerType') selected=system.type localize=true}}
+                        <input type='checkbox' name='system.container.enabled' {{checked system.container.enabled}}/>
+                    </span>
+                </section>
+                <section name='specifics'>
+                    {{#if system.container.enabled}}
+                    <span class='form-option'>
+                        <label class='resource-label'>{{localize 'HM.contype'}}</label>
+                        <select name='system.container.type' data-dtype='Number'>
+                            {{selectOptions (findConfigObj 'containerType') selected=system.container.type localize=true}}
                         </select>
                     </span>
+                    {{/if}}
                 </section>
             </div>
         </div> 
