@@ -83,10 +83,10 @@ export const registerHandlebarsHelpers = () => {
     Handlebars.registerHelper('getValidContainers', (containers, thisId, opts) => {
         const {[thisId]: _, ...selectObj} = containers;
         const {containerMap} = opts.data.root.actor;
-        const srcKeys = Object.keys(selectObj);
         const children = containerMap[thisId];
-        if (!children) return containers;
+        if (!children) return selectObj;
 
+        const srcKeys = Object.keys(selectObj);
         const validKeys = srcKeys.filter((a) => !containerMap[thisId].includes(a));
         return validKeys.reduce((acc, i) => {
             acc[i] = containers[i];
