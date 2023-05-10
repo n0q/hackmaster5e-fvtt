@@ -10,7 +10,7 @@ export const HMContainer = {
 
             const nodes = root.filter((a) => a.system?.container?.enabled);
             return nodes.reduce((acc, node) => {
-                const children = search(node.hmContents, r - 1);
+                const children = search(node.items, r - 1);
                 return acc.concat(children);
             }, nodes);
         };
@@ -23,8 +23,8 @@ export const HMContainer = {
             if (r < 0) return cList;
 
             rootNodes.forEach((node) => {
-                const {hmContents} = node;
-                const children = hmContents.filter((a) => a.system?.container?.enabled);
+                const {items} = node;
+                const children = items.filter((a) => a.system?.container?.enabled);
 
                 preOrder(children, cList, r - 1);
 
@@ -45,12 +45,12 @@ export const HMContainer = {
 
     getChildContainer: (rootId, containerId, actor) => {
         const BFS = (rootNode, targetId) => {
-            const {hmContents} = rootNode;
-            let child = hmContents.find((node) => node._id === targetId);
+            const {items} = rootNode;
+            let child = items.find((node) => node._id === targetId);
             if (child) return child;
 
-            for (let i = 0; i < hmContents.length; i++) {
-                child = BFS(hmContents[i], targetId);
+            for (let i = 0; i < items.length; i++) {
+                child = BFS(items[i], targetId);
                 if (child) break;
             }
             return child;
@@ -61,7 +61,7 @@ export const HMContainer = {
     },
 
     pull: (container, id) => {
-        const idx = container.hmContents.findIndex((a) => a._id === id);
+        const idx = container.items.findIndex((a) => a._id === id);
         const {_manifest} = container.system.container;
         const [itemString] = _manifest.splice(idx, 1);
         container.update({'system.container._manifest': _manifest});

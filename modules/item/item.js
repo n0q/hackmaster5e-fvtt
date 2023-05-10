@@ -69,8 +69,8 @@ export class HMItem extends Item {
 
     get weightTotal() {
         let weightInner = 0.0;
-        if (this.system.manifest?.length) {
-            weightInner = this.hmContents.reduce((acc, item) => acc + item.weightTotal, 0);
+        if (this.system?.container?.enabled) {
+            weightInner = this.items.reduce((acc, item) => acc + item.weightTotal, 0);
         }
         return this.system.weight * (this.system.qty || 1) + weightInner;
     }

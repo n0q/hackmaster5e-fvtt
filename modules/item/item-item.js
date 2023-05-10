@@ -23,12 +23,12 @@ export class HMItemItem extends HMItem {
         return this.system.container._manifest.map((a) => JSON.parse(a));
     }
 
-    get hmContents() {
-        return this._manifestData.map((a) => {
+    get items() {
+        return new foundry.utils.Collection(this._manifestData.map((a) => {
             const item = new CONFIG.Item.documentClass(a);
             item.rootId = this.rootId ? this.rootId : this._id;
             item.container = this;
-            return item;
-        });
+            return [item._id, item];
+        }));
     }
 }

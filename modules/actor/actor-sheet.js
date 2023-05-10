@@ -128,8 +128,8 @@ export class HMActorSheet extends ActorSheet {
                     const rootId = li.data('rootId');
                     container = HMContainer.getChildContainer(rootId, containerId, this.actor);
                 }
-                const {hmContents} = container;
-                const child = hmContents.find((a) => a._id === itemId);
+                const {items} = container;
+                const child = items.find((a) => a._id === itemId);
                 child.sheet.render(true);
             }
         });
@@ -146,8 +146,8 @@ export class HMActorSheet extends ActorSheet {
                     const rootId = li.data('rootId');
                     container = HMContainer.getChildContainer(rootId, containerId, this.actor);
                 }
-                const {hmContents} = container;
-                item = hmContents.find((a) => a._id === itemId);
+                const {items} = container;
+                item = items.find((a) => a._id === itemId);
             }
 
             const title = `${game.i18n.localize('HM.confirmation')}: ${item.name}`;
