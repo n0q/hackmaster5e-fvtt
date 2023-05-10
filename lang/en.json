@@ -62,6 +62,15 @@
             "non":  "Non"
         },
 
+        "containerTypeSelect": {
+            "captype":      "Capacity Type",
+            "unlimited":    "Unlimited",
+            "weight":       "Weight",
+            "quantity":     "Quantity",
+            "qcap":         "Quantity Limit",
+            "wcap":         "Weight Limit" 
+        },
+
         "CHAT": {
             "cspell":   "Clerical Spell",
             "ctime":    "Casting Time",

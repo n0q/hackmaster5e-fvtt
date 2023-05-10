@@ -92,7 +92,7 @@
                 "container": {
                     "enabled": false,
                     "type": 0,
-                    "capacity": {"max": 0},
+                    "capacity": {"max": null},
                     "_manifest": []
                 }
             }

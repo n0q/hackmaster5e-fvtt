@@ -28,12 +28,27 @@
                 </section>
                 <section name='specifics'>
                     {{#if system.container.enabled}}
+                        {{#with system.container}}
                     <span class='form-option'>
-                        <label class='resource-label'>{{localize 'HM.contype'}}</label>
+                        <label class='resource-label'>{{localize 'HM.containerTypeSelect.captype'}}</label>
                         <select name='system.container.type' data-dtype='Number'>
-                            {{selectOptions (findConfigObj 'containerType') selected=system.container.type localize=true}}
+                            {{selectOptions (findConfigObj 'containerType') selected=type localize=true}}
                         </select>
                     </span>
+                            {{#if type}}
+                    <span class='form-option'>
+                        <label class='resource-label'>
+                            {{#if (eq type 1)}}
+                                {{localize 'HM.containerTypeSelect.wcap'}}
+                            {{else}}
+                                {{localize 'HM.containerTypeSelect.qcap'}}
+                            {{/if}}
+                        </label>
+                        <input type='number' placeholder=0 name='system.container.capacity.max'
+                               value='{{capacity.max}}' data-dtype='Float' />
+                    </span>
+                            {{/if}}
+                        {{/with}}
                     {{/if}}
                 </section>
             </div>

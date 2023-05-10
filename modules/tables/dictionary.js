@@ -59,9 +59,9 @@ idx.classFeatureTable = {
 };
 
 idx.containerType = {
-    [HMCONST.CONTAINER.TYPE.NONE]:      'No',
-    [HMCONST.CONTAINER.TYPE.WEIGHT]:    'Weight',
-    [HMCONST.CONTAINER.TYPE.QUANTITY]:  'Quantity',
+    [HMCONST.CONTAINER.TYPE.WEIGHT]:    'HM.containerTypeSelect.weight',
+    [HMCONST.CONTAINER.TYPE.QUANTITY]:  'HM.containerTypeSelect.quantity',
+    [HMCONST.CONTAINER.TYPE.UNLIMITED]: 'HM.containerTypeSelect.unlimited',
 };
 
 idx.handedness = {
