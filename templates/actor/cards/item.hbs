@@ -1,5 +1,5 @@
 <li class='card hmstyle' data-item-id='{{_id}}' data-container-id='{{container._id}}' data-root-id='{{container.rootId}}'>
-    <summary>
+    <summary{{#if items.contents.length}} class='toggleswitch'{{/if}}>
         <header>
             <label for='{{name}}'>
                 <img src='{{img}}' title='{{name}}' width='28' height='28'/>
@@ -36,11 +36,11 @@
             </div>
         </section>
     </summary>
-</li>
 {{#if system.container.enabled}}
-<section style='padding-left: 15px;'>
+    <section class='{{toggleSwitch _id invert=true}} container' toggle>
     {{#each items}}
-    {{>'systems/hackmaster5e/templates/actor/cards/item.hbs'}}
+        {{>'systems/hackmaster5e/templates/actor/cards/item.hbs'}}
     {{/each}}
-</section>
+    </section>
 {{/if}}
+</li>
