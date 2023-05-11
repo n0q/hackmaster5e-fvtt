@@ -80,16 +80,14 @@ export const registerHandlebarsHelpers = () => {
         return `${pct}%`;
     });
 
-    Handlebars.registerHelper('getValidContainers', (containers, thisId, opts) => {
-        const {[thisId]: _, ...selectObj} = containers;
+    Handlebars.registerHelper('getValidContainers', (selectObj, thisId, opts) => {
         const {containerMap} = opts.data.root.actor;
-        const children = containerMap[thisId];
-        if (!children) return selectObj;
+        const blacklist = containerMap.get(thisId) ?? [];
 
         const srcKeys = Object.keys(selectObj);
-        const validKeys = srcKeys.filter((a) => !containerMap[thisId].includes(a));
+        const validKeys = srcKeys.filter((a) => !blacklist.includes(a));
         return validKeys.reduce((acc, i) => {
-            acc[i] = containers[i];
+            acc[i] = selectObj[i];
             return acc;
         }, {});
     });

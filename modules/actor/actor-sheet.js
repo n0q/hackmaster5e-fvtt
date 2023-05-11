@@ -31,9 +31,9 @@ export class HMActorSheet extends ActorSheet {
         const skills = {uskills: [], oskills: [], iskills: []};
 
         const containers = HMContainer.getContainers(actor);
-        actor.containerMap = HMContainer.getContainerMap(containers);
         const containerList = containers.map((a) => [a._id, a.name]);
         actor.containers = Object.fromEntries([[null, '']].concat(containerList));
+        actor.containerMap = HMContainer.getMap(actor.itemTypes.item);
 
         actor.itemTypes.skill.forEach((i) => {
             if (i.system.language) {
@@ -115,40 +115,20 @@ export class HMActorSheet extends ActorSheet {
         html.find('.item-edit').click((ev) => {
             const li = $(ev.currentTarget).parents('.card, .item');
             const itemId = li.data('itemId');
-            const item = this.actor.items.get(itemId);
+            const rootId = li.data('rootId');
 
-            if (item) {
-                item.sheet.render(true);
-            } else {
-                // Maybe the item is in a container.
-                const containerId = li.data('containerId');
-                let container = this.actor.items.get(containerId);
-                if (!container) {
-                    // We have to go deeper.
-                    const rootId = li.data('rootId');
-                    container = HMContainer.getChildContainer(rootId, containerId, this.actor);
-                }
-                const {items} = container;
-                const child = items.find((a) => a._id === itemId);
-                child.sheet.render(true);
-            }
+            const item = this.actor.items.get(itemId)
+                ?? HMContainer.find(this.actor, itemId, rootId);
+            item.sheet.render(true);
         });
 
         // Delete Item
         html.find('.item-delete').click((ev) => {
             const li = $(ev.currentTarget).parents('.card, .item');
             const itemId = li.data('itemId');
-            let item = this.actor.items.get(itemId);
-            if (!item) {
-                const containerId = li.data('containerId');
-                let container = this.actor.items.get(containerId);
-                if (!container) {
-                    const rootId = li.data('rootId');
-                    container = HMContainer.getChildContainer(rootId, containerId, this.actor);
-                }
-                const {items} = container;
-                item = items.find((a) => a._id === itemId);
-            }
+            const rootId = li.data('rootId');
+            const item = this.actor.items.get(itemId)
+                ?? HMContainer.find(this.actor, itemId, rootId);
 
             const title = `${game.i18n.localize('HM.confirmation')}: ${item.name}`;
             const content = `<p>${game.i18n.localize('HM.dialog.deleteBody')} <b>${item.name}</b>?</p>`;

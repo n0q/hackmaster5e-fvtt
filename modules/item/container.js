@@ -1,67 +1,54 @@
-import { HMCONST } from '../tables/constants.js';
-
 export const HMContainer = {
     getContainers: (actor) => {
-        const {item} = actor.itemTypes;
-        const {MAX_DEPTH} = HMCONST.CONTAINER;
-
-        const search = (root, r=MAX_DEPTH) => {
-            if (r < 0) return [];
-
-            const nodes = root.filter((a) => a.system?.container?.enabled);
-            return nodes.reduce((acc, node) => {
-                const children = search(node.items, r - 1);
-                return acc.concat(children);
-            }, nodes);
-        };
-        return search(item);
+        const stack = actor.itemTypes.item.filter((a) => a.system.container.enabled);
+        for (let i = 0; i < stack.length; i++) {
+            const node = stack[i];
+            const children = node.items.filter((a) => a.system.container.enabled);
+            if (children) stack.push(...children);
+        }
+        return stack;
     },
 
-    getContainerMap: (containers) => {
-        const {MAX_DEPTH} = HMCONST.CONTAINER;
-        const preOrder = (rootNodes, cList={}, r=MAX_DEPTH) => {
-            if (r < 0) return cList;
+    getMap: (root) => {
+        const getChildNodes = (node) => node.filter((a) => a.type === 'item' && a.system.container.enabled);
 
-            rootNodes.forEach((node) => {
-                const {items} = node;
-                const children = items.filter((a) => a.system?.container?.enabled);
+        const stack = getChildNodes(root);
+        const cMap = new Map();
 
-                preOrder(children, cList, r - 1);
+        let i = 0;
+        while (i < stack.length) {
+            const node = stack[i++];
+            const children = getChildNodes(node.items);
+            if (children.length) stack.push(...children);
+            cMap.set(node._id, [node._id]);
+        }
 
-                if (children.length) {
-                    cList[node._id] = children.reduce((acc, child) => (
-                        cList[child._id]
-                            ? acc.concat(cList[child._id])
-                            : acc
-                        ), children.map((a) => a._id));
-                }
-            });
-            return cList;
-        };
-
-        const roots = containers.filter((a) => !a.container);
-        return preOrder(roots);
-    },
-
-    getChildContainer: (rootId, containerId, actor) => {
-        const BFS = (rootNode, targetId) => {
-            const {items} = rootNode;
-            let child = items.find((node) => node._id === targetId);
-            if (child) return child;
-
-            for (let i = 0; i < items.length; i++) {
-                child = BFS(items[i], targetId);
-                if (child) break;
+        while (i) {
+            const node = stack[--i];
+            const {container, _id} = node;
+            if (container) {
+                const nodeMap = cMap.get(_id);
+                const containerMap = cMap.get(container._id);
+                cMap.set(container._id, containerMap.concat(nodeMap));
             }
-            return child;
-        };
+        }
 
-        const root = actor.items.get(rootId);
-        return BFS(root, containerId);
+        return cMap;
+    },
+
+    find: (actor, id, rootId=undefined) => {
+        const stack = rootId ? [actor.items.get(rootId)] : [actor];
+        while (stack.length > 0) {
+            const node = stack.pop();
+            if (node._id === id) return node;
+            if (node.items) stack.push(...node.items);
+        }
+
+        return undefined;
     },
 
     pull: (container, id) => {
-        const idx = container.items.findIndex((a) => a._id === id);
+        const idx = container.items.contents.findIndex((a) => a._id === id);
         const {_manifest} = container.system.container;
         const [itemString] = _manifest.splice(idx, 1);
         container.update({'system.container._manifest': _manifest});
