@@ -38,8 +38,9 @@
     .hide { @include hide; }
 
     .container {
-        padding: 0 0 0 $padding-md;
-        margin-bottom: -$padding-sm;
+        padding: 0 0 $padding-sm $padding-md;
+        margin-top: 2px;
+        margin-bottom: -$padding-md;
         margin-right: -$padding-sm;
     }
 

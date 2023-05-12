@@ -31,12 +31,19 @@
                 </div>
                 {{#unless system.innate}}
                 <div>{{#if (eq type 'item')}}{{system.qty}}x{{/if}}</div>
-                <span>{{numberFormat weightTotal decimals=2}} lbs.</span>
+                <div>
+                    <span class='{{toggleSwitch _id}}' toggle>
+                        {{numberFormat weightTotal decimals=2}} lbs.
+                    </span>
+                    <span class='{{toggleSwitch _id invert=true}}' toggle>
+                        {{numberFormat system.weight decimals=2}} lbs.
+                    </span>
+                </div>
                 {{/unless}}
             </div>
         </section>
     </summary>
-{{#if system.container.enabled}}
+{{#if (and system.container.enabled system.container._manifest.length)}}
     <section class='{{toggleSwitch _id invert=true}} container' toggle>
     {{#each items}}
         {{>'systems/hackmaster5e/templates/actor/cards/item.hbs'}}
