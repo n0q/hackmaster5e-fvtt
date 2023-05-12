@@ -37,15 +37,15 @@
                     </span>
                             {{#if type}}
                     <span class='form-option'>
-                        <label class='resource-label'>
-                            {{#if (eq type 1)}}
-                                {{localize 'HM.containerTypeSelect.wcap'}}
-                            {{else}}
-                                {{localize 'HM.containerTypeSelect.qcap'}}
-                            {{/if}}
-                        </label>
-                        <input type='number' placeholder=0 name='system.container.capacity.max'
-                               value='{{capacity.max}}' data-dtype='Float' />
+                                {{#if (eq type 1)}}
+                        <label class='resource-label'>{{localize 'HM.containerTypeSelect.wcap'}}</label>
+                        <input class='editable' type='number' placeholder=0 data-item-prop='system.container.capacity'
+                               value='{{capacity}}' data-dtype='Float' />
+                                {{else}}
+                        <label class='resource-label'>{{localize 'HM.containerTypeSelect.qcap'}}</label>
+                        <input class='editable' type='number' placeholder=0 data-item-prop='system.container.capacity'
+                               value='{{capacity}}' data-dtype='Number' />
+                                {{/if}}
                     </span>
                             {{/if}}
                         {{/with}}

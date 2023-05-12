@@ -12,6 +12,23 @@
                 <a class='item-control item-delete' title='Delete Item'><i class='fas fa-trash'></i></a>
             </div>
             <div class='inventory-details'>
+                {{#with system}}
+                <div>
+                    {{#if container.enabled}}
+                        {{#if (eq container.type 1)}}
+                        <span {{#if (gt ../weightInner container.capacity)}}style='color: red;'{{/if}}>
+                            {{numberFormat ../weightInner decimals=2}} lbs.
+                        </span>
+                            / {{numberFormat container.capacity decimals=2}} lbs.
+                        {{else if (eq container.type 2)}}
+                        <span {{#if (gt ../qtyInner container.capacity)}}style='color: red;'{{/if}}>
+                            {{../qtyInner}}
+                        </span>
+                            / {{container.capacity}}
+                        {{/if}}
+                    {{/if}}
+                </div>
+                {{/with}}
                 <div>
                     {{#unless system.innate}}
                     <select class='selectable' name='container' data-oper='containerMove'>
