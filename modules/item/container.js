@@ -3,14 +3,16 @@ export const HMContainer = {
         const stack = actor.itemTypes.item.filter((a) => a.system.container.enabled);
         for (let i = 0; i < stack.length; i++) {
             const node = stack[i];
-            const children = node.items.filter((a) => a.system.container.enabled);
+            const children = node.items.filter((a) => a.type === 'item'
+                && a.system.container.enabled);
             if (children) stack.push(...children);
         }
         return stack;
     },
 
     getMap: (root) => {
-        const getChildNodes = (node) => node.filter((a) => a.type === 'item' && a.system.container.enabled);
+        const getChildNodes = (node) => node.filter((a) => a.type === 'item'
+            && a.system.container.enabled);
 
         const stack = getChildNodes(root);
         const cMap = new Map();
@@ -70,7 +72,7 @@ export const HMContainer = {
 
     deserialize: (actor, itemString) => {
         const itemJson = JSON.parse(itemString);
-        actor.createEmbeddedDocuments('Item', [itemJson]);
+        actor.createEmbeddedDocuments('Item', [itemJson], {keepId: true});
     },
 
     moveToContainer: (actor, currentTarget) => {
