@@ -27,6 +27,30 @@ export class HMItem extends Item {
         super.prepareDerivedData();
     }
 
+    /** @override */
+    async delete(...args) {
+        const {_id, container} = this;
+        if (container) {
+            let {_manifest} = container.system.container;
+            _manifest = _manifest.filter((a) => JSON.parse(a)._id !== _id);
+            container.update({'system.container._manifest': _manifest});
+        } else super.delete(...args);
+    }
+
+    /** @override */
+    async update(...args) {
+        const [data] = args;
+        const {_id, container} = this;
+        if (container) {
+            const cIdx = container._manifestData.findIndex((a) => a._id === _id);
+            this.updateSource(data);
+            const {_manifest} = container.system.container;
+            _manifest[cIdx] = JSON.stringify(this);
+            container.apps[this.appId] = this;
+            container.update({'system.container._manifest': _manifest});
+        } else super.update(...args);
+    }
+
     get quality() {
         const {system} = this;
         const qKey = system?.ranged?.checked ? 'ranged' : this.type;
@@ -42,6 +66,10 @@ export class HMItem extends Item {
         const {specialty} = this.system;
         if (specialty.checked && specialty.value.length) return `${rawName} (${specialty.value})`;
         return rawName;
+    }
+
+    get weightTotal() {
+        return this.system.weight * (this.system.qty || 1) + (this.weightInner || 0);
     }
 
     // HACK: Temporary measure until future inventory overhaul.

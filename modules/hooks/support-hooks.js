@@ -34,7 +34,7 @@ export class HMSupportHooks {
                 }
             });
 
-            if (r === 5) dsnTerms = dsnTerms.concat(newTerms); // eslint-disable-line
+            if (r === 5) return dsnTerms.concat(newTerms);
             return dsnTerms;
         };
 

@@ -58,6 +58,12 @@ idx.classFeatureTable = {
     spdr: 'HM.CCLASS.TABLE.spdr',
 };
 
+idx.containerType = {
+    [HMCONST.CONTAINER.TYPE.WEIGHT]:    'HM.containerTypeSelect.weight',
+    [HMCONST.CONTAINER.TYPE.QUANTITY]:  'HM.containerTypeSelect.quantity',
+    [HMCONST.CONTAINER.TYPE.UNLIMITED]: 'HM.containerTypeSelect.unlimited',
+};
+
 idx.handedness = {
     'right':        'HM.handednessSelect.right',
     'left':         'HM.handednessSelect.left',
@@ -253,9 +259,10 @@ idx.itemCClass = {
 };
 
 idx.itemTypes = {
-    'armor':  'HM.itemTypes.armor',
-    'item':   'HM.itemTypes.item',
-    'weapon': 'HM.itemTypes.weapon',
+    armor:     'HM.itemTypes.armor',
+    weapon:    'HM.itemTypes.weapon',
+    item:      'HM.itemTypes.item',
+    container: 'HM.itemTypes.container',
 };
 
 idx.dice = {

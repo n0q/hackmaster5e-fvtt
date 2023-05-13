@@ -1,5 +1,6 @@
 import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
+import { HMContainer } from '../item/container.js';
 import { HMCONST, HMTABLES, SYSTEM_ID } from '../tables/constants.js';
 
 export class HMActorSheet extends ActorSheet {
@@ -22,21 +23,25 @@ export class HMActorSheet extends ActorSheet {
     }
 
     _prepareBaseItems(sheetData) {
-        const actorData = sheetData.actor;
-
-        const {spell} = actorData.itemTypes;
+        const {actor} = sheetData;
+        const {spell} = actor.itemTypes;
         const gear = {weapons: [], armors: [], items: []};
         const armors = {owned: [], carried: [], equipped: []};
         const weapons = {owned: [], carried: [], equipped: [], innate: []};
         const skills = {uskills: [], oskills: [], iskills: []};
 
-        actorData.itemTypes.skill.forEach((i) => {
+        const containers = HMContainer.getContainers(actor);
+        const containerList = containers.map((a) => [a._id, a.name]);
+        actor.containers = Object.fromEntries([[null, '']].concat(containerList));
+        actor.containerMap = HMContainer.getMap(actor.itemTypes.item);
+
+        actor.itemTypes.skill.forEach((i) => {
             if (i.system.language) {
                 skills.iskills.push(i);
                 return;
             }
 
-            if (actorData.type !== 'character' || !i.system.universal) {
+            if (actor.type !== 'character' || !i.system.universal) {
                 skills.oskills.push(i);
                 return;
             }
@@ -44,13 +49,13 @@ export class HMActorSheet extends ActorSheet {
             skills.uskills.push(i);
         });
 
-        actorData.itemTypes.armor.forEach((i) => {
+        actor.itemTypes.armor.forEach((i) => {
             gear.armors.push(i);
             const state = HMTABLES.itemstate[(i.system.state)];
             armors[state].push(i);
         });
 
-        actorData.itemTypes.weapon.forEach((i) => {
+        actor.itemTypes.weapon.forEach((i) => {
             gear.weapons.push(i);
 
             const {INNATE} = HMCONST.ITEM_STATE;
@@ -65,7 +70,7 @@ export class HMActorSheet extends ActorSheet {
             }
         });
 
-        gear.items = actorData.itemTypes.item.sort((a, b) => a.name.localeCompare(b.name));
+        gear.items = actor.itemTypes.item.sort((a, b) => a.name.localeCompare(b.name));
 
         function skillsort(a, b) {
             return `${game.i18n.localize(a.name)} ${a.system.specialty.value || ''}`
@@ -74,23 +79,23 @@ export class HMActorSheet extends ActorSheet {
 
         Object.keys(skills).forEach((skillType) => skills[skillType].sort(skillsort));
 
-        actorData.skills = skills;
-        actorData.armors = armors;
-        actorData.weapons = weapons;
-        actorData.gear = gear;
-        actorData.spells = spell.sort(
+        actor.skills = skills;
+        actor.armors = armors;
+        actor.weapons = weapons;
+        actor.gear = gear;
+        actor.spells = spell.sort(
             (a, b) => Number(a.system.lidx) - Number(b.system.lidx) || a.name.localeCompare(b.name),
         );
 
-        actorData.talents = actorData.itemTypes.talent.sort((a, b) => a.name.localeCompare(b.name));
+        actor.talents = actor.itemTypes.talent.sort((a, b) => a.name.localeCompare(b.name));
 
         const slevels = [];
-            for (let i=0; i < actorData.spells.length; i++) {
-                const lidx = Number(actorData.spells[i].system.lidx);
+            for (let i=0; i < actor.spells.length; i++) {
+                const lidx = Number(actor.spells[i].system.lidx);
                 if (!slevels.includes(lidx)) { slevels.push(lidx); }
             }
 
-        actorData.slevels = slevels.sort();
+        actor.slevels = slevels.sort();
     }
 
     /** @override */
@@ -109,14 +114,22 @@ export class HMActorSheet extends ActorSheet {
         // Update Inventory Item
         html.find('.item-edit').click((ev) => {
             const li = $(ev.currentTarget).parents('.card, .item');
-            const item = this.actor.items.get(li.data('itemId'));
+            const itemId = li.data('itemId');
+            const rootId = li.data('rootId');
+
+            const item = this.actor.items.get(itemId)
+                ?? HMContainer.find(this.actor, itemId, rootId);
             item.sheet.render(true);
         });
 
         // Delete Item
         html.find('.item-delete').click((ev) => {
             const li = $(ev.currentTarget).parents('.card, .item');
-            const item = this.actor.items.get(li.data('itemId'));
+            const itemId = li.data('itemId');
+            const rootId = li.data('rootId');
+            const item = this.actor.items.get(itemId)
+                ?? HMContainer.find(this.actor, itemId, rootId);
+
             const title = `${game.i18n.localize('HM.confirmation')}: ${item.name}`;
             const content = `<p>${game.i18n.localize('HM.dialog.deleteBody')} <b>${item.name}</b>?</p>`;
 
@@ -236,8 +249,9 @@ export class HMActorSheet extends ActorSheet {
         ev.preventDefault();
         ev.stopPropagation();
         const {dataset, value} = ev.currentTarget;
-        const {flag} = dataset;
+        const {flag, oper} = dataset;
         if (flag) this.actor.setFlag(SYSTEM_ID, flag, value);
+        if (oper) HMContainer.moveToContainer(this.actor, ev.currentTarget);
     }
 
     async _onEdit(ev) {

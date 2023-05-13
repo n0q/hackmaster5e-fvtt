@@ -11,21 +11,48 @@
             {{> "systems/hackmaster5e/templates/item/parts/description.hbs" }}
         </div>
 
-{{#with data}}
-        <div class="tab attributes" data-group="primary" data-tab="attributes">
-            <div class="item-form">
-                <div class="sidepanel">
-                    <div class="options-block">
-                        <label class="resource-label">{{localize "HM.quality"}}</label>
-                        <select name="system.qidx" data-dtype="{{system.qidx}}">
-                        {{#select system.qidx}}{{#each (findConfigObj "qidx") as |type t|}}
-                            <option value="{{t}}">{{localize type}}</option>
-                        {{/each}}{{/select}}
+        {{#with data}}
+        <div class='tab attributes newform' data-group='primary' data-tab='attributes'>
+            <div class='grid-2col' style='grid-template-columns: 40% 1fr; padding-top: 5px;'>
+                <section name='options' class='col_rborder'>
+                    <span class='form-option'>
+                        <label class='resource-label'>{{localize 'HM.quality'}}</label>
+                        <select name='system.qidx' data-dtype='{{system.qidx}}'>
+                            {{selectOptions (findConfigObj 'qidx') selected=system.qidx localize=true}}
                         </select>
-                    </div>
-                </div>
+                    </span>
+                    <span class='form-option'>
+                        <label class='resource-label'>{{localize 'HM.container'}}</label>
+                        <input type='checkbox' name='system.container.enabled' {{checked system.container.enabled}}/>
+                    </span>
+                </section>
+                <section name='specifics'>
+                    {{#if system.container.enabled}}
+                        {{#with system.container}}
+                    <span class='form-option'>
+                        <label class='resource-label'>{{localize 'HM.containerTypeSelect.captype'}}</label>
+                        <select name='system.container.type' data-dtype='Number'>
+                            {{selectOptions (findConfigObj 'containerType') selected=type localize=true}}
+                        </select>
+                    </span>
+                            {{#if type}}
+                    <span class='form-option'>
+                                {{#if (eq type 1)}}
+                        <label class='resource-label'>{{localize 'HM.containerTypeSelect.wcap'}}</label>
+                        <input class='editable' type='number' placeholder=0 data-item-prop='system.container.capacity'
+                               value='{{capacity}}' data-dtype='Float' />
+                                {{else}}
+                        <label class='resource-label'>{{localize 'HM.containerTypeSelect.qcap'}}</label>
+                        <input class='editable' type='number' placeholder=0 data-item-prop='system.container.capacity'
+                               value='{{capacity}}' data-dtype='Number' />
+                                {{/if}}
+                    </span>
+                            {{/if}}
+                        {{/with}}
+                    {{/if}}
+                </section>
             </div>
         </div> 
-{{/with}}
+        {{/with}}
     </section>
 </form>

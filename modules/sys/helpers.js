@@ -80,6 +80,23 @@ export const registerHandlebarsHelpers = () => {
         return `${pct}%`;
     });
 
+    Handlebars.registerHelper('getValidContainers', (selectObj, thisId, opts) => {
+        const {containerMap} = opts.data.root.actor;
+        const blacklist = containerMap.get(thisId) ?? [];
+
+        const srcKeys = Object.keys(selectObj);
+        const validKeys = srcKeys.filter((a) => !blacklist.includes(a));
+        return validKeys.reduce((acc, i) => {
+            acc[i] = selectObj[i];
+            return acc;
+        }, {});
+    });
+
+    Handlebars.registerHelper('delete', (arg1, arg2) => {
+        const {[arg2]: _, ...deleted} = arg1;
+        return deleted;
+    });
+
     Handlebars.registerHelper('repeat', function _(count, opts) {
         let str = '';
 

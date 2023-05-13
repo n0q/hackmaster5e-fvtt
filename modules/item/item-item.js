@@ -18,4 +18,25 @@ export class HMItemItem extends HMItem {
         const newqty = Math.max(1, parseInt(qty, 10)) || 1;
         this.update({'system.qty': newqty});
     }
+
+    get _manifestData() {
+        return this.system.container._manifest.map((a) => JSON.parse(a));
+    }
+
+    get items() {
+        return new foundry.utils.Collection(this._manifestData.map((a) => {
+            const item = new CONFIG.Item.documentClass(a);
+            item.rootId = this.rootId ? this.rootId : this._id;
+            item.container = this;
+            return [item._id, item];
+        }));
+    }
+
+    get qtyInner() {
+        return this.items.reduce((acc, item) => acc + item.system.qty, 0) || 1;
+    }
+
+    get weightInner() {
+        return this.items.reduce((acc, item) => acc + item.weightTotal, 0) || 0;
+    }
 }
