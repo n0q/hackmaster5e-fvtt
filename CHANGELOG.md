@@ -7,6 +7,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Inventory containers.
 ### Fixed
 - Weapon profiles were not generated for classless Character Actors.
+- Quality ranged weapons now add to damage (previously attack) roll.
+- Long item names could cause stylesheet blowout in inventory tab.
 
 ### [0.3.22] - 2023-04-08
 ### Changed
@@ -15,7 +17,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - DsN displays penetration dice decay.
 - Threat range correction for scenes with square grids.
 - Weapon talents could fail to function under certain circumstances.
-- Typos
+- Typos.
 
 ### [0.3.21] - 2023-04-04
 ### Added

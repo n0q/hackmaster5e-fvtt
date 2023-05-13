@@ -570,7 +570,7 @@ export const HMTABLES = {
     'quality': {
         'armor':  [1, 1, 0, 0],
         'weapon': [1, 0, 1, 0],
-        'ranged': [1, 0, 0, 0],
+        'ranged': [0, 0, 1, 0],
     },
     scale: {
         [HMCONST.SCALE.TINY]:     {hp:  0, kb:  5, reach: -2,  move: 1/3},
