@@ -33,10 +33,10 @@ export class HMItemItem extends HMItem {
     }
 
     get qtyInner() {
-        return this.items.reduce((acc, item) => acc + item.system.qty, 0);
+        return this.items.reduce((acc, item) => acc + item.system.qty, 0) || 1;
     }
 
     get weightInner() {
-        return this.items.reduce((acc, item) => acc + item.weightTotal, 0);
+        return this.items.reduce((acc, item) => acc + item.weightTotal, 0) || 0;
     }
 }
