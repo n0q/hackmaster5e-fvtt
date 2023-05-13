@@ -46,6 +46,7 @@ export class HMItem extends Item {
             this.updateSource(data);
             const {_manifest} = container.system.container;
             _manifest[cIdx] = JSON.stringify(this);
+            container.apps[this.appId] = this;
             container.update({'system.container._manifest': _manifest});
         } else super.update(...args);
     }
@@ -68,15 +69,7 @@ export class HMItem extends Item {
     }
 
     get weightTotal() {
-        /*
-        let weightInner = 0.0;
-        if (this.system?.container?.enabled) {
-            weightInner = this.items.reduce((acc, item) => acc + item.weightTotal, 0);
-        }
-         this.weightInner = weightInner;
-        return this.system.weight * (this.system.qty || 1) + weightInner;
-    */
-        return this.system.weight * (this.system.qty || 1) + this.weightInner;
+        return this.system.weight * (this.system.qty || 1) + (this.weightInner || 0);
     }
 
     // HACK: Temporary measure until future inventory overhaul.
