@@ -31,6 +31,11 @@
     overflow: visible;
     margin: 3px;
 
+    &.item {
+        &.character { max-width: calc(#{$character-width} - 6px); }
+        &.beast { max-width: calc(#{$beast-width} - 6px); }
+    }
+
     .toggleswitch header:hover {
         @include text-glow($shad-1px);
     }
@@ -54,7 +59,7 @@
 
     > section {
         padding: 5px;
-        
+
         input[type=number] {
             background: transparent;
             border: 1px solid;
@@ -111,7 +116,7 @@
         h4 {
             white-space: nowrap;
             overflow: hidden;
-            text-overflow: clip;
+            text-overflow: ellipsis;
             padding-left: 2px;
             margin-top: 1px;
             margin-bottom: -1px;
