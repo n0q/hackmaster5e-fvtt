@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Weapon profiles were not generated for classless Character Actors.
 - Quality ranged weapons now add to damage (previously attack) roll.
 - Long item names could cause stylesheet blowout in inventory tab.
+- Ranged defense using weapon's selected defense die.
 
 ### [0.3.22] - 2023-04-08
 ### Changed
