@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+### [Unreleased]
+### Added
+- Inventory containers.
+### Fixed
+- Weapon profiles were not generated for classless Character Actors.
+
 ### [0.3.22] - 2023-04-08
 ### Changed
 - 'Universal Skills' header is omitted when character actor has even number of uskills.

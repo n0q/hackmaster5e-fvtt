@@ -86,6 +86,15 @@
                 "weight": 0,
                 "price": null,
                 "avail": {"high": 0, "med": 0, "low": 0}
+            },
+
+            "container": {
+                "container": {
+                    "enabled": false,
+                    "type": 0,
+                    "capacity": 0,
+                    "_manifest": []
+                }
             }
         },
 
@@ -128,7 +137,7 @@
         },
 
         "item": {
-            "templates": ["base", "thing"],
+            "templates": ["base", "thing", "container"],
             "qidx": 3,
             "qty":  1
         },
