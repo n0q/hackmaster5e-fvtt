@@ -39,9 +39,9 @@ export class HMItem extends Item {
 
     /** @override */
     async update(...args) {
-        const [data] = args;
         const {_id, container} = this;
         if (container) {
+            const [data] = args;
             const cIdx = container._manifestData.findIndex((a) => a._id === _id);
             this.updateSource(data);
             const {_manifest} = container.system.container;
@@ -68,8 +68,15 @@ export class HMItem extends Item {
         return rawName;
     }
 
-    get weightTotal() {
-        return this.system.weight * (this.system.qty || 1) + (this.weightInner || 0);
+    get weight() {
+        const {weight, qty} = this.system;
+        const {items} = this;
+
+        const intrinsic = (weight || 0) * (qty || 1);
+        const contents = items ? items.reduce((acc, item) => acc + item.weight.total, 0) || 0 : 0;
+        const total = intrinsic + contents;
+
+        return {intrinsic, contents, total};
     }
 
     // HACK: Temporary measure until future inventory overhaul.
@@ -83,7 +90,7 @@ export class HMItem extends Item {
 
         if (caller) callers.push({caller, context: caller.items.get(itemId)});
         else {
-            let actors = canvas.tokens.controlled.map((token) => token.actor);
+            const actors = canvas.tokens.controlled.map((token) => token.actor);
 
             const smartSelect = game.settings.get(SYSTEM_ID, 'smartSelect');
             if (!actors.length && smartSelect) {
