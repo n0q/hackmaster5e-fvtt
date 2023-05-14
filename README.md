@@ -1,6 +1,6 @@
 # hackmaster5e-fvtt
 
-Hackmaster for Foundry. Some rough edges here and there, but this should do what you need. This project is on temporary hiatus. Developer gone fishing, but will be back in a couple of months. I Promise!
+Hackmaster for Foundry. Some rough edges here and there, but this should do what you need. May all your hits be crits!
 
 ----
 ## Roadmap
