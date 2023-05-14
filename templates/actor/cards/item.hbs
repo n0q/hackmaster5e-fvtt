@@ -3,7 +3,12 @@
         <header>
             <label for='{{name}}'>
                 <img src='{{img}}' title='{{name}}' width='28' height='28'/>
-                <h4 class='item-name'>{{name}}</h4>
+                <h4 class='item-name'>
+                    {{name}}
+                    {{#if (and (eq type 'item') (gt system.qidx 3))}}
+                    <i class="fa-solid fa-star gold-star" title={{localize (findConfigValue 'qidx' system.qidx)}}></i>
+                    {{/if}}
+                </h4>
             </label>
         </header>
         <section>

@@ -17,7 +17,7 @@
                 <section name='options' class='col_rborder'>
                     <span class='form-option'>
                         <label class='resource-label'>{{localize 'HM.quality'}}</label>
-                        <select name='system.qidx' data-dtype='{{system.qidx}}'>
+                        <select name='system.qidx' data-dtype='Number'>
                             {{selectOptions (findConfigObj 'qidx') selected=system.qidx localize=true}}
                         </select>
                     </span>

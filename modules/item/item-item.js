@@ -25,7 +25,7 @@ export class HMItemItem extends HMItem {
 
     get items() {
         return new foundry.utils.Collection(this._manifestData.map((a) => {
-            const item = new CONFIG.Item.documentClass(a);
+            const item = new CONFIG.Item.documentClass(a); // eslint-disable-line
             item.rootId = this.rootId ? this.rootId : this._id;
             item.container = this;
             return [item._id, item];

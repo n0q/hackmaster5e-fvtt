@@ -5,8 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### [Unreleased]
 ### Added
 - Inventory containers.
+- Quality items get a gold star!
 ### Changed
-- Gear compendium now has containers.
+- Added containers to gear compendium.
+- Total weight is displayed for items with qty greater than one.
 ### Fixed
 - Weapon profiles were not generated for classless Character Actors.
 - Quality ranged weapons now add to damage (previously attack) roll.
