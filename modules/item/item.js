@@ -27,6 +27,30 @@ export class HMItem extends Item {
         super.prepareDerivedData();
     }
 
+    /** @override */
+    async delete(...args) {
+        const {_id, container} = this;
+        if (container) {
+            let {_manifest} = container.system.container;
+            _manifest = _manifest.filter((a) => JSON.parse(a)._id !== _id);
+            container.update({'system.container._manifest': _manifest});
+        } else super.delete(...args);
+    }
+
+    /** @override */
+    async update(...args) {
+        const {_id, container} = this;
+        if (container) {
+            const [data] = args;
+            const cIdx = container._manifestData.findIndex((a) => a._id === _id);
+            this.updateSource(data);
+            const {_manifest} = container.system.container;
+            _manifest[cIdx] = JSON.stringify(this);
+            container.apps[this.appId] = this;
+            container.update({'system.container._manifest': _manifest});
+        } else super.update(...args);
+    }
+
     get quality() {
         const {system} = this;
         const qKey = system?.ranged?.checked ? 'ranged' : this.type;
@@ -44,6 +68,17 @@ export class HMItem extends Item {
         return rawName;
     }
 
+    get weight() {
+        const {weight, qty} = this.system;
+        const {items} = this;
+
+        const intrinsic = (weight || 0) * (qty || 1);
+        const contents = items ? items.reduce((acc, item) => acc + item.weight.total, 0) || 0 : 0;
+        const total = intrinsic + contents;
+
+        return {intrinsic, contents, total};
+    }
+
     // HACK: Temporary measure until future inventory overhaul.
     get invstate() {
         const state = parseInt(this.system.state, 10) || 0;
@@ -55,7 +90,7 @@ export class HMItem extends Item {
 
         if (caller) callers.push({caller, context: caller.items.get(itemId)});
         else {
-            let actors = canvas.tokens.controlled.map((token) => token.actor);
+            const actors = canvas.tokens.controlled.map((token) => token.actor);
 
             const smartSelect = game.settings.get(SYSTEM_ID, 'smartSelect');
             if (!actors.length && smartSelect) {

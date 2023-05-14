@@ -62,6 +62,15 @@
             "non":  "Non"
         },
 
+        "containerTypeSelect": {
+            "captype":      "Capacity Type",
+            "unlimited":    "Unlimited",
+            "weight":       "Weight",
+            "quantity":     "Quantity",
+            "qcap":         "Quantity Limit",
+            "wcap":         "Weight Limit" 
+        },
+
         "CHAT": {
             "cspell":   "Clerical Spell",
             "ctime":    "Casting Time",
@@ -258,9 +267,10 @@
         },
 
         "itemTypes": {
-            "armor":    "Armor",
-            "item":     "Item",
-            "weapon":   "Weapon"
+            "armor":     "Armor",
+            "container": "Container",
+            "item":      "Item",
+            "weapon":    "Weapon"
         },
 
         "dialog": {
@@ -496,10 +506,12 @@
         "clerical":     "Clerical",
         "comatose":     "Comatose",
         "complication": "Complication",
-        "confirmation": "Confirmation",
         "combat":       "Combat",
         "components":   "Components",
         "comp":         "Complication",
+        "confirmation": "Confirmation",
+        "container":    "Container",
+        "contype":      "Container type",
         "cost":         "Cost",
         "countup":      "Count Up",
         "custom":       "Custom",

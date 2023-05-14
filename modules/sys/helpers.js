@@ -1,4 +1,4 @@
-import idx from '../tables/dictionary.js';
+import { idx } from '../tables/dictionary.js';
 
 export const registerHandlebarsHelpers = () => {
     Handlebars.registerHelper('concat', (...args) => {
@@ -78,6 +78,33 @@ export const registerHandlebarsHelpers = () => {
     Handlebars.registerHelper('pct', (arg1) => {
         const pct = Math.round((Number(arg1) || 0) * 100);
         return `${pct}%`;
+    });
+
+    Handlebars.registerHelper('getValidContainers', (selectObj, thisId, opts) => {
+        const {containerMap} = opts.data.root.actor;
+        const blacklist = containerMap.get(thisId) ?? [];
+
+        const srcKeys = Object.keys(selectObj);
+        const validKeys = srcKeys.filter((a) => !blacklist.includes(a));
+        return validKeys.reduce((acc, i) => {
+            acc[i] = selectObj[i];
+            return acc;
+        }, {});
+    });
+
+    Handlebars.registerHelper('itemSort', (itemTypes) => {
+        const items = itemTypes.item.sort((a, b) => {
+            const container = a.system.container.enabled - b.system.container.enabled;
+            return container || a.name.localeCompare(b.name);
+        });
+
+        const {weapon, armor} = itemTypes;
+        return weapon.concat(armor, items);
+    });
+
+    Handlebars.registerHelper('delete', (arg1, arg2) => {
+        const {[arg2]: _, ...deleted} = arg1;
+        return deleted;
     });
 
     Handlebars.registerHelper('repeat', function _(count, opts) {

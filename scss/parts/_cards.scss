@@ -31,11 +31,23 @@
     overflow: visible;
     margin: 3px;
 
+    &.item {
+        &.character { max-width: calc(#{$character-width} - 6px); }
+        &.beast { max-width: calc(#{$beast-width} - 6px); }
+    }
+
     .toggleswitch header:hover {
         @include text-glow($shad-1px);
     }
 
     .hide { @include hide; }
+
+    .container {
+        padding: 0 0 $padding-sm $padding-md;
+        margin-top: 2px;
+        margin-bottom: -$padding-md;
+        margin-right: -$padding-sm;
+    }
 
     @include table-basic;
 
@@ -47,7 +59,7 @@
 
     > section {
         padding: 5px;
-        
+
         input[type=number] {
             background: transparent;
             border: 1px solid;
@@ -98,13 +110,13 @@
         flex: 1;
         display: flex;
         flex-direction: column;
-        margin-right: 10px;
+        margin-right: $padding-md;
         min-width: 0;
 
         h4 {
             white-space: nowrap;
             overflow: hidden;
-            text-overflow: clip;
+            text-overflow: ellipsis;
             padding-left: 2px;
             margin-top: 1px;
             margin-bottom: -1px;
@@ -156,8 +168,13 @@
     .inventory-details {
         display: grid;
         margin-right: 1em;
-        grid-template-columns: 1fr 5em 2em 5em;
+        grid-template-columns: 1fr 8em 4em 4em 1.5em 5em;
         justify-items: end;
         gap: 1em;
+
+        select {
+            width: 8em;
+            height: 18px;
+        }
     }
 }

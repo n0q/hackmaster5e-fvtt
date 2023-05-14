@@ -2,6 +2,19 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+### [0.3.23] - 2023-05-13
+### Added
+- Inventory containers.
+- Quality items get a gold star!
+### Changed
+- Added containers to gear compendium.
+- Total weight is displayed for items with qty greater than one.
+### Fixed
+- Weapon profiles were not generated for classless Character Actors.
+- Quality ranged weapons now add to damage (previously attack) roll.
+- Long item names could cause stylesheet blowout in inventory tab.
+- Ranged defense using weapon's selected defense die.
+
 ### [0.3.22] - 2023-04-08
 ### Changed
 - 'Universal Skills' header is omitted when character actor has even number of uskills.
@@ -9,7 +22,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - DsN displays penetration dice decay.
 - Threat range correction for scenes with square grids.
 - Weapon talents could fail to function under certain circumstances.
-- Typos
+- Typos.
 
 ### [0.3.21] - 2023-04-04
 ### Added

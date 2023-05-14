@@ -37,6 +37,7 @@ export class DefendPrompt extends HMPrompt {
             capList,
             specialMove: HMCONST.SPECIAL.STANDARD,
             defDie: wData.defdie,
+            rDefDie: HMCONST.DIE.D20P,
             canDodge: canDodge || caller.type === 'beast',
             dodge: canDodge,
             ranged,
@@ -72,17 +73,18 @@ export class DefendPrompt extends HMPrompt {
     }
 
     get dialogResp() {
-        const {button, spd, defDie} = this.dialogData;
+        const {button, spd, defDie, rDefDie} = this.dialogData;
         const specialMove = Number(this.dialogData.specialMove);
+        const {SPECIAL} = HMCONST;
         const dialogResp = {
-            defdie: HMTABLES.die[defDie],
+            defdie: specialMove === SPECIAL.RDEFEND ? HMTABLES.die[rDefDie] : HMTABLES.die[defDie],
             dodge: this.dialogData.dodge ? this.dialogData.dodge : 0,
             widx: this.dialogData.widx,
             specialMove,
             range: Number(this.dialogData.range),
             bonus: parseInt(this.dialogData.bonus, 10) || 0,
             advance: false,
-            duration: specialMove === HMCONST.SPECIAL.DEFEND ? false : (spd?.melee || 0),
+            duration: specialMove === SPECIAL.DEFEND ? false : (spd?.melee || 0),
             button,
         };
         return dialogResp;

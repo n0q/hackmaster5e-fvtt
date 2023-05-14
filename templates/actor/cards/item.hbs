@@ -1,9 +1,14 @@
-<li class='card hmstyle' data-item-id='{{_id}}'>
-    <summary>
+<li class='item card {{actor.type}} hmstyle' data-item-id='{{_id}}' data-container-id='{{container._id}}' data-root-id='{{container.rootId}}'>
+    <summary{{#if items.contents.length}} class='toggleswitch'{{/if}}>
         <header>
             <label for='{{name}}'>
                 <img src='{{img}}' title='{{name}}' width='28' height='28'/>
-                <h4 class='item-name'>{{name}}</h4>
+                <h4 class='item-name'>
+                    {{name}}
+                    {{#if (and (eq type 'item') (gt system.qidx 3))}}
+                    <i class="fa-solid fa-star gold-star" title={{localize (findConfigValue 'qidx' system.qidx)}}></i>
+                    {{/if}}
+                </h4>
             </label>
         </header>
         <section>
@@ -12,17 +17,57 @@
                 <a class='item-control item-delete' title='Delete Item'><i class='fas fa-trash'></i></a>
             </div>
             <div class='inventory-details'>
-                <span>
-                    {{localize (findConfigValue 'itemTypes' type)}}
-                </span>
-                <div class='item-control location {{#unless (eq system.state 3)}}item-state button{{/unless}}'>
-                    {{localize (findConfigValue 'thingState' system.state)}}
+                <div>
+                    {{#if system.container.enabled}}
+                        {{#if (eq system.container.type 1)}}
+                        <span {{#if (gt weight.contents capacity)}}style='color: red;'{{/if}}>
+                            {{numberFormat weight.contents decimals=2}} lbs.
+                        </span>
+                            / {{numberFormat capacity decimals=2}} lbs.
+                        {{else if (eq system.container.type 2)}}
+                        <span {{#if (gt qtyInner capacity)}}style='color: red;'{{/if}}>
+                            {{qtyInner}}
+                        </span>
+                            / {{capacity}}
+                        {{/if}}
+                    {{/if}}
+                </div>
+                <div>
+                    {{#unless system.innate}}
+                    <select class='selectable' name='container' data-oper='containerMove'>
+                        {{selectOptions (getValidContainers @root.actor.containers _id) selected=container._id}}
+                    </select>
+                    {{/unless}}
+                </div>
+                <div>
+                    {{#if system.container.enabled}}
+                        {{localize (findConfigValue 'itemTypes' 'container')}}
+                    {{else}}
+                        {{localize (findConfigValue 'itemTypes' type)}}
+                    {{/if}}
+                </div>
+                <div class='item-control location {{#unless (or container (eq system.state 3))}}item-state button {{/unless}}'>
+                    {{#unless container}}{{localize (findConfigValue 'thingState' system.state)}}{{/unless}}
                 </div>
                 {{#unless system.innate}}
                 <div>{{#if (eq type 'item')}}{{system.qty}}x{{/if}}</div>
-                <span>{{numberFormat system.weight decimals=2}} lbs.</span>
+                <div>
+                    <span class='{{toggleSwitch _id}}' toggle>
+                        {{numberFormat weight.total decimals=2}} lbs.
+                    </span>
+                    <span class='{{toggleSwitch _id invert=true}}' toggle>
+                        {{numberFormat weight.intrinsic decimals=2}} lbs.
+                    </span>
+                </div>
                 {{/unless}}
             </div>
         </section>
     </summary>
+{{#if (and system.container.enabled system.container._manifest.length)}}
+    <section class='{{toggleSwitch _id invert=true}} container' toggle>
+    {{#each (itemSort this.itemTypes)}}
+        {{>'systems/hackmaster5e/templates/actor/cards/item.hbs'}}
+    {{/each}}
+    </section>
+{{/if}}
 </li>

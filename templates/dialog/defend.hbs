@@ -17,8 +17,8 @@
         <span class='form-group'>
             {{#if (eq SPECIAL.RDEFEND specialMove)}}
             <label>{{localize 'HM.dialog.getRangedDefend'}}</label>
-            <select name='defense' class='bind' data-prop='defDie' data-render=true style='max-width: 7em;'>
-                {{selectOptions (findConfigObj 'defDieRanged') selected=defDie localize=true}}
+            <select name='defense' class='bind' data-prop='rDefDie' data-render=true style='max-width: 7em;'>
+                {{selectOptions (findConfigObj 'defDieRanged') selected=rDefDie localize=true}}
             </select>
             {{else}}
             <label>{{localize 'HM.dialog.getDefendDie'}}</label>
