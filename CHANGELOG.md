@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### [Unreleased]
 ### Added
 - Inventory containers.
+### Changed
+- Gear compendium now has containers.
 ### Fixed
 - Weapon profiles were not generated for classless Character Actors.
 - Quality ranged weapons now add to damage (previously attack) roll.
