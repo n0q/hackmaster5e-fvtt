@@ -116,17 +116,17 @@ export class HMCharacterActor extends HMActor {
         let armor = 0.0;
         for (let i=0; i < item.length; i++) {
             const {invstate} = item[i];
-            const {system, type, weightTotal} = item[i];
+            const {system, type, weight} = item[i];
             switch (invstate) {
                 case 'innate': break;
 
                 case 'equipped': {
-                    if (type === 'armor' && !system?.shield?.checked) armor += weightTotal;
+                    if (type === 'armor' && !system?.shield?.checked) armor += weight.total;
                 }
                 // Falls through
 
                 case 'carried': {
-                    carried += weightTotal;
+                    carried += weight.total;
                     break;
                 }
                 default:
