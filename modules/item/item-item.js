@@ -41,4 +41,10 @@ export class HMItemItem extends HMItem {
     get qtyInner() {
         return this.items.reduce((acc, item) => acc + item.system.qty, 0) || 1;
     }
+
+    get itemTypes() {
+        const types = Object.fromEntries(game.documentTypes.Item.map((t) => [t, []]));
+        this.items.contents.forEach((item) => types[item.type].push(item));
+        return types;
+    }
 }

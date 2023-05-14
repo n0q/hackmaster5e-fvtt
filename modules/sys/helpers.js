@@ -1,4 +1,4 @@
-import idx from '../tables/dictionary.js';
+import { idx } from '../tables/dictionary.js';
 
 export const registerHandlebarsHelpers = () => {
     Handlebars.registerHelper('concat', (...args) => {
@@ -90,6 +90,16 @@ export const registerHandlebarsHelpers = () => {
             acc[i] = selectObj[i];
             return acc;
         }, {});
+    });
+
+    Handlebars.registerHelper('itemSort', (itemTypes) => {
+        const items = itemTypes.item.sort((a, b) => {
+            const container = a.system.container.enabled - b.system.container.enabled;
+            return container || a.name.localeCompare(b.name);
+        });
+
+        const {weapon, armor} = itemTypes;
+        return weapon.concat(armor, items);
     });
 
     Handlebars.registerHelper('delete', (arg1, arg2) => {

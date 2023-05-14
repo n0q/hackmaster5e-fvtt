@@ -60,7 +60,7 @@
     </summary>
 {{#if (and system.container.enabled system.container._manifest.length)}}
     <section class='{{toggleSwitch _id invert=true}} container' toggle>
-    {{#each items}}
+    {{#each (itemSort this.itemTypes)}}
         {{>'systems/hackmaster5e/templates/actor/cards/item.hbs'}}
     {{/each}}
     </section>
