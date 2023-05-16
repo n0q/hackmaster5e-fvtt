@@ -1,5 +1,34 @@
 import { HMCONST } from '../tables/constants.js';
 
+export const calculateArmorDamage = (obj) => {
+    let armorDamage = 0;
+    const stack = obj.rolls
+        ? [obj.rolls.find((roll) => roll.total === obj.total)]
+        : obj.terms.filter((term) => !term.isDeterministic);
+
+    while (stack.length) {
+        const term = stack.pop();
+
+        if (term.constructor.name === 'PoolTerm') {
+            const idx = term.results.findIndex((result) => result.active);
+            stack.push(term.rolls[idx]);
+        } else
+
+        if (term.constructor.name === 'Roll') {
+            stack.push(...term.terms.filter((t) => !t.isDeterministic));
+        } else
+
+        if (term.constructor.name === 'HMDie') {
+            armorDamage = term.results.reduce((acc, result) => {
+                if (result.penetrated && !result.bias) return acc + 1;
+                return acc;
+            }, armorDamage);
+        }
+    }
+
+    return armorDamage;
+};
+
 export const transformDamageFormula = (stringTerms, operation=new Set()) => {
     const {FORMULA_MOD} = HMCONST;
     const setComparator = (sterms, oper, r=5) => {

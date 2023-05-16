@@ -1,6 +1,7 @@
 import { HMTABLES, HMCONST } from '../tables/constants.js';
 import { CRITTABLE } from '../tables/crits.js';
 import { idx } from '../tables/dictionary.js';
+import { calculateArmorDamage } from '../sys/utils.js';
 
 export class HMChatMgr {
     constructor() { this._user = game.user.id; }
@@ -354,9 +355,10 @@ async function createDamageCard(dataset) {
 
     flavor += getSpecialMoveFlavor(resp);
     const rollContent = await roll.render({flavor});
+    const armorDamage = calculateArmorDamage(roll);
 
     const template = 'systems/hackmaster5e/templates/chat/damage.hbs';
-    const templateData = {resp, context, caller};
+    const templateData = {resp, context, caller, armorDamage};
     const resultContent = await renderTemplate(template, templateData);
     const content = resultContent + rollContent;
     return {content, roll, flavor: caller.name};
