@@ -957,6 +957,8 @@
     },
 
     "SETTINGS": {
+        "autoEncumbrance":      "Auto Encumbrance",
+        "autoEncumbranceHint":  "Automatically adjust Character encumbrance levels based on equipped and carried items.",
         "playerNewItems":       "Player New Items",
         "playerNewItemsHint":   "Allow players to create new items from the inventory tab.",
         "reachOpacity":         "Reach Opacity",

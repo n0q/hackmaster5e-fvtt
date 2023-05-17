@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+### [Unreleased]
+### Added
+- Auto-encumbrance setting.
+
 ### [0.3.23] - 2023-05-13
 ### Added
 - Inventory containers.

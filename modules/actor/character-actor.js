@@ -138,7 +138,15 @@ export class HMCharacterActor extends HMActor {
         const total = carried + HMTABLES.weight(priors.bmi, priors.height) || 0.0;
         this.system.encumb = {carried, effective, total};
 
-        const penalty = this.getFlag(SYSTEM_ID, 'encumbrance') || 0;
+        let penalty = this.getFlag(SYSTEM_ID, 'encumbrance') || 0;
+        if (game.settings.get(SYSTEM_ID, 'autoEncumbrance')) {
+            const {idx} = this.system.abilities.total.str;
+            const encumbrance = [...HMTABLES.abilitymods.encumbrance[idx], Infinity];
+            penalty = encumbrance.findIndex((x) => effective <= x);
+            this.encIdx = penalty;
+            this.setFlag(SYSTEM_ID, 'encumbrance', penalty);
+        }
+        this.encumbranceIdx = penalty;
         this.system.bonus.encumb = HMTABLES.encumbrance[penalty];
     }
 

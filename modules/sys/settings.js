@@ -1,4 +1,5 @@
 import { SYSTEM_ID } from '../tables/constants.js';
+import { HMSocket, SOCKET_TYPES } from './sockets.js';
 
 export const registerSystemSettings = () => {
     game.settings.register(SYSTEM_ID, 'reachOpacity', {
@@ -28,5 +29,15 @@ export const registerSystemSettings = () => {
         config: true,
         type: Boolean,
         default: true,
+    });
+
+    game.settings.register(SYSTEM_ID, 'autoEncumbrance', {
+        name: 'SETTINGS.autoEncumbrance',
+        hint: 'SETTINGS.autoEncumbranceHint',
+        scope: 'world',
+        config: true,
+        type: Boolean,
+        default: true,
+        onChange: () => HMSocket.emit(SOCKET_TYPES.RENDER_APPS),
     });
 };
