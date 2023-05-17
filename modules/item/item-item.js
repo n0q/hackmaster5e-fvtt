@@ -39,7 +39,7 @@ export class HMItemItem extends HMItem {
     }
 
     get qtyInner() {
-        return this.items.reduce((acc, item) => acc + item.system.qty, 0) || 1;
+        return this.items.reduce((acc, item) => acc + item.system.qty, 0) || 0;
     }
 
     get itemTypes() {

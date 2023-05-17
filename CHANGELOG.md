@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### [Unreleased]
 ### Added
 - Auto-encumbrance setting.
+### Fixed
+- Empty quantity containers displaying a contents of 1.
 
 ### [0.3.23] - 2023-05-13
 ### Added
