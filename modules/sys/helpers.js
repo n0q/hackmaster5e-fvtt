@@ -56,6 +56,8 @@ export const registerHandlebarsHelpers = () => {
         return {...cross.map((x, i) => `${game.i18n.localize(label[i])} (${x} ${suffix})`)};
     });
 
+    Handlebars.registerHelper('mergeObjs', (obj1, obj2) => ({...obj1, ...obj2}));
+
     Handlebars.registerHelper('isGM', () => game.user.isGM);
     Handlebars.registerHelper('getFlag', (scope, key, opts) => opts.data.root.actor.getFlag(scope, key));
     Handlebars.registerHelper('getSetting', (scope, key) => game.settings.get(scope, key));

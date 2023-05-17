@@ -957,6 +957,8 @@
     },
 
     "SETTINGS": {
+        "armorDegredation":     "Armor Degredation",
+        "armorDegredationHint": "Use Armor Degredation rules (GMG120).",
         "autoEncumbrance":      "Auto Encumbrance",
         "autoEncumbranceHint":  "Automatically adjust Character encumbrance levels based on equipped and carried items.",
         "playerNewItems":       "Player New Items",

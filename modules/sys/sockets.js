@@ -14,7 +14,10 @@ export class HMSocket {
 
     static renderApps() {
         const apps = game.actors.reduce((acc, actor) => ({...acc, ...actor.apps}), {});
-        Object.keys(apps).forEach((key) => apps[key].render());
+        Object.keys(apps).forEach((key) => {
+            apps[key].document.prepareData();
+            apps[key].render();
+        });
     }
 }
 

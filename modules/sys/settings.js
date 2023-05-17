@@ -31,6 +31,19 @@ export const registerSystemSettings = () => {
         default: true,
     });
 
+    game.settings.register(SYSTEM_ID, 'armorDegredation', {
+        name: 'SETTINGS.armorDegredation',
+        hint: 'SETTINGS.armorDegredationHint',
+        scope: 'world',
+        config: true,
+        type: Boolean,
+        default: true,
+        onChange: () => {
+            HMSocket.renderApps();
+            HMSocket.emit(SOCKET_TYPES.RENDER_APPS);
+        },
+    });
+
     game.settings.register(SYSTEM_ID, 'autoEncumbrance', {
         name: 'SETTINGS.autoEncumbrance',
         hint: 'SETTINGS.autoEncumbranceHint',
@@ -38,6 +51,9 @@ export const registerSystemSettings = () => {
         config: true,
         type: Boolean,
         default: true,
-        onChange: () => HMSocket.emit(SOCKET_TYPES.RENDER_APPS),
+        onChange: () => {
+            HMSocket.renderApps();
+            HMSocket.emit(SOCKET_TYPES.RENDER_APPS);
+        },
     });
 };

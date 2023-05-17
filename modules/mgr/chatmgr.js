@@ -1,4 +1,4 @@
-import { HMTABLES, HMCONST } from '../tables/constants.js';
+import { HMTABLES, HMCONST, SYSTEM_ID } from '../tables/constants.js';
 import { CRITTABLE } from '../tables/crits.js';
 import { idx } from '../tables/dictionary.js';
 import { calculateArmorDamage } from '../sys/utils.js';
@@ -355,7 +355,8 @@ async function createDamageCard(dataset) {
 
     flavor += getSpecialMoveFlavor(resp);
     const rollContent = await roll.render({flavor});
-    const armorDamage = calculateArmorDamage(roll);
+    const useArmorDegredation = game.settings.get(SYSTEM_ID, 'armorDegredation');
+    const armorDamage = useArmorDegredation ? calculateArmorDamage(roll) : 0;
 
     const template = 'systems/hackmaster5e/templates/chat/damage.hbs';
     const templateData = {resp, context, caller, armorDamage};
