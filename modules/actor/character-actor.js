@@ -146,7 +146,7 @@ export class HMCharacterActor extends HMActor {
             this.encIdx = penalty;
             this.setFlag(SYSTEM_ID, 'encumbrance', penalty);
         }
-        this.encumbranceIdx = penalty;
+        this.encIdx = penalty;
         this.system.bonus.encumb = HMTABLES.encumbrance[penalty];
     }
 
