@@ -1,4 +1,5 @@
 import { HMItem } from './item.js';
+import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { SYSTEM_ID } from '../tables/constants.js';
 
 export class HMArmorItem extends HMItem {
@@ -27,7 +28,9 @@ export class HMArmorItem extends HMItem {
         const {bonus, damage, shield, qn} = this.system;
         qn ? bonus.qual = this.quality : delete bonus.qual;
 
-        const armorDmg = useArmorDegredation ? Number(-Math.floor(damage/10)) : 0;
+        const adjDamage = Math.max(damage, 0);
+        if (adjDamage !== damage) this.update({'system.damage': adjDamage});
+        const armorDmg = useArmorDegredation ? Number(-Math.floor(adjDamage/10)) : 0;
 
         Object.keys(bonus.base).forEach((key) => {
             let sum = 0;
@@ -58,5 +61,19 @@ export class HMArmorItem extends HMItem {
             shield.checked ? actorBonus.shield = sum
                            : actorBonus.armor  = sum;
         }
+    }
+
+    damageArmorBy(input) {
+        const value = Number(input) || 0;
+        const {bonus, damage} = this.system;
+        const maxDamage = 10 * (bonus.base.dr + bonus.mod.dr + (bonus?.qual?.dr || 0));
+        const newDamage = Math.clamped(damage + value, 0, maxDamage);
+        this.update({'system.damage': newDamage});
+    }
+
+    async onClick(ev) {
+        ev.preventDefault();
+        const {dataset} = ev.currentTarget;
+        if (dataset.op === 'admg') console.warn('admg');
     }
 }

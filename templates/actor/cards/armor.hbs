@@ -6,10 +6,22 @@
                 <h4 class="card-name" style="font-size: 16px;">{{name}}</h4>
             </label>
         </header>
+        {{#if (and (gt system.state 1) (not system.shield.checked))}}
+        <section class='weapon-controls'>
+            <img class='button imgbutton' src='{{findConfigValue 'combatImg' 'admg'}}' title='Armor Damage'
+                 data-item-id='{{_id}}' data-op='admg'
+                 />
+        </section>
+        {{/if}}
     </summary>
     <section class='{{toggleSwitch _id invert=true}}' toggle>
         <div class='card-expanded'>
-            <div></div><div></div>
+            <span style='padding-top: 5px;'>
+                Armor Damage:
+                <input class='editable' style='padding-right: 2px;' type='number' value={{system.damage}} min='0'
+                       data-item-prop='system.damage' data-item-id='{{_id}}' data-type='Number'/>
+            </span>
+            <div></div>
             <table class="table-basic">
                 <thead>
                     <tr>
