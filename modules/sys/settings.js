@@ -1,5 +1,4 @@
 import { SYSTEM_ID } from '../tables/constants.js';
-import { HMSocket, SOCKET_TYPES } from './sockets.js';
 
 export const registerSystemSettings = () => {
     game.settings.register(SYSTEM_ID, 'reachOpacity', {
@@ -31,19 +30,6 @@ export const registerSystemSettings = () => {
         default: true,
     });
 
-    game.settings.register(SYSTEM_ID, 'armorDegredation', {
-        name: 'SETTINGS.armorDegredation',
-        hint: 'SETTINGS.armorDegredationHint',
-        scope: 'world',
-        config: true,
-        type: Boolean,
-        default: true,
-        onChange: () => {
-            HMSocket.renderApps();
-            HMSocket.emit(SOCKET_TYPES.RENDER_APPS);
-        },
-    });
-
     game.settings.register(SYSTEM_ID, 'autoEncumbrance', {
         name: 'SETTINGS.autoEncumbrance',
         hint: 'SETTINGS.autoEncumbranceHint',
@@ -51,9 +37,24 @@ export const registerSystemSettings = () => {
         config: true,
         type: Boolean,
         default: true,
-        onChange: () => {
-            HMSocket.renderApps();
-            HMSocket.emit(SOCKET_TYPES.RENDER_APPS);
-        },
+        onChange: renderApps,
+    });
+
+    game.settings.register(SYSTEM_ID, 'armorDegredation', {
+        name: 'SETTINGS.armorDegredation',
+        hint: 'SETTINGS.armorDegredationHint',
+        scope: 'world',
+        config: true,
+        type: Boolean,
+        default: false,
+        onChange: renderApps,
     });
 };
+
+function renderApps() {
+    const apps = game.actors.reduce((acc, actor) => ({...acc, ...actor.apps}), {});
+    Object.keys(apps).forEach((key) => {
+        apps[key].document.prepareData();
+        apps[key].render();
+    });
+}
