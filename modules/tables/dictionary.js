@@ -370,14 +370,14 @@ idx.savesImg = {
 };
 
 idx.combatImg = {
-    'atk':    'icons/weapons/swords/greatsword-blue.webp',
-    'ratk':   'icons/weapons/bows/shortbow-recurve-blue.webp',
-    'dmg':    'icons/skills/melee/strike-sword-blood-red.webp',
-    'rdmg':   'icons/weapons/ammunition/arrow-head-war-flight.webp',
-    'def':    'icons/equipment/shield/heater-crystal-blue.webp',
-    'cast':   'icons/weapons/wands/wand-carved-pink.webp',
-    'prep':   'icons/sundries/documents/document-symbol-lightning-brown.webp',
-    'unprep': 'icons/sundries/documents/blueprint-magical-brown.webp',
+    atk:    'icons/weapons/swords/greatsword-blue.webp',
+    ratk:   'icons/weapons/bows/shortbow-recurve-blue.webp',
+    dmg:    'icons/skills/melee/strike-sword-blood-red.webp',
+    rdmg:   'icons/weapons/ammunition/arrow-head-war-flight.webp',
+    def:    'icons/equipment/shield/heater-crystal-blue.webp',
+    cast:   'icons/weapons/wands/wand-carved-pink.webp',
+    prep:   'icons/sundries/documents/document-symbol-lightning-brown.webp',
+    unprep: 'icons/sundries/documents/blueprint-magical-brown.webp',
 };
 
 idx.defaultImg = {

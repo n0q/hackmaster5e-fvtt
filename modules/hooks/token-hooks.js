@@ -6,14 +6,14 @@ export class HMTokenHooks {
         // Populate hp.max for beast tokens.
         if (actor.type !== 'beast' || actor.system.hp.max || userId !== game.user.id) return;
 
-        const {hp} = actor.system;
-        const {formula} = hp;
+        const {formula} = actor.system.hp;
         if (Roll.validate(formula)) {
-            const r = new Roll(formula);
-            await r.evaluate({'async': true});
-            hp.value = r.total;
-            hp.max = r.total;
-            await actor.update({'data.hp': hp});
+            const r = await new Roll(formula).evaluate({'async': true});
+            const tokenHp = {value: r.total, max: r.total};
+            // TODO: v13
+            game.release.generation < 11
+                ? await actor.update({'system.hp': tokenHp})
+                : await token.update({'delta.system.hp': tokenHp});
         }
     }
 }

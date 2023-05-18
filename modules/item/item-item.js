@@ -28,6 +28,7 @@ export class HMItemItem extends HMItem {
             const item = new CONFIG.Item.documentClass(a); // eslint-disable-line
             item.rootId = this.rootId ? this.rootId : this._id;
             item.container = this;
+            item.ownership = this.parent ? this.parent.ownership : this.ownership;
             return [item._id, item];
         }));
     }
@@ -39,7 +40,7 @@ export class HMItemItem extends HMItem {
     }
 
     get qtyInner() {
-        return this.items.reduce((acc, item) => acc + item.system.qty, 0) || 1;
+        return this.items.reduce((acc, item) => acc + item.system.qty, 0) || 0;
     }
 
     get itemTypes() {

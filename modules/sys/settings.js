@@ -29,4 +29,32 @@ export const registerSystemSettings = () => {
         type: Boolean,
         default: true,
     });
+
+    game.settings.register(SYSTEM_ID, 'autoEncumbrance', {
+        name: 'SETTINGS.autoEncumbrance',
+        hint: 'SETTINGS.autoEncumbranceHint',
+        scope: 'world',
+        config: true,
+        type: Boolean,
+        default: true,
+        onChange: renderApps,
+    });
+
+    game.settings.register(SYSTEM_ID, 'armorDegredation', {
+        name: 'SETTINGS.armorDegredation',
+        hint: 'SETTINGS.armorDegredationHint',
+        scope: 'world',
+        config: true,
+        type: Boolean,
+        default: true,
+        onChange: renderApps,
+    });
 };
+
+function renderApps() {
+    const apps = game.actors.reduce((acc, actor) => ({...acc, ...actor.apps}), {});
+    Object.keys(apps).forEach((key) => {
+        apps[key].document.prepareData();
+        apps[key].render();
+    });
+}

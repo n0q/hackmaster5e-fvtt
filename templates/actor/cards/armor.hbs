@@ -6,10 +6,21 @@
                 <h4 class="card-name" style="font-size: 16px;">{{name}}</h4>
             </label>
         </header>
+        {{#if (and (gt system.state 1) (not system.shield.checked))}}
+        <section class='weapon-controls'>
+        </section>
+        {{/if}}
     </summary>
     <section class='{{toggleSwitch _id}}' toggle>
         <div class='card-expanded'>
-            <div></div><div></div>
+            <span style='padding-top: 5px;'>
+                {{#if (getSetting 'hackmaster5e' 'armorDegredation')}}
+                Armor Damage:
+                <input class='editable' style='padding-right: 2px;' type='number' value={{system.damage}} min='0'
+                       data-item-prop='system.damage' data-item-id='{{_id}}' data-type='Number'/>
+                {{/if}}
+            </span>
+            <div></div>
             <table class="table-basic">
                 <thead>
                     <tr>
@@ -20,7 +31,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{#each system.bonus}}
+                    {{#each (mergeObjs system.bonus derived)}}
                     <tr>
                         <th scope="row"><label class="resource-label">{{@key}}</label></td>
                         {{#each this}}{{#if (eq 'mod' @../key)}}

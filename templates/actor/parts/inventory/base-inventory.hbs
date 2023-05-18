@@ -16,10 +16,14 @@
             </label>
             <label>
                 {{localize 'HM.encumbRow.penalty'}}:
+                {{#if (getSetting 'hackmaster5e' 'autoEncumbrance')}}
+                <b>{{lookup (mapSelect @root/actor.encumbrance 'encumbrance' 'lbs.') @root/actor.encIdx}}</b>
+                {{else}}
                 <select class='selectable' name='encumbrance' data-flag='encumbrance'>
                     {{selectOptions (mapSelect @root/actor.encumbrance 'encumbrance' 'lbs.')
                         selected=(getFlag 'hackmaster5e' 'encumbrance')}}
                 </select>
+                {{/if}}
             </label>
         </span>
         {{#if (or (isGM) (getSetting 'hackmaster5e' 'playerNewItems'))}}

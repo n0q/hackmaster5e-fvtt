@@ -4,10 +4,10 @@ export class HMDie extends Die {
     get total() {
         const rv = super.total;
         if (!rv) return rv;
-        return this.results.reduce((t, r) => t + (r.offset ?? 0), rv);
+        return this.results.reduce((t, r) => t + (r.bias ?? 0), rv);
     }
 
-    roll({minimize=false, maximize=false, offset=false, faces=false}={}) {
+    roll({minimize=false, maximize=false, bias=false, faces=false}={}) {
         const roll = super.roll({minimize, maximize});
         this.results[this.results.length -1] = roll;
 
@@ -16,7 +16,7 @@ export class HMDie extends Die {
             roll.result = Math.ceil(CONFIG.Dice.randomUniform() * faces);
         }
 
-        if (offset) roll.offset = offset;
+        if (bias) roll.bias = bias;
         return roll;
     }
 
@@ -63,7 +63,7 @@ export class HMDie extends Die {
 
             if (DiceTerm.compareResult(r.result, comparison, target)) {
                 r.penetrated = true;
-                this.roll({faces: pFaces, offset: -1});
+                this.roll({faces: pFaces, bias: -1});
                 if (max !== null) max -= 1;
             }
 
@@ -74,7 +74,7 @@ export class HMDie extends Die {
     }
 
     getResultLabel(result) {
-        return String(result.result + (result?.offset || 0));
+        return String(result.result + (result?.bias || 0));
     }
 
     getResultCSS(result) {
