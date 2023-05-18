@@ -915,11 +915,6 @@
         }
     },
 
-    "ACTOR": {
-        "TypeBeast":        "Beast",
-        "TypeCharacter":    "Character"
-    },
-
     "CONTROLS": {
         "reachview":    "Reach View"
     },
@@ -943,6 +938,11 @@
         "sfatigue":     "Spell Fatigued"
     },
     
+    "ACTOR": {
+        "TypeBeast":        "Beast",
+        "TypeCharacter":    "Character"
+    },
+
     "ITEM": {
         "TypeArmor":        "Armor",
         "TypeCclass":       "Character Class",
@@ -955,9 +955,28 @@
         "TypeWeapon":       "Weapon",
         "TypeWound":        "Wound"
     },
+    
+    "TYPES": {
+        "Actor": {
+            "beast":        "Beast",
+            "character":    "Character"
+        },
+        "Item":  {
+            "armor":        "Armor",
+            "cclass":       "Character Class",
+            "item":         "Item",
+            "proficiency":  "Proficiency",
+            "race":         "Race",
+            "skill":        "Skill",
+            "spell":        "Spell",
+            "talent":       "Talent",
+            "weapon":       "Weapon",
+            "wound":        "Wound"
+        }
+    },
 
     "SETTINGS": {
-        "armorDegredation":     "Armor Degredation",
+        "armorDegredation":     "Armor Degredation (Experimental)",
         "armorDegredationHint": "Use Armor Degredation rules (GMG120).",
         "autoEncumbrance":      "Auto Encumbrance",
         "autoEncumbranceHint":  "Automatically adjust Character encumbrance levels based on equipped and carried items.",
