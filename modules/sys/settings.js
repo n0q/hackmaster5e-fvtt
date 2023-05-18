@@ -46,7 +46,7 @@ export const registerSystemSettings = () => {
         scope: 'world',
         config: true,
         type: Boolean,
-        default: false,
+        default: true,
         onChange: renderApps,
     });
 };

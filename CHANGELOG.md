@@ -2,13 +2,15 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-### [Unreleased]
+### [0.3.24] - 2023-05-18
 ### Added
 - Auto-encumbrance setting.
+- Armor damage (Experimental).
 ### Fixed
 - Empty quantity containers displaying a contents of 1.
 - Players unable to edit encapsulated items.
-- Light quarrel weights were off by a factor of 10.
+- Compendium inaccuracies.
+- Under v11, sending a Beast actor to the canvas could cause a crash.
 
 ### [0.3.23] - 2023-05-13
 ### Added

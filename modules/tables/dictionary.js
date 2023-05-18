@@ -378,7 +378,6 @@ idx.combatImg = {
     cast:   'icons/weapons/wands/wand-carved-pink.webp',
     prep:   'icons/sundries/documents/document-symbol-lightning-brown.webp',
     unprep: 'icons/sundries/documents/blueprint-magical-brown.webp',
-    admg:   'icons/skills/melee/strike-hammer-destructive-orange.webp',
 };
 
 idx.defaultImg = {
