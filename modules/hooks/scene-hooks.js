@@ -1,3 +1,5 @@
+import { HMTokenHooks } from './token-hooks.js';
+
 export class HMSceneControlHooks {
     static getSceneControlButtons(controls) {
         const tools = controls.find((a) => a.name === 'token').tools;
@@ -15,6 +17,6 @@ export class HMSceneControlHooks {
     static renderSceneControls() {
         if (!canvas.tokens) return;
         const {placeables} = canvas.tokens;
-        if (placeables.length) placeables.forEach((t) => t.drawReach());
+        if (placeables.length) placeables.forEach((t) => HMTokenHooks.drawToken(t));
     }
 }
