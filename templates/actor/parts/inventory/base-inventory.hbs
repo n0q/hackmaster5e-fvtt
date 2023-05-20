@@ -1,5 +1,5 @@
 <ol class='cards-list inventory'>
-    {{#with actor.system.encumb}}
+    {{#with actor.encumb}}
     <header>
         <span class='weights'>
             <label>
@@ -17,7 +17,7 @@
             <label>
                 {{localize 'HM.encumbRow.penalty'}}:
                 {{#if (getSetting 'hackmaster5e' 'autoEncumbrance')}}
-                <b>{{lookup (mapSelect @root/actor.encumbrance 'encumbrance' 'lbs.') @root/actor.encIdx}}</b>
+                <b>{{lookup (mapSelect @root/actor.encumbrance 'encumbrance' 'lbs.') penalty}}</b>
                 {{else}}
                 <select class='selectable' name='encumbrance' data-flag='encumbrance'>
                     {{selectOptions (mapSelect @root/actor.encumbrance 'encumbrance' 'lbs.')
