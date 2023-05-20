@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### [Unreleased]
 ### Fixed
 - Auto-encumbrance generated errors for unpriviledged users.
+### Changed
+- Armor degredation defaults to 'off'.
 
 ### [0.3.24] - 2023-05-18
 ### Added
