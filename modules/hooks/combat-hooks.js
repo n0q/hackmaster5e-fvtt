@@ -26,13 +26,13 @@ export class HMCombatHooks {
     }
 
     static async createCombatant(combatant) {
-        const {token} = combatant;
-        if (token) token.object.reach.visible = true;
+        const token = combatant.token.object;
+        token.animReachOpen();
     }
 
     static deleteCombatant(combatant) {
-        const {token} = combatant;
-        if (token) token.object.reach.visible = false;
+        const token = combatant.token.object;
+        token.animReachClose();
     }
 
     static async preDeleteCombat(combat) {
@@ -47,10 +47,7 @@ export class HMCombatHooks {
     }
 
     static deleteCombat(combat) {
-        [...combat.combatants].forEach((c) => {
-            const {reach} = c.token.object;
-            reach.visible = false;
-        });
+        [...combat.combatants].forEach((c) => c.token.object.animReachClose());
     }
 
     static renderCombatTracker(_tracker, html) {

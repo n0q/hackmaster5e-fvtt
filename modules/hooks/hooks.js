@@ -36,7 +36,6 @@ export const registerHooks = () => {
     Hooks.on('createToken', HMTokenHooks.createToken);
     Hooks.on('destroyToken', HMTokenHooks.destroyToken);
     Hooks.on('drawToken', HMTokenHooks.drawToken);
-    Hooks.on('controlToken', HMTokenHooks.controlToken);
     Hooks.on('hoverToken', HMTokenHooks.hoverToken);
     Hooks.on('refreshToken', HMTokenHooks.refreshToken);
     Hooks.on('hotbarDrop', HMMacroHooks.hotbarDrop);

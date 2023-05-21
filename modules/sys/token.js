@@ -99,6 +99,55 @@ export class HMToken extends Token {
         return {distance, opacity};
     }
 
+    animReachOpen() {
+        const {reach} = this;
+        reach.visible = !!this.combatant && this.visibleByDefault();
+        const ease = 'elastic.out(1, 0.3)';
+        reach.scale.set(1, 1);
+        game.gsap.from(reach.scale, {
+            x: 0,
+            y: 0,
+            duration: 2,
+            ease,
+            onStart: () => this.drawReach(),
+            onComplete: () => this.drawReach(),
+        });
+    }
+
+    animReachClose() {
+        const {reach} = this;
+        game.gsap.to(reach.scale, {
+            yoyo: true,
+            repeat: 1,
+            x: 0,
+            y: 0,
+            ease: 'back.in(1)',
+            onRepeat: () => { reach.visible = false; },
+        });
+    }
+
+    visibleByDefault() {
+        const {actor} = this;
+        const {isGM, showAllThreats} = game.user;
+
+        if (!actor) return false;
+        if (showAllThreats) return true;
+        if (isGM && !actor.hasPlayerOwner) return true;
+
+        let owner = game.users.find((a) => a.character?.id === actor.id);
+        if (!owner) {
+            const {'default': _, ...ownership} = actor.ownership;
+            const userId = Object.keys(ownership).find((a) => {
+                const isOwner = ownership[a] === CONST.DOCUMENT_PERMISSION_LEVELS.OWNER;
+                const isPlayer = !game.users.get(a)?.isGM;
+                return isOwner && isPlayer;
+            });
+            owner = userId ? game.users.get(userId) : undefined;
+        }
+
+        return game.userId === owner?.id;
+    }
+
     async addWound(amount) {
         if (!this.actor) return false;
         return this.actor.addWound(amount);
