@@ -2,13 +2,14 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-### [Unreleased]
-### Fixed
-- Auto-encumbrance generated errors for unpriviledged users.
+## [Unreleased]
 ### Changed
 - Armor degredation defaults to 'off'.
+### Fixed
+- Auto-encumbrance generated errors for unpriviledged users.
+- DsN dice decay display regression.
 
-### [0.3.24] - 2023-05-18
+## [0.3.24] - 2023-05-18
 ### Added
 - Auto-encumbrance setting.
 - Armor damage (Experimental).
@@ -18,7 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Compendium inaccuracies.
 - Under v11, sending a Beast actor to the canvas could cause a crash.
 
-### [0.3.23] - 2023-05-13
+## [0.3.23] - 2023-05-13
 ### Added
 - Inventory containers.
 - Quality items get a gold star!
@@ -31,7 +32,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Long item names could cause stylesheet blowout in inventory tab.
 - Ranged defense using weapon's selected defense die.
 
-### [0.3.22] - 2023-04-08
+## [0.3.22] - 2023-04-08
 ### Changed
 - 'Universal Skills' header is omitted when character actor has even number of uskills.
 ### Fixed
@@ -40,7 +41,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Weapon talents could fail to function under certain circumstances.
 - Typos.
 
-### [0.3.21] - 2023-04-04
+## [0.3.21] - 2023-04-04
 ### Added
 - Class option for receiving half penalty for non-proficient weapon use.
 - Class option for bonus HP.
@@ -50,12 +51,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Under certain circumstances, talents could interact with other talents.
 - Compendium inaccuracies.
 
-### [0.3.20] - 2023-02-21
+## [0.3.20] - 2023-02-21
 ### Fixed
 - Snapshot timing no longer accounts for draw time.
 - Fumble/Crit QoL improvements.
 
-### [0.3.19] - 2023-02-12
+## [0.3.19] - 2023-02-12
 ### Added
 - Fumble complications due to strains/sprains.
 ### Changed
@@ -65,11 +66,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Removed
 - Cut recursive functionality from fumble tables.
 
-### [0.3.18] - 2023-02-08
+## [0.3.18] - 2023-02-08
 ### Added
 - Fumble macro.
 
-### [0.3.16] - 2023-01-22
+## [0.3.16] - 2023-01-22
 ### Changed
 - Skill macros respect smart select.
 ### Fixed
@@ -79,7 +80,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Extended character width of ability scores to 3.
 - Minimum ability score is now 1/01.
 
-### [0.3.15] - 2023-01-20
+## [0.3.15] - 2023-01-20
 ### Added
 - Dishonorable characters are properly punished.
 ### Removed
