@@ -7,9 +7,9 @@ export const registerSystemSettings = () => {
         scope: 'client',
         config: true,
         type: Number,
-        default: 0.1,
+        default: 0.2,
         range: {min: 0, max: 1, step: 0.05},
-        onChange: () => canvas.tokens.placeables.forEach((t) => t.drawReach()),
+        onChange: () => canvas.tokens.placeables.forEach((t) => t.refresh()),
     });
 
     game.settings.register(SYSTEM_ID, 'smartSelect', {
