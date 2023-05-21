@@ -16,4 +16,29 @@ export class HMTokenHooks {
                 : await token.update({'delta.system.hp': tokenHp});
         }
     }
+
+    static drawToken(token) {
+        token.reach ??= canvas.grid.reach.addChild(new PIXI.Graphics()); // eslint-disable-line
+        const {reach} = token;
+        reach.filters ??= [new PIXI.filters.ColorMatrixFilter()];
+        reach.visible = !!token.combatant && token.visibleByDefault();
+        token.drawReach();
+    }
+
+    static hoverToken(token, hover) {
+        if (!token.combatant) return;
+        token.drawReach();
+        const {reach} = token;
+        reach.visible = hover ? true : token.visibleByDefault();
+    }
+
+    static refreshToken(token) {
+        const {reach} = token;
+        reach.position = token.center;
+        reach.filters[0].brightness(1);
+    }
+
+    static destroyToken(token) {
+        token.reach?.destroy();
+    }
 }

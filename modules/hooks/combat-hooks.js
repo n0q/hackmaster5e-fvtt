@@ -26,15 +26,13 @@ export class HMCombatHooks {
     }
 
     static async createCombatant(combatant) {
-        const {tokenId} = combatant;
-        const token = game.canvas.tokens.placeables.find((x) => x.id === tokenId);
-        if (token) token.drawReach();
+        const token = combatant.token.object;
+        token.animReachOpen();
     }
 
-    static async deleteCombatant(combatant) {
-        const {tokenId} = combatant;
-        const token = game.canvas.tokens.placeables.find((x) => x.id === tokenId);
-        if (token) token.drawReach();
+    static deleteCombatant(combatant) {
+        const token = combatant.token.object;
+        token.animReachClose();
     }
 
     static async preDeleteCombat(combat) {
@@ -46,6 +44,10 @@ export class HMCombatHooks {
                                                     // && y.duration.combat.id === combat.id);
             effects.forEach((effect) => x.actor.deleteEmbeddedDocuments('ActiveEffect', [effect.id]));
         });
+    }
+
+    static deleteCombat(combat) {
+        [...combat.combatants].forEach((c) => c.token.object.animReachClose());
     }
 
     static renderCombatTracker(_tracker, html) {

@@ -24,6 +24,8 @@ import { registerHooks } from './modules/hooks/hooks.js';
 import { registerHandlebarsHelpers } from './modules/sys/helpers.js';
 import { preloadHandlebarsTemplates } from './modules/sys/templates.js';
 
+import gsap, { PixiPlugin } from '/scripts/greensock/esm/all.js';
+
 function registerSheets() {
     Actors.unregisterSheet('core', ActorSheet);
     Actors.registerSheet('hackmaster', HMCharacterActorSheet, {types: ['character'], makeDefault: true});
@@ -67,6 +69,12 @@ function registerConfig() {
     };
 }
 
+function registerGsapPlugins() {
+    PixiPlugin.registerPIXI(PIXI);
+    gsap.registerPlugin(PixiPlugin);
+    game.gsap = gsap;
+}
+
 Hooks.once('init', async () => {
     game[SYSTEM_ID] = { HMActor, HMItem, HMWeaponItem, HMSpellItem };
 
@@ -75,5 +83,6 @@ Hooks.once('init', async () => {
     registerHandlebarsHelpers();
     preloadHandlebarsTemplates();
     registerSystemSettings();
+    registerGsapPlugins();
     registerHooks();
 });

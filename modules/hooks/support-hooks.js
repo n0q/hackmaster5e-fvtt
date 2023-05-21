@@ -24,9 +24,9 @@ export class HMSupportHooks {
                 dsnTerm.results = foundry.utils.deepClone(term.results);
 
                 if (!dsnTerm.isDeterministic && dsnTerm.faces >= 20) {
-                    const offsetIdx = dsnTerm.results.findIndex((x) => x.offset);
-                    if (offsetIdx !== -1) {
-                        const results = dsnTerm.results.splice(offsetIdx);
+                    const biasIdx = dsnTerm.results.findIndex((x) => x.bias);
+                    if (biasIdx !== -1) {
+                        const results = dsnTerm.results.splice(biasIdx);
                         const faces = results[0].faces ? results[0].faces : dsnTerm.faces;
                         const newTerm = new HMDie({faces, results});
                         newTerms.push(newTerm);

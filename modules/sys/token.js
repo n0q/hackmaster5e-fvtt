@@ -1,92 +1,59 @@
 import { SYSTEM_ID, HMCONST } from '../tables/constants.js';
 import { actorHasEffects } from './effects.js';
 
-function newReach(distance, color, visible) {
-    return {
-        distance,
-        color,
-        foo: 'bar',
-        visible,
-        opacity: game.settings.get(SYSTEM_ID, 'reachOpacity'),
-        id: randomID(),
-    };
-}
+export class HMToken extends Token {
+    drawReach() {
+        const {center, hover, reach} = this;
+        reach.clear();
 
-function getReach(actor) {
-    if (!actor) return null;
+        reach.position = center;
+        const geometry = this.getGeometry();
+        const color = this.getColor();
+        if (!geometry || !color) return;
 
-    const reachHint = actor.getFlag(SYSTEM_ID, 'reachHint');
-    const weapons = actor.itemTypes.weapon.filter((a) => !a.system.ranged.checked);
-    const {ITEM_STATE} = HMCONST;
+        const [w, h, w2, h2, op] = geometry;
+        const op2 = hover ? op * 2 : op;
+        reach.beginFill(color, op)
+            .lineStyle(1, color, op2)
+            .drawEllipse(0, 0, w, h)
+            .drawEllipse(0, 0, w2, h2)
+            .endFill();
+    }
 
-    const weapon = weapons.find((a) => a.system.state >=  ITEM_STATE.EQUIPPED && a.id === reachHint)
-                ?? weapons.find((a) => a.system.state === ITEM_STATE.EQUIPPED)
-                ?? weapons.find((a) => a.system.innate);
-    if (!weapon) return null;
-    if (weapon.id !== reachHint && actor.isOwner) actor.setFlag(SYSTEM_ID, 'reachHint', weapon.id);
+    getColor() {
+        const {actor} = this;
+        if (!actor) return false;
 
-    const wProfile = actor.wprofiles.get(weapon.profileId);
-    const reach = (wProfile.system.reach || 0);
+        const defaultColor = '#ffffff';
+        if (!actor.hasPlayerOwner) return Color.from(defaultColor);
 
-    // TODO: This works okay for gridless and square. Falls flat on hex grids.
-    let distance = Math.max(reach, 0);
-    const isGridless = canvas.scene.grid.type === CONST.GRID_TYPES.GRIDLESS;
-    if (isGridless) distance += (game.canvas.scene.grid.distance / 2);
-
-    let color;
-    let visible;
-    const defaultColor = '#ffffff';
-
-    if (actor.hasPlayerOwner) {
         let owner = game.users.find((a) => a.character?.id === actor.id);
         if (!owner) {
-            const userId = Object.entries(actor.ownership).find((a) => {
-                const [uid, pl] = a;
-                const isOwner = pl === CONST.DOCUMENT_PERMISSION_LEVELS.OWNER;
-                const isGM = game.users.get(uid)?.isGM;
-                return isOwner && !isGM && uid !== 'default';
-            })?.[0];
+            const {'default': _, ...ownership} = actor.ownership;
+            const userId = Object.keys(ownership).find((a) => {
+                const isOwner = ownership[a] === CONST.DOCUMENT_PERMISSION_LEVELS.OWNER;
+                const isPlayer = !game.users.get(a)?.isGM;
+                return isOwner && isPlayer;
+            });
             owner = userId ? game.users.get(userId) : undefined;
         }
 
-        color = owner?.color ?? defaultColor;
-        visible = game.userId === owner?.id;
-    } else {
-        color = defaultColor;
-        visible = game.user.isGM;
+        const colorCode = owner?.color ?? defaultColor;
+        return Color.from(colorCode);
     }
 
-    return newReach(distance, color, visible);
-}
-
-export class HMToken extends Token {
-    async draw(...args) {
-        const rv = super.draw(...args);
-        this.reach = this.addChildAt(new PIXI.Container(), 0);
-        this.drawReach();
-        return rv;
-    }
-
-    async drawReach(hovered=false) {
-        this.reach.removeChildren().forEach((c) => c.destroy());
-        if (!this.combatant) return;
+    getGeometry() {
+        if (!this.combatant) return false;
 
         const eList = ['dead', 'incap', 'unconscious', 'sfatigue', 'sleep'];
-        if (actorHasEffects(this.actor, eList)) return;
+        if (actorHasEffects(this.actor, eList)) return false;
 
-        const reach = getReach(this.actor);
-        if (!reach) return;
-        if (!hovered && !reach.visible && !game.user.showAllThreats) return;
-
-        const gfx = this.reach.addChild(new PIXI.Graphics());
-        if (canvas.interface.reverseMaskfilter) {
-            gfx.filters = [canvas.interface.reverseMaskfilter];
-        }
+        const reach = this.getReach();
+        if (!reach) return false;
 
         const squareGrid = canvas.scene.grid.type === CONST.GRID_TYPES.SQUARE;
         const dim = canvas.dimensions;
         const unit = dim.size / dim.distance;
-        const [cx, cy] = [this.w / 2, this.h / 2];
         const {width, height} = this.document;
 
         let [w, h] = [reach.distance, reach.distance];
@@ -103,13 +70,82 @@ export class HMToken extends Token {
         w *= unit;
         h *= unit;
 
-        const color = Color.from(reach.color);
-        const hoverOpacity = hovered ? reach.opacity * 4 : reach.opacity * 2;
-        gfx.beginFill(color, reach.opacity)
-            .lineStyle(1, color, hoverOpacity)
-            .drawEllipse(cx, cy, w, h)
-            .drawEllipse(cx, cy, w2, h2)
-            .endFill();
+        const op = reach.opacity;
+        return [w, h, w2, h2, op];
+    }
+
+    getReach() {
+        const {actor} = this;
+        if (!actor) return null;
+
+        const reachHint = actor.getFlag(SYSTEM_ID, 'reachHint');
+        const weapons = actor.itemTypes.weapon.filter((a) => !a.system.ranged.checked);
+        const STATE = HMCONST.ITEM_STATE;
+
+        const weapon = weapons.find((a) => a.system.state >=  STATE.EQUIPPED && a.id === reachHint)
+                    ?? weapons.find((a) => a.system.state === STATE.EQUIPPED)
+                    ?? weapons.find((a) => a.system.innate);
+        if (!weapon) return null;
+        if (weapon.id !== reachHint && actor.isOwner) actor.setFlag(SYSTEM_ID, 'reachHint', weapon.id);
+
+        const wProfile = actor.wprofiles.get(weapon.profileId);
+        const reach = (wProfile.system.reach || 0);
+
+        let distance = Math.max(reach, 0);
+        const isGridless = canvas.scene.grid.type === CONST.GRID_TYPES.GRIDLESS;
+        if (isGridless) distance += (game.canvas.scene.grid.distance / 2);
+
+        const opacity = game.settings.get(SYSTEM_ID, 'reachOpacity');
+        return {distance, opacity};
+    }
+
+    animReachOpen() {
+        const {reach} = this;
+        reach.visible = !!this.combatant && this.visibleByDefault();
+        const ease = 'elastic.out(1, 0.3)';
+        reach.scale.set(1, 1);
+        game.gsap.from(reach.scale, {
+            x: 0,
+            y: 0,
+            duration: 2,
+            ease,
+            onStart: () => this.drawReach(),
+            onComplete: () => this.drawReach(),
+        });
+    }
+
+    animReachClose() {
+        const {reach} = this;
+        game.gsap.to(reach.scale, {
+            yoyo: true,
+            repeat: 1,
+            x: 0,
+            y: 0,
+            ease: 'back.in(1)',
+            onRepeat: () => { reach.visible = false; },
+        });
+    }
+
+    visibleByDefault() {
+        const {actor} = this;
+        const {isGM, showAllThreats} = game.user;
+
+        if (!actor) return false;
+        if (showAllThreats) return true;
+        if (isGM && !actor.hasPlayerOwner) return true;
+
+        let owner = game.users.find((a) => a.character?.id === actor.id);
+        if (!owner) {
+            const {'default': _, ...ownership} = actor.ownership;
+            const userId = Object.keys(ownership).find((a) => {
+                const isOwner = ownership[a] === CONST.DOCUMENT_PERMISSION_LEVELS.OWNER;
+                const isPlayer = !game.users.get(a)?.isGM;
+                return isOwner && isPlayer;
+            });
+            owner = userId ? game.users.get(userId) : undefined;
+        }
+
+        return game.userId === owner?.id;
     }
 
     async addWound(amount) {

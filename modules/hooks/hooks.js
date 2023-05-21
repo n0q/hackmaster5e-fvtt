@@ -20,23 +20,31 @@ export const registerHooks = () => {
     Hooks.on('createActiveEffect', HMActiveEffectHooks.createActiveEffect);
     Hooks.on('deleteActiveEffect', HMActiveEffectHooks.deleteActiveEffect);
     Hooks.on('createActor', HMActorHooks.createActor);
-    Hooks.on('createToken', HMTokenHooks.createToken);
-    Hooks.on('hoverToken', (token, state) => token.drawReach(state));
-    Hooks.on('createItem', HMItemHooks.createItem);
-    Hooks.on('preCreateItem', HMItemHooks.preCreateItem);
-    Hooks.on('updateItem', HMItemHooks.updateItem);
     Hooks.on('renderChatMessage', HMChatHooks.renderChatMessage);
+    Hooks.on('deleteCombat', HMCombatHooks.deleteCombat);
+    Hooks.on('preDeleteCombat', HMCombatHooks.preDeleteCombat);
     Hooks.on('updateCombat', HMCombatHooks.updateCombat);
     Hooks.on('createCombatant', HMCombatHooks.createCombatant);
     Hooks.on('deleteCombatant', HMCombatHooks.deleteCombatant);
-    Hooks.on('preDeleteCombat', HMCombatHooks.preDeleteCombat);
-    Hooks.on('deleteCombat', () => canvas.tokens.placeables.forEach((t) => t.drawReach()));
     Hooks.on('renderCombatTracker', HMCombatHooks.renderCombatTracker);
+    Hooks.on('createItem', HMItemHooks.createItem);
+    Hooks.on('preCreateItem', HMItemHooks.preCreateItem);
+    Hooks.on('updateItem', HMItemHooks.updateItem);
+    Hooks.on('drawGridLayer', drawGridLayer);
     Hooks.on('renderSceneControls', HMSceneControlHooks.renderSceneControls);
     Hooks.on('getSceneControlButtons', HMSceneControlHooks.getSceneControlButtons);
+    Hooks.on('createToken', HMTokenHooks.createToken);
+    Hooks.on('destroyToken', HMTokenHooks.destroyToken);
+    Hooks.on('drawToken', HMTokenHooks.drawToken);
+    Hooks.on('hoverToken', HMTokenHooks.hoverToken);
+    Hooks.on('refreshToken', HMTokenHooks.refreshToken);
     Hooks.on('hotbarDrop', HMMacroHooks.hotbarDrop);
     game.socket.on(SYSTEM_SOCKET, handleSocketEvent);
 };
+
+function drawGridLayer(layer) {
+    layer.reach = layer.addChildAt(new PIXI.Container(), layer.getChildIndex(layer.borders));
+}
 
 async function ready() {
     if (game.modules.get('_dev-mode')?.api?.getPackageDebugValue(SYSTEM_ID)) {
