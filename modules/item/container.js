@@ -25,8 +25,8 @@ export const HMContainer = {
             cMap.set(node._id, [node._id]);
         }
 
-        while (i) {
-            const node = stack[--i];
+        while (stack.length) {
+            const node = stack.pop();
             const {container, _id} = node;
             if (container) {
                 const nodeMap = cMap.get(_id);
