@@ -50,6 +50,14 @@ export class HMCombatHooks {
         [...combat.combatants].forEach((c) => c.token.object.animReachClose());
     }
 
+    static renderCombatTrackerConfig(config, html) {
+        const formEl = $(html).find('div').has('input[type="checkbox"]');
+        const {position} = config;
+        position.height -= formEl.outerHeight();
+        config.setPosition(position);
+        formEl.remove('div');
+    }
+
     static renderCombatTracker(_tracker, html) {
         function removeTurnControls(combatDocument) {
             if (!combatDocument.find('[data-control=\'nextTurn\']').length) return;

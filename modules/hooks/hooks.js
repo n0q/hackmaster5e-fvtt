@@ -27,6 +27,7 @@ export const registerHooks = () => {
     Hooks.on('createCombatant', HMCombatHooks.createCombatant);
     Hooks.on('deleteCombatant', HMCombatHooks.deleteCombatant);
     Hooks.on('renderCombatTracker', HMCombatHooks.renderCombatTracker);
+    Hooks.on('renderCombatTrackerConfig', HMCombatHooks.renderCombatTrackerConfig);
     Hooks.on('createItem', HMItemHooks.createItem);
     Hooks.on('preCreateItem', HMItemHooks.preCreateItem);
     Hooks.on('updateItem', HMItemHooks.updateItem);
