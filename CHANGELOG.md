@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+### Added
+- Hue and Cry button added to combat tracker.
 ### Changed
 - Removed extraneous details from combat tracker config.
 

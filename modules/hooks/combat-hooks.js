@@ -1,3 +1,4 @@
+import { SYSTEM_ID } from '../tables/constants.js';
 import { HMSocket, SOCKET_TYPES } from '../sys/sockets.js';
 
 export class HMCombatHooks {
@@ -50,6 +51,18 @@ export class HMCombatHooks {
         [...combat.combatants].forEach((c) => c.token.object.animReachClose());
     }
 
+    // Track if combatant's init ever changes, for hue and cry.
+    static preUpdateCombatant(combatant, delta, opts, userId) {
+        if (game.userId !== userId) return;
+        const acted = combatant.getFlag(SYSTEM_ID, 'acted');
+        const {initiative} = combatant;
+        if (!initiative || acted) return;
+
+        if (delta.initiative && initiative !== delta.initiative) {
+            combatant.setFlag(SYSTEM_ID, 'acted', true);
+        }
+    }
+
     static renderCombatTrackerConfig(config, html) {
         const formEl = $(html).find('div').has('input[type="checkbox"]');
         const {position} = config;
@@ -78,7 +91,7 @@ export class HMCombatHooks {
             const title = doc.find('h3.encounter-title');
             title.css('margin-left', '0');
             const hacButton = `
-                <a class="combat-button combat-control" data-tooltip="COMBAT.HueAndCry" data-control="HueAndCry">
+                <a class="combat-button combat-control" data-tooltip="COMBAT.HueAndCry" data-control="doHueAndCry">
                      <i class="fas fa-megaphone"></i>
                 </a>`;
             $(hacButton).insertBefore(title);

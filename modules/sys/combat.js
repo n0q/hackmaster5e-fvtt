@@ -31,11 +31,11 @@ export class HMCombat extends Combat {
         return super.rollInitiative(ids, rollData);
     }
 
-    async HueAndCry() {
+    async doHueAndCry() {
         const {combatants, round} = this;
         const {user} = game;
-// const canHaC = combatants.filter((c) => c.initiative > round && !c.getFlag(SYSTEM_ID, 'HaCed'));
-        const canHaC = combatants.filter((c) => c.initiative > round);
+        const canHaC = combatants.filter((c) => c.initiative > round && !c.getFlag(SYSTEM_ID, 'acted'));
+
         const {controlled} = canvas.tokens;
 
         const allCombatants = user.isGM
@@ -46,27 +46,32 @@ export class HMCombat extends Combat {
             ? canHaC.filter((c) => controlled.find((t) => t.id === c.tokenId))
             : allCombatants;
 
-        if (!stack.length) ui.notifications.warn('No valid combatants selected.');
+        if (!stack.length) {
+            ui.notifications.warn('No valid combatants selected.');
+            return;
+        }
 
-        const dataset = [];
+        const dataset = {true: [], false: []};
         stack.forEach((c) => {
             const oldInit = c.initiative;
             const newInit = Math.max(oldInit - 2, round);
-            dataset.push({
+            dataset[c.hidden].push({
                 delta: newInit - oldInit,
                 hidden: c.hidden,
                 name: c.token.name,
                 oldInit,
                 newInit,
             });
-            c.update({'initiative': newInit});
-            c.setFlag(SYSTEM_ID, 'HaCed', true);
+            this.setInitiative(c.id, newInit);
         });
 
-        const cardtype = HMCONST.CARD_TYPE.NOTE;
-        const chatMgr = new HMChatMgr();
-        const initChatCard = await chatMgr.getCard({cardtype, dataset});
-        await ChatMessage.create(initChatCard);
+        Object.keys(dataset).map(async (key) => {
+            if (!dataset[key].length) return;
+            const cardtype = HMCONST.CARD_TYPE.NOTE;
+            const chatMgr = new HMChatMgr();
+            const initChatCard = await chatMgr.getCard({cardtype, dataset: dataset[key]});
+            ChatMessage.create(initChatCard);
+        });
     }
 }
 
