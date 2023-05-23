@@ -58,7 +58,7 @@ export class HMCombatHooks {
         formEl.remove('div');
     }
 
-    static renderCombatTracker(_tracker, html) {
+    static renderCombatTracker(tracker, html) {
         function removeTurnControls(combatDocument) {
             if (!combatDocument.find('[data-control=\'nextTurn\']').length) return;
             combatDocument.find('[data-control=\'nextTurn\']').each((_, el) => el.remove());
@@ -66,7 +66,7 @@ export class HMCombatHooks {
             combatDocument.find('.active').removeClass('active');
         }
 
-        function DoubleclickSetsInitiative(combatDocument) {
+        function doubleClickSetsInitiative(combatDocument) {
             combatDocument.find('.token-initiative').off('dblclick').on('dblclick', onInitiativeDblClick);
             combatDocument.find('#combat-tracker li.combatant').each((_, el) => {
                 if (el.classList.contains('active')) return;
@@ -74,8 +74,20 @@ export class HMCombatHooks {
             });
         }
 
+        function addHACControl(doc) {
+            const title = doc.find('h3.encounter-title');
+            title.css('margin-left', '0');
+            const hacButton = `
+                <a class="combat-button combat-control" data-tooltip="COMBAT.HueAndCry" data-control="HueAndCry">
+                     <i class="fas fa-megaphone"></i>
+                </a>`;
+            $(hacButton).insertBefore(title);
+            doc.find('.combat-control').click((ev) => tracker._onCombatControl(ev));
+        }
+
         removeTurnControls(html);
-        DoubleclickSetsInitiative(html);
+        doubleClickSetsInitiative(html);
+        addHACControl(html);
     }
 }
 

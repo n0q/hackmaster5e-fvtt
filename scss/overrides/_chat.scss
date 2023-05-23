@@ -1,15 +1,15 @@
 .hm-chat-note {
     padding: $padding-sm;
-    display: flex;
-    flex-flow: row nowrap;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: clip;
-    justify-content: space-between;
-
-    span { min-width: 0; }
-    i { font-size: .75rem; }
-    a { color: var(--color-text-dark-secondary); }
+    >.hm-chat-note-row {
+        display: flex;
+        flex-flow: row nowrap;
+        overflow: hidden;
+        text-overflow: clip;
+        justify-content: space-between;
+        min-width: 0;
+        i { font-size: .75rem; }
+        a { color: var(--color-text-dark-secondary); }
+    }
 }
 
 .dice-tooltip .dice-rolls .roll.penetrated:before {
