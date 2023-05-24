@@ -75,13 +75,22 @@ export class HMCombatHooks {
         doubleClickSetsInitiative(html);
         if (!tracker.viewed?.round) return;
         removeTurnControls(html);
+        removeActiveClass(html);
         addHACControl(html);
         highlightInit(html);
 
         function removeTurnControls(doc) {
+            if (!doc.find('[data-control=\'nextTurn\']').length) return;
             doc.find('[data-control=\'nextTurn\']').each((_, el) => el.remove());
             doc.find('[data-control=\'previousTurn\']')[0].remove();
             doc.find('.active').removeClass('active');
+        }
+
+        function removeActiveClass(doc) {
+            doc.find('.combatant.active').each((_, el) => {
+                el.classList.remove('active');
+                el.classList.add('turn-done');
+            });
         }
 
         function doubleClickSetsInitiative(doc) {
@@ -105,9 +114,8 @@ export class HMCombatHooks {
 
         function highlightInit(doc) {
             const {round} = tracker.viewed;
-            const inits = doc.find('.initiative');
-            inits.each((i, row) => {
-                if (row.innerHTML <= round) $(row).addClass('ready-to-act');
+            doc.find('.initiative').each((_, row) => {
+                if (row.innerHTML <= round) row.classList.add('ready-to-act');
             });
         }
     }
