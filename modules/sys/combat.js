@@ -11,7 +11,7 @@ export class HMCombat extends Combat {
 
     /** @override */
     _sortCombatants(a, b) { // eslint-disable-line
-        return a.name.localeCompare(b.name);
+        return a.isNPC - b.isNPC || a.name.localeCompare(b.name);
     }
 
     /** @override */
@@ -46,8 +46,8 @@ export class HMCombat extends Combat {
         const {controlled} = canvas.tokens;
 
         const allCombatants = user.isGM
-            ? canHaC.filter((a) => !a.hasPlayerOwner)
-            : canHaC.filter((a) => a.hasPlayerOwner && a.players.includes(user));
+            ? canHaC.filter((a) => a.isNPC)
+            : canHaC.filter((a) => a.players.includes(user));
 
         const stack = controlled.length
             ? canHaC.filter((c) => controlled.find((t) => t.id === c.tokenId))

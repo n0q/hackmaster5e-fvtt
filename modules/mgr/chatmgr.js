@@ -167,7 +167,7 @@ async function createInitNote(dataset) {
     const template = 'systems/hackmaster5e/templates/chat/initNote.hbs';
 
     const content = Array.isArray(dataset)
-        ? await renderTemplate(template, dataset)
+        ? await renderTemplate(template, dataset.sort((a, b) => a.name.localeCompare(b.name)))
         : await renderTemplate(template, [dataset]);
 
     const whisper = dataset[0]?.hidden ? getGMs() : undefined;
