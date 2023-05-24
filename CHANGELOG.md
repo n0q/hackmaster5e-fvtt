@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - Hue and Cry button added to combat tracker.
 - Foundry v11 api support.
+- Combatants who are ready to act have their inits highlighted.
 ### Changed
 - Combatants now sorted by name instead of by initiative.
 - Removed extraneous details from combat tracker config.

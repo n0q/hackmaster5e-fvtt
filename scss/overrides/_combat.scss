@@ -1,6 +1,11 @@
 .initiative {
     color: $c-white;
 
+    &.ready-to-act {
+        color: $c-orange;
+        text-shadow: 0 0 5px $c-orange;
+    }
+
     &:hover {
         border: 1px solid $c-orange;
         border-radius: 2px;

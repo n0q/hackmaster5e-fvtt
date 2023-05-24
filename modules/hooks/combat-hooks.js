@@ -76,6 +76,7 @@ export class HMCombatHooks {
         if (!tracker.viewed?.round) return;
         removeTurnControls(html);
         addHACControl(html);
+        highlightInit(html);
 
         function removeTurnControls(doc) {
             doc.find('[data-control=\'nextTurn\']').each((_, el) => el.remove());
@@ -100,6 +101,14 @@ export class HMCombatHooks {
                 </a>`;
             $(hacButton).insertBefore(title);
             doc.find('.combat-control').click((ev) => tracker._onCombatControl(ev));
+        }
+
+        function highlightInit(doc) {
+            const {round} = tracker.viewed;
+            const inits = doc.find('.initiative');
+            inits.each((i, row) => {
+                if (row.innerHTML <= round) $(row).addClass('ready-to-act');
+            });
         }
     }
 }
