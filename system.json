@@ -6,7 +6,8 @@
     "version": null,
     "compatibility": {
         "minimum": "10",
-        "verified": "10"
+        "verified": "10.291",
+        "maximum": "11"
     },
     "manifestPlusVersion": "1.2.0",
     "templateVersion": 1,
