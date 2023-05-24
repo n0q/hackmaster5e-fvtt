@@ -102,12 +102,14 @@ export class HMToken extends Token {
     animReachOpen() {
         const {reach} = this;
         reach.visible = !!this.combatant && this.visibleByDefault();
+        if (!reach.visible) return;
+
         const ease = 'elastic.out(1, 0.3)';
         reach.scale.set(1, 1);
         game.gsap.from(reach.scale, {
             x: 0,
             y: 0,
-            duration: 2,
+            duration: 1.5,
             ease,
             onStart: () => this.drawReach(),
             onComplete: () => this.drawReach(),
@@ -116,6 +118,8 @@ export class HMToken extends Token {
 
     animReachClose() {
         const {reach} = this;
+        if (!reach.visible) return;
+
         game.gsap.to(reach.scale, {
             yoyo: true,
             repeat: 1,

@@ -17,10 +17,13 @@ export class HMTokenHooks {
         }
     }
 
+    static destroyToken(token) {
+        token.reach?.destroy();
+    }
+
     static drawToken(token) {
         token.reach ??= canvas.grid.reach.addChild(new PIXI.Graphics()); // eslint-disable-line
         const {reach} = token;
-        reach.filters ??= [new PIXI.filters.ColorMatrixFilter()];
         reach.visible = !!token.combatant && token.visibleByDefault();
         token.drawReach();
     }
@@ -35,10 +38,5 @@ export class HMTokenHooks {
     static refreshToken(token) {
         const {reach} = token;
         reach.position = token.center;
-        reach.filters[0].brightness(1);
-    }
-
-    static destroyToken(token) {
-        token.reach?.destroy();
     }
 }

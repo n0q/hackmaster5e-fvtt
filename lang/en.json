@@ -921,6 +921,7 @@
     },
 
     "COMBAT": {
+        "HueAndCry":    "Hue and Cry!",
         "Round":        "Count",
         "Rounds":       "Counts"
     },

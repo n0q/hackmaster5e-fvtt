@@ -17,7 +17,7 @@ gulp.task('eslint', function () {
         .pipe(eslint.format());
 });
 
-gulp.task('default', function () {
+gulp.task('default', gulp.series('sass', 'eslint', function () {
     gulp.watch('./scss/**/*.scss', gulp.series('sass'));
     gulp.watch(['hm.js', './modules/**/*.js'], gulp.series('eslint'));
-});
+}));

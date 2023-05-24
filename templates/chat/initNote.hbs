@@ -1,7 +1,13 @@
 <div class='hm-chat-note noWhisper'>
-    <span>
-        <b>{{delta}}</b><i class='fa fa-hourglass-half'></i>
-        {{name}} ({{oldInit}} <i class='fa fa-arrow-right'></i> {{newInit}})
-    </span>
-    <a class='button message-delete'><i class='fas fa-trash'></i></a>
+    {{#each this}}
+    <section class='hm-chat-note-row'>
+        <span>
+            <b>{{delta}}</b><i class='fa fa-hourglass-half'></i>
+            {{name}} ({{oldInit}} <i class='fa fa-arrow-right'></i> {{newInit}})
+        </span>
+        {{#unless @index}}
+        <a class='button message-delete'><i class='fas fa-trash'></i></a>
+        {{/unless}}
+    </section>
+    {{/each}}
 </div>
