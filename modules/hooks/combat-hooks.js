@@ -72,16 +72,20 @@ export class HMCombatHooks {
     }
 
     static renderCombatTracker(tracker, html) {
-        function removeTurnControls(combatDocument) {
-            if (!combatDocument.find('[data-control=\'nextTurn\']').length) return;
-            combatDocument.find('[data-control=\'nextTurn\']').each((_, el) => el.remove());
-            combatDocument.find('[data-control=\'previousTurn\']')[0].remove();
-            combatDocument.find('.active').removeClass('active');
+        doubleClickSetsInitiative(html);
+        if (!tracker.viewed?.round) return;
+        removeTurnControls(html);
+        addHACControl(html);
+
+        function removeTurnControls(doc) {
+            doc.find('[data-control=\'nextTurn\']').each((_, el) => el.remove());
+            doc.find('[data-control=\'previousTurn\']')[0].remove();
+            doc.find('.active').removeClass('active');
         }
 
-        function doubleClickSetsInitiative(combatDocument) {
-            combatDocument.find('.token-initiative').off('dblclick').on('dblclick', onInitiativeDblClick);
-            combatDocument.find('#combat-tracker li.combatant').each((_, el) => {
+        function doubleClickSetsInitiative(doc) {
+            doc.find('.token-initiative').off('dblclick').on('dblclick', onInitiativeDblClick);
+            doc.find('#combat-tracker li.combatant').each((_, el) => {
                 if (el.classList.contains('active')) return;
                 el.classList.add('turn-done');
             });
@@ -97,10 +101,6 @@ export class HMCombatHooks {
             $(hacButton).insertBefore(title);
             doc.find('.combat-control').click((ev) => tracker._onCombatControl(ev));
         }
-
-        removeTurnControls(html);
-        doubleClickSetsInitiative(html);
-        addHACControl(html);
     }
 }
 

@@ -4,10 +4,17 @@ import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 
 export class HMCombat extends Combat {
-    nextTurn() { return this.nextRound(); }
+    /** @override */
+    nextTurn() {
+        return this.nextRound();
+    }
 
-    _sortCombatants(a, b) { return -super._sortCombatants(a, b); }
+    /** @override */
+    _sortCombatants(a, b) { // eslint-disable-line
+        return a.name.localeCompare(b.name);
+    }
 
+    /** @override */
     async _getInitiativeDie(ids) {
         const caller = ids.length ? this.combatants.get(ids[0]).actor : null;
         const dialogResp = await HMDialogFactory({dialog: 'initdie'}, caller);
