@@ -72,50 +72,63 @@ export class HMCombatHooks {
     }
 
     static renderCombatTracker(tracker, html) {
-        doubleClickSetsInitiative(html);
-        if (!tracker.viewed?.round) return;
-        removeTurnControls(html);
-        removeActiveClass(html);
-        addHACControl(html);
-        highlightInit(html);
+        const rootEl = html.get(0);
 
-        function removeTurnControls(doc) {
-            if (!doc.find('[data-control=\'nextTurn\']').length) return;
-            doc.find('[data-control=\'nextTurn\']').each((_, el) => el.remove());
-            doc.find('[data-control=\'previousTurn\']')[0].remove();
-            doc.find('.active').removeClass('active');
+        doubleClickSetsInitiative(rootEl);
+        if (!tracker.viewed?.round) return;
+        removeTurnControls(rootEl);
+        removeActiveClass(rootEl);
+        addHACControl(rootEl);
+        highlightInit(rootEl);
+
+        function removeTurnControls(domObj) {
+            domObj.querySelectorAll('[data-control="nextTurn"]').forEach((el) => el.remove());
+            domObj.querySelector('[data-control="previousTurn"]').remove();
+            domObj.querySelector('.active').classList.remove('active');
         }
 
-        function removeActiveClass(doc) {
-            doc.find('.combatant.active').each((_, el) => {
+        function removeActiveClass(domObj) {
+            domObj.querySelectorAll('.combatant.active').forEach((el) => {
                 el.classList.remove('active');
                 el.classList.add('turn-done');
             });
         }
 
-        function doubleClickSetsInitiative(doc) {
-            doc.find('.token-initiative').off('dblclick').on('dblclick', onInitiativeDblClick);
-            doc.find('#combat-tracker li.combatant').each((_, el) => {
+        function doubleClickSetsInitiative(domObj) {
+            domObj.querySelectorAll('.token-initiative').forEach((el) => {
+                el.removeEventListener('dblclick', onInitiativeDblClick);
+                el.addEventListener('dblclick', onInitiativeDblClick);
+            });
+
+            domObj.querySelectorAll('#combat-tracker li.combatant').forEach((el) => {
                 if (el.classList.contains('active')) return;
                 el.classList.add('turn-done');
             });
         }
 
-        function addHACControl(doc) {
-            const title = doc.find('h3.encounter-title');
-            title.css('margin-left', '0');
-            const hacButton = `
-                <a class="combat-button combat-control" data-tooltip="COMBAT.HueAndCry" data-control="doHueAndCry">
-                     <i class="fas fa-megaphone"></i>
-                </a>`;
-            $(hacButton).insertBefore(title);
-            doc.find('.combat-control').click((ev) => tracker._onCombatControl(ev));
+        function addHACControl(domObj) {
+            const title = domObj.querySelector('h3.encounter-title');
+            title.style.marginLeft = '0';
+
+            const hacButton = document.createElement('a');
+            hacButton.className = 'combat-button combat-control';
+            hacButton.setAttribute('data-tooltip', 'COMBAT.HueAndCry');
+            hacButton.setAttribute('data-control', 'doHueAndCry');
+            hacButton.innerHTML = '<i class="fas fa-megaphone"></i>';
+
+            title.parentNode.insertBefore(hacButton, title);
+
+            const combatControls = domObj.querySelectorAll('.combat-control');
+            combatControls.forEach((button) => {
+                button.addEventListener('click', (ev) => tracker._onCombatControl(ev));
+            });
         }
 
-        function highlightInit(doc) {
-            const {round} = tracker.viewed;
-            doc.find('.initiative').each((_, row) => {
-                if (row.innerHTML <= round) row.classList.add('ready-to-act');
+        function highlightInit(domObj) {
+            const round = tracker.viewed.round;
+            const initiativeRows = domObj.querySelectorAll('.initiative');
+            initiativeRows.forEach((row) => {
+                if (parseInt(row.innerHTML, 10) <= round) row.classList.add('ready-to-act');
             });
         }
     }
