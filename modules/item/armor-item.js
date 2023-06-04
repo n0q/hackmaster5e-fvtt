@@ -1,5 +1,4 @@
 import { HMItem } from './item.js';
-import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { SYSTEM_ID } from '../tables/constants.js';
 
 export class HMArmorItem extends HMItem {
@@ -29,7 +28,6 @@ export class HMArmorItem extends HMItem {
         qn ? bonus.qual = this.quality : delete bonus.qual;
 
         const adjDamage = Math.max(damage, 0);
-        if (adjDamage !== damage) this.update({'system.damage': adjDamage});
         const armorDmg = useArmorDegredation ? Number(-Math.floor(adjDamage/10)) : 0;
 
         Object.keys(bonus.base).forEach((key) => {
