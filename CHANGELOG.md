@@ -4,7 +4,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 ### Fixed
-- Armod damage generated errors for unpriviledged users.
+- Armor damage generated errors for unpriviledged users.
+- Bio tab no longer sticks.
 
 ## [0.3.26] - 2023-05-24
 ### Added
