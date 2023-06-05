@@ -73,9 +73,7 @@ export class HMCombatHooks {
 
     // TODO: Optimize to do more with fewer searches.
     static renderCombatTracker(tracker, html) {
-        window.tracker = tracker;
         const rootEl = html.get(0);
-        window.rootEl = rootEl;
         doubleClickSetsInitiative(rootEl);
         if (!tracker.viewed?.round) return;
         removeTurnControls(rootEl);
