@@ -74,6 +74,7 @@ export class HMCombatHooks {
     // TODO: Optimize to do more with fewer searches.
     static renderCombatTracker(tracker, html) {
         const rootEl = html.get(0);
+
         doubleClickSetsInitiative(rootEl);
         if (!tracker.viewed?.round) return;
         removeTurnControls(rootEl);
@@ -84,27 +85,29 @@ export class HMCombatHooks {
 
         function drawDivider(domObj) {
             const {active} = game.combats;
-
             let wasNPC = true;
-            const firstNPC = Array.from(domObj.querySelectorAll('.combatant')).find((el) => {
-                const cId = el.getAttribute('data-combatant-id');
-                const {isNPC} = active.combatants.get(cId);
-                if (isNPC && !wasNPC) return true;
-                wasNPC = isNPC;
-                return false;
-            });
+            const combatantElements = domObj.getElementsByClassName('combatant');
 
-            if (firstNPC) {
-                const divider = document.createElement('hr');
-                divider.className = 'npc-divider';
-                firstNPC.before(divider);
+            for (let i = 0; i < combatantElements.length; i++) {
+                const el = combatantElements[i];
+                const {isNPC} = active.combatants.get(el.getAttribute('data-combatant-id'));
+
+                if (isNPC && !wasNPC) {
+                    const divider = document.createElement('hr');
+                    divider.className = 'npc-divider';
+                    el.before(divider);
+                    break;
+                }
+
+                wasNPC = isNPC;
             }
         }
 
         function removeTurnControls(domObj) {
-            domObj.querySelectorAll('[data-control="nextTurn"]').forEach((el) => el.remove());
+            const nextTurnControls = domObj.querySelectorAll('[data-control="nextTurn"]');
+            if (nextTurnControls.length === 0) return;
+            nextTurnControls.forEach((el) => el.remove());
             domObj.querySelector('[data-control="previousTurn"]').remove();
-            domObj.querySelector('.active').classList.remove('active');
         }
 
         function removeActiveClass(domObj) {
