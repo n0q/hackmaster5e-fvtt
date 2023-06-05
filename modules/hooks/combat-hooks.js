@@ -77,11 +77,14 @@ export class HMCombatHooks {
 
         doubleClickSetsInitiative(rootEl);
         if (!tracker.viewed?.round) return;
+
         removeTurnControls(rootEl);
         removeActiveClass(rootEl);
         addHACControl(rootEl);
         highlightInit(rootEl);
+
         drawDivider(rootEl);
+        tracker.setPosition();
 
         function drawDivider(domObj) {
             const {active} = game.combats;
