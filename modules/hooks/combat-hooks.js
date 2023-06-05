@@ -71,52 +71,116 @@ export class HMCombatHooks {
         formEl.remove('div');
     }
 
+    // TODO: Optimize to do more with fewer searches.
     static renderCombatTracker(tracker, html) {
-        doubleClickSetsInitiative(html);
-        if (!tracker.viewed?.round) return;
-        removeTurnControls(html);
-        removeActiveClass(html);
-        addHACControl(html);
-        highlightInit(html);
+        const rootEl = html.get(0);
 
-        function removeTurnControls(doc) {
-            if (!doc.find('[data-control=\'nextTurn\']').length) return;
-            doc.find('[data-control=\'nextTurn\']').each((_, el) => el.remove());
-            doc.find('[data-control=\'previousTurn\']')[0].remove();
-            doc.find('.active').removeClass('active');
+        doubleClickSetsInitiative(rootEl);
+        if (!tracker.viewed?.round) return;
+
+        removeTurnControls(rootEl);
+        removeActiveClass(rootEl);
+        addHACControl(rootEl);
+        highlightInit(rootEl);
+
+        drawDivider(rootEl);
+        tracker.setPosition();
+
+        function drawDivider(domObj) {
+            const {active} = game.combats;
+            let wasNPC = true;
+            const combatantElements = domObj.getElementsByClassName('combatant');
+
+            for (let i = 0; i < combatantElements.length; i++) {
+                const el = combatantElements[i];
+                const {isNPC} = active.combatants.get(el.getAttribute('data-combatant-id'));
+
+                if (isNPC && !wasNPC) {
+                    const divider = document.createElement('hr');
+                    divider.className = 'npc-divider';
+                    el.before(divider);
+                    break;
+                }
+
+                wasNPC = isNPC;
+            }
         }
 
-        function removeActiveClass(doc) {
-            doc.find('.combatant.active').each((_, el) => {
+        function removeTurnControls(domObj) {
+            const nextTurnControls = domObj.querySelectorAll('[data-control="nextTurn"]');
+            if (nextTurnControls.length === 0) return;
+            nextTurnControls.forEach((el) => el.remove());
+            domObj.querySelector('[data-control="previousTurn"]').remove();
+        }
+
+        function removeActiveClass(domObj) {
+            domObj.querySelectorAll('.combatant.active').forEach((el) => {
                 el.classList.remove('active');
                 el.classList.add('turn-done');
             });
         }
 
-        function doubleClickSetsInitiative(doc) {
-            doc.find('.token-initiative').off('dblclick').on('dblclick', onInitiativeDblClick);
-            doc.find('#combat-tracker li.combatant').each((_, el) => {
+        function doubleClickSetsInitiative(domObj) {
+            domObj.querySelectorAll('.token-initiative').forEach((el) => {
+                el.removeEventListener('dblclick', onInitiativeDblClick);
+                el.addEventListener('dblclick', onInitiativeDblClick);
+            });
+
+            domObj.querySelectorAll('#combat-tracker li.combatant').forEach((el) => {
                 if (el.classList.contains('active')) return;
                 el.classList.add('turn-done');
             });
         }
 
-        function addHACControl(doc) {
-            const title = doc.find('h3.encounter-title');
-            title.css('margin-left', '0');
-            const hacButton = `
-                <a class="combat-button combat-control" data-tooltip="COMBAT.HueAndCry" data-control="doHueAndCry">
-                     <i class="fas fa-megaphone"></i>
-                </a>`;
-            $(hacButton).insertBefore(title);
-            doc.find('.combat-control').click((ev) => tracker._onCombatControl(ev));
+        function addHACControl(domObj) {
+            const title = domObj.querySelector('h3.encounter-title');
+            title.style.marginLeft = '0';
+
+            const hacButton = document.createElement('a');
+            hacButton.className = 'combat-button combat-control';
+            hacButton.setAttribute('data-tooltip', 'COMBAT.HueAndCry');
+            hacButton.setAttribute('data-control', 'doHueAndCry');
+            hacButton.innerHTML = '<i class="fas fa-megaphone"></i>';
+
+            title.parentNode.insertBefore(hacButton, title);
+
+            const combatControls = domObj.querySelectorAll('.combat-control');
+            combatControls.forEach((button) => {
+                button.addEventListener('click', (ev) => tracker._onCombatControl(ev));
+            });
         }
 
-        function highlightInit(doc) {
+        function highlightInit(domObj) {
             const {round} = tracker.viewed;
-            doc.find('.initiative').each((_, row) => {
-                if (row.innerHTML <= round) row.classList.add('ready-to-act');
-            });
+            const initiativeRows = domObj.getElementsByClassName('initiative');
+
+            for (let i = 0; i < initiativeRows.length; i++) {
+                const row = initiativeRows[i];
+                const initiativeValue = parseInt(row.textContent, 10);
+
+                // eslint-disable-next-line no-continue
+                if (initiativeValue > round) continue;
+
+                row.classList.add('ready-to-act');
+
+                const li = row.closest('li');
+                const combatantId = li.getAttribute('data-combatant-id');
+                const {combatants} = game.combats.active;
+                const combatant = combatants.get(combatantId);
+
+                // eslint-disable-next-line no-continue
+                if (!combatant.isOwner || game.user.isGM) continue;
+
+                const orange2 = '#ff6400';
+                const orange1 = '#ffa660';
+                game.gsap.to(row, {
+                    duration: 1,
+                    repeat: -1,
+                    yoyo: true,
+                    color: [orange1, orange2],
+                    textShadow: [`0 0 7px ${orange1}`, `0 0 5px ${orange2}`],
+                });
+            }
         }
     }
 }

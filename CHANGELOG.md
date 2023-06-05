@@ -2,16 +2,25 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.3.27] - 2023-06-05
+### Added
+- Line divides NPCs from PCs on init tracker.
+- Defeated combatants have a darkened initiative color.
+- Init color gentle flashes for player when they are ready to take an action.
+### Fixed
+- Armor damage generated errors for unpriviledged users.
+- Bio tab no longer sticks.
+
 ## [0.3.26] - 2023-05-24
 ### Added
 - Hue and Cry! button added to combat tracker.
 - Foundry v11 api support.
 - Combatants who are ready to act have their inits highlighted.
-### Fixed
-- Unintended combatant highlighting on initiative table.
 ### Changed
 - Combatants now sorted by NPC status and name, rather than initiative.
 - Removed extraneous details from combat tracker config.
+### Fixed
+- Unintended combatant highlighting on initiative table.
 - Reach animation tweaks.
 
 ## [0.3.25] - 2023-05-21
