@@ -5,6 +5,10 @@ hr {
     }
 }
 
+li.combatant.defeated .initiative {
+    display: none;
+}
+
 .initiative {
     color: $c-white;
 

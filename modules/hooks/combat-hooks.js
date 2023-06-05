@@ -151,11 +151,12 @@ export class HMCombatHooks {
         }
 
         function highlightInit(domObj) {
-            const round = tracker.viewed.round;
+            const {round} = tracker.viewed;
             const initiativeRows = domObj.querySelectorAll('.initiative');
-            initiativeRows.forEach((row) => {
+            for (let i = 0; i < initiativeRows.length; i++) {
+                const row = initiativeRows[i];
                 if (parseInt(row.innerHTML, 10) <= round) row.classList.add('ready-to-act');
-            });
+            }
         }
     }
 }

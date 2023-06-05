@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 ### Added
 - Line divides NPCs from PCs on init tracker.
+### Changed
+- Defeated combatants no longer display an initiative count.
 ### Fixed
 - Armor damage generated errors for unpriviledged users.
 - Bio tab no longer sticks.
