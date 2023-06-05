@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+### Added
+- Line divides NPCs from PCs on init tracker.
 ### Fixed
 - Armor damage generated errors for unpriviledged users.
 - Bio tab no longer sticks.

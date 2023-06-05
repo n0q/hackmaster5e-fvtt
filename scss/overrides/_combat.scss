@@ -1,3 +1,10 @@
+hr {
+    &.npc-divider {
+        border-top: 0;
+        border-bottom: 2px groove var(--color-border-dark-4);
+    }
+}
+
 .initiative {
     color: $c-white;
 

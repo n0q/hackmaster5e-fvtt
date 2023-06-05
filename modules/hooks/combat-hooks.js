@@ -71,15 +71,37 @@ export class HMCombatHooks {
         formEl.remove('div');
     }
 
+    // TODO: Optimize to do more with fewer searches.
     static renderCombatTracker(tracker, html) {
+        window.tracker = tracker;
         const rootEl = html.get(0);
-
+        window.rootEl = rootEl;
         doubleClickSetsInitiative(rootEl);
         if (!tracker.viewed?.round) return;
         removeTurnControls(rootEl);
         removeActiveClass(rootEl);
         addHACControl(rootEl);
         highlightInit(rootEl);
+        drawDivider(rootEl);
+
+        function drawDivider(domObj) {
+            const {active} = game.combats;
+
+            let wasNPC = true;
+            const firstNPC = Array.from(domObj.querySelectorAll('.combatant')).find((el) => {
+                const cId = el.getAttribute('data-combatant-id');
+                const {isNPC} = active.combatants.get(cId);
+                if (isNPC && !wasNPC) return true;
+                wasNPC = isNPC;
+                return false;
+            });
+
+            if (firstNPC) {
+                const divider = document.createElement('hr');
+                divider.className = 'npc-divider';
+                firstNPC.before(divider);
+            }
+        }
 
         function removeTurnControls(domObj) {
             domObj.querySelectorAll('[data-control="nextTurn"]').forEach((el) => el.remove());
