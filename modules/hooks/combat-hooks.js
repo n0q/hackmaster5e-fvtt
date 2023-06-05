@@ -152,10 +152,34 @@ export class HMCombatHooks {
 
         function highlightInit(domObj) {
             const {round} = tracker.viewed;
-            const initiativeRows = domObj.querySelectorAll('.initiative');
+            const initiativeRows = domObj.getElementsByClassName('initiative');
+
             for (let i = 0; i < initiativeRows.length; i++) {
                 const row = initiativeRows[i];
-                if (parseInt(row.innerHTML, 10) <= round) row.classList.add('ready-to-act');
+                const initiativeValue = parseInt(row.textContent, 10);
+
+                // eslint-disable-next-line no-continue
+                if (initiativeValue > round) continue;
+
+                row.classList.add('ready-to-act');
+
+                const li = row.closest('li');
+                const combatantId = li.getAttribute('data-combatant-id');
+                const {combatants} = game.combats.active;
+                const combatant = combatants.get(combatantId);
+
+                // eslint-disable-next-line no-continue
+                if (!combatant.isOwner || game.user.isGM) continue;
+
+                const orange2 = '#ff6400';
+                const orange1 = '#ffa660';
+                game.gsap.to(row, {
+                    duration: 1,
+                    repeat: -1,
+                    yoyo: true,
+                    color: [orange1, orange2],
+                    textShadow: [`0 0 7px ${orange1}`, `0 0 5px ${orange2}`],
+                });
             }
         }
     }
