@@ -16,7 +16,7 @@ export class HMSceneControlHooks {
 
     static renderSceneControls() {
         if (!canvas.tokens) return;
-        const {placeables} = canvas.tokens;
+        const placeables = canvas.tokens.placeables.filter((t) => t.visible);
         if (placeables.length) placeables.forEach((t) => HMTokenHooks.drawToken(t));
     }
 }
