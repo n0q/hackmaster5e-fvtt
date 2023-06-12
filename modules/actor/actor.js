@@ -13,6 +13,7 @@ export class HMActor extends Actor {
 
     prepareDerivedData() {
         super.prepareDerivedData();
+        this.setArmorBonus();
     }
 
     /** @override */
@@ -68,6 +69,18 @@ export class HMActor extends Actor {
             profile.evaluate();
             this.wprofiles.set(profile.id, profile);
         });
+    }
+
+    setArmorBonus() {
+        const {bonus} = this.system;
+        const allArmor = this.itemTypes.armor.filter((a) => a.invstate === 'equipped');
+
+        const isShield = (a) => a.system.shield.checked;
+        const shieldItem = allArmor.find(isShield);
+        const armorItem = allArmor.find((a) => !isShield(a));
+
+        if (armorItem) bonus.armor = armorItem.system.bonus.total;
+        if (shieldItem) bonus.shield = shieldItem.system.bonus.total;
     }
 
     setBonusTotal() {

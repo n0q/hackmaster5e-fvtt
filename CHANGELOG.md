@@ -4,6 +4,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 ### Fixed
+- v11: Under some circumstances, armor effects could double during combat.
 - Reach View toggle no longer displays reach of non-visible tokens.
 
 ## [0.3.27] - 2023-06-05
