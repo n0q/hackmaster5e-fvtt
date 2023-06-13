@@ -1,11 +1,16 @@
 import { HMCONST, HMTABLES } from '../tables/constants.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
+import { HMContainer } from '../item/container.js';
 
 export class HMItemHooks {
     static async createItem(item, _options, userId) {
         if (game.user.id !== userId) return;
         if (!item.parent) return;
         const {type} = item;
+
+        if (type === 'item' && item.system.container.enabled) {
+            HMContainer.randomizeChildIDs(item);
+        }
 
         if (type === 'wound' && item.parent) {
             if (!item.parent.system.bonus.total.trauma) return;

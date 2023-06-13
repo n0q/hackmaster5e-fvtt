@@ -10,6 +10,34 @@ export const HMContainer = {
         return stack;
     },
 
+    // TODO: Iteratate
+    randomizeChildIDs: (root) => {
+        const {_manifest} = root.system.container;
+
+        const updateIdsRecursive = (item) => {
+            item._id = foundry.utils.randomID(); // eslint-disable-line
+
+            if (item.system.container.enabled) {
+                const stack = item.system.container._manifest;
+                for (let j = 0; j < stack.length; j++) {
+                    const childSerialized = stack[j];
+                    const childJson = JSON.parse(childSerialized);
+                    updateIdsRecursive(childJson);
+                    stack[j] = JSON.stringify(childJson);
+                }
+            }
+        };
+
+        for (let i = 0; i < _manifest.length; i++) {
+            const itemSerialized = _manifest[i];
+            const itemJson = JSON.parse(itemSerialized);
+            updateIdsRecursive(itemJson);
+            _manifest[i] = JSON.stringify(itemJson);
+        }
+
+        root.update({'system.container._manifest': _manifest});
+    },
+
     getMap: (root) => {
         const getChildNodes = (node) => node.filter((a) => a.type === 'item'
             && a.system.container.enabled);
