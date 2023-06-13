@@ -21,10 +21,10 @@ export class HMCharacterActor extends HMActor {
     }
 
     get movespd() {
-        const raceMove = this.system.bonus.race?.move || 0;
+        const raceMove = Number(this.system.bonus.race?.move || 0);
         let movespd = Object.values(HMTABLES.movespd).map((x) => x * raceMove);
 
-        const armorMove = this.system.bonus.armor?.move || 1;
+        const armorMove = Number(this.system.bonus.armor?.move || 1);
         if (armorMove !== 1) {
             const armorPenalty = [1, 1, armorMove, armorMove, armorMove];
             movespd = movespd.map((move, i) => move * armorPenalty[i]);
