@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.3.28] - 2023-06-12
+### Changed
+- Child item ids are randomized on item creation.
+### Fixed
+- v11: Under some circumstances, armor effects could double during combat.
+- Dragruler reach levels were occasionally inaccurate.
+- Reach View toggle no longer displays reach of non-visible tokens.
+
 ## [0.3.27] - 2023-06-05
 ### Added
 - Line divides NPCs from PCs on init tracker.

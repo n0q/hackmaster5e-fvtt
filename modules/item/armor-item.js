@@ -43,22 +43,6 @@ export class HMArmorItem extends HMItem {
         this.derived = armorDmg
             ? {wear: {dr: totalArmorDmg, def: 0, init: 0, spd: 0, move: 0}}
             : undefined;
-
-        // Populate armor and shield vectors on actor.
-        // TODO: Items should never do this to actors.
-        if (setBonus && this.invstate === 'equipped') {
-            const actorBonus = this.actor.system.bonus;
-            const aVector = actorBonus?.armor || {};
-            const sVector = actorBonus?.shield || {};
-            const sum = shield.checked ? sVector : aVector;
-
-            Object.keys(bonus.total).forEach((key) => {
-                sum[key] = (sum[key] || 0) + bonus.total[key];
-            });
-
-            shield.checked ? actorBonus.shield = sum
-                           : actorBonus.armor  = sum;
-        }
     }
 
     damageArmorBy(input) {
