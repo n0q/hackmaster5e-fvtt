@@ -36,15 +36,7 @@
     </header>
     {{/with}}
     <section class='scrollable' style='height: 30rem;'>
-    {{#each actor.gear.weapons}}
-        {{#unless system.innate}}
-            {{> 'systems/hackmaster5e/templates/actor/cards/item.hbs' }}
-        {{/unless}}
-    {{/each}}
-    {{#each actor.gear.armors}}
-        {{> 'systems/hackmaster5e/templates/actor/cards/item.hbs' }}
-    {{/each}}
-    {{#each actor.gear.items}}
+    {{#each (itemSort actor.itemTypes)}}    
         {{> 'systems/hackmaster5e/templates/actor/cards/item.hbs' }}
     {{/each}}
     <hr>

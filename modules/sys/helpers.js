@@ -95,13 +95,23 @@ export const registerHandlebarsHelpers = () => {
     });
 
     Handlebars.registerHelper('itemSort', (itemTypes) => {
+        const {currency, weapon, armor} = itemTypes;
+
+        const compareNames = (a, b) => a.name.localeCompare(b.name);
+
         const items = itemTypes.item.sort((a, b) => {
             const container = a.system.container.enabled - b.system.container.enabled;
-            return container || a.name.localeCompare(b.name);
+            return container || compareNames(a, b);
         });
 
-        const {weapon, armor} = itemTypes;
-        return weapon.concat(armor, items);
+        const weapons = weapon
+            .filter((w) => !w.system.innate)
+            .sort(compareNames);
+
+        const armors = armor.sort(compareNames);
+        const currencies = currency.sort(compareNames);
+
+        return [...weapons, ...armors, ...items, ...currencies];
     });
 
     Handlebars.registerHelper('delete', (arg1, arg2) => {
