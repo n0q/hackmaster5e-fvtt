@@ -20,11 +20,11 @@ export class HMArmorItem extends HMItem {
         return vector;
     }
 
-    _prepArmorData({setBonus=true}={}) {
+    _prepArmorData() {
         if (!this.actor?.system) return;
 
         const useArmorDegredation = game.settings.get(SYSTEM_ID, 'armorDegredation');
-        const {bonus, damage, shield, qn} = this.system;
+        const {bonus, damage, qn} = this.system;
         qn ? bonus.qual = this.quality : delete bonus.qual;
 
         const adjDamage = Math.max(damage, 0);
