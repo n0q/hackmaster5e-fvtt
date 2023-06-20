@@ -1,0 +1,7 @@
+{{#each (itemSort actor.itemTypes)}}    
+    {{> 'systems/hackmaster5e/templates/actor/cards/item.hbs' }}
+{{/each}}
+<hr>
+{{#each actor.weapons.innate}}
+    {{> 'systems/hackmaster5e/templates/actor/cards/item.hbs' }}
+{{/each}}

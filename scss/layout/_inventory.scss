@@ -1,5 +1,14 @@
 .inventory {
+    display: flex;
+    flex-direction: column;
+    height: 32rem;
+
+    &.beast {
+        height: 22rem;
+    }
+
     > header {
+        flex: 0 0 auto;
         margin: 2px 15px 2px 3px;
         display: grid;
         grid-template-columns: 1fr min-content;
@@ -18,5 +27,9 @@
         > .item-controls {
             padding-left: $padding-md;
         }
+    }
+
+    > section {
+        flex: 1 1 auto;
     }
 }

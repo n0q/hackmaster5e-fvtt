@@ -1,47 +1,13 @@
 <ol class='cards-list inventory'>
-    {{#with actor.encumb}}
     <header>
-        <span class='weights'>
-            <label>
-                {{localize 'HM.encumbRow.scale'}}:
-                <b>{{numberFormat total decimals=2}} lbs.</b>
-            </label>
-            <label>
-                {{localize 'HM.encumbRow.carried'}}:
-                <b>{{numberFormat carried decimals=2}} lbs.</b>
-            </label>
-            <label>
-                {{localize 'HM.encumbRow.effective'}}:
-                <b>{{numberFormat effective decimals=2}} lbs.</b>
-            </label>
-            <label>
-                {{localize 'HM.encumbRow.penalty'}}:
-                {{#if (getSetting 'hackmaster5e' 'autoEncumbrance')}}
-                <b>{{lookup (mapSelect @root/actor.encumbrance 'encumbrance' 'lbs.') penalty}}</b>
-                {{else}}
-                <select class='selectable' name='encumbrance' data-flag='encumbrance'>
-                    {{selectOptions (mapSelect @root/actor.encumbrance 'encumbrance' 'lbs.')
-                        selected=(getFlag 'hackmaster5e' 'encumbrance')}}
-                </select>
-                {{/if}}
-            </label>
-        </span>
-        {{#if (or (isGM) (getSetting 'hackmaster5e' 'playerNewItems'))}}
-        <div class='item-controls'>
-            <a class='item-control item-create' title='New Item' data-render='true' data-type='item'>
-                <i class='fas fa-plus'></i>
-            </a>
-        </div>
-        {{/if}}
+        {{> 'systems/hackmaster5e/templates/actor/parts/inventory/inventory-weight.hbs' }}
     </header>
-    {{/with}}
-    <section class='scrollable' style='height: 30rem;'>
-    {{#each (itemSort actor.itemTypes)}}    
-        {{> 'systems/hackmaster5e/templates/actor/cards/item.hbs' }}
-    {{/each}}
-    <hr>
-    {{#each actor.weapons.innate}}
-        {{> 'systems/hackmaster5e/templates/actor/cards/item.hbs' }}
-    {{/each}}
+
+    <section class='scrollable'>
+        {{> 'systems/hackmaster5e/templates/actor/parts/inventory/inventory-list.hbs' }}
     </section>
+
+    <footer>
+        {{> 'systems/hackmaster5e/templates/actor/parts/inventory/inventory-currency.hbs' }}
+    </footer>
 </ol>

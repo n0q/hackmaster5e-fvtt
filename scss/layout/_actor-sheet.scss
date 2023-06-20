@@ -27,13 +27,13 @@ $actor-logo-dim: 40%;
     display: grid;
     width: $character-width;
     grid-gap: $actor-gridgap-v $actor-gridgap-h;
-    grid-template-rows: repeat(4, min-content);
+    grid-template-rows: repeat(3, min-content) 1fr;
+    overflow: hidden;
 
     >header {
         display: grid;
         grid-template-columns: 1fr $actor-logo-dim;
         column-gap: $padding-md;
-        overflow: hidden;
         padding-bottom: 0;
         border-bottom: 1px solid #AAA;
         margin-bottom: $padding-sm;
@@ -96,7 +96,7 @@ $actor-logo-dim: 40%;
         padding: 2px;
         border: 2px solid $c-grey;
         >section {
-            height: 24ex;
+            height: 10rem;
         }
     }
 
@@ -148,9 +148,9 @@ $actor-logo-dim: 40%;
 }
 
 .scrollable {
+    position: relative;
+    height: auto;
     min-height: 0;
     overflow-y: auto;
     padding-right: 1.5%;
-    overflow: scroll;
-    overflow: overlay; // depreciated in moz
 }
