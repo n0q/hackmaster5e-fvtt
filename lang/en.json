@@ -267,10 +267,7 @@
         },
 
         "itemTypes": {
-            "armor":     "Armor",
-            "container": "Container",
-            "item":      "Item",
-            "weapon":    "Weapon"
+            "container": "Container"
         },
 
         "dialog": {
@@ -948,6 +945,7 @@
     "ITEM": {
         "TypeArmor":        "Armor",
         "TypeCclass":       "Character Class",
+        "TypeCurrency":     "Currency",
         "TypeItem":         "Item",
         "TypeProficiency":  "Proficiency",
         "TypeRace":         "Race",
@@ -966,6 +964,7 @@
         "Item":  {
             "armor":        "Armor",
             "cclass":       "Character Class",
+            "currency":     "Currency",
             "item":         "Item",
             "proficiency":  "Proficiency",
             "race":         "Race",

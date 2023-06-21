@@ -1,10 +1,10 @@
-/* eslint no-shadow: ["error", {"allow": ["HMCONST", "HMTABLES]}] */
 export const SYSTEM_ID = 'hackmaster5e';
 export const SYSTEM_SOCKET = `system.${SYSTEM_ID}`;
+export const DEFAULT_ICON = 'icons/magic/symbols/question-stone-yellow.webp';
+export const DEFAULT_ICON_CURRENCY = 'icons/commodities/currency/coins-plain-stack-gold-yellow.webp';
 
 // TODO: ITEM_STATE and itemstate are the same table.
 export const HMCONST = {
-    DEFAULT_ICON: 'icons/magic/symbols/question-stone-yellow.webp',
     CARD_TYPE: {
         ROLL:  0,
         ALERT: 1,
@@ -452,6 +452,15 @@ export const HMTABLES = {
             18: 75200,
             19: 87650,
             20: 87650,
+        },
+    },
+    currency: {
+        _dim: {
+            tc: {name: 'Trade Coin',     value: 1,     weight: 0.0050},
+            cp: {name: 'Copper Piece',   value: 10,    weight: 0.0125},
+            sp: {name: 'Silver Piece',   value: 100,   weight: 0.0125},
+            gp: {name: 'Gold Piece',     value: 1000,  weight: 0.0125},
+            pp: {name: 'Platinum Piece', value: 10000, weight: 0.0125},
         },
     },
     encumbrance: {

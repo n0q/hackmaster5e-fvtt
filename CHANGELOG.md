@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Currency items.
 ### Changed
 - Tweaks to inventory sorting.
+- Style sheet improvements.
 
 ## [0.3.28] - 2023-06-12
 ### Changed

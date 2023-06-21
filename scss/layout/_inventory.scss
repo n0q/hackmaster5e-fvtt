@@ -7,13 +7,18 @@
         height: 22rem;
     }
 
-    > header {
-        flex: 0 0 auto;
-        margin: 2px 15px 2px 3px;
+    > header, > footer {
+        margin: 2px 22px 2px 3px;
         display: grid;
-        grid-template-columns: 1fr min-content;
+        grid-template-columns: min-content 1fr;
 
-        > .weights {
+        .item-controls {
+            padding-right: $padding-md;
+        }
+    }
+
+    > header {
+        .weights {
             display: flex;
             justify-content: space-between;
             align-self: center;
@@ -22,10 +27,6 @@
                 margin-top: -2px;
                 height: 20px;
             }
-        }
-
-        > .item-controls {
-            padding-left: $padding-md;
         }
     }
 

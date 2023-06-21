@@ -8,6 +8,7 @@
                     {{#if (and (eq type 'item') (gt system.qidx 3))}}
                     <i class="fa-solid fa-star gold-star" title={{localize (findConfigValue 'qidx' system.qidx)}}></i>
                     {{/if}}
+                    {{#if (eq type 'currency')}}({{{label}}}){{/if}}
                 </h4>
             </label>
         </header>

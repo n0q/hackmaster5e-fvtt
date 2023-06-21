@@ -1,6 +1,7 @@
 import { HMItem } from './item.js';
 import { HMArmorItem } from './armor-item.js';
 import { HMClassItem } from './class-item.js';
+import { HMCurrencyItem } from './currency-item.js';
 import { HMItemItem } from './item-item.js';
 import { HMProficiencyItem } from './proficiency-item.js';
 import { HMRaceItem } from './race-item.js';
@@ -15,6 +16,7 @@ const handler = {
     construct(_actor, args) {
         if (args[0]?.type === 'armor') return new HMArmorItem(...args);
         if (args[0]?.type === 'cclass') return new HMClassItem(...args);
+        if (args[0]?.type === 'currency') return new HMCurrencyItem(...args);
         if (args[0]?.type === 'item') return new HMItemItem(...args);
         if (args[0]?.type === 'proficiency') return new HMProficiencyItem(...args);
         if (args[0]?.type === 'race') return new HMRaceItem(...args);

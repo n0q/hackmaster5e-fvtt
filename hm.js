@@ -10,6 +10,7 @@ import { HMItemFactory } from './modules/item/item-factory.js';
 import { HMItemSheet } from './modules/item/sheets/item-sheet.js';
 import { HMArmorItemSheet } from './modules/item/sheets/armor-item-sheet.js';
 import { HMClassItemSheet } from './modules/item/sheets/class-item-sheet.js';
+import { HMCurrencyItemSheet } from './modules/item/sheets/currency-item-sheet.js';
 import { HMProficiencyItemSheet } from './modules/item/sheets/proficiency-item-sheet.js';
 import { HMRaceItemSheet } from './modules/item/sheets/race-item-sheet.js';
 import { HMSpellItemSheet } from './modules/item/sheets/spell-item-sheet.js';
@@ -34,6 +35,7 @@ function registerSheets() {
     Items.registerSheet('hackmaster', HMItemSheet, {makeDefault: true});
     Items.registerSheet('hackmaster', HMArmorItemSheet, {types: ['armor'], makeDefault: true});
     Items.registerSheet('hackmaster', HMClassItemSheet, {types: ['cclass'], makeDefault: true});
+    Items.registerSheet('hackmaster', HMCurrencyItemSheet, {types: ['currency'], makeDefault: true});
     Items.registerSheet('hackmaster', HMProficiencyItemSheet, {types: ['proficiency'], makeDefault: true});
     Items.registerSheet('hackmaster', HMRaceItemSheet, {types: ['race'], makeDefault: true});
     Items.registerSheet('hackmaster', HMSpellItemSheet, {types: ['spell'], makeDefault: true});
