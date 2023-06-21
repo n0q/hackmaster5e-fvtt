@@ -17,7 +17,7 @@ export const HMContainer = {
         const updateIdsRecursive = (item) => {
             item._id = foundry.utils.randomID(); // eslint-disable-line
 
-            if (item.system.container.enabled) {
+            if (item.system?.container?.enabled) {
                 const stack = item.system.container._manifest;
                 for (let j = 0; j < stack.length; j++) {
                     const childSerialized = stack[j];
