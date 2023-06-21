@@ -11,26 +11,16 @@
         margin: 2px 22px 2px 3px;
         display: grid;
         grid-template-columns: min-content 1fr;
-
-        .item-controls {
-            padding-right: $padding-md;
-        }
+        @include details-hor;
     }
 
-    > header {
-        .weights {
-            display: flex;
-            justify-content: space-between;
-            align-self: center;
-
-            select {
-                margin-top: -2px;
-                height: 20px;
-            }
-        }
+    header select {
+        margin-top: -2px;
+        height: 20px;
     }
 
     > section {
+        background-color: rgba(0, 0, 0, 0.01);
         flex: 1 1 auto;
     }
 }

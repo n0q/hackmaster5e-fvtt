@@ -1,34 +1,36 @@
 {{#with actor.encumb}}
-    <span class='weights'>
-        <label>
-            {{localize 'HM.encumbRow.scale'}}:
-            <b>{{numberFormat total decimals=2}} lbs.</b>
-        </label>
-        <label>
-            {{localize 'HM.encumbRow.carried'}}:
-            <b>{{numberFormat carried decimals=2}} lbs.</b>
-        </label>
-        <label>
-            {{localize 'HM.encumbRow.effective'}}:
-            <b>{{numberFormat effective decimals=2}} lbs.</b>
-        </label>
-        <label>
-            {{localize 'HM.encumbRow.penalty'}}:
+    {{#if (or (isGM) (getSetting 'hackmaster5e' 'playerNewItems'))}}
+    <span class='item-controls'>
+        <a class='item-control item-create' title='New Item' data-render='true' data-type='item'>
+            <i class='fas fa-plus'></i>
+        </a>
+    </span>
+    {{else}}<span></span>{{/if}}
+    <dl>
+        <span>
+            <dt>{{localize 'HM.encumbRow.scale'}}</dt>
+            <dd>{{numberFormat total decimals=2}} lbs.</dd>
+        </span>
+        <span>
+            <dt>{{localize 'HM.encumbRow.carried'}}</dt>
+            <dd>{{numberFormat carried decimals=2}} lbs.</dd>
+        </span>
+        <span>
+            <dt>{{localize 'HM.encumbRow.effective'}}</dt>
+            <dd>{{numberFormat effective decimals=2}} lbs.</dd>
+        </span>
+        <span>
+            <dt>{{localize 'HM.encumbRow.penalty'}}</dt>
             {{#if (getSetting 'hackmaster5e' 'autoEncumbrance')}}
-            <b>{{lookup (mapSelect @root/actor.encumbrance 'encumbrance' 'lbs.') penalty}}</b>
+            <dd>{{lookup (mapSelect @root/actor.encumbrance 'encumbrance' 'lbs.') penalty}}</dd>
             {{else}}
+            <dd>
             <select class='selectable' name='encumbrance' data-flag='encumbrance'>
                 {{selectOptions (mapSelect @root/actor.encumbrance 'encumbrance' 'lbs.')
                     selected=(getFlag 'hackmaster5e' 'encumbrance')}}
             </select>
+            </dd>
             {{/if}}
-        </label>
-    </span>
-    {{#if (or (isGM) (getSetting 'hackmaster5e' 'playerNewItems'))}}
-    <div class='item-controls'>
-        <a class='item-control item-create' title='New Item' data-render='true' data-type='item'>
-            <i class='fas fa-plus'></i>
-        </a>
-    </div>
-    {{/if}}
+        </span>
+    </dl>
 {{/with}}

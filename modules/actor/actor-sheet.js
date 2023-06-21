@@ -99,6 +99,29 @@ export class HMActorSheet extends ActorSheet {
             }
 
         actor.slevels = slevels.sort();
+        actor.money = this.money();
+    }
+
+    money() {
+        const {ITEM_STATE} = HMCONST;
+        const {_dim} = HMTABLES.currency;
+        const moneyRaw = this.actor.hm.itemTypes.currency.reduce((acc, c) => {
+            acc.total += c.value || 0;
+            if (!c.rootId && c.system.state === ITEM_STATE.OWNED) return acc;
+            const root = this.actor.items.get(c.rootId);
+            if (c.rootId && root.system.state === ITEM_STATE.OWNED) return acc;
+            acc.carried += c.value || 0;
+            return acc;
+        }, {total: 0, carried: 0});
+
+        const standard = Object.keys(_dim).find((c) => _dim[c].standard);
+        const standardValue = _dim[standard].value;
+        const precision = standardValue.toString().length;
+        return {
+            standard,
+            total: parseFloat((moneyRaw.total / standardValue).toFixed(precision)),
+            carried: parseFloat((moneyRaw.carried / standardValue).toFixed(precision)),
+        };
     }
 
     /** @override */

@@ -36,6 +36,21 @@ export class HMCurrencyItem extends HMItem {
         this.update({'system.coin': coin});
     }
 
+    get standard() {
+        const {_dim} = this.system;
+        const coinTypes = Object.keys(_dim);
+        return coinTypes.find((x) => _dim[x].standard);
+    }
+
+    get value() {
+        const {_dim, coin} = this.system;
+        const coinTypes = Object.keys(_dim);
+        return coinTypes.reduce(
+            (acc, cType) => acc + (coin[cType]?.qty || 0) * _dim[cType].value,
+            0,
+        );
+    }
+
     get label() {
         return this.toString({filter: true, html: true});
     }
