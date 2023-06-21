@@ -40,6 +40,16 @@ export const registerSystemSettings = () => {
         onChange: renderApps,
     });
 
+    game.settings.register(SYSTEM_ID, 'currencyWeight', {
+        name: 'SETTINGS.currencyWeight',
+        hint: 'SETTINGS.currencyWeightHint',
+        scope: 'world',
+        config: true,
+        type: Boolean,
+        default: true,
+        onChange: renderApps,
+    });
+
     game.settings.register(SYSTEM_ID, 'armorDegredation', {
         name: 'SETTINGS.armorDegredation',
         hint: 'SETTINGS.armorDegredationHint',

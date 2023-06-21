@@ -1,4 +1,4 @@
-import { DEFAULT_ICON_CURRENCY, HMTABLES } from '../tables/constants.js';
+import { DEFAULT_ICON_CURRENCY, HMTABLES, SYSTEM_ID } from '../tables/constants.js';
 import { HMItem } from './item.js';
 
 export class HMCurrencyItem extends HMItem {
@@ -69,6 +69,9 @@ export class HMCurrencyItem extends HMItem {
     }
 
     get weight() {
+        const currencyWeight = game.settings.get(SYSTEM_ID, 'currencyWeight');
+        if (!currencyWeight) return {total: 0, intrinsic: 0};
+
         const {_dim, coin} = this.system;
         const weightRawTotal = Object.keys(coin).reduce(
             (weight, type) => weight + coin[type].qty * _dim[type].weight,
