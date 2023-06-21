@@ -46,7 +46,7 @@ export class HMCurrencyItem extends HMItem {
         const {_dim, coin} = this.system;
         const coinTypes = Object.keys(_dim);
         return coinTypes.reduce(
-            (acc, cType) => acc + (coin[cType]?.qty || 0) * _dim[cType].value,
+            (acc, cType) => acc + (coin[cType]?.qty || 0) * (_dim[cType].value || 0),
             0,
         );
     }

@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 ### Added
 - Currency items.
+- New Currency button on inventory tab.
 - Carried/Total currency is displayed on inventory tab.
 - Currency weight global setting.
 ### Changed
