@@ -5,6 +5,7 @@ export const preloadHandlebarsTemplates = () => {
     loadTemplates([
         `${templatePath}/actor/cards/armor.hbs`,
         `${templatePath}/actor/cards/item.hbs`,
+        `${templatePath}/actor/cards/item/card-item-currency.hbs`,
         `${templatePath}/actor/cards/saves.hbs`,
         `${templatePath}/actor/cards/skill.hbs`,
         `${templatePath}/actor/cards/spell.hbs`,

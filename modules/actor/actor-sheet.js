@@ -197,7 +197,7 @@ export class HMActorSheet extends ActorSheet {
     // Getters
     _getOwnedItem(itemId) {
         const {actor} = this;
-        return actor.items.get(itemId)
+        return actor.hm.items.get(itemId)
             ?? actor.effects.get(itemId)
             ?? actor.wprofiles.get(itemId);
     }
@@ -297,12 +297,10 @@ export class HMActorSheet extends ActorSheet {
                 const floatMatch = targetValue.match(/^([0-9]?\.[0-9]+)$/);
                 if (pctMatch)   { targetValue = parseFloat(pctMatch[1]) / 100;   } else
                 if (floatMatch) { targetValue = parseFloat(floatMatch[1]);       } else
-                                { targetValue = parseInt(targetValue, 10) / 100; }
+                                { targetValue = parseInt(targetValue, 10) / 100; } // eslint-disable-line
             }
-            setProperty(item, itemProp, targetValue);
 
-            // TODO: Update only the altered property.
-           await this.actor.updateEmbeddedDocuments('Item', [{_id:item.id, data:item.system}]);
+            item.update({[itemProp]: targetValue});
         }
     }
 
