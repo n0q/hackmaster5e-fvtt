@@ -13,7 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Tweaks to inventory sorting.
 - Style sheet improvements.
 ### Fixed
-- Item ids could be rerolled during certain container operations.
+- Item ids could randomize during certain container operations.
 
 ## [0.3.28] - 2023-06-12
 ### Changed
