@@ -94,6 +94,16 @@ export const registerHandlebarsHelpers = () => {
         }, {});
     });
 
+    Handlebars.registerHelper('objSort', (obj1, key, opts) => {
+        const obj2 = opts.hash.obj2 ? opts.hash.obj2 : obj1;
+        let sortedKeys = Object.keys(obj2).sort((a, b) => obj2[a][key] - obj2[b][key]);
+        if (!!opts.hash.reverse) sortedKeys = sortedKeys.reverse();
+
+        let sortedObj = {};
+        sortedKeys.forEach((k) => sortedObj[k] = obj1[k]);
+        return sortedObj;
+    });
+
     Handlebars.registerHelper('itemSort', (itemTypes) => {
         const {currency, weapon, armor} = itemTypes;
 

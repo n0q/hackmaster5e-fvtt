@@ -1,0 +1,12 @@
+{{#with system}}
+<span>
+    {{#each (objSort coin 'value' obj2=_dim reverse=true)}}
+    <input class='editable' type='number' value='{{qty}}' data-item-prop='system.coin.{{@key}}.qty' data-dtype='Number'>
+    <label class='bold-label'>{{@key}}</label>
+    {{/each}}
+</span>
+{{/with}}
+<span class='card-controls'>
+    <a class='item-control item-edit' title='Edit Item'><i class='fas fa-edit'></i></a>
+    <a class='item-control item-delete' title='Delete Item'><i class='fas fa-trash'></i></a>
+</span>
