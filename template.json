@@ -141,8 +141,8 @@
             "templates": ["base"],
             "state": 0,
             "weight": 0,
-            "coin": {},
-            "_dim": {}
+            "issuer": null,
+            "coins": {}
         },
 
         "item": {

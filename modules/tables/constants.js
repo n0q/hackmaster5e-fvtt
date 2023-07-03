@@ -455,12 +455,13 @@ export const HMTABLES = {
         },
     },
     currency: {
-        _dim: {
-            tc: {name: 'Trade Coin',     value: 1,     weight: 0.0050},
-            cp: {name: 'Copper Piece',   value: 10,    weight: 0.0125},
-            sp: {name: 'Silver Piece',   value: 100,   weight: 0.0125, standard: true},
-            gp: {name: 'Gold Piece',     value: 1000,  weight: 0.0125},
-            pp: {name: 'Platinum Piece', value: 10000, weight: 0.0125},
+        standard: 'sp',
+        coins: {
+            tc: {value: 1,     weight: 0.0050},
+            cp: {value: 10,    weight: 0.0125},
+            sp: {value: 100,   weight: 0.0125},
+            gp: {value: 1000,  weight: 0.0125},
+            pp: {value: 10000, weight: 0.0125},
         },
     },
     encumbrance: {

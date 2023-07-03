@@ -104,7 +104,7 @@ export class HMActorSheet extends ActorSheet {
 
     money() {
         const {ITEM_STATE} = HMCONST;
-        const {_dim} = HMTABLES.currency;
+        const config = HMTABLES.currency;
         const moneyRaw = this.actor.hm.itemTypes.currency.reduce((acc, c) => {
             acc.total += c.value || 0;
             if (!c.rootId && c.system.state === ITEM_STATE.OWNED) return acc;
@@ -114,8 +114,8 @@ export class HMActorSheet extends ActorSheet {
             return acc;
         }, {total: 0, carried: 0});
 
-        const standard = Object.keys(_dim).find((c) => _dim[c].standard);
-        const standardValue = _dim[standard].value;
+        const {standard} = config;
+        const standardValue = config.coins[standard].value;
         const precision = standardValue.toString().length;
         return {
             standard,

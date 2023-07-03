@@ -1,10 +1,10 @@
-{{#with system}}
 <span>
-    {{#each (objSort coin 'value' obj2=_dim reverse=true)}}
-    <input class='editable' type='number' value='{{qty}}' data-item-prop='system.coin.{{@key}}.qty' data-dtype='Number'>
+    {{#with system}}
+    {{#each (objSort ../_currencyData 'value' reverse=true)}}
+    <input class='editable' type='number' value='{{qty}}' data-item-prop='system.coins.{{@key}}.qty' data-dtype='Number'>
     <label class='bold-label'>{{@key}}</label>
     {{/each}}
+    {{/with}}
 </span>
-{{/with}}
 <span class='card-controls'>
 </span>
