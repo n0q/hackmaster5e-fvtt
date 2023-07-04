@@ -1,6 +1,21 @@
 import { idx } from '../tables/dictionary.js';
 
 export const registerHandlebarsHelpers = () => {
+    /* eslint-disable no-console */
+    Handlebars.registerHelper('toConsole', (obj, level) => {
+        const logLevelMapping = {
+            log: console.log,
+            info: console.info,
+            warn: console.warn,
+            error: console.error,
+            trace: console.trace,
+        };
+
+        const toConsole = logLevelMapping[level] || console.warn;
+        toConsole(obj);
+    });
+    /* eslint-enable no-console */
+
     Handlebars.registerHelper('concat', (...args) => {
         let outStr = '';
         args.forEach((arg) => {
