@@ -36,8 +36,11 @@
         &.beast { max-width: calc(#{$beast-width} - 6px); }
     }
 
+    header em { font-style: normal; }
+
     .toggleswitch header:hover {
         @include text-glow($shad-1px);
+        em { @include text-glow('reset'); }
     }
 
     .hide { @include hide; }
@@ -177,4 +180,11 @@
             height: 18px;
         }
     }
+}
+
+.card section.currency-card {
+    margin-left: 24px;
+    margin-right: -$padding-sm;
+    display: flex;
+    justify-content: space-between;
 }

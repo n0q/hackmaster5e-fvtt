@@ -1,12 +1,17 @@
 <li class='item card {{actor.type}} hmstyle' data-item-id='{{_id}}' data-container-id='{{container._id}}' data-root-id='{{container.rootId}}'>
-    <summary{{#if items.contents.length}} class='toggleswitch'{{/if}}>
+    <summary{{#if (or items.contents.length (eq type 'currency'))}} class='toggleswitch'{{/if}}>
         <header>
             <label for='{{name}}'>
                 <img src='{{img}}' title='{{name}}' width='28' height='28'/>
                 <h4 class='item-name'>
                     {{name}}
                     {{#if (and (eq type 'item') (gt system.qidx 3))}}
-                    <i class="fa-solid fa-star gold-star" title={{localize (findConfigValue 'qidx' system.qidx)}}></i>
+                    <em><i class="fa-solid fa-star gold-star" title={{localize (findConfigValue 'qidx' system.qidx)}}></i></em>
+                    {{/if}}
+                    {{#if (and (eq type 'currency') value)}}
+                    <em class='{{toggleSwitch _id invert=true}}' toggle>
+                        ({{{label}}})
+                    </em>
                     {{/if}}
                 </h4>
             </label>
@@ -68,6 +73,10 @@
     {{#each (itemSort this.itemTypes)}}
         {{>'systems/hackmaster5e/templates/actor/cards/item.hbs'}}
     {{/each}}
+    </section>
+{{else if (eq type 'currency')}}
+    <section class='{{toggleSwitch _id}} currency-card' toggle>
+        {{>'systems/hackmaster5e/templates/actor/cards/item/card-item-currency.hbs'}}
     </section>
 {{/if}}
 </li>

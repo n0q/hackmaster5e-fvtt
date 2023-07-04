@@ -1,35 +1,9 @@
-<ol class='cards-list'>
-    <li class='table-header'>
-    {{#with actor.system.encumb}}
-    <label>
-        {{localize 'HM.scale'}} {{localize 'HM.weight'}}:
-        <b>{{numberFormat total decimals=2}} lbs.</b>
-    </label>
-    <label style='padding-left: 4.2em;'>
-        {{localize 'HM.carried'}} {{localize 'HM.load'}}:
-        <b>{{numberFormat carried decimals=2}} lbs.</b>
-    </label>
-    <label style='padding-left: 4.2em;'>
-        {{localize 'HM.effective'}} {{localize 'HM.encumbrance'}}:
-        <b>{{numberFormat effective decimals=2}} lbs.</b>
-    </label>
-    {{/with}}
-    </li>
-    <section class='scrollable' style='height: 24.5em;'>
-    {{#each actor.gear.weapons}}
-        {{#unless system.innate}}
-            {{> 'systems/hackmaster5e/templates/actor/cards/item.hbs' }}
-        {{/unless}}
-    {{/each}}
-    {{#each actor.gear.armors}}
-        {{> 'systems/hackmaster5e/templates/actor/cards/item.hbs' }}
-    {{/each}}
-    {{#each actor.gear.items}}
-        {{> 'systems/hackmaster5e/templates/actor/cards/item.hbs' }}
-    {{/each}}
-    <hr>
-    {{#each actor.weapons.innate}}
-        {{> 'systems/hackmaster5e/templates/actor/cards/item.hbs' }}
-    {{/each}}
+<ol class='cards-list inventory beast'>
+    <section class='scrollable'>
+        {{> 'systems/hackmaster5e/templates/actor/parts/inventory/inventory-list.hbs' }}
     </section>
+
+    <footer>
+        {{> 'systems/hackmaster5e/templates/actor/parts/inventory/inventory-currency.hbs' }}
+    </footer>
 </ol>

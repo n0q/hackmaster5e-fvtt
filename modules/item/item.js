@@ -1,4 +1,4 @@
-import { HMTABLES, HMCONST, SYSTEM_ID } from '../tables/constants.js';
+import { DEFAULT_ICON, HMTABLES, HMCONST, SYSTEM_ID } from '../tables/constants.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { HMStates } from '../sys/effects.js';
@@ -8,7 +8,7 @@ import { HMStates } from '../sys/effects.js';
 // we are making Hackmaster, not Aces & Eights.
 
 export class HMItem extends Item {
-    static DEFAULT_ICON = HMCONST.DEFAULT_ICON;
+    static DEFAULT_ICON = DEFAULT_ICON;
 
     /** @override */
     prepareData() {

@@ -1,22 +1,26 @@
 .inventory {
-    > header {
-        margin: 2px 15px 2px 3px;
+    display: flex;
+    flex-direction: column;
+    height: 32rem;
+
+    &.beast {
+        height: 22rem;
+    }
+
+    > header, > footer {
+        margin: 2px 22px 2px 3px;
         display: grid;
-        grid-template-columns: 1fr min-content;
+        grid-template-columns: min-content 1fr;
+        @include details-hor;
+    }
 
-        > .weights {
-            display: flex;
-            justify-content: space-between;
-            align-self: center;
+    header select {
+        margin-top: -2px;
+        height: 20px;
+    }
 
-            select {
-                margin-top: -2px;
-                height: 20px;
-            }
-        }
-
-        > .item-controls {
-            padding-left: $padding-md;
-        }
+    > section {
+        background-color: rgba(0, 0, 0, 0.01);
+        flex: 1 1 auto;
     }
 }

@@ -71,9 +71,9 @@
 
     "Item": {
         "types": [
-            "armor",    "cclass",    "item",    "proficiency",
-            "race",     "skill",     "spell",   "talent",
-            "weapon",   "wound"
+            "armor",         "cclass",    "currency",   "item",
+            "proficiency",   "race",      "skill",     "spell",
+            "talent",        "weapon",    "wound"
         ],
 
         "templates": {
@@ -135,6 +135,14 @@
                 "hprof": false
             },
             "ptable": {}
+        },
+
+        "currency": {
+            "templates": ["base"],
+            "state": 0,
+            "weight": 0,
+            "issuer": null,
+            "coins": {}
         },
 
         "item": {

@@ -99,6 +99,29 @@ export class HMActorSheet extends ActorSheet {
             }
 
         actor.slevels = slevels.sort();
+        actor.money = this.money();
+    }
+
+    money() {
+        const {ITEM_STATE} = HMCONST;
+        const config = HMTABLES.currency;
+        const moneyRaw = this.actor.hm.itemTypes.currency.reduce((acc, c) => {
+            acc.total += c.value || 0;
+            if (!c.rootId && c.system.state === ITEM_STATE.OWNED) return acc;
+            const root = this.actor.items.get(c.rootId);
+            if (c.rootId && root.system.state === ITEM_STATE.OWNED) return acc;
+            acc.carried += c.value || 0;
+            return acc;
+        }, {total: 0, carried: 0});
+
+        const {standard} = config;
+        const standardValue = config.coins[standard].value;
+        const precision = standardValue.toString().length;
+        return {
+            standard,
+            total: parseFloat((moneyRaw.total / standardValue).toFixed(precision)),
+            carried: parseFloat((moneyRaw.carried / standardValue).toFixed(precision)),
+        };
     }
 
     /** @override */
@@ -174,7 +197,7 @@ export class HMActorSheet extends ActorSheet {
     // Getters
     _getOwnedItem(itemId) {
         const {actor} = this;
-        return actor.items.get(itemId)
+        return actor.hm.items.get(itemId)
             ?? actor.effects.get(itemId)
             ?? actor.wprofiles.get(itemId);
     }
@@ -274,12 +297,10 @@ export class HMActorSheet extends ActorSheet {
                 const floatMatch = targetValue.match(/^([0-9]?\.[0-9]+)$/);
                 if (pctMatch)   { targetValue = parseFloat(pctMatch[1]) / 100;   } else
                 if (floatMatch) { targetValue = parseFloat(floatMatch[1]);       } else
-                                { targetValue = parseInt(targetValue, 10) / 100; }
+                                { targetValue = parseInt(targetValue, 10) / 100; } // eslint-disable-line
             }
-            setProperty(item, itemProp, targetValue);
 
-            // TODO: Update only the altered property.
-           await this.actor.updateEmbeddedDocuments('Item', [{_id:item.id, data:item.system}]);
+            item.update({[itemProp]: targetValue});
         }
     }
 

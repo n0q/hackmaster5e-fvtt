@@ -2,6 +2,19 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.3.29] - 2023-07-04
+### Added
+- Currency items.
+- New Currency button on inventory tab.
+- Carried/Total currency is displayed on inventory tab.
+- Currency weight global setting.
+### Changed
+- Moved New Item button to upper left corner of inventory (was upper right).
+- Tweaks to inventory sorting.
+- Style sheet improvements.
+### Fixed
+- Item ids could randomize during certain container operations.
+
 ## [0.3.28] - 2023-06-12
 ### Changed
 - Child item ids are randomized on item creation.

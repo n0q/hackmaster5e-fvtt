@@ -259,10 +259,11 @@ idx.itemCClass = {
 };
 
 idx.itemTypes = {
-    armor:     'HM.itemTypes.armor',
-    weapon:    'HM.itemTypes.weapon',
-    item:      'HM.itemTypes.item',
+    armor:     'TYPES.Item.armor',
+    weapon:    'TYPES.Item.weapon',
+    item:      'TYPES.Item.item',
     container: 'HM.itemTypes.container',
+    currency:  'TYPES.Item.currency',
 };
 
 idx.dice = {

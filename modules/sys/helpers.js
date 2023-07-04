@@ -1,6 +1,21 @@
 import { idx } from '../tables/dictionary.js';
 
 export const registerHandlebarsHelpers = () => {
+    /* eslint-disable no-console */
+    Handlebars.registerHelper('toConsole', (obj, level) => {
+        const logLevelMapping = {
+            log: console.log,
+            info: console.info,
+            warn: console.warn,
+            error: console.error,
+            trace: console.trace,
+        };
+
+        const toConsole = logLevelMapping[level] || console.warn;
+        toConsole(obj);
+    });
+    /* eslint-enable no-console */
+
     Handlebars.registerHelper('concat', (...args) => {
         let outStr = '';
         args.forEach((arg) => {
@@ -94,14 +109,34 @@ export const registerHandlebarsHelpers = () => {
         }, {});
     });
 
+    Handlebars.registerHelper('objSort', (obj1, key, opts) => {
+        const obj2 = opts.hash.obj2 ? opts.hash.obj2 : obj1;
+        let sortedKeys = Object.keys(obj2).sort((a, b) => obj2[a][key] - obj2[b][key]);
+        if (!!opts.hash.reverse) sortedKeys = sortedKeys.reverse();
+
+        let sortedObj = {};
+        sortedKeys.forEach((k) => sortedObj[k] = obj1[k]);
+        return sortedObj;
+    });
+
     Handlebars.registerHelper('itemSort', (itemTypes) => {
+        const {currency, weapon, armor} = itemTypes;
+
+        const compareNames = (a, b) => a.name.localeCompare(b.name);
+
         const items = itemTypes.item.sort((a, b) => {
             const container = a.system.container.enabled - b.system.container.enabled;
-            return container || a.name.localeCompare(b.name);
+            return container || compareNames(a, b);
         });
 
-        const {weapon, armor} = itemTypes;
-        return weapon.concat(armor, items);
+        const weapons = weapon
+            .filter((w) => !w.system.innate)
+            .sort(compareNames);
+
+        const armors = armor.sort(compareNames);
+        const currencies = currency.sort(compareNames);
+
+        return [...weapons, ...armors, ...items, ...currencies];
     });
 
     Handlebars.registerHelper('delete', (arg1, arg2) => {

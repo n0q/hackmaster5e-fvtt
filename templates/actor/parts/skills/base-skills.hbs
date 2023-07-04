@@ -1,13 +1,13 @@
 <ol class='skills-list grid-3col'>
     {{#with actor.skills}}
-    <span>
+    <span class='scrollable' style='height: 30.7rem; margin-right: -4px;'>
         {{#if (isEven uskills.length)}}
         <header class='resource-label'>{{localize 'HM.SKILLS.uskills'}}</header>
         {{/if}}
         {{#each uskills}}
             {{#if (isHalf @index ../uskills.length)}}
     </span>
-    <span>
+    <span class='scrollable' style='height: 30.7rem; margin-right: -4px;'>
             {{/if}}
             {{> 'systems/hackmaster5e/templates/actor/cards/skill.hbs' }}
         {{/each}}

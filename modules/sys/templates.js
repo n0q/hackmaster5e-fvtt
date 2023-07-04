@@ -5,6 +5,7 @@ export const preloadHandlebarsTemplates = () => {
     loadTemplates([
         `${templatePath}/actor/cards/armor.hbs`,
         `${templatePath}/actor/cards/item.hbs`,
+        `${templatePath}/actor/cards/item/card-item-currency.hbs`,
         `${templatePath}/actor/cards/saves.hbs`,
         `${templatePath}/actor/cards/skill.hbs`,
         `${templatePath}/actor/cards/spell.hbs`,
@@ -30,6 +31,9 @@ export const preloadHandlebarsTemplates = () => {
         `${templatePath}/actor/parts/header/header-portrait.hbs`,
         `${templatePath}/actor/parts/inventory/base-inventory.hbs`,
         `${templatePath}/actor/parts/inventory/beast-inventory.hbs`,
+        `${templatePath}/actor/parts/inventory/inventory-currency.hbs`,
+        `${templatePath}/actor/parts/inventory/inventory-list.hbs`,
+        `${templatePath}/actor/parts/inventory/inventory-weight.hbs`,
         `${templatePath}/actor/parts/overview/base-overview.hbs`,
         `${templatePath}/actor/parts/overview/overview-skills.hbs`,
         `${templatePath}/actor/parts/spells/base-spells.hbs`,

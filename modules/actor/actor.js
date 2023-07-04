@@ -2,8 +2,14 @@ import { HMTABLES, SYSTEM_ID } from '../tables/constants.js';
 import { HMACTOR_TUNABLES } from '../tables/tunables.js';
 import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { HMWeaponProfile } from '../item/weapon-profile.js';
+import { HMItemContainer } from './container-abstract.js';
 
 export class HMActor extends Actor {
+    constructor(...args) {
+        super(...args);
+        this.hm = new HMItemContainer({actor: this});
+    }
+
     prepareBaseData() {
         super.prepareBaseData();
         if (this.type === 'worksheet') return;

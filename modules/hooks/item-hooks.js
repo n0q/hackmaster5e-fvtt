@@ -3,12 +3,13 @@ import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMContainer } from '../item/container.js';
 
 export class HMItemHooks {
-    static async createItem(item, _options, userId) {
+    static async createItem(item, options, userId) {
         if (game.user.id !== userId) return;
         if (!item.parent) return;
         const {type} = item;
 
-        if (type === 'item' && item.system.container.enabled) {
+        const {keepId} = options;
+        if (type === 'item' && item.system.container.enabled && !keepId) {
             HMContainer.randomizeChildIDs(item);
         }
 
