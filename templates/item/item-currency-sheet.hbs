@@ -1,10 +1,24 @@
 <form class="{{cssClass}}" autocomplete="off">
     {{> "systems/hackmaster5e/templates/item/parts/header.hbs" }}
 
-    <section class="sheet-body">
-        {{#with data}}
-        <div class='grid-2col' style='grid-template-columns: 40% 1fr; padding-top: 5px;'>
+{{#with item}}
+<section class='sheet-body newform'>
+        <div class='grid-2col' style='grid-template-columns: 30% 1fr; padding-top: 5px;'>
+            <section name='options' style='padding-right: 10px; border-right: 1px solid;'>
+                {{#each (objSort _currencyData 'value' reverse=true)}}
+                <span class='form-option'>
+                <label class='bold-label'>{{@key}}</label>
+                <input class='editable' type='number' value='{{qty}}' data-item-prop='system.coins.{{@key}}.qty' data-dtype='Number'>
+                </span>
+                {{/each}}
+            </section>
+            <section>
+                <span class='form-option'>
+                    <label class='bold-label'>Issuer:</label>
+                    <input class='editable' type='text' style='margin-left: 1em; width: 100%;' value='{{system.issuer}}' data-item-prop='system.issuer' data-dtype='String'>
+                </span>
+            </section>
         </div>
-        {{/with}}
     </section>
+{{/with}}
 </form>

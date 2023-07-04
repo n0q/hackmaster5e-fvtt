@@ -5,8 +5,8 @@ export class HMCurrencyItemSheet extends HMItemSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             classes: ['hackmaster', 'sheet', 'item'],
-            width: 610,
-            height: 490,
+            width: 500,
+            height: 260,
         });
     }
 }
