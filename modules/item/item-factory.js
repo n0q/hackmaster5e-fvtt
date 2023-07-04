@@ -13,7 +13,7 @@ import { HMWoundItem } from './wound-item.js';
 import { SYSTEM_ID } from '../tables/constants.js';
 
 const handler = {
-    construct(_actor, args) {
+    construct(_item, args) {
         if (args[0]?.type === 'armor') return new HMArmorItem(...args);
         if (args[0]?.type === 'cclass') return new HMClassItem(...args);
         if (args[0]?.type === 'currency') return new HMCurrencyItem(...args);

@@ -23,10 +23,6 @@
 }
 
 .card {
-    .foobar {
-        color: red;
-    }
-
     border: $card_border solid $c-grey;
     border-top-left-radius: $card-border-radius; 
     border-bottom-left-radius: $card-border-radius; 
