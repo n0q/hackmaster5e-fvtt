@@ -576,6 +576,7 @@
         "initiative":   "Initiative",
         "innate":       "Innate",
         "inventory":    "Inventory",
+        "issuer":       "Issuer",
         "jab":          "Jab",
         "knockback":    "Knockback",
         "knockout":     "Knock Out",
@@ -680,6 +681,10 @@
         "wranges":      "Weapon Ranges",
         "weight":       "Weight",
         "wound":        "Wound",
+
+
+        "ccurrency":    "Carried Currency",
+        "tcurrency":    "Total Currency",
 
         "raw":          "Raw",
         "racial":       "Racial",
