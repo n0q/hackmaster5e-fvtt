@@ -1,0 +1,72 @@
+{
+  "name": "Human",
+  "type": "race",
+  "img": "icons/environment/people/group.webp",
+  "effects": [],
+  "folder": "CilUlWsBm5OqIAZT",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "adj": "Human",
+    "scale": {
+      "hp": "3",
+      "kb": "3",
+      "reach": "3",
+      "move": "3"
+    },
+    "bonus": {
+      "hp": 10,
+      "kb": 15,
+      "reach": 0,
+      "move": 1,
+      "def": null
+    },
+    "abilities": {
+      "str": {
+        "value": 0,
+        "fvalue": 0
+      },
+      "int": {
+        "value": 0,
+        "fvalue": 0
+      },
+      "wis": {
+        "value": 0,
+        "fvalue": 0
+      },
+      "dex": {
+        "value": 0,
+        "fvalue": 0
+      },
+      "con": {
+        "value": 0,
+        "fvalue": 0
+      },
+      "lks": {
+        "value": 0,
+        "fvalue": 0
+      },
+      "cha": {
+        "value": 0,
+        "fvalue": 0
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688863357446,
+    "modifiedTime": 1688863357446,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "R3x5rnYFSjLkxQWO",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!R3x5rnYFSjLkxQWO"
+}

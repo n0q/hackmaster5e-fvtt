@@ -1,0 +1,471 @@
+{
+  "name": "Fighter",
+  "type": "cclass",
+  "img": "icons/skills/melee/strike-sword-gray.webp",
+  "effects": [],
+  "folder": "twKHkLNCYFslTClk",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "level": 1,
+    "bonus": null,
+    "top_cf": "0.02",
+    "hp": 0,
+    "features": {
+      "sp": false,
+      "atk": true,
+      "def": false,
+      "spd": true,
+      "spdm": false,
+      "spdr": false,
+      "init": true,
+      "back": false,
+      "luck": false,
+      "assn": false
+    },
+    "caps": {
+      "fcast": false,
+      "hprof": false
+    },
+    "ptable": {
+      "1": {
+        "hp": {
+          "value": null,
+          "die": "1d10",
+          "reroll": false
+        },
+        "atk": {
+          "value": 0
+        },
+        "spd": {
+          "value": 0
+        },
+        "init": {
+          "value": 0
+        },
+        "back": {
+          "value": ""
+        },
+        "luck": {
+          "value": null
+        }
+      },
+      "2": {
+        "hp": {
+          "die": "1d10",
+          "reroll": true
+        },
+        "atk": {
+          "value": 1
+        },
+        "spd": {
+          "value": 0
+        },
+        "init": {
+          "value": 0
+        },
+        "back": {
+          "value": ""
+        },
+        "luck": {
+          "value": null
+        }
+      },
+      "3": {
+        "hp": {
+          "die": "1d10",
+          "reroll": false
+        },
+        "atk": {
+          "value": 1
+        },
+        "spd": {
+          "value": 0
+        },
+        "init": {
+          "value": 0
+        },
+        "back": {
+          "value": ""
+        },
+        "luck": {
+          "value": null
+        }
+      },
+      "4": {
+        "hp": {
+          "die": "1d10",
+          "reroll": true
+        },
+        "atk": {
+          "value": 2
+        },
+        "spd": {
+          "value": 0
+        },
+        "init": {
+          "value": 0
+        },
+        "back": {
+          "value": ""
+        },
+        "luck": {
+          "value": null
+        }
+      },
+      "5": {
+        "hp": {
+          "die": "1d10",
+          "reroll": false
+        },
+        "atk": {
+          "value": 2
+        },
+        "spd": {
+          "value": -1
+        },
+        "init": {
+          "value": 0
+        },
+        "back": {
+          "value": ""
+        },
+        "luck": {
+          "value": null
+        }
+      },
+      "6": {
+        "hp": {
+          "die": "1d10",
+          "reroll": true
+        },
+        "atk": {
+          "value": 3
+        },
+        "spd": {
+          "value": -1
+        },
+        "init": {
+          "value": -1
+        },
+        "back": {
+          "value": ""
+        },
+        "luck": {
+          "value": null
+        }
+      },
+      "7": {
+        "hp": {
+          "die": "1d10",
+          "reroll": false
+        },
+        "atk": {
+          "value": 3
+        },
+        "spd": {
+          "value": -1
+        },
+        "init": {
+          "value": -1
+        },
+        "back": {
+          "value": ""
+        },
+        "luck": {
+          "value": null
+        }
+      },
+      "8": {
+        "hp": {
+          "die": "1d10",
+          "reroll": true
+        },
+        "atk": {
+          "value": 4
+        },
+        "spd": {
+          "value": -1
+        },
+        "init": {
+          "value": -1
+        },
+        "back": {
+          "value": ""
+        },
+        "luck": {
+          "value": null
+        }
+      },
+      "9": {
+        "hp": {
+          "die": "1d10",
+          "reroll": false
+        },
+        "atk": {
+          "value": 4
+        },
+        "spd": {
+          "value": -2
+        },
+        "init": {
+          "value": -1
+        },
+        "back": {
+          "value": ""
+        },
+        "luck": {
+          "value": null
+        }
+      },
+      "10": {
+        "hp": {
+          "die": "1d10",
+          "reroll": true
+        },
+        "atk": {
+          "value": 5
+        },
+        "spd": {
+          "value": -2
+        },
+        "init": {
+          "value": -1
+        },
+        "back": {
+          "value": ""
+        },
+        "luck": {
+          "value": null
+        }
+      },
+      "11": {
+        "hp": {
+          "die": "1d10",
+          "reroll": false
+        },
+        "atk": {
+          "value": 5
+        },
+        "spd": {
+          "value": -2
+        },
+        "init": {
+          "value": -1
+        },
+        "back": {
+          "value": ""
+        },
+        "luck": {
+          "value": null
+        }
+      },
+      "12": {
+        "hp": {
+          "die": "1d10",
+          "reroll": true
+        },
+        "atk": {
+          "value": 6
+        },
+        "spd": {
+          "value": -2
+        },
+        "init": {
+          "value": -2
+        },
+        "back": {
+          "value": ""
+        },
+        "luck": {
+          "value": null
+        }
+      },
+      "13": {
+        "hp": {
+          "die": "1d10",
+          "reroll": false
+        },
+        "atk": {
+          "value": 6
+        },
+        "spd": {
+          "value": -2
+        },
+        "init": {
+          "value": -2
+        },
+        "back": {
+          "value": ""
+        },
+        "luck": {
+          "value": null
+        }
+      },
+      "14": {
+        "hp": {
+          "die": "1d10",
+          "reroll": true
+        },
+        "atk": {
+          "value": 7
+        },
+        "spd": {
+          "value": -3
+        },
+        "init": {
+          "value": -2
+        },
+        "back": {
+          "value": ""
+        },
+        "luck": {
+          "value": null
+        }
+      },
+      "15": {
+        "hp": {
+          "die": "1d10",
+          "reroll": false
+        },
+        "atk": {
+          "value": 7
+        },
+        "spd": {
+          "value": -3
+        },
+        "init": {
+          "value": -2
+        },
+        "back": {
+          "value": ""
+        },
+        "luck": {
+          "value": null
+        }
+      },
+      "16": {
+        "hp": {
+          "die": "1d10",
+          "reroll": true
+        },
+        "atk": {
+          "value": 8
+        },
+        "spd": {
+          "value": -3
+        },
+        "init": {
+          "value": -2
+        },
+        "back": {
+          "value": ""
+        },
+        "luck": {
+          "value": null
+        }
+      },
+      "17": {
+        "hp": {
+          "die": "1d10",
+          "reroll": false
+        },
+        "atk": {
+          "value": 8
+        },
+        "spd": {
+          "value": -3
+        },
+        "init": {
+          "value": -2
+        },
+        "back": {
+          "value": ""
+        },
+        "luck": {
+          "value": null
+        }
+      },
+      "18": {
+        "hp": {
+          "die": "1d10",
+          "reroll": true
+        },
+        "atk": {
+          "value": 9
+        },
+        "spd": {
+          "value": -3
+        },
+        "init": {
+          "value": -2
+        },
+        "back": {
+          "value": ""
+        },
+        "luck": {
+          "value": null
+        }
+      },
+      "19": {
+        "hp": {
+          "die": "1d10",
+          "reroll": false
+        },
+        "atk": {
+          "value": 9
+        },
+        "spd": {
+          "value": -3
+        },
+        "init": {
+          "value": -3
+        },
+        "back": {
+          "value": ""
+        },
+        "luck": {
+          "value": null
+        }
+      },
+      "20": {
+        "hp": {
+          "die": "1d10",
+          "reroll": true
+        },
+        "atk": {
+          "value": 10
+        },
+        "spd": {
+          "value": -4
+        },
+        "init": {
+          "value": -3
+        },
+        "back": {
+          "value": ""
+        },
+        "luck": {
+          "value": null
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688862764876,
+    "modifiedTime": 1688862766905,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "3Ej6TTeVTnH2nhYZ",
+  "sort": 300000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!3Ej6TTeVTnH2nhYZ"
+}

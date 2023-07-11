@@ -1,0 +1,54 @@
+{
+  "name": "Arrow, Longbow",
+  "type": "item",
+  "img": "icons/weapons/ammunition/arrow-simple.webp",
+  "system": {
+    "description": "",
+    "state": 0,
+    "weight": 0.125,
+    "price": "2 sp",
+    "avail": {
+      "high": 75,
+      "med": 70,
+      "low": 65
+    },
+    "container": {
+      "enabled": false,
+      "type": 0,
+      "capacity": 0,
+      "_manifest": []
+    },
+    "qidx": "3",
+    "qty": 20
+  },
+  "effects": [],
+  "flags": {
+    "scene-packer": {
+      "hash": "87b288255b8d6ee8f01028f1bf1fa06cc60c10e8",
+      "sourceId": "Item.tRaLuChzqCy4yXhe"
+    },
+    "core": {},
+    "exportSource": {
+      "world": "send-in-the-mob",
+      "system": "hackmaster5e",
+      "coreVersion": "10.290",
+      "systemVersion": "0.2.33"
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1669247355354,
+    "modifiedTime": 1688862886913,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "folder": "aXJYcFpbrAwf8XHZ",
+  "_id": "wyGyH8uUd3wrMbf9",
+  "sort": 3000000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!wyGyH8uUd3wrMbf9"
+}

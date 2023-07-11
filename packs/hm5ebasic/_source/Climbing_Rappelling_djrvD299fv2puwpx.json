@@ -1,0 +1,57 @@
+{
+  "name": "Climbing/Rappelling",
+  "type": "skill",
+  "img": "icons/sundries/survival/leather-strap-brown.webp",
+  "effects": [],
+  "folder": "NTUq2SI8rPwmDcPy",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "bonus": {
+      "total": {
+        "value": 0,
+        "literacy": 0,
+        "verbal": 0
+      },
+      "mastery": {
+        "value": 0,
+        "literacy": 0,
+        "verbal": 0
+      }
+    },
+    "bp": 6,
+    "specialty": {
+      "checked": false,
+      "value": null
+    },
+    "universal": true,
+    "tools": false,
+    "language": false,
+    "relevant": {
+      "str": true,
+      "int": false,
+      "wis": false,
+      "dex": true,
+      "con": false,
+      "lks": false,
+      "cha": false
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688863602626,
+    "modifiedTime": 1689022115891,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "djrvD299fv2puwpx",
+  "sort": 2600000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!djrvD299fv2puwpx"
+}

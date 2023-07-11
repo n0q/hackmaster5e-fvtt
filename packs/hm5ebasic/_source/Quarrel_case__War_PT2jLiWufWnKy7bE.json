@@ -1,0 +1,44 @@
+{
+  "name": "Quarrel case, War",
+  "type": "item",
+  "img": "icons/containers/ammunition/arrows-quiver-simple-brown.webp",
+  "effects": [],
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "state": 0,
+    "weight": 2,
+    "price": "8 cp",
+    "avail": {
+      "high": 80,
+      "med": 75,
+      "low": 70
+    },
+    "container": {
+      "enabled": true,
+      "type": 2,
+      "capacity": 32,
+      "_manifest": []
+    },
+    "qidx": "3",
+    "qty": 1
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1664221864002,
+    "modifiedTime": 1688862886913,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "folder": "aXJYcFpbrAwf8XHZ",
+  "_id": "PT2jLiWufWnKy7bE",
+  "sort": 900000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!PT2jLiWufWnKy7bE"
+}

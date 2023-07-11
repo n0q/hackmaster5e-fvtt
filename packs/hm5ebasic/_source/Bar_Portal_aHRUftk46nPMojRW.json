@@ -1,0 +1,43 @@
+{
+  "name": "Bar Portal",
+  "type": "spell",
+  "img": "icons/commodities/metal/chain-steel.webp",
+  "effects": [],
+  "folder": "cpFjPtcuKG8ClW1o",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<div><p>Range: <strong>60 feet<br></strong>Area of Effect: <strong>20 sq. feet<br></strong>Duration: <strong>1 minute<br></strong>Saving Throw: <strong>None</strong></p></div><div><hr></div><div><p><strong>Additional Spell Point schedule:<br></strong>Increase Range: 1 SP/5 ft (max 200 ft)<br>Increase Area of Effect: 15 SP/20 sq. ft<br>Increase Duration: 20 SP/minute</p></div><hr><p> </p>",
+    "divine": false,
+    "component": {
+      "verbal": true,
+      "somatic": true,
+      "material": false,
+      "catalyst": false,
+      "divine": false
+    },
+    "save": {
+      "type": 0,
+      "action": 0
+    },
+    "speed": 1,
+    "prepped": 0,
+    "lidx": "1"
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688864042785,
+    "modifiedTime": 1688864231943,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "aHRUftk46nPMojRW",
+  "sort": 3700000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!aHRUftk46nPMojRW"
+}

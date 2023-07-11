@@ -1,0 +1,43 @@
+{
+  "name": "Amplify Illumination",
+  "type": "spell",
+  "img": "icons/magic/light/torch-fire-orange.webp",
+  "effects": [],
+  "folder": "cpFjPtcuKG8ClW1o",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<div><p>Range: <strong>1 foot<br></strong>Volume of Effect: <strong>1 light source<br></strong>Duration: <strong>10 minutes<br></strong>Saving Throw: <em><strong>None</strong></em></p><hr></div><div><p><strong>Additional Spell Point schedule: <br></strong>Extend Duration: 1 SP/minute (no limit)<br>Extend Radius: 15 SP/additional 50% radius <br>(maximum 300% of original)</p></div><hr><p></p>",
+    "divine": false,
+    "component": {
+      "verbal": true,
+      "somatic": true,
+      "material": false,
+      "catalyst": false,
+      "divine": false
+    },
+    "save": {
+      "type": 0,
+      "action": 0
+    },
+    "speed": 1,
+    "prepped": 0,
+    "lidx": "0"
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688864040839,
+    "modifiedTime": 1688864231943,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "gxk3SQMLazBIqZno",
+  "sort": 3500000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!gxk3SQMLazBIqZno"
+}

@@ -1,0 +1,103 @@
+{
+  "name": "Axe, Throwing",
+  "type": "weapon",
+  "img": "icons/weapons/axes/axe-broad-engraved.webp",
+  "effects": [],
+  "folder": "WJ8CJJT3HasPiIvN",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "state": 0,
+    "weight": 2,
+    "price": "3 sp",
+    "avail": {
+      "high": 90,
+      "med": 85,
+      "low": 80
+    },
+    "innate": false,
+    "proficiency": "Throwing Axes",
+    "scale": "2",
+    "skill": "medium",
+    "bonus": {
+      "total": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 0,
+        "jspd": 0
+      },
+      "base": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 7,
+        "jspd": 0
+      },
+      "mod": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 0
+      },
+      "misc": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 0
+      }
+    },
+    "dmg": {
+      "normal": "d4p + d6p",
+      "shield": "d4p",
+      "type": "hacking"
+    },
+    "jab": {
+      "normal": "",
+      "shield": "",
+      "checked": false
+    },
+    "caps": {},
+    "req": {
+      "str": 7
+    },
+    "qn": 0,
+    "reach": 0,
+    "defdie": "0",
+    "ranged": {
+      "checked": true,
+      "reach": {
+        "0": 5,
+        "1": 20,
+        "2": 30,
+        "3": 40,
+        "4": 60
+      },
+      "timing": {
+        "load": 0,
+        "draw": 2,
+        "aim": 4,
+        "fire": 0,
+        "recover": 1
+      },
+      "mechanical": false
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688864448827,
+    "modifiedTime": 1689022793022,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "SD73p3hnTagJB2Gc",
+  "sort": 100000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!SD73p3hnTagJB2Gc"
+}

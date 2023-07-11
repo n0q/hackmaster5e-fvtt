@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+### Removed
+- Foundry v10 API support.
+### Changed
+- Basic compendium converted to use v11 compendium folders.
+
 ## [0.3.30] - 2023-07-07
 ### Fixed
 - Issue with Currency Items breaking after updating the game without restarting Foundry.

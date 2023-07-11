@@ -1,0 +1,43 @@
+{
+  "name": "Moderate Emotion: Cause Fear",
+  "type": "spell",
+  "img": "icons/magic/control/energy-stream-link-orange.webp",
+  "effects": [],
+  "folder": "JPubesCxoswyWJ3Z",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<div><p>Range: <strong>5 feet per level of the cleric<br></strong>Volume of Effect: <strong>1 creature<br></strong>Duration: <strong>1d4p minutes plus 1 minute per cleric level<br></strong>Saving Throw: <em><strong>negates (Mental)</strong></em></p></div><hr><p> </p>",
+    "divine": true,
+    "component": {
+      "verbal": true,
+      "somatic": true,
+      "material": false,
+      "catalyst": false,
+      "divine": false
+    },
+    "save": {
+      "type": "3",
+      "action": 0
+    },
+    "speed": 4,
+    "prepped": 0,
+    "lidx": "2"
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688863889082,
+    "modifiedTime": 1688863895807,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "P4vEkLZhcpeuRR9a",
+  "sort": 500000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!P4vEkLZhcpeuRR9a"
+}

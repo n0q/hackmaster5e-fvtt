@@ -1,0 +1,43 @@
+{
+  "name": "Skipping Betty Fireball",
+  "type": "spell",
+  "img": "icons/magic/fire/explosion-flame-lightning-strike.webp",
+  "effects": [],
+  "folder": "cpFjPtcuKG8ClW1o",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<div><p>Range: <strong>Special<br></strong>Volume of Effect: <strong>Individual(s)<br></strong>Duration: <strong>10 skips<br></strong>Saving Throw: <em><strong>DODGE Evades (no damage)</strong></em></p></div><div><hr></div><div><p><strong>Additional Spell Point schedule:<br></strong>Increase Potency of Fireball: 20 SP per d4p (maximum 10d4p)<br>Increase Duration: 10 SP/skip</p></div><hr><p> </p>",
+    "divine": false,
+    "component": {
+      "verbal": true,
+      "somatic": true,
+      "material": false,
+      "catalyst": false,
+      "divine": false
+    },
+    "save": {
+      "type": "4",
+      "action": "2"
+    },
+    "speed": 2,
+    "prepped": 0,
+    "lidx": "5"
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688864214488,
+    "modifiedTime": 1688864231943,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "jmOOgbvD7RSbwlDb",
+  "sort": 100000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!jmOOgbvD7RSbwlDb"
+}

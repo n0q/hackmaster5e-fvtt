@@ -1,0 +1,72 @@
+{
+  "name": "Dwarf",
+  "type": "race",
+  "img": "icons/environment/people/group.webp",
+  "effects": [],
+  "folder": "CilUlWsBm5OqIAZT",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "adj": "Dwarven",
+    "scale": {
+      "hp": "3",
+      "kb": "4",
+      "reach": "2",
+      "move": "2"
+    },
+    "bonus": {
+      "hp": 10,
+      "kb": 20,
+      "reach": -1,
+      "move": 0.5,
+      "def": null
+    },
+    "abilities": {
+      "str": {
+        "value": 0,
+        "fvalue": 0
+      },
+      "int": {
+        "value": 0,
+        "fvalue": 0
+      },
+      "wis": {
+        "value": 0,
+        "fvalue": 0
+      },
+      "dex": {
+        "value": 0,
+        "fvalue": 0
+      },
+      "con": {
+        "value": 4,
+        "fvalue": 0
+      },
+      "lks": {
+        "value": -2,
+        "fvalue": 0
+      },
+      "cha": {
+        "value": -2,
+        "fvalue": 0
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688863351684,
+    "modifiedTime": 1688863355505,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "h0lw6F1CTQwHvj0z",
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!h0lw6F1CTQwHvj0z"
+}

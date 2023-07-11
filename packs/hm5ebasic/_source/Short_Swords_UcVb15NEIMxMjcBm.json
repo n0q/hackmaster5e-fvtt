@@ -1,0 +1,42 @@
+{
+  "name": "Short Swords",
+  "type": "proficiency",
+  "img": "icons/weapons/swords/shortsword-guard-brass.webp",
+  "effects": [],
+  "flags": {},
+  "system": {
+    "description": "",
+    "bonus": {
+      "atk": 0,
+      "def": 0,
+      "dmg": 0,
+      "spd": 0
+    },
+    "skill": "low",
+    "weapon": {
+      "checked": true
+    },
+    "ranged": {
+      "checked": false
+    },
+    "mechanical": {
+      "checked": false
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1664221894895,
+    "modifiedTime": 1688862919871,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "folder": "G4zFlEQld7NivOKQ",
+  "_id": "UcVb15NEIMxMjcBm",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!UcVb15NEIMxMjcBm"
+}

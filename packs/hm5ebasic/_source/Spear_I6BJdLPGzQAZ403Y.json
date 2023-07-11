@@ -1,0 +1,96 @@
+{
+  "name": "Spear",
+  "type": "weapon",
+  "img": "icons/weapons/polearms/spear-hooked-simple-blue.webp",
+  "effects": [],
+  "folder": "QwQmMG0GWSXCH4JC",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "state": 0,
+    "weight": 4,
+    "price": "2 sp",
+    "avail": {
+      "high": 95,
+      "med": 90,
+      "low": 85
+    },
+    "innate": false,
+    "proficiency": "Spears",
+    "scale": "4",
+    "skill": "low",
+    "bonus": {
+      "total": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 0,
+        "jspd": 0
+      },
+      "base": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 12,
+        "jspd": 8
+      },
+      "mod": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 0
+      }
+    },
+    "dmg": {
+      "normal": "2d6p + 3",
+      "shield": "{d6p,d6p}kl",
+      "type": "hacking"
+    },
+    "jab": {
+      "normal": "",
+      "shield": "",
+      "checked": true
+    },
+    "caps": {
+      "2": {
+        "checked": false
+      },
+      "5": {
+        "checked": true
+      }
+    },
+    "req": {
+      "str": 9
+    },
+    "qn": 0,
+    "reach": 13,
+    "defdie": "1",
+    "ranged": {
+      "checked": false,
+      "reach": {
+        "0": 5,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688864505287,
+    "modifiedTime": 1689022817102,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "I6BJdLPGzQAZ403Y",
+  "sort": 1600000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!I6BJdLPGzQAZ403Y"
+}

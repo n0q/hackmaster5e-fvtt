@@ -1,0 +1,96 @@
+{
+  "name": "Warhammer",
+  "type": "weapon",
+  "img": "icons/weapons/hammers/hammer-war-rounding.webp",
+  "effects": [],
+  "folder": "QwQmMG0GWSXCH4JC",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "state": 0,
+    "weight": 2.5,
+    "price": "2 sp",
+    "avail": {
+      "high": 90,
+      "med": 85,
+      "low": 80
+    },
+    "innate": false,
+    "proficiency": "Warhammers",
+    "scale": "2",
+    "skill": "low",
+    "bonus": {
+      "total": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 0,
+        "jspd": 0
+      },
+      "base": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 8,
+        "jspd": 0
+      },
+      "mod": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 0
+      }
+    },
+    "dmg": {
+      "normal": "2d6p",
+      "shield": "d6p",
+      "type": "crushing"
+    },
+    "jab": {
+      "normal": "",
+      "shield": "",
+      "checked": false
+    },
+    "caps": {
+      "2": {
+        "checked": false
+      },
+      "5": {
+        "checked": false
+      }
+    },
+    "req": {
+      "str": 9
+    },
+    "qn": 0,
+    "reach": 1.5,
+    "defdie": "0",
+    "ranged": {
+      "checked": false,
+      "reach": {
+        "0": 5,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688864514213,
+    "modifiedTime": 1689022821860,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "pAZpKz50Z0Lsj5v9",
+  "sort": 150000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!pAZpKz50Z0Lsj5v9"
+}

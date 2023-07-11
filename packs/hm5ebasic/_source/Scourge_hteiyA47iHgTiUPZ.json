@@ -1,0 +1,96 @@
+{
+  "name": "Scourge",
+  "type": "weapon",
+  "img": "icons/weapons/misc/whip-red-yellow.webp",
+  "effects": [],
+  "folder": "QwQmMG0GWSXCH4JC",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "state": 0,
+    "weight": 2,
+    "price": "1 sp",
+    "avail": {
+      "high": 85,
+      "med": 80,
+      "low": 75
+    },
+    "innate": false,
+    "proficiency": "Scourges",
+    "scale": "2",
+    "skill": "low",
+    "bonus": {
+      "total": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 0,
+        "jspd": 0
+      },
+      "base": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 9,
+        "jspd": 0
+      },
+      "mod": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 0
+      }
+    },
+    "dmg": {
+      "normal": "2d4p",
+      "shield": "0",
+      "type": "hacking"
+    },
+    "jab": {
+      "normal": "",
+      "shield": "",
+      "checked": false
+    },
+    "caps": {
+      "2": {
+        "checked": false
+      },
+      "5": {
+        "checked": false
+      }
+    },
+    "req": {
+      "str": 4
+    },
+    "qn": 0,
+    "reach": 1.5,
+    "defdie": "0",
+    "ranged": {
+      "checked": false,
+      "reach": {
+        "0": 5,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688864493779,
+    "modifiedTime": 1689022810605,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "hteiyA47iHgTiUPZ",
+  "sort": 1400000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!hteiyA47iHgTiUPZ"
+}

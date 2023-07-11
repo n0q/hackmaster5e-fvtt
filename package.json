@@ -1,6 +1,7 @@
 {
   "devDependencies": {
     "@babel/eslint-parser": "^7.17.0",
+    "@foundryvtt/foundryvtt-cli": "^0.0.9",
     "@typhonjs-fvtt/eslint-config-foundry.js": "^0.8.0",
     "eslint-config-airbnb": "^18.2.1",
     "gulp": "^4.0.2",

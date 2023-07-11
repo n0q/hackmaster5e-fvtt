@@ -1,0 +1,43 @@
+{
+  "name": "Cure Trifling Wound",
+  "type": "spell",
+  "img": "icons/magic/life/heart-cross-purple-orange.webp",
+  "effects": [],
+  "folder": "JPubesCxoswyWJ3Z",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<div><p>Range: <strong>Touch<br></strong>Volume of Effect: <strong>1 creature<br></strong>Duration: <strong>Permanent<br></strong>Saving Throw: <em><strong>none</strong></em></p><hr></div><table border=\"1\"><thead><tr style=\"text-align: center;\"><td><em><strong>HP restored</strong></em></td><td><p><em><strong>HP restored</strong></em></p><p>(annointed followers)</p></td></tr></thead><tbody><tr style=\"text-align: center;\"><td>d3p</td><td>d4p</td></tr></tbody></table>",
+    "divine": true,
+    "component": {
+      "verbal": true,
+      "somatic": true,
+      "material": false,
+      "catalyst": false,
+      "divine": false
+    },
+    "save": {
+      "type": 0,
+      "action": 0
+    },
+    "speed": 3,
+    "prepped": 0,
+    "lidx": "2"
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688863804562,
+    "modifiedTime": 1688863895807,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "blMWV6aAq23d6NzQ",
+  "sort": 3100000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!blMWV6aAq23d6NzQ"
+}
