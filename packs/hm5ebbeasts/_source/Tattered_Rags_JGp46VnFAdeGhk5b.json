@@ -1,0 +1,68 @@
+{
+  "_id": "JGp46VnFAdeGhk5b",
+  "name": "Tattered Rags",
+  "type": "armor",
+  "img": "icons/equipment/chest/shirt-simple-grey.webp",
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {
+    "core": {
+      "sourceId": "Compendium.world.armors.meZmBjXaAeY9GwCU"
+    }
+  },
+  "system": {
+    "description": "",
+    "state": 2,
+    "weight": 5,
+    "price": "5 cp",
+    "avail": {
+      "high": 100,
+      "med": 85,
+      "low": 70
+    },
+    "armortype": "light",
+    "proficiency": "Light Armors",
+    "bonus": {
+      "total": {
+        "dr": 1,
+        "def": -1,
+        "init": 0,
+        "spd": 0,
+        "move": 1
+      },
+      "base": {
+        "dr": 1,
+        "def": -1,
+        "init": 0,
+        "spd": 0,
+        "move": 1
+      },
+      "mod": {
+        "dr": 0,
+        "def": 0,
+        "init": 0,
+        "spd": 0,
+        "move": 0
+      }
+    },
+    "qn": 0,
+    "shield": {
+      "checked": false
+    }
+  },
+  "ownership": {
+    "default": 0,
+    "9BV8kpaEbvqHiGtI": 3,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "10.290",
+    "createdTime": 1669794628071,
+    "modifiedTime": 1669794662765,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_key": "!actors.items!Nj0cg0XfZFVEUEvT.JGp46VnFAdeGhk5b"
+}

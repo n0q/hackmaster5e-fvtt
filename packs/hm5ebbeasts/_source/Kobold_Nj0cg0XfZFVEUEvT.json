@@ -1,0 +1,154 @@
+{
+  "name": "Kobold",
+  "type": "beast",
+  "img": "icons/svg/mystery-man.svg",
+  "system": {
+    "sp": {
+      "value": 0,
+      "max": 0
+    },
+    "bonus": {
+      "total": {},
+      "misc": {
+        "_idx": {
+          "tenacity": 4
+        },
+        "will": null,
+        "sp": null,
+        "fos": null,
+        "foa": null,
+        "physical": 2,
+        "mental": 1,
+        "dodge": 2,
+        "poison": null,
+        "trauma": 4,
+        "atk": 2,
+        "def": 1,
+        "spd": -1,
+        "dmg": -3,
+        "init": 3,
+        "dr": 1,
+        "reach": -1,
+        "fatigue": null
+      }
+    },
+    "bio": {
+      "desc": "",
+      "tactics": "",
+      "habitat": "",
+      "ecology": ""
+    },
+    "hp": {
+      "value": 0,
+      "max": null,
+      "formula": "13+d4"
+    },
+    "scale": 2,
+    "level": 1,
+    "movespd": {
+      "gnd": {
+        "crawl": 1.25,
+        "walk": 2.5,
+        "jog": 5,
+        "run": 7.5,
+        "sprint": 10
+      }
+    },
+    "cslevel": ""
+  },
+  "prototypeToken": {
+    "name": "Kobold",
+    "displayName": 50,
+    "actorLink": false,
+    "texture": {
+      "src": "icons/svg/mystery-man.svg",
+      "scaleX": 1,
+      "scaleY": 1,
+      "offsetX": 0,
+      "offsetY": 0,
+      "rotation": 0,
+      "tint": null
+    },
+    "width": 1,
+    "height": 1,
+    "lockRotation": false,
+    "rotation": 0,
+    "alpha": 1,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    },
+    "bar2": {
+      "attribute": null
+    },
+    "light": {
+      "alpha": 0.5,
+      "angle": 360,
+      "bright": 0,
+      "color": null,
+      "coloration": 1,
+      "dim": 0,
+      "attenuation": 0.5,
+      "luminosity": 0.5,
+      "saturation": 0,
+      "contrast": 0,
+      "shadows": 0,
+      "animation": {
+        "type": null,
+        "speed": 5,
+        "intensity": 5,
+        "reverse": false
+      },
+      "darkness": {
+        "min": 0,
+        "max": 1
+      }
+    },
+    "sight": {
+      "enabled": false,
+      "range": null,
+      "angle": 360,
+      "visionMode": "basic",
+      "color": null,
+      "attenuation": 0.1,
+      "brightness": 0,
+      "saturation": 0,
+      "contrast": 0
+    },
+    "detectionModes": [],
+    "flags": {},
+    "randomImg": false
+  },
+  "items": [
+    "8EjDe6Ixk7J9ZvBw",
+    "iw7KxZzUP2yXKA4T",
+    "JGp46VnFAdeGhk5b",
+    "RvIRwlFCVwhXCKo5"
+  ],
+  "effects": [],
+  "flags": {
+    "core": {
+      "sourceId": "Actor.w0XSfQe0pNqFc5Jl"
+    },
+    "hackmaster5e": {
+      "reachHint": "8EjDe6Ixk7J9ZvBw"
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "10.291",
+    "createdTime": 1669794535840,
+    "modifiedTime": 1670132692821,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_id": "Nj0cg0XfZFVEUEvT",
+  "_key": "!actors!Nj0cg0XfZFVEUEvT"
+}

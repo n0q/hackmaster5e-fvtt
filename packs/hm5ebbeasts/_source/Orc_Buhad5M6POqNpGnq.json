@@ -1,0 +1,156 @@
+{
+  "name": "Orc",
+  "type": "beast",
+  "img": "icons/svg/mystery-man.svg",
+  "system": {
+    "sp": {
+      "value": 0,
+      "max": 0
+    },
+    "bonus": {
+      "total": {},
+      "misc": {
+        "_idx": {
+          "tenacity": 3
+        },
+        "will": null,
+        "sp": null,
+        "fos": null,
+        "foa": null,
+        "physical": 4,
+        "mental": 1,
+        "dodge": 3,
+        "trauma": 6,
+        "poison": null,
+        "atk": 3,
+        "def": -1,
+        "spd": null,
+        "dmg": 2,
+        "init": 4,
+        "dr": null,
+        "reach": null,
+        "fatigue": null
+      }
+    },
+    "bio": {
+      "desc": "",
+      "tactics": "",
+      "habitat": "",
+      "ecology": ""
+    },
+    "hp": {
+      "value": 0,
+      "max": null,
+      "formula": "23 + d8"
+    },
+    "scale": 3,
+    "level": 1,
+    "movespd": {
+      "gnd": {
+        "crawl": 2.5,
+        "walk": 5,
+        "jog": 10,
+        "run": 15,
+        "sprint": 20
+      }
+    },
+    "cslevel": "all"
+  },
+  "prototypeToken": {
+    "name": "Orc",
+    "displayName": 50,
+    "actorLink": false,
+    "texture": {
+      "src": "icons/svg/mystery-man.svg",
+      "scaleX": 1,
+      "scaleY": 1,
+      "offsetX": 0,
+      "offsetY": 0,
+      "rotation": 0,
+      "tint": null
+    },
+    "width": 1,
+    "height": 1,
+    "lockRotation": false,
+    "rotation": 0,
+    "alpha": 1,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    },
+    "bar2": {
+      "attribute": null
+    },
+    "light": {
+      "alpha": 0.5,
+      "angle": 360,
+      "bright": 0,
+      "color": null,
+      "coloration": 1,
+      "dim": 0,
+      "attenuation": 0.5,
+      "luminosity": 0.5,
+      "saturation": 0,
+      "contrast": 0,
+      "shadows": 0,
+      "animation": {
+        "type": null,
+        "speed": 5,
+        "intensity": 5,
+        "reverse": false
+      },
+      "darkness": {
+        "min": 0,
+        "max": 1
+      }
+    },
+    "sight": {
+      "enabled": false,
+      "range": null,
+      "angle": 360,
+      "visionMode": "basic",
+      "color": null,
+      "attenuation": 0.1,
+      "brightness": 0,
+      "saturation": 0,
+      "contrast": 0
+    },
+    "detectionModes": [],
+    "flags": {},
+    "randomImg": false
+  },
+  "items": [
+    "cXSAxr8S3nt45T9l",
+    "MpmnoAE8eUDjsFQB",
+    "cPDlsrA7Y8TchNj8",
+    "heUIaqpPduoknT78",
+    "80H2wdVeu2X1F6EY",
+    "e6hBb7ar1C3XAtHy"
+  ],
+  "effects": [],
+  "flags": {
+    "hackmaster5e": {
+      "reachHint": "cPDlsrA7Y8TchNj8"
+    },
+    "core": {
+      "sourceId": "Actor.zRnOhI51mzgWv9gk"
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "10.291",
+    "createdTime": 1669795717754,
+    "modifiedTime": 1671763400304,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_id": "Buhad5M6POqNpGnq",
+  "_key": "!actors!Buhad5M6POqNpGnq"
+}
