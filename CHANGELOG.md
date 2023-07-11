@@ -7,6 +7,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Foundry v10 API support.
 ### Changed
 - Basic compendium converted to use v11 compendium folders.
+### Fixed
+- New currency items generated errors for unpriviledged users.
 
 ## [0.3.30] - 2023-07-07
 ### Fixed

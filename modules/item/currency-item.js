@@ -17,6 +17,7 @@ export class HMCurrencyItem extends HMItem {
 
     _prepCurrencyData() {
         const {system} = this;
+        if (!this.isOwner) return;
         if (!system?.coins || !Object.entries(system.coins).length) {
             const coins = {};
             Object.keys(COIN_CFG.coins).forEach((coin) => { coins[coin] = {qty: 0}; });
