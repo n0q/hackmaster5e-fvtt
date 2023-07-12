@@ -4,8 +4,8 @@
 # Serializes/deserializes leveldb into json using the fvtt conversion utility.
 
 wd=$(dirname "$0")
-SRC_DIR="$wd/_source"
-PACK_DIR="$wd/packs"
+SRC_DIR="$wd/../_source"
+PACK_DIR="$wd/../packs"
 
 getPacks() {
     packs=$(find "${1}" -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
