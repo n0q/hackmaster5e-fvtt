@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Basic compendium converted to use v11 compendium folders.
 ### Fixed
 - New currency items generated errors for unpriviledged users.
+- Status timers were not working correctly under v11.
 
 ## [0.3.30] - 2023-07-07
 ### Fixed

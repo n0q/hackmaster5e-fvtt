@@ -726,6 +726,7 @@
             "key":          "Key",
             "label":        "Label",
             "mode":         "Mode",
+            "name":         "Name",
             "priority":     "Pri",
             "showreach":    "Show Reach",
             "tequipped":    "Toggle Equipped",
