@@ -4,7 +4,12 @@
 # Serializes/deserializes leveldb into json using the fvtt conversion utility.
 
 wd=$(dirname "$0")
-packs=$(find "$wd/packs" -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
+SRC_DIR="$wd/_source"
+PACK_DIR="$wd/packs"
+
+getPacks() {
+    packs=$(find "${1}" -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
+}
 
 showhelp() {
     echo -e "Serializes or deserializes leveldb to json.\n"
@@ -14,19 +19,22 @@ showhelp() {
 }
 
 serialize() {
+    getPacks "$SRC_DIR"
+    [ -d "$PACK_DIR" ] || mkdir "$PACK_DIR"
     for pack in $packs; do
-        npx fvtt package pack -n $pack                  \
-            --inputDirectory "$wd/packs/$pack/_source"  \
-            --outputDirectory "$wd/packs"
+        npx fvtt package pack -n $pack          \
+            --inputDirectory "$SRC_DIR/$pack"   \
+            --outputDirectory "$PACK_DIR"
     done
 }
 
 deserialize() {
+    getPacks "$PACK_DIR"
     for pack in $packs; do
-        rm -rf "$wd/packs/$pack/_source"
-        npx fvtt package unpack -n $pack                \
-            --inputDirectory "$wd/packs"                \
-            --outputDirectory "$wd/packs/$pack/_source"
+        [ -d "$SRC_DIR/$pack" ] || mkdir -p "$SRC_DIR/$pack"
+        npx fvtt package unpack -n $pack        \
+            --inputDirectory "$PACK_DIR"        \
+            --outputDirectory "$SRC_DIR/$pack"
     done
 }
 

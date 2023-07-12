@@ -28,7 +28,6 @@ jobs:
           gulp sass
           ./convert_leveldb.sh -s
           npm prune --production    
-          rm -rf packs/*/_source
           zip -r ./system.zip hm.js system.json template.json LICENSE README.md fonts/ lang/ modules/ packs/ styles/ templates/
 
     # Create a release for this specific version

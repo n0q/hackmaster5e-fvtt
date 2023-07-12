@@ -111,8 +111,7 @@ foundry
 !*/foundry
 
 # foundry packs
-packs/*
-!packs/*/_source/
+packs
 
 # style sheets
 *.css
