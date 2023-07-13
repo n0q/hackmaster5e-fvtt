@@ -13,7 +13,7 @@ module.exports = {
         'sourceType': 'module',
         'ecmaFeatures': {'jsx': true}
     },
-    'extends': ['airbnb', '@typhonjs-fvtt/eslint-config-foundry.js'],
+    'extends': ['airbnb'],
     'globals': {
         '$': false,
         'game': false,
