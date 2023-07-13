@@ -110,6 +110,9 @@ dist
 foundry
 !*/foundry
 
+# foundry packs
+packs
+
 # style sheets
 *.css
 

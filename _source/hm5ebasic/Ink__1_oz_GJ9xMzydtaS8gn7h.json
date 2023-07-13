@@ -1,0 +1,44 @@
+{
+  "name": "Ink, 1 oz",
+  "type": "item",
+  "img": "icons/tools/scribal/ink-quill-red.webp",
+  "effects": [],
+  "folder": "aXJYcFpbrAwf8XHZ",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "state": 0,
+    "weight": 0,
+    "price": "5 cp",
+    "avail": {
+      "high": 95,
+      "med": 85,
+      "low": 80
+    },
+    "container": {
+      "enabled": false,
+      "type": 0,
+      "capacity": 0,
+      "_manifest": []
+    },
+    "qidx": "3",
+    "qty": 1
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688862854787,
+    "modifiedTime": 1688862886913,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "GJ9xMzydtaS8gn7h",
+  "sort": 1200000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!GJ9xMzydtaS8gn7h"
+}

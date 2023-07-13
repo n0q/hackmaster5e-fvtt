@@ -1,0 +1,43 @@
+{
+  "name": "Alter Emotion: Frighten",
+  "type": "spell",
+  "img": "icons/magic/control/energy-stream-link-orange.webp",
+  "effects": [],
+  "folder": "JPubesCxoswyWJ3Z",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<div><p>Range: <strong>30 feet<br></strong>Volume of Effect: <strong>1 living creature<br></strong>Duration: <strong>1d4p+2 minutes<br></strong>Saving Throw: <em><strong>Negates (Mental)</strong></em></p></div><hr style=\"border-top: 1px solid var(--color-border-light-primary); border-bottom: 1px solid var(--color-border-light-highlight);\"><p> </p>",
+    "divine": true,
+    "component": {
+      "verbal": true,
+      "somatic": true,
+      "material": true,
+      "catalyst": false,
+      "divine": false
+    },
+    "save": {
+      "type": "3",
+      "action": 0
+    },
+    "speed": 3,
+    "prepped": 0,
+    "lidx": "3"
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688863769600,
+    "modifiedTime": 1688863895807,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "u6afrn9rHw9hurum",
+  "sort": 4600000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!u6afrn9rHw9hurum"
+}

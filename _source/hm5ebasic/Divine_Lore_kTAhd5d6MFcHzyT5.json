@@ -1,0 +1,57 @@
+{
+  "name": "Divine Lore",
+  "type": "skill",
+  "img": "icons/sundries/books/book-symbol-cross-blue.webp",
+  "effects": [],
+  "folder": "gmubRV5gQsbhAz5N",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "bonus": {
+      "total": {
+        "value": 0,
+        "literacy": 0,
+        "verbal": 0
+      },
+      "mastery": {
+        "value": 0,
+        "literacy": 0,
+        "verbal": 0
+      }
+    },
+    "bp": 10,
+    "specialty": {
+      "checked": false,
+      "value": null
+    },
+    "universal": false,
+    "tools": false,
+    "language": false,
+    "relevant": {
+      "str": false,
+      "int": false,
+      "wis": true,
+      "dex": false,
+      "con": false,
+      "lks": false,
+      "cha": false
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688863412804,
+    "modifiedTime": 1688863536358,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "kTAhd5d6MFcHzyT5",
+  "sort": 101563,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!kTAhd5d6MFcHzyT5"
+}

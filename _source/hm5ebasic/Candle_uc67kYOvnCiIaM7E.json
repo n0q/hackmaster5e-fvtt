@@ -1,0 +1,54 @@
+{
+  "name": "Candle",
+  "type": "item",
+  "img": "icons/sundries/lights/candle-unlit-tan.webp",
+  "system": {
+    "description": "",
+    "state": 0,
+    "weight": 0.0083333,
+    "price": "0.083 tc",
+    "avail": {
+      "high": 95,
+      "med": 90,
+      "low": 85
+    },
+    "container": {
+      "enabled": false,
+      "type": 0,
+      "capacity": 0,
+      "_manifest": []
+    },
+    "qidx": "3",
+    "qty": 1
+  },
+  "effects": [],
+  "flags": {
+    "scene-packer": {
+      "hash": "dd734ec16d482bb73fc857b1b81235e1d4ddc6d8",
+      "sourceId": "Item.Wc2BXGboF46sRq0C"
+    },
+    "core": {},
+    "exportSource": {
+      "world": "send-in-the-mob",
+      "system": "hackmaster5e",
+      "coreVersion": "10.290",
+      "systemVersion": "0.2.33"
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1669244501150,
+    "modifiedTime": 1688862886913,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "folder": "aXJYcFpbrAwf8XHZ",
+  "_id": "uc67kYOvnCiIaM7E",
+  "sort": 2100000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!uc67kYOvnCiIaM7E"
+}

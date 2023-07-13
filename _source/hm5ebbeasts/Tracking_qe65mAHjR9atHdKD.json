@@ -1,0 +1,60 @@
+{
+  "_id": "qe65mAHjR9atHdKD",
+  "name": "Tracking",
+  "type": "skill",
+  "img": "icons/creatures/abilities/paw-print-pair-purple.webp",
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {
+    "core": {
+      "sourceId": "Compendium.hackmaster5e.uskills.ot1J14PZ8nbm1uoM"
+    }
+  },
+  "system": {
+    "description": "",
+    "bonus": {
+      "total": {
+        "value": 50,
+        "literacy": 0,
+        "verbal": 0
+      },
+      "mastery": {
+        "value": 45,
+        "literacy": 0,
+        "verbal": 0
+      }
+    },
+    "bp": 7,
+    "specialty": {
+      "checked": false,
+      "value": null
+    },
+    "universal": true,
+    "tools": false,
+    "language": false,
+    "relevant": {
+      "str": false,
+      "int": false,
+      "wis": true,
+      "dex": false,
+      "con": false,
+      "lks": false,
+      "cha": false
+    }
+  },
+  "ownership": {
+    "default": 0,
+    "YT3vyFbQDsF30XLi": 3,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "10.290",
+    "createdTime": 1669795281972,
+    "modifiedTime": 1669795601213,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_key": "!actors.items!d2gEYoUh8sMyaAKl.qe65mAHjR9atHdKD"
+}

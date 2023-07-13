@@ -1,0 +1,43 @@
+{
+  "name": "Torchlight",
+  "type": "spell",
+  "img": "icons/magic/light/explosion-star-small-blue-yellow.webp",
+  "effects": [],
+  "folder": "cpFjPtcuKG8ClW1o",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<div><p>Range: <strong>100 feet<br></strong>Volume of Effect: <strong>30 foot radius<br></strong>Duration: <strong>10 minutes<br></strong>Saving Throw: <em><strong>not applicable</strong></em></p></div><div><hr></div><div><p><strong>Additional Spell Point schedule:<br></strong>Increase Range: 1 SP/feet<br>Increase Duration: 3 SP/minute</p></div><hr><p></p>",
+    "divine": false,
+    "component": {
+      "verbal": true,
+      "somatic": false,
+      "material": true,
+      "catalyst": false,
+      "divine": false
+    },
+    "save": {
+      "type": 0,
+      "action": 0
+    },
+    "speed": 1,
+    "prepped": 0,
+    "lidx": "3"
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688864224204,
+    "modifiedTime": 1688864231943,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "47SZ3dTAw7dZ7Q39",
+  "sort": 600000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!47SZ3dTAw7dZ7Q39"
+}

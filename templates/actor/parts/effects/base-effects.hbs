@@ -1,7 +1,7 @@
 <section class='hmstyle'>
 <table class='table-basic'>
     <thead>
-        <th style='text-align: left; padding-left: 5px;'>{{localize 'HM.UI.label'}}</th>
+        <th style='text-align: left; padding-left: 5px;'>{{localize 'HM.UI.name'}}</th>
         <th style='text-align: left;'>{{localize 'HM.type'}}</th>
         <th style='text-align: left;'>{{localize 'HM.UI.key'}}</th>
         <th style='text-align: left;'>{{localize 'HM.UI.value'}}</th>
@@ -13,7 +13,7 @@
 {{#each actor.collections.effects}}{{#with this}}
     {{#each changes}}
     <tr>
-        <td>{{../label}}</td>
+        <td>{{../name}}</td>
         <td>{{#if ../flags.core.statusId}}{{localize 'HM.seffect'}}
             {{else}}{{localize 'ITEM.TypeTalent'}}
             {{/if}}

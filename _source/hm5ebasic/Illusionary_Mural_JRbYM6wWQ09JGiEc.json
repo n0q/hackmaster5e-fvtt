@@ -1,0 +1,43 @@
+{
+  "name": "Illusionary Mural",
+  "type": "spell",
+  "img": "icons/magic/symbols/squares-3d-green.webp",
+  "effects": [],
+  "folder": "cpFjPtcuKG8ClW1o",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<div><p>Range: <strong>30 feet<br></strong>Area of Effect: <strong>100 square feet<br></strong>Duration: <strong>Special<br></strong>Saving Throw: <em><strong>MENTAL Negates</strong></em></p></div><div><hr></div><div><p><strong>Additional Spell Point schedule:<br></strong>Increase Area of Effect: 1 SP/ 5 sq. ft.</p></div><hr><p></p>",
+    "divine": false,
+    "component": {
+      "verbal": true,
+      "somatic": true,
+      "material": false,
+      "catalyst": false,
+      "divine": false
+    },
+    "save": {
+      "type": "3",
+      "action": 0
+    },
+    "speed": 10,
+    "prepped": 0,
+    "lidx": "0"
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688864071852,
+    "modifiedTime": 1688864231943,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "JRbYM6wWQ09JGiEc",
+  "sort": 2200000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!JRbYM6wWQ09JGiEc"
+}

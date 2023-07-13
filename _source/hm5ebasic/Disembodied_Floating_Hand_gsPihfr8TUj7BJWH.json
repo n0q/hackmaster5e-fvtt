@@ -1,0 +1,43 @@
+{
+  "name": "Disembodied Floating Hand",
+  "type": "spell",
+  "img": "icons/skills/melee/unarmed-punch-fist-yellow-red.webp",
+  "system": {
+    "description": "<div><p>Range: <strong>Personal</strong><br>Volume of Effect: <strong>120 foot radius from caster</strong><br>Duration: <strong>5 minutes</strong><br>Saving Throw: <em><strong>not applicable</strong></em></p></div><div><hr></div><div><p><strong>Additional Spell Point schedule:</strong><br>Increase Volume of Effect:  1 SP/foot<br>Increase Duration: 5 SP/10 seconds</p></div><hr><p> </p>",
+    "divine": false,
+    "component": {
+      "verbal": true,
+      "somatic": true,
+      "material": false,
+      "catalyst": false,
+      "divine": false
+    },
+    "save": {
+      "type": 0,
+      "action": 0
+    },
+    "speed": 1,
+    "prepped": 0,
+    "lidx": "6"
+  },
+  "effects": [],
+  "flags": {
+    "core": {}
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1666203455561,
+    "modifiedTime": 1688864231943,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "folder": "cpFjPtcuKG8ClW1o",
+  "_id": "gsPihfr8TUj7BJWH",
+  "sort": 3400000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!gsPihfr8TUj7BJWH"
+}

@@ -2,6 +2,17 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.3.31] - 2023-07-12
+### Removed
+- Foundry v10 API support.
+### Changed
+- Basic compendium converted to use v11 compendium folders.
+- Removed hyphen from Class and Level display in header for clarity.
+### Fixed
+- New currency items generated errors for unpriviledged users.
+- Status timers were not working correctly under v11.
+- Character sheet tabbed section scrolls if user's screen height cannot display the full sheet at once.
+
 ## [0.3.30] - 2023-07-07
 ### Fixed
 - Issue with Currency Items breaking after updating the game without restarting Foundry.

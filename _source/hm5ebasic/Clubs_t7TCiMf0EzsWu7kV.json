@@ -1,0 +1,44 @@
+{
+  "name": "Clubs",
+  "type": "proficiency",
+  "img": "icons/weapons/clubs/club-baton-blue.webp",
+  "effects": [],
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "bonus": {
+      "atk": 0,
+      "def": 0,
+      "dmg": 0,
+      "spd": 0
+    },
+    "skill": "minimal",
+    "weapon": {
+      "checked": true
+    },
+    "ranged": {
+      "checked": false
+    },
+    "mechanical": {
+      "checked": false
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1664221894883,
+    "modifiedTime": 1688862919871,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "folder": "G4zFlEQld7NivOKQ",
+  "_id": "t7TCiMf0EzsWu7kV",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!t7TCiMf0EzsWu7kV"
+}

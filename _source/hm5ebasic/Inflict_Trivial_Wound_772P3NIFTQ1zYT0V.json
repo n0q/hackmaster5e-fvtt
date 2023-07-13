@@ -1,0 +1,43 @@
+{
+  "name": "Inflict Trivial Wound",
+  "type": "spell",
+  "img": "icons/magic/symbols/runes-triangle-magenta.webp",
+  "effects": [],
+  "folder": "JPubesCxoswyWJ3Z",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<div><p>Range: <strong>Touch<br></strong>Volume of Effect: <strong>1 creature<br></strong>Duration: <strong>Permanent<br></strong>Saving Throw: <em><strong>none</strong></em></p><hr></div><table style=\"width: 276px; border-top: 1px solid var(--color-border-light-tertiary); border-bottom: 1px solid var(--color-border-light-tertiary);\" border=\"1\"><thead style=\"text-shadow: 1px 1px var(--color-shadow-dark); border-bottom: 1px solid var(--color-border-dark);\"><tr style=\"text-align: center;\"><td style=\"width: 272px;\"><em><strong>HP damage infliected</strong></em></td></tr></thead><tbody><tr style=\"text-align: center;\"><td style=\"width: 272px;\">d6p</td></tr></tbody></table>",
+    "divine": true,
+    "component": {
+      "verbal": true,
+      "somatic": true,
+      "material": false,
+      "catalyst": false,
+      "divine": false
+    },
+    "save": {
+      "type": 0,
+      "action": 0
+    },
+    "speed": 2,
+    "prepped": 0,
+    "lidx": "3"
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688863862601,
+    "modifiedTime": 1688863895807,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "772P3NIFTQ1zYT0V",
+  "sort": 1600000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!772P3NIFTQ1zYT0V"
+}

@@ -1,0 +1,97 @@
+{
+  "name": "Knife, Throwing",
+  "type": "weapon",
+  "img": "icons/weapons/thrown/dagger-ringed-steel.webp",
+  "effects": [],
+  "folder": "WJ8CJJT3HasPiIvN",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "state": 0,
+    "weight": 0.5,
+    "price": "1 sp",
+    "avail": {
+      "high": 80,
+      "med": 75,
+      "low": 70
+    },
+    "innate": false,
+    "proficiency": "Throwing Knives",
+    "scale": "2",
+    "skill": "medium",
+    "bonus": {
+      "total": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 0,
+        "jspd": 0
+      },
+      "base": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 6,
+        "jspd": 0
+      },
+      "mod": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 0
+      }
+    },
+    "dmg": {
+      "normal": "d6p",
+      "shield": "1",
+      "type": "hacking"
+    },
+    "jab": {
+      "normal": "",
+      "shield": "",
+      "checked": false
+    },
+    "caps": {},
+    "req": {
+      "str": 4
+    },
+    "qn": 0,
+    "reach": 0,
+    "defdie": "0",
+    "ranged": {
+      "checked": true,
+      "reach": {
+        "0": 5,
+        "1": 20,
+        "2": 30,
+        "3": 40,
+        "4": 50
+      },
+      "timing": {
+        "load": 0,
+        "draw": 1,
+        "aim": 4,
+        "fire": 0,
+        "recover": 1
+      },
+      "mechanical": false
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688864477847,
+    "modifiedTime": 1689022799559,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "13L7Frahf6vEda24",
+  "sort": 500000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!13L7Frahf6vEda24"
+}

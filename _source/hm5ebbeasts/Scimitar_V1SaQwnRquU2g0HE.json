@@ -1,0 +1,107 @@
+{
+  "_id": "V1SaQwnRquU2g0HE",
+  "name": "Scimitar",
+  "type": "weapon",
+  "img": "icons/weapons/swords/scimitar-worn-blue.webp",
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {
+    "core": {
+      "sourceId": "Compendium.world.weapons.XTUJCSHnudXeuowc"
+    }
+  },
+  "system": {
+    "description": "",
+    "state": 2,
+    "weight": 4,
+    "price": "15 sp",
+    "avail": {
+      "high": 85,
+      "med": 80,
+      "low": 75
+    },
+    "innate": false,
+    "proficiency": "Scimitars",
+    "scale": "3",
+    "skill": "medium",
+    "bonus": {
+      "total": {
+        "atk": 1,
+        "def": 1,
+        "dmg": 0,
+        "spd": 9,
+        "jspd": null
+      },
+      "base": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 9,
+        "jspd": 0
+      },
+      "mod": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 0
+      },
+      "misc": {
+        "atk": 1,
+        "def": 1,
+        "dmg": 0,
+        "spd": 0,
+        "jspd": 0
+      }
+    },
+    "dmg": {
+      "normal": "2d8p",
+      "shield": "d8p",
+      "type": "hacking"
+    },
+    "jab": {
+      "normal": "",
+      "shield": "",
+      "checked": false
+    },
+    "caps": {
+      "2": {
+        "checked": false
+      },
+      "5": {
+        "checked": false
+      }
+    },
+    "req": {
+      "str": 8
+    },
+    "qn": 0,
+    "reach": 3,
+    "defdie": "0",
+    "ranged": {
+      "checked": false,
+      "reach": {
+        "0": 5,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0
+      }
+    },
+    "adjReach": 3
+  },
+  "ownership": {
+    "default": 0,
+    "9BV8kpaEbvqHiGtI": 3,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "10.291",
+    "createdTime": 1670292246871,
+    "modifiedTime": 1670292248694,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_key": "!actors.items!rRppaFRMFWBADDiI.V1SaQwnRquU2g0HE"
+}

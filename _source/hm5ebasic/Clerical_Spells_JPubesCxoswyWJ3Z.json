@@ -1,0 +1,19 @@
+{
+  "name": "Clerical Spells",
+  "sorting": "a",
+  "folder": "OcjsHFako5zQDq6z",
+  "type": "Item",
+  "_id": "JPubesCxoswyWJ3Z",
+  "sort": 0,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": null,
+    "modifiedTime": 1689022716333,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_key": "!folders!JPubesCxoswyWJ3Z"
+}

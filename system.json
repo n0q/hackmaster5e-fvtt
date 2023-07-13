@@ -5,7 +5,7 @@
     "url": null,
     "version": null,
     "compatibility": {
-        "minimum": "10",
+        "minimum": "11",
         "verified": "11"
     },
     "manifestPlusVersion": "1.2.0",
@@ -26,29 +26,15 @@
         {
             "label": "Beasts, Basic",
             "type": "Actor",
-            "name": "hmbbeasts",
-            "path": "packs/beasts-basic.db",
+            "name": "hm5ebbeasts",
+            "path": "packs/hm5ebbeasts",
             "system": "hackmaster5e"
         },
         {
-            "label": "Armors, Basic",
+            "label": "Hackmaster, Basic",
             "type": "Item",
-            "name": "hmbarmors",
-            "path": "packs/armors-basic.db",
-            "system": "hackmaster5e"
-        },
-        {
-            "label": "Classes, Basic",
-            "type": "Item",
-            "name": "hmbclasses",
-            "path": "packs/classes-basic.db",
-            "system": "hackmaster5e"
-        },
-        {
-            "label": "Clerical Spells, Basic",
-            "type": "Item",
-            "name": "hmbdivine",
-            "path": "packs/clerical-spells-basic.db",
+            "name": "hm5ebasic",
+            "path": "packs/hm5ebasic",
             "system": "hackmaster5e"
         },
         {
@@ -59,73 +45,10 @@
             "system": "hackmaster5e"
         },
         {
-            "label": "Gear, Basic",
-            "type": "Item",
-            "name": "hmbgear",
-            "path": "packs/gear-basic.db",
-            "system": "hackmaster5e"
-        },
-        {
-            "label": "Innate Weapons, Basic",
-            "type": "Item",
-            "name": "hmbinnate",
-            "path": "packs/innate-weapons-basic.db",
-            "system": "hackmaster5e"
-        },
-        {
-            "label": "Mage Spells, Basic",
-            "type": "Item",
-            "name": "hmbarcane",
-            "path": "packs/mage-spells-basic.db",
-            "system": "hackmaster5e"
-        },
-        {
-            "label": "Proficiencies, Basic",
-            "type": "Item",
-            "name": "hmbproficiencies",
-            "path": "packs/proficiencies-basic.db",
-            "system": "hackmaster5e"
-        },
-        {
-            "label": "Races, Basic",
-            "type": "Item",
-            "name": "hmbraces",
-            "path": "packs/races-basic.db",
-            "system": "hackmaster5e"
-        },
-        {
-            "label": "Skills, Basic",
-            "type": "Item",
-            "name": "hmbskills",
-            "path": "packs/skills-basic.db",
-            "system": "hackmaster5e"
-        },
-        {
-            "label": "Skills, Universal",
-            "type": "Item",
-            "name": "uskills",
-            "path": "packs/skills-universal.db",
-            "system": "hackmaster5e"
-        },
-        {
-            "label": "Talents, Basic",
-            "type": "Item",
-            "name": "hmbtalents",
-            "path": "packs/talents-basic.db",
-            "system": "hackmaster5e"
-        },
-        {
-            "label": "Weapons, Basic",
-            "type": "Item",
-            "name": "hmbweapons",
-            "path": "packs/weapons-basic.db",
-            "system": "hackmaster5e"
-        },
-        {
             "label": "Combat Macros",
             "type": "Macro",
             "name": "combat_macros",
-            "path": "packs/combat-macros.db",
+            "path": "packs/combat-macros",
             "system": "hackmaster5e"
         }
     ],

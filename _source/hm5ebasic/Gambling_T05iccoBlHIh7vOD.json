@@ -1,0 +1,57 @@
+{
+  "name": "Gambling",
+  "type": "skill",
+  "img": "icons/sundries/gaming/playing-cards.webp",
+  "effects": [],
+  "folder": "gmubRV5gQsbhAz5N",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "bonus": {
+      "total": {
+        "value": 0,
+        "literacy": 0,
+        "verbal": 0
+      },
+      "mastery": {
+        "value": 0,
+        "literacy": 0,
+        "verbal": 0
+      }
+    },
+    "bp": 1,
+    "specialty": {
+      "checked": false,
+      "value": null
+    },
+    "universal": false,
+    "tools": false,
+    "language": false,
+    "relevant": {
+      "str": false,
+      "int": false,
+      "wis": true,
+      "dex": false,
+      "con": false,
+      "lks": false,
+      "cha": true
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688863423727,
+    "modifiedTime": 1688863537566,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "T05iccoBlHIh7vOD",
+  "sort": 100782,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!T05iccoBlHIh7vOD"
+}

@@ -1,0 +1,102 @@
+{
+  "name": "Dagger",
+  "type": "weapon",
+  "img": "icons/weapons/daggers/dagger-straight-blue.webp",
+  "effects": [],
+  "folder": "QwQmMG0GWSXCH4JC",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "state": 0,
+    "weight": 1,
+    "price": "2 sp",
+    "avail": {
+      "high": 95,
+      "med": 90,
+      "low": 85
+    },
+    "innate": false,
+    "proficiency": "Daggers",
+    "scale": "2",
+    "skill": "low",
+    "bonus": {
+      "total": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 0,
+        "jspd": 0
+      },
+      "base": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 7,
+        "jspd": 5
+      },
+      "mod": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 0
+      },
+      "misc": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 0
+      }
+    },
+    "dmg": {
+      "normal": "2d4p",
+      "shield": "0",
+      "type": "puncturing"
+    },
+    "jab": {
+      "normal": "",
+      "shield": "",
+      "checked": true
+    },
+    "caps": {
+      "2": {
+        "checked": true
+      },
+      "5": {
+        "checked": false
+      }
+    },
+    "req": {
+      "str": 4
+    },
+    "qn": 0,
+    "reach": 1,
+    "defdie": "0",
+    "ranged": {
+      "checked": false,
+      "reach": {
+        "0": 5,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688864460393,
+    "modifiedTime": 1689022772920,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "PO7BTrtLgE8jNP7Q",
+  "sort": 500000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!PO7BTrtLgE8jNP7Q"
+}

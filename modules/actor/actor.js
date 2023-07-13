@@ -40,9 +40,9 @@ export class HMActor extends Actor {
     }
 
     get fightingDefensively() {
-        const fxList = this.effects.map((fx) => fx.getFlag('core', 'statusId'));
-        const dList = Object.values(HMTABLES.effects.defense);
-        return fxList.map((x) => dList.indexOf(x) >= 0).some((y) => y);
+        const fxList = this.effects.contents.flatMap((fx) => [...fx.statuses.keys()]);
+        const dSet = new Set(Object.values(HMTABLES.effects.defense));
+        return fxList.some((fx) => dSet.has(fx));
     }
 
     resetBonus() {

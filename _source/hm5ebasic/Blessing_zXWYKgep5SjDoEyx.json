@@ -1,0 +1,43 @@
+{
+  "name": "Blessing",
+  "type": "spell",
+  "img": "icons/magic/holy/prayer-hands-glowing-yellow.webp",
+  "effects": [],
+  "folder": "JPubesCxoswyWJ3Z",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<div><p>Range: <strong>10 feet<br></strong>Volume of Effect: <strong>1 living creature per level of the cleric (maximum of 7)<br></strong>Duration: <strong>5 minutes<br></strong>Saving Throw: <em><strong>not applicable</strong></em></p></div><hr><p> </p>",
+    "divine": true,
+    "component": {
+      "verbal": true,
+      "somatic": true,
+      "material": false,
+      "catalyst": false,
+      "divine": false
+    },
+    "save": {
+      "type": 0,
+      "action": 0
+    },
+    "speed": 7,
+    "prepped": 0,
+    "lidx": "6"
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688863774852,
+    "modifiedTime": 1688863895807,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "zXWYKgep5SjDoEyx",
+  "sort": 4300000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!zXWYKgep5SjDoEyx"
+}

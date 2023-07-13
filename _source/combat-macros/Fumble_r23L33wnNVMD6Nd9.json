@@ -1,0 +1,29 @@
+{
+  "name": "Fumble",
+  "type": "script",
+  "scope": "global",
+  "author": "6PGvwKmaOsPz0R2y",
+  "img": "icons/skills/melee/sword-damaged-broken-glow-red.webp",
+  "command": "game.hackmaster5e.HMWeaponItem.rollFumble();",
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "flags": {
+    "core": {
+      "sourceId": "Macro.mqtFLTVgwq4r502N"
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "10.291",
+    "createdTime": 1675724642389,
+    "modifiedTime": 1675846294237,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "folder": null,
+  "sort": 0,
+  "_id": "r23L33wnNVMD6Nd9",
+  "_key": "!macros!r23L33wnNVMD6Nd9"
+}

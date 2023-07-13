@@ -1,0 +1,60 @@
+{
+  "_id": "MpmnoAE8eUDjsFQB",
+  "name": "Observation",
+  "type": "skill",
+  "img": "icons/creatures/eyes/human-single-brown.webp",
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {
+    "core": {
+      "sourceId": "Compendium.hackmaster5e.uskills.Nn2HevIo0xCoXwFD"
+    }
+  },
+  "system": {
+    "description": "",
+    "bonus": {
+      "total": {
+        "value": 0,
+        "literacy": 0,
+        "verbal": 0
+      },
+      "mastery": {
+        "value": 20,
+        "literacy": 0,
+        "verbal": 0
+      }
+    },
+    "bp": 4,
+    "specialty": {
+      "checked": false,
+      "value": null
+    },
+    "universal": true,
+    "tools": false,
+    "language": false,
+    "relevant": {
+      "str": false,
+      "int": false,
+      "wis": true,
+      "dex": false,
+      "con": false,
+      "lks": false,
+      "cha": false
+    }
+  },
+  "ownership": {
+    "default": 0,
+    "YT3vyFbQDsF30XLi": 3,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "10.290",
+    "createdTime": 1669795800145,
+    "modifiedTime": 1669795805773,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_key": "!actors.items!Buhad5M6POqNpGnq.MpmnoAE8eUDjsFQB"
+}

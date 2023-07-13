@@ -20,9 +20,8 @@ function getSpeed(ranged, wData, specialMove=0) {
 function getDefense(effects) {
     if (!effects) return HMCONST.DEFENSE.DEFENSE0;
     const dList = Object.values(HMTABLES.effects.defense);
-    const fxSet = new Set(effects.map((fx) => fx.getFlag('core', 'statusId')));
-    const [dKey] = new Set([...(new Set(dList))].filter((x) => fxSet.has(x)));
-    return dList.indexOf(dKey) + 1;
+    const fxList = effects.contents.flatMap((fx) => [...fx.statuses.keys()]);
+    return dList.findIndex((value) => fxList.includes(value)) + 1;
 }
 
 export class AttackPrompt extends HMPrompt {

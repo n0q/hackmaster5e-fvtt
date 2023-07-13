@@ -1,0 +1,44 @@
+{
+  "name": "Quiver, War",
+  "type": "item",
+  "img": "icons/containers/ammunition/arrows-quiver-black.webp",
+  "effects": [],
+  "folder": "aXJYcFpbrAwf8XHZ",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "state": 0,
+    "weight": 2,
+    "price": "6 cp",
+    "avail": {
+      "high": 80,
+      "med": 75,
+      "low": 70
+    },
+    "container": {
+      "enabled": true,
+      "type": 2,
+      "capacity": 20,
+      "_manifest": []
+    },
+    "qidx": "3",
+    "qty": 1
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688862894880,
+    "modifiedTime": 1688862894880,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "OLGYGHdMhMu1bdMS",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!OLGYGHdMhMu1bdMS"
+}

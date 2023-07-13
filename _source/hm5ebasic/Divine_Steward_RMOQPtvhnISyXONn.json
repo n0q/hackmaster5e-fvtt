@@ -1,0 +1,43 @@
+{
+  "name": "Divine Steward",
+  "type": "spell",
+  "img": "icons/magic/nature/elemental-plant-humanoid.webp",
+  "effects": [],
+  "folder": "JPubesCxoswyWJ3Z",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<div><p>Range: <strong>Special<br></strong>Area of Effect: <strong>Special<br></strong>Duration: <strong>4 hours + 1 hour per level of the cleric<br></strong>Saving Throw: <em><strong>not applicable</strong></em></p><hr></div>",
+    "divine": true,
+    "component": {
+      "verbal": true,
+      "somatic": true,
+      "material": false,
+      "catalyst": false,
+      "divine": true
+    },
+    "save": {
+      "type": 0,
+      "action": 0
+    },
+    "speed": 300,
+    "prepped": 0,
+    "lidx": "5"
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688863819926,
+    "modifiedTime": 1688863895807,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "RMOQPtvhnISyXONn",
+  "sort": 2500000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!RMOQPtvhnISyXONn"
+}

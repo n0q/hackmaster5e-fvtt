@@ -1,0 +1,68 @@
+{
+  "_id": "80H2wdVeu2X1F6EY",
+  "name": "Shield, Medium",
+  "type": "armor",
+  "img": "icons/equipment/shield/heater-wooden-brown-axe.webp",
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {
+    "core": {
+      "sourceId": "Compendium.world.armors.friBLkQNBcNNQxf1"
+    }
+  },
+  "system": {
+    "description": "",
+    "state": 2,
+    "weight": 14,
+    "price": "30 sp",
+    "avail": {
+      "high": 95,
+      "med": 85,
+      "low": 75
+    },
+    "armortype": "none",
+    "proficiency": "Shields",
+    "bonus": {
+      "total": {
+        "dr": 6,
+        "def": 6,
+        "init": 0,
+        "spd": 0,
+        "move": 1
+      },
+      "base": {
+        "dr": 6,
+        "def": 6,
+        "init": 0,
+        "spd": 0,
+        "move": 1
+      },
+      "mod": {
+        "dr": 0,
+        "def": 0,
+        "init": 0,
+        "spd": 0,
+        "move": 0
+      }
+    },
+    "qn": 0,
+    "shield": {
+      "checked": true
+    }
+  },
+  "ownership": {
+    "default": 0,
+    "9BV8kpaEbvqHiGtI": 3,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "10.290",
+    "createdTime": 1669795848215,
+    "modifiedTime": 1669795850126,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_key": "!actors.items!Buhad5M6POqNpGnq.80H2wdVeu2X1F6EY"
+}

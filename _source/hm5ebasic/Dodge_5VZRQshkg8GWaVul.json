@@ -1,0 +1,30 @@
+{
+  "changes": [
+    {
+      "key": "hackmaster5e.talent.flag.dodge",
+      "value": "true",
+      "mode": 5,
+      "priority": null
+    }
+  ],
+  "_id": "5VZRQshkg8GWaVul",
+  "disabled": false,
+  "duration": {
+    "startTime": null,
+    "seconds": null,
+    "combat": null,
+    "rounds": null,
+    "turns": null,
+    "startRound": null,
+    "startTurn": null
+  },
+  "icon": null,
+  "origin": null,
+  "tint": null,
+  "transfer": true,
+  "flags": {},
+  "name": "Dodge",
+  "description": "",
+  "statuses": [],
+  "_key": "!items.effects!GwIhdCtVJZsAhngD.5VZRQshkg8GWaVul"
+}

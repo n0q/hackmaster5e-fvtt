@@ -1,0 +1,43 @@
+{
+  "name": "Charm",
+  "type": "spell",
+  "img": "icons/magic/control/buff-flight-wings-blue.webp",
+  "effects": [],
+  "folder": "cpFjPtcuKG8ClW1o",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<div style=\"font-style: italic;\"><p><em>Range: <strong>30 feet</strong><br>Volume of Effect: <strong>One individual</strong><br>Duration: <strong>Special</strong><br>Saving Throw: <strong>MENTAL Negates</strong></em></p></div><hr><p> </p>",
+    "divine": false,
+    "component": {
+      "verbal": true,
+      "somatic": true,
+      "material": false,
+      "catalyst": false,
+      "divine": false
+    },
+    "save": {
+      "type": "3",
+      "action": 0
+    },
+    "speed": 1,
+    "prepped": 0,
+    "lidx": "3"
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688864051124,
+    "modifiedTime": 1688864231943,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "3zVvMDtg9ieHSwAS",
+  "sort": 3100000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!3zVvMDtg9ieHSwAS"
+}

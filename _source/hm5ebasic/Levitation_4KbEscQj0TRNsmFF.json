@@ -1,0 +1,43 @@
+{
+  "name": "Levitation",
+  "type": "spell",
+  "img": "icons/commodities/materials/feather-blue-glowing.webp",
+  "system": {
+    "description": "<p>Range: <strong>Touch</strong><br>Volume of Effect: <strong>One creature</strong><br>Duration: <strong>30 minutes</strong><br>Saving Throw: <em><strong>not applicable</strong></em></p><hr><p><strong>Additional Spell Point schedule:</strong><br>Increase Duration: 1 SP/minute<br>Increase Weight Able to be Levitated: 10 SP/10 pounds<br>Cast on person other than mage: 50 SP</p><hr><p></p>",
+    "divine": false,
+    "component": {
+      "verbal": true,
+      "somatic": true,
+      "material": true,
+      "catalyst": false,
+      "divine": false
+    },
+    "save": {
+      "type": 0,
+      "action": 0
+    },
+    "speed": 2,
+    "prepped": 0,
+    "lidx": "6"
+  },
+  "effects": [],
+  "flags": {
+    "core": {}
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1667882631809,
+    "modifiedTime": 1688864231943,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "folder": "cpFjPtcuKG8ClW1o",
+  "_id": "4KbEscQj0TRNsmFF",
+  "sort": 1000000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!4KbEscQj0TRNsmFF"
+}

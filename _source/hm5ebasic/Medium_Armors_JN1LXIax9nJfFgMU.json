@@ -1,0 +1,42 @@
+{
+  "name": "Medium Armors",
+  "type": "proficiency",
+  "img": "icons/equipment/chest/breastplate-layered-leather-studded-black.webp",
+  "effects": [],
+  "flags": {},
+  "system": {
+    "description": "",
+    "bonus": {
+      "atk": 0,
+      "def": 0,
+      "dmg": 0,
+      "spd": 0
+    },
+    "skill": null,
+    "weapon": {
+      "checked": false
+    },
+    "ranged": {
+      "checked": false
+    },
+    "mechanical": {
+      "checked": false
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1664221894892,
+    "modifiedTime": 1688862919871,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "folder": "fK9HFzRH1VJXQKIm",
+  "_id": "JN1LXIax9nJfFgMU",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!JN1LXIax9nJfFgMU"
+}

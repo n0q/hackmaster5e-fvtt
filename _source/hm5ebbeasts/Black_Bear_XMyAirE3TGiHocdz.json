@@ -1,0 +1,151 @@
+{
+  "name": "Black Bear",
+  "type": "beast",
+  "img": "icons/svg/mystery-man.svg",
+  "system": {
+    "sp": {
+      "value": 0,
+      "max": 0
+    },
+    "bonus": {
+      "total": {},
+      "misc": {
+        "_idx": {
+          "tenacity": 3
+        },
+        "will": null,
+        "sp": null,
+        "fos": null,
+        "foa": null,
+        "physical": 9,
+        "mental": 8,
+        "dodge": 7,
+        "trauma": 11,
+        "poison": null,
+        "atk": 8,
+        "def": -1,
+        "spd": 4,
+        "dmg": 4,
+        "init": -1,
+        "dr": 9,
+        "reach": 2,
+        "fatigue": null
+      }
+    },
+    "bio": {
+      "desc": "",
+      "tactics": "",
+      "habitat": "",
+      "ecology": ""
+    },
+    "hp": {
+      "value": 0,
+      "max": null,
+      "formula": "29 + 4d8"
+    },
+    "scale": 4,
+    "level": 1,
+    "movespd": {
+      "gnd": {
+        "crawl": 10,
+        "walk": 15,
+        "jog": 20,
+        "run": 25,
+        "sprint": 30
+      }
+    },
+    "cslevel": "all"
+  },
+  "prototypeToken": {
+    "name": "Black Bear",
+    "displayName": 50,
+    "actorLink": false,
+    "texture": {
+      "src": "icons/svg/mystery-man.svg",
+      "scaleX": 1,
+      "scaleY": 1,
+      "offsetX": 0,
+      "offsetY": 0,
+      "rotation": 0,
+      "tint": null
+    },
+    "width": 1,
+    "height": 1,
+    "lockRotation": false,
+    "rotation": 0,
+    "alpha": 1,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    },
+    "bar2": {
+      "attribute": null
+    },
+    "light": {
+      "alpha": 0.5,
+      "angle": 360,
+      "bright": 0,
+      "color": null,
+      "coloration": 1,
+      "dim": 0,
+      "attenuation": 0.5,
+      "luminosity": 0.5,
+      "saturation": 0,
+      "contrast": 0,
+      "shadows": 0,
+      "animation": {
+        "type": null,
+        "speed": 5,
+        "intensity": 5,
+        "reverse": false
+      },
+      "darkness": {
+        "min": 0,
+        "max": 1
+      }
+    },
+    "sight": {
+      "enabled": false,
+      "range": null,
+      "angle": 360,
+      "visionMode": "basic",
+      "color": null,
+      "attenuation": 0.1,
+      "brightness": 0,
+      "saturation": 0,
+      "contrast": 0
+    },
+    "detectionModes": [],
+    "flags": {},
+    "randomImg": false
+  },
+  "items": [
+    "nWnI8qVxR0i6ivwI"
+  ],
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "flags": {
+    "hackmaster5e": {
+      "reachHint": "nWnI8qVxR0i6ivwI"
+    },
+    "core": {
+      "sourceId": "Actor.zTjsCLxAc7prYz1f"
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "10.291",
+    "createdTime": 1669956150797,
+    "modifiedTime": 1671763409605,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "folder": null,
+  "sort": 0,
+  "_id": "XMyAirE3TGiHocdz",
+  "_key": "!actors!XMyAirE3TGiHocdz"
+}
