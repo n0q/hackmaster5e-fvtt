@@ -30,7 +30,9 @@ $actor-logo-dim: 40%;
     grid-template-rows: repeat(3, min-content) 1fr;
     overflow: hidden;
 
-    >.sheet-body.scrollable: { padding-right: 0; }
+    >.sheet-body.scrollable {
+        padding-right: 0;
+    }
 
     >header {
         display: grid;
