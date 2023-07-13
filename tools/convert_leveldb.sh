@@ -1,7 +1,5 @@
 #!/bin/bash
-# author: n0q
-# ver: 1
-# Serializes/deserializes leveldb into json using the fvtt conversion utility.
+# Serializes/deserializes leveldb into json using the fvtt cli utility.
 
 wd=$(dirname "$0")
 SRC_DIR="$wd/../_source"
@@ -26,6 +24,7 @@ serialize() {
             --inputDirectory "$SRC_DIR/$pack"   \
             --outputDirectory "$PACK_DIR"
     done
+    exit 0
 }
 
 deserialize() {
@@ -36,35 +35,21 @@ deserialize() {
             --inputDirectory "$PACK_DIR"        \
             --outputDirectory "$SRC_DIR/$pack"
     done
-}
-
-confirm_serialize() {
-    read -p "This isn't a workflow. Are you sure? [Y/n]" proceed
-    case $proceed in
-        Y)
-            serialize
-            ;;
-        *)
-            echo -e "\nTerminating."
-            exit 1
-            ;;
-    esac
-}
-
-if [ $# -eq 0 ]; then
-    deserialize
     exit 0
-fi
+}
+
+confirmSerialize() {
+    read -p "This isn't a workflow. Are you sure? [Y/n] " proceed
+    [ "$proceed" == "Y" ] && serialize || echo -e "\nTerminating"
+    exit 1;
+}
+
+[ $# -eq 0 ] && deserialize
 
 while getopts "hs" opt; do
     case "$opt" in
         s)
-            if [ -z "$GITHUB_ACTIONS" ]; then
-                confirm_serialize
-            else
-                serialize
-            fi
-            exit 0
+            [ -z "${GITHUB_ACTIONS+x}" ] && confirmSerialize || serialize
             ;;
         h)
             showhelp
