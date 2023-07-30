@@ -1,4 +1,5 @@
-import { SYSTEM_ID, SYSTEM_SOCKET } from '../tables/constants.js';
+// import { SYSTEM_ID, SYSTEM_SOCKET } from '../tables/constants.js';
+import { SYSTEM_SOCKET } from '../tables/constants.js';
 import { HMActiveEffectHooks } from './effect-hooks.js';
 import { HMActorHooks } from './actor-hooks.js';
 import { HMChatHooks } from './chat-hooks.js';
@@ -45,11 +46,13 @@ export const registerHooks = () => {
 };
 
 function drawGridLayer(layer) {
+    // eslint-disable-next-line no-param-reassign
     layer.reach = layer.addChildAt(new PIXI.Container(), layer.getChildIndex(layer.borders));
 }
 
 async function ready() {
-    if (game.modules.get('_dev-mode')?.api?.getPackageDebugValue(SYSTEM_ID)) {
+    // if (game.modules.get('_dev-mode')?.api?.getPackageDebugValue(SYSTEM_ID)) {
+    if (game.user.isGM) {
         const tItem = game.items.contents.find((a) => a.name === 'test');
         if (tItem) { tItem.sheet.render(true); }
         const tActor = game.actors.contents.find((a) => a.name === 'test');
