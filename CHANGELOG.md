@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 ### Added
 - Can change Language name on character sheet.
+### Changed
+- Increased spacing for currency inputs via inventory tab.
 ### Fixed
 - Scrollbars appearing for certain character tabs when they shouldn't.
 
