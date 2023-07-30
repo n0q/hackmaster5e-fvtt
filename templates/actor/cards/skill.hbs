@@ -44,7 +44,23 @@
         </section>
     </summary>
     <article class='{{toggleSwitch _id}}' toggle>
+    {{#if system.specialty.checked}}
+        <div class='form-group'>
+            <label>{{localize 'HM.specialty'}}:</label>
+            <input class='editable' type='text' value='{{system.specialty.value}}' style='max-width: unset;'
+                data-item-prop='system.specialty.value'
+                data-dtype='String'
+            />
+        </div>
+    {{/if}}
     {{#if system.language}}
+        <div class='form-group'>
+            <label>{{localize 'HM.language'}}:</label>
+            <input class='editable' type='text' value='{{name}}' style='max-width: unset;'
+                data-item-prop='name'
+                data-dtype='String'
+            />
+        </div>
         <div class='form-group' style='gap: 10px;'>
             <label>{{localize 'HM.literacy'}}:</label>
             <input class='editable' type='number' value='{{system.bonus.mastery.literacy}}'
@@ -63,15 +79,6 @@
             <input class='editable' type='number' value='{{system.bonus.mastery.value}}'
                 data-item-prop='system.bonus.mastery.value'
                 data-dtype='Number'
-            />
-        </div>
-    {{/if}}
-    {{#if system.specialty.checked}}
-        <div class='form-group'>
-            <label>{{localize 'HM.specialty'}}:</label>
-            <input class='editable' type='text' value='{{system.specialty.value}}' style='max-width: unset;'
-                data-item-prop='system.specialty.value'
-                data-dtype='String'
             />
         </div>
     {{/if}}
