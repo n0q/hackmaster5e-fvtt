@@ -10,6 +10,7 @@ export class HMSupportHooks {
     }
 
     static async diceSoNiceRollStart(_, context) {
+        // eslint-disable-next-line no-shadow
         const dsnDecay = (terms, dsnTerms, newTerms=[], r=5) => {
             if (r < 0) return false;
 
@@ -66,7 +67,7 @@ export class HMSupportHooks {
                 const combatant = combat.getCombatantByToken(token.id);
                 if (!combatant || !round) return [];
 
-                const {movespd} = token.actor;
+                const {movespd} = token.actor; // from getter
                 movespd.push(Infinity);
                 movespd[0] = 0;
 
@@ -90,36 +91,12 @@ export class HMSupportHooks {
             }
 
             async onMovementHistoryUpdate(tokens) {
-                // Workaround for broken dragRuler.getMovedDistanceFromToken();
-                /* eslint no-shadow: ['error', {'allow': ['combatant']}] */
-                function getMovementHistory(token) {
-                    const {combat} = game;
-                    if (!combat) return [];
-                    const combatant = combat.getCombatantByToken(token.id);
-                    if (!combatant) return [];
-                    const dragRulerFlags = combatant.flags.dragRuler;
-                    if (!dragRulerFlags) return [];
-                    if (combat.round > dragRulerFlags.trackedRound) return [];
-                    return dragRulerFlags.passedWaypoints ?? [];
-                }
-
                 tokens.forEach((movedToken) => {
-                    const moveHistory = foundry.utils.duplicate(getMovementHistory(movedToken));
-                    if (!moveHistory.length) return;
-
-                    moveHistory.push(movedToken.center);
-                    const rays = [];
-                    for (let i = 0; i < moveHistory.length -1; i++) {
-                        rays.push({ray: new Ray(moveHistory[i], moveHistory[i+1])});
-                    }
-
-                    const distances = game.canvas.grid.measureDistances(rays, {gridSpaces: true});
-                    const moved = Math.round(distances.reduce((sum, a) => sum + a, 0) * 1e4) / 1e4;
-
                     const combatant = game.combat.getCombatantByToken(movedToken.id);
-                    const movedFlag = combatant.getFlag(SYSTEM_ID, 'moved') || {};
                     const roundCurrent = game.combat.round;
-                    movedFlag[roundCurrent] = moved;
+                    const movedFlag = combatant.getFlag(SYSTEM_ID, 'moved') || {};
+                    const movedRaw = dragRuler.getMovedDistanceFromToken(movedToken);
+                    movedFlag[roundCurrent] = parseFloat(movedRaw.toPrecision(4));
                     combatant.setFlag(SYSTEM_ID, 'moved', movedFlag);
                 });
             }

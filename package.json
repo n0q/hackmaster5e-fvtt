@@ -1,13 +1,13 @@
 {
   "devDependencies": {
-    "@babel/eslint-parser": "^7.17.0",
+    "@babel/eslint-parser": "^7.22.9",
     "@foundryvtt/foundryvtt-cli": "^0.0.9",
     "@typhonjs-fvtt/eslint-config-foundry.js": "^0.8.0",
     "eslint-config-airbnb": "^18.2.1",
     "gulp": "^4.0.2",
     "gulp-cached": "^1.1.1",
-    "gulp-dart-sass": "^1.0.2",
-    "gulp-eslint-new": "^1.4.2",
-    "sass": "^1.35.1"
+    "gulp-dart-sass": "^1.1.0",
+    "gulp-eslint-new": "^1.8.2",
+    "sass": "^1.63.6"
   }
 }
