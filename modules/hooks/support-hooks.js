@@ -67,7 +67,7 @@ export class HMSupportHooks {
                 const combatant = combat.getCombatantByToken(token.id);
                 if (!combatant || !round) return [];
 
-                const {movespd} = token.actor;
+                const {movespd} = token.actor; // from getter
                 movespd.push(Infinity);
                 movespd[0] = 0;
 
