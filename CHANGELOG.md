@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+### Fixed
+- Inconsistency in class level display.
+
 ## [0.3.33] - 2023-07-30
 ### Added
 - Can change Language name on character sheet.
