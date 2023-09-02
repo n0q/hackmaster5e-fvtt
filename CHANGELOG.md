@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 ### Fixed
 - Inconsistency in class level display.
+- Negative coin counts.
+- ToP now rounds up, instead of down.
 
 ## [0.3.33] - 2023-07-30
 ### Added

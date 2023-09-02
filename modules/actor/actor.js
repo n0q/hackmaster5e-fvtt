@@ -61,7 +61,7 @@ export class HMActor extends Actor {
         Object.keys(wounds).forEach((a) => { value -= wounds[a].system.hp; });
 
         const topCf = HMTABLES.top[type] + (system.bonus.total.top || 0);
-        const topValue = Math.floor(max * topCf);
+        const topValue = Math.ceil(max * topCf);
         system.hp = {max, value, top: topValue};
     }
 
