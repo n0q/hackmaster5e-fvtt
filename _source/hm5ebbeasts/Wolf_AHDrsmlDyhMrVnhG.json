@@ -43,6 +43,9 @@
       "max": null,
       "formula": "21 + 2d8"
     },
+    "ep": {
+      "value": 0
+    },
     "scale": 3,
     "level": 1,
     "movespd": {
@@ -54,7 +57,7 @@
         "sprint": 30
       }
     },
-    "cslevel": ""
+    "cslevel": "all"
   },
   "prototypeToken": {
     "name": "Wolf",
@@ -107,7 +110,7 @@
     },
     "sight": {
       "enabled": false,
-      "range": null,
+      "range": 0,
       "angle": 360,
       "visionMode": "basic",
       "color": null,
@@ -118,13 +121,11 @@
     },
     "detectionModes": [],
     "flags": {},
-    "randomImg": false
+    "randomImg": false,
+    "appendNumber": false,
+    "prependAdjective": false
   },
-  "items": [
-    "FxKXoU6UQeSAFkxD",
-    "wEclcpvSx7eAI7M2",
-    "qe65mAHjR9atHdKD"
-  ],
+  "items": [],
   "effects": [],
   "flags": {
     "hackmaster5e": {
@@ -137,9 +138,9 @@
   "_stats": {
     "systemId": "hackmaster5e",
     "systemVersion": "0",
-    "coreVersion": "10.290",
+    "coreVersion": "11.305",
     "createdTime": 1668241510265,
-    "modifiedTime": 1669795529943,
+    "modifiedTime": 1689301271993,
     "lastModifiedBy": "6PGvwKmaOsPz0R2y"
   },
   "folder": null,

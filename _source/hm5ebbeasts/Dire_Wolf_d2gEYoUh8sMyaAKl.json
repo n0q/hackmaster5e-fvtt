@@ -43,6 +43,9 @@
       "max": null,
       "formula": "27 + 3d8"
     },
+    "ep": {
+      "value": 0
+    },
     "scale": 3,
     "level": 1,
     "movespd": {
@@ -107,7 +110,7 @@
     },
     "sight": {
       "enabled": false,
-      "range": null,
+      "range": 0,
       "angle": 360,
       "visionMode": "basic",
       "color": null,
@@ -118,7 +121,9 @@
     },
     "detectionModes": [],
     "flags": {},
-    "randomImg": false
+    "randomImg": false,
+    "appendNumber": false,
+    "prependAdjective": false
   },
   "items": [
     "FxKXoU6UQeSAFkxD",
@@ -137,9 +142,9 @@
   "_stats": {
     "systemId": "hackmaster5e",
     "systemVersion": "0",
-    "coreVersion": "10.291",
+    "coreVersion": "11.305",
     "createdTime": 1668241510265,
-    "modifiedTime": 1671763407325,
+    "modifiedTime": 1689301266061,
     "lastModifiedBy": "6PGvwKmaOsPz0R2y"
   },
   "folder": null,

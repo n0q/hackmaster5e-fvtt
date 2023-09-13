@@ -43,6 +43,9 @@
       "max": null,
       "formula": "27 + d8"
     },
+    "ep": {
+      "value": 0
+    },
     "scale": 3,
     "level": 1,
     "movespd": {
@@ -54,7 +57,7 @@
         "sprint": 20
       }
     },
-    "cslevel": ""
+    "cslevel": "all"
   },
   "prototypeToken": {
     "name": "Skeleton",
@@ -107,7 +110,7 @@
     },
     "sight": {
       "enabled": false,
-      "range": null,
+      "range": 0,
       "angle": 360,
       "visionMode": "basic",
       "color": null,
@@ -118,7 +121,9 @@
     },
     "detectionModes": [],
     "flags": {},
-    "randomImg": false
+    "randomImg": false,
+    "appendNumber": false,
+    "prependAdjective": false
   },
   "items": [
     "V1SaQwnRquU2g0HE",
@@ -142,9 +147,9 @@
   "_stats": {
     "systemId": "hackmaster5e",
     "systemVersion": "0",
-    "coreVersion": "10.291",
+    "coreVersion": "11.305",
     "createdTime": 1670292045564,
-    "modifiedTime": 1670292769880,
+    "modifiedTime": 1689301272564,
     "lastModifiedBy": "6PGvwKmaOsPz0R2y"
   },
   "folder": null,
