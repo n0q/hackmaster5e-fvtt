@@ -86,7 +86,7 @@ export class HMCurrencyItem extends HMItem {
         const {_currencyData} = this;
 
         const weightRawTotal = Object.values(_currencyData).reduce(
-            (weight, value) => weight + value.qty * value.weight,
+            (weight, value) => weight + Math.max(value.qty, 0) * value.weight,
             0,
         );
 

@@ -8,7 +8,7 @@
                 {{#each (objSort _currencyData 'value' reverse=true)}}
                 <span class='form-option'>
                 <label class='bold-label'>{{@key}}</label>
-                <input class='editable' type='number' value='{{qty}}' data-item-prop='system.coins.{{@key}}.qty' data-dtype='Number'>
+                <input class='editable' type='number' value='{{qty}}' data-item-prop='system.coins.{{@key}}.qty' data-dtype='uint'>
                 </span>
                 {{/each}}
             </section>

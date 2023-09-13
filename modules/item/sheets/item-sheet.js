@@ -60,14 +60,15 @@ export class HMItemSheet extends ItemSheet {
         if (dataset.itemProp) {
             const {itemProp, dtype} = dataset;
             let targetValue = ev.target.value;
-            if (dtype === 'Number') { targetValue = parseInt(targetValue, 10); } else
-            if (dtype === 'Float')  { targetValue = parseFloat(targetValue);   } else
+            if (dtype === 'Number') { targetValue = parseInt(targetValue, 10);               } else
+            if (dtype === 'uint')   { targetValue = Math.max(parseInt(targetValue, 10), 0);  } else
+            if (dtype === 'Float')  { targetValue = parseFloat(targetValue);                 } else
             if (dtype === 'Percent') {
                 const pctMatch = targetValue.match(/^([0-9]+)%$/);
                 const floatMatch = targetValue.match(/^([0-9]?\.[0-9]+)$/);
                 if (pctMatch)   { targetValue = parseFloat(pctMatch[1]) / 100;   } else
                 if (floatMatch) { targetValue = parseFloat(floatMatch[1]);       } else
-                                { targetValue = parseInt(targetValue, 10) / 100; }
+                                { targetValue = parseInt(targetValue, 10) / 100; } // eslint-disable-line
             }
             setProperty(item, itemProp, targetValue);
             await this.item.update({system:item.system});

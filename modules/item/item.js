@@ -72,7 +72,7 @@ export class HMItem extends Item {
         const {weight, qty} = this.system;
         const {items} = this;
 
-        const intrinsic = (weight || 0) * (qty || 1);
+        const intrinsic = (Math.max(weight, 0) || 0) * (Math.max(qty, 1) || 1);
         const contents = items ? items.reduce((acc, item) => acc + item.weight.total, 0) || 0 : 0;
         const total = intrinsic + contents;
 

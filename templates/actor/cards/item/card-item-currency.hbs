@@ -1,7 +1,7 @@
 <span style='background: rgba(0, 0, 0, 0.025);'>
     {{#with system}}
     {{#each (objSort ../_currencyData 'value' reverse=true)}}
-    <input class='editable' type='number' value='{{qty}}' data-item-prop='system.coins.{{@key}}.qty' data-dtype='Number'/>
+    <input class='editable' type='number' value='{{qty}}' data-item-prop='system.coins.{{@key}}.qty' data-dtype='uint'/>
     <label class='bold-label' style='padding-right: 1em'>{{@key}}</label>
     {{/each}}
     {{/with}}
