@@ -14,13 +14,15 @@
       "hp": "2",
       "kb": "2",
       "reach": "3",
-      "move": "3"
+      "move": "3",
+      "token": "3"
     },
     "bonus": {
       "hp": 5,
       "kb": 10,
       "reach": 0,
       "move": 1,
+      "token": 5,
       "def": 2
     },
     "abilities": {
@@ -57,9 +59,9 @@
   "_stats": {
     "systemId": "hackmaster5e",
     "systemVersion": "0",
-    "coreVersion": "11.305",
+    "coreVersion": "11.308",
     "createdTime": 1688863353625,
-    "modifiedTime": 1688863355505,
+    "modifiedTime": 1694619570598,
     "lastModifiedBy": "6PGvwKmaOsPz0R2y"
   },
   "_id": "bCgxchLai1Ws2nFz",
