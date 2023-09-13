@@ -39,11 +39,11 @@ export class HMCombatHooks {
     static async preDeleteCombat(combat) {
         const combatants = combat.turns;
 
-        combatants.forEach((x) => {
-            const effects = x.actor.effects.filter((y) => y.isTemporary
-                                                       && y.disabled);
-                                                    // && y.duration.combat.id === combat.id);
-            effects.forEach((effect) => x.actor.deleteEmbeddedDocuments('ActiveEffect', [effect.id]));
+        combatants.forEach((c) => {
+            const {actor} = c;
+            const effects = actor.effects.filter((fx) => fx.isTemporary);
+            const effectIds = effects.map((fx) => fx.id);
+            actor.deleteEmbeddedDocuments('ActiveEffect', effectIds);
         });
     }
 
