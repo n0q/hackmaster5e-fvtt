@@ -8,10 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Fixed
 - Inconsistency in class level display.
-- Negative coin counts.
+- Fractional or negative coin counts.
 - ToP now rounds up, instead of down.
-- Jab damage auto-calculates even if a damage code was specified.
-- Fractional armor damage.
+- Jab damage auto-calculated even if a damage code was specified.
+- Fractional or negative armor damage.
 
 ## [0.3.33] - 2023-07-30
 ### Added
