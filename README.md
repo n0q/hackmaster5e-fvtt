@@ -4,9 +4,6 @@ Hackmaster for Foundry. Some rough edges here and there, but this should do what
 
 ----
 ## Roadmap
-##### 0.3: Inventory and Talents
-A proper, nested inventory system with containers, proper weight management, and more. Better talents which will alter a character's behavior without needing to manually tune miscellanious bonuses.
-
 ##### 0.4: Combat Revamp
 Better support for melee, ranged, and magical combat. This includes (but is not limited to) fighting styles (and two weapon fighting), grappling, improved ranged combat all around, and spell volatility.
 
