@@ -42,7 +42,7 @@ export const HMCONST = {
         RSTD:        0b00000010,
         SHIELDRSTD:  0b00000011,
         JAB:         0b00000100,
-        JABSHIELD:   0b00000101,
+        SHIELDJAB:   0b00000101,
         BSTAB:       0b00001000,
         BSTABSHIELD: 0b00001001,
     },
