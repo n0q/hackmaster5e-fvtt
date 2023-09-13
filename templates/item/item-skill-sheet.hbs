@@ -28,12 +28,14 @@
                             <input type="checkbox" name="system.tools" {{checked system.tools}}/>
                         </div>
                         <div class="options-row">
-                            <label class="resource-label">{{localize "HM.specialty"}}:</label>
-                            <input type="checkbox" name="system.specialty.checked" {{checked system.specialty.checked}}/>
-                        </div>
-                        <div class="options-row">
                             <label class="resource-label">{{localize "HM.language"}}:</label>
                             <input type="checkbox" name="system.language" {{checked system.language}}/>
+                        </div>
+                        <div class="options-row">
+                            <label class="resource-label">
+                                {{#if system.language}}{{localize 'HM.dialect'}}{{else}}{{localize 'HM.specialty'}}{{/if}}:
+                            </label>
+                            <input type="checkbox" name="system.specialty.checked" {{checked system.specialty.checked}}/>
                         </div>
                     </div>
                 </div>
@@ -68,7 +70,9 @@
                         {{/if}}
                         {{#if system.specialty.checked}}
                         <div class="options-row">
-                            <label class="resource-label">{{localize "HM.specialty"}}:</label>
+                            <label class="resource-label">
+                                {{#if system.language}}{{localize 'HM.dialect'}}{{else}}{{localize 'HM.specialty'}}{{/if}}:
+                            </label>
                             <input type="text" name="system.specialty.value" value="{{system.specialty.value}}" data-dtype="String"/>
                         </div>
                         {{/if}}
