@@ -1,9 +1,9 @@
-import { SYSTEM_ID, HMCONST } from '../tables/constants.js';
+import { SYSTEM_ID, HMCONST, HMTABLES } from '../tables/constants.js';
 import { actorHasEffects } from './effects.js';
 
 export class HMToken extends Token {
     drawReach() {
-        const {center, hover, reach} = this;
+        const {center, hover, reach, interactionState} = this;
         reach.clear();
 
         reach.position = center;
@@ -11,13 +11,23 @@ export class HMToken extends Token {
         const color = this.getColor();
         if (!geometry || !color) return;
 
-        const [w, h, w2, h2, op] = geometry;
-        const op2 = hover ? op * 2 : op;
-        reach.beginFill(color, op)
-            .lineStyle(1, color, op2)
-            .drawEllipse(0, 0, w, h)
-            .drawEllipse(0, 0, w2, h2)
-            .endFill();
+        const [r1, r2, r3, op] = geometry;
+
+        const isDragged = interactionState === MouseInteractionManager.INTERACTION_STATES.DRAG;
+        if (hover || isDragged) {
+            reach.beginFill(color, op)
+                .lineStyle(1, color, op * 2)
+                .drawCircle(0, 0, r1)
+                .drawCircle(0, 0, r2)
+                .drawCircle(0, 0, r3)
+                .endFill();
+        } else {
+            reach.beginFill(color, op)
+                .lineStyle(1, color, op)
+                .drawCircle(0, 0, r2)
+                .drawCircle(0, 0, r3)
+                .endFill();
+        }
     }
 
     getColor() {
@@ -44,34 +54,29 @@ export class HMToken extends Token {
 
     getGeometry() {
         if (!this.combatant) return false;
+        const {actor} = this;
 
         const eList = ['dead', 'incap', 'unconscious', 'sfatigue', 'sleep'];
-        if (actorHasEffects(this.actor, eList)) return false;
+        if (actorHasEffects(actor, eList)) return false;
 
         const reach = this.getReach();
         if (!reach) return false;
 
-        const squareGrid = canvas.scene.grid.type === CONST.GRID_TYPES.SQUARE;
         const dim = canvas.dimensions;
         const unit = dim.size / dim.distance;
-        const {width, height} = this.document;
 
-        let [w, h] = [reach.distance, reach.distance];
+        // Breaks for beasts, which use actor.system.scale for a size index (3 = medium)
+        const [race] = actor.itemTypes.race;
+        const tokenBaseDiameter = race
+            ? Number(race.system.bonus.token)
+            : HMTABLES.scale[HMCONST.SCALE.MEDIUM].token;
 
-        if (squareGrid) {
-            w += (width  * dim.distance) / 2;
-            h += (height * dim.distance) / 2;
-        } else {
-            w += ((width - 1)  * dim.distance) / 2;
-            h += ((height - 1) * dim.distance) / 2;
-        }
-
-        const [w2, h2] = [(w + 5) * unit, (h + 5) * unit];
-        w *= unit;
-        h *= unit;
+        const r1 = (tokenBaseDiameter / 2) * unit;
+        const r2 = r1 + (reach.distance * unit);
+        const r3 = r2 + (5 * unit);
 
         const op = reach.opacity;
-        return [w, h, w2, h2, op];
+        return [r1, r2, r3, op];
     }
 
     getReach() {
@@ -91,11 +96,9 @@ export class HMToken extends Token {
         const wProfile = actor.wprofiles.get(weapon.profileId);
         const reach = (wProfile.system.reach || 0);
 
-        let distance = Math.max(reach, 0);
-        const isGridless = canvas.scene.grid.type === CONST.GRID_TYPES.GRIDLESS;
-        if (isGridless) distance += (game.canvas.scene.grid.distance / 2);
-
+        const distance = Math.max(reach, 0);
         const opacity = game.settings.get(SYSTEM_ID, 'reachOpacity');
+
         return {distance, opacity};
     }
 
