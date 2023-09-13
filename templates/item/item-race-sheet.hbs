@@ -46,6 +46,16 @@
                         </span>
                     </span>
                     <span class='form-option'>
+                        <label class="resource-label">Token Diameter</label>
+                        <span>
+                            <select name="system.scale.token">
+                                {{selectOptions (findConfigObj 'scale') selected=system.scale.token localize=true}}
+                            </select>
+                            <input type="number" name="system.bonus.token" value="{{system.bonus.token}}"
+                            {{#if (ne system.scale.token '0')}}readonly{{/if}} data-dtype="Float"/>
+                        </span>
+                    </span>
+                    <span class='form-option'>
                         <label class="resource-label">{{localize "HM.move"}}</label>
                         <span>
                             <select name="system.scale.move">
