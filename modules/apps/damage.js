@@ -70,7 +70,7 @@ export class DamagePrompt extends HMPrompt {
         if (isBackstab) { formulaType += DMGFORM.BSTAB; } else
         if (isRanged)   { formulaType += DMGFORM.RSTD; } else
         if (isJab) {
-            const {jab} = weapons[widx].system.jab;
+            const {jab} = weapons[widx].system;
             const jabFormula = shieldHit ? jab?.shield : jab?.normal;
 
             jabFormula && jabFormula !== 'auto'
