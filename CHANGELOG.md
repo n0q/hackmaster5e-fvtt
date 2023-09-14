@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 ### Changed
 - All temporary status effects are removed from combatants at conclusion of combat.
+### Fixed
+- Exceeding heavy encumbrance no longer glitches character.
 
 ## [0.3.34] - 2023-09-13
 ### Changed

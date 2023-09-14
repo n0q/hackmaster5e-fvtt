@@ -157,7 +157,8 @@
             "none":   "None",
             "light":  "Light",
             "medium": "Medium",
-            "heavy":  "Heavy"
+            "heavy":  "Heavy",
+            "over":   "OVER"
         },
 
         "encumbRow": {

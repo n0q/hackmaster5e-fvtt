@@ -307,6 +307,7 @@ idx.encumbrance = {
     [HMCONST.ENCUMBRANCE.LIGHT]:    'HM.encumbSelect.light',
     [HMCONST.ENCUMBRANCE.MEDIUM]:   'HM.encumbSelect.medium',
     [HMCONST.ENCUMBRANCE.HEAVY]:    'HM.encumbSelect.heavy',
+    [HMCONST.ENCUMBRANCE.OVER]:     'HM.encumbSelect.over',
 };
 
 idx.reach = {
