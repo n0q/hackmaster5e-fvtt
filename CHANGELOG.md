@@ -3,10 +3,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+### Added
+- Token base display.
 ### Changed
 - All temporary status effects are removed from combatants at conclusion of combat.
+- Drag Ruler module is recommended upon system install.
 ### Fixed
 - Exceeding heavy encumbrance no longer glitches character.
+- Compendium inaccuracies.
 
 ## [0.3.34] - 2023-09-13
 ### Changed

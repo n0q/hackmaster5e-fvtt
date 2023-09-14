@@ -55,6 +55,7 @@ export class HMToken extends Token {
     getGeometry() {
         if (!this.combatant) return false;
         const {actor} = this;
+        const {system} = actor;
 
         const eList = ['dead', 'incap', 'unconscious', 'sfatigue', 'sleep'];
         if (actorHasEffects(actor, eList)) return false;
@@ -65,11 +66,12 @@ export class HMToken extends Token {
         const dim = canvas.dimensions;
         const unit = dim.size / dim.distance;
 
-        // Breaks for beasts, which use actor.system.scale for a size index (3 = medium)
         const [race] = actor.itemTypes.race;
-        const tokenBaseDiameter = race
-            ? Number(race.system.bonus.token)
-            : HMTABLES.scale[HMCONST.SCALE.MEDIUM].token;
+        const defaultBaseDiameter = HMTABLES.scale[HMCONST.SCALE.MEDIUM].token;
+        let tokenBaseDiameter = defaultBaseDiameter;
+        if (race)         { tokenBaseDiameter = Number(race.system.bonus.token);            } else
+        if (system.scale) { tokenBaseDiameter = HMTABLES.scale[Number(system.scale)].token; }
+        tokenBaseDiameter |= defaultBaseDiameter;
 
         const r1 = (tokenBaseDiameter / 2) * unit;
         const r2 = r1 + (reach.distance * unit);
