@@ -46,7 +46,7 @@
     "dmg": {
       "normal": "2d6p + 3",
       "shield": "{d6p,d6p}kl",
-      "type": "hacking"
+      "type": "puncturing"
     },
     "jab": {
       "normal": "",
@@ -81,9 +81,9 @@
   "_stats": {
     "systemId": "hackmaster5e",
     "systemVersion": "0",
-    "coreVersion": "11.305",
+    "coreVersion": "11.308",
     "createdTime": 1688864505287,
-    "modifiedTime": 1689022817102,
+    "modifiedTime": 1694718373777,
     "lastModifiedBy": "6PGvwKmaOsPz0R2y"
   },
   "_id": "I6BJdLPGzQAZ403Y",
