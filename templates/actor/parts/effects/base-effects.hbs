@@ -25,7 +25,7 @@
         </td>
         <td>{{#with ../duration}}
             {{#if remaining includeZero=true}}
-                {{remaining}}
+                {{ceil remaining}}
                 {{#if (eq remaining 1)}}
                     {{toLowerCase (localize 'HM.second')}}
                 {{else}}
