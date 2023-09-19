@@ -810,10 +810,10 @@ export const HMTABLES = {
 
                 const specialMove = {
                     [HMCONST.SPECIAL.RSTANDARD]: declare,
-                    [HMCONST.SPECIAL.SNAPSHOT]:  timingNew.load,
-                    [HMCONST.SPECIAL.LOAD]:      timingNew.load,
-                    [HMCONST.SPECIAL.DRAW]:      timingNew.draw,
-                    [HMCONST.SPECIAL.AIM]:       timingNew.aim,
+                    [HMCONST.SPECIAL.SNAPSHOT]:  (timingNew.draw + timingNew.load) || 0,
+                    [HMCONST.SPECIAL.LOAD]:      timingNew.load || 0,
+                    [HMCONST.SPECIAL.DRAW]:      timingNew.draw || 0,
+                    [HMCONST.SPECIAL.AIM]:       timingNew.aim || 0,
                 };
                 return {base, declare, shoot, ...specialMove};
             },

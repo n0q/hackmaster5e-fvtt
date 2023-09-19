@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Exceeding heavy encumbrance no longer glitches character.
 - Compendium inaccuracies.
 - Effect duration display showed spurious results under certain circumstances.
+- Snapshots timer is accurate to the book.
 
 ## [0.3.34] - 2023-09-13
 ### Changed
