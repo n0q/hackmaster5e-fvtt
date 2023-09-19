@@ -1,33 +1,25 @@
 import { SYSTEM_ID, HMCONST, HMTABLES } from '../tables/constants.js';
 import { actorHasEffects } from './effects.js';
 
+const FILL_TYPE = {
+    REACH:  0b01,
+    BASE:   0b10,
+};
+
 export class HMToken extends Token {
     drawReach() {
         const {center, hover, reach, interactionState} = this;
-        reach.clear();
+        const isDragged = interactionState === MouseInteractionManager.INTERACTION_STATES.DRAG;
 
+        reach.clear();
         reach.position = center;
         const geometry = this.getGeometry();
         const color = this.getColor();
         if (!geometry || !color) return;
 
-        const [r1, r2, r3, op] = geometry;
-
-        const isDragged = interactionState === MouseInteractionManager.INTERACTION_STATES.DRAG;
-        if (hover || isDragged) {
-            reach.beginFill(color, op)
-                .lineStyle(1, color, op * 2)
-                .drawCircle(0, 0, r1)
-                .drawCircle(0, 0, r2)
-                .drawCircle(0, 0, r3)
-                .endFill();
-        } else {
-            reach.beginFill(color, op)
-                .lineStyle(1, color, op)
-                .drawCircle(0, 0, r2)
-                .drawCircle(0, 0, r3)
-                .endFill();
-        }
+        let mode = FILL_TYPE.REACH;
+        mode |= hover || isDragged ? FILL_TYPE.BASE : 0;
+        renderGeometry(reach, mode, geometry, color);
     }
 
     getColor() {
@@ -161,4 +153,30 @@ export class HMToken extends Token {
         if (!this.actor) return false;
         return this.actor.addWound(amount);
     }
+}
+
+function renderGeometry(reach, mode, geometry, color) {
+    const [r1, r2, r3, op] = geometry;
+
+    const fillTypeOperations = {
+        [FILL_TYPE.BASE | FILL_TYPE.REACH]: () => {
+            reach.lineStyle(1, color, op * 2)
+                .drawCircle(0, 0, r1)
+                .drawCircle(0, 0, r2)
+                .drawCircle(0, 0, r3);
+        },
+        [FILL_TYPE.REACH]: () => {
+            reach.lineStyle(1, color, op)
+                .drawCircle(0, 0, r2)
+                .drawCircle(0, 0, r3);
+        },
+        [FILL_TYPE.BASE]: () => {
+            reach.lineStyle(1, color, 1)
+                .drawCircle(0, 0, r1);
+        },
+    };
+
+    reach.beginFill(color, op);
+    if (Object.prototype.hasOwnProperty.call(fillTypeOperations, mode)) fillTypeOperations[mode]();
+    reach.endFill();
 }
