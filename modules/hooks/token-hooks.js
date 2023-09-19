@@ -22,9 +22,11 @@ export class HMTokenHooks {
     }
 
     static drawToken(token) {
+        const {reach, interactionState} = token;
+        const {INTERACTION_STATES} = MouseInteractionManager;
+        const isDragged = interactionState === INTERACTION_STATES.DRAG;
         token.reach ??= canvas.grid.reach.addChild(new PIXI.Graphics()); // eslint-disable-line
-        const {reach} = token;
-        reach.visible = !!token.combatant && token.visibleByDefault();
+        reach.visible = !!token.combatant && (token.visibleByDefault() || isDragged);
         token.drawReach();
     }
 

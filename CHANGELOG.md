@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Effect duration display showed spurious results under certain circumstances.
 - Snapshots timer is accurate to the book.
 - Attack cards no longer display jab speed for ranged weapons.
+- Weapon reach/threat ranges were not displayed while actively dragging a token owned by another user.
 
 ## [0.3.34] - 2023-09-13
 ### Changed
