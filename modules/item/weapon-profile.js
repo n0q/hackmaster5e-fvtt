@@ -129,8 +129,9 @@ export class HMWeaponProfile extends foundry.abstract.DataModel {
                                 .reduce((sum, vector) => sum + (bonus[vector][stat] || 0), 0);
         });
 
+        const canJab = !ranged.checked && weapon.system.jab.checked;
         const jspd = total.spd + bonus.base.jspd - bonus.base.spd;
-        total.jspd = Math.max(this.minspd, jspd);
+        total.jspd = canJab ? Math.max(this.minspd, jspd) : 0;
         total.spd = Math.max(this.minspd, total.spd);
         this.system.bonus = {total, ...bonus};
         this.system.reach = Math.max(0, weapon.system.reach + reachOffset);
