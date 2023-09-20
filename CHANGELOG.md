@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Snapshots timer is accurate to the book.
 - Attack cards no longer display jab speed for ranged weapons.
 - Weapon reach/threat ranges were not displayed while actively dragging a token owned by another user.
+- Scene crash when drawing reach for a token without an actor.
 
 ## [0.3.34] - 2023-09-13
 ### Changed

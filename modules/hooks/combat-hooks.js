@@ -32,8 +32,8 @@ export class HMCombatHooks {
     }
 
     static deleteCombatant(combatant) {
-        const token = combatant.token.object;
-        token.animReachClose();
+        const token = combatant.token?.object;
+        if (token) token.animReachClose();
     }
 
     static async preDeleteCombat(combat) {
