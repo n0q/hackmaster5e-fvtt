@@ -51,7 +51,7 @@ export class HMToken extends Token {
     }
 
     getGeometry() {
-        if (!this.combatant) return false;
+        if (!this.combatant || !this.actor) return false;
         const {actor} = this;
         const {system} = actor;
 
