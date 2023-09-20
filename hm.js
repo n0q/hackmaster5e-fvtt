@@ -68,6 +68,8 @@ function registerConfig() {
             {urls: ['systems/hackmaster5e/styles/fonts/GenBkBasBI.woff2'], style: 'italic', weight: 700},
         ],
     };
+
+    CONFIG.time.roundTime = 1;
 }
 
 function registerGsapPlugins() {

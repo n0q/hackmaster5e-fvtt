@@ -63,6 +63,7 @@ export const HMCONST = {
         LIGHT:    1,
         MEDIUM:   2,
         HEAVY:    3,
+        OVER:     4,
     },
     ITEM_STATE: {
         OWNED:    0,
@@ -469,6 +470,7 @@ export const HMTABLES = {
         [HMCONST.ENCUMBRANCE.LIGHT]:    {dr: 0, def: -1, init: 0, spd: 0},
         [HMCONST.ENCUMBRANCE.MEDIUM]:   {dr: 1, def: -2, init: 1, spd: 1},
         [HMCONST.ENCUMBRANCE.HEAVY]:    {dr: 2, def: -4, init: 2, spd: 2},
+        [HMCONST.ENCUMBRANCE.OVER]:     {dr: 4, def: -8, init: 4, spd: 4},
     },
     formula: {
         atk: {
@@ -583,14 +585,14 @@ export const HMTABLES = {
         'ranged': [0, 0, 1, 0],
     },
     scale: {
-        [HMCONST.SCALE.TINY]:     {hp:  0, kb:  5, reach: -2,  move: 1/3},
-        [HMCONST.SCALE.SMALL]:    {hp:  5, kb: 10, reach: -1,  move: 1/2},
-        [HMCONST.SCALE.MEDIUM]:   {hp: 10, kb: 15, reach:  0,  move:   1},
-        [HMCONST.SCALE.LARGE]:    {hp: 15, kb: 20, reach:  1,  move:   2},
-        [HMCONST.SCALE.HUGE]:     {hp: 20, kb: 25, reach:  2,  move:   3},
-        [HMCONST.SCALE.GIGANTIC]: {hp: 25, kb: 30, reach:  3,  move:   4},
-        [HMCONST.SCALE.ENORMOUS]: {hp: 35, kb: 40, reach:  5,  move:   6},
-        [HMCONST.SCALE.COLOSSAL]: {hp: 70, kb: 75, reach:  12, move:  13},
+        [HMCONST.SCALE.TINY]:     {hp:  0, kb:  5, reach: -2, token:  1, move: 1/3},
+        [HMCONST.SCALE.SMALL]:    {hp:  5, kb: 10, reach: -1, token:  3, move: 1/2},
+        [HMCONST.SCALE.MEDIUM]:   {hp: 10, kb: 15, reach:  0, token:  5, move:   1},
+        [HMCONST.SCALE.LARGE]:    {hp: 15, kb: 20, reach:  1, token:  7, move:   2},
+        [HMCONST.SCALE.HUGE]:     {hp: 20, kb: 25, reach:  2, token:  9, move:   3},
+        [HMCONST.SCALE.GIGANTIC]: {hp: 25, kb: 30, reach:  3, token: 11, move:   4},
+        [HMCONST.SCALE.ENORMOUS]: {hp: 35, kb: 40, reach:  5, token: 15, move:   6},
+        [HMCONST.SCALE.COLOSSAL]: {hp: 70, kb: 75, reach: 12, token: 29, move:  13},
     },
     'skill': {
         'difficulty': {
@@ -808,10 +810,10 @@ export const HMTABLES = {
 
                 const specialMove = {
                     [HMCONST.SPECIAL.RSTANDARD]: declare,
-                    [HMCONST.SPECIAL.SNAPSHOT]:  timingNew.load,
-                    [HMCONST.SPECIAL.LOAD]:      timingNew.load,
-                    [HMCONST.SPECIAL.DRAW]:      timingNew.draw,
-                    [HMCONST.SPECIAL.AIM]:       timingNew.aim,
+                    [HMCONST.SPECIAL.SNAPSHOT]:  (timingNew.draw + timingNew.load) || 0,
+                    [HMCONST.SPECIAL.LOAD]:      timingNew.load || 0,
+                    [HMCONST.SPECIAL.DRAW]:      timingNew.draw || 0,
+                    [HMCONST.SPECIAL.AIM]:       timingNew.aim || 0,
                 };
                 return {base, declare, shoot, ...specialMove};
             },

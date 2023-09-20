@@ -13,7 +13,7 @@
   "_id": "nWnI8qVxR0i6ivwI",
   "system": {
     "description": "",
-    "state": 0,
+    "state": 3,
     "weight": 0,
     "price": "",
     "avail": {
@@ -96,9 +96,9 @@
   "_stats": {
     "systemId": "hackmaster5e",
     "systemVersion": "0",
-    "coreVersion": "10.291",
+    "coreVersion": "11.305",
     "createdTime": 1669956297662,
-    "modifiedTime": 1671763370619,
+    "modifiedTime": 1689301266066,
     "lastModifiedBy": "6PGvwKmaOsPz0R2y"
   },
   "_key": "!actors.items!XMyAirE3TGiHocdz.nWnI8qVxR0i6ivwI"

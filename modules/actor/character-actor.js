@@ -34,7 +34,7 @@ export class HMCharacterActor extends HMActor {
 
     get encumbrance() {
         const {idx} = this.system.abilities.total.str;
-        return HMTABLES.abilitymods.encumbrance[idx];
+        return [...HMTABLES.abilitymods.encumbrance[idx], Infinity];
     }
 
     resetBonus() {

@@ -2,6 +2,26 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.4.0] - 2023-09-20
+### Added
+- Token base display.
+- Token base size to race cards.
+- Setting to disable token threat/reach/base display.
+### Changed
+- All temporary status effects are removed from combatants at conclusion of combat.
+- Drag Ruler module is recommended upon system install.
+- Set Halfling base token size to Small.
+- Improved reach display culling.
+- Increased hovered token's reach display visibility;
+### Fixed
+- Exceeding heavy encumbrance no longer glitches character.
+- Compendium inaccuracies.
+- Effect duration display showed spurious results under certain circumstances.
+- Snapshots timer is accurate to the book.
+- Attack cards no longer display jab speed for ranged weapons.
+- Weapon reach/threat ranges were not displayed while actively dragging a token owned by another user.
+- Scene crash when drawing reach for a token without an actor.
+
 ## [0.3.34] - 2023-09-13
 ### Changed
 - Tweaked language ui.

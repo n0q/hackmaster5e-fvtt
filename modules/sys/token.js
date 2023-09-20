@@ -1,23 +1,31 @@
-import { SYSTEM_ID, HMCONST } from '../tables/constants.js';
+import { SYSTEM_ID, HMCONST, HMTABLES } from '../tables/constants.js';
 import { actorHasEffects } from './effects.js';
 
-export class HMToken extends Token {
-    drawReach() {
-        const {center, hover, reach} = this;
-        reach.clear();
+export const FILL_TYPE = {
+    ZERO:       0b00,
+    DEFAULT:    0b01,
+    REACH:      0b01,
+    BASE:       0b10,
+    FULL:       0b11,
+};
 
+export class HMToken extends Token {
+    drawReach(renderMode = FILL_TYPE.DEFAULT) {
+        const showReach = game.settings.get(SYSTEM_ID, 'showReach');
+
+        const {center, hover, reach, interactionState} = this;
+        const isDragged = interactionState === MouseInteractionManager.INTERACTION_STATES.DRAG;
+
+        reach.clear();
+        if (!showReach) return;
         reach.position = center;
         const geometry = this.getGeometry();
         const color = this.getColor();
         if (!geometry || !color) return;
 
-        const [w, h, w2, h2, op] = geometry;
-        const op2 = hover ? op * 2 : op;
-        reach.beginFill(color, op)
-            .lineStyle(1, color, op2)
-            .drawEllipse(0, 0, w, h)
-            .drawEllipse(0, 0, w2, h2)
-            .endFill();
+        let mode = renderMode;
+        if (hover || isDragged) mode |= FILL_TYPE.BASE;
+        renderGeometry(reach, mode, hover, geometry, color);
     }
 
     getColor() {
@@ -43,35 +51,32 @@ export class HMToken extends Token {
     }
 
     getGeometry() {
-        if (!this.combatant) return false;
+        if (!this.combatant || !this.actor) return false;
+        const {actor} = this;
+        const {system} = actor;
 
         const eList = ['dead', 'incap', 'unconscious', 'sfatigue', 'sleep'];
-        if (actorHasEffects(this.actor, eList)) return false;
+        if (actorHasEffects(actor, eList)) return false;
 
         const reach = this.getReach();
         if (!reach) return false;
 
-        const squareGrid = canvas.scene.grid.type === CONST.GRID_TYPES.SQUARE;
         const dim = canvas.dimensions;
         const unit = dim.size / dim.distance;
-        const {width, height} = this.document;
 
-        let [w, h] = [reach.distance, reach.distance];
+        const [race] = actor.itemTypes.race;
+        const defaultBaseDiameter = HMTABLES.scale[HMCONST.SCALE.MEDIUM].token;
+        let tokenBaseDiameter = defaultBaseDiameter;
+        if (race)         { tokenBaseDiameter = Number(race.system.bonus.token);            } else
+        if (system.scale) { tokenBaseDiameter = HMTABLES.scale[Number(system.scale)].token; }
+        tokenBaseDiameter ??= defaultBaseDiameter;
 
-        if (squareGrid) {
-            w += (width  * dim.distance) / 2;
-            h += (height * dim.distance) / 2;
-        } else {
-            w += ((width - 1)  * dim.distance) / 2;
-            h += ((height - 1) * dim.distance) / 2;
-        }
-
-        const [w2, h2] = [(w + 5) * unit, (h + 5) * unit];
-        w *= unit;
-        h *= unit;
+        const r1 = (tokenBaseDiameter / 2) * unit;
+        const r2 = r1 + (reach.distance * unit);
+        const r3 = r2 + (5 * unit);
 
         const op = reach.opacity;
-        return [w, h, w2, h2, op];
+        return [r1, r2, r3, op];
     }
 
     getReach() {
@@ -91,11 +96,9 @@ export class HMToken extends Token {
         const wProfile = actor.wprofiles.get(weapon.profileId);
         const reach = (wProfile.system.reach || 0);
 
-        let distance = Math.max(reach, 0);
-        const isGridless = canvas.scene.grid.type === CONST.GRID_TYPES.GRIDLESS;
-        if (isGridless) distance += (game.canvas.scene.grid.distance / 2);
-
+        const distance = Math.max(reach, 0);
         const opacity = game.settings.get(SYSTEM_ID, 'reachOpacity');
+
         return {distance, opacity};
     }
 
@@ -156,4 +159,31 @@ export class HMToken extends Token {
         if (!this.actor) return false;
         return this.actor.addWound(amount);
     }
+}
+
+function renderGeometry(reach, mode, isHovered, geometry, color) {
+    const [r1, r2, r3, op] = geometry;
+
+    const fillTypeOps = {
+        [FILL_TYPE.BASE | FILL_TYPE.REACH]: (solid) => {
+            reach.lineStyle(1, color, 1)
+                .drawCircle(0, 0, r1)
+                .lineStyle(1, color, solid ? 1 : op)
+                .drawCircle(0, 0, r2)
+                .drawCircle(0, 0, r3);
+        },
+        [FILL_TYPE.REACH]: () => {
+            reach.lineStyle(1, color, op)
+                .drawCircle(0, 0, r2)
+                .drawCircle(0, 0, r3);
+        },
+        [FILL_TYPE.BASE]: () => {
+            reach.lineStyle(1, color, 1)
+                .drawCircle(0, 0, r1);
+        },
+    };
+
+    reach.beginFill(color, op);
+    if (Object.prototype.hasOwnProperty.call(fillTypeOps, mode)) fillTypeOps[mode](isHovered);
+    reach.endFill();
 }

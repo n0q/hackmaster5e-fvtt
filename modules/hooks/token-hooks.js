@@ -1,3 +1,5 @@
+import { FILL_TYPE } from '../sys/token.js';
+
 export class HMTokenHooks {
     static async createToken(token, _options, userId) {
         if (game.user.id !== userId) return;
@@ -22,17 +24,35 @@ export class HMTokenHooks {
     }
 
     static drawToken(token) {
-        token.reach ??= canvas.grid.reach.addChild(new PIXI.Graphics()); // eslint-disable-line
-        const {reach} = token;
-        reach.visible = !!token.combatant && token.visibleByDefault();
+        // eslint-disable-next-line no-param-reassign
+        token.reach ??= canvas.grid.reach.addChild(new PIXI.Graphics());
+        const {reach, interactionState} = token;
+        const {INTERACTION_STATES} = MouseInteractionManager;
+        const isDragged = interactionState === INTERACTION_STATES.DRAG;
+        reach.visible = !!token.combatant && (token.visibleByDefault() || isDragged);
         token.drawReach();
     }
 
     static hoverToken(token, hover) {
+        /* eslint-disable no-param-reassign */
         if (!token.combatant) return;
-        token.drawReach();
+        token.drawReach(hover ? FILL_TYPE.FULL : FILL_TYPE.REACH);
         const {reach} = token;
         reach.visible = hover ? true : token.visibleByDefault();
+
+        const otherTokens = canvas.tokens.placeables.filter((t) => t.id !== token.id);
+        otherTokens.forEach((t) => {
+            let fillType = FILL_TYPE.BASE;
+            if (hover) {
+                if (t.reach.visible) fillType |= FILL_TYPE.REACH;
+                if (t.isVisible) t.reach.visible = true;
+            } else {
+                fillType = FILL_TYPE.REACH;
+                t.reach.visible = t.isVisible && t.visibleByDefault();
+            }
+            t.drawReach(fillType);
+        });
+        /* eslint-enable-line no-param-reassign */
     }
 
     static refreshToken(token) {

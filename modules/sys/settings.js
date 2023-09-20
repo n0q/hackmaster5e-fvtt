@@ -1,6 +1,16 @@
 import { SYSTEM_ID } from '../tables/constants.js';
 
 export const registerSystemSettings = () => {
+    game.settings.register(SYSTEM_ID, 'showReach', {
+        name: 'SETTINGS.showReach',
+        hint: 'SETTINGS.showReachHint',
+        scope: 'world',
+        config: true,
+        type: Boolean,
+        default: true,
+        onChange: () => canvas.tokens.placeables.forEach((t) => t.drawReach()),
+    });
+
     game.settings.register(SYSTEM_ID, 'reachOpacity', {
         name: 'SETTINGS.reachOpacity',
         hint: 'SETTINGS.reachOpacityHint',

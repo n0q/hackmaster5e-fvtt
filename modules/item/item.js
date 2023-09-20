@@ -178,6 +178,7 @@ export async function advanceClock(comData, dialogResp, smartInit=false) {
     await ChatMessage.create(initChatCard);
 }
 
+// TODO: Convert to using world timer.
 export async function setStatusEffectOnToken(comData, effect, rounds=null) {
     const {active} = game.combats;
     const {combatant} = comData;
