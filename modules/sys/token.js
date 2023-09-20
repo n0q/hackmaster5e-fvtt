@@ -11,10 +11,13 @@ export const FILL_TYPE = {
 
 export class HMToken extends Token {
     drawReach(renderMode = FILL_TYPE.DEFAULT) {
+        const showReach = game.settings.get(SYSTEM_ID, 'showReach');
+
         const {center, hover, reach, interactionState} = this;
         const isDragged = interactionState === MouseInteractionManager.INTERACTION_STATES.DRAG;
 
         reach.clear();
+        if (!showReach) return;
         reach.position = center;
         const geometry = this.getGeometry();
         const color = this.getColor();
