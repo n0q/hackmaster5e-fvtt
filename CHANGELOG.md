@@ -9,6 +9,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - All temporary status effects are removed from combatants at conclusion of combat.
 - Drag Ruler module is recommended upon system install.
 - Set Halfling base token size to Small.
+- Improved reach display culling.
+- Increased hovered token's reach display visibility;
+
 ### Fixed
 - Exceeding heavy encumbrance no longer glitches character.
 - Compendium inaccuracies.

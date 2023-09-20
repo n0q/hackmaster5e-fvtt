@@ -36,7 +36,7 @@ export class HMTokenHooks {
     static hoverToken(token, hover) {
         /* eslint-disable no-param-reassign */
         if (!token.combatant) return;
-        token.drawReach(FILL_TYPE.REACH | FILL_TYPE.BASE);
+        token.drawReach(hover ? FILL_TYPE.FULL : FILL_TYPE.REACH);
         const {reach} = token;
         reach.visible = hover ? true : token.visibleByDefault();
 

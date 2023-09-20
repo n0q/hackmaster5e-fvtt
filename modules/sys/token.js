@@ -6,6 +6,7 @@ export const FILL_TYPE = {
     DEFAULT:    0b01,
     REACH:      0b01,
     BASE:       0b10,
+    FULL:       0b11,
 };
 
 export class HMToken extends Token {
@@ -21,7 +22,7 @@ export class HMToken extends Token {
 
         let mode = renderMode;
         if (hover || isDragged) mode |= FILL_TYPE.BASE;
-        renderGeometry(reach, mode, geometry, color);
+        renderGeometry(reach, mode, hover, geometry, color);
     }
 
     getColor() {
@@ -157,13 +158,14 @@ export class HMToken extends Token {
     }
 }
 
-function renderGeometry(reach, mode, geometry, color) {
+function renderGeometry(reach, mode, isHovered, geometry, color) {
     const [r1, r2, r3, op] = geometry;
 
-    const fillTypeOperations = {
-        [FILL_TYPE.BASE | FILL_TYPE.REACH]: () => {
+    const fillTypeOps = {
+        [FILL_TYPE.BASE | FILL_TYPE.REACH]: (solid) => {
             reach.lineStyle(1, color, 1)
                 .drawCircle(0, 0, r1)
+                .lineStyle(1, color, solid ? 1 : op)
                 .drawCircle(0, 0, r2)
                 .drawCircle(0, 0, r3);
         },
@@ -179,6 +181,6 @@ function renderGeometry(reach, mode, geometry, color) {
     };
 
     reach.beginFill(color, op);
-    if (Object.prototype.hasOwnProperty.call(fillTypeOperations, mode)) fillTypeOperations[mode]();
+    if (Object.prototype.hasOwnProperty.call(fillTypeOps, mode)) fillTypeOps[mode](isHovered);
     reach.endFill();
 }
