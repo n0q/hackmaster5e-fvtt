@@ -65,7 +65,7 @@ export class HMToken extends Token {
         let tokenBaseDiameter = defaultBaseDiameter;
         if (race)         { tokenBaseDiameter = Number(race.system.bonus.token);            } else
         if (system.scale) { tokenBaseDiameter = HMTABLES.scale[Number(system.scale)].token; }
-        tokenBaseDiameter |= defaultBaseDiameter;
+        tokenBaseDiameter ??= defaultBaseDiameter;
 
         const r1 = (tokenBaseDiameter / 2) * unit;
         const r2 = r1 + (reach.distance * unit);
