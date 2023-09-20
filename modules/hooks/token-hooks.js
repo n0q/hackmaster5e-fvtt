@@ -48,7 +48,7 @@ export class HMTokenHooks {
                 if (t.isVisible) t.reach.visible = true;
             } else {
                 fillType = FILL_TYPE.REACH;
-                t.reach.visible = t.visibleByDefault();
+                t.reach.visible = t.isVisible && t.visibleByDefault();
             }
             t.drawReach(fillType);
         });
