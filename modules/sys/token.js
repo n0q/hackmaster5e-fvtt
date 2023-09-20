@@ -1,13 +1,15 @@
 import { SYSTEM_ID, HMCONST, HMTABLES } from '../tables/constants.js';
 import { actorHasEffects } from './effects.js';
 
-const FILL_TYPE = {
-    REACH:  0b01,
-    BASE:   0b10,
+export const FILL_TYPE = {
+    ZERO:       0b00,
+    DEFAULT:    0b01,
+    REACH:      0b01,
+    BASE:       0b10,
 };
 
 export class HMToken extends Token {
-    drawReach() {
+    drawReach(renderMode = FILL_TYPE.DEFAULT) {
         const {center, hover, reach, interactionState} = this;
         const isDragged = interactionState === MouseInteractionManager.INTERACTION_STATES.DRAG;
 
@@ -17,8 +19,8 @@ export class HMToken extends Token {
         const color = this.getColor();
         if (!geometry || !color) return;
 
-        let mode = FILL_TYPE.REACH;
-        mode |= hover || isDragged ? FILL_TYPE.BASE : 0;
+        let mode = renderMode;
+        if (hover || isDragged) mode |= FILL_TYPE.BASE;
         renderGeometry(reach, mode, geometry, color);
     }
 
@@ -160,7 +162,7 @@ function renderGeometry(reach, mode, geometry, color) {
 
     const fillTypeOperations = {
         [FILL_TYPE.BASE | FILL_TYPE.REACH]: () => {
-            reach.lineStyle(1, color, op * 2)
+            reach.lineStyle(1, color, 1)
                 .drawCircle(0, 0, r1)
                 .drawCircle(0, 0, r2)
                 .drawCircle(0, 0, r3);
