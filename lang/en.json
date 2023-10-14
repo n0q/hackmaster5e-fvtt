@@ -267,6 +267,16 @@
             "verydifficult": "Very Difficult"
         },
 
+        "spellVolatility": {
+            "normal":       "Normal Casting",
+            "amped1":       "Amped Up Casting",
+            "amped2":       "Overamped Casting",
+            "danger1":      "Danger Zone 1",
+            "danger2":      "Danger Zone 2",
+            "danger3":      "Danger Zone 3",
+            "danger4":      "Danger Zone 4"
+        },
+
         "itemTypes": {
             "container": "Container"
         },

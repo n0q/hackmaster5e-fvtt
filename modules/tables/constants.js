@@ -165,6 +165,15 @@ export const HMCONST = {
         GGROUND:    66,
         SCAMPER:    67,
     },
+    SVR: {
+        NORMAL:     0,
+        AMPED1:     1,
+        AMPED2:     2,
+        DANGER1:    3,
+        DANGER2:    4,
+        DANGER3:    5,
+        DANGER4:    6,
+    },
     TALENT: {
         WEAPON: 0,
         EFFECT: 1,
@@ -601,6 +610,23 @@ export const HMTABLES = {
             'average':      -40,
             'easy':         -80,
             'trivial':      -90,
+        },
+    },
+    spell: {
+        sfc: (svr) => {
+            const svrClamped = Math.clamped(svr, 1, 244);
+            return Math.ceil((svrClamped - 4) / 10) + 14;
+        },
+        svr: (level, stage) => {
+            const sTable = [0  + level * 1,
+                            0  + level * 2.5,
+                            0  + level * 6,
+                            3  + level * 7,
+                            7  + level * 8,
+                            12 + level * 9,
+                            18 + level * 10,
+            ];
+            return Math.ceil(sTable[stage]);
         },
     },
     effects: {

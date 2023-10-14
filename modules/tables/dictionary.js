@@ -238,6 +238,17 @@ idx.skillLevel = {
     'verydifficult': 'HM.skillDiffSelect.verydifficult',
 };
 
+idx.spellVolatility = {
+    [HMCONST.SVR.NORMAL]:   'HM.spellVolatility.normal',
+    [HMCONST.SVR.AMPED1]:   'HM.spellVolatility.amped1',
+    [HMCONST.SVR.AMPED2]:   'HM.spellVolatility.amped2',
+    [HMCONST.SVR.DANGER1]:  'HM.spellVolatility.danger1',
+    [HMCONST.SVR.DANGER1]:  'HM.spellVolatility.danger1',
+    [HMCONST.SVR.DANGER2]:  'HM.spellVolatility.danger2',
+    [HMCONST.SVR.DANGER3]:  'HM.spellVolatility.danger3',
+    [HMCONST.SVR.DANGER4]:  'HM.spellVolatility.danger4',
+};
+
 idx.talentSelect = {
     [HMCONST.TALENT.WEAPON]:    'HM.talentSelect.weapon',
     [HMCONST.TALENT.EFFECT]:    'HM.talentSelect.effect',
