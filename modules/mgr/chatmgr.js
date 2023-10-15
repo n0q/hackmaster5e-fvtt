@@ -213,6 +213,10 @@ async function createCritCard(dataset) {
     const template = 'systems/hackmaster5e/templates/chat/crit.hbs';
     const resultContent = await renderTemplate(template, {resp, critData});
     const content = resultContent + rollContent;
+
+    const useArmorDegredation = game.settings.get(SYSTEM_ID, 'armorDegredation');
+    if (useArmorDegredation) Hooks.callAll('armorDamage', 1, game.user.id);
+
     return {content, roll, flavor: caller?.name};
 }
 
@@ -359,8 +363,11 @@ async function createDamageCard(dataset) {
 
     flavor += getSpecialMoveFlavor(resp);
     const rollContent = await roll.render({flavor});
+
     const useArmorDegredation = game.settings.get(SYSTEM_ID, 'armorDegredation');
     const armorDamage = useArmorDegredation ? calculateArmorDamage(roll) : 0;
+    const isBeast = caller.type === 'beast';
+    if (armorDamage && isBeast) Hooks.callAll('armorDamage', armorDamage, game.user.id);
 
     const template = 'systems/hackmaster5e/templates/chat/damage.hbs';
     const templateData = {resp, context, caller, armorDamage};
