@@ -1,3 +1,4 @@
+import { HMCONST, HMTABLES } from '../tables/constants.js';
 import { HMItem } from './item.js';
 
 export class HMSkillItem extends HMItem {
@@ -39,5 +40,21 @@ export class HMSkillItem extends HMItem {
                                 .filter((v) => v !== 'total')
                                 .reduce((acc, value) => acc + bonus[value][key] || 0, 0);
         });
+    }
+
+    get mastery() {
+        const {bonus} = this.system;
+        const {MASTERY} = HMCONST.SKILL;
+
+        return Object.keys(bonus.total).reduce((acc, type) => {
+            const isUnskilled = !bonus.mastery[type];
+            const mValue = parseInt(bonus.total[type], 10);
+            acc[type] = isUnskilled ? MASTERY.UNSKILLED : HMTABLES.skill.mastery(mValue);
+            return acc;
+        }, {});
+    }
+
+    get level() {
+        return this.system.bonus.total;
     }
 }

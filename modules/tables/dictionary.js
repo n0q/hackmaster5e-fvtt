@@ -230,12 +230,21 @@ idx.saves = {
 };
 
 idx.skillLevel = {
-    'auto':          'HM.auto',
-    'trivial':       'HM.skillDiffSelect.trivial',
-    'easy':          'HM.skillDiffSelect.easy',
-    'average':       'HM.skillDiffSelect.average',
-    'difficult':     'HM.skillDiffSelect.difficult',
-    'verydifficult': 'HM.skillDiffSelect.verydifficult',
+    [HMCONST.SKILL.DIFF.AUTO]:          'HM.auto',
+    [HMCONST.SKILL.DIFF.TRIVIAL]:       'HM.skillDiffSelect.trivial',
+    [HMCONST.SKILL.DIFF.EASY]:          'HM.skillDiffSelect.easy',
+    [HMCONST.SKILL.DIFF.AVERAGE]:       'HM.skillDiffSelect.average',
+    [HMCONST.SKILL.DIFF.DIFFICULT]:     'HM.skillDiffSelect.difficult',
+    [HMCONST.SKILL.DIFF.VDIFFICULT]:    'HM.skillDiffSelect.verydifficult',
+};
+
+idx.skillMastery = {
+    [HMCONST.SKILL.MASTERY.UNSKILLED]:  'HM.skillMastery.unskilled',
+    [HMCONST.SKILL.MASTERY.NOVICE]:     'HM.skillMastery.novice',
+    [HMCONST.SKILL.MASTERY.AVERAGE]:    'HM.skillMastery.average',
+    [HMCONST.SKILL.MASTERY.ADVANCED]:   'HM.skillMastery.advanced',
+    [HMCONST.SKILL.MASTERY.EXPERT]:     'HM.skillMastery.expert',
+    [HMCONST.SKILL.MASTERY.MASTER]:     'HM.skillMastery.master',
 };
 
 idx.spellVolatility = {

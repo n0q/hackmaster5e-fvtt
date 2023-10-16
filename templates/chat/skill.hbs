@@ -1,8 +1,15 @@
+{{localize 'HM.skill'}}:
+<b>{{specname}}</b><br>
+{{localize 'HM.skilllevel'}}:
+<b>{{level}}</b><br>
+{{localize 'HM.skillmastery'}}:
+<b>{{localize (lookup (findConfigObj 'skillMastery') mastery)}}</b><br>
 {{#unless (eq formulaType 'opposed')}}
-    {{#unless (eq dc 'auto')}}
+    {{#unless (eq dc (HMCONST 'SKILL.DIFF.AUTO'))}}
         {{localize 'HM.target'}}:
         <b>{{localize (lookup (findConfigObj 'skillLevel') dc)}}</b>
         <br>
     {{/unless}}
+    <hr>
     <b>{{specialRow}}</b>
 {{/unless}}

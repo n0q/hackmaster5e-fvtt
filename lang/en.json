@@ -267,6 +267,18 @@
             "verydifficult": "Very Difficult"
         },
 
+        "skillMastery": {
+            "unskilled":    "Unskilled",
+            "novice":       "Novice",
+            "average":      "Average",
+            "advanced":     "Advanced",
+            "expert":       "Expert",
+            "master":       "Master"
+        },
+
+        "skilllevel":       "Skill Level",
+        "skillmastery":     "Skill Mastery",
+
         "spellVolatility": {
             "normal":       "Normal Casting",
             "amped1":       "Amped Up Casting",

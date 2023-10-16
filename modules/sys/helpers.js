@@ -1,4 +1,5 @@
 import { idx } from '../tables/dictionary.js';
+import { HMCONST } from '../tables/constants.js';
 
 export const registerHandlebarsHelpers = () => {
     /* eslint-disable no-console */
@@ -41,6 +42,12 @@ export const registerHandlebarsHelpers = () => {
         if (!!opts.hash.invert) visible = !visible;
         if (!visible) return 'hide';
         return undefined;
+    });
+
+    Handlebars.registerHelper('HMCONST', (key) => {
+        const keyExists = foundry.utils.hasProperty(HMCONST, key);
+        if (keyExists) return foundry.utils.getProperty(HMCONST, key);
+        return 'INVALID_KEY';
     });
 
     Handlebars.registerHelper('findConfigValue', (obj, key) => {
