@@ -87,4 +87,8 @@ export class HMSpellItem extends HMItem {
             if (resp.sfatigue) setStatusEffectOnToken(comData, 'sfatigue', resp.sfatigue);
         }
     }
+
+    get baseSPC() {
+        return HMTABLES.cast.baseSPC(this.system.lidx);
+    }
 }

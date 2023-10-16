@@ -586,16 +586,13 @@ export const HMTABLES = {
             }),
     },
     cast: {
+        baseSPC: (lidx) => (parseInt(lidx, 10) * 10) + 30,
         timing: (spd, caller) => {
             const {fatigue} = caller.system.bonus.total;
             const {basespd} = caller[SYSTEM_ID].talent.sfatigue;
             const declare = spd;
             const sfatigue = Math.max(spd + basespd + (Number(fatigue) || 0), 1);
             return {declare, sfatigue};
-        },
-        cost: (lidx, prepped) => {
-            const base = (lidx * 10) + 30;
-            return prepped ? base : base * 2;
         },
     },
     die: {
