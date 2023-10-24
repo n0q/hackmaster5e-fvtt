@@ -539,7 +539,7 @@ export const HMTABLES = {
             morale:   'd20p +  @bonus.total.morale   + @resp.bonus',
             physical: 'd20p +  @bonus.total.physical + @resp.bonus',
             poison:   'd20p +  @bonus.total.poison   + @resp.bonus',
-            target:   'd20p +  @level',
+            spell:    'd20p +  @spellSave',
             tenacity: 'd20p +  @bonus.total.tenacity + @resp.bonus',
             trauma:   '@talent.die.trauma - (@bonus.total.trauma + @resp.bonus)',
             turning:  'd20p +  @bonus.total.turning  + @resp.bonus',

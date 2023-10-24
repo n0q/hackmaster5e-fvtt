@@ -5,6 +5,9 @@ export class HMClassItem extends HMItem {
     prepareBaseData() {
         super.prepareBaseData();
         this._prepCClassData();
+        if (!this.actor) return;
+        this.setHP();
+        this.setBonusTotal();
     }
 
     prepareDerivedData() {
@@ -20,13 +23,15 @@ export class HMClassItem extends HMItem {
             const {pData} = HMTABLES.cclass;
             for (let z = 1; z < 21; z++) pTable[z] = deepClone(pData);
             this.update({'system.ptable': pTable});
-            return;
         }
 
-        if (!this.actor) return;
-
-        // calculate hp
         system.level = Math.clamped((system.level || 0), 0, 20);
+    }
+
+    setHP() {
+        const {system} = this;
+        const pTable = system.ptable;
+
         const {level} = system;
         if (level < 1) {
             delete system.bonus;
@@ -56,21 +61,36 @@ export class HMClassItem extends HMItem {
             if (reroll) rerolled = true;
         }
 
+        system.bonus = {hp: hp + Math.max(...hpStack) + (system.hp || 0)};
+    }
+
+    setBonusTotal() {
+        const {system} = this;
+        const pTable = system.ptable;
+        const {features, level} = system;
+
         const bonus = {
-            'hp':       hp + Math.max(...hpStack) + (system.hp || 0),
-            'turning':  level,
-            'dodge':    level,
-            'mental':   level,
-            'physical': level,
-            'top':      (system.top_cf || 0.01) * level,
+            turning:  level,
+            dodge:    level,
+            mental:   level,
+            physical: level,
+            top:      (system.top_cf || 0.01) * level,
         };
 
         // grab the level data off the ptable
-        const {features} = system;
         Object.keys(features).forEach((idx) => {
             bonus[idx] = features[idx] ? pTable[level]?.[idx]?.value || 0 : 0;
         });
 
-        system.bonus = bonus;
+        // max spell level for saves and volatility checks
+        let slvlValue = parseInt(pTable[level]?.slvl?.value, 10);
+        if (features.slvl && !slvlValue) {
+            let row = level;
+            while (row > 1 && !parseInt(pTable[--row].slvl.value, 10));
+            if (row !== level) slvlValue = pTable[row].slvl.value;
+        }
+        bonus.slvl = Math.max(slvlValue - 2, 0);
+
+        Object.assign(system.bonus, bonus);
     }
 }

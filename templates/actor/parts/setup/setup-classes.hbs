@@ -91,19 +91,19 @@
                 <table class='table-basic'>
                     <tbody>
                         <tr>
-                            <th scope='row'>{{localize 'HM.level'}}</th>
-                            <td width='99%'>
+                            <th width='99%' scope='row'>{{localize 'HM.level'}}</th>
+                            <td>
                                 <input class='editable' type='number' value={{level}}
                                     data-item-prop='system.level' data-dtype='Number'/>
                             </td>
                         </tr>
                         <tr>
-                            <th scope='row'>{{localize 'HM.hp'}}</th>
-                            <td width='99%'>{{bonus.hp}}</td>
+                            <th width='99%' scope='row'>{{localize 'HM.hp'}}</th>
+                            <td>{{bonus.hp}}</td>
                         </tr>
                         {{#each features}}{{#if this}}
                         <tr>
-                            <th scope='row'>{{localize (findConfigValue 'classFeatureTable' @key)}}</th>
+                            <th scope='row'>{{localize (concat 'HM.CCLASS.CARD.' @key)}}</th>
                             <td width='99%'>{{lookup ../bonus @key}}</td>
                         </tr>
                         {{/if}}{{/each}}

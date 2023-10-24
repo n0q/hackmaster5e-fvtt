@@ -4,6 +4,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 ### Added
+- Hybrid spell casting saves.
 - Skill cards display mastery level.
 ### Changed
 - Skill card formatting.

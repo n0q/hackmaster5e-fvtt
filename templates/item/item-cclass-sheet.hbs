@@ -13,7 +13,7 @@
 
         {{#with data}}
         <div class='tab newform' data-group='primary' data-tab='attributes'>
-            <div class='grid-2col' style='grid-template-columns: 40% 1fr;'>
+            <div class='grid-2col' style='grid-template-columns: 38% 1fr;'>
                 <section name='options' class='col_rborder' style='padding-top: 5px;'>
                     <span class='form-option rjust' style='margin-right: 5px;'>
                         <label>{{localize 'HM.CCLASS.OPT.top'}}</label>
@@ -26,14 +26,15 @@
                     <hr>
                     {{#each system.features as |feature key|}}
                     <span class='form-option'>
-                        <label>{{localize (findConfigValue 'itemCClass' key)}}</label>
-                        <input type='checkbox' name='system.features.{{@key}}' {{checked feature}}/>
+                        <label>{{localize (concat 'HM.CCLASS.OPT.' key)}}</label>
+                        <input type='checkbox' class='feature' data-feature='{{@key}}'
+                               name='system.features.{{@key}}' {{checked feature}}/>
                     </span>
                     {{/each}}
                     <hr>
                     {{#each system.caps as |cap key|}}
                     <span class='form-option'>
-                        <label>{{localize (findConfigValue 'itemCClass' key)}}</label>
+                        <label>{{localize (concat 'HM.CCLASS.OPT.' key)}}</label>
                         <input type='checkbox' name='system.caps.{{@key}}' {{checked cap}}/>
                     </span>
                     {{/each}}
@@ -43,10 +44,10 @@
                         <thead>
                             <tr>
                                 <th scope='col'></th>
-                                <th scope='col'>HDie</th>
-                                <th scope='col'>Reroll</th>
+                                <th scope='col'>{{{localize 'HM.CCLASS.TABLE.hd'}}}</th>
+                                <th scope='col'>{{{localize 'HM.CCLASS.TABLE.rhd'}}}</th>
                                 {{#each system.features as |enabled feature|}}{{#if enabled}}
-                                <th scope='col'>{{localize (findConfigValue 'classFeatureTable' feature)}}</th>
+                                <th scope='col'>{{{localize (concat 'HM.CCLASS.TABLE.' feature)}}}</th>
                                 {{/if}}{{/each}}
                             </tr>
                             <tbody>
@@ -60,16 +61,24 @@
                                     <td>
                                         <input type='checkbox' name='system.ptable.{{lkey}}.hp.reroll' {{checked level.hp.reroll}}/>
                                     </td>
-                                    {{#each ../system.features as |enabled feature|}}
-                                        {{#if enabled}}
-                                        <td>
-                                            <input name='system.ptable.{{lkey}}.{{feature}}.value'
-                                            value='{{#with (lookup level feature)}}{{value}}{{/with}}'
-                                                   {{#if (eq feature 'back')}}type='text'
-                                                   {{else}}type='number' data-dtype='Number'{{/if}}/>
-                                        </td>
+                                {{#each ../system.features as |enabled feature|}}
+                                    {{#if enabled}}
+                                    <td>
+                                        {{#if (eq 'slvl' feature)}}
+                                            {{#with (lookup level 'slvl')}}
+                                        <select name='system.ptable.{{lkey}}.slvl.value'>
+                                                {{selectOptions (findConfigObj 'spellHybrid') selected=value localize=true}}
+                                            {{/with}}
+                                        </select>
+                                        {{else}}
+                                        <input name='system.ptable.{{lkey}}.{{feature}}.value'
+                                        value='{{#with (lookup level feature)}}{{value}}{{/with}}'
+                                               {{#if (eq feature 'back')}}type='text'
+                                               {{else}}type='number' data-dtype='Number'{{/if}}/>
                                         {{/if}}
-                                    {{/each}}
+                                    </td>
+                                    {{/if}}
+                                {{/each}}
                                 </tr>
                             {{/each}}
                             <tbody>

@@ -128,7 +128,8 @@
                 "init": false,
                 "back": false,
                 "luck": false,
-                "assn": false
+                "assn": false,
+                "slvl": false
             },
             "caps": {
                 "fcast": false,
