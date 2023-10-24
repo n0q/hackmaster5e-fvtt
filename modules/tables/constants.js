@@ -591,7 +591,9 @@ export const HMTABLES = {
             const {fatigue} = caller.system.bonus.total;
             const {basespd} = caller[SYSTEM_ID].talent.sfatigue;
             const declare = spd;
-            const sfatigue = Math.max(spd + basespd + (Number(fatigue) || 0), 1);
+            const c = caller.itemTypes.cclass[0] ?? null;
+            const fcast = c ? c.system.caps.fcast * 5 : 0;
+            const sfatigue = Math.max(spd + basespd + fcast + (Number(fatigue) || 0), 1);
             return {declare, sfatigue};
         },
     },

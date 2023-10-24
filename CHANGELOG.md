@@ -2,12 +2,17 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+### Added
+- Free caster (read: Rogues) spell fatigue increased from 5 to 10.
+
 ## [0.4.1] - 2023-10-23
 ### Added
 - Hybrid spell casting saves.
 - Skill cards display mastery level.
 ### Changed
 - Skill card formatting.
+- Class card formatting.
 
 ## [0.4.0] - 2023-09-20
 ### Added
