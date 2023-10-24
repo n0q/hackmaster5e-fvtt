@@ -1,4 +1,5 @@
 import { HMPrompt } from './prompt.js';
+import { HMCONST } from '../tables/constants.js';
 
 export class SkillPrompt extends HMPrompt {
     static get defaultOptions() {
@@ -12,7 +13,7 @@ export class SkillPrompt extends HMPrompt {
         super(dialogData, options);
         const {system} = this.dialogData.skill;
         mergeObject(this.dialogData, {
-            dc: 'auto',
+            dc: HMCONST.SKILL.DIFF.AUTO,
             language: system.language,
             hasVerbal: system.bonus.total.verbal > 0,
             hasLiteracy: system.bonus.total.literacy > 0,
@@ -25,7 +26,7 @@ export class SkillPrompt extends HMPrompt {
 
     get dialogResp() {
         const dialogResp = {
-            dc: this.dialogData.dc,
+            dc: Number(this.dialogData.dc),
             rollMode: this.dialogData.rollMode,
             bonus: parseInt(this.dialogData.bonus, 10) || 0,
             formulaType: this.dialogData.formulaType,

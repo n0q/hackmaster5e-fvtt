@@ -72,10 +72,16 @@ export class HMSpellItem extends HMItem {
 
         const {save} = context.system;
         if (resp.button === 'cast' && save.type > HMCONST.SAVE.TYPE.SPECIAL) {
-            const level = actor.itemTypes.cclass.length
-                ? caller.itemTypes.cclass[0].system.level
-                : parseInt(caller.system.level, 10) || 1;
-            dataset.roll = await new Roll(HMTABLES.formula.save.target, {level})
+            let spellSave = 0;
+            const cclass = actor.itemTypes.cclass[0];
+            if (actor.type === 'beast') spellSave = parseInt(caller.system.level, 10) || 1;
+            if (actor.type === 'character' && cclass) {
+                const {system} = cclass;
+                spellSave = system.features.slvl
+                    ? parseInt(system.bonus.slvl, 10) || 0
+                    : parseInt(system.level, 10) || 1;
+            }
+            dataset.roll = await new Roll(HMTABLES.formula.save.spell, {spellSave})
                                          .evaluate({async: true});
         }
 
@@ -86,5 +92,9 @@ export class HMSpellItem extends HMItem {
             if (resp.advance) await advanceClock(comData, dialogResp, true);
             if (resp.sfatigue) setStatusEffectOnToken(comData, 'sfatigue', resp.sfatigue);
         }
+    }
+
+    get baseSPC() {
+        return HMTABLES.cast.baseSPC(this.system.lidx);
     }
 }

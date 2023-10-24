@@ -24,7 +24,7 @@ import { registerSystemSettings } from './modules/sys/settings.js';
 import { registerHooks } from './modules/hooks/hooks.js';
 import { registerHandlebarsHelpers } from './modules/sys/helpers.js';
 import { preloadHandlebarsTemplates } from './modules/sys/templates.js';
-import gsap, { PixiPlugin } from '/scripts/greensock/esm/all.js';
+import gsap, { PixiPlugin } from '/scripts/greensock/esm/all.js'; // eslint-disable-line
 
 function registerSheets() {
     Actors.unregisterSheet('core', ActorSheet);

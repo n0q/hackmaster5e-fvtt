@@ -41,6 +41,7 @@
                         (and (eq @key 'def') ../system.weapon.ranged)
                         (and (eq @key 'reach') ../system.weapon.ranged)
                         (and (eq @key 'dmg') ../system.weapon.mechanical)
+                        (eq (localize (concat 'HM.statbonus.' @key)) (concat 'HM.statbonus.' @key))
                     )}}
                     <tr>
                         <th scope='row'>{{localize (concat 'HM.statbonus.' @key)}}</th>

@@ -1,4 +1,5 @@
 <form>
+    HI: {{HMCONST 'SKILL.TYPE.SKILL'}}
     <div class='form-group'>
         <label>{{localize 'HM.difficulty'}}</label>
         <select name='dc' class='bind' data-prop='dc' data-render=true>
@@ -16,27 +17,27 @@
         <button type='submit' class='dialog-button normal default'
             {{#unless hasVerbal}}disabled{{/unless}}    
             data-prop='formulaType'
-            data-value='language'
+            data-value='{{HMCONST "SKILL.TYPE.VERBAL"}}'
             data-render=false>
             {{localize 'HM.language'}}
         </button>
         <button type='submit' class='dialog-button normal'
             {{#unless hasLiteracy}}disabled{{/unless}}    
             data-prop='formulaType'
-            data-value='literacy'
+            data-value='{{HMCONST "SKILL.TYPE.WRITTEN"}}'
             data-render=false>
             {{localize 'HM.literacy'}}
         </button>
     {{else}}
         <button type='submit' class='dialog-button normal default'
             data-prop='formulaType'
-            data-value='skill'
+            data-value='{{HMCONST "SKILL.TYPE.SKILL"}}'
             data-render=false>
             {{localize 'HM.skillcheck'}}
         </button>
         <button type='submit' class='dialog-button normal'
             data-prop='formulaType'
-            data-value='opposed'
+            data-value='{{HMCONST "SKILL.TYPE.OPPOSED"}}'
             data-render=false>
             {{localize 'HM.opposed'}}
         </button>

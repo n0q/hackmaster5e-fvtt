@@ -17,7 +17,7 @@ export class CastPrompt extends HMPrompt {
         const {divine, lidx, prepped} = sData;
 
         mergeObject(this.dialogData, {
-            cost: getSpellCost(sData, caller),
+            cost: getSpellCost(spell, caller),
             spd: getSpellSpeed(sData, caller),
             divine,
             advance: dialogData.inCombat,
@@ -33,7 +33,7 @@ export class CastPrompt extends HMPrompt {
         const sData = spell.system;
         const {divine, lidx} = sData;
 
-        this.dialogData.cost = getSpellCost(sData, caller);
+        this.dialogData.cost = getSpellCost(spell, caller);
         this.dialogData.spd = getSpellSpeed(sData, caller);
         this.dialogData.divine = divine;
         this.dialogData.lidx = lidx;
@@ -64,9 +64,12 @@ function getSpellSpeed(sData, caller) {
     return HMTABLES.cast.timing(sData.speed, caller);
 }
 
-function getSpellCost(sData, caller) {
-    const {lidx, prepped} = sData;
+function getSpellCost(spell, caller) {
+    const {prepped} = spell.system;
+    const {baseSPC} = spell;
+
     const [callerClass] = caller.itemTypes.cclass;
     const freeCast = callerClass ? callerClass.system.caps.fcast : false;
-    return freeCast ? 0 : HMTABLES.cast.cost(lidx, prepped);
+    if (freeCast) return 0;
+    return prepped ? baseSPC : baseSPC * 2;
 }

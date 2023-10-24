@@ -45,19 +45,6 @@ idx.alignment = {
     'non': 'HM.alignmentSelect.non',
 };
 
-idx.classFeatureTable = {
-    assn: 'HM.CCLASS.TABLE.assn',
-    atk:  'HM.CCLASS.TABLE.atk',
-    back: 'HM.CCLASS.TABLE.back',
-    def:  'HM.CCLASS.TABLE.def',
-    init: 'HM.CCLASS.TABLE.init',
-    luck: 'HM.CCLASS.TABLE.luck',
-    sp:   'HM.CCLASS.TABLE.sp',
-    spd:  'HM.CCLASS.TABLE.spd',
-    spdm: 'HM.CCLASS.TABLE.spdm',
-    spdr: 'HM.CCLASS.TABLE.spdr',
-};
-
 idx.containerType = {
     [HMCONST.CONTAINER.TYPE.WEIGHT]:    'HM.containerTypeSelect.weight',
     [HMCONST.CONTAINER.TYPE.QUANTITY]:  'HM.containerTypeSelect.quantity',
@@ -230,32 +217,37 @@ idx.saves = {
 };
 
 idx.skillLevel = {
-    'auto':          'HM.auto',
-    'trivial':       'HM.skillDiffSelect.trivial',
-    'easy':          'HM.skillDiffSelect.easy',
-    'average':       'HM.skillDiffSelect.average',
-    'difficult':     'HM.skillDiffSelect.difficult',
-    'verydifficult': 'HM.skillDiffSelect.verydifficult',
+    [HMCONST.SKILL.DIFF.AUTO]:          'HM.auto',
+    [HMCONST.SKILL.DIFF.TRIVIAL]:       'HM.skillDiffSelect.trivial',
+    [HMCONST.SKILL.DIFF.EASY]:          'HM.skillDiffSelect.easy',
+    [HMCONST.SKILL.DIFF.AVERAGE]:       'HM.skillDiffSelect.average',
+    [HMCONST.SKILL.DIFF.DIFFICULT]:     'HM.skillDiffSelect.difficult',
+    [HMCONST.SKILL.DIFF.VDIFFICULT]:    'HM.skillDiffSelect.verydifficult',
+};
+
+idx.skillMastery = {
+    [HMCONST.SKILL.MASTERY.UNSKILLED]:  'HM.skillMastery.unskilled',
+    [HMCONST.SKILL.MASTERY.NOVICE]:     'HM.skillMastery.novice',
+    [HMCONST.SKILL.MASTERY.AVERAGE]:    'HM.skillMastery.average',
+    [HMCONST.SKILL.MASTERY.ADVANCED]:   'HM.skillMastery.advanced',
+    [HMCONST.SKILL.MASTERY.EXPERT]:     'HM.skillMastery.expert',
+    [HMCONST.SKILL.MASTERY.MASTER]:     'HM.skillMastery.master',
+};
+
+idx.spellVolatility = {
+    [HMCONST.SVR.NORMAL]:   'HM.spellVolatility.normal',
+    [HMCONST.SVR.AMPED1]:   'HM.spellVolatility.amped1',
+    [HMCONST.SVR.AMPED2]:   'HM.spellVolatility.amped2',
+    [HMCONST.SVR.DANGER1]:  'HM.spellVolatility.danger1',
+    [HMCONST.SVR.DANGER1]:  'HM.spellVolatility.danger1',
+    [HMCONST.SVR.DANGER2]:  'HM.spellVolatility.danger2',
+    [HMCONST.SVR.DANGER3]:  'HM.spellVolatility.danger3',
+    [HMCONST.SVR.DANGER4]:  'HM.spellVolatility.danger4',
 };
 
 idx.talentSelect = {
     [HMCONST.TALENT.WEAPON]:    'HM.talentSelect.weapon',
     [HMCONST.TALENT.EFFECT]:    'HM.talentSelect.effect',
-};
-
-idx.itemCClass = {
-    sp:    'HM.CCLASS.OPT.sp',
-    init:  'HM.CCLASS.OPT.init',
-    atk:   'HM.CCLASS.OPT.atk',
-    def:   'HM.CCLASS.OPT.def',
-    spd:   'HM.CCLASS.OPT.spd',
-    spdr:  'HM.CCLASS.OPT.spdr',
-    spdm:  'HM.CCLASS.OPT.spdm',
-    back:  'HM.CCLASS.OPT.back',
-    fcast: 'HM.CCLASS.OPT.fcast',
-    hprof: 'HM.CCLASS.OPT.hprof',
-    luck:  'HM.CCLASS.OPT.luck',
-    assn:  'HM.CCLASS.OPT.assn',
 };
 
 idx.itemTypes = {
@@ -353,6 +345,32 @@ idx.spellLevels = {
     '19': 'HM.spellLevels.19',
     '20': 'HM.spellLevels.20',
     '21': 'HM.spellLevels.21',
+};
+
+idx.spellHybrid = {
+    0:  'HM.SPELL.HYBRID.0',
+    1:  'HM.SPELL.HYBRID.1',
+    2:  'HM.SPELL.HYBRID.2',
+    3:  'HM.SPELL.HYBRID.3',
+    4:  'HM.SPELL.HYBRID.4',
+    5:  'HM.SPELL.HYBRID.5',
+    6:  'HM.SPELL.HYBRID.6',
+    7:  'HM.SPELL.HYBRID.7',
+    8:  'HM.SPELL.HYBRID.8',
+    9:  'HM.SPELL.HYBRID.9',
+    10: 'HM.SPELL.HYBRID.10',
+    11: 'HM.SPELL.HYBRID.11',
+    12: 'HM.SPELL.HYBRID.12',
+    13: 'HM.SPELL.HYBRID.13',
+    14: 'HM.SPELL.HYBRID.14',
+    15: 'HM.SPELL.HYBRID.15',
+    16: 'HM.SPELL.HYBRID.16',
+    17: 'HM.SPELL.HYBRID.17',
+    18: 'HM.SPELL.HYBRID.18',
+    19: 'HM.SPELL.HYBRID.19',
+    20: 'HM.SPELL.HYBRID.20',
+    21: 'HM.SPELL.HYBRID.21',
+    22: 'HM.SPELL.HYBRID.22',
 };
 
 // Images

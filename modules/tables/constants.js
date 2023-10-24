@@ -143,6 +143,30 @@ export const HMCONST = {
         ENORMOUS: 7,
         COLOSSAL: 8,
     },
+    SKILL: {
+        DIFF: {
+            AUTO:       -1,
+            VDIFFICULT:  0,
+            DIFFICULT:   1,
+            AVERAGE:     2,
+            EASY:        3,
+            TRIVIAL:     4,
+        },
+        MASTERY: {
+            UNSKILLED:  0,
+            NOVICE:     1,
+            AVERAGE:    2,
+            ADVANCED:   3,
+            EXPERT:     4,
+            MASTER:     5,
+        },
+        TYPE: {
+            SKILL:      'value',
+            OPPOSED:    'opposed',
+            VERBAL:     'verbal',
+            WRITTEN:    'literacy',
+        },
+    },
     SPECIAL: {
         STANDARD:    0,
         JAB:         1,
@@ -164,6 +188,15 @@ export const HMCONST = {
         RDEFEND:    65,
         GGROUND:    66,
         SCAMPER:    67,
+    },
+    SVR: {
+        NORMAL:     0,
+        AMPED1:     1,
+        AMPED2:     2,
+        DANGER1:    3,
+        DANGER2:    4,
+        DANGER3:    5,
+        DANGER4:    6,
     },
     TALENT: {
         WEAPON: 0,
@@ -506,17 +539,17 @@ export const HMTABLES = {
             morale:   'd20p +  @bonus.total.morale   + @resp.bonus',
             physical: 'd20p +  @bonus.total.physical + @resp.bonus',
             poison:   'd20p +  @bonus.total.poison   + @resp.bonus',
-            target:   'd20p +  @level',
+            spell:    'd20p +  @spellSave',
             tenacity: 'd20p +  @bonus.total.tenacity + @resp.bonus',
             trauma:   '@talent.die.trauma - (@bonus.total.trauma + @resp.bonus)',
             turning:  'd20p +  @bonus.total.turning  + @resp.bonus',
             will:     'd20p +  @bonus.total.will     + @resp.bonus',
         },
-        'skill': {
-            'skill':    'd100 - (@resp.bonus + @bonus.total.value)',
-            'opposed':  'd100 + (@resp.bonus + @bonus.total.value)',
-            'language': 'd100 - (@resp.bonus + @bonus.total.verbal)',
-            'literacy': 'd100 - (@resp.bonus + @bonus.total.literacy)',
+        skill: {
+            [HMCONST.SKILL.TYPE.SKILL]:     'd100 - (@resp.bonus + @bonus.total.value)',
+            [HMCONST.SKILL.TYPE.OPPOSED]:   'd100 + (@resp.bonus + @bonus.total.value)',
+            [HMCONST.SKILL.TYPE.VERBAL]:    'd100 - (@resp.bonus + @bonus.total.verbal)',
+            [HMCONST.SKILL.TYPE.WRITTEN]:   'd100 - (@resp.bonus + @bonus.total.literacy)',
         },
     },
     bracket: {
@@ -553,16 +586,13 @@ export const HMTABLES = {
             }),
     },
     cast: {
+        baseSPC: (lidx) => (parseInt(lidx, 10) * 10) + 30,
         timing: (spd, caller) => {
             const {fatigue} = caller.system.bonus.total;
             const {basespd} = caller[SYSTEM_ID].talent.sfatigue;
             const declare = spd;
             const sfatigue = Math.max(spd + basespd + (Number(fatigue) || 0), 1);
             return {declare, sfatigue};
-        },
-        cost: (lidx, prepped) => {
-            const base = (lidx * 10) + 30;
-            return prepped ? base : base * 2;
         },
     },
     die: {
@@ -594,13 +624,25 @@ export const HMTABLES = {
         [HMCONST.SCALE.ENORMOUS]: {hp: 35, kb: 40, reach:  5, token: 15, move:   6},
         [HMCONST.SCALE.COLOSSAL]: {hp: 70, kb: 75, reach: 12, token: 29, move:  13},
     },
-    'skill': {
-        'difficulty': {
-            'verydifficult': 10,
-            'difficult':      0,
-            'average':      -40,
-            'easy':         -80,
-            'trivial':      -90,
+    skill: {
+        difficulty: (arg) => [10, 0, -40, -80, -90].findIndex((m) => arg + m <= 0),
+        mastery: (arg) => [0, 25, 50, 75, 87, Infinity].findIndex((m) => m >= arg),
+    },
+    spell: {
+        sfc: (svr) => {
+            const svrClamped = Math.clamped(svr, 1, 244);
+            return Math.ceil((svrClamped - 4) / 10) + 14;
+        },
+        svr: (level, stage) => {
+            const sTable = [0  + level * 1,
+                            0  + level * 2.5,
+                            0  + level * 6,
+                            3  + level * 7,
+                            7  + level * 8,
+                            12 + level * 9,
+                            18 + level * 10,
+            ];
+            return Math.ceil(sTable[stage]);
         },
     },
     effects: {

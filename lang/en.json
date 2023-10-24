@@ -267,6 +267,28 @@
             "verydifficult": "Very Difficult"
         },
 
+        "skillMastery": {
+            "unskilled":    "Unskilled",
+            "novice":       "Novice",
+            "average":      "Average",
+            "advanced":     "Advanced",
+            "expert":       "Expert",
+            "master":       "Master"
+        },
+
+        "skilllevel":       "Skill Level",
+        "skillmastery":     "Skill Mastery",
+
+        "spellVolatility": {
+            "normal":       "Normal Casting",
+            "amped1":       "Amped Up Casting",
+            "amped2":       "Overamped Casting",
+            "danger1":      "Danger Zone 1",
+            "danger2":      "Danger Zone 2",
+            "danger3":      "Danger Zone 3",
+            "danger4":      "Danger Zone 4"
+        },
+
         "itemTypes": {
             "container": "Container"
         },
@@ -383,6 +405,34 @@
             "19":   "18",
             "20":   "19",
             "21":   "20"
+        },
+        
+        "SPELL": {
+            "HYBRID": {
+                "0":    "--",
+                "1":    "a",
+                "2":    "a - j",
+                "3":    "a - 1",
+                "4":    "a - 2",
+                "5":    "a - 3",
+                "6":    "a - 4",
+                "7":    "a - 5",
+                "8":    "a - 6",
+                "9":    "a - 7",
+                "10":   "a - 8",
+                "11":   "a - 9",
+                "12":   "a - 10",
+                "13":   "a - 11",
+                "14":   "a - 12",
+                "15":   "a - 13",
+                "16":   "a - 14",
+                "17":   "a - 15",
+                "18":   "a - 16",
+                "19":   "a - 17",
+                "20":   "a - 18",
+                "21":   "a - 19",
+                "22":   "a - 20"
+            }
         },
 
         "sizeAbbr": {
@@ -703,6 +753,7 @@
                 "hprof":    "Half Non-Proficienty Penalties",
                 "init":     "Initiative Bonus",
                 "luck":     "Luck Points",
+                "slvl":     "Hybrid Arcane Caster",
                 "sp":       "Spell Points",
                 "spd":      "Speed Bonus",
                 "spdm":     "Melee Speed Bonus",
@@ -710,16 +761,32 @@
                 "top":      "ToP Bonus"
             },
             "TABLE": {
-                "assn": "aToP",
-                "atk":  "Attack",
-                "back": "Bstab",
-                "def":  "Defense",
-                "init": "Init",
+                "hd":   "Hit<br>Die",
+                "rhd":  "Reroll",
+                "assn": "Ignored<br>ToP",
+                "atk":  "Attack<br>Bonus",
+                "back": "Back-<br>stab",
+                "def":  "Defense<br>Bonus",
+                "init": "Init<br>Bonus",
                 "luck": "Luck",
+                "slvl": "Best<br>Spell",
                 "sp":   "SP",
-                "spd":  "Speed",
-                "spdm": "MSpeed",
-                "spdr": "RSpeed"
+                "spd":  "Speed<br>Bonus",
+                "spdm": "Melee<br>Speed",
+                "spdr": "Ranged<br>Speed"
+            },
+            "CARD": {
+                "assn": "ToP Penetration",
+                "atk":  "Attack Bonus",
+                "back": "Backstab Bonus",
+                "def":  "Defense Bonus",
+                "init": "Initiative",
+                "luck": "Luck",
+                "slvl": "Spell Saves",
+                "sp":   "SP",
+                "spd":  "Speed Bonus",
+                "spdm": "Melee Speed",
+                "spdr": "Ranged Speed"
             }
         },
 

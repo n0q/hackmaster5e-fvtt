@@ -213,6 +213,10 @@ async function createCritCard(dataset) {
     const template = 'systems/hackmaster5e/templates/chat/crit.hbs';
     const resultContent = await renderTemplate(template, {resp, critData});
     const content = resultContent + rollContent;
+
+    const useArmorDegredation = game.settings.get(SYSTEM_ID, 'armorDegredation');
+    if (useArmorDegredation) Hooks.callAll('armorDamage', 1, game.user.id);
+
     return {content, roll, flavor: caller?.name};
 }
 
@@ -359,8 +363,11 @@ async function createDamageCard(dataset) {
 
     flavor += getSpecialMoveFlavor(resp);
     const rollContent = await roll.render({flavor});
+
     const useArmorDegredation = game.settings.get(SYSTEM_ID, 'armorDegredation');
     const armorDamage = useArmorDegredation ? calculateArmorDamage(roll) : 0;
+    const isBeast = caller.type === 'beast';
+    if (armorDamage && isBeast) Hooks.callAll('armorDamage', armorDamage, game.user.id);
 
     const template = 'systems/hackmaster5e/templates/chat/damage.hbs';
     const templateData = {resp, context, caller, armorDamage};
@@ -370,35 +377,41 @@ async function createDamageCard(dataset) {
 }
 
 async function createSkillCard(dataset) {
-    const {context, roll} = dataset;
-    const {rollMode, formulaType, dc} = dataset.resp;
+    const {caller, context, roll, resp} = dataset;
+    const {rollMode, formulaType, dc} = resp;
+    const {TYPE} = HMCONST.SKILL;
 
-    const skillname = context.specname;
-    let flavor = formulaType === 'opposed'
-        ? `${game.i18n.localize('HM.opposed')} ${skillname} ${game.i18n.localize('HM.skillcheck')}`
-        : `${skillname} ${game.i18n.localize(`HM.${formulaType}`)} ${game.i18n.localize('HM.check')}`;
-    if (context.system.untrained) flavor = `${game.i18n.localize('HM.untrained')} ${flavor}`;
+    const isSkill = formulaType === TYPE.SKILL || formulaType === TYPE.OPPOSED;
+    let flavor = formulaType === TYPE.OPPOSED ? `${game.i18n.localize('HM.opposed')} ` : '';
+    flavor += isSkill
+        ? ` ${game.i18n.localize('HM.skill')}`
+        : ` ${game.i18n.localize(`HM.${formulaType}`)}`;
+    flavor += ` ${game.i18n.localize('HM.check')}`;
+
     const rollContent = await roll.render({flavor});
 
     let specialRow;
     if (formulaType !== 'opposed') {
         const {difficulty} = HMTABLES.skill;
-        if (dc === 'auto') {
-            for (const key in difficulty) {
-                if (roll.total + difficulty[key] > 0) continue;
-                specialRow = `${game.i18n.localize(idx.skillLevel[key])}
-                              ${game.i18n.localize('HM.success')}`;
-                break;
-            }
+        const rollIdx = difficulty(roll.total);
+        const isQualified = rollIdx === -1;
+
+        if (dc === HMCONST.SKILL.DIFF.AUTO && !isQualified) {
+            specialRow = `${game.i18n.localize(idx.skillLevel[rollIdx])}
+                          ${game.i18n.localize('HM.success')}`;
         } else {
-            const success = roll.total + difficulty[dc] < 1;
+            const success = !isQualified && dc - rollIdx >= 0;
             specialRow = game.i18n.localize(success ? 'HM.passed' : 'HM.failed');
         }
     }
 
-    const templateData = {dc, specialRow, formulaType};
+    const specname = context.specname;
+    const level = context.level[isSkill ? TYPE.SKILL : formulaType];
+    const mastery = context.mastery[isSkill ? TYPE.SKILL : formulaType];
+    const templateData = {dc, specialRow, formulaType, mastery, level, specname};
     const template = 'systems/hackmaster5e/templates/chat/skill.hbs';
+
     let content = await renderTemplate(template, templateData);
     content += rollContent;
-    return {content, roll, rollMode, flavor: dataset.caller.name};
+    return {content, roll, rollMode, flavor: caller.name};
 }
