@@ -81,7 +81,6 @@ export class HMSpellItem extends HMItem {
                     ? parseInt(system.bonus.slvl, 10) || 0
                     : parseInt(system.level, 10) || 1;
             }
-            console.warn(spellSave);
             dataset.roll = await new Roll(HMTABLES.formula.save.spell, {spellSave})
                                          .evaluate({async: true});
         }
