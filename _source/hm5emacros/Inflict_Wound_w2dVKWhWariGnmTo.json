@@ -5,8 +5,8 @@
   "img": "icons/skills/melee/blood-slash-foam-red.webp",
   "scope": "global",
   "command": "const tokens = game.canvas.tokens.controlled;\nif (!tokens.length) return;\n\nlet [hp, assn] = [undefined, undefined];\nfor (const t of tokens) {\n    const rv = await t.addWound(hp, assn);\n    hp ||= rv.hp;\n    assn ||= rv.assn;\n\n    if (rv.error) {\n        ui.notifications.warn(`Unable to wound <b>${t.name}</b>.`);\n        console.error(rv.error);\n    } else {\n        ui.notifications.info(`<b>${t.name}</b> receives <b>${hp} HP</b> of damage.`);\n    }\n}",
-  "folder": null,
-  "sort": 0,
+  "folder": "j9mKSD1M06N9zYcn",
+  "sort": 106250,
   "flags": {
     "core": {
       "sourceId": "Macro.XTeusTAXqqPY9MmB"
@@ -20,9 +20,9 @@
   "_stats": {
     "systemId": "hackmaster5e",
     "systemVersion": "0",
-    "coreVersion": "10.291",
+    "coreVersion": "11.313",
     "createdTime": null,
-    "modifiedTime": 1673986747205,
+    "modifiedTime": 1698743780181,
     "lastModifiedBy": "6PGvwKmaOsPz0R2y"
   },
   "_key": "!macros!w2dVKWhWariGnmTo"

@@ -6,16 +6,24 @@
   "img": "icons/weapons/swords/greatsword-blue.webp",
   "scope": "global",
   "command": "game.hackmaster5e.HMWeaponItem.rollAttack();",
-  "folder": null,
-  "sort": 0,
-  "permission": {
-    "9BV8kpaEbvqHiGtI": 3,
-    "default": 2
-  },
+  "folder": "j9mKSD1M06N9zYcn",
+  "sort": 100000,
   "flags": {
     "core": {
       "sourceId": "Macro.1wYLnuQjAlZ5Io0E"
     }
+  },
+  "ownership": {
+    "9BV8kpaEbvqHiGtI": 3,
+    "default": 2
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.313",
+    "createdTime": null,
+    "modifiedTime": 1698743768170,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
   },
   "_key": "!macros!6GSH2H8TWq1C5NAc"
 }

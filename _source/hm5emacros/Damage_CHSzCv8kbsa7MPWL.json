@@ -6,16 +6,24 @@
   "img": "icons/skills/melee/strike-sword-blood-red.webp",
   "scope": "global",
   "command": "game.hackmaster5e.HMWeaponItem.rollDamage();",
-  "folder": null,
-  "sort": 0,
-  "permission": {
-    "9BV8kpaEbvqHiGtI": 3,
-    "default": 2
-  },
+  "folder": "j9mKSD1M06N9zYcn",
+  "sort": 150000,
   "flags": {
     "core": {
       "sourceId": "Macro.whD23kXLYQeR6bbv"
     }
+  },
+  "ownership": {
+    "9BV8kpaEbvqHiGtI": 3,
+    "default": 2
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.313",
+    "createdTime": null,
+    "modifiedTime": 1698743776056,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
   },
   "_key": "!macros!CHSzCv8kbsa7MPWL"
 }

@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 ### Added
 - Free caster (read: Rogues) spell fatigue increased from 5 to 10.
+- Statblock generator macro.
+### Changed
+- Folded Combat Macros compendium into more generalized Hackmaster Macros compendium.
 
 ## [0.4.1] - 2023-10-23
 ### Added
