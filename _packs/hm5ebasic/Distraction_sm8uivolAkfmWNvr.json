@@ -1,0 +1,57 @@
+{
+  "name": "Distraction",
+  "type": "skill",
+  "img": "icons/magic/air/air-smoke-casting.webp",
+  "effects": [],
+  "folder": "NTUq2SI8rPwmDcPy",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "bonus": {
+      "total": {
+        "value": 0,
+        "literacy": 0,
+        "verbal": 0
+      },
+      "mastery": {
+        "value": 0,
+        "literacy": 0,
+        "verbal": 0
+      }
+    },
+    "bp": 1,
+    "specialty": {
+      "checked": false,
+      "value": null
+    },
+    "universal": true,
+    "tools": false,
+    "language": false,
+    "relevant": {
+      "str": false,
+      "int": false,
+      "wis": false,
+      "dex": false,
+      "con": false,
+      "lks": false,
+      "cha": true
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688863612713,
+    "modifiedTime": 1689022115891,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "sm8uivolAkfmWNvr",
+  "sort": 2200000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!sm8uivolAkfmWNvr"
+}

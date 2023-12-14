@@ -1,0 +1,19 @@
+{
+  "name": "Proficiencies",
+  "sorting": "a",
+  "folder": null,
+  "type": "Item",
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688860948117,
+    "modifiedTime": 1688863571813,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "fK9HFzRH1VJXQKIm",
+  "sort": 600000,
+  "_key": "!folders!fK9HFzRH1VJXQKIm"
+}

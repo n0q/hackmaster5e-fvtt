@@ -1,0 +1,43 @@
+{
+  "name": "Disguise",
+  "type": "spell",
+  "img": "icons/magic/perception/silhouette-stealth-shadow.webp",
+  "effects": [],
+  "folder": "cpFjPtcuKG8ClW1o",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<div><p>Range: <strong>Personal<br></strong>Volume of Effect: <strong>Personal<br></strong>Duration: <strong>2d6p minutes<br></strong>Saving Throw: <em><strong>None</strong></em></p></div><div><hr></div><div><p><strong>Additional Spell Point schedule:<br></strong>Extend Duration: 10 SP/minute<br>Increase Height Range: 10 SP/inch<br>Increase Weight Range: 3 SP/pound</p></div><hr><p> </p>",
+    "divine": false,
+    "component": {
+      "verbal": true,
+      "somatic": true,
+      "material": false,
+      "catalyst": false,
+      "divine": false
+    },
+    "save": {
+      "type": 0,
+      "action": 0
+    },
+    "speed": 1,
+    "prepped": 0,
+    "lidx": "3"
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688864057654,
+    "modifiedTime": 1688864231943,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "JIK3fkKsa3hDhIPK",
+  "sort": 3000000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!JIK3fkKsa3hDhIPK"
+}

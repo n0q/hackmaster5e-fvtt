@@ -1,0 +1,411 @@
+{
+  "name": "Thief",
+  "type": "cclass",
+  "img": "icons/tools/hand/lockpicks-steel-grey.webp",
+  "effects": [],
+  "folder": "twKHkLNCYFslTClk",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "level": 1,
+    "bonus": null,
+    "top_cf": "0.01",
+    "hp": 0,
+    "features": {
+      "sp": false,
+      "atk": true,
+      "def": false,
+      "spd": false,
+      "spdm": false,
+      "spdr": false,
+      "init": true,
+      "back": true,
+      "luck": true,
+      "assn": false
+    },
+    "caps": {
+      "fcast": false,
+      "hprof": false
+    },
+    "ptable": {
+      "1": {
+        "hp": {
+          "value": null,
+          "die": "d6",
+          "reroll": false
+        },
+        "atk": {
+          "value": 0
+        },
+        "init": {
+          "value": -1
+        },
+        "back": {
+          "value": "0"
+        },
+        "luck": {
+          "value": 21
+        }
+      },
+      "2": {
+        "hp": {
+          "die": "d6",
+          "reroll": true
+        },
+        "atk": {
+          "value": 0
+        },
+        "init": {
+          "value": -1
+        },
+        "back": {
+          "value": "0"
+        },
+        "luck": {
+          "value": 22
+        }
+      },
+      "3": {
+        "hp": {
+          "die": "d6",
+          "reroll": false
+        },
+        "atk": {
+          "value": 0
+        },
+        "init": {
+          "value": -1
+        },
+        "back": {
+          "value": "0"
+        },
+        "luck": {
+          "value": 23
+        }
+      },
+      "4": {
+        "hp": {
+          "die": "d6",
+          "reroll": true
+        },
+        "atk": {
+          "value": 1
+        },
+        "init": {
+          "value": -1
+        },
+        "back": {
+          "value": "0"
+        },
+        "luck": {
+          "value": 24
+        }
+      },
+      "5": {
+        "hp": {
+          "die": "d6",
+          "reroll": false
+        },
+        "atk": {
+          "value": 1
+        },
+        "init": {
+          "value": -2
+        },
+        "back": {
+          "value": "0"
+        },
+        "luck": {
+          "value": 25
+        }
+      },
+      "6": {
+        "hp": {
+          "die": "d6",
+          "reroll": true
+        },
+        "atk": {
+          "value": 1
+        },
+        "init": {
+          "value": -2
+        },
+        "back": {
+          "value": "0"
+        },
+        "luck": {
+          "value": 26
+        }
+      },
+      "7": {
+        "hp": {
+          "die": "d6",
+          "reroll": false
+        },
+        "atk": {
+          "value": 1
+        },
+        "init": {
+          "value": -2
+        },
+        "back": {
+          "value": "0"
+        },
+        "luck": {
+          "value": 27
+        }
+      },
+      "8": {
+        "hp": {
+          "die": "d6",
+          "reroll": true
+        },
+        "atk": {
+          "value": 2
+        },
+        "init": {
+          "value": -2
+        },
+        "back": {
+          "value": "0"
+        },
+        "luck": {
+          "value": 28
+        }
+      },
+      "9": {
+        "hp": {
+          "die": "d6",
+          "reroll": false
+        },
+        "atk": {
+          "value": 2
+        },
+        "init": {
+          "value": -2
+        },
+        "back": {
+          "value": "d4p"
+        },
+        "luck": {
+          "value": 29
+        }
+      },
+      "10": {
+        "hp": {
+          "die": "d6",
+          "reroll": true
+        },
+        "atk": {
+          "value": 2
+        },
+        "init": {
+          "value": -3
+        },
+        "back": {
+          "value": "d4p"
+        },
+        "luck": {
+          "value": 30
+        }
+      },
+      "11": {
+        "hp": {
+          "die": "d6",
+          "reroll": false
+        },
+        "atk": {
+          "value": 2
+        },
+        "init": {
+          "value": -3
+        },
+        "back": {
+          "value": "d4p"
+        },
+        "luck": {
+          "value": 31
+        }
+      },
+      "12": {
+        "hp": {
+          "die": "d6",
+          "reroll": true
+        },
+        "atk": {
+          "value": 3
+        },
+        "init": {
+          "value": -3
+        },
+        "back": {
+          "value": "d4p"
+        },
+        "luck": {
+          "value": 32
+        }
+      },
+      "13": {
+        "hp": {
+          "die": "d6",
+          "reroll": false
+        },
+        "atk": {
+          "value": 3
+        },
+        "init": {
+          "value": -3
+        },
+        "back": {
+          "value": "d4p"
+        },
+        "luck": {
+          "value": 33
+        }
+      },
+      "14": {
+        "hp": {
+          "die": "d6",
+          "reroll": true
+        },
+        "atk": {
+          "value": 3
+        },
+        "init": {
+          "value": -3
+        },
+        "back": {
+          "value": "d4p"
+        },
+        "luck": {
+          "value": 34
+        }
+      },
+      "15": {
+        "hp": {
+          "die": "d6",
+          "reroll": false
+        },
+        "atk": {
+          "value": 3
+        },
+        "init": {
+          "value": -3
+        },
+        "back": {
+          "value": "d4p"
+        },
+        "luck": {
+          "value": 35
+        }
+      },
+      "16": {
+        "hp": {
+          "die": "d6",
+          "reroll": true
+        },
+        "atk": {
+          "value": 4
+        },
+        "init": {
+          "value": -4
+        },
+        "back": {
+          "value": "d4p"
+        },
+        "luck": {
+          "value": 36
+        }
+      },
+      "17": {
+        "hp": {
+          "die": "d6",
+          "reroll": false
+        },
+        "atk": {
+          "value": 4
+        },
+        "init": {
+          "value": -4
+        },
+        "back": {
+          "value": "2d4p"
+        },
+        "luck": {
+          "value": 37
+        }
+      },
+      "18": {
+        "hp": {
+          "die": "d6",
+          "reroll": true
+        },
+        "atk": {
+          "value": 4
+        },
+        "init": {
+          "value": -4
+        },
+        "back": {
+          "value": "2d4p"
+        },
+        "luck": {
+          "value": 38
+        }
+      },
+      "19": {
+        "hp": {
+          "die": "d6",
+          "reroll": false
+        },
+        "atk": {
+          "value": 4
+        },
+        "init": {
+          "value": -4
+        },
+        "back": {
+          "value": "2d4p"
+        },
+        "luck": {
+          "value": 39
+        }
+      },
+      "20": {
+        "hp": {
+          "die": "d6",
+          "reroll": true
+        },
+        "atk": {
+          "value": 5
+        },
+        "init": {
+          "value": -4
+        },
+        "back": {
+          "value": "2d4p"
+        },
+        "luck": {
+          "value": 40
+        }
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688862769055,
+    "modifiedTime": 1688862769055,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "8x4alDBGldQHMB2n",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!8x4alDBGldQHMB2n"
+}

@@ -1,0 +1,43 @@
+{
+  "name": "Planar Servant",
+  "type": "spell",
+  "img": "icons/magic/control/silhouette-hold-change-green.webp",
+  "effects": [],
+  "folder": "cpFjPtcuKG8ClW1o",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<div><p>Range: <strong>30 feet<br></strong>Volume of Effect: <strong>special<br></strong>Duration: <strong>6 hours<br></strong>Saving Throw: <em><strong>None</strong></em></p></div><div><hr></div><div><p><strong>Additional Spell Point schedule:<br></strong>Extend Duration: 1 SP/5 minutes<br>Increase HP Capacity: 12 SP/HP</p></div><hr><p> </p>",
+    "divine": false,
+    "component": {
+      "verbal": true,
+      "somatic": true,
+      "material": true,
+      "catalyst": false,
+      "divine": false
+    },
+    "save": {
+      "type": 0,
+      "action": 0
+    },
+    "speed": 300,
+    "prepped": 0,
+    "lidx": "2"
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688864098189,
+    "modifiedTime": 1688864231943,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "yHeSlEfNj3rzyrsA",
+  "sort": 1700000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!yHeSlEfNj3rzyrsA"
+}

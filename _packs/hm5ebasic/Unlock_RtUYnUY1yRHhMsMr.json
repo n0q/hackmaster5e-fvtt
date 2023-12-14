@@ -1,0 +1,43 @@
+{
+  "name": "Unlock",
+  "type": "spell",
+  "img": "icons/sundries/misc/key-ring-long-gold.webp",
+  "effects": [],
+  "folder": "cpFjPtcuKG8ClW1o",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<div><p>Range: <strong>15 feet<br></strong>Volume of Effect: <strong>10 cubic feet<br></strong>Duration: <strong>Instantaneous<br></strong>Saving Throw: <em><strong>None</strong></em></p></div><div><hr></div><div><p><strong>Additional Spell Point schedule:<br></strong>Increase Range: 1 SP/foot (max 50 feet)<br>Increase Volume:  2 SP/cubic foot</p></div><hr><p></p>",
+    "divine": false,
+    "component": {
+      "verbal": true,
+      "somatic": false,
+      "material": true,
+      "catalyst": false,
+      "divine": false
+    },
+    "save": {
+      "type": 0,
+      "action": 0
+    },
+    "speed": 2,
+    "prepped": 0,
+    "lidx": "4"
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688864231901,
+    "modifiedTime": 1688864231943,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "RtUYnUY1yRHhMsMr",
+  "sort": 300000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!RtUYnUY1yRHhMsMr"
+}

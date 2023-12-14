@@ -1,0 +1,57 @@
+{
+  "name": "Identify Trap",
+  "type": "skill",
+  "img": "icons/environment/traps/trap-jaw-tan.webp",
+  "effects": [],
+  "folder": "gmubRV5gQsbhAz5N",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "bonus": {
+      "total": {
+        "value": 0,
+        "literacy": 0,
+        "verbal": 0
+      },
+      "mastery": {
+        "value": 0,
+        "literacy": 0,
+        "verbal": 0
+      }
+    },
+    "bp": 16,
+    "specialty": {
+      "checked": false,
+      "value": null
+    },
+    "universal": false,
+    "tools": false,
+    "language": false,
+    "relevant": {
+      "str": false,
+      "int": false,
+      "wis": true,
+      "dex": false,
+      "con": false,
+      "lks": false,
+      "cha": false
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688863427449,
+    "modifiedTime": 1688863549487,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "uysPu7csNzZtKvLk",
+  "sort": 100002,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!uysPu7csNzZtKvLk"
+}

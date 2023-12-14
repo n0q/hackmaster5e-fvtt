@@ -1,0 +1,96 @@
+{
+  "name": "Staff",
+  "type": "weapon",
+  "img": "icons/weapons/staves/staff-simple.webp",
+  "effects": [],
+  "folder": "QwQmMG0GWSXCH4JC",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "state": 0,
+    "weight": 4,
+    "price": "2 cp",
+    "avail": {
+      "high": 100,
+      "med": 95,
+      "low": 90
+    },
+    "innate": false,
+    "proficiency": "Staves",
+    "scale": "4",
+    "skill": "low",
+    "bonus": {
+      "total": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 0,
+        "jspd": 0
+      },
+      "base": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 13,
+        "jspd": 0
+      },
+      "mod": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 0
+      }
+    },
+    "dmg": {
+      "normal": "2d4p+3",
+      "shield": "d4p",
+      "type": "crushing"
+    },
+    "jab": {
+      "normal": "",
+      "shield": "",
+      "checked": false
+    },
+    "caps": {
+      "2": {
+        "checked": false
+      },
+      "5": {
+        "checked": false
+      }
+    },
+    "req": {
+      "str": 7
+    },
+    "qn": 0,
+    "reach": 8,
+    "defdie": "0",
+    "ranged": {
+      "checked": false,
+      "reach": {
+        "0": 5,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688864507383,
+    "modifiedTime": 1689022818729,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "WC4ympaCYcLVpvBk",
+  "sort": 1700000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!WC4ympaCYcLVpvBk"
+}

@@ -1,0 +1,57 @@
+{
+  "name": "Language",
+  "type": "skill",
+  "img": "icons/sundries/books/book-open-red.webp",
+  "effects": [],
+  "folder": "gmubRV5gQsbhAz5N",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "bonus": {
+      "total": {
+        "value": 0,
+        "literacy": 0,
+        "verbal": 0
+      },
+      "mastery": {
+        "value": 0,
+        "literacy": 0,
+        "verbal": 0
+      }
+    },
+    "bp": 2,
+    "specialty": {
+      "checked": false,
+      "value": null
+    },
+    "universal": false,
+    "tools": false,
+    "language": true,
+    "relevant": {
+      "str": false,
+      "int": true,
+      "wis": false,
+      "dex": false,
+      "con": false,
+      "lks": false,
+      "cha": false
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688863429026,
+    "modifiedTime": 1688863540722,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "Y0wAzqVHz2GFtcU2",
+  "sort": 100196,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!Y0wAzqVHz2GFtcU2"
+}

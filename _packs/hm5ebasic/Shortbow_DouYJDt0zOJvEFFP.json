@@ -1,0 +1,103 @@
+{
+  "name": "Shortbow",
+  "type": "weapon",
+  "img": "icons/weapons/bows/shortbow-arrows-black.webp",
+  "effects": [],
+  "folder": "WJ8CJJT3HasPiIvN",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "state": 0,
+    "weight": 1,
+    "price": "30 sp",
+    "avail": {
+      "high": 90,
+      "med": 85,
+      "low": 80
+    },
+    "innate": false,
+    "proficiency": "Shortbows",
+    "scale": "3",
+    "skill": "medium",
+    "bonus": {
+      "total": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 0,
+        "jspd": 0
+      },
+      "base": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 12,
+        "jspd": 0
+      },
+      "mod": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 0
+      },
+      "misc": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 0
+      }
+    },
+    "dmg": {
+      "normal": "2d6p",
+      "shield": "1",
+      "type": "puncturing"
+    },
+    "jab": {
+      "normal": "",
+      "shield": "",
+      "checked": false
+    },
+    "caps": {},
+    "req": {
+      "str": 7
+    },
+    "qn": 0,
+    "reach": 0,
+    "defdie": "1",
+    "ranged": {
+      "checked": true,
+      "reach": {
+        "0": 5,
+        "1": 50,
+        "2": 80,
+        "3": 120,
+        "4": 150
+      },
+      "timing": {
+        "load": 5,
+        "draw": 2,
+        "aim": 4,
+        "fire": 1,
+        "recover": 0
+      },
+      "mechanical": true
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688864498712,
+    "modifiedTime": 1689022813688,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "DouYJDt0zOJvEFFP",
+  "sort": 700000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!DouYJDt0zOJvEFFP"
+}

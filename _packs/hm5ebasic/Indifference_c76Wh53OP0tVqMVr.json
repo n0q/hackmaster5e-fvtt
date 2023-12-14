@@ -1,0 +1,43 @@
+{
+  "name": "Indifference",
+  "type": "spell",
+  "img": "icons/magic/control/silhouette-grow-shrink-tan.webp",
+  "system": {
+    "description": "<div><p>Range: <strong>5 feet per level of cleric</strong><br>Volume of Effect: <strong>1 living creature</strong><br>Duration: <strong>1d4p minutes plus 1 minute per level of cleric</strong><br>Saving Throw: <em><strong>negates (Mental)</strong></em></p></div><hr><p> </p>",
+    "divine": true,
+    "component": {
+      "verbal": true,
+      "somatic": true,
+      "material": false,
+      "catalyst": false,
+      "divine": false
+    },
+    "save": {
+      "type": "3",
+      "action": 0
+    },
+    "speed": 5,
+    "prepped": 0,
+    "lidx": "6"
+  },
+  "effects": [],
+  "flags": {
+    "core": {}
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1662373549581,
+    "modifiedTime": 1688863895807,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "folder": "JPubesCxoswyWJ3Z",
+  "_id": "c76Wh53OP0tVqMVr",
+  "sort": 1100000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!c76Wh53OP0tVqMVr"
+}

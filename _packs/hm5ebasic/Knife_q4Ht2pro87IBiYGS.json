@@ -1,0 +1,102 @@
+{
+  "name": "Knife",
+  "type": "weapon",
+  "img": "icons/weapons/daggers/knife-green.webp",
+  "effects": [],
+  "folder": "QwQmMG0GWSXCH4JC",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "state": 0,
+    "weight": 0.5,
+    "price": "5 cp",
+    "avail": {
+      "high": 1000,
+      "med": 95,
+      "low": 85
+    },
+    "innate": false,
+    "proficiency": "Knives",
+    "scale": "2",
+    "skill": "low",
+    "bonus": {
+      "total": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 0,
+        "jspd": 0
+      },
+      "base": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 7,
+        "jspd": 0
+      },
+      "mod": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 0
+      },
+      "misc": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 0
+      }
+    },
+    "dmg": {
+      "normal": "d6p",
+      "shield": "0",
+      "type": "puncturing"
+    },
+    "jab": {
+      "normal": "",
+      "shield": "",
+      "checked": false
+    },
+    "caps": {
+      "2": {
+        "checked": true
+      },
+      "5": {
+        "checked": false
+      }
+    },
+    "req": {
+      "str": 3
+    },
+    "qn": 0,
+    "reach": 1,
+    "defdie": "0",
+    "ranged": {
+      "checked": false,
+      "reach": {
+        "0": 5,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688864475909,
+    "modifiedTime": 1689022782432,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "q4Ht2pro87IBiYGS",
+  "sort": 900000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!q4Ht2pro87IBiYGS"
+}

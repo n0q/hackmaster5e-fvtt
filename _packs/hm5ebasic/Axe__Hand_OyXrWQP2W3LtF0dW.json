@@ -1,0 +1,96 @@
+{
+  "name": "Axe, Hand",
+  "type": "weapon",
+  "img": "icons/weapons/axes/shortaxe-hammer-steel.webp",
+  "effects": [],
+  "folder": "QwQmMG0GWSXCH4JC",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "state": 0,
+    "weight": 2,
+    "price": "3 sp",
+    "avail": {
+      "high": 95,
+      "med": 90,
+      "low": 85
+    },
+    "innate": false,
+    "proficiency": "Hand Axes",
+    "scale": "2",
+    "skill": "low",
+    "bonus": {
+      "total": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 0,
+        "jspd": 0
+      },
+      "base": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 8,
+        "jspd": 0
+      },
+      "mod": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 0
+      }
+    },
+    "dmg": {
+      "normal": "d4p + d6p",
+      "shield": "d6p",
+      "type": "hacking"
+    },
+    "jab": {
+      "normal": "",
+      "shield": "",
+      "checked": false
+    },
+    "caps": {
+      "2": {
+        "checked": false
+      },
+      "5": {
+        "checked": false
+      }
+    },
+    "req": {
+      "str": 6
+    },
+    "qn": 0,
+    "reach": 1.5,
+    "defdie": "0",
+    "ranged": {
+      "checked": false,
+      "reach": {
+        "0": 5,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688864446687,
+    "modifiedTime": 1689022766366,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "OyXrWQP2W3LtF0dW",
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!OyXrWQP2W3LtF0dW"
+}

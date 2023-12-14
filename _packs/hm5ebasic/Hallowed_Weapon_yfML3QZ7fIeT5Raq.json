@@ -1,0 +1,43 @@
+{
+  "name": "Hallowed Weapon",
+  "type": "spell",
+  "img": "icons/weapons/swords/sword-gold-holy.webp",
+  "effects": [],
+  "folder": "JPubesCxoswyWJ3Z",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<div><p>Range: <strong>Touch<br></strong>Volume of Effect: <strong>1 weapon<br></strong>Duration: <strong>1 hour<br></strong>Saving Throw: <em><strong>not applicable</strong></em></p></div><hr><p> </p>",
+    "divine": true,
+    "component": {
+      "verbal": true,
+      "somatic": true,
+      "material": false,
+      "catalyst": true,
+      "divine": false
+    },
+    "save": {
+      "type": 0,
+      "action": 0
+    },
+    "speed": 1,
+    "prepped": 0,
+    "lidx": "6"
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688863841860,
+    "modifiedTime": 1688863895807,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "yfML3QZ7fIeT5Raq",
+  "sort": 2000000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!yfML3QZ7fIeT5Raq"
+}

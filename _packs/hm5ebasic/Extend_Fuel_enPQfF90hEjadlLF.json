@@ -1,0 +1,43 @@
+{
+  "name": "Extend Fuel",
+  "type": "spell",
+  "img": "icons/magic/fire/flame-burning-campfire-yellow-blue.webp",
+  "effects": [],
+  "folder": "JPubesCxoswyWJ3Z",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<div><p>Range: <strong>1 foot<br></strong>Volume of Effect: <strong>one light source<br></strong>Duration: <strong>see text<br></strong>Saving Throw: <em><strong>not applicable</strong></em></p></div><hr><p> </p>",
+    "divine": true,
+    "component": {
+      "verbal": true,
+      "somatic": true,
+      "material": true,
+      "catalyst": false,
+      "divine": false
+    },
+    "save": {
+      "type": 0,
+      "action": 0
+    },
+    "speed": 10,
+    "prepped": 0,
+    "lidx": "2"
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688863835404,
+    "modifiedTime": 1688863895807,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "enPQfF90hEjadlLF",
+  "sort": 2900000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!enPQfF90hEjadlLF"
+}

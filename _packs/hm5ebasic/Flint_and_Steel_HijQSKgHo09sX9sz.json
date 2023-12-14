@@ -1,0 +1,44 @@
+{
+  "name": "Flint and Steel",
+  "type": "item",
+  "img": "icons/commodities/metal/clasp-steel.webp",
+  "effects": [],
+  "folder": "aXJYcFpbrAwf8XHZ",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "state": 0,
+    "weight": 0.5,
+    "price": "2 cp",
+    "avail": {
+      "high": 90,
+      "med": 85,
+      "low": 80
+    },
+    "container": {
+      "enabled": false,
+      "type": 0,
+      "capacity": 0,
+      "_manifest": []
+    },
+    "qidx": "3",
+    "qty": 1
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688862837749,
+    "modifiedTime": 1688862886913,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "HijQSKgHo09sX9sz",
+  "sort": 1500000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!HijQSKgHo09sX9sz"
+}

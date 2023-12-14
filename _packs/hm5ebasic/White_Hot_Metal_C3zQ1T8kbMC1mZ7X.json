@@ -1,0 +1,43 @@
+{
+  "name": "White Hot Metal",
+  "type": "spell",
+  "img": "icons/commodities/metal/barstock-heated-steel.webp",
+  "effects": [],
+  "folder": "cpFjPtcuKG8ClW1o",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<p>Range: <strong>10 feet<br></strong>Volume of Effect: <strong>10 lbs. of metal<br></strong>Duration: <strong>10 seconds<br></strong>Saving Throw: <em><strong>None</strong></em></p><hr><p><strong>Additional Spell Point schedule:<br></strong>Increase Duration: 50 SP/10 seconds<br>Increase Range: 10 SP/ 5’ range increment</p><hr><p></p>",
+    "divine": false,
+    "component": {
+      "verbal": true,
+      "somatic": false,
+      "material": true,
+      "catalyst": false,
+      "divine": false
+    },
+    "save": {
+      "type": 0,
+      "action": 0
+    },
+    "speed": 2,
+    "prepped": 0,
+    "lidx": "4"
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688864236719,
+    "modifiedTime": 1688864236719,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "C3zQ1T8kbMC1mZ7X",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!C3zQ1T8kbMC1mZ7X"
+}
