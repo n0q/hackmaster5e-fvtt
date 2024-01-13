@@ -1,0 +1,28 @@
+{
+  "name": "Damage",
+  "type": "script",
+  "author": "6PGvwKmaOsPz0R2y",
+  "img": "icons/skills/melee/strike-sword-blood-red.webp",
+  "scope": "global",
+  "command": "game.hackmaster5e.HMWeaponItem.rollDamage();",
+  "folder": "8taid6iAhnOaLWrM",
+  "flags": {
+    "core": {}
+  },
+  "ownership": {
+    "9BV8kpaEbvqHiGtI": 3,
+    "default": 2,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.315",
+    "createdTime": 1705172349615,
+    "modifiedTime": 1705172354582,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "Mda90268J3yYhB3C",
+  "sort": 400000,
+  "_key": "!macros!Mda90268J3yYhB3C"
+}

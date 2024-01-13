@@ -760,6 +760,13 @@
                 "spdr":     "Ranged Speed Bonus",
                 "top":      "ToP Bonus"
             },
+            "HINT": {
+                "assn":     "If checked, this class may bypass some ToP when it inflicts damage.",
+                "fcast":    "If checked, this class may cast arcane spells without expending spell points, but spell fatigue lasts five seconds longer.",
+                "hp":       "Bonus HP, in addition to what is received from class hit dice.",
+                "hprof":    "If checked, this class is subject to only half of the penalty when using a weapon it is not proficiency in.",      
+                "slvl":     "If checked, this class does not gain spell levels at the same rate as a full Mage."
+            },
             "TABLE": {
                 "hd":   "Hit<br>Die",
                 "rhd":  "Reroll",

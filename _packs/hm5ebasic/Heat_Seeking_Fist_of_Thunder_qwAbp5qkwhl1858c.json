@@ -1,0 +1,43 @@
+{
+  "name": "Heat Seeking Fist of Thunder",
+  "type": "spell",
+  "img": "icons/magic/lightning/fist-unarmed-strike-blue-green.webp",
+  "system": {
+    "description": "<div><p>Range: <strong>100 feet</strong><br>Volume of Effect: <strong>20-foot radius sphere</strong><br>Duration: <strong>Instantaneous</strong><br>Saving Throw: <em><strong>PHYSICAL (Half damage)</strong></em></p></div><div><hr></div><div><p><strong>Additional Spell Point schedule:</strong><br>Increase Range: 10 SP/5 feet<br>Increase Volume of Effect:  20 SP/foot<br>Increase Blast: 20 SP/d4p (max 9d4p)</p></div><hr><p> </p>",
+    "divine": false,
+    "component": {
+      "verbal": true,
+      "somatic": true,
+      "material": true,
+      "catalyst": false,
+      "divine": false
+    },
+    "save": {
+      "type": "2",
+      "action": "1"
+    },
+    "speed": 2,
+    "prepped": 0,
+    "lidx": "6"
+  },
+  "effects": [],
+  "flags": {
+    "core": {}
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1665682327646,
+    "modifiedTime": 1688864231943,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "folder": "cpFjPtcuKG8ClW1o",
+  "_id": "qwAbp5qkwhl1858c",
+  "sort": 2800000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!qwAbp5qkwhl1858c"
+}

@@ -1,0 +1,28 @@
+{
+  "name": "Defend",
+  "type": "script",
+  "author": "6PGvwKmaOsPz0R2y",
+  "img": "icons/equipment/shield/heater-crystal-blue.webp",
+  "scope": "global",
+  "command": "game.hackmaster5e.HMWeaponItem.rollDefend();",
+  "folder": "8taid6iAhnOaLWrM",
+  "flags": {
+    "core": {}
+  },
+  "ownership": {
+    "9BV8kpaEbvqHiGtI": 3,
+    "default": 2,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.315",
+    "createdTime": 1705172351093,
+    "modifiedTime": 1705172354582,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "0NL4xaJnOt7OpVzG",
+  "sort": 200000,
+  "_key": "!macros!0NL4xaJnOt7OpVzG"
+}

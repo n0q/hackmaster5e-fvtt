@@ -1,0 +1,374 @@
+{
+  "name": "Dire Wolf",
+  "type": "beast",
+  "img": "icons/svg/mystery-man.svg",
+  "system": {
+    "sp": {
+      "value": 0,
+      "max": 0
+    },
+    "bonus": {
+      "total": {},
+      "misc": {
+        "_idx": {
+          "tenacity": 3
+        },
+        "sp": null,
+        "will": null,
+        "physical": 7,
+        "atk": 5,
+        "fos": null,
+        "mental": 2,
+        "def": 5,
+        "foa": null,
+        "dodge": 5,
+        "dmg": 0,
+        "init": -2,
+        "dr": 3,
+        "spd": 8,
+        "trauma": 10,
+        "poison": null,
+        "fatigue": null,
+        "reach": 2
+      }
+    },
+    "bio": {
+      "desc": "",
+      "tactics": "",
+      "habitat": "",
+      "ecology": ""
+    },
+    "hp": {
+      "value": 0,
+      "max": null,
+      "formula": "27 + 3d8"
+    },
+    "ep": {
+      "value": 0
+    },
+    "scale": 3,
+    "level": 1,
+    "movespd": {
+      "gnd": {
+        "crawl": 10,
+        "walk": 15,
+        "jog": 20,
+        "run": 25,
+        "sprint": 30
+      }
+    },
+    "cslevel": "all"
+  },
+  "prototypeToken": {
+    "name": "Dire Wolf",
+    "displayName": 0,
+    "actorLink": false,
+    "texture": {
+      "src": "icons/svg/mystery-man.svg",
+      "scaleX": 1,
+      "scaleY": 1,
+      "offsetX": 0,
+      "offsetY": 0,
+      "rotation": 0,
+      "tint": null
+    },
+    "width": 1,
+    "height": 1,
+    "lockRotation": false,
+    "rotation": 0,
+    "alpha": 1,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    },
+    "bar2": {
+      "attribute": null
+    },
+    "light": {
+      "alpha": 0.5,
+      "angle": 360,
+      "bright": 0,
+      "color": null,
+      "coloration": 1,
+      "dim": 0,
+      "attenuation": 0.5,
+      "luminosity": 0.5,
+      "saturation": 0,
+      "contrast": 0,
+      "shadows": 0,
+      "animation": {
+        "type": null,
+        "speed": 5,
+        "intensity": 5,
+        "reverse": false
+      },
+      "darkness": {
+        "min": 0,
+        "max": 1
+      }
+    },
+    "sight": {
+      "enabled": false,
+      "range": 0,
+      "angle": 360,
+      "visionMode": "basic",
+      "color": null,
+      "attenuation": 0.1,
+      "brightness": 0,
+      "saturation": 0,
+      "contrast": 0
+    },
+    "detectionModes": [],
+    "flags": {},
+    "randomImg": false,
+    "appendNumber": false,
+    "prependAdjective": false
+  },
+  "items": [
+    {
+      "name": "Bite",
+      "type": "weapon",
+      "img": "icons/creatures/abilities/mouth-teeth-rows-red.webp",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {
+        "core": {
+          "sourceId": "Item.4qQ4QIiXDZsFQFjc"
+        }
+      },
+      "_id": "FxKXoU6UQeSAFkxD",
+      "system": {
+        "description": "",
+        "state": 3,
+        "weight": 0,
+        "price": "",
+        "avail": {
+          "high": 0,
+          "med": 0,
+          "low": 0
+        },
+        "innate": true,
+        "proficiency": "",
+        "scale": "3",
+        "skill": "minimal",
+        "bonus": {
+          "total": {
+            "atk": 0,
+            "def": 0,
+            "dmg": 0,
+            "spd": 0,
+            "jspd": 0
+          },
+          "base": {
+            "atk": 0,
+            "def": 0,
+            "dmg": 0,
+            "spd": 0,
+            "jspd": 0
+          },
+          "mod": {
+            "atk": 0,
+            "def": 0,
+            "dmg": 0,
+            "spd": 0
+          }
+        },
+        "dmg": {
+          "normal": "4d4p",
+          "shield": "2d4p",
+          "type": "puncturing"
+        },
+        "jab": {
+          "normal": "",
+          "shield": "",
+          "checked": false
+        },
+        "caps": {
+          "2": {
+            "checked": false
+          },
+          "5": {
+            "checked": false
+          }
+        },
+        "req": {
+          "str": 0
+        },
+        "qn": 0,
+        "reach": 0,
+        "defdie": "0",
+        "ranged": {
+          "checked": false,
+          "reach": {
+            "0": 5,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0
+          }
+        }
+      },
+      "ownership": {
+        "default": 0,
+        "9BV8kpaEbvqHiGtI": 3,
+        "6PGvwKmaOsPz0R2y": 3
+      },
+      "_stats": {
+        "systemId": "hackmaster5e",
+        "systemVersion": "0",
+        "coreVersion": "11.305",
+        "createdTime": 1668241537307,
+        "modifiedTime": 1689301266061,
+        "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+      },
+      "_key": "!actors.items!d2gEYoUh8sMyaAKl.FxKXoU6UQeSAFkxD"
+    },
+    {
+      "_id": "wEclcpvSx7eAI7M2",
+      "name": "Listening",
+      "type": "skill",
+      "img": "icons/commodities/biological/shell-snail.brown.webp",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {
+        "core": {
+          "sourceId": "Compendium.hackmaster5e.uskills.m3jrJIsJYIAAWuHF"
+        }
+      },
+      "system": {
+        "description": "",
+        "bonus": {
+          "total": {
+            "value": 0,
+            "literacy": 0,
+            "verbal": 0
+          },
+          "mastery": {
+            "value": 65,
+            "literacy": 0,
+            "verbal": 0
+          }
+        },
+        "bp": 6,
+        "specialty": {
+          "checked": false,
+          "value": null
+        },
+        "universal": true,
+        "tools": false,
+        "language": false,
+        "relevant": {
+          "str": false,
+          "int": false,
+          "wis": true,
+          "dex": false,
+          "con": false,
+          "lks": false,
+          "cha": false
+        }
+      },
+      "ownership": {
+        "default": 0,
+        "YT3vyFbQDsF30XLi": 3,
+        "6PGvwKmaOsPz0R2y": 3
+      },
+      "_stats": {
+        "systemId": "hackmaster5e",
+        "systemVersion": "0",
+        "coreVersion": "10.290",
+        "createdTime": 1669795265455,
+        "modifiedTime": 1669795273664,
+        "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+      },
+      "_key": "!actors.items!d2gEYoUh8sMyaAKl.wEclcpvSx7eAI7M2"
+    },
+    {
+      "_id": "qe65mAHjR9atHdKD",
+      "name": "Tracking",
+      "type": "skill",
+      "img": "icons/creatures/abilities/paw-print-pair-purple.webp",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {
+        "core": {
+          "sourceId": "Compendium.hackmaster5e.uskills.ot1J14PZ8nbm1uoM"
+        }
+      },
+      "system": {
+        "description": "",
+        "bonus": {
+          "total": {
+            "value": 50,
+            "literacy": 0,
+            "verbal": 0
+          },
+          "mastery": {
+            "value": 45,
+            "literacy": 0,
+            "verbal": 0
+          }
+        },
+        "bp": 7,
+        "specialty": {
+          "checked": false,
+          "value": null
+        },
+        "universal": true,
+        "tools": false,
+        "language": false,
+        "relevant": {
+          "str": false,
+          "int": false,
+          "wis": true,
+          "dex": false,
+          "con": false,
+          "lks": false,
+          "cha": false
+        }
+      },
+      "ownership": {
+        "default": 0,
+        "YT3vyFbQDsF30XLi": 3,
+        "6PGvwKmaOsPz0R2y": 3
+      },
+      "_stats": {
+        "systemId": "hackmaster5e",
+        "systemVersion": "0",
+        "coreVersion": "10.290",
+        "createdTime": 1669795281972,
+        "modifiedTime": 1669795601213,
+        "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+      },
+      "_key": "!actors.items!d2gEYoUh8sMyaAKl.qe65mAHjR9atHdKD"
+    }
+  ],
+  "effects": [],
+  "flags": {
+    "hackmaster5e": {
+      "reachHint": "FxKXoU6UQeSAFkxD"
+    },
+    "core": {
+      "sourceId": "Actor.tA6qvfsATYwXOCTE"
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1668241510265,
+    "modifiedTime": 1689301266061,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_id": "d2gEYoUh8sMyaAKl",
+  "_key": "!actors!d2gEYoUh8sMyaAKl"
+}

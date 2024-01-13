@@ -1,0 +1,44 @@
+{
+  "name": "Backpack",
+  "type": "item",
+  "img": "icons/containers/bags/pack-leather-black-brown.webp",
+  "effects": [],
+  "folder": "aXJYcFpbrAwf8XHZ",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "state": 0,
+    "weight": 3.5,
+    "price": "18 cp",
+    "avail": {
+      "high": 80,
+      "med": 70,
+      "low": 50
+    },
+    "container": {
+      "enabled": true,
+      "type": 1,
+      "capacity": 50,
+      "_manifest": []
+    },
+    "qidx": "3",
+    "qty": 1
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688862801847,
+    "modifiedTime": 1688862886913,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "rEhatb2iNLvi2p6B",
+  "sort": 2600000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!rEhatb2iNLvi2p6B"
+}

@@ -1,0 +1,44 @@
+{
+  "name": "Slings",
+  "type": "proficiency",
+  "img": "icons/weapons/slings/slingshot-wood.webp",
+  "effects": [],
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "bonus": {
+      "atk": 0,
+      "def": 0,
+      "dmg": 0,
+      "spd": 0
+    },
+    "skill": "medium",
+    "weapon": {
+      "checked": true
+    },
+    "ranged": {
+      "checked": true
+    },
+    "mechanical": {
+      "checked": true
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1664221894896,
+    "modifiedTime": 1688862919871,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "folder": "G4zFlEQld7NivOKQ",
+  "_id": "O9INhbY0RkLpeNxM",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!O9INhbY0RkLpeNxM"
+}

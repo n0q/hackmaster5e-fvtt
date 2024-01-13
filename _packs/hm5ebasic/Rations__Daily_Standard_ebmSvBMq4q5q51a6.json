@@ -1,0 +1,44 @@
+{
+  "name": "Rations, Daily Standard",
+  "type": "item",
+  "img": "icons/consumables/grains/sack-rice-flour-brown.webp",
+  "effects": [],
+  "folder": "aXJYcFpbrAwf8XHZ",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "state": 0,
+    "weight": 7.142857,
+    "price": "7 tc",
+    "avail": {
+      "high": 85,
+      "med": 80,
+      "low": 75
+    },
+    "container": {
+      "enabled": false,
+      "type": 0,
+      "capacity": 0,
+      "_manifest": []
+    },
+    "qidx": "3",
+    "qty": 1
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688862896932,
+    "modifiedTime": 1688862896932,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "ebmSvBMq4q5q51a6",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!ebmSvBMq4q5q51a6"
+}

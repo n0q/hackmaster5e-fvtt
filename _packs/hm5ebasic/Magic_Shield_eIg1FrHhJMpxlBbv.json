@@ -1,0 +1,43 @@
+{
+  "name": "Magic Shield",
+  "type": "spell",
+  "img": "icons/magic/defensive/shield-barrier-blue.webp",
+  "effects": [],
+  "folder": "cpFjPtcuKG8ClW1o",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<div><p>Range: <strong>Personal<br></strong>Area of Effect: <strong>Special<br></strong>Duration: <strong>1 minute<br></strong>Saving Throw: <em><strong>None</strong></em></p></div><div><hr></div><div><p><strong>Additional Spell Point schedule:<br></strong>Extend Duration: 40 SP/1 minute<br>Increase Damage Capacity: 5 SP/1 HP (max 30 HP)</p></div><hr><p> </p>",
+    "divine": false,
+    "component": {
+      "verbal": true,
+      "somatic": true,
+      "material": false,
+      "catalyst": false,
+      "divine": false
+    },
+    "save": {
+      "type": 0,
+      "action": 0
+    },
+    "speed": 1,
+    "prepped": 0,
+    "lidx": "2"
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688864078668,
+    "modifiedTime": 1688864231943,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "eIg1FrHhJMpxlBbv",
+  "sort": 1200000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!eIg1FrHhJMpxlBbv"
+}

@@ -20,13 +20,25 @@
                         <input type='number' name='system.top_cf' value='{{system.top_cf}}' data-dtype='Float'/>
                     </span>
                     <span class='form-option rjust' style='margin-right: 5px;'>
-                        <label>{{localize 'HM.CCLASS.OPT.hp'}}</label>
+                        <span>
+                            <label>{{localize 'HM.CCLASS.OPT.hp'}}</label>
+                            <span class='tooltip' data-text="{{localize (findConfigValue 'classHints' 'hp')}}">
+                                <span class='info'></span>
+                            </span>
+                        </span>
                         <input type='number' name='system.hp' value='{{system.hp}}' data-dtype='Number'/>
                     </span>
                     <hr>
                     {{#each system.features as |feature key|}}
                     <span class='form-option'>
-                        <label>{{localize (concat 'HM.CCLASS.OPT.' key)}}</label>
+                        <span>
+                            <label>{{localize (concat 'HM.CCLASS.OPT.' key)}}</label>
+                            {{#if (findConfigValue 'classHints' @key)}}
+                                <span class='tooltip' data-text="{{localize (findConfigValue 'classHints' @key)}}">
+                                    <span class='info'></span>
+                                </span>
+                            {{/if}}
+                        </span>
                         <input type='checkbox' class='feature' data-feature='{{@key}}'
                                name='system.features.{{@key}}' {{checked feature}}/>
                     </span>
@@ -34,7 +46,14 @@
                     <hr>
                     {{#each system.caps as |cap key|}}
                     <span class='form-option'>
-                        <label>{{localize (concat 'HM.CCLASS.OPT.' key)}}</label>
+                        <span>
+                            <label>{{localize (concat 'HM.CCLASS.OPT.' key)}}</label>
+                            {{#if (findConfigValue 'classHints' @key)}}
+                                <span class='tooltip' data-text="{{localize (findConfigValue 'classHints' @key)}}">
+                                    <span class='info'></span>
+                                </span>
+                            {{/if}}
+                        </span>
                         <input type='checkbox' name='system.caps.{{@key}}' {{checked cap}}/>
                     </span>
                     {{/each}}

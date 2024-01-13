@@ -1,0 +1,44 @@
+{
+  "name": "Lantern, Miner's",
+  "type": "item",
+  "img": "icons/sundries/lights/lantern-bullseye-signal-copper.webp",
+  "effects": [],
+  "folder": "aXJYcFpbrAwf8XHZ",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "state": 0,
+    "weight": 3,
+    "price": "10 sp",
+    "avail": {
+      "high": 85,
+      "med": 75,
+      "low": 60
+    },
+    "container": {
+      "enabled": false,
+      "type": 0,
+      "capacity": 0,
+      "_manifest": []
+    },
+    "qidx": "3",
+    "qty": 1
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688862867183,
+    "modifiedTime": 1688862886913,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "0CbIisMG6TT2L6Fj",
+  "sort": 300000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!0CbIisMG6TT2L6Fj"
+}

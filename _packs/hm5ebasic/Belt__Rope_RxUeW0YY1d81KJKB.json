@@ -1,0 +1,44 @@
+{
+  "name": "Belt, Rope",
+  "type": "item",
+  "img": "icons/equipment/waist/belt-rope.webp",
+  "effects": [],
+  "folder": "aXJYcFpbrAwf8XHZ",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "state": 0,
+    "weight": 0.5,
+    "price": "1 tc",
+    "avail": {
+      "high": 100,
+      "med": 95,
+      "low": 90
+    },
+    "container": {
+      "enabled": true,
+      "type": 0,
+      "capacity": 0,
+      "_manifest": []
+    },
+    "qidx": "3",
+    "qty": 1
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688862810796,
+    "modifiedTime": 1688862886913,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "RxUeW0YY1d81KJKB",
+  "sort": 2400000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!RxUeW0YY1d81KJKB"
+}

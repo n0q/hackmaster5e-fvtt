@@ -57,6 +57,14 @@ idx.handedness = {
     'ambidextrous': 'HM.handednessSelect.ambidextrous',
 };
 
+idx.classHints = {
+    assn:   'HM.CCLASS.HINT.assn',
+    fcast:  'HM.CCLASS.HINT.fcast',
+    hp:     'HM.CCLASS.HINT.hp',
+    hprof:  'HM.CCLASS.HINT.hprof',
+    slvl:   'HM.CCLASS.HINT.slvl',
+};
+
 idx.honor = {
     [HMCONST.HONOR.NOTORIETY]:    'HM.honorSelect.notoriety',
     [HMCONST.HONOR.DISHONORABLE]: 'HM.honorSelect.dishonorable',

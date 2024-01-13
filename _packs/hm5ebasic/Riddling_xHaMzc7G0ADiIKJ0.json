@@ -1,0 +1,57 @@
+{
+  "name": "Riddling",
+  "type": "skill",
+  "img": "icons/magic/symbols/question-stone-yellow.webp",
+  "effects": [],
+  "folder": "gmubRV5gQsbhAz5N",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "bonus": {
+      "total": {
+        "value": 0,
+        "literacy": 0,
+        "verbal": 0
+      },
+      "mastery": {
+        "value": 0,
+        "literacy": 0,
+        "verbal": 0
+      }
+    },
+    "bp": 4,
+    "specialty": {
+      "checked": false,
+      "value": null
+    },
+    "universal": false,
+    "tools": false,
+    "language": false,
+    "relevant": {
+      "str": false,
+      "int": true,
+      "wis": false,
+      "dex": false,
+      "con": false,
+      "lks": false,
+      "cha": false
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688863443857,
+    "modifiedTime": 1688863548107,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "xHaMzc7G0ADiIKJ0",
+  "sort": 100004,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!xHaMzc7G0ADiIKJ0"
+}

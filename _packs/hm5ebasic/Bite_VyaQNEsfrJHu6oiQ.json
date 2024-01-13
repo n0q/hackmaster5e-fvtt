@@ -1,0 +1,97 @@
+{
+  "name": "Bite",
+  "type": "weapon",
+  "img": "icons/creatures/abilities/mouth-teeth-rows-red.webp",
+  "effects": [],
+  "folder": "DdTnD6AHMdl6XYzC",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "state": 0,
+    "weight": 0,
+    "price": "",
+    "avail": {
+      "high": 0,
+      "med": 0,
+      "low": 0
+    },
+    "innate": true,
+    "proficiency": "",
+    "scale": "3",
+    "skill": "minimal",
+    "bonus": {
+      "total": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 0,
+        "jspd": 0
+      },
+      "base": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 0,
+        "jspd": 0
+      },
+      "mod": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 0
+      }
+    },
+    "dmg": {
+      "normal": "2d4p",
+      "shield": "2d4p",
+      "type": "puncturing"
+    },
+    "jab": {
+      "normal": "",
+      "shield": "",
+      "checked": false
+    },
+    "caps": {
+      "2": {
+        "checked": false
+      },
+      "5": {
+        "checked": false
+      }
+    },
+    "req": {
+      "str": 0
+    },
+    "qn": 0,
+    "reach": 0,
+    "defdie": "0",
+    "ranged": {
+      "checked": false,
+      "reach": {
+        "0": 5,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0
+      }
+    }
+  },
+  "ownership": {
+    "default": 0,
+    "9BV8kpaEbvqHiGtI": 3,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688864896942,
+    "modifiedTime": 1688864902734,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "VyaQNEsfrJHu6oiQ",
+  "sort": 200000,
+  "_key": "!items!VyaQNEsfrJHu6oiQ"
+}

@@ -1,0 +1,43 @@
+{
+  "name": "Memory Wipe, Lesser",
+  "type": "spell",
+  "img": "icons/magic/perception/hand-eye-fire-blue.webp",
+  "system": {
+    "description": "<p>Range: <strong>90 feet</strong><br>Volume of Effect: <strong>1-4 creatures in a 20-feet cube</strong><br>Duration: <strong>Permanent</strong><br>Saving Throw: <em><strong>MENTAL Negates</strong></em></p><hr><p><strong>Additional Spell Point schedule:</strong><br>Increase Length of Memories Erased: 50 SP/minute<br>Increase Volume of Effect: 40 SP/creature or 1 SP/cubic foot</p><hr><p></p>",
+    "divine": false,
+    "component": {
+      "verbal": true,
+      "somatic": true,
+      "material": false,
+      "catalyst": false,
+      "divine": false
+    },
+    "save": {
+      "type": "3",
+      "action": 0
+    },
+    "speed": 0,
+    "prepped": 0,
+    "lidx": "5"
+  },
+  "effects": [],
+  "flags": {
+    "core": {}
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1667333229572,
+    "modifiedTime": 1688864231943,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "folder": "cpFjPtcuKG8ClW1o",
+  "_id": "YYPBKIFivq9UuPzE",
+  "sort": 1300000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!YYPBKIFivq9UuPzE"
+}

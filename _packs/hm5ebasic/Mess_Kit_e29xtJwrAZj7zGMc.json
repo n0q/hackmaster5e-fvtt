@@ -1,0 +1,44 @@
+{
+  "name": "Mess Kit",
+  "type": "item",
+  "img": "icons/tools/cooking/can.webp",
+  "effects": [],
+  "folder": "aXJYcFpbrAwf8XHZ",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "state": 0,
+    "weight": 6,
+    "price": "1 sp",
+    "avail": {
+      "high": 85,
+      "med": 60,
+      "low": 50
+    },
+    "container": {
+      "enabled": false,
+      "type": 0,
+      "capacity": 0,
+      "_manifest": []
+    },
+    "qidx": "3",
+    "qty": 1
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688862871910,
+    "modifiedTime": 1688862886913,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "e29xtJwrAZj7zGMc",
+  "sort": 400000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!e29xtJwrAZj7zGMc"
+}

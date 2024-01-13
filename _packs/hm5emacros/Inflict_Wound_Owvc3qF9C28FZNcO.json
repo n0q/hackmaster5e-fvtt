@@ -1,0 +1,28 @@
+{
+  "name": "Inflict Wound",
+  "type": "script",
+  "author": "6PGvwKmaOsPz0R2y",
+  "img": "icons/skills/melee/blood-slash-foam-red.webp",
+  "scope": "global",
+  "command": "const tokens = game.canvas.tokens.controlled;\nif (!tokens.length) return;\n\nlet [hp, assn] = [undefined, undefined];\nfor (const t of tokens) {\n    const rv = await t.addWound(hp, assn);\n    hp ||= rv.hp;\n    assn ||= rv.assn;\n\n    if (rv.error) {\n        ui.notifications.warn(`Unable to wound <b>${t.name}</b>.`);\n        console.error(rv.error);\n    } else {\n        ui.notifications.info(`<b>${t.name}</b> receives <b>${hp} HP</b> of damage.`);\n    }\n}",
+  "folder": "8taid6iAhnOaLWrM",
+  "flags": {
+    "core": {}
+  },
+  "ownership": {
+    "9BV8kpaEbvqHiGtI": 3,
+    "default": 2,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.315",
+    "createdTime": 1705172354577,
+    "modifiedTime": 1705172354582,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "Owvc3qF9C28FZNcO",
+  "sort": 100000,
+  "_key": "!macros!Owvc3qF9C28FZNcO"
+}

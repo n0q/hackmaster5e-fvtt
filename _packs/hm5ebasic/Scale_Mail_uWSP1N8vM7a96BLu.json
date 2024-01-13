@@ -1,0 +1,66 @@
+{
+  "name": "Scale Mail",
+  "type": "armor",
+  "img": "icons/equipment/chest/breastplate-scale-grey.webp",
+  "effects": [],
+  "folder": "uPKgk3a1MMSGErlt",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "state": 0,
+    "weight": 60,
+    "price": "120 sp",
+    "avail": {
+      "high": 95,
+      "med": 60,
+      "low": 15
+    },
+    "armortype": "heavy",
+    "proficiency": "Heavy Armors",
+    "damage": 0,
+    "bonus": {
+      "total": {
+        "dr": 0,
+        "def": 0,
+        "init": 0,
+        "spd": 0,
+        "move": 1
+      },
+      "base": {
+        "dr": 5,
+        "def": -6,
+        "init": 3,
+        "spd": 2,
+        "move": 0.5
+      },
+      "mod": {
+        "dr": 0,
+        "def": 0,
+        "init": 0,
+        "spd": 0,
+        "move": 0
+      }
+    },
+    "qn": 0,
+    "shield": {
+      "checked": false
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688862692003,
+    "modifiedTime": 1688862705226,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "uWSP1N8vM7a96BLu",
+  "sort": 600000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!uWSP1N8vM7a96BLu"
+}

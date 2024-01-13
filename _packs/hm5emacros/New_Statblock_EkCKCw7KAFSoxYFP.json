@@ -1,0 +1,27 @@
+{
+  "name": "New Statblock",
+  "type": "script",
+  "scope": "global",
+  "author": "6PGvwKmaOsPz0R2y",
+  "img": "icons/sundries/gaming/dice-pair-white-green.webp",
+  "command": "/* Author: n0q\n *\n * About: Generates potential character stats, and notes arrays\n * which hit the Shopkeeper Rule as per Hackmaster PHB10.\n */\n\nconst abilities = ['STR', 'INT', 'WIS', 'DEX', 'CON', 'LKS', 'CHA'];\nconst rolls = await Promise.all(abilities.map(async (a) => ({\n    value: Number((await new Roll('3d6').evaluate()).result),\n    fvalue: Number((await new Roll('d100').evaluate()).result),\n})));\n\nconst statData = {\n    sum: 0.00,\n    bp: 0,\n    get avg() { return this.sum / 7 }, \n    _addBP: function(stat) {\n        let value = -10; // Minimum attribute score is 1/01.\n        if (stat < 10) { value += ((stat -  0) / 0.10) + 0;   } else\n        if (stat < 16) { value += ((stat - 10) / 0.05) + 100; } else\n                       { value += ((stat - 16) / 0.03) + 220; };\n        this.bp += Math.ceil(value);\n    },\n};\n\nconst skData = {high: false, low: 0};\nconst rollData = abilities.reduce((acc, key, idx) => {\n    const result = rolls[idx];\n    const sum = result.value + (result.fvalue * 0.01) - 0.01;\n    statData.sum += sum;\n    statData._addBP(sum);\n    if (result.value > 12) { skData.high = true; } else\n    if (result.value < 6)  { skData.low++; }\n    acc[key] = {value: result.value, fvalue: result.fvalue % 100};\n    return acc;\n}, {});\n\nconst isShopkeeper = !skData.high || skData.low > 1;\nconst data = {isShopkeeper, rollData, statData};\n\nconst hbs = `\n  <section style='position: relative;'>\n  {{#if isShopkeeper}}\n    <div style='position: absolute;\n                top: 50%;\n                left: 50%;\n                transform: translateX(-50%) translateY(-50%) rotate(-33deg);\n                transform-origin: center;\n                font-size: 24px;\n                color: rgba(0, 0, 0, 0.35);'>\n    Shopkeeper</div>\n  {{/if}}\n    <table><tbody>\n  {{#each rollData}}\n      <tr>\n        <th scope=row>{{@key}}</th>\n        <td style='text-align: right;'>\n          {{value}}<b>&frasl;</b>{{pad fvalue}}\n        </td>\n      </tr>\n  {{/each}}\n    </tbody></table>\n  </section>\n  <section style='display: flex; justify-content: space-between;'>\n  {{#with statData}}\n    <span>sum: <b>{{numberFormat sum decimals=2}}</b></span>\n    <span><b>{{bp}} BP</b></span>\n    <span>avg: <b>{{numberFormat avg decimals=2}}</b></span>\n  {{/with}}\n  </section>`;\n\nconst cmData = {\n    content: (Handlebars.compile(hbs))(data),\n    flavor: 'Ability Score Roll',\n    sound: CONFIG.sounds.dice,\n};\nconst msgData = await new ChatMessage(cmData);\nChatMessage.create(msgData);",
+  "folder": null,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "flags": {
+    "core": {}
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.315",
+    "createdTime": 1673569832484,
+    "modifiedTime": 1705172395939,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "EkCKCw7KAFSoxYFP",
+  "sort": 0,
+  "_key": "!macros!EkCKCw7KAFSoxYFP"
+}

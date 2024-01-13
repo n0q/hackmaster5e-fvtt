@@ -1,0 +1,44 @@
+{
+  "name": "Rations, Daily Trail",
+  "type": "item",
+  "img": "icons/consumables/food/dried-meat-jerky-fish-red.webp",
+  "effects": [],
+  "folder": "aXJYcFpbrAwf8XHZ",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "state": 0,
+    "weight": 3.571428,
+    "price": "7 cp",
+    "avail": {
+      "high": 90,
+      "med": 85,
+      "low": 80
+    },
+    "container": {
+      "enabled": false,
+      "type": 0,
+      "capacity": 0,
+      "_manifest": []
+    },
+    "qidx": "3",
+    "qty": 1
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688862900047,
+    "modifiedTime": 1688862900047,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "P4XgwslfdnSpeQyV",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!P4XgwslfdnSpeQyV"
+}

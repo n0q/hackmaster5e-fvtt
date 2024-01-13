@@ -1,0 +1,57 @@
+{
+  "name": "Cartography",
+  "type": "skill",
+  "img": "icons/tools/navigation/map-chart-tan.webp",
+  "effects": [],
+  "folder": "NTUq2SI8rPwmDcPy",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "bonus": {
+      "total": {
+        "value": 0,
+        "literacy": 0,
+        "verbal": 0
+      },
+      "mastery": {
+        "value": 0,
+        "literacy": 0,
+        "verbal": 0
+      }
+    },
+    "bp": 5,
+    "specialty": {
+      "checked": false,
+      "value": null
+    },
+    "universal": true,
+    "tools": true,
+    "language": false,
+    "relevant": {
+      "str": false,
+      "int": true,
+      "wis": false,
+      "dex": false,
+      "con": false,
+      "lks": false,
+      "cha": false
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688863597008,
+    "modifiedTime": 1689022115891,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "IiCzxTpiLLjUnVNi",
+  "sort": 2800000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!IiCzxTpiLLjUnVNi"
+}

@@ -1,0 +1,54 @@
+{
+  "name": "Quarrel, Heavy",
+  "type": "item",
+  "img": "icons/weapons/ammunition/arrow-simple.webp",
+  "system": {
+    "description": "",
+    "state": 0,
+    "weight": 0.0833333,
+    "price": "2 sp",
+    "avail": {
+      "high": 80,
+      "med": 75,
+      "low": 70
+    },
+    "container": {
+      "enabled": false,
+      "type": 0,
+      "capacity": 0,
+      "_manifest": []
+    },
+    "qidx": "3",
+    "qty": 20
+  },
+  "effects": [],
+  "flags": {
+    "scene-packer": {
+      "hash": "3d3b86d7be616ff05b1b8eeaa5b50561bff027e0",
+      "sourceId": "Item.Q6B5j2C9JwtbFDmf"
+    },
+    "core": {},
+    "exportSource": {
+      "world": "send-in-the-mob",
+      "system": "hackmaster5e",
+      "coreVersion": "10.290",
+      "systemVersion": "0.2.34"
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1669254363787,
+    "modifiedTime": 1688862886913,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "folder": "aXJYcFpbrAwf8XHZ",
+  "_id": "THgjhTxvJHyRKHIF",
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!THgjhTxvJHyRKHIF"
+}

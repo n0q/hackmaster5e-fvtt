@@ -1,0 +1,43 @@
+{
+  "name": "Slippery Surface",
+  "type": "spell",
+  "img": "icons/magic/water/wave-water-teal.webp",
+  "effects": [],
+  "folder": "cpFjPtcuKG8ClW1o",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<div><p>Range: <strong>30 feet<br></strong>Area of Effect: <strong>10’ x 10’ square<br></strong>Duration: <strong>1 minute<br></strong>Saving Throw: <em><strong>DODGE (Special)</strong></em></p></div><div><hr></div><div><p><strong>Additional Spell Point schedule:<br></strong>Increase Range: 1 SP/foot<br>Increase Area of Effect: 1 SP/2 sq. feet<br>Increase Duration: 5 SP/10 seconds</p></div><hr><p> </p>",
+    "divine": false,
+    "component": {
+      "verbal": true,
+      "somatic": true,
+      "material": true,
+      "catalyst": false,
+      "divine": false
+    },
+    "save": {
+      "type": "4",
+      "action": "3"
+    },
+    "speed": 1,
+    "prepped": 0,
+    "lidx": "3"
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688864216762,
+    "modifiedTime": 1688864231943,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "3WqwYLIFX5EsDBcd",
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!3WqwYLIFX5EsDBcd"
+}

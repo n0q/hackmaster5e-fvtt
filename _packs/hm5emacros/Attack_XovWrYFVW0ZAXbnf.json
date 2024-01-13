@@ -1,0 +1,28 @@
+{
+  "name": "Attack",
+  "type": "script",
+  "author": "6PGvwKmaOsPz0R2y",
+  "img": "icons/weapons/swords/greatsword-blue.webp",
+  "scope": "global",
+  "command": "game.hackmaster5e.HMWeaponItem.rollAttack();",
+  "folder": "8taid6iAhnOaLWrM",
+  "flags": {
+    "core": {}
+  },
+  "ownership": {
+    "9BV8kpaEbvqHiGtI": 3,
+    "default": 2,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.315",
+    "createdTime": 1705172346038,
+    "modifiedTime": 1705172354582,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "XovWrYFVW0ZAXbnf",
+  "sort": 500000,
+  "_key": "!macros!XovWrYFVW0ZAXbnf"
+}

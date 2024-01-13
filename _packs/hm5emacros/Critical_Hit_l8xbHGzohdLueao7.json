@@ -1,0 +1,27 @@
+{
+  "name": "Critical Hit",
+  "type": "script",
+  "scope": "global",
+  "author": "6PGvwKmaOsPz0R2y",
+  "img": "icons/skills/melee/strike-axe-blood-red.webp",
+  "command": "game.hackmaster5e.HMWeaponItem.rollCrit();",
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "flags": {
+    "core": {}
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.315",
+    "createdTime": 1667405587850,
+    "modifiedTime": 1705172354582,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "folder": "8taid6iAhnOaLWrM",
+  "_id": "l8xbHGzohdLueao7",
+  "sort": 600000,
+  "_key": "!macros!l8xbHGzohdLueao7"
+}

@@ -45,10 +45,10 @@
             "system": "hackmaster5e"
         },
         {
-            "label": "Combat Macros",
+            "label": "Hackmaster Macros",
             "type": "Macro",
-            "name": "combat_macros",
-            "path": "packs/combat-macros",
+            "name": "hm5emacros",
+            "path": "packs/hm5emacros",
             "system": "hackmaster5e"
         }
     ],

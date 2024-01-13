@@ -1,0 +1,43 @@
+{
+  "name": "Doze",
+  "type": "spell",
+  "img": "icons/magic/control/sleep-bubble-purple.webp",
+  "effects": [],
+  "folder": "cpFjPtcuKG8ClW1o",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "<div><p>Range: <strong>40 feet<br></strong>Volume of Effect: <strong>Selected creatures in 10-foot radius<br></strong>Duration: <strong>1 minute<br></strong>Saving Throw: <em><strong>MENTAL Negates</strong></em></p></div><div><hr></div><div><p><strong>Additional Spell Point schedule:<br></strong>Increase Hit Points Affected: 1 SP/1 HP<br>Increase Number of Creatures Affected: 25 SP/ creature</p></div><hr><p> </p>",
+    "divine": false,
+    "component": {
+      "verbal": true,
+      "somatic": true,
+      "material": true,
+      "catalyst": false,
+      "divine": false
+    },
+    "save": {
+      "type": "3",
+      "action": 0
+    },
+    "speed": 1,
+    "prepped": 0,
+    "lidx": "2"
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688864059561,
+    "modifiedTime": 1688864231943,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "io8XcU3CnKzSmqYh",
+  "sort": 2300000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!io8XcU3CnKzSmqYh"
+}

@@ -1,0 +1,19 @@
+{
+  "name": "Basic Skills",
+  "sorting": "a",
+  "folder": "eS6Azb0H2L85X7VX",
+  "type": "Item",
+  "_id": "gmubRV5gQsbhAz5N",
+  "sort": 0,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": null,
+    "modifiedTime": 1689022697118,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_key": "!folders!gmubRV5gQsbhAz5N"
+}

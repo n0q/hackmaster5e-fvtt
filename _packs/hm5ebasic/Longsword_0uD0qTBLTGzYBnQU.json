@@ -1,0 +1,102 @@
+{
+  "name": "Longsword",
+  "type": "weapon",
+  "img": "icons/weapons/swords/sword-guard-brass-worn.webp",
+  "effects": [],
+  "folder": "QwQmMG0GWSXCH4JC",
+  "flags": {
+    "core": {}
+  },
+  "system": {
+    "description": "",
+    "state": 0,
+    "weight": 3,
+    "price": "20 sp",
+    "avail": {
+      "high": 85,
+      "med": 80,
+      "low": 75
+    },
+    "innate": false,
+    "proficiency": "Longswords",
+    "scale": "3",
+    "skill": "medium",
+    "bonus": {
+      "total": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 0,
+        "jspd": 0
+      },
+      "base": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 10,
+        "jspd": 8
+      },
+      "mod": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 0
+      },
+      "misc": {
+        "atk": 0,
+        "def": 0,
+        "dmg": 0,
+        "spd": 0
+      }
+    },
+    "dmg": {
+      "normal": "2d8p",
+      "shield": "d8p",
+      "type": "hacking"
+    },
+    "jab": {
+      "normal": "",
+      "shield": "",
+      "checked": true
+    },
+    "caps": {
+      "2": {
+        "checked": false
+      },
+      "5": {
+        "checked": false
+      }
+    },
+    "req": {
+      "str": 8
+    },
+    "qn": 0,
+    "reach": 3.5,
+    "defdie": "0",
+    "ranged": {
+      "checked": false,
+      "reach": {
+        "0": 5,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0
+      }
+    }
+  },
+  "_stats": {
+    "systemId": "hackmaster5e",
+    "systemVersion": "0",
+    "coreVersion": "11.305",
+    "createdTime": 1688864483756,
+    "modifiedTime": 1689022784926,
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+  },
+  "_id": "0uD0qTBLTGzYBnQU",
+  "sort": 1000000,
+  "ownership": {
+    "default": 0,
+    "6PGvwKmaOsPz0R2y": 3
+  },
+  "_key": "!items!0uD0qTBLTGzYBnQU"
+}
