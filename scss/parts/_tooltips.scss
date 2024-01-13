@@ -1,0 +1,68 @@
+$tt-margin: -15px;
+$tt-arrow-dim: 5px;
+
+.tooltip {
+  position: relative;
+
+  //Tooltip text container
+  &::before {
+    position: absolute;
+    left: -80px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 5px;
+    border: 1px solid transparent;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+    color: #fff;
+    content: attr(data-text);
+    padding: 1rem;
+    text-transform: none;
+    transition: all 0.5s ease;
+    width: 160px;
+    white-space: pre-line;
+    transform: translateY(-100%) translateY($tt-margin);
+  }
+
+  //Tooltip arrow
+  &::after {
+    position: absolute;
+    border-left: $tt-arrow-dim solid transparent;
+    border-right: $tt-arrow-dim solid transparent;
+    border-top: $tt-arrow-dim solid #2B222A;
+    content: " ";
+    font-size: 0;
+    line-height: 0;
+    margin-left: -$tt-arrow-dim;
+    width: 0;
+    transform: translateY(100%) translateY($tt-margin - $tt-arrow-dim) translateX(-1.5 * $tt-arrow-dim);
+  }
+
+  //Setting up the transition
+  &::before,
+  &::after {
+    color: gold;
+    opacity: 0;
+    pointer-events: none;
+    text-align: center;
+  }
+
+  //Triggering the transition
+  &:focus::before,
+  &:focus::after,
+  &:hover::before,
+  &:hover::after {
+    opacity: 1;
+    transition: all .25s ease 0.5s;
+  }
+
+  .info::before {
+    font-size: 12px;
+    font-family: var(--font-awesome);
+    content: "\f059";
+    opacity: 0.5;
+    transition: opacity .5s ease;
+  }
+
+  .info:hover::before {
+    opacity: 1;
+  }
+}
