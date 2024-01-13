@@ -2,13 +2,14 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [0.4.2] - 2024-01-13
 ### Added
-- Free caster (read: Rogues) spell fatigue increased from 5 to 10.
+- Free caster (read: Rogues) spell fatigue duration increased from 5 to 10 seconds.
 - Statblock generator macro.
 - Tooltips added to Character Class items.
 ### Changed
 - Folded Combat Macros compendium into more generalized Hackmaster Macros compendium.
+- Style sheet improvements.
 ### Fixed
 - Spell list order no longer skips around under certain circumstances.
 
