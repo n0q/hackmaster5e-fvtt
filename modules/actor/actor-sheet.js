@@ -90,15 +90,10 @@ export class HMActorSheet extends ActorSheet {
             (a, b) => Number(a.system.lidx) - Number(b.system.lidx) || a.name.localeCompare(b.name),
         );
 
+        const slevels = [...new Set(spell.map((s) => Number(s.system.lidx)))];
+        actor.slevels = slevels.sort((a, b) => a - b);
+
         actor.talents = actor.itemTypes.talent.sort((a, b) => a.name.localeCompare(b.name));
-
-        const slevels = [];
-            for (let i=0; i < actor.spells.length; i++) {
-                const lidx = Number(actor.spells[i].system.lidx);
-                if (!slevels.includes(lidx)) { slevels.push(lidx); }
-            }
-
-        actor.slevels = slevels.sort();
         actor.money = this.money();
     }
 

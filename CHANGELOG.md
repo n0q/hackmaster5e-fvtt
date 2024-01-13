@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Statblock generator macro.
 ### Changed
 - Folded Combat Macros compendium into more generalized Hackmaster Macros compendium.
+### Fixed
+- Spell list order no longer skips around under certain circumstances.
 
 ## [0.4.1] - 2023-10-23
 ### Added
