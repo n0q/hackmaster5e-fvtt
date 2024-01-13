@@ -157,5 +157,6 @@
     } @else {
         font-weight: bold;
         text-shadow: $_textShadow;
+        transition: text-shadow 0.25s;
     }
 }
