@@ -4,7 +4,7 @@ $tt-arrow-dim: 5px;
 .tooltip {
   position: relative;
 
-  //Tooltip text container
+  // container
   &::before {
     position: absolute;
     left: -80px;
@@ -19,10 +19,11 @@ $tt-arrow-dim: 5px;
     transition: all 0.5s ease;
     width: 160px;
     white-space: pre-line;
-    transform: translateY(-100%) translateY($tt-margin);
+    transform: translateY(-100%)
+               translateY($tt-margin);
   }
 
-  //Tooltip arrow
+  // arrow
   &::after {
     position: absolute;
     border-left: $tt-arrow-dim solid transparent;
@@ -33,19 +34,19 @@ $tt-arrow-dim: 5px;
     line-height: 0;
     margin-left: -$tt-arrow-dim;
     width: 0;
-    transform: translateY(100%) translateY($tt-margin - $tt-arrow-dim) translateX(-1.5 * $tt-arrow-dim);
+    transform: translateY(100%)
+               translateY($tt-margin - $tt-arrow-dim)
+               translateX(-1.5 * $tt-arrow-dim);
   }
 
-  //Setting up the transition
   &::before,
   &::after {
-    color: gold;
+    color: wheat;
     opacity: 0;
     pointer-events: none;
     text-align: center;
   }
 
-  //Triggering the transition
   &:focus::before,
   &:focus::after,
   &:hover::before,
@@ -59,7 +60,7 @@ $tt-arrow-dim: 5px;
     font-family: var(--font-awesome);
     content: "\f059";
     opacity: 0.5;
-    transition: opacity .5s ease;
+    transition: opacity .25s ease;
   }
 
   .info:hover::before {
