@@ -662,6 +662,14 @@ export const HMTABLES = {
             'fullparry',
         ],
         statusEffects: {
+            blind: {
+                label: 'EFFECT.StatusBlind',
+                icon: 'icons/svg/blind.svg',
+                changes: [
+                    {key: 'system.bonus.state.def', value: '-8', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                    {key: 'system.bonus.state.atk', value: '-8', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
+                ],
+            },
             defense1: {
                 label: 'EFFECT.defense1',
                 icon: 'systems/hackmaster5e/styles/icons/swords-emblem1.svg',
