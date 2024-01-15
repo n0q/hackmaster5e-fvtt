@@ -14,6 +14,7 @@ export class HMWeaponProfile extends foundry.abstract.DataModel {
         const {system} = this;
         const {ranged} = system;
         if (ranged.checked) return HMTABLES.weapons.ranged.minspd(ranged.timing);
+        if (system.innate) return 1;
         return HMTABLES.weapons.scale[system.scale].minspd;
     }
 
