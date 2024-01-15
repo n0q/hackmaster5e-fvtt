@@ -173,21 +173,23 @@ export class HMActor extends Actor {
         const delta = isDelta ? value : value - hpCurrent;
 
         if (delta > 0) {
-            const wounds = this.itemTypes.wound.filter((a) => a.system.hp > 0);
-            const woundsTotal = wounds.reduce((acc, x) => x.system.hp + acc, 0);
-            const healMax = Math.min(delta, woundsTotal);
+            const wound = this.itemTypes.wound.filter((w) => w.system.hp);
+            const woundSum = wound.reduce((acc, x) => x.system.hp + acc, 0);
+            let healing = Math.min(delta, woundSum);
 
-            let healedTotal = 0;
-            let r = wounds.length * healMax;
-            const healValues = new Array(wounds.length).fill(0);
-            for (let i = 0; healedTotal < healMax; i = ++i % wounds.length) {
-                if (!r--) break;
-                if (healValues[i] < wounds[i].system.hp) {
-                    healValues[i]++;
-                    healedTotal++;
+            let i = 0;
+            while (healing && i < wound.length) {
+                const system = wound[i].system;
+                if (system.hp) {
+                    const limit = Math.sign(--system.hp);
+                    system.timer = Math.max(limit, --system.timer);
+                    healing--;
                 }
+                i = ++i % wound.length;
             }
-            for (let i = 0; i < wounds.length; i++) await wounds[i].setHp({value: -healValues[i]});
+
+            const newWounds = wound.map((w) => ({_id: w._id, system: w.system}));
+            await this.updateEmbeddedDocuments('Item', newWounds);
         } else await this.addWound(-delta);
 
         this.setHP();

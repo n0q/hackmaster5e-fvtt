@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Blind status effect now correctly supplies a -8 malus on a token's attack and defense.
 ### Fixed
 - Fumble table inaccuracy.
+- Modifying actor hp via token hud is no longer so janky.
 ### Changed
 - Blind status effect no longer prevents user from seeing the map while token is selected.
 
