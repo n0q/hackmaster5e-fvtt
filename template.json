@@ -121,6 +121,7 @@
             "features": {
                 "sp":   false,
                 "atk":  false,
+                "dmg":  false,
                 "def":  false,
                 "spd":  false,
                 "spdm": false,

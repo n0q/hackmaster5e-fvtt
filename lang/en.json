@@ -758,7 +758,8 @@
                 "spd":      "Speed Bonus",
                 "spdm":     "Melee Speed Bonus",
                 "spdr":     "Ranged Speed Bonus",
-                "top":      "ToP Bonus"
+                "top":      "ToP Bonus",
+                "dmg":      "Damage Bonus"
             },
             "HINT": {
                 "assn":     "If checked, this class may bypass some ToP when it inflicts damage.",
@@ -780,7 +781,8 @@
                 "sp":   "SP",
                 "spd":  "Speed<br>Bonus",
                 "spdm": "Melee<br>Speed",
-                "spdr": "Ranged<br>Speed"
+                "spdr": "Ranged<br>Speed",
+                "dmg":  "Damage<br>Bonus"
             },
             "CARD": {
                 "assn": "ToP Penetration",
@@ -793,7 +795,8 @@
                 "sp":   "SP",
                 "spd":  "Speed Bonus",
                 "spdm": "Melee Speed",
-                "spdr": "Ranged Speed"
+                "spdr": "Ranged Speed",
+                "dmg":  "Damage Bonus"
             }
         },
 
