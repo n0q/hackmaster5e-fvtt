@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 ### Added
 - Blind status effect now correctly supplies a -8 malus on a token's attack and defense.
+- Damage class bonus.
+- Spell volatility rating, check, and max mishap tier autocalculation on spell cards.
 ### Fixed
 - Fumble table inaccuracy.
 - Modifying actor hp via token hud is no longer so janky.

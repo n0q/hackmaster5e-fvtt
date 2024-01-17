@@ -41,12 +41,18 @@ export class CastPrompt extends HMPrompt {
     }
 
     get dialogResp() {
-        const {button, spd, divine} = this.dialogData;
+        const {button, caller, divine, sidx, spd, spells} = this.dialogData;
+        const schedule = parseInt(this.dialogData.schedule, 10) || 0;
+        const svr = getSpellVolatility(spells[sidx], schedule, caller);
+
         const dialogResp = {
-            sidx: this.dialogData.sidx,
+            svr,
+            smc: HMTABLES.spell.smc(svr),
+            sfc: HMTABLES.spell.sfc(svr),
+            sidx,
             divine,
             cost: this.dialogData.cost,
-            schedule: parseInt(this.dialogData.schedule, 10) || 0,
+            schedule,
             advance: spd[button],
             sfatigue: !divine && button === 'cast' ? spd.sfatigue : false,
             private: this.dialogData.private,
@@ -72,4 +78,19 @@ function getSpellCost(spell, caller) {
     const freeCast = callerClass ? callerClass.system.caps.fcast : false;
     if (freeCast) return 0;
     return prepped ? baseSPC : baseSPC * 2;
+}
+
+// TODO: Extended stages via leyline.
+function getSpellVolatility(spell, schedule, caller) {
+    const {baseSPC, system} = spell;
+    const {lidx, prepped} = system;
+    const [callerClass] = caller.itemTypes.cclass;
+
+    const freeCast = callerClass ? callerClass.system.caps.fcast : false;
+    const overhead = freeCast ? 0 : !prepped * baseSPC;
+    const isAmped = schedule || overhead;
+    const stage = isAmped ? Math.floor((baseSPC + overhead + schedule) / baseSPC) : 0;
+
+    const svr = HMTABLES.spell.svr(Number(lidx), Math.min(stage, 2));
+    return freeCast ? 2 * svr : svr;
 }

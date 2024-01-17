@@ -635,7 +635,9 @@ export const HMTABLES = {
             const svrClamped = Math.clamped(svr, 1, 244);
             return Math.ceil((svrClamped - 4) / 10) + 14;
         },
-        svr: (level, stage) => {
+        smc: (arg) => [0, 10, 25, 40, 55, 76, 105, 145, Infinity].findIndex((m) => m >= arg),
+        svr: (lidx, stage) => {
+            const level = lidx + 1;
             const sTable = [0  + level * 1,
                             0  + level * 2.5,
                             0  + level * 6,

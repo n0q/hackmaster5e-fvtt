@@ -80,7 +80,10 @@
             "ratk":     "Ranged Attack Roll",
             "mdmg":     "Melee Damage Roll",
             "rdmg":     "Ranged Damage Roll",
-            "sthrow":   "Saving Throw"
+            "sthrow":   "Saving Throw",
+            "sfc":      "Volatility Check",
+            "smc":      "Maximum Mishap Tier",
+            "svr":      "Volatility Rating"
         },
 
         "defenseSelect": {
