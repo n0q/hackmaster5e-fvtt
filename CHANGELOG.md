@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.4.4] - 2024-01-16
+### Fixed
+- Spell volatility stage ramped up to Overamped 1 SP too soon.
+### Changed
+- Reorganized skill chat cards.
+
 ## [0.4.3] - 2024-01-16
 ### Added
 - Blind status effect now correctly supplies a -8 malus on a token's attack and defense.
