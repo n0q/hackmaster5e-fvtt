@@ -25,6 +25,7 @@ import { registerHooks } from './modules/hooks/hooks.js';
 import { registerHandlebarsHelpers } from './modules/sys/helpers.js';
 import { preloadHandlebarsTemplates } from './modules/sys/templates.js';
 import gsap, { PixiPlugin } from '/scripts/greensock/esm/all.js'; // eslint-disable-line
+import { registerSchema } from './modules/sys/schema.js';
 
 function registerSheets() {
     Actors.unregisterSheet('core', ActorSheet);
@@ -81,8 +82,8 @@ function registerGsapPlugins() {
 
 Hooks.once('init', async () => {
     game[SYSTEM_ID] = { HMActor, HMItem, HMWeaponItem, HMSpellItem };
-
     registerConfig();
+    registerSchema();
     registerSheets();
     registerHandlebarsHelpers();
     preloadHandlebarsTemplates();

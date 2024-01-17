@@ -247,10 +247,6 @@
             }
         },
 
-        "wound": {
-            "hp":      null,
-            "timer":   null,
-            "treated": false
-        }
+        "wound": {}
     }
 }
