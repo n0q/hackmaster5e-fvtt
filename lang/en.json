@@ -283,9 +283,9 @@
         "skillmastery":     "Skill Mastery",
 
         "spellVolatility": {
-            "normal":       "Normal Casting",
-            "amped1":       "Amped Up Casting",
-            "amped2":       "Overamped Casting",
+            "normal":       "Normal",
+            "amped1":       "Amped Up",
+            "amped2":       "Overamped",
             "danger1":      "Danger Zone 1",
             "danger2":      "Danger Zone 2",
             "danger3":      "Danger Zone 3",

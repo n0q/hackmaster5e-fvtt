@@ -43,9 +43,11 @@ export class CastPrompt extends HMPrompt {
     get dialogResp() {
         const {button, caller, divine, sidx, spd, spells} = this.dialogData;
         const schedule = parseInt(this.dialogData.schedule, 10) || 0;
-        const svr = getSpellVolatility(spells[sidx], schedule, caller);
+        const stage = getVolatilityStage(spells[sidx], schedule, caller);
+        const svr = getSpellVolatility(spells[sidx], schedule, stage, caller);
 
         const dialogResp = {
+            stage,
             svr,
             smc: HMTABLES.spell.smc(svr),
             sfc: HMTABLES.spell.sfc(svr),
@@ -81,16 +83,22 @@ function getSpellCost(spell, caller) {
 }
 
 // TODO: Extended stages via leyline.
-function getSpellVolatility(spell, schedule, caller) {
+function getVolatilityStage(spell, schedule, caller) {
     const {baseSPC, system} = spell;
-    const {lidx, prepped} = system;
+    const {prepped} = system;
     const [callerClass] = caller.itemTypes.cclass;
 
     const freeCast = callerClass ? callerClass.system.caps.fcast : false;
     const overhead = freeCast ? 0 : !prepped * baseSPC;
     const isAmped = schedule || overhead;
     const stage = isAmped ? Math.floor((baseSPC + overhead + schedule) / baseSPC) : 0;
+    return Math.min(stage, 2);
+}
 
-    const svr = HMTABLES.spell.svr(Number(lidx), Math.min(stage, 2));
+function getSpellVolatility(spell, schedule, stage, caller) {
+    const {lidx} = spell.system;
+    const [callerClass] = caller.itemTypes.cclass;
+    const freeCast = callerClass ? callerClass.system.caps.fcast : false;
+    const svr = HMTABLES.spell.svr(Number(lidx), stage);
     return freeCast ? 2 * svr : svr;
 }

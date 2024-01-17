@@ -10,7 +10,9 @@
     {{/if}}
     {{#unless context.system.divine}}
         <hr>
-        {{localize 'HM.CHAT.svr'}}: <b>{{resp.svr}}</b><br>
+        {{localize 'HM.CHAT.svr'}}: <b>{{resp.svr}}</b>
+        (<span{{#if (gt resp.stage 1)}} style='color: red;'{{/if}}
+            >{{localize (findConfigValue 'spellVolatility' resp.stage)}}</span>)<br>
         {{localize 'HM.CHAT.sfc'}}: <b>{{resp.sfc}}</b><br>
         {{localize 'HM.CHAT.smc'}}: <b>{{resp.smc}}</b><br>
     {{/unless}}
