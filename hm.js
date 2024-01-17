@@ -70,6 +70,7 @@ function registerConfig() {
     };
 
     CONFIG.time.roundTime = 1;
+    delete CONFIG.specialStatusEffects.BLIND;
 }
 
 function registerGsapPlugins() {

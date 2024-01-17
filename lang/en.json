@@ -80,7 +80,10 @@
             "ratk":     "Ranged Attack Roll",
             "mdmg":     "Melee Damage Roll",
             "rdmg":     "Ranged Damage Roll",
-            "sthrow":   "Saving Throw"
+            "sthrow":   "Saving Throw",
+            "sfc":      "Volatility Check",
+            "smc":      "Maximum Mishap Tier",
+            "svr":      "Volatility Rating"
         },
 
         "defenseSelect": {
@@ -280,9 +283,9 @@
         "skillmastery":     "Skill Mastery",
 
         "spellVolatility": {
-            "normal":       "Normal Casting",
-            "amped1":       "Amped Up Casting",
-            "amped2":       "Overamped Casting",
+            "normal":       "Normal",
+            "amped1":       "Amped Up",
+            "amped2":       "Overamped",
             "danger1":      "Danger Zone 1",
             "danger2":      "Danger Zone 2",
             "danger3":      "Danger Zone 3",
@@ -758,7 +761,8 @@
                 "spd":      "Speed Bonus",
                 "spdm":     "Melee Speed Bonus",
                 "spdr":     "Ranged Speed Bonus",
-                "top":      "ToP Bonus"
+                "top":      "ToP Bonus",
+                "dmg":      "Damage Bonus"
             },
             "HINT": {
                 "assn":     "If checked, this class may bypass some ToP when it inflicts damage.",
@@ -780,7 +784,8 @@
                 "sp":   "SP",
                 "spd":  "Speed<br>Bonus",
                 "spdm": "Melee<br>Speed",
-                "spdr": "Ranged<br>Speed"
+                "spdr": "Ranged<br>Speed",
+                "dmg":  "Damage<br>Bonus"
             },
             "CARD": {
                 "assn": "ToP Penetration",
@@ -793,7 +798,8 @@
                 "sp":   "SP",
                 "spd":  "Speed Bonus",
                 "spdm": "Melee Speed",
-                "spdr": "Ranged Speed"
+                "spdr": "Ranged Speed",
+                "dmg":  "Damage Bonus"
             }
         },
 

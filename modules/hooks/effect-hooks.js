@@ -8,7 +8,8 @@ export class HMActiveEffectHooks {
         Object.keys(statusEffects).forEach((key) => {
             const effect = statusEffects[key];
             effect.id = key;
-            CONFIG.statusEffects.push(effect);
+            const fxIdx = CONFIG.statusEffects.findIndex((fx) => fx.id === key);
+            fxIdx !== -1 ? CONFIG.statusEffects[fxIdx] = effect : CONFIG.statusEffects.push(effect);
         });
     }
 

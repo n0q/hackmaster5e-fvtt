@@ -1,4 +1,3 @@
-// import { SYSTEM_ID, SYSTEM_SOCKET } from '../tables/constants.js';
 import { SYSTEM_SOCKET } from '../tables/constants.js';
 import { HMActiveEffectHooks } from './effect-hooks.js';
 import { HMActorHooks } from './actor-hooks.js';
