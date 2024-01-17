@@ -91,7 +91,7 @@ function getVolatilityStage(spell, schedule, caller) {
     const freeCast = callerClass ? callerClass.system.caps.fcast : false;
     const overhead = freeCast ? 0 : !prepped * baseSPC;
     const isAmped = schedule || overhead;
-    const stage = isAmped ? Math.floor((baseSPC + overhead + schedule) / baseSPC) : 0;
+    const stage = isAmped ? Math.floor((baseSPC + overhead + schedule - 1) / baseSPC) : 0;
     return Math.min(stage, 2);
 }
 
