@@ -1,5 +1,4 @@
-import { HMCONST, HMTABLES } from '../tables/constants.js';
-import { HMChatMgr } from '../mgr/chatmgr.js';
+import { HMCONST } from '../tables/constants.js';
 import { HMContainer } from '../item/container.js';
 
 export class HMItemHooks {
@@ -13,38 +12,7 @@ export class HMItemHooks {
             HMContainer.randomizeChildIDs(item);
         }
 
-        if (type === 'wound' && item.parent) {
-            if (!item.parent.system.bonus.total.trauma) return;
-            const hpToP = item.parent.system.hp.top;
-
-            const {assn, hp} = item.system;
-            if (!hpToP || hpToP >= hp + assn) return;
-
-            const chatmgr = new HMChatMgr();
-            const cardtype = HMCONST.CARD_TYPE.ALERT;
-            const dataset = {context: item, top:hpToP, wound: hp};
-            if (item.parent.type === 'beast') dataset.hidden = true;
-            const card = await chatmgr.getCard({cardtype, dataset});
-            await ChatMessage.create(card);
-
-            // Auto-roll for beasts.
-            if (item.parent.type === 'beast') {
-                const formula = HMTABLES.formula.save.trauma;
-                const dialogResp = {caller: item.parent, context: item.parent};
-                const {system, hackmaster5e} = item.parent;
-
-                const rollContext = {...system, talent: hackmaster5e.talent};
-                const roll = await new Roll(formula, rollContext).evaluate({async: true});
-
-                dataset.resp = {caller: item.parent};
-                dataset.dialog = 'save';
-                dataset.formulaType = 'trauma';
-
-                dialogResp.resp = {rollMode: 'gmroll'};
-                const topcard = await chatmgr.getCard({dataset, roll, dialogResp});
-                await ChatMessage.create(topcard);
-            }
-        } else if (type === 'race' || type === 'cclass') {
+        if (type === 'race' || type === 'cclass') {
             const itemList = item.parent.itemTypes[type];
             if (!itemList.length) return;
 

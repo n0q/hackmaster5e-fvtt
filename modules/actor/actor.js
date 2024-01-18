@@ -1,4 +1,4 @@
-import { HMTABLES, SYSTEM_ID } from '../tables/constants.js';
+import { HMCONST, HMTABLES, SYSTEM_ID } from '../tables/constants.js';
 import { HMACTOR_TUNABLES } from '../tables/tunables.js';
 import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { HMWeaponProfile } from '../item/weapon-profile.js';
@@ -143,26 +143,21 @@ export class HMActor extends Actor {
         console.error(`${cName} does not have a getAbilityBonus() function.`);
     }
 
-    async addWound(amount, topIgnore=0) {
-        let woundData = {hp: amount, timer: amount, assn: topIgnore};
+    async addWound() {
+        const dialogResp = await HMDialogFactory({dialog: 'wound'});
+        const {resp} = dialogResp;
 
-        if (!amount) {
-            const dataset = {dialog: 'wound'};
-            const dialogResp = await HMDialogFactory(dataset);
-            woundData = dialogResp.data;
-        }
+        const data = {hp: resp.hp, timer: resp.hp};
+        const itemData = {name: 'New Wound', type: 'wound', data};
 
-        const {hp, assn} = woundData;
-        if (hp < 1) return {hp: 0};
-        const iData = {name: 'New Wound', type: 'wound', data: woundData};
+        const context = await Item.create(itemData, {parent: this});
+        const hpToP = this.system.hp.top;
 
-        try {
-            await Item.create(iData, {parent: this});
-        } catch (error) {
-            return {error, hp};
-        }
+        if (hpToP >= (resp.hp + resp.assn)) return false;
 
-        return {hp, assn};
+        const cardtype = HMCONST.CARD_TYPE.ALERT;
+        const dataset = {context, top: hpToP, wound: resp.hp};
+        return {cardtype, dataset};
     }
 
     async modifyTokenAttribute(attribute, value, isDelta=false, isBar=true) {

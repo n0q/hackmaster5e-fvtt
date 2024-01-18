@@ -190,16 +190,13 @@ export class HMDialog {
                 wound: {
                     label: game.i18n.localize('HM.dialog.setWoundTitle'),
                     callback: () => ({
-                        value: parseInt(document.getElementById('hp').value, 10) || 0,
+                        hp: parseInt(document.getElementById('hp').value, 10) || 0,
                         assn: parseInt(document.getElementById('assn').value, 10) || 0,
                     }),
                 },
             },
             default: 'wound',
         }, {width: 175});
-
-        const {assn, value} = dialogResp.resp;
-        dialogResp.data = {hp: value, timer: value, assn};
         return dialogResp;
     }
 

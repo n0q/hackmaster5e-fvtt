@@ -1,5 +1,6 @@
 import { HMCONST, HMTABLES, SYSTEM_ID } from '../tables/constants.js';
 import { HMActor } from './actor.js';
+import { HMChatMgr } from '../mgr/chatmgr.js';
 
 export class HMCharacterActor extends HMActor {
     prepareBaseData() {
@@ -207,5 +208,14 @@ export class HMCharacterActor extends HMActor {
     getAbilityBonus(ability, bonus) {
         const {idx} = this.system.abilities.total[ability];
         return HMTABLES.abilitymods[ability][idx][bonus];
+    }
+
+    async addWound(...args) {
+        const cardData = await super.addWound(...args);
+        if (cardData) {
+            const chatmgr = new HMChatMgr();
+            const card = await chatmgr.getCard(cardData);
+            await ChatMessage.create(card);
+        }
     }
 }
