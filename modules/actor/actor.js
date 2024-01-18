@@ -145,18 +145,27 @@ export class HMActor extends Actor {
 
     async addWound() {
         const dialogResp = await HMDialogFactory({dialog: 'wound'});
-        const {resp} = dialogResp;
+        const {hp, assn, armorDamage} = dialogResp.resp;
 
-        const data = {hp: resp.hp, timer: resp.hp};
+        if (armorDamage) {
+            const armor = this.itemTypes.armor.find((a) => (
+                a.system.state === HMCONST.ITEM_STATE.EQUIPPED
+                && !a.system.shield.checked
+            ));
+            if (armor) armor.damageArmorBy(armorDamage);
+        }
+
+        if (!hp) return false;
+
+        const data = {hp, timer: hp};
         const itemData = {name: 'New Wound', type: 'wound', data};
-
         const context = await Item.create(itemData, {parent: this});
-        const hpToP = this.system.hp.top;
 
-        if (hpToP >= (resp.hp + resp.assn)) return false;
+        const hpToP = this.system.hp.top;
+        if (hpToP >= (hp + assn)) return false;
 
         const cardtype = HMCONST.CARD_TYPE.ALERT;
-        const dataset = {context, top: hpToP, wound: resp.hp};
+        const dataset = {context, top: hpToP, wound: hp};
         return {cardtype, dataset};
     }
 

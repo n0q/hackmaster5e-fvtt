@@ -1,8 +1,14 @@
 <form class='hackmaster'>
     <div class='form-group'>
-        <label>{{localize 'HM.dialog.setWoundBody'}}</label>
+        <label>{{localize 'HM.dialog.setWoundHP'}}</label>
         <input id='hp' type='number' placeholder='0'/>
     </div>
+{{#if (getSetting 'hackmaster5e' 'armorDegredation')}}
+    <div class='form-group'>
+        <label>{{localize 'HM.dialog.setWoundArmor'}}</label>
+        <input id='armorDamage' type='number' placeholder='0'/>
+    </div>
+{{/if}}
     <div class='form-group'>
         <label>{{localize 'HM.dialog.setWoundToP'}}</label>
         <input id='assn' type='number' placeholder='0'/>

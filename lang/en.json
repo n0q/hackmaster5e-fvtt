@@ -319,8 +319,9 @@
             "rollMode":          "Roll Mode",
             "setInitTitle":      "Set Initiative",
             "setInitBody":       "New Init",
+            "setWoundArmor":     "Armor Damage",
             "setWoundTitle":     "Inflict Wound",
-            "setWoundBody":      "Wound HP",
+            "setWoundHP":        "Wound HP",
             "setWoundToP":       "ToP Penetration",
             "specialMove":       "Special Move",
             "strBonus":          "Moved 10+ feet/s",
@@ -1065,7 +1066,7 @@
     },
 
     "SETTINGS": {
-        "armorDegredation":     "Armor Degredation (Experimental)",
+        "armorDegredation":     "Armor Degredation",
         "armorDegredationHint": "Use Armor Degredation rules (GMG120).",
         "autoEncumbrance":      "Auto Encumbrance",
         "autoEncumbranceHint":  "Automatically adjust Character encumbrance levels based on equipped and carried items.",

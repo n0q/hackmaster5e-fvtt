@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+### Added
+- Armor damage can be specified when wounding an actor or token.
+
 ## [0.4.4] - 2024-01-16
 ### Fixed
 - Spell volatility stage ramped up to Overamped 1 SP too soon.

@@ -191,6 +191,7 @@ export class HMDialog {
                     label: game.i18n.localize('HM.dialog.setWoundTitle'),
                     callback: () => ({
                         hp: parseInt(document.getElementById('hp').value, 10) || 0,
+                        armorDamage: parseInt(document.getElementById('armorDamage')?.value, 10) || 0,
                         assn: parseInt(document.getElementById('assn').value, 10) || 0,
                     }),
                 },
