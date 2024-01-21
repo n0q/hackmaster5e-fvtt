@@ -18,4 +18,16 @@
 .gold-star {
     color: yellow;
     -webkit-text-stroke: 1px black;
+    text-stroke: 1px black;
+}
+
+.fa-hm-heart-attack {
+    .fa-heart {
+        color: red;
+        scale: 1.1;
+    }
+    .fa-heart-crack {
+        color: black;
+        scale: 1.1;
+    }
 }

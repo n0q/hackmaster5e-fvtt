@@ -96,6 +96,32 @@ $actor-logo-dim: 40%;
         "abilities middle-saves-l middle-stats middle-saves-r middle-wounds";
     
     .middle-wounds {
+        @include table-basic;
+        table {
+            th, td {
+                text-align: right;
+                padding-right: 5px;
+                width: 3em;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+            thead {
+                height: 4px;
+                padding: -10px;
+                margin: -10px;
+                tr {
+                    height: 4px;
+                margin: -10px;
+                padding: -10px;
+
+                }
+                th {
+                    height: 4px;
+                padding: -10px;
+                margin: -10px;
+                }
+            }
+        }
         margin-top: 3px;
         padding: 2px;
         border: 2px solid $c-grey;

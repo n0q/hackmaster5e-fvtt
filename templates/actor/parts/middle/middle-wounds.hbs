@@ -1,3 +1,44 @@
+<section style="padding-top: -10px; margin-top: -10px;">
+<table>
+<thead>
+    <tr>
+        <th>
+            <span class="fa-stack fa-hm-heart-attack" style="vertical-align: center; margin-top: -10px; margin-bottom: -10px;">
+                <i class="fas fa-heart fa-stack-1x"></i><i class="fas fa-heart-crack fa-stack-1x"></i>
+            </span>
+        </th>
+        <th>
+            <i class="fa-regular fa-clock"></i>
+        </th>
+        <th>
+            <i class="fa-solid fa-suitcase-medical"></i> 
+        </th>
+        <th>
+            <a class='item-control item-create' title='Inflict Wound' data-dialog='wound' data-type='wound'>
+                <i class='fas fa-plus'></i>
+            </a>
+        </th>
+    </tr>
+</thead>
+<tbody>
+{{#each actor.itemTypes.wound}}
+    <tr class='item' data-item-id='{{_id}}'>
+        <td>
+            <label class='button' data-action='decHp'>{{system.hp}}</label>
+        </td>
+        <td>
+            <label class='button' data-action='decTimer'>{{system.timer}}</label>
+        </td>
+        <td>
+            <label class='button' data-action='treat'>{{#if system.treated}}Y{{else}}N{{/if}}</label>
+        </td>
+        <td></td>
+    </tr>
+{{/each}}
+</tbody>
+</table>
+</section>
+<!--
 <li class='flexrow item-header'>
     <label class='item-image'>{{localize 'HM.wound'}}</label>
     <label class='item-name'>{{localize 'HM.duration'}}</label>
@@ -9,6 +50,21 @@
         </a>
     </div>
 </li>
+-->
+<!--
+<section>
+    <span class="fa-stack fa-hm-heart-attack" style="vertical-align: top;">
+        <i class="fas fa-heart fa-stack-1x"></i><i class="fas fa-heart-crack fa-stack-1x"></i>
+    </span>
+</section>
+-->
+    <!--
+<span class="fa-stack" style="vertical-align: top;">
+  <i class="fas fa-heart fa-stack-1x" style="color: red;"></i>
+  <i class="fas fa-heart-crack fa-stack-1x" style="color: black;"></i>
+</span>
+    -->
+<!--
 <section class='hmstyle scrollable'>
 {{#each actor.itemTypes.wound}}
     <li class='item flexrow tablerow' data-item-id='{{_id}}'>
@@ -21,3 +77,4 @@
     </li>
 {{/each}}
 </section>
+-->
