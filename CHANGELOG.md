@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 ### Added
 - Armor damage can be specified when wounding an actor or token.
+### Fixed
+- Weapon speed proficiency can no longer be a positive value
 
 ## [0.4.4] - 2024-01-16
 ### Fixed
