@@ -10,7 +10,12 @@ export const FILL_TYPE = {
 };
 
 export class HMToken extends Token {
+    get __isSecret() {
+        return this.document.disposition === CONST.TOKEN_DISPOSITIONS.SECRET && !this.isOwner;
+    }
+
     drawReach(renderMode = FILL_TYPE.DEFAULT) {
+        if (this.__isSecret) return;
         const showReach = game.settings.get(SYSTEM_ID, 'showReach');
 
         const {center, hover, reach, interactionState} = this;
