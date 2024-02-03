@@ -7,6 +7,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Armor damage can be specified when wounding an actor or token.
 ### Fixed
 - Weapon speed proficiency can no longer be a positive value
+- Tokens with 'secret' disposition no longer display threat/reach to non-owners.
+- Temporary fix for chrome scrollbar changes.
 
 ## [0.4.4] - 2024-01-16
 ### Fixed
