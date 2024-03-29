@@ -21,17 +21,31 @@ export class HMWoundItem extends HMItem {
         switch (action) {
             case 'decTimer': {
                 system.timer--;
-                if (!system.timer) system.timer = --system.hp;
+                if (!system.timer && system.hp) system.timer = --system.hp;
+                system.treated = true;
                 break;
             }
             case 'decHp': {
-                const limit = Math.sign(--system.hp);
+                system.hp = Math.max(0, system.hp - 1);
+                const limit = Math.sign(system.hp);
                 system.timer = Math.max(limit, --system.timer);
                 system.treated = true;
                 break;
             }
+            case 'treat': {
+                system.treated = !system.treated;
+                break;
+            }
+            case 'toggleEmbed': {
+                system.isEmbedded = !system.isEmbedded;
+            }
             // no default
         }
-        system.hp < 1 && !system.embed ? this.delete() : this.update({system});
+
+        if (system.hp < 1) {
+            system.hp = 0;
+            system.timer = 0;
+        }
+        system.hp < 1 && !system.isEmbedded ? this.delete() : this.update({system});
     }
 }

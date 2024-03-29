@@ -5,10 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 ### Added
 - Armor damage can be specified when wounding an actor or token.
+### Changed
+- Wounds auto-remove after hitting 0 HP if there is no embedded projectile.
 ### Fixed
 - Weapon speed proficiency can no longer be a positive value
 - Tokens with 'secret' disposition no longer display threat/reach to non-owners.
-- Temporary fix for chrome scrollbar changes.
+- Fix for chrome scrollbar changes.
+- Completely reworked wounds code.
 
 ## [0.4.4] - 2024-01-16
 ### Fixed
@@ -21,12 +24,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Blind status effect now correctly supplies a -8 malus on a token's attack and defense.
 - Damage class bonus.
 - Spell volatility rating, check, and max mishap tier autocalculation on spell cards.
-### Fixed
-- Fumble table inaccuracy.
-- Modifying actor hp via token hud is no longer so janky.
 ### Changed
 - Blind status effect no longer prevents user from seeing the map while token is selected.
 - Innate weapon minimum speed is universally 1, ignoring weapon size.
+### Fixed
+- Fumble table inaccuracy.
+- Modifying actor hp via token hud is no longer so janky.
 
 ## [0.4.2] - 2024-01-13
 ### Added
