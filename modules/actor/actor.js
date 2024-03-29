@@ -39,6 +39,11 @@ export class HMActor extends Actor {
         return false;
     }
 
+    get embeddedArrows() {
+        const {wound} = this.itemTypes;
+        return wound.reduce((acc, w) => acc + 1 * (!!w.system.embed && w.system.isEmbedded), 0);
+    }
+
     get fightingDefensively() {
         const fxList = this.effects.contents.flatMap((fx) => [...fx.statuses.keys()]);
         const dSet = new Set(Object.values(HMTABLES.effects.defense));

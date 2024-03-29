@@ -94,39 +94,39 @@ $actor-logo-dim: 40%;
     grid-template-columns: $actor-portrait-dim $actor-saves-dim 1fr $actor-saves-dim $actor-wounds-dim;
     grid-template-areas:
         "abilities middle-saves-l middle-stats middle-saves-r middle-wounds";
-    
+
     .middle-wounds {
+        margin-top: 3px;
+        border-left: 2px solid $c-grey;
+
         @include table-basic;
         table {
-            th, td {
+            margin: 0;
+            table-layout: fixed;
+            tbody tr:first-child td {
+                position: sticky;
+                top: 0;
+                background: lightgrey;
+                z-index: 10;
+            }
+            td {
                 text-align: right;
                 padding-right: 5px;
                 width: 3em;
                 overflow: hidden;
                 white-space: nowrap;
-            }
-            thead {
-                height: 4px;
-                padding: -10px;
-                margin: -10px;
-                tr {
-                    height: 4px;
-                margin: -10px;
-                padding: -10px;
-
-                }
-                th {
-                    height: 4px;
-                padding: -10px;
-                margin: -10px;
+                &:nth-child(1) { width: 3em; }
+                &:nth-child(2) { width: 3em; }
+                &:nth-child(3) { width: 2em; }
+                &:nth-child(4) {
+                    text-align: left;
+                    width: auto;
                 }
             }
         }
-        margin-top: 3px;
-        padding: 2px;
-        border: 2px solid $c-grey;
+
         >section {
-            height: 10rem;
+            height: 11rem;
         }
     }
 

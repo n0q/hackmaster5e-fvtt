@@ -1,80 +1,53 @@
-<section style="padding-top: -10px; margin-top: -10px;">
-<table>
-<thead>
-    <tr>
-        <th>
-            <span class="fa-stack fa-hm-heart-attack" style="vertical-align: center; margin-top: -10px; margin-bottom: -10px;">
-                <i class="fas fa-heart fa-stack-1x"></i><i class="fas fa-heart-crack fa-stack-1x"></i>
-            </span>
-        </th>
-        <th>
-            <i class="fa-regular fa-clock"></i>
-        </th>
-        <th>
-            <i class="fa-solid fa-suitcase-medical"></i> 
-        </th>
-        <th>
-            <a class='item-control item-create' title='Inflict Wound' data-dialog='wound' data-type='wound'>
-                <i class='fas fa-plus'></i>
-            </a>
-        </th>
-    </tr>
-</thead>
-<tbody>
+<section class="scrollable">
+    <table>
+        <tbody>
+            <tr>
+                <td><i class="fas fa-heart-crack"></i></td>
+                <td><i class="fa-regular fa-clock" style="margin-right: -2px;"></i></td>
+                <td><i class="fa-solid fa-square-plus"></i></td>
+                <td>
+                    <span style="text-align: left;">
+                        <i class="hm-arrow-svgi" style="margin-right: -4px;"></i>
+                        <i class="fa-regular fa-xmark" style="font-size:8px; margin-right: -4px;"></i> 
+                        {{actor.embeddedArrows}}
+                    </span>
+                </td>
+                <td>
+                    <a class='item-control item-create' title='Inflict Wound' data-dialog='wound' data-type='wound'>
+                        <i class='fas fa-plus'></i>
+                    </a>
+                </td>
+            </tr>
 {{#each actor.itemTypes.wound}}
-    <tr class='item' data-item-id='{{_id}}'>
-        <td>
-            <label class='button' data-action='decHp'>{{system.hp}}</label>
-        </td>
-        <td>
-            <label class='button' data-action='decTimer'>{{system.timer}}</label>
-        </td>
-        <td>
-            <label class='button' data-action='treat'>{{#if system.treated}}Y{{else}}N{{/if}}</label>
-        </td>
-        <td></td>
-    </tr>
+            <tr class='item' data-item-id='{{_id}}'>
+    {{#with system}}
+                <td><label class='button' data-action='decHp'>{{hp}}</label></td>
+                <td><label class='button' data-action='decTimer'>{{timer}}</label></td>
+                <td>
+                    <label class='button' data-action='treat'>
+                        <i class="fa-solid fa-square-plus"{{#unless treated}} style="opacity: 0.5;"{{/unless}}></i>
+                    </label>
+                </td>
+                <td>
+                    <label class='button' data-action='toggleEmbed'>
+        {{#if isEmbedded}}
+                        <span title='{{localize (findConfigValue "embedSelect" embed)}}'>
+            {{#repeat embed}}
+                            <span class="hm-arrow-svgi" style="margin-right: -10px;"></span>
+            {{/repeat}}
+                        </span>
+        {{/if}}
+                    </label>
+                </td>
+                <td>
+                    <div class='item-controls'>
+                        <a class='item-control item-edit' title='Edit Wound'><i class='fas fa-edit'></i></a>
+                        <a class='item-control item-delete' title='Delete Wound'><i class='fas fa-trash'></i></a>
+                    </div>
+                </td>
+            </tr>
+    {{/with}}
 {{/each}}
-</tbody>
-</table>
+        </tbody>
+    </table>
 </section>
-<!--
-<li class='flexrow item-header'>
-    <label class='item-image'>{{localize 'HM.wound'}}</label>
-    <label class='item-name'>{{localize 'HM.duration'}}</label>
-    <div class='item-controls'>
-        <a class='item-control item-create' title='Create item'
-            data-dialog='wound'
-            data-type='wound'>
-            <i class='fas fa-plus'></i> New
-        </a>
-    </div>
-</li>
--->
-<!--
-<section>
-    <span class="fa-stack fa-hm-heart-attack" style="vertical-align: top;">
-        <i class="fas fa-heart fa-stack-1x"></i><i class="fas fa-heart-crack fa-stack-1x"></i>
-    </span>
-</section>
--->
-    <!--
-<span class="fa-stack" style="vertical-align: top;">
-  <i class="fas fa-heart fa-stack-1x" style="color: red;"></i>
-  <i class="fas fa-heart-crack fa-stack-1x" style="color: black;"></i>
-</span>
-    -->
-<!--
-<section class='hmstyle scrollable'>
-{{#each actor.itemTypes.wound}}
-    <li class='item flexrow tablerow' data-item-id='{{_id}}'>
-        <label class='button' data-action='decHp'>{{system.hp}}</label>
-        <label class='button' data-action='decTimer'>{{system.timer}}</label>
-        <div class='item-controls'>
-            <a class='item-control item-edit' title='Edit Wound'><i class='fas fa-edit'></i></a>
-            <a class='item-control item-delete' title='Delete Wound'><i class='fas fa-trash'></i></a>
-        </div>
-    </li>
-{{/each}}
-</section>
--->

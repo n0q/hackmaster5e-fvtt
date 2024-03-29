@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Armor damage can be specified when wounding an actor or token.
 ### Changed
 - Wounds auto-remove after hitting 0 HP if there is no embedded projectile.
+- New wound tracker with embedded arrow tabulation.
 ### Fixed
 - Weapon speed proficiency can no longer be a positive value
 - Tokens with 'secret' disposition no longer display threat/reach to non-owners.

@@ -21,13 +21,12 @@
     text-stroke: 1px black;
 }
 
-.fa-hm-heart-attack {
-    .fa-heart {
-        color: red;
-        scale: 1.1;
-    }
-    .fa-heart-crack {
-        color: black;
-        scale: 1.1;
-    }
+.hm-arrow-svgi::before {
+    content: "";
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    background: url('../styles/icons/arrow.svg');
+    background-size: contain;
 }

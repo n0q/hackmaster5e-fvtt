@@ -122,7 +122,12 @@
             height: 18px;
         }
 
+        .button {
+            cursor: pointer;
+        }
+
         .button[disabled] {
+            cursor: default;
             color: var(--color-text-dark-inactive);
             &:hover { @include text-glow('reset'); }
         }
