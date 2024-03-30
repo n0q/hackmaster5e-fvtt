@@ -45,6 +45,14 @@ idx.alignment = {
     'non': 'HM.alignmentSelect.non',
 };
 
+idx.embedSelect = {
+    [HMCONST.RANGED.EMBED.AUTO]:        'HM.auto',
+    [HMCONST.RANGED.EMBED.NONE]:        'HM.embedSelect.none',
+    [HMCONST.RANGED.EMBED.SUPERFICIAL]: 'HM.embedSelect.superficial',
+    [HMCONST.RANGED.EMBED.EMBEDDED]:    'HM.embedSelect.embedded',
+    [HMCONST.RANGED.EMBED.DEEPLY]:      'HM.embedSelect.deeply',
+};
+
 idx.containerType = {
     [HMCONST.CONTAINER.TYPE.WEIGHT]:    'HM.containerTypeSelect.weight',
     [HMCONST.CONTAINER.TYPE.QUANTITY]:  'HM.containerTypeSelect.quantity',
@@ -185,6 +193,14 @@ idx.effectModes = {
     [CONST.ACTIVE_EFFECT_MODES.OVERRIDE]:  'EFFECT.MODE_OVERRIDE',
     [CONST.ACTIVE_EFFECT_MODES.MULTIPLY]:  'EFFECT.MODE_MULTIPLY',
     [CONST.ACTIVE_EFFECT_MODES.CUSTOM]:    'EFFECT.MODE_CUSTOM',
+};
+
+idx.embedSelect = {
+    [HMCONST.RANGED.EMBED.AUTO]:    'HM.auto',
+    [HMCONST.RANGED.EMBED.NONE]:    'HM.embedSelect.none',
+    [HMCONST.RANGED.EMBED.SUPER]:   'HM.embedSelect.superficial',
+    [HMCONST.RANGED.EMBED.EMBED]:   'HM.embedSelect.embedded',
+    [HMCONST.RANGED.EMBED.D_EMBED]: 'HM.embedSelect.deeply',
 };
 
 idx.weaponskill = {

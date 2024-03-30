@@ -1,4 +1,4 @@
-import { HMTABLES, SYSTEM_ID } from '../tables/constants.js';
+import { HMCONST, HMTABLES, SYSTEM_ID } from '../tables/constants.js';
 import { HMACTOR_TUNABLES } from '../tables/tunables.js';
 import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { HMWeaponProfile } from '../item/weapon-profile.js';
@@ -37,6 +37,11 @@ export class HMActor extends Actor {
         const {cclass} = this.itemTypes;
         if (cclass.length) return cclass[0].system.features.back || false;
         return false;
+    }
+
+    get embeddedArrows() {
+        const {wound} = this.itemTypes;
+        return wound.reduce((acc, w) => acc + 1 * (!!w.system.embed && w.system.isEmbedded), 0);
     }
 
     get fightingDefensively() {
@@ -143,26 +148,35 @@ export class HMActor extends Actor {
         console.error(`${cName} does not have a getAbilityBonus() function.`);
     }
 
-    async addWound(amount, topIgnore=0) {
-        let woundData = {hp: amount, timer: amount, assn: topIgnore};
+    async addWound({notify, wdata} = {}) {
+        const woundData = wdata ?? (await HMDialogFactory({dialog: 'wound'})).resp;
+        const {hp, assn, armorDamage, embed, isEmbedded} = woundData;
 
-        if (!amount) {
-            const dataset = {dialog: 'wound'};
-            const dialogResp = await HMDialogFactory(dataset);
-            woundData = dialogResp.data;
+        if (armorDamage) {
+            const armor = this.itemTypes.armor.find((a) => (
+                a.system.state === HMCONST.ITEM_STATE.EQUIPPED
+                && !a.system.shield.checked
+            ));
+            if (armor) armor.damageArmorBy(armorDamage);
         }
 
-        const {hp, assn} = woundData;
-        if (hp < 1) return {hp: 0};
-        const iData = {name: 'New Wound', type: 'wound', data: woundData};
+        if (!hp) return false;
 
-        try {
-            await Item.create(iData, {parent: this});
-        } catch (error) {
-            return {error, hp};
+        const data = {hp, timer: hp, embed, isEmbedded};
+        const itemData = {name: 'New Wound', type: 'wound', data};
+        const context = await Item.create(itemData, {parent: this});
+
+        if (notify) {
+            ui.notifications.info(`<b>${this.name}</b> receives <b>${hp}</b> HP of damage.`);
         }
 
-        return {hp, assn};
+        const hpToP = this.system.hp.top;
+        if (hpToP >= (hp + assn)) return {woundData};
+
+        const cardtype = HMCONST.CARD_TYPE.ALERT;
+        const dataset = {context, top: hpToP, wound: hp};
+        const cardData = {cardtype, dataset};
+        return {woundData, cardData};
     }
 
     async modifyTokenAttribute(attribute, value, isDelta=false, isBar=true) {

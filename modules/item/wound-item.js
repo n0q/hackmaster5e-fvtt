@@ -13,26 +13,40 @@ export class HMWoundItem extends HMItem {
         this.WoundAction(ev);
     }
 
-    async setHp({value=0, isDelta=true}={}) {
-        let {hp, timer} = this.system;
-        hp = isDelta ? hp + value : value;
-        timer = hp;
-        await this.update({'system': {hp, timer}});
-    }
-
-    async setTimer({value=0, isDelta=true}={}) {
-        let {hp, timer} = this.system;
-        timer = isDelta ? timer + value : value;
-        if (timer < 1) timer = --hp;
-        await this.update({'system': {hp, timer}});
-    }
-
     async WoundAction(event) {
         const element = event.currentTarget;
         const {action} = element.dataset;
+        const {system} = this;
 
-        if (action === 'decTimer') await this.setTimer({value: -1});
-        if (action === 'decHp') await this.setHp({value: -1});
-        if (this.system.hp < 0) this.delete();
+        switch (action) {
+            case 'decTimer': {
+                system.timer--;
+                if (!system.timer && system.hp) system.timer = --system.hp;
+                system.treated = true;
+                break;
+            }
+            case 'decHp': {
+                system.hp = Math.max(0, system.hp - 1);
+                const limit = Math.sign(system.hp);
+                system.timer = Math.max(limit, --system.timer);
+                system.treated = true;
+                break;
+            }
+            case 'treat': {
+                system.treated = !system.treated;
+                break;
+            }
+            case 'toggleEmbed': {
+                system.isEmbedded = !system.isEmbedded;
+                system.treated = true;
+            }
+            // no default
+        }
+
+        if (system.hp < 1) {
+            system.hp = 0;
+            system.timer = 0;
+        }
+        system.hp < 1 && !system.isEmbedded ? this.delete() : this.update({system});
     }
 }

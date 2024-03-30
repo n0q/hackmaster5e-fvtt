@@ -105,6 +105,12 @@
             "moving":       "Moving"
         },
 
+        "embedSelect": {
+            "none":         "None",
+            "superficial":  "Superficial",
+            "embedded":     "Embedded",
+            "deeply":       "Deeply Embedded"
+        },
 
         "handednessSelect": {
             "right":        "Right",
@@ -298,7 +304,9 @@
 
         "dialog": {
             "advCombatTracker":  "Advance clock?",
+            "barbed":            "Can Embed?",
             "deleteBody":        "Really delete",
+            "embedLevel":        "Embed Level",
             "getInitDieTitle":   "Roll for Initiative",
             "getInitDieBody":    "Initiative Die",
             "getAttackTitle":    "Roll an Attack",
@@ -319,8 +327,9 @@
             "rollMode":          "Roll Mode",
             "setInitTitle":      "Set Initiative",
             "setInitBody":       "New Init",
+            "setWoundArmor":     "Armor Damage",
             "setWoundTitle":     "Inflict Wound",
-            "setWoundBody":      "Wound HP",
+            "setWoundHP":        "Wound HP",
             "setWoundToP":       "ToP Penetration",
             "specialMove":       "Special Move",
             "strBonus":          "Moved 10+ feet/s",
@@ -599,8 +608,9 @@
         "easy":         "Easy",
         "effects":      "Effects",
         "effective":    "Effective",
-        "epvalue":      "EP Value",
+        "embedded":     "Embedded",
         "encumbrance":  "Encumbrance",
+        "epvalue":      "EP Value",
         "eyes":         "Eyes",
         "failed":       "Failed",
         "failure":      "Failure",
@@ -1065,7 +1075,7 @@
     },
 
     "SETTINGS": {
-        "armorDegredation":     "Armor Degredation (Experimental)",
+        "armorDegredation":     "Armor Degredation",
         "armorDegredationHint": "Use Armor Degredation rules (GMG120).",
         "autoEncumbrance":      "Auto Encumbrance",
         "autoEncumbranceHint":  "Automatically adjust Character encumbrance levels based on equipped and carried items.",

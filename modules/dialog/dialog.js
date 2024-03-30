@@ -6,6 +6,7 @@ import { DamagePrompt } from '../apps/damage.js';
 import { DefendPrompt } from '../apps/defend.js';
 import { FumblePrompt } from '../apps/fumble.js';
 import { SkillPrompt } from '../apps/skill.js';
+import { WoundPrompt } from '../apps/wound.js';
 
 function getDialogData() {
     return {
@@ -181,25 +182,17 @@ export class HMDialog {
 
     static async setWoundDialog(caller) {
         const dialogResp = {caller};
+        const dialogData = getDialogData();
+        dialogData.caller = caller;
 
-        dialogResp.resp = await Dialog.wait({
-            render: () => focusById('hp'),
-            title: game.i18n.localize('HM.dialog.setWoundTitle'),
-            content: await renderTemplate('systems/hackmaster5e/templates/dialog/wound.hbs'),
-            buttons: {
-                wound: {
-                    label: game.i18n.localize('HM.dialog.setWoundTitle'),
-                    callback: () => ({
-                        value: parseInt(document.getElementById('hp').value, 10) || 0,
-                        assn: parseInt(document.getElementById('assn').value, 10) || 0,
-                    }),
-                },
-            },
-            default: 'wound',
-        }, {width: 175});
+        const title = caller
+            ? `${caller.name}: ${game.i18n.localize('HM.dialog.setWoundTitle')}`
+            : `${game.i18n.localize('HM.dialog.setWoundTitle')}`;
+        dialogResp.resp = await new Promise((resolve) => {
+            const options = {resolve, title};
+            new WoundPrompt(dialogData, options).render(true);
+        });
 
-        const {assn, value} = dialogResp.resp;
-        dialogResp.data = {hp: value, timer: value, assn};
         return dialogResp;
     }
 

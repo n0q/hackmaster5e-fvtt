@@ -1,11 +1,37 @@
 # Changelog
+
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [0.4.4] - 2024-01-16
-### Fixed
-- Spell volatility stage ramped up to Overamped 1 SP too soon.
+## [0.4.5] - 2024-03-30
+
+### Added
+
+- Armor damage can be specified when wounding an actor or token.
+- Wounds track treatment status and projectile embeds.
+- Actor tracks overall number of projectile embeds.
+
 ### Changed
+
+- Wounds auto-remove after hitting 0 HP if there is no embedded projectile.
+- New wound tracker with embedded arrow tabulation.
+- Replaced old wound macro with a new one (Please update your macros).
+
+### Fixed
+
+- Weapon speed proficiency can no longer be a positive value
+- Tokens with 'secret' disposition no longer display threat/reach to non-owners.
+- Fix for chrome scrollbar changes.
+- Completely reworked wounds code.
+
+## [0.4.4] - 2024-01-16
+
+### Fixed
+
+- Spell volatility stage ramped up to Overamped 1 SP too soon.
+
+### Changed
+
 - Reorganized skill chat cards.
 
 ## [0.4.3] - 2024-01-16
@@ -13,12 +39,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Blind status effect now correctly supplies a -8 malus on a token's attack and defense.
 - Damage class bonus.
 - Spell volatility rating, check, and max mishap tier autocalculation on spell cards.
-### Fixed
-- Fumble table inaccuracy.
-- Modifying actor hp via token hud is no longer so janky.
 ### Changed
 - Blind status effect no longer prevents user from seeing the map while token is selected.
 - Innate weapon minimum speed is universally 1, ignoring weapon size.
+### Fixed
+- Fumble table inaccuracy.
+- Modifying actor hp via token hud is no longer so janky.
 
 ## [0.4.2] - 2024-01-13
 ### Added

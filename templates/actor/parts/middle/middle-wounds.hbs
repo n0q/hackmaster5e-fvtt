@@ -1,23 +1,53 @@
-<li class='flexrow item-header'>
-    <label class='item-image'>{{localize 'HM.wound'}}</label>
-    <label class='item-name'>{{localize 'HM.duration'}}</label>
-    <div class='item-controls'>
-        <a class='item-control item-create' title='Create item'
-            data-dialog='wound'
-            data-type='wound'>
-            <i class='fas fa-plus'></i> New
-        </a>
-    </div>
-</li>
-<section class='hmstyle scrollable'>
+<section class="scrollable">
+    <table>
+        <tbody>
+            <tr>
+                <td><i class="fas fa-heart-crack"></i></td>
+                <td><i class="fa-regular fa-clock" style="margin-right: -2px;"></i></td>
+                <td><i class="fa-solid fa-square-plus"></i></td>
+                <td>
+                    <span style="text-align: left;">
+                        <i class="hm-arrow-svgi" style="margin-right: -8px;"></i>
+                        <i class="fa-regular fa-xmark" style="font-size: 8px; margin-right: -2px;"></i> 
+                        {{actor.embeddedArrows}}
+                    </span>
+                </td>
+                <td>
+                    <a class='item-control item-create' title='Inflict Wound' data-dialog='wound' data-type='wound'>
+                        <i class='fas fa-plus'></i>
+                    </a>
+                </td>
+            </tr>
 {{#each actor.itemTypes.wound}}
-    <li class='item flexrow tablerow' data-item-id='{{_id}}'>
-        <label class='button' data-action='decHp'>{{system.hp}}</label>
-        <label class='button' data-action='decTimer'>{{system.timer}}</label>
-        <div class='item-controls'>
-            <a class='item-control item-edit' title='Edit Wound'><i class='fas fa-edit'></i></a>
-            <a class='item-control item-delete' title='Delete Wound'><i class='fas fa-trash'></i></a>
-        </div>
-    </li>
+            <tr class='item' data-item-id='{{_id}}'>
+    {{#with system}}
+                <td><label class='button' data-action='decHp'>{{hp}}</label></td>
+                <td><label class='button' data-action='decTimer'>{{timer}}</label></td>
+                <td>
+                    <label class='button' data-action='treat'>
+                        <i class="fa-solid fa-square-plus"{{#unless treated}} style="opacity: 0.5;"{{/unless}}></i>
+                    </label>
+                </td>
+                <td>
+                    <label class='button' data-action='toggleEmbed'>
+        {{#if isEmbedded}}
+                        <span title='{{localize (findConfigValue "embedSelect" embed)}}'>
+            {{#repeat embed}}
+                            <span class="hm-arrow-svgi" style="margin-right: -10px;"></span>
+            {{/repeat}}
+                        </span>
+        {{/if}}
+                    </label>
+                </td>
+                <td>
+                    <div class='item-controls'>
+                        <a class='item-control item-edit' title='Edit Wound'><i class='fas fa-edit'></i></a>
+                        <a class='item-control item-delete' title='Delete Wound'><i class='fas fa-trash'></i></a>
+                    </div>
+                </td>
+            </tr>
+    {{/with}}
 {{/each}}
+        </tbody>
+    </table>
 </section>

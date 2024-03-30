@@ -202,15 +202,17 @@ export class HMActorSheet extends ActorSheet {
         const {dataset} = ev.currentTarget;
         const {type} = dataset;
         const itemName = `New ${type.capitalize()}`;
-
         const itemData = {name: itemName, type};
-        if (dataset.dialog) {
+
+        const {dialog} = dataset;
+        if (dialog === 'wound') { await this.actor.addWound(); } else
+        if (dialog) {
             const dialogResp = await HMDialogFactory(dataset, this.actor);
             itemData.data = dialogResp.data;
+        } else {
+            const newItem = await Item.create(itemData, {parent: this.actor});
+            if (dataset.render === 'true') newItem.sheet.render(true);
         }
-
-        const newItem = await Item.create(itemData, {parent: this.actor});
-        if (dataset.render === 'true') newItem.sheet.render(true);
     }
 
     _updateOwnedItem(item) {

@@ -12,16 +12,23 @@ export class HMProficiencyItem extends HMItem {
 
     _prepProficiencyData() {
         const {system} = this;
+        const {bonus} = system;
         const [isMechanical, isRanged] = [system.mechanical.checked, system.ranged.checked];
+
+        let dirty = false;
+        if (bonus.spd > 0) {
+            bonus.spd = -Math.abs(bonus.spd);
+            dirty = true;
+        }
+
         if (isMechanical || isRanged) {
             if (isMechanical && !isRanged) this.update({'system.mechanical.checked': false});
 
-            const {bonus} = system;
             const {def, dmg} = bonus;
             if (isRanged) bonus.def = 0;
             if (isMechanical) bonus.dmg = 0;
-            const dirty = bonus.def !== def || bonus.dmg !== dmg;
-            if (dirty) this.update({'system.bonus': bonus});
+            dirty = dirty || bonus.def !== def || bonus.dmg !== dmg;
         }
+        if (dirty) this.update({'system.bonus': bonus});
     }
 }

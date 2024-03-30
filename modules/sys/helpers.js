@@ -27,6 +27,8 @@ export const registerHandlebarsHelpers = () => {
         return outStr;
     });
 
+    Handlebars.registerHelper('repeat', (n, block) => new Array(n).fill(null).map(() => block.fn()).join(''));
+
     Handlebars.registerHelper('toLowerCase', (str) => str.toLowerCase());
 
     Handlebars.registerHelper('toUpperCase', (str) => {

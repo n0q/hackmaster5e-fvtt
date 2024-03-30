@@ -10,7 +10,12 @@ export const FILL_TYPE = {
 };
 
 export class HMToken extends Token {
+    get __isSecret() {
+        return this.document.disposition === CONST.TOKEN_DISPOSITIONS.SECRET && !this.isOwner;
+    }
+
     drawReach(renderMode = FILL_TYPE.DEFAULT) {
+        if (this.__isSecret) return;
         const showReach = game.settings.get(SYSTEM_ID, 'showReach');
 
         const {center, hover, reach, interactionState} = this;
@@ -155,9 +160,13 @@ export class HMToken extends Token {
         return game.userId === owner?.id;
     }
 
-    async addWound(amount) {
+    async addWound(wdata) {
+        if (arguments.length === 2 && wdata === undefined) {
+            ui.notifications.error('This macro is obsolete. Please get a new copy from the system compendium.');
+            return undefined;
+        }
         if (!this.actor) return false;
-        return this.actor.addWound(amount);
+        return this.actor.addWound({notify: true, wdata});
     }
 }
 

@@ -34,6 +34,7 @@ export class HMTokenHooks {
     }
 
     static hoverToken(token, hover) {
+        if (token.__isSecret) return;
         /* eslint-disable no-param-reassign */
         if (!token.combatant) return;
         token.drawReach(hover ? FILL_TYPE.FULL : FILL_TYPE.REACH);

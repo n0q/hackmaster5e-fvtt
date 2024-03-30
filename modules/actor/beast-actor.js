@@ -1,4 +1,6 @@
+import { HMTABLES } from '../tables/constants.js';
 import { HMActor } from './actor.js';
+import { HMChatMgr } from '../mgr/chatmgr.js';
 
 export class HMBeastActor extends HMActor {
     prepareBaseData() {
@@ -47,5 +49,30 @@ export class HMBeastActor extends HMActor {
     }
 
     // Placeholder value.
-    getAbilityBonus() { return 2; }
+    getAbilityBonus() { return 2; } // eslint-disable-line
+
+    async addWound(...args) {
+        const {woundData, cardData} = await super.addWound(...args);
+        if (cardData) {
+            cardData.dataset.hidden = true;
+            const chatmgr = new HMChatMgr();
+            const card = await chatmgr.getCard(cardData);
+            await ChatMessage.create(card);
+
+            const formula = HMTABLES.formula.save.trauma;
+            const {system, hackmaster5e} = this;
+            const rollContext = {...system, talent: hackmaster5e.talent};
+            const roll = await new Roll(formula, rollContext).evaluate({async: true});
+
+            const resp = {rollMode: CONST.DICE_ROLL_MODES.PRIVATE};
+            const dialogResp = {resp};
+
+            cardData.dialog = 'save';
+            cardData.formulaType = 'trauma';
+
+            const topcard = await chatmgr.getCard({dataset: cardData, roll, dialogResp});
+            await ChatMessage.create(topcard);
+        }
+        return woundData;
+    }
 }

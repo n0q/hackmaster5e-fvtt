@@ -96,6 +96,13 @@ export const HMCONST = {
         SPRINT: 4,
     },
     RANGED: {
+        EMBED: {
+            AUTO:   -1,
+            NONE:    0,
+            SUPER:   1,
+            EMBED:   2,
+            D_EMBED: 3,
+        },
         REACH: {
             MINIMUM: 0,
             SHORT:   1,
@@ -812,6 +819,7 @@ export const HMTABLES = {
             [HMCONST.SCALE.COLOSSAL]: {'minspd': 15},
         },
         ranged: {
+            embed: (arg) => [0, 1, 3, 9, Infinity].findIndex((m) => m > arg) - 1,
             reach: {
                 [HMCONST.RANGED.REACH.SHORT]:    0,
                 [HMCONST.RANGED.REACH.MEDIUM]:   4,
