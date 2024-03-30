@@ -148,9 +148,9 @@ export class HMActor extends Actor {
         console.error(`${cName} does not have a getAbilityBonus() function.`);
     }
 
-    async addWound() {
-        const dialogResp = await HMDialogFactory({dialog: 'wound'});
-        const {hp, assn, armorDamage, embed, isEmbedded} = dialogResp.resp;
+    async addWound({notify, wdata} = {}) {
+        const woundData = wdata ?? (await HMDialogFactory({dialog: 'wound'})).resp;
+        const {hp, assn, armorDamage, embed, isEmbedded} = woundData;
 
         if (armorDamage) {
             const armor = this.itemTypes.armor.find((a) => (
@@ -166,12 +166,17 @@ export class HMActor extends Actor {
         const itemData = {name: 'New Wound', type: 'wound', data};
         const context = await Item.create(itemData, {parent: this});
 
+        if (notify) {
+            ui.notifications.info(`<b>${this.name}</b> receives <b>${hp}</b> HP of damage.`);
+        }
+
         const hpToP = this.system.hp.top;
-        if (hpToP >= (hp + assn)) return false;
+        if (hpToP >= (hp + assn)) return {woundData};
 
         const cardtype = HMCONST.CARD_TYPE.ALERT;
         const dataset = {context, top: hpToP, wound: hp};
-        return {cardtype, dataset};
+        const cardData = {cardtype, dataset};
+        return {woundData, cardData};
     }
 
     async modifyTokenAttribute(attribute, value, isDelta=false, isBar=true) {

@@ -211,11 +211,12 @@ export class HMCharacterActor extends HMActor {
     }
 
     async addWound(...args) {
-        const cardData = await super.addWound(...args);
+        const {woundData, cardData} = await super.addWound(...args);
         if (cardData) {
             const chatmgr = new HMChatMgr();
             const card = await chatmgr.getCard(cardData);
             await ChatMessage.create(card);
         }
+        return woundData;
     }
 }

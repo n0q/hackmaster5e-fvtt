@@ -52,11 +52,11 @@ export class HMBeastActor extends HMActor {
     getAbilityBonus() { return 2; } // eslint-disable-line
 
     async addWound(...args) {
-        const dataset = await super.addWound(...args);
-        if (dataset) {
-            dataset.dataset.hidden = true;
+        const {woundData, cardData} = await super.addWound(...args);
+        if (cardData) {
+            cardData.dataset.hidden = true;
             const chatmgr = new HMChatMgr();
-            const card = await chatmgr.getCard(dataset);
+            const card = await chatmgr.getCard(cardData);
             await ChatMessage.create(card);
 
             const formula = HMTABLES.formula.save.trauma;
@@ -67,11 +67,12 @@ export class HMBeastActor extends HMActor {
             const resp = {rollMode: CONST.DICE_ROLL_MODES.PRIVATE};
             const dialogResp = {resp};
 
-            dataset.dialog = 'save';
-            dataset.formulaType = 'trauma';
+            cardData.dialog = 'save';
+            cardData.formulaType = 'trauma';
 
-            const topcard = await chatmgr.getCard({dataset, roll, dialogResp});
+            const topcard = await chatmgr.getCard({dataset: cardData, roll, dialogResp});
             await ChatMessage.create(topcard);
         }
+        return woundData;
     }
 }

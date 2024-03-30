@@ -160,9 +160,13 @@ export class HMToken extends Token {
         return game.userId === owner?.id;
     }
 
-    async addWound(amount) {
+    async addWound(wdata) {
+        if (arguments.length === 2 && wdata === undefined) {
+            ui.notifications.error('This macro is obsolete. Please get a new copy from the system compendium.');
+            return undefined;
+        }
         if (!this.actor) return false;
-        return this.actor.addWound(amount);
+        return this.actor.addWound({notify: true, wdata});
     }
 }
 
