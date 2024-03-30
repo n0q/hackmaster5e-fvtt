@@ -2,6 +2,8 @@
 
 Hackmaster for Foundry. Some rough edges here and there, but this should do what you need. May all your hits be crits!
 
+Don't worry if updates are slow or sluggish. I work on this project as time allows.
+
 ----
 ## Roadmap
 ##### 0.4: Combat Revamp

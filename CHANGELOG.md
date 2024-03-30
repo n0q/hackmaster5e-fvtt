@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - Wounds auto-remove after hitting 0 HP if there is no embedded projectile.
 - New wound tracker with embedded arrow tabulation.
+- Replaced old wound macro with a new one (Please update your macros).
 
 ### Fixed
 
