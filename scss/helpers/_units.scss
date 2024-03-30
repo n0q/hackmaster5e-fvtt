@@ -24,9 +24,11 @@
 .hm-arrow-svgi::before {
     content: "";
     display: inline-block;
+    scale: 0.9;
     width: 1em;
     height: 1em;
     vertical-align: middle;
     background: url('../styles/icons/arrow.svg');
     background-size: contain;
+    transform: translateY(-2px);
 }

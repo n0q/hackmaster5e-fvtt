@@ -38,6 +38,7 @@ export class HMWoundItem extends HMItem {
             }
             case 'toggleEmbed': {
                 system.isEmbedded = !system.isEmbedded;
+                system.treated = true;
             }
             // no default
         }

@@ -1,5 +1,3 @@
-import { positionTooltip } from '../../sys/tooltip.js';
-
 export class HMItemSheet extends ItemSheet {
   /** @override */
     static get defaultOptions() {
@@ -43,15 +41,6 @@ export class HMItemSheet extends ItemSheet {
         super.activateListeners(html);
         if (!this.options.editable) return;
 
-        const root = html.get(0);
-        root.querySelectorAll('.tooltip').forEach((e) => {
-            e.addEventListener('mouseover', () => positionTooltip(e));
-        });
-        /*
-        root.querySelectorAll('.tooltip').forEach((e) => {
-            e.addEventListener('mouseover', () => positionTooltip(e));
-        });
-        */
         html.find('.editable').change(this._onEdit.bind(this));
 
         $(document).ready(() => $('.autoselect').focus(function autoselect() { $(this).select(); }));
