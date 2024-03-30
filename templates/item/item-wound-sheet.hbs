@@ -1,22 +1,35 @@
-{{#with data}}
 <form class="{{cssClass}}" autocomplete="off">
-    <div class="item-form">
-        <div class="sidepanel">
-            <div class="options-block">
-                <div class="options-row">
-                    <label class="resource-label">{{localize "HM.hp"}}:</label>
-                    <input type="number" name="system.hp" value="{{system.hp}}" data-dtype="Number"/>
-                </div>
-                <div class="options-row">
-                    <label class="resource-label">{{localize "HM.duration"}}:</label>
-                    <input type="number" name="system.timer" value="{{system.timer}}" data-dtype="Number"/>
-                </div>
-                <div class="options-row">
-                    <label class="resource-label">{{localize "HM.treated"}}:</label>
-                    <input type="checkbox" name="system.treated" {{checked system.treated}}/>
-                </div>
-            </div>
-        </div>
+{{#with data.system}}
+    <div class="newform">
+        <section name='options'>
+            <span class='form-option'>
+                <label class="resource-label">{{localize "HM.hp"}}:</label>
+                <input style="text-align: right; padding-right: 10px;" type="number" name="system.hp" value="{{hp}}" data-dtype="Number"/>
+            </span>
+            <span class='form-option'>
+                <label class="resource-label">{{localize "HM.duration"}}:</label>
+                <input style="text-align: right; padding-right: 10px" type="number" name="system.timer" value="{{timer}}" data-dtype="Number"/>
+            </span>
+            <span class='form-option'>
+                <label class="resource-label">{{localize "HM.treated"}}:</label>
+                <input type="checkbox" name="system.treated" {{checked treated}}/>
+            </span>
+            <span class='form-option'>
+                <label class="resource-label">{{localize "HM.embedded"}}:</label>
+                <input type="checkbox" name="system.isEmbedded" {{checked isEmbedded}}/>
+            </span>
+            <span class='form-option'>
+                <label class="resource-label">{{localize "HM.embedded"}} {{localize "HM.level"}}:</label>
+                <select
+                    style="width: auto;"
+                    name="system.embed"
+                    data-dtype="{{embed}}"
+                    {{#unless isEmbedded}}disabled{{/unless}}
+                >
+                    {{selectOptions (findConfigObj 'embedSelect' omit='-1') selected=embed localize=true}}
+                </select>
+            </span>
+        </section>
     </div>
-</form>
 {{/with}}
+</form>

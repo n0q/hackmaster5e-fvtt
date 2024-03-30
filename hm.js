@@ -16,6 +16,7 @@ import { HMRaceItemSheet } from './modules/item/sheets/race-item-sheet.js';
 import { HMSpellItemSheet } from './modules/item/sheets/spell-item-sheet.js';
 import { HMTalentItemSheet } from './modules/item/sheets/talent-item-sheet.js';
 import { HMWeaponItemSheet } from './modules/item/sheets/weapon-item-sheet.js';
+import { HMWoundItemSheet } from './modules/item/sheets/wound-item-sheet.js';
 import { HMCombat, HMCombatTracker } from './modules/sys/combat.js';
 import { HMDie } from './modules/sys/dice.js';
 import { HMToken } from './modules/sys/token.js';
@@ -42,6 +43,7 @@ function registerSheets() {
     Items.registerSheet('hackmaster', HMSpellItemSheet, {types: ['spell'], makeDefault: true});
     Items.registerSheet('hackmaster', HMTalentItemSheet, {types: ['talent'], makeDefault: true});
     Items.registerSheet('hackmaster', HMWeaponItemSheet, {types: ['weapon'], makeDefault: true});
+    Items.registerSheet('hackmaster', HMWoundItemSheet, {types: ['wound'], makeDefault: true});
 }
 
 function registerConfig() {
