@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+
+### Changed
+
+- "Treated" marker now only displays if a wound is untreated.
+
 ## [0.4.5] - 2024-03-30
 
 ### Added
@@ -22,7 +28,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Weapon speed proficiency can no longer be a positive value
 - Tokens with 'secret' disposition no longer display threat/reach to non-owners.
 - Fix for chrome scrollbar changes.
-- Completely reworked wounds code.
 
 ## [0.4.4] - 2024-01-16
 
