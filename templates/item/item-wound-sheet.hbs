@@ -21,13 +21,24 @@
             <span class='form-option'>
                 <label class="resource-label">{{localize "HM.embedded"}} {{localize "HM.level"}}:</label>
                 <select
-                    style="width: auto;"
+                    style="width: 10em;"
                     name="system.embed"
                     data-dtype="{{embed}}"
                     {{#unless isEmbedded}}disabled{{/unless}}
                 >
                     {{selectOptions (findConfigObj 'embedSelect' omit='-1') selected=embed localize=true}}
                 </select>
+            </span>
+            <span class='form-option'>
+                <label class="resource-label">{{localize "HM.note"}}:</label>
+                <input
+                    type="text"
+                    style="width: 10em;"
+                    name="system.note"
+                    value="{{note}}"
+                    placeholder="{{localize 'HM.unset'}}"
+                    data-dtype="String"
+                />
             </span>
         </section>
     </div>

@@ -6,7 +6,7 @@ export class HMWoundItemSheet extends HMItemSheet {
         return mergeObject(super.defaultOptions, {
             classes: ['hackmaster', 'sheet', 'item'],
             width: 280,
-            height: 190,
+            height: 215,
         });
     }
 }

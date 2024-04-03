@@ -21,7 +21,14 @@
 {{#each actor.itemTypes.wound}}
             <tr class='item' data-item-id='{{_id}}'>
     {{#with system}}
-                <td><label class='button' data-action='decHp'>{{hp}}</label></td>
+                {{#if note}}
+                <td class='dogear'>
+                    <div class='marker' title='{{note}}'></div>
+                    {{else}}
+                <td>
+                {{/if}}
+                    <label class='button' data-action='decHp'>{{hp}}</label>
+                </td>
                 <td><label class='button' data-action='decTimer'>{{timer}}</label></td>
                 <td>
                     <label class='button' data-action='treat'{{#if treated}} style="visibility: hidden;"{{/if}}>

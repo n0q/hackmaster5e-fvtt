@@ -4,43 +4,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+### Added
+- Wounds can have notes, which are displayed on the wound tracker.
 
 ### Changed
-
 - "Treated" marker now only displays if a wound is untreated.
 
 ### Fixed
-
 - Under certain circumstnaces, threat range animation viewable by players who shouldn't see it.
 
 ## [0.4.5] - 2024-03-30
-
 ### Added
-
 - Armor damage can be specified when wounding an actor or token.
 - Wounds track treatment status and projectile embeds.
 - Actor tracks overall number of projectile embeds.
 
 ### Changed
-
 - Wounds auto-remove after hitting 0 HP if there is no embedded projectile.
 - New wound tracker with embedded arrow tabulation.
 - Replaced old wound macro with a new one (Please update your macros).
 
 ### Fixed
-
 - Weapon speed proficiency can no longer be a positive value
 - Tokens with 'secret' disposition no longer display threat/reach to non-owners.
 - Fix for chrome scrollbar changes.
 
 ## [0.4.4] - 2024-01-16
-
 ### Fixed
-
 - Spell volatility stage ramped up to Overamped 1 SP too soon.
 
 ### Changed
-
 - Reorganized skill chat cards.
 
 ## [0.4.3] - 2024-01-16
