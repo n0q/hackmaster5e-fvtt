@@ -25,6 +25,7 @@ export class HMActor extends Actor {
     /** @override */
     // effects need to be applied before the other documents, or their effects will be missed.
     // We're relying on effects to be the first embeddedType. This seems to be safe, but...
+    /* eslint-disable no-restricted-syntax */
     prepareEmbeddedDocuments() {
         const embeddedTypes = this.constructor.metadata.embedded || {};
         for (const collectionName of Object.values(embeddedTypes)) {
@@ -32,6 +33,7 @@ export class HMActor extends Actor {
             if (collectionName === 'effects') this.applyActiveEffects();
         }
     }
+    /* eslint-enable no-restricted-syntax */
 
     get canBackstab() {
         const {cclass} = this.itemTypes;
@@ -74,7 +76,7 @@ export class HMActor extends Actor {
         this.wprofiles = new Collection();
         this.itemTypes.weapon.forEach((weapon) => {
             const _id = foundry.utils.randomID();
-            weapon.profileId = _id;
+            weapon.profileId = _id; // eslint-disable-line no-param-reassign
             const profileData = {name: weapon.name, weapon, actor: this, _id};
             const profile = new HMWeaponProfile(profileData);
             profile.evaluate();
@@ -100,7 +102,7 @@ export class HMActor extends Actor {
 
         const multiply = ['move'];
         for (const vector in bonus) {
-            if (vector === 'total') continue;
+            if (vector === 'total') continue; // eslint-disable-line no-continue
 
             // Dereference indexed key/val pairs;
             if (bonus[vector]?._idx) {
