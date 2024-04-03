@@ -109,7 +109,7 @@ export class HMToken extends Token {
 
     animReachOpen() {
         const {reach} = this;
-        reach.visible = !!this.combatant && this.visibleByDefault();
+        reach.visible = !!this.combatant && this.visibleByDefault() && this.isVisible;
         if (!reach.visible) return;
 
         const ease = 'elastic.out(1, 0.3)';
