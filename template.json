@@ -139,13 +139,7 @@
             "ptable": {}
         },
 
-        "currency": {
-            "templates": ["base"],
-            "state": 0,
-            "weight": 0,
-            "issuer": null,
-            "coins": {}
-        },
+        "currency": {},
 
         "item": {
             "templates": ["base", "thing", "container"],
