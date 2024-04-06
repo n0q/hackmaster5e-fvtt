@@ -156,20 +156,7 @@
             "mechanical": {"checked": false}
         },
 
-        "race": {
-            "templates": ["base"],
-            "adj": null,
-            "scale": {"hp": 3,  "kb": 3,  "reach": 3, "move": 3, "token": 3},
-            "bonus": {"hp": 10, "kb": 15, "reach": 0, "move": 1, "token": 5}, 
-            "abilities": {
-                "str": {"value": 0, "fvalue": 0},
-                "int": {"value": 0, "fvalue": 0},
-                "wis": {"value": 0, "fvalue": 0},
-                "dex": {"value": 0, "fvalue": 0},
-                "con": {"value": 0, "fvalue": 0},
-                "lks": {"value": 0, "fvalue": 0},
-                "cha": {"value": 0, "fvalue": 0}}
-        },
+        "race": {},
 
         "spell": {
             "templates": ["base"],

@@ -22,7 +22,7 @@
                                 {{selectOptions (findConfigObj 'scale') selected=system.scale.hp localize=true}}
                             </select>
                             <input type="number" name="system.bonus.hp" value="{{system.bonus.hp}}"
-                            {{#if (ne system.scale.hp '0')}}readonly{{/if}} data-dtype="Number"/>
+                            {{#if system.scale.hp}}readonly{{/if}} data-dtype="Number"/>
                         </span>
                     </span>
                     <span class='form-option'>
@@ -32,7 +32,7 @@
                                 {{selectOptions (findConfigObj 'scale') selected=system.scale.kb localize=true}}
                             </select>
                             <input type="number" name="system.bonus.kb" value="{{system.bonus.kb}}"
-                            {{#if (ne system.scale.kb '0')}}readonly{{/if}} data-dtype="Number"/>
+                            {{#if system.scale.kb}}readonly{{/if}} data-dtype="Number"/>
                         </span>
                     </span>
                     <span class='form-option'>
@@ -42,7 +42,7 @@
                                 {{selectOptions (findConfigObj 'scale') selected=system.scale.reach localize=true}}
                             </select>
                             <input type="number" name="system.bonus.reach" value="{{system.bonus.reach}}"
-                            {{#if (ne system.scale.reach '0')}}readonly{{/if}} data-dtype="Number"/>
+                            {{#if system.scale.reach}}readonly{{/if}} data-dtype="Number"/>
                         </span>
                     </span>
                     <span class='form-option'>
@@ -52,7 +52,7 @@
                                 {{selectOptions (findConfigObj 'scale') selected=system.scale.token localize=true}}
                             </select>
                             <input type="number" name="system.bonus.token" value="{{system.bonus.token}}"
-                            {{#if (ne system.scale.token '0')}}readonly{{/if}} data-dtype="Float"/>
+                            {{#if system.scale.token}}readonly{{/if}} data-dtype="Float"/>
                         </span>
                     </span>
                     <span class='form-option'>
@@ -62,7 +62,7 @@
                                 {{selectOptions (findConfigObj 'scale') selected=system.scale.move localize=true}}
                             </select>
                             <input type="text" class="editable" name="system.bonus.move" value="{{pct system.bonus.move}}"
-                                {{#if (ne system.scale.move '0')}}
+                                {{#if system.scale.move}}
                                     readonly
                                 {{else}}
                                     data-item-prop='system.bonus.move' data-dtype="Percent"
