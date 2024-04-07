@@ -157,44 +157,8 @@
         },
 
         "race": {},
-
-        "spell": {
-            "templates": ["base"],
-            "divine": false,
-            "component": {
-                "verbal":   true,
-                "somatic":  true,
-                "material": true,
-                "catalyst": false,
-                "divine":   false
-            },
-            "save": {"type": 0, "action": 0},
-            "speed":   1,
-            "prepped": 0,
-            "lidx":    2
-        },
-
-        "skill": {
-            "templates": ["base"],
-            "bonus": {
-                "total":   {"value": 0, "literacy": 0, "verbal": 0},
-                "mastery": {"value": 0, "literacy": 0, "verbal": 0}
-            },
-            "bp": 0,
-            "specialty": {"checked": false, "value": null},
-            "universal": false,
-            "tools": false,
-            "language": false,
-            "relevant": {
-                "str": false,
-                "int": false,
-                "wis": false,
-                "dex": false,
-                "con": false,
-                "lks": false,
-                "cha": false
-            }
-        },
+        "spell": {},
+        "skill": {},
 
         "talent": {
             "templates": ["base"],
