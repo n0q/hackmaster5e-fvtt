@@ -1,18 +1,30 @@
 import { FILL_TYPE } from '../sys/token.js';
 
 export class HMTokenHooks {
+    /**
+     * Creates a token with additional processing for HMBeastActors.
+     * Calculates maximum HP based on defined formula and updates actor's HP.
+     *
+     * @static
+     * @async
+     * @param {HMToken} token - The token instance to process.
+     * @param {object} _options - Unused options parameter, present for compatability.
+     * @param {string} userId - User id of the calling user to check against client user id.
+     * @returns {Promise<void>} - Returns early if user id does not match or token.actor
+     * is not HMBeastActor.
+    */
     static async createToken(token, _options, userId) {
         if (game.user.id !== userId) return;
         const {actor} = token;
 
         // Populate hp.max for beast tokens.
-        if (actor.type !== 'beast' || actor.system.hp.max || userId !== game.user.id) return;
+        if (actor.type !== 'beast' || actor.system.hp.max) return;
 
         const {formula} = actor.system.hp;
         if (Roll.validate(formula)) {
             const r = await new Roll(formula).evaluate({'async': true});
             const tokenHp = {value: r.total, max: r.total};
-            await token.actor.update({'system.hp': tokenHp});
+            await actor.update({'system.hp': tokenHp});
         }
     }
 
