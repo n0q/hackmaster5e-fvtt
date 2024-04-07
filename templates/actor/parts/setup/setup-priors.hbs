@@ -4,8 +4,10 @@
     <section class='newform grid-2col' style='padding-top: 2px; grid-template-columns: 40% 1fr;'>
         <span>
             <span class='form-option'>
-                <label class='resource-label'>{{localize 'HM.sex'}}</label>
-                <input type='text' style='width: 6em;' name='system.priors.sex' value='{{sex}}' data-dtype='String'/>
+                <label class="resource-label">{{localize "HM.sex"}}</label>
+                <select name="system.priors.sex" data-dtype="Number">
+                    {{selectOptions (findConfigObj "sex") selected=sex localize=true}}
+                </select>
             </span>
             <span class='form-option'>
                 <label class='resource-label'>{{localize 'HM.age'}}</label>

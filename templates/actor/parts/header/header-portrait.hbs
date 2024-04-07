@@ -28,8 +28,8 @@
             {{/if}}
         </div>
         <div>
-            {{#if sex}}
-            <label class="bold-label">{{localize 'HM.sex'}}</label>: {{sex}},
+            {{#if sex includeZero=true}}
+            <label class="bold-label">{{localize "HM.sex"}}</label>: {{localize (findConfigValue "sex" sex)}},
             {{/if}}
             {{#if handedness}}
             <label class="bold-label">{{localize 'HM.handedness'}}</label>: {{localize (concat 'HM.handednessSelect.' handedness)}}

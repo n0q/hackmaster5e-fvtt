@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 - "Treated" marker now only displays if a wound is untreated.
+- Sex is speficied by dropdown, rather than an open string.
 
 ### Fixed
 - Under certain circumstnaces, threat range animation viewable by players who shouldn't see it.

@@ -15,7 +15,7 @@
                     "bmi": null,
                     "height": null,
                     "handedness": "right",
-                    "sex": null,
+                    "sex": 0,
                     "hair": null,
                     "eyes": null,
                     "gawd": null,

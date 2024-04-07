@@ -150,6 +150,10 @@ export const HMCONST = {
         ENORMOUS: 7,
         COLOSSAL: 8,
     },
+    SEX: {
+        FEMALE:   0,
+        MALE:     1,
+    },
     SKILL: {
         DIFF: {
             AUTO:       -1,

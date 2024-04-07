@@ -240,6 +240,11 @@ idx.saves = {
     'will':     'HM.saves.will',
 };
 
+idx.sex = {
+    [HMCONST.SEX.FEMALE]:   'HM.female',
+    [HMCONST.SEX.MALE]:     'HM.male',
+};
+
 idx.skillLevel = {
     [HMCONST.SKILL.DIFF.AUTO]:          'HM.auto',
     [HMCONST.SKILL.DIFF.TRIVIAL]:       'HM.skillDiffSelect.trivial',
