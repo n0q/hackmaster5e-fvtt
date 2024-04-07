@@ -464,6 +464,23 @@ export const HMTABLES = {
             39: [64, 128, 256, 384],
         },
     },
+    beast: {
+        int: {
+            0:   0,
+            1:   1,
+            2:   4,
+            3:   5,
+            4:   6,
+            5:   9,
+            6:  12,
+            7:  14,
+            8:  16,
+            9:  18,
+            10: 20,
+            11: 22,
+            12: 23,
+        },
+    },
     cclass: {
         pData: {
             hp:   {value: null, die: null, reroll: false},

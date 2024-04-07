@@ -63,6 +63,7 @@
             "ep": {"value": 0},
             "scale": 3,
             "level": 1,
+            "idx": {"int": 0},
             "movespd": {
                 "gnd": {"crawl": 2.5, "walk": 5, "jog": 10, "run": 15, "sprint": 20}
             }

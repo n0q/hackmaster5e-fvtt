@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 ### Added
 - Wounds can have notes, which are displayed on the wound tracker.
+- Intelligence dropdown for beast Actors.
+- Racial bonus to spell volatility checks.
+- Racial BMI breakpoints for being overweight or obese.
 
 ### Changed
 - "Treated" marker now only displays if a wound is untreated.

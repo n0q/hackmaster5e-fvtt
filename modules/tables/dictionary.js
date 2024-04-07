@@ -203,6 +203,22 @@ idx.embedSelect = {
     [HMCONST.RANGED.EMBED.D_EMBED]: 'HM.embedSelect.deeply',
 };
 
+idx.intelligenceSelect = {
+    0:  'HM.intelligenceSelect.non',
+    1:  'HM.intelligenceSelect.semi',
+    2:  'HM.intelligenceSelect.animallow',
+    3:  'HM.intelligenceSelect.animalhigh',
+    4:  'HM.intelligenceSelect.obtuse',
+    5:  'HM.intelligenceSelect.slow',
+    6:  'HM.intelligenceSelect.average',
+    7:  'HM.intelligenceSelect.bright',
+    8:  'HM.intelligenceSelect.smart',
+    9:  'HM.intelligenceSelect.brilliant',
+    10: 'HM.intelligenceSelect.genius',
+    11: 'HM.intelligenceSelect.sgenius',
+    12: 'HM.intelligenceSelect.gawd',
+};
+
 idx.weaponskill = {
     'minimal': 'HM.weaponskillSelect.minimal',
     'low':     'HM.weaponskillSelect.low',

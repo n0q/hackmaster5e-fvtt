@@ -138,6 +138,22 @@
             "legendary":    "Legendary"
         },
 
+        "intelligenceSelect": {
+            "non":          "Non",
+            "semi":         "Semi",
+            "animallow":    "Animal, Low",
+            "animalhigh":   "Animal, High",
+            "obtuse":       "Obtuse",
+            "slow":         "Slow",
+            "average":      "Average",
+            "bright":       "Bright",
+            "smart":        "Smart",
+            "brilliant":    "Brilliant",
+            "genius":       "Genius",
+            "sgenius":      "Supra-genius",
+            "gawd":         "God-like"
+        },
+
         "physDmgSelect": {
             "crushing":     "Crushing",
             "hacking":      "Hacking",
