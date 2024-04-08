@@ -106,6 +106,9 @@ export class HMCharacterActor extends HMActor {
                     if (key === 'chamod') this.setAbilities({adjust: 'cha', delta: stats[key]});
                 }
             });
+
+            /* @todo Another hack to be replaced when we move to a stats object. */
+            stats.sfc = parseInt(system.abilities.total.int.value, 10) || 0;
         });
 
         stats.hp     = total.con.value;

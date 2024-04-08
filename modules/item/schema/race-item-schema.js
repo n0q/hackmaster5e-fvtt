@@ -13,7 +13,7 @@ export class HMRaceSchema extends foundry.abstract.DataModel {
         const scaleEntries = scaleKeys.map((k) => [k, new fields.NumberField(scaleOpts)]);
         const scaleInner = Object.fromEntries(scaleEntries);
 
-        const bonusKeys = [...scaleKeys, 'def'];
+        const bonusKeys = [...scaleKeys, 'def', 'sfc'];
         const bonusOpts = {required: false, integer: false, nullable: true};
         const bonusEntries = bonusKeys.map((k) => [
             k, new fields.NumberField({...bonusOpts, initial: bonusInitial[k] || 0})]);
@@ -36,14 +36,17 @@ export class HMRaceSchema extends foundry.abstract.DataModel {
     static migrateData(source) {
         /* eslint-disable no-param-reassign */
         // 0.4.6 - Enforce scale and bonus values as numbers.
-        const {scale} = source;
-        const scaleEntries = Object.entries(scale).map(([k, v]) => [k, parseInt(v, 10) || 0]);
-        source.scale = Object.fromEntries(scaleEntries);
-
-        if (!Number.isFinite(source.bonus.move)) {
-            source.bonus.move = source.scale.move ? HMTABLES.scale[source.scale.move].move : 1;
+        if ('scale' in source) {
+            const {scale} = source;
+            const scaleEntries = Object.entries(scale).map(([k, v]) => [k, parseInt(v, 10) || 0]);
+            source.scale = Object.fromEntries(scaleEntries);
         }
 
+        if ('bonus' in source) {
+            if (!Number.isFinite(source.bonus.move)) {
+                source.bonus.move = 1;
+            }
+        }
         /* eslint-enable no-param-reassign */
         return super.migrateData(source);
     }

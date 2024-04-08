@@ -7,15 +7,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - Wounds can have notes, which are displayed on the wound tracker.
 - Intelligence dropdown for beast Actors.
-- Racial bonus to spell volatility checks.
+- Racial bonus to spell volatility failure checks.
 - Racial BMI breakpoints for being overweight or obese.
+- Spell Volatility Save autocalc.
 
 ### Changed
 - "Treated" marker now only displays if a wound is untreated.
 - Sex is speficied by dropdown, rather than an open string.
+- Character race cards no longer display bonuses with a value of zero.
 
 ### Fixed
-- Under certain circumstnaces, threat range animation viewable by players who shouldn't see it.
+- Under certain circumstnaces, non-visible threat range anims viewable by users.
 
 ## [0.4.5] - 2024-03-30
 ### Added

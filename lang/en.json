@@ -234,6 +234,7 @@
             "morale":   "Morale",
             "physical": "Physical",
             "reach":    "Reach",
+            "sfc":      "SFC",
             "spd":      "Speed",
             "turning":  "Turning"
         },
@@ -1028,6 +1029,12 @@
 
         "NOTIFY": {
             "talentCharOnly":  "Talents are currently incompatible with Beast actors." 
+        },
+
+        "RACE": {
+            "HINT": {
+                "sfc":  "Spell Failure Check bonus"
+            }
         }
     },
 

@@ -12,13 +12,13 @@ export class HMActor extends Actor {
 
     prepareBaseData() {
         super.prepareBaseData();
-        if (this.type === 'worksheet') return;
         this[SYSTEM_ID] = {talent: deepClone(HMACTOR_TUNABLES)};
         this.resetBonus();
     }
 
     prepareDerivedData() {
         super.prepareDerivedData();
+        this.setSkillBonus();
         this.setArmorBonus();
     }
 
@@ -96,25 +96,35 @@ export class HMActor extends Actor {
         if (shieldItem) bonus.shield = shieldItem.system.bonus.total;
     }
 
+    /* @todo This function is a hack, until the next bonus refactor replaces everything with
+     * a "stats matrix" class.
+     */
+    setSkillBonus() {
+        const {bonus} = this.system;
+        const arcanelore = this.itemTypes.skill.find((s) => s.name === 'Arcane Lore');
+        if (!arcanelore) return;
+
+        const sfc = arcanelore.mastery.value - 1;
+        if (sfc > 0) bonus.skill = {sfc};
+    }
+
     setBonusTotal() {
         const {bonus} = this.system;
         const total = {};
 
         const multiply = ['move'];
-        for (const vector in bonus) {
-            if (vector === 'total') continue; // eslint-disable-line no-continue
-
+        Object.keys(bonus).filter((v) => v !== 'total').forEach((vector) => {
             // Dereference indexed key/val pairs;
             if (bonus[vector]?._idx) {
                 const idx = bonus[vector]._idx;
-                for (const idxKey in idx) {
+                Object.keys(idx).forEach((idxKey) => {
                     const idxValue = idx[idxKey];
-                    const table    = HMTABLES[idxKey][idxValue];
+                    const table    = HMTABLES.beast[idxKey][idxValue];
                     bonus[vector]  = Object.assign(bonus[vector], table);
-                }
+                });
             }
 
-            for (const key in bonus[vector]) {
+            Object.keys(bonus[vector]).forEach((key) => {
                 const value = bonus[vector][key];
                 if (key !== '_idx' && value !== null) {
                     if (typeof value === 'string') {
@@ -125,8 +135,8 @@ export class HMActor extends Actor {
                         total[key] = (total?.[key] || 0) + value;
                     }
                 }
-            }
-        }
+            });
+        });
 
         Object.keys(total)
             .filter((stat) => Number.isNumeric(total[stat]) && !Number.isInteger(total[stat]))
