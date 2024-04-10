@@ -162,7 +162,7 @@ export class HMActor extends Actor {
 
     async addWound({notify, wdata} = {}) {
         const woundData = wdata ?? (await HMDialogFactory({dialog: 'wound'})).resp;
-        const {hp, assn, armorDamage, embed, isEmbedded} = woundData;
+        const {hp, assn, armorDamage, embed, isEmbedded, note} = woundData;
 
         if (armorDamage) {
             const armor = this.itemTypes.armor.find((a) => (
@@ -174,8 +174,8 @@ export class HMActor extends Actor {
 
         if (!hp) return false;
 
-        const data = {hp, timer: hp, embed, isEmbedded};
-        const itemData = {name: 'New Wound', type: 'wound', data};
+        const data = {hp, timer: hp, embed, isEmbedded, note};
+        const itemData = {name: 'Wound', type: 'wound', data};
         const context = await Item.create(itemData, {parent: this});
 
         if (notify) {

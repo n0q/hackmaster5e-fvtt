@@ -355,6 +355,7 @@
             "getSaveTitle":      "Save",
             "getSkillTitle1":    "Skill Check",
             "getSkillTitle2":    "Skill Checks",
+            "optNote":           "optional comment",
             "rollMode":          "Roll Mode",
             "setInitTitle":      "Set Initiative",
             "setInitBody":       "New Init",

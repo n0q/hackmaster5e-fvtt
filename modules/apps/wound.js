@@ -19,6 +19,7 @@ export class WoundPrompt extends HMPrompt {
             assn: null,
             isEmbedded: false,
             embed: HMCONST.RANGED.EMBED.AUTO,
+            note: undefined,
         });
     }
 
@@ -27,7 +28,7 @@ export class WoundPrompt extends HMPrompt {
     }
 
     get dialogResp() {
-        const {armorDamage, assn, embed} = this.dialogData;
+        const {armorDamage, assn, embed, note} = this.dialogData;
         const hp = parseInt(this.dialogData.hp, 10) || 0;
         const isEmbedded = !!this.dialogData.isEmbedded && !!hp;
 
@@ -41,6 +42,7 @@ export class WoundPrompt extends HMPrompt {
             embed: embedLevel,
             armorDamage: parseInt(armorDamage, 10) || 0,
             assn: parseInt(assn, 10) || 0,
+            note,
         };
         return dialogResp;
     }
