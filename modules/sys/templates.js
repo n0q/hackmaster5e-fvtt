@@ -63,6 +63,7 @@ export const preloadHandlebarsTemplates = () => {
         `${templatePath}/chat/trauma.hbs`,
         `${templatePath}/chat/skill.hbs`,
         `${templatePath}/chat/spell.hbs`,
+        `${templatePath}/chat/parts/volatility.hbs`,
 
         `${templatePath}/item/parts/description.hbs`,
         `${templatePath}/item/parts/header-logistics.hbs`,

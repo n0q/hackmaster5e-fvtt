@@ -83,7 +83,8 @@ export class HMSpellItem extends HMItem {
         if (resp.button === 'cast') {
             const {system} = caller;
             const roll = await new Roll(HMTABLES.formula.save.spell, system).evaluate();
-            roll.sfc = roll.dice[0].total + actor.system.bonus.total.sfc;
+            dataset.sfc = {value: roll.dice[0].total + actor.system.bonus.total.sfc};
+            dataset.sfc.mishap = HMTABLES.spell.mishap(resp.sfc, resp.smc, dataset.sfc.value);
             dataset.roll = roll;
         }
 

@@ -193,6 +193,20 @@
             "penalty":      "Penalty"
         },
 
+        "spellMishapList": {
+            "none":     "Success",
+            "schedule": "Schedule Lost",
+            "failed":   "Spell Failed",
+            "tier1":    "Tier 1 Mishap",
+            "tier2":    "Tier 2 Mishap",
+            "tier3":    "Tier 3 Mishap",
+            "tier4":    "Tier 4 Mishap",
+            "tier5":    "Tier 5 Mishap",
+            "tier6":    "Tier 6 Mishap",
+            "tier7":    "Tier 7 Mishap",
+            "tier8":    "Tier 8 Mishap"
+        },
+
         "sizeSelect": {
             "tiny":   "Tiny",
             "small":  "Small",

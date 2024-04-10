@@ -667,6 +667,7 @@ export const HMTABLES = {
         mastery: (arg) => [0, 25, 50, 75, 87, Infinity].findIndex((m) => m >= arg),
     },
     spell: {
+        mishap: (sfc, smc, save) => Math.clamped(sfc - save, 0, smc + 2),
         sfc: (svr) => {
             const svrClamped = Math.clamped(svr, 1, 244);
             return Math.ceil((svrClamped - 4) / 10) + 14;

@@ -128,6 +128,20 @@ idx.size = {
     'large':  'HM.sizeSelect.large',
 };
 
+idx.spellMishap = {
+    0:  'HM.spellMishapList.none',
+    1:  'HM.spellMishapList.schedule',
+    2:  'HM.spellMishapList.failed',
+    3:  'HM.spellMishapList.tier1',
+    4:  'HM.spellMishapList.tier2',
+    5:  'HM.spellMishapList.tier3',
+    6:  'HM.spellMishapList.tier4',
+    7:  'HM.spellMishapList.tier5',
+    8:  'HM.spellMishapList.tier6',
+    9:  'HM.spellMishapList.tier7',
+    10: 'HM.spellMishapList.tier8',
+};
+
 idx.statbonus = {
     'feat':     'HM.feat',
     'atk':      'HM.statbonus.atk',
