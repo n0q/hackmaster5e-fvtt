@@ -1,7 +1,7 @@
 import { HMItem, advanceClock, setStatusEffectOnToken } from './item.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMDialogFactory } from '../dialog/dialog-factory.js';
-import { HMCONST, HMTABLES } from '../tables/constants.js';
+import { HMTABLES } from '../tables/constants.js';
 
 export class HMSpellItem extends HMItem {
     prepareBaseData() {
@@ -12,6 +12,16 @@ export class HMSpellItem extends HMItem {
         super.prepareDerivedData();
     }
 
+    /**
+     * Asynchronously rolls a spell and handles the associated actions.
+     *
+     * @param {Object} param0 - An object containing the spell and caller.
+     * @param {string} param0.spell - The UUID of the spell object to be rolled.
+     * @param {HMToken|HMActor} [param0.caller] - The actor or token object
+     * initiating the roll. Optional.
+     * @returns {Promise<void>} A promise that resolves when the roll is complete,
+     * or nothing if no actor or token is found.
+     */
     static async rollSpell({spell, caller}={}) {
         let actor;
         let token;
@@ -70,19 +80,11 @@ export class HMSpellItem extends HMItem {
             resp,
         };
 
-        const {save} = context.system;
-        if (resp.button === 'cast' && save.type > HMCONST.SAVE.TYPE.SPECIAL) {
-            let spellSave = 0;
-            const cclass = actor.itemTypes.cclass[0];
-            if (actor.type === 'beast') spellSave = parseInt(caller.system.level, 10) || 1;
-            if (actor.type === 'character' && cclass) {
-                const {system} = cclass;
-                spellSave = system.features.slvl
-                    ? parseInt(system.bonus.slvl, 10) || 0
-                    : parseInt(system.level, 10) || 1;
-            }
-            dataset.roll = await new Roll(HMTABLES.formula.save.spell, {spellSave})
-                                         .evaluate({async: true});
+        if (resp.button === 'cast') {
+            const {system} = caller;
+            const roll = await new Roll(HMTABLES.formula.save.spell, system).evaluate();
+            roll.sfc = roll.dice[0].total + actor.system.bonus.total.sfc;
+            dataset.roll = roll;
         }
 
         const card = await chatMgr.getCard({dataset});
