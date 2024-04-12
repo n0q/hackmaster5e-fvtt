@@ -11,7 +11,8 @@
       "total": {},
       "misc": {
         "_idx": {
-          "tenacity": 3
+          "tenacity": 3,
+          "int": 3
         },
         "will": null,
         "sp": null,
@@ -248,9 +249,9 @@
   "_stats": {
     "systemId": "hackmaster5e",
     "systemVersion": "0",
-    "coreVersion": "11.305",
+    "coreVersion": "11.315",
     "createdTime": 1669956150797,
-    "modifiedTime": 1689301266066,
+    "modifiedTime": 1712883240756,
     "lastModifiedBy": "6PGvwKmaOsPz0R2y"
   },
   "folder": null,
