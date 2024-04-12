@@ -13,85 +13,162 @@
 
         {{#with data}}
         <div class="tab attributes newform" data-group="primary" data-tab="attributes">
-            <div class='grid-2col' style='grid-template-columns: 50% 1fr; padding-top: 5px;'>
-                <section name='options' style='padding-right: 10px; border-right: 1px solid;'>
-                    <span class='form-option'>
-                    <label class="resource-label">{{localize "HM.hp"}}</label>
-                        <span>
+            <div class='grid-2col' style='grid-template-columns: 21em 1fr; padding-top: 5px;'>
+                <table class="table-basic">
+                    <tr>
+                        <td><label class="resource-label">{{localize "HM.hp"}}</label></td>
+                        <td>
                             <select name="system.scale.hp">
                                 {{selectOptions (findConfigObj 'scale') selected=system.scale.hp localize=true}}
                             </select>
+                        </td>
+                        <td>
                             <input type="number" name="system.bonus.hp" value="{{system.bonus.hp}}"
-                            {{#if (ne system.scale.hp '0')}}readonly{{/if}} data-dtype="Number"/>
-                        </span>
-                    </span>
-                    <span class='form-option'>
-                        <label class="resource-label">{{localize "HM.kb"}}</label>
-                        <span>
+                                {{#if system.scale.hp}}readonly{{/if}} data-dtype="Number"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="resource-label">{{localize "HM.kb"}}</label></td>
+                        <td>
                             <select name="system.scale.kb">
                                 {{selectOptions (findConfigObj 'scale') selected=system.scale.kb localize=true}}
                             </select>
+                        </td>
+                        <td>
                             <input type="number" name="system.bonus.kb" value="{{system.bonus.kb}}"
-                            {{#if (ne system.scale.kb '0')}}readonly{{/if}} data-dtype="Number"/>
-                        </span>
-                    </span>
-                    <span class='form-option'>
-                        <label class="resource-label">{{localize "HM.reach"}}</label>
-                        <span>
+                                {{#if system.scale.kb}}readonly{{/if}} data-dtype="Number"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="resource-label">{{localize "HM.reach"}}</label></td>
+                        <td>
                             <select name="system.scale.reach">
                                 {{selectOptions (findConfigObj 'scale') selected=system.scale.reach localize=true}}
                             </select>
+                        </td>
+                        <td>
                             <input type="number" name="system.bonus.reach" value="{{system.bonus.reach}}"
-                            {{#if (ne system.scale.reach '0')}}readonly{{/if}} data-dtype="Number"/>
-                        </span>
-                    </span>
-                    <span class='form-option'>
-                        <label class="resource-label">Token Diameter</label>
-                        <span>
+                                {{#if system.scale.reach}}readonly{{/if}} data-dtype="Number"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="resource-label">Token Diameter</label></td>
+                        <td>
                             <select name="system.scale.token">
                                 {{selectOptions (findConfigObj 'scale') selected=system.scale.token localize=true}}
                             </select>
+                        </td>
+                        <td>
                             <input type="number" name="system.bonus.token" value="{{system.bonus.token}}"
-                            {{#if (ne system.scale.token '0')}}readonly{{/if}} data-dtype="Float"/>
-                        </span>
-                    </span>
-                    <span class='form-option'>
-                        <label class="resource-label">{{localize "HM.move"}}</label>
-                        <span>
+                                {{#if system.scale.token}}readonly{{/if}} data-dtype="Number"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="resource-label">{{localize "HM.move"}}</label></td>
+                        <td>
                             <select name="system.scale.move">
                                 {{selectOptions (findConfigObj 'scale') selected=system.scale.move localize=true}}
                             </select>
+                        </td>
+                        <td>
                             <input type="text" class="editable" name="system.bonus.move" value="{{pct system.bonus.move}}"
-                                {{#if (ne system.scale.move '0')}}
+                                {{#if system.scale.move}}
                                     readonly
                                 {{else}}
                                     data-item-prop='system.bonus.move' data-dtype="Percent"
-                                {{/if}}/>
-                        </span>
-                    </span>
-                    <span class='form-option'>
-                        <label class="resource-label">{{localize "HM.def"}}</label>
-                        <input type="number" name="system.bonus.def" value="{{system.bonus.def}}" placeholder=0 data-dtype="Number"/>
-                    </span>
+                                {{/if}}
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="resource-label">{{localize "HM.defense"}}</label></td>
+                        <td colspan="2">
+                            <input type="number" name="system.bonus.def" value="{{system.bonus.def}}" placeholder=0 data-dtype="Number"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="resource-label">Spell Failure Check</label></td>
+                        <td colspan="2">
+                            <input type="number" name="system.bonus.sfc" value="{{system.bonus.sfc}}" placeholder=0 data-dtype="Number"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="resource-label">{{localize "HM.adjective"}}</label></td>
+                        <td colspan="2">
+                            <input type="text"
+                                   placeholder="Elven"
+                                   name="system.adj"
+                                   value="{{system.adj}}"
+                                   style="width: auto;"
+                                   data-dtype="String"/>
+                        </td>
+                    </tr>
+                </table>
+                <section style="border-left: 1px solid black; padding-left: 10px; padding-right: 5px;">
+                    <table class="table-basic">
+                        {{#each system.abilities as |ability key|}}
+                        <tr>
+                            <td style="width: 99%; text-align: left;">
+                            <label for="system.mods.abilities.{{key}}.value" class="resource-label">
+                                {{localize (findConfigValue "ability_long" key)}}
+                            </label>
+                            </td>
+                            <td>
+                                <input type="number"
+                                       name="system.abilities.{{key}}.value"
+                                       value="{{ability.value}}"
+                                       data-dtype="Number"/>
+                                <label class="resource-label">
+                            </td>
+                        {{/each}}
+                        </tr>
+                    </table>
                     <hr>
-                    <span class='form-option'>
-                        <label class="resource-label">{{localize "HM.adjective"}}</label>
-                        <input type="text" placeholder="Elven" name="system.adj" value="{{system.adj}}" style='width: 12.3em;'
-                        data-dtype="String"/>
-                    </span>
-                </section>
-                <section>
-                    {{#each system.abilities as |ability key|}}
-                    <span class='form-option'>
-                        <label for="system.mods.abilities.{{key}}.value" class="resource-label">
-                            {{localize (findConfigValue "ability_long" key)}}
-                        </label>
-                        <span>
-                            <input type="number" name="system.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number"/>
-                            <label class="resource-label">
-                        </span>
-                    </span>
-                    {{/each}}
+                    <table class="table-basic">
+                        <tbody>
+                            <tr>
+                                <td style="width: 99%; text-align: left;">
+                                    <label class="resource-label">BMI</label>
+                                </td>
+                                <td><label class="resource-label">Female</label></td>
+                                <td><label class="resource-label">Male</label></td>
+                            </tr>
+                            <tr>
+                                <td><label class="resource-label">Overweight</label></td>
+                                <td>
+                                    <input type="number"
+                                           name="system.bmi.1.0"
+                                           value="{{system.bmi.[1].[0]}}"
+                                           placeholder="0"
+                                           data-dtype="Number"/>
+                                </td>
+                                <td>
+                                    <input type="number"
+                                           name="system.bmi.1.1"
+                                           value="{{system.bmi.[1].[1]}}"
+                                           placeholder="0"
+                                           data-dtype="Number"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="resource-label">Obese</label></td>
+                                <td>
+                                    <input type="number"
+                                           name="system.bmi.2.0"
+                                           value="{{system.bmi.[2].[0]}}"
+                                           placeholder="0"
+                                           data-dtype="Number"/>
+                                </td>
+                                <td>
+                                    <input type="number"
+                                           name="system.bmi.2.1"
+                                           value="{{system.bmi.[2].[1]}}"
+                                           placeholder="0"
+                                           data-dtype="Number"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </section>
             </div>
         </div>

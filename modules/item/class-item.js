@@ -83,14 +83,13 @@ export class HMClassItem extends HMItem {
         });
 
         // max spell level for saves and volatility checks
-        let slvlValue = parseInt(pTable[level]?.slvl?.value, 10);
-        if (features.slvl && !slvlValue) {
-            let row = level;
+        let slvl = parseInt(level, 10) || 1;
+        if (features.slvl) {
+            let row = level + 1;
             while (row > 1 && !parseInt(pTable[--row].slvl.value, 10));
-            if (row !== level) slvlValue = pTable[row].slvl.value;
+            slvl = (parseInt(pTable[row].slvl.value, 10) || 0) - 2;
         }
-        bonus.slvl = Math.max(slvlValue - 2, 0);
-
+        bonus.slvl = Math.max(slvl, 0);
         Object.assign(system.bonus, bonus);
     }
 }

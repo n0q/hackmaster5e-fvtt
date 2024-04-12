@@ -4,20 +4,19 @@ const sass = require('gulp-dart-sass');
 const cache = require('gulp-cached');
 const eslint = require('gulp-eslint-new');
 
-gulp.task('sass', function () {
-    return gulp.src('./scss/**/*.scss')
-        .pipe(sass.sync().on('error', sass.logError))
-        .pipe(gulp.dest('./styles'));
-});
+const sourceJS = ['hm.js', './modules/**/*.js'];
+const sourceSASS = './scss/**/*.scss';
 
-gulp.task('eslint', function () {
-    return gulp.src(['hm.js', './modules/**/*.js'])
-        .pipe(cache('lint'))
-        .pipe(eslint())
-        .pipe(eslint.format());
-});
+gulp.task('sass', () => gulp.src(sourceSASS)
+    .pipe(sass.sync().on('error', sass.logError))
+    .pipe(gulp.dest('./styles')));
 
-gulp.task('default', gulp.series('sass', 'eslint', function () {
-    gulp.watch('./scss/**/*.scss', gulp.series('sass'));
-    gulp.watch(['hm.js', './modules/**/*.js'], gulp.series('eslint'));
+gulp.task('eslint', () => gulp.src(sourceJS)
+    .pipe(cache('lint'))
+    .pipe(eslint())
+    .pipe(eslint.format()));
+
+gulp.task('default', gulp.series('sass', 'eslint', () => {
+    gulp.watch(sourceSASS, gulp.series('sass'));
+    gulp.watch(sourceJS, gulp.series('eslint'));
 }));

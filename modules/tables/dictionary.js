@@ -45,6 +45,12 @@ idx.alignment = {
     'non': 'HM.alignmentSelect.non',
 };
 
+idx.bmi = {
+    [HMCONST.PRIORS.BMI.NORMAL]:        'Normal',
+    [HMCONST.PRIORS.BMI.OVER]:          'Overweight',
+    [HMCONST.PRIORS.BMI.OBESE]:         'Obese',
+};
+
 idx.embedSelect = {
     [HMCONST.RANGED.EMBED.AUTO]:        'HM.auto',
     [HMCONST.RANGED.EMBED.NONE]:        'HM.embedSelect.none',
@@ -128,6 +134,20 @@ idx.size = {
     'large':  'HM.sizeSelect.large',
 };
 
+idx.spellMishap = {
+    0:  'HM.spellMishapList.none',
+    1:  'HM.spellMishapList.schedule',
+    2:  'HM.spellMishapList.failed',
+    3:  'HM.spellMishapList.tier1',
+    4:  'HM.spellMishapList.tier2',
+    5:  'HM.spellMishapList.tier3',
+    6:  'HM.spellMishapList.tier4',
+    7:  'HM.spellMishapList.tier5',
+    8:  'HM.spellMishapList.tier6',
+    9:  'HM.spellMishapList.tier7',
+    10: 'HM.spellMishapList.tier8',
+};
+
 idx.statbonus = {
     'feat':     'HM.feat',
     'atk':      'HM.statbonus.atk',
@@ -203,6 +223,22 @@ idx.embedSelect = {
     [HMCONST.RANGED.EMBED.D_EMBED]: 'HM.embedSelect.deeply',
 };
 
+idx.intelligenceSelect = {
+    0:  'HM.intelligenceSelect.non',
+    1:  'HM.intelligenceSelect.semi',
+    2:  'HM.intelligenceSelect.animallow',
+    3:  'HM.intelligenceSelect.animalhigh',
+    4:  'HM.intelligenceSelect.obtuse',
+    5:  'HM.intelligenceSelect.slow',
+    6:  'HM.intelligenceSelect.average',
+    7:  'HM.intelligenceSelect.bright',
+    8:  'HM.intelligenceSelect.smart',
+    9:  'HM.intelligenceSelect.brilliant',
+    10: 'HM.intelligenceSelect.genius',
+    11: 'HM.intelligenceSelect.sgenius',
+    12: 'HM.intelligenceSelect.gawd',
+};
+
 idx.weaponskill = {
     'minimal': 'HM.weaponskillSelect.minimal',
     'low':     'HM.weaponskillSelect.low',
@@ -238,6 +274,11 @@ idx.saves = {
     'trauma':   'HM.saves.trauma',
     'turning':  'HM.saves.turning',
     'will':     'HM.saves.will',
+};
+
+idx.sex = {
+    [HMCONST.PRIORS.SEX.FEMALE]:    'HM.female',
+    [HMCONST.PRIORS.SEX.MALE]:      'HM.male',
 };
 
 idx.skillLevel = {

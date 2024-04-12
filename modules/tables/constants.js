@@ -125,6 +125,17 @@ export const HMCONST = {
         NOPENETRATE:    3,
         HALVE:          4,
     },
+    PRIORS: {
+        SEX: {
+            FEMALE:   0,
+            MALE:     1,
+        },
+        BMI: {
+            NORMAL: 0,
+            OVER:   1,
+            OBESE:  2,
+        },
+    },
     SAVE: {
         TYPE: {
             NONE:     0,
@@ -460,6 +471,31 @@ export const HMTABLES = {
             39: [64, 128, 256, 384],
         },
     },
+    beast: {
+        tenacity: {
+            0: {tenacity:  null, tenacityCf:  null},
+            1: {tenacity:  2,    tenacityCf: 0.500},
+            2: {tenacity:  1,    tenacityCf: 0.400},
+            3: {tenacity:  0,    tenacityCf: 0.250},
+            4: {tenacity: -4,    tenacityCf: 0.200},
+            5: {tenacity: -8,    tenacityCf: 0.001},
+        },
+        int: {
+            0:  {sfc:  0},
+            1:  {sfc:  1},
+            2:  {sfc:  4},
+            3:  {sfc:  5},
+            4:  {sfc:  6},
+            5:  {sfc:  9},
+            6:  {sfc: 12},
+            7:  {sfc: 14},
+            8:  {sfc: 16},
+            9:  {sfc: 18},
+            10: {sfc: 20},
+            11: {sfc: 22},
+            12: {sfc: 23},
+        },
+    },
     cclass: {
         pData: {
             hp:   {value: null, die: null, reroll: false},
@@ -546,7 +582,7 @@ export const HMTABLES = {
             morale:   'd20p +  @bonus.total.morale   + @resp.bonus',
             physical: 'd20p +  @bonus.total.physical + @resp.bonus',
             poison:   'd20p +  @bonus.total.poison   + @resp.bonus',
-            spell:    'd20p +  @spellSave',
+            spell:    'd20p +  @bonus.total.slvl',
             tenacity: 'd20p +  @bonus.total.tenacity + @resp.bonus',
             trauma:   '@talent.die.trauma - (@bonus.total.trauma + @resp.bonus)',
             turning:  'd20p +  @bonus.total.turning  + @resp.bonus',
@@ -638,6 +674,7 @@ export const HMTABLES = {
         mastery: (arg) => [0, 25, 50, 75, 87, Infinity].findIndex((m) => m >= arg),
     },
     spell: {
+        mishap: (sfc, smc, save) => Math.clamped(sfc - save, 0, smc + 2),
         sfc: (svr) => {
             const svrClamped = Math.clamped(svr, 1, 244);
             return Math.ceil((svrClamped - 4) / 10) + 14;
@@ -774,14 +811,6 @@ export const HMTABLES = {
                 icon: 'systems/hackmaster5e/styles/icons/nailed-head.svg',
             },
         },
-    },
-    'tenacity': {
-        0: {'tenacity':  null, 'tenacityCf':  null},
-        1: {'tenacity':  2,    'tenacityCf': 0.500},
-        2: {'tenacity':  1,    'tenacityCf': 0.400},
-        3: {'tenacity':  0,    'tenacityCf': 0.250},
-        4: {'tenacity': -4,    'tenacityCf': 0.200},
-        5: {'tenacity': -8,    'tenacityCf': 0.001},
     },
     'top': {'character': 0.3, 'beast': 0.4},
     weapons: {

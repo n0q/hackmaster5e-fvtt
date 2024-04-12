@@ -34,7 +34,16 @@
             {{selectOptions (findConfigObj 'embedSelect') selected=embed localize=true}}
         </select>
     </div>
-
+    <hr>
+    <div class='form-group' style='padding-bottom: 5px;'>
+        <input
+            style='max-width: unset; text-align: left;'
+            type='text'
+            class='bind note'
+            data-prop='note'
+            placeholder='{{localize "HM.dialog.optNote"}}'
+        />
+    </div>
     <section class='dialog-buttons'>
         <button type='submit' class='dialog-button normal default'>
             {{localize 'HM.dialog.setWoundTitle'}}

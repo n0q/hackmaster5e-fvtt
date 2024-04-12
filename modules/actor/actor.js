@@ -12,19 +12,20 @@ export class HMActor extends Actor {
 
     prepareBaseData() {
         super.prepareBaseData();
-        if (this.type === 'worksheet') return;
         this[SYSTEM_ID] = {talent: deepClone(HMACTOR_TUNABLES)};
         this.resetBonus();
     }
 
     prepareDerivedData() {
         super.prepareDerivedData();
+        this.setSkillBonus();
         this.setArmorBonus();
     }
 
     /** @override */
     // effects need to be applied before the other documents, or their effects will be missed.
     // We're relying on effects to be the first embeddedType. This seems to be safe, but...
+    /* eslint-disable no-restricted-syntax */
     prepareEmbeddedDocuments() {
         const embeddedTypes = this.constructor.metadata.embedded || {};
         for (const collectionName of Object.values(embeddedTypes)) {
@@ -32,6 +33,7 @@ export class HMActor extends Actor {
             if (collectionName === 'effects') this.applyActiveEffects();
         }
     }
+    /* eslint-enable no-restricted-syntax */
 
     get canBackstab() {
         const {cclass} = this.itemTypes;
@@ -74,7 +76,7 @@ export class HMActor extends Actor {
         this.wprofiles = new Collection();
         this.itemTypes.weapon.forEach((weapon) => {
             const _id = foundry.utils.randomID();
-            weapon.profileId = _id;
+            weapon.profileId = _id; // eslint-disable-line no-param-reassign
             const profileData = {name: weapon.name, weapon, actor: this, _id};
             const profile = new HMWeaponProfile(profileData);
             profile.evaluate();
@@ -94,25 +96,35 @@ export class HMActor extends Actor {
         if (shieldItem) bonus.shield = shieldItem.system.bonus.total;
     }
 
+    /* @todo This function is a hack, until the next bonus refactor replaces everything with
+     * a "stats matrix" class.
+     */
+    setSkillBonus() {
+        const {bonus} = this.system;
+        const arcanelore = this.itemTypes.skill.find((s) => s.name === 'Arcane Lore');
+        if (!arcanelore) return;
+
+        const sfc = arcanelore.mastery.value - 1;
+        if (sfc > 0) bonus.skill = {sfc};
+    }
+
     setBonusTotal() {
         const {bonus} = this.system;
         const total = {};
 
         const multiply = ['move'];
-        for (const vector in bonus) {
-            if (vector === 'total') continue;
-
+        Object.keys(bonus).filter((v) => v !== 'total').forEach((vector) => {
             // Dereference indexed key/val pairs;
             if (bonus[vector]?._idx) {
                 const idx = bonus[vector]._idx;
-                for (const idxKey in idx) {
+                Object.keys(idx).forEach((idxKey) => {
                     const idxValue = idx[idxKey];
-                    const table    = HMTABLES[idxKey][idxValue];
+                    const table    = HMTABLES.beast[idxKey][idxValue];
                     bonus[vector]  = Object.assign(bonus[vector], table);
-                }
+                });
             }
 
-            for (const key in bonus[vector]) {
+            Object.keys(bonus[vector]).forEach((key) => {
                 const value = bonus[vector][key];
                 if (key !== '_idx' && value !== null) {
                     if (typeof value === 'string') {
@@ -123,8 +135,8 @@ export class HMActor extends Actor {
                         total[key] = (total?.[key] || 0) + value;
                     }
                 }
-            }
-        }
+            });
+        });
 
         Object.keys(total)
             .filter((stat) => Number.isNumeric(total[stat]) && !Number.isInteger(total[stat]))
@@ -150,7 +162,7 @@ export class HMActor extends Actor {
 
     async addWound({notify, wdata} = {}) {
         const woundData = wdata ?? (await HMDialogFactory({dialog: 'wound'})).resp;
-        const {hp, assn, armorDamage, embed, isEmbedded} = woundData;
+        const {hp, assn, armorDamage, embed, isEmbedded, note} = woundData;
 
         if (armorDamage) {
             const armor = this.itemTypes.armor.find((a) => (
@@ -162,8 +174,8 @@ export class HMActor extends Actor {
 
         if (!hp) return false;
 
-        const data = {hp, timer: hp, embed, isEmbedded};
-        const itemData = {name: 'New Wound', type: 'wound', data};
+        const data = {hp, timer: hp, embed, isEmbedded, note};
+        const itemData = {name: 'Wound', type: 'wound', data};
         const context = await Item.create(itemData, {parent: this});
 
         if (notify) {

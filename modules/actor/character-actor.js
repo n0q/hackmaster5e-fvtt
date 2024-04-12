@@ -5,6 +5,7 @@ import { HMChatMgr } from '../mgr/chatmgr.js';
 export class HMCharacterActor extends HMActor {
     prepareBaseData() {
         super.prepareBaseData();
+        this.#hmMigrate();
         this.setRace();
         this.setCClass();
         this.setAbilities();
@@ -19,6 +20,17 @@ export class HMCharacterActor extends HMActor {
         this.setHP();
         this.setExtras();
         this.prepareWeaponProfiles();
+    }
+
+    // Temporary migration code. This will eventually go into a schema file.
+    #hmMigrate() {
+        const {priors} = this.system;
+        if (Number.isInteger(priors.sex)) return;
+
+        const {SEX} = HMCONST.PRIORS;
+        const match = priors.sex.toLowerCase().match(/(.).*/)?.[1];
+        const sex = match === 'm' ? SEX.MALE : SEX.FEMALE;
+        this.update({'system.priors.sex': sex});
     }
 
     get movespd() {
@@ -95,6 +107,9 @@ export class HMCharacterActor extends HMActor {
                     if (key === 'chamod') this.setAbilities({adjust: 'cha', delta: stats[key]});
                 }
             });
+
+            /* @todo Another hack to be replaced when we move to a stats object. */
+            stats.sfc = parseInt(system.abilities.total.int.value, 10) || 0;
         });
 
         stats.hp     = total.con.value;

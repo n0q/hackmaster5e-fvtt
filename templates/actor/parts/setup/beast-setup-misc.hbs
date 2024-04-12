@@ -70,6 +70,12 @@
     </span>
     <span>
         <span class='form-option'>
+            <label class='resource-label'>{{localize 'HM.ability.int'}}</label>
+            <select name='system.bonus.misc._idx.int' data-dtype='Number'>
+                {{selectOptions (findConfigObj 'intelligenceSelect') selected=system.bonus.misc._idx.int localize=true}}
+            </select>
+        </span>
+        <span class='form-option'>
             <label class='resource-label'>{{localize 'HM.statbonus.atk'}}</label>
             <input type='number' name='system.bonus.misc.atk' value='{{system.bonus.misc.atk}}' data-dtype='Number'/>
         </span>

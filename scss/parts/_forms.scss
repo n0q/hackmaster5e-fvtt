@@ -4,6 +4,12 @@
         max-width: 4em;
         text-align: right;
     }
+
+    .note {
+        &::placeholder {
+            text-align: center;
+        }
+    }
 }
 
 .newform {

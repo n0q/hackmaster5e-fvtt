@@ -28,14 +28,26 @@
                             <th scope='row'>{{localize (concat 'HM.statbonus.kb')}}</th>
                             <td width='99%'>{{bonus.kb}}</td>
                         </tr>
+                        {{#if bonus.reach}}
                         <tr>
-                            <th scope='row'>{{localize (concat 'HM.statbonus.reach')}}</th>
-                            <td width='99%'>{{numberFormat bonus.reach sign=true}}</td>
+                            <th scope="row">{{localize (concat "HM.statbonus.reach")}}</th>
+                            <td width="99%">{{numberFormat bonus.reach sign=true}}</td>
                         </tr>
+                        {{/if}}
+                        {{#if bonus.def}}
                         <tr>
-                            <th scope='row'>{{localize (concat 'HM.statbonus.def')}}</th>
-                            <td width='99%'>{{#if bonus.def}}{{bonus.def}}{{else}}0{{/if}}</td>
+                            <th scope="row">{{localize (concat "HM.statbonus.def")}}</th>
+                            <td width="99%">{{numberFormat bonus.def sign=true}}</td>
                         </tr>
+                        {{/if}}
+                        {{#if bonus.sfc}}
+                        <tr>
+                            <th scope="row" title="{{localize 'HM.RACE.HINT.sfc'}}">
+                                {{localize (concat "HM.statbonus.sfc")}}
+                            </th>
+                            <td width="99%">{{numberFormat bonus.sfc sign=true}}</td>
+                        </tr>
+                        {{/if}}
                     </tbody>
                 </table>
             </span>

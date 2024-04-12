@@ -138,6 +138,22 @@
             "legendary":    "Legendary"
         },
 
+        "intelligenceSelect": {
+            "non":          "Non",
+            "semi":         "Semi",
+            "animallow":    "Animal, Low",
+            "animalhigh":   "Animal, High",
+            "obtuse":       "Obtuse",
+            "slow":         "Slow",
+            "average":      "Average",
+            "bright":       "Bright",
+            "smart":        "Smart",
+            "brilliant":    "Brilliant",
+            "genius":       "Genius",
+            "sgenius":      "Supra-genius",
+            "gawd":         "God-like"
+        },
+
         "physDmgSelect": {
             "crushing":     "Crushing",
             "hacking":      "Hacking",
@@ -175,6 +191,20 @@
             "carried":      "Carried Load",
             "effective":    "Effective Load",
             "penalty":      "Penalty"
+        },
+
+        "spellMishapList": {
+            "none":     "Success",
+            "schedule": "Schedule Lost",
+            "failed":   "Spell Failed",
+            "tier1":    "Tier 1 Mishap",
+            "tier2":    "Tier 2 Mishap",
+            "tier3":    "Tier 3 Mishap",
+            "tier4":    "Tier 4 Mishap",
+            "tier5":    "Tier 5 Mishap",
+            "tier6":    "Tier 6 Mishap",
+            "tier7":    "Tier 7 Mishap",
+            "tier8":    "Tier 8 Mishap"
         },
 
         "sizeSelect": {
@@ -218,6 +248,7 @@
             "morale":   "Morale",
             "physical": "Physical",
             "reach":    "Reach",
+            "sfc":      "SFC",
             "spd":      "Speed",
             "turning":  "Turning"
         },
@@ -324,6 +355,7 @@
             "getSaveTitle":      "Save",
             "getSkillTitle1":    "Skill Check",
             "getSkillTitle2":    "Skill Checks",
+            "optNote":           "optional comment",
             "rollMode":          "Roll Mode",
             "setInitTitle":      "Set Initiative",
             "setInitBody":       "New Init",
@@ -620,6 +652,7 @@
         "fast":         "Fast",
         "fatigue":      "Fatigue",
         "feat":         "Feat",
+        "female":       "Female",
         "fire":         "Fire",
         "fleeing":      "Fleeing",
         "for":          "For",
@@ -657,6 +690,7 @@
         "luck":         "Luck",
         "mage":         "Mage",
         "magic":        "Magic",
+        "male":         "Male",
         "mastery":      "Mastery",
         "material":     "Material",
         "mechanical":   "Mechanical",
@@ -668,6 +702,7 @@
         "movece":       "Move Coeff",
         "none":         "None",
         "normal":       "Normal",
+        "note":         "Note",
         "opposed":      "Opposed",
         "overview":     "Overview",
         "passed":       "Passed",
@@ -737,6 +772,7 @@
         "type":         "Type",
         "unequipped":   "Unequipped",
         "unprepared":   "Unprepared",
+        "unset":        "Unset",
         "untrained":    "Untrained",
         "universal":    "Universal",
         "verbal":       "Verbal",
@@ -1008,6 +1044,12 @@
 
         "NOTIFY": {
             "talentCharOnly":  "Talents are currently incompatible with Beast actors." 
+        },
+
+        "RACE": {
+            "HINT": {
+                "sfc":  "Spell Failure Check bonus"
+            }
         }
     },
 

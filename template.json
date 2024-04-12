@@ -15,7 +15,7 @@
                     "bmi": null,
                     "height": null,
                     "handedness": "right",
-                    "sex": null,
+                    "sex": 0,
                     "hair": null,
                     "eyes": null,
                     "gawd": null,
@@ -139,13 +139,7 @@
             "ptable": {}
         },
 
-        "currency": {
-            "templates": ["base"],
-            "state": 0,
-            "weight": 0,
-            "issuer": null,
-            "coins": {}
-        },
+        "currency": {},
 
         "item": {
             "templates": ["base", "thing", "container"],
@@ -162,58 +156,9 @@
             "mechanical": {"checked": false}
         },
 
-        "race": {
-            "templates": ["base"],
-            "adj": null,
-            "scale": {"hp": 3,  "kb": 3,  "reach": 3, "move": 3, "token": 3},
-            "bonus": {"hp": 10, "kb": 15, "reach": 0, "move": 1, "token": 5}, 
-            "abilities": {
-                "str": {"value": 0, "fvalue": 0},
-                "int": {"value": 0, "fvalue": 0},
-                "wis": {"value": 0, "fvalue": 0},
-                "dex": {"value": 0, "fvalue": 0},
-                "con": {"value": 0, "fvalue": 0},
-                "lks": {"value": 0, "fvalue": 0},
-                "cha": {"value": 0, "fvalue": 0}}
-        },
-
-        "spell": {
-            "templates": ["base"],
-            "divine": false,
-            "component": {
-                "verbal":   true,
-                "somatic":  true,
-                "material": true,
-                "catalyst": false,
-                "divine":   false
-            },
-            "save": {"type": 0, "action": 0},
-            "speed":   1,
-            "prepped": 0,
-            "lidx":    2
-        },
-
-        "skill": {
-            "templates": ["base"],
-            "bonus": {
-                "total":   {"value": 0, "literacy": 0, "verbal": 0},
-                "mastery": {"value": 0, "literacy": 0, "verbal": 0}
-            },
-            "bp": 0,
-            "specialty": {"checked": false, "value": null},
-            "universal": false,
-            "tools": false,
-            "language": false,
-            "relevant": {
-                "str": false,
-                "int": false,
-                "wis": false,
-                "dex": false,
-                "con": false,
-                "lks": false,
-                "cha": false
-            }
-        },
+        "race": {},
+        "spell": {},
+        "skill": {},
 
         "talent": {
             "templates": ["base"],

@@ -32,6 +32,7 @@ export class HMBeastActor extends HMActor {
         if (bonus.stats === undefined) bonus.stats = {};
         const {misc, stats} = this.system.bonus;
         stats.poison = (misc.trauma || 0) * 2;
+        misc.slvl = parseInt(this.system.level, 10) || 0;
     }
 
     setSP() {

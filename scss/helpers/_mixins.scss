@@ -100,6 +100,7 @@
     }
 }
 
+$dogear-size: 10px;
 @mixin table-basic {
     table {
         table-layout: fixed;
@@ -115,7 +116,29 @@
 
         td {
             padding: 2px;
-            text-align: right
+            text-align: right;
+
+            &.dogear {
+                position: relative;
+            }
+
+            &.dogear .marker {
+                position: absolute;
+                inset: 0 auto auto 0;
+                width: $dogear-size;
+                height: $dogear-size;
+            }
+
+            &.dogear::after {
+                content: "";
+                position: absolute;
+                inset: 0 auto auto 0;
+                border-style: solid;
+                border-width: $dogear-size $dogear-size 0 0;
+                border-color: currentColor transparent transparent transparent;
+                pointer-events: none;
+                opacity: 0.5;
+            }
         }
 
         select {
@@ -151,6 +174,11 @@
         input[type=text] {
             &[data-dtype="Number"] { width: 2em; }
             &[data-dtype="String"] { width: 6em; }
+        }
+
+         input:read-only {
+            border: 0;
+            background: none;
         }
     }
 }

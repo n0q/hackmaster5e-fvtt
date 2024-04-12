@@ -18,12 +18,17 @@
         <i>{{toLowerCase (localize 'HM.seconds')}}.</i><br>
     {{else}}
     {{localize 'HM.CHAT.ctime'}}: <b>{{context.system.speed}}</b><br>
+        {{#if sfc.mishap}}
+            {{> "systems/hackmaster5e/templates/chat/parts/volatility.hbs"}}
+        {{/if}}
     {{/if}}
 {{/unless}}
-{{#unless resp.total}}
+{{#if rollContent.html}}
+    {{{rollContent.html}}}
+{{else}}
 <div class='dice-roll'>
     <div class='dice-flavor'>
-        {{resp.flavor}}
+        {{rollContent.flavor}}
     </div>
 </div>
-{{/unless}}
+{{/if}}
