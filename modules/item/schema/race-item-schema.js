@@ -30,6 +30,10 @@ export class HMRaceSchema extends foundry.abstract.DataModel {
             scale: new fields.SchemaField(scaleInner),
             bonus: new fields.SchemaField(bonusInner),
             abilities: new fields.SchemaField(abilityInner),
+            bmi: new fields.SchemaField({
+                [HMCONST.PRIORS.BMI.OVER]: getBmiSchema(),
+                [HMCONST.PRIORS.BMI.OBESE]: getBmiSchema(),
+            }),
         };
     }
 
@@ -50,4 +54,14 @@ export class HMRaceSchema extends foundry.abstract.DataModel {
         /* eslint-enable no-param-reassign */
         return super.migrateData(source);
     }
+}
+
+function getBmiSchema() {
+        const fields = foundry.data.fields;
+        const bmiOpts = {required: false, integer: false, initial: undefined};
+
+        return new fields.SchemaField({
+            [HMCONST.PRIORS.SEX.FEMALE]: new fields.NumberField(bmiOpts),
+            [HMCONST.PRIORS.SEX.MALE]: new fields.NumberField(bmiOpts),
+        });
 }

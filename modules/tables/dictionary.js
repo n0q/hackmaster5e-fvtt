@@ -45,6 +45,12 @@ idx.alignment = {
     'non': 'HM.alignmentSelect.non',
 };
 
+idx.bmi = {
+    [HMCONST.PRIORS.BMI.NORMAL]:        'Normal',
+    [HMCONST.PRIORS.BMI.OVER]:          'Overweight',
+    [HMCONST.PRIORS.BMI.OBESE]:         'Obese',
+};
+
 idx.embedSelect = {
     [HMCONST.RANGED.EMBED.AUTO]:        'HM.auto',
     [HMCONST.RANGED.EMBED.NONE]:        'HM.embedSelect.none',
@@ -271,8 +277,8 @@ idx.saves = {
 };
 
 idx.sex = {
-    [HMCONST.SEX.FEMALE]:   'HM.female',
-    [HMCONST.SEX.MALE]:     'HM.male',
+    [HMCONST.PRIORS.SEX.FEMALE]:    'HM.female',
+    [HMCONST.PRIORS.SEX.MALE]:      'HM.male',
 };
 
 idx.skillLevel = {

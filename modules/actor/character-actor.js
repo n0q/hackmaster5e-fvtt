@@ -27,8 +27,9 @@ export class HMCharacterActor extends HMActor {
         const {priors} = this.system;
         if (Number.isInteger(priors.sex)) return;
 
+        const {SEX} = HMCONST.PRIORS;
         const match = priors.sex.toLowerCase().match(/(.).*/)?.[1];
-        const sex = match === 'm' ? HMCONST.SEX.MALE : HMCONST.SEX.FEMALE;
+        const sex = match === 'm' ? SEX.MALE : SEX.FEMALE;
         this.update({'system.priors.sex': sex});
     }
 

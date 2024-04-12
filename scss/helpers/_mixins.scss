@@ -175,6 +175,11 @@ $dogear-size: 10px;
             &[data-dtype="Number"] { width: 2em; }
             &[data-dtype="String"] { width: 6em; }
         }
+
+         input:read-only {
+            border: 0;
+            background: none;
+        }
     }
 }
 

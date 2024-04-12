@@ -23,7 +23,8 @@
       "reach": 0,
       "move": 1,
       "token": 5,
-      "def": 2
+      "def": 2,
+      "sfc": 1
     },
     "abilities": {
       "str": {
@@ -54,14 +55,24 @@
         "value": 2,
         "fvalue": 0
       }
+    },
+    "bmi": {
+      "1": {
+        "0": 0,
+        "1": 0
+      },
+      "2": {
+        "0": 0,
+        "1": 0
+      }
     }
   },
   "_stats": {
     "systemId": "hackmaster5e",
     "systemVersion": "0",
-    "coreVersion": "11.308",
+    "coreVersion": "11.315",
     "createdTime": 1688863353625,
-    "modifiedTime": 1694619570598,
+    "modifiedTime": 1712881965186,
     "lastModifiedBy": "6PGvwKmaOsPz0R2y"
   },
   "_id": "bCgxchLai1Ws2nFz",

@@ -54,14 +54,24 @@
         "value": 0,
         "fvalue": 0
       }
+    },
+    "bmi": {
+      "1": {
+        "0": 25.5,
+        "1": 26
+      },
+      "2": {
+        "0": 30,
+        "1": 31
+      }
     }
   },
   "_stats": {
     "systemId": "hackmaster5e",
     "systemVersion": "0",
-    "coreVersion": "11.308",
+    "coreVersion": "11.315",
     "createdTime": 1688863357446,
-    "modifiedTime": 1694619589750,
+    "modifiedTime": 1712882024549,
     "lastModifiedBy": "6PGvwKmaOsPz0R2y"
   },
   "_id": "R3x5rnYFSjLkxQWO",

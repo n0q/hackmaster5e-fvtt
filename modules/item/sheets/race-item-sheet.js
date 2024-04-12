@@ -5,10 +5,9 @@ export class HMRaceItemSheet extends HMItemSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             classes: ['hackmaster', 'sheet', 'item'],
-            width: 600,
+            width: 530,
             height: 400,
-            // tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'description' }],
-            tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'attributes' }],
+            tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'description' }],
         });
     }
 }

@@ -125,6 +125,17 @@ export const HMCONST = {
         NOPENETRATE:    3,
         HALVE:          4,
     },
+    PRIORS: {
+        SEX: {
+            FEMALE:   0,
+            MALE:     1,
+        },
+        BMI: {
+            NORMAL: 0,
+            OVER:   1,
+            OBESE:  2,
+        },
+    },
     SAVE: {
         TYPE: {
             NONE:     0,
@@ -149,10 +160,6 @@ export const HMCONST = {
         GIGANTIC: 6,
         ENORMOUS: 7,
         COLOSSAL: 8,
-    },
-    SEX: {
-        FEMALE:   0,
-        MALE:     1,
     },
     SKILL: {
         DIFF: {
