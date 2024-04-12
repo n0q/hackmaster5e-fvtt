@@ -325,7 +325,7 @@ async function createSpellCard(dataset) {
     const rollContent = {flavor: `${sLevel} ${game.i18n.localize('HM.level')} ${sType}`};
 
     let squelch = false;
-    system.save.type > HMCONST.SAVE.TYPE.SPECIAL
+    system.save.type && resp.button === 'cast'
         ? rollContent.html = await roll.render({flavor: rollContent.flavor})
         : squelch = true;
 
