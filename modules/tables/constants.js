@@ -5,6 +5,22 @@ export const DEFAULT_ICON_CURRENCY = 'icons/commodities/currency/coins-plain-sta
 
 // TODO: ITEM_STATE and itemstate are the same table.
 export const HMCONST = {
+    ARMOR: {
+        SHIELD: {
+            BUCKLER:    0,
+            SMALL:      1,
+            MEDIUM:     2,
+            LARGE:      3,
+            BODY:       4,
+        },
+        TYPE: {
+            NONE:   0,
+            SHIELD: 1,
+            LIGHT:  2,
+            MEDIUM: 3,
+            HEAVY:  4,
+        },
+    },
     CARD_TYPE: {
         ROLL:  0,
         ALERT: 1,

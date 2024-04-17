@@ -1,9 +1,15 @@
-/**
- * @fileoverview Schema template for items which are physical things in the world.
- *               Includes equipped state, weight, price, and availability.
- */
 import { HMCONST } from '../../../tables/constants.js';
 
+/**
+ * Schema template for items which are physical things in the world.
+ * @property {NumberField} state - Specifies if an item is equipped, carried, or owned.
+ * @property {NumberField} weight (float) - Item weight in lbs.
+ * @property {StringField} price - Price of the item.
+ * @property {SchemaField} avail - Item availability.
+ * @property {NumberField} avail.low - Low availability threshold.
+ * @property {NumberField} avail.med - Medium availability threshold.
+ * @property {NumberField} avail.high - High availability threshold.
+ */
 export class ThingSchema {
     constructor() {
         const fields = foundry.data.fields;

@@ -60,8 +60,8 @@
                     <hr>
                     <span class='form-option'>
                         <label class='resource-label'>{{localize 'HM.armortype'}}</label>
-                        <select name='system.armortype' data-dtype='{{system.armortype}}'>
-                            {{selectOptions (findConfigObj 'armortype') selected=system.armortype localize=true}}
+                        <select name='system.armortype' data-dtype='Number'>
+                            {{selectOptions (findConfigObj 'armorSelect') selected=system.armortype localize=true}}
                         </select>
                     </span>
                     {{/unless}}

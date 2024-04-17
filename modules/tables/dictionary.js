@@ -187,11 +187,12 @@ idx.tenacity = {
     5: 'HM.tenacitySelect.cowardly',
 };
 
-idx.armortype = {
-    'none':   'HM.armorSelect.none',
-    'light':  'HM.armorSelect.light',
-    'medium': 'HM.armorSelect.medium',
-    'heavy':  'HM.armorSelect.heavy',
+idx.armorSelect = {
+    [HMCONST.ARMOR.TYPE.NONE]:      'HM.armorSelect.none',
+    [HMCONST.ARMOR.TYPE.SHIELD]:    'HM.armorSelect.shield',
+    [HMCONST.ARMOR.TYPE.LIGHT]:     'HM.armorSelect.light',
+    [HMCONST.ARMOR.TYPE.MEDIUM]:    'HM.armorSelect.medium',
+    [HMCONST.ARMOR.TYPE.HEAVY]:     'HM.armorSelect.heavy',
 };
 
 idx.physdmgtype = {
