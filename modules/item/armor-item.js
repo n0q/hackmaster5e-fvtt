@@ -14,18 +14,25 @@ export class HMArmorItem extends HMItem {
 
     get quality() {
         const vector = super.quality;
-        if (!this.system.shield.checked) {
+        if (!this.system.isShield) {
             const {def} = this.system.bonus.base;
             vector.def = Math.min(vector.def, -def);
         }
         return vector;
     }
 
+    /**
+     * shield.checked is deprecated, so this function tries to set
+     * armortype to SHIELD if it finds shield.checked in use.
+     */
     #hmMigrateData() {
         const {armortype, shield} = this.system;
         const {SHIELD} = HMCONST.ARMOR.TYPE;
         if (shield.checked && armortype !== SHIELD) {
-            this.update({'system.armortype': SHIELD});
+            this.update({
+                'system.armortype': SHIELD,
+                'system.shield.checked': false,
+            });
         }
     }
 

@@ -54,7 +54,7 @@ export class HMCharacterActor extends HMActor {
         super.resetBonus();
         const {ITEM_STATE} = HMCONST;
         const hasArmor = this.itemTypes.armor.find((a) => a.system.state === ITEM_STATE.EQUIPPED
-                                                      && !a.system.shield.checked);
+                                                      && !a.system.isShield);
 
         if (!hasArmor) this.system.bonus.armor = {init: -1};
     }
@@ -137,7 +137,7 @@ export class HMCharacterActor extends HMActor {
                 case 'innate': break;
 
                 case 'equipped': {
-                    if (type === 'armor' && !system?.shield?.checked) armor += weight.total;
+                    if (type === 'armor' && !system.isShield) armor += weight.total;
                 }
                 // Falls through
 

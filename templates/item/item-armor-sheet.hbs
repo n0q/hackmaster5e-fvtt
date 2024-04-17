@@ -45,10 +45,6 @@
                         <input type='number' class='editable' value='{{system.qn}}'
                             data-item-prop='system.qn' data-dtype='Number'/>
                     </span>
-                    <span class='form-option'>
-                        <label class='resource-label'>{{localize 'HM.shield'}}</label>
-                        <input type='checkbox' name='system.shield.checked' {{checked system.shield.checked}}/>
-                    </span>
                 </section>
                 <section name='specifics'>
                     <span class='form-option'>
@@ -56,7 +52,6 @@
                         <input type='text' style='width: 12em;' name='system.proficiency'
                             value='{{system.proficiency}}' data-dtype='String'/>
                     </span>
-                    {{#unless system.shield.checked}}
                     <hr>
                     <span class='form-option'>
                         <label class='resource-label'>{{localize 'HM.armortype'}}</label>
@@ -64,7 +59,6 @@
                             {{selectOptions (findConfigObj 'armorSelect') selected=system.armortype localize=true}}
                         </select>
                     </span>
-                    {{/unless}}
                 </section>
             </div>
         </div>

@@ -37,6 +37,10 @@ export class HMArmorSchema extends foundry.abstract.DataModel {
         };
     }
 
+    get isShield() {
+        return this.armortype === HMCONST.ARMOR.TYPE.SHIELD;
+    }
+
     /* eslint-disable no-param-reassign */
     static migrateData(source) {
         if (source?.damage == null) source.damage = 0;
