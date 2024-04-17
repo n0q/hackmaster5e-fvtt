@@ -287,9 +287,9 @@ export class HMActorSheet extends ActorSheet {
         if (dataset.itemProp) {
             const {itemProp, dtype} = dataset;
             let targetValue = ev.target.value;
-            if (dtype === 'Number')  { targetValue = parseInt(targetValue, 10);              } else
-            if (dtype === 'uint')    { targetValue = Math.max(parseInt(targetValue, 10), 0); } else
-            if (dtype === 'Float')   { targetValue = parseFloat(targetValue);                } else
+            if (dtype === 'Number')  { targetValue = parseInt(targetValue, 10) || 0;              } else
+            if (dtype === 'uint')    { targetValue = Math.max(parseInt(targetValue, 10), 0) || 0; } else
+            if (dtype === 'Float')   { targetValue = parseFloat(targetValue) || 0;                } else
             if (dtype === 'Percent') {
                 const pctMatch = targetValue.match(/^([0-9]+)%$/);
                 const floatMatch = targetValue.match(/^([0-9]?\.[0-9]+)$/);
