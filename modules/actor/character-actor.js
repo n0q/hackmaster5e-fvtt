@@ -5,7 +5,7 @@ import { HMChatMgr } from '../mgr/chatmgr.js';
 export class HMCharacterActor extends HMActor {
     prepareBaseData() {
         super.prepareBaseData();
-        this.#hmMigrate();
+        this.hmMigrate();
         this.setRace();
         this.setCClass();
         this.setAbilities();
@@ -23,7 +23,7 @@ export class HMCharacterActor extends HMActor {
     }
 
     // Temporary migration code. This will eventually go into a schema file.
-    #hmMigrate() {
+    hmMigrate() {
         const {priors} = this.system;
         if (Number.isInteger(priors.sex)) return;
 
