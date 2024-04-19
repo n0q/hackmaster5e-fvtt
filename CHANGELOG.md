@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.4.7] - 2024-04-19
+### Fixed
+- Combats potentially broken under some circumstances.
+
 ## [0.4.6] - 2024-04-11
 ### Added
 - Wounds can have notes, which are displayed on the wound tracker.
