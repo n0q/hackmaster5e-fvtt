@@ -1,3 +1,5 @@
+import { HMCONST, HMTABLES } from '../../tables/constants.js';
+
 export class HMSkillSchema extends foundry.abstract.DataModel {
     static defineSchema() {
         const fields = foundry.data.fields;
@@ -26,12 +28,28 @@ export class HMSkillSchema extends foundry.abstract.DataModel {
             bp: new fields.NumberField(numberOpts),
             specialty: new fields.SchemaField({
                 checked: new fields.BooleanField(booleanOpts),
-                value: new fields.HTMLField(stringOpts),
+                value: new fields.StringField(stringOpts),
             }),
             universal: new fields.BooleanField(booleanOpts),
             tools: new fields.BooleanField(booleanOpts),
             language: new fields.BooleanField(booleanOpts),
             relevant: new fields.SchemaField(abilityInner),
         };
+    }
+
+    get mastery() {
+        const {bonus} = this;
+        const {MASTERY} = HMCONST.SKILL;
+
+        return Object.keys(bonus.total).reduce((acc, type) => {
+            const isUnskilled = !bonus.mastery[type];
+            const mValue = parseInt(bonus.total[type], 10);
+            acc[type] = isUnskilled ? MASTERY.UNSKILLED : HMTABLES.skill.mastery(mValue);
+            return acc;
+        }, {});
+    }
+
+    get level() {
+        return this.bonus.total;
     }
 }

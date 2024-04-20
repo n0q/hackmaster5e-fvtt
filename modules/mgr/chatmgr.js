@@ -411,9 +411,9 @@ async function createSkillCard(dataset) {
         }
     }
 
-    const specname = context.specname;
-    const level = context.level[isSkill ? TYPE.SKILL : formulaType];
-    const mastery = context.mastery[isSkill ? TYPE.SKILL : formulaType];
+    const {specname, system} = context;
+    const level = system.level[isSkill ? TYPE.SKILL : formulaType];
+    const mastery = system.mastery[isSkill ? TYPE.SKILL : formulaType];
     const templateData = {dc, specialRow, formulaType, mastery, level, specname};
     const template = 'systems/hackmaster5e/templates/chat/skill.hbs';
 
