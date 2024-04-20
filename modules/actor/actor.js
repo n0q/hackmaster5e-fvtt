@@ -104,7 +104,7 @@ export class HMActor extends Actor {
         const arcanelore = this.itemTypes.skill.find((s) => s.name === 'Arcane Lore');
         if (!arcanelore) return;
 
-        const sfc = arcanelore.system.mastery.value - 1;
+        const sfc = arcanelore.mastery.value - 1;
         if (sfc > 0) bonus.skill = {sfc};
     }
 
