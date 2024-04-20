@@ -86,11 +86,11 @@ export class HMActor extends Actor {
 
     setArmorBonus() {
         const {bonus} = this.system;
-        const allArmor = this.itemTypes.armor.filter((a) => a.invstate === 'equipped');
-
-        const isShield = (a) => a.system.shield.checked;
-        const shieldItem = allArmor.find(isShield);
-        const armorItem = allArmor.find((a) => !isShield(a));
+        const {shieldItem, armorItem} = this.itemTypes.armor.reduce((acc, obj) => {
+            if (obj.system.state !== HMCONST.ITEM_STATE.EQUIPPED) return acc;
+            obj.system.isShield ? acc.shieldItem = obj : acc.armorItem = obj;
+            return acc;
+        }, {shieldItem: undefined, armorItem: undefined});
 
         if (armorItem) bonus.armor = armorItem.system.bonus.total;
         if (shieldItem) bonus.shield = shieldItem.system.bonus.total;
@@ -104,7 +104,7 @@ export class HMActor extends Actor {
         const arcanelore = this.itemTypes.skill.find((s) => s.name === 'Arcane Lore');
         if (!arcanelore) return;
 
-        const sfc = arcanelore.mastery.value - 1;
+        const sfc = arcanelore.system.mastery.value - 1;
         if (sfc > 0) bonus.skill = {sfc};
     }
 
@@ -167,7 +167,7 @@ export class HMActor extends Actor {
         if (armorDamage) {
             const armor = this.itemTypes.armor.find((a) => (
                 a.system.state === HMCONST.ITEM_STATE.EQUIPPED
-                && !a.system.shield.checked
+                && !a.system.isShield
             ));
             if (armor) armor.damageArmorBy(armorDamage);
         }
