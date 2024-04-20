@@ -2,6 +2,7 @@ import { DEFAULT_ICON, HMTABLES, HMCONST, SYSTEM_ID } from '../tables/constants.
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { HMStates } from '../sys/effects.js';
+import { HMSkillSchema } from './schema/skill-item-schema.js';
 
 // Remember: Items may not alter Actors under any circumstances.
 // You will create a free fire shooting gallery if you do this, and
@@ -85,39 +86,52 @@ export class HMItem extends Item {
         return HMTABLES.itemstate[state];
     }
 
+    /**
+     * @param {string} skillName
+     * @param {string|null} specialty
+     * @param {HMActor} caller
+     * @param {string} itemId
+     * @todo Move this horrible function somewhere else.
+     */
     static async rollSkill({skillName, specialty=null, caller, itemId}) {
         const callers = [];
 
-        if (caller) callers.push({caller, context: caller.items.get(itemId)});
-        else {
+        if (caller) {
+            // Named caller.
+            callers.push({caller, context: caller.items.get(itemId)});
+        } else {
+            // Anonymous caller. Get all selected tokens.
             const actors = canvas.tokens.controlled.map((token) => token.actor);
 
-            const smartSelect = game.settings.get(SYSTEM_ID, 'smartSelect');
-            if (!actors.length && smartSelect) {
+            if (!actors.length && !game.user.isGM) {
+                // No tokens were selected.
+                const smartSelect = game.settings.get(SYSTEM_ID, 'smartSelect');
                 const {character} = game.user;
-                if (character) actors.push(character);
+                if (smartSelect && character) actors.push(character);
             }
 
-            Object.values(actors).forEach((actor) => {
-                let context = actor.items.find((a) => a.type === 'skill'
-                    && skillName === a.name
-                    && specialty === a.system.specialty.value);
+            if (!actors.length) return;
+
+            actors.forEach((actor) => {
+                const skills = actor.itemTypes.skill.filter((a) => a.name === skillName);
+                let context = specialty
+                    ? skills.find((a) => a.system.specialty.value === specialty)
+                    : skills[0];
 
                 // Unskilled actor.
                 if (!context) {
-                    const system = deepClone(game.model.Item.skill);
-                    system.untrained = true;
+                    const system = new HMSkillSchema();
                     let specname = skillName;
                     if (specialty) {
-                        system.specialty = {checked: true, value: 0};
+                        system.specialty = {checked: true, value: specialty};
                         specname += ` (${specialty})`;
                     }
                     context = {name: skillName, specname, system};
                 }
+
                 callers.push({caller: actor, context});
             });
         }
-        if (!callers.length) return;
 
         // NOTE: We don't know if it's a language if none of the callers have the skill.
         const dialogCaller = callers.find((a) => a.context._id) ?? callers[0];
