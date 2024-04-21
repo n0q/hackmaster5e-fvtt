@@ -84,6 +84,19 @@ export class HMActor extends Actor {
         });
     }
 
+	setArmorBonus() {
+        const {bonus} = this.system;
+        const allArmor = this.itemTypes.armor.filter((a) => a.invstate === 'equipped');
+
+        const isShield = (a) => a.system.shield.checked;
+        const shieldItem = allArmor.find(isShield);
+        const armorItem = allArmor.find((a) => !isShield(a));
+
+        if (armorItem) bonus.armor = armorItem.system.bonus.total;
+        if (shieldItem) bonus.shield = shieldItem.system.bonus.total;
+    }
+
+/*
     setArmorBonus() {
         const {bonus} = this.system;
         const {shieldItem, armorItem} = this.itemTypes.armor.reduce((acc, obj) => {
@@ -95,7 +108,7 @@ export class HMActor extends Actor {
         if (armorItem) bonus.armor = armorItem.system.bonus.total;
         if (shieldItem) bonus.shield = shieldItem.system.bonus.total;
     }
-
+*/
     /* @todo This function is a hack, until the next bonus refactor replaces everything with
      * a "stats matrix" class.
      */
@@ -167,7 +180,7 @@ export class HMActor extends Actor {
         if (armorDamage) {
             const armor = this.itemTypes.armor.find((a) => (
                 a.system.state === HMCONST.ITEM_STATE.EQUIPPED
-                && !a.system.isShield
+                && !a.system.shield.checked
             ));
             if (armor) armor.damageArmorBy(armorDamage);
         }
