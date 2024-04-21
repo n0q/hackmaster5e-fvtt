@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.4.9] - 2024-04-20
+### Fixed
+- Shield issues.
+
 ## [0.4.8] - 2024-04-20
 ### Fixed
 - Skill checks via macro.
