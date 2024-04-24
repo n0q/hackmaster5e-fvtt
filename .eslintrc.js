@@ -4,7 +4,7 @@ module.exports = {
         'browser': true
     },
     'settings': {
-        'react': {'version': 'latest'}
+        'react': {'version': '999.999.999'}
         },
     'parser': '@babel/eslint-parser',
     'parserOptions': {
