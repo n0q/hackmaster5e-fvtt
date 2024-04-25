@@ -177,7 +177,7 @@
             "ranged": {
                 "checked": false,
                 "reach": {"0": 5, "1": 0, "2": 0, "3": 0, "4": 0},
-                "timing": {"aim": 0, "draw": 0, "fire": 0, "load": 0, "recover": 0}
+                "timing": {"load": 0, "draw": 0, "aim": 0, "fire": 0, "recover": 0}
             }
         },
 
