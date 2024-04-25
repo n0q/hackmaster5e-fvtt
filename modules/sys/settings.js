@@ -69,6 +69,19 @@ export const registerSystemSettings = () => {
         default: false,
         onChange: renderApps,
     });
+
+    /**
+     * Stores the currently known game version, to detect when system migration
+     * is necessary. This value is altered by HMMigrate, not by a user.
+     */
+    game.settings.register(SYSTEM_ID, 'gameVer', {
+        name: 'gameVer',
+        scope: 'world',
+        config: false,
+        requiresReload: false,
+        type: String,
+        default: undefined,
+    });
 };
 
 function renderApps() {
