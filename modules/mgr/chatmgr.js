@@ -1,6 +1,7 @@
 /**
- * @fileoverview Abandon all hope, ye who enter here.
- * Calling this a refactor target is putting things mildly.
+ * @file Deprecated.
+ * @deprecated Use chat/chat-factory.js instead.
+ * Abandon all hope, ye who enter here.
  */
 import { HMTABLES, HMCONST, SYSTEM_ID } from '../tables/constants.js';
 import { CRITTABLE } from '../tables/crits.js';
@@ -48,8 +49,6 @@ export class HMChatMgr {
             }
         } else if (cardtype === HMCONST.CARD_TYPE.ALERT) {
             cData = await createToPAlert(dataset);
-        } else if (cardtype === HMCONST.CARD_TYPE.NOTE) {
-            cData = await createInitNote(dataset);
         }
 
         const chatData = {
@@ -165,17 +164,6 @@ function getGMs() {
         if (u.isGM) arr.push(u.id);
         return arr;
     }, []);
-}
-
-async function createInitNote(dataset) {
-    const template = 'systems/hackmaster5e/templates/chat/initNote.hbs';
-
-    const content = Array.isArray(dataset)
-        ? await renderTemplate(template, dataset.sort((a, b) => a.name.localeCompare(b.name)))
-        : await renderTemplate(template, [dataset]);
-
-    const whisper = dataset[0]?.hidden ? getGMs() : undefined;
-    return {content, whisper};
 }
 
 async function createFumbleCard(dataset) {

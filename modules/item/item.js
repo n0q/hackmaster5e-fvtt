@@ -1,8 +1,9 @@
-import { DEFAULT_ICON, HMTABLES, HMCONST, SYSTEM_ID } from '../tables/constants.js';
+import { DEFAULT_ICON, HMTABLES, SYSTEM_ID } from '../tables/constants.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { HMStates } from '../sys/effects.js';
 import { HMSkillSchema } from './schema/skill-item-schema.js';
+import { HMChatFactory, CFTYPE } from '../chat/chat-factory.js';
 
 // Remember: Items may not alter Actors under any circumstances.
 // You will create a free fire shooting gallery if you do this, and
@@ -178,18 +179,15 @@ export async function advanceClock(comData, dialogResp, smartInit=false) {
     const newInit     = oldInit + delta;
     active.setInitiative(combatant.id, newInit);
 
-    const initChatData = {
+    const batch = [{
         name: combatant.name,
         hidden: combatant.hidden,
         delta,
         oldInit,
         newInit,
-    };
-
-    const cardtype = HMCONST.CARD_TYPE.NOTE;
-    const chatMgr = new HMChatMgr();
-    const initChatCard = await chatMgr.getCard({cardtype, dataset: initChatData});
-    await ChatMessage.create(initChatCard);
+    }];
+    const builder = new HMChatFactory(CFTYPE.INIT_NOTE, {batch});
+    builder.createChatMessage();
 }
 
 // TODO: Convert to using world timer.
