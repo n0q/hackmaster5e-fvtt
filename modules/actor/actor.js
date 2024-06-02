@@ -12,7 +12,7 @@ export class HMActor extends Actor {
 
     prepareBaseData() {
         super.prepareBaseData();
-        this[SYSTEM_ID] = {talent: deepClone(HMACTOR_TUNABLES)};
+        this[SYSTEM_ID] = {talent: foundry.utils.deepClone(HMACTOR_TUNABLES)};
         this.resetBonus();
     }
 

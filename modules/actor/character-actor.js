@@ -80,7 +80,7 @@ export class HMCharacterActor extends HMActor {
 
             const clamp = HMTABLES.abilitymods.clamp[stat];
             const statSum = value + (fvalue / 100);
-            const statAdj = Math.clamped(statSum, clamp.min, clamp.max);
+            const statAdj = Math.clamp(statSum, clamp.min, clamp.max);
             const idx = Math.floor((statAdj - clamp.min) / clamp.step);
 
             fvalue = (fvalue + 101) % 100;

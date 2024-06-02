@@ -185,7 +185,7 @@ export class HMWeaponItem extends HMItem {
             ? getDerivedDamageBonus(actor, context, addStrBonus)
             : undefined;
 
-        const contextSystem = deepClone(context.system);
+        const contextSystem = foundry.utils.deepClone(context.system);
         contextSystem.bonus.total.back = actor.system.bonus.total.back;
         const rollContext = {resp, derived, ...contextSystem};
 
