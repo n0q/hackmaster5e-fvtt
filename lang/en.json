@@ -651,6 +651,7 @@
         "family":       "Family",
         "fast":         "Fast",
         "fatigue":      "Fatigue",
+        "fatiguefactor": "Fatigue Factor",
         "feat":         "Feat",
         "female":       "Female",
         "fire":         "Fire",

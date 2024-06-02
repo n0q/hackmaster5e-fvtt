@@ -12,6 +12,7 @@ import { ThingSchema } from './parts/thing-schema.js';
  * @property {SchemaField} bonus.base
  * @property {SchemaField} bonus.mod
  * @property {NumberField} qn - Quality number. Represents a +n armor.
+ * @property {NumberField} ff - Fatigue factor.
  * @property {BooleanField} shield.checked - True if armor is a shield.
  * @deprecated since 0.4.7. Use armortype instead.
  */
@@ -31,6 +32,7 @@ export class HMArmorSchema extends foundry.abstract.DataModel {
                 mod: getVectorSchema({move: 0}),
             }),
             qn: new fields.NumberField({required: false, initial: 0, integer: true}),
+            ff: new fields.NumberField({required: false, initial: 0, integer: true}),
             shield: new fields.SchemaField({
                 checked: new fields.BooleanField({required: false, initial: false}),
             }),

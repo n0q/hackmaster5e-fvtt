@@ -4,8 +4,8 @@ import { HMCONST, SYSTEM_ID } from '../tables/constants.js';
 export class HMArmorItem extends HMItem {
     prepareBaseData() {
         super.prepareBaseData();
-        this.#hmMigrateData();
-        this.#prepArmorData();
+        this.hmMigrateData();
+        this.prepArmorData();
     }
 
     prepareDerivedData() {
@@ -25,7 +25,7 @@ export class HMArmorItem extends HMItem {
      * shield.checked is deprecated, so this function tries to set
      * armortype to SHIELD if it finds shield.checked in use.
      */
-    #hmMigrateData() {
+    hmMigrateData() {
         const {armortype, shield} = this.system;
         const {SHIELD} = HMCONST.ARMOR.TYPE;
         if (shield.checked && armortype !== SHIELD) {
@@ -36,7 +36,7 @@ export class HMArmorItem extends HMItem {
         }
     }
 
-    #prepArmorData() {
+    prepArmorData() {
         if (!this.actor?.system) return;
 
         const useArmorDegredation = game.settings.get(SYSTEM_ID, 'armorDegredation');
