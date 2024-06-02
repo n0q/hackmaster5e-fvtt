@@ -27,6 +27,7 @@ import { registerHandlebarsHelpers } from './modules/sys/helpers.js';
 import { preloadHandlebarsTemplates } from './modules/sys/templates.js';
 import gsap, { PixiPlugin } from '/scripts/greensock/esm/all.js'; // eslint-disable-line
 import { registerSchema } from './modules/sys/schema.js';
+import { migrateData } from './modules/sys/migration.js';
 
 function registerSheets() {
     Actors.unregisterSheet('core', ActorSheet);
@@ -92,4 +93,8 @@ Hooks.once('init', async () => {
     registerSystemSettings();
     registerGsapPlugins();
     registerHooks();
+});
+
+Hooks.once('ready', () => {
+    migrateData();
 });

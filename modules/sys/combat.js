@@ -1,7 +1,7 @@
 /* eslint max-classes-per-file: ['error', 2] */
-import { HMCONST, SYSTEM_ID } from '../tables/constants.js';
+import { SYSTEM_ID } from '../tables/constants.js';
 import { HMDialogFactory } from '../dialog/dialog-factory.js';
-import { HMChatMgr } from '../mgr/chatmgr.js';
+import { HMChatFactory, CFTYPE } from '../chat/chat-factory.js';
 
 export class HMCombat extends Combat {
     /** @override */
@@ -58,27 +58,21 @@ export class HMCombat extends Combat {
             return;
         }
 
-        const dataset = {true: [], false: []};
-        stack.forEach((c) => {
+        const batch = stack.map((c) => {
             const oldInit = c.initiative;
             const newInit = Math.max(oldInit - 2, round);
-            dataset[c.hidden].push({
+            this.setInitiative(c.id, newInit);
+            return {
                 delta: newInit - oldInit,
                 hidden: c.hidden,
                 name: c.token.name,
                 oldInit,
                 newInit,
-            });
-            this.setInitiative(c.id, newInit);
+            };
         });
 
-        Object.keys(dataset).map(async (key) => {
-            if (!dataset[key].length) return;
-            const cardtype = HMCONST.CARD_TYPE.NOTE;
-            const chatMgr = new HMChatMgr();
-            const initChatCard = await chatMgr.getCard({cardtype, dataset: dataset[key]});
-            ChatMessage.create(initChatCard);
-        });
+        const builder = new HMChatFactory(CFTYPE.INIT_NOTE, {batch});
+        builder.createChatMessage();
     }
 }
 

@@ -1,4 +1,5 @@
 export class HMChatHooks {
+    /* eslint-disable no-param-reassign */
     static async renderChatMessage(_app, html) {
         if (html.find('.noWhisper')) html.find('.whisper-to').remove();
 
@@ -9,4 +10,5 @@ export class HMChatHooks {
         html.find('.message-metadata')[0].style.display = 'none';
         if (!game.user.isGM) html.find('.message-delete').remove();
     }
+    /* eslint-enable no-param-reassign */
 }

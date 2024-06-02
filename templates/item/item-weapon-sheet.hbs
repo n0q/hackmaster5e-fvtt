@@ -124,31 +124,17 @@
                                 <input type='number' class='bold-label' value='{{system.bonus.base.spd}}' readonly/>
                             </span>
                             <hr>
-                            <span class='form-option'>
-                                <label class='resource-label'>{{localize 'HM.load'}}</label>
-                                <input type='number' class='timing' name='system.ranged.timing.load'
-                                    value='{{system.ranged.timing.load}}' data-dtype='Number'/>
+                            {{#each system.ranged.timing}}
+                                <span class="form-option">
+                                <label class="resource-label">{{localize (concat "HM." @key)}}</label>
+                                <input type="number"
+                                       class="timing"
+                                       name="system.ranged.timing.{{@key}}"
+                                       value="{{this}}"
+                                       data-key="{{@key}}"
+                                 />
                             </span>
-                            <span class='form-option'>
-                                <label class='resource-label'>{{localize 'HM.draw'}}</label>
-                                <input type='number' class='timing' name='system.ranged.timing.draw'
-                                    value='{{system.ranged.timing.draw}}' data-dtype='Number'/>
-                            </span>
-                            <span class='form-option'>
-                                <label class='resource-label'>{{localize 'HM.aim'}}</label>
-                                <input type='number' class='timing' name='system.ranged.timing.aim'
-                                    value='{{system.ranged.timing.aim}}' data-dtype='Number'/>
-                            </span>
-                            <span class='form-option'>
-                                <label class='resource-label'>{{localize 'HM.fire'}}</label>
-                                <input type='number' class='timing' name='system.ranged.timing.fire'
-                                    value='{{system.ranged.timing.fire}}' data-dtype='Number'/>
-                            </span>
-                            <span class='form-option'>
-                                <label class='resource-label'>{{localize 'HM.recover'}}</label>
-                                <input type='number' class='timing' name='system.ranged.timing.recover'
-                                    value='{{system.ranged.timing.recover}}' data-dtype='Number'/>
-                            </span>
+                            {{/each}}
                         </span>
                     </span>
                     <hr>

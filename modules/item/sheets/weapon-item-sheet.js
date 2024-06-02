@@ -21,12 +21,14 @@ export class HMWeaponItemSheet extends HMItemSheet {
     async onChangeTiming(ev) {
         ev.preventDefault();
         ev.stopPropagation();
-        const {name, value} = ev.currentTarget;
-        const newTiming = Math.max(parseInt(value, 10) || 0, 0);
-        await this.item.update({[name]: newTiming});
 
-        const {timing} = this.item.system.ranged;
+        const {dataset, value} = ev.currentTarget;
+        const newValue = {[dataset.key]: Math.max(parseInt(value, 10) || 0, 0)};
+        const timing = {...this.item.system.ranged.timing, ...newValue};
         const spd = Object.values(timing).reduce((a, b) => (a || 0) + (b || 0));
-        await this.item.update({'system.bonus.base.spd': spd});
+        await this.item.update({
+            'system.bonus.base.spd': spd,
+            'system.ranged.timing': timing,
+        });
     }
 }

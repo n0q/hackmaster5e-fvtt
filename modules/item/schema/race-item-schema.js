@@ -37,8 +37,8 @@ export class HMRaceSchema extends foundry.abstract.DataModel {
         };
     }
 
+    /* eslint-disable no-param-reassign */
     static migrateData(source) {
-        /* eslint-disable no-param-reassign */
         // 0.4.6 - Enforce scale and bonus values as numbers.
         if ('scale' in source) {
             const {scale} = source;
@@ -51,17 +51,17 @@ export class HMRaceSchema extends foundry.abstract.DataModel {
                 source.bonus.move = 1;
             }
         }
-        /* eslint-enable no-param-reassign */
         return super.migrateData(source);
     }
+    /* eslint-enable no-param-reassign */
 }
 
 function getBmiSchema() {
-        const fields = foundry.data.fields;
-        const bmiOpts = {required: false, integer: false, initial: undefined};
+    const fields = foundry.data.fields;
+    const bmiOpts = {required: false, integer: false, initial: undefined};
 
-        return new fields.SchemaField({
-            [HMCONST.PRIORS.SEX.FEMALE]: new fields.NumberField(bmiOpts),
-            [HMCONST.PRIORS.SEX.MALE]: new fields.NumberField(bmiOpts),
-        });
+    return new fields.SchemaField({
+        [HMCONST.PRIORS.SEX.FEMALE]: new fields.NumberField(bmiOpts),
+        [HMCONST.PRIORS.SEX.MALE]: new fields.NumberField(bmiOpts),
+    });
 }

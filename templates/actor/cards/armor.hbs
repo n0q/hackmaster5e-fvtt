@@ -6,7 +6,7 @@
                 <h4 class="card-name" style="font-size: 16px;">{{name}}</h4>
             </label>
         </header>
-        {{#if (and (gt system.state 1) (not system.shield.checked))}}
+        {{#if (and (gt system.state 1) (not system.isShield))}}
         <section class='weapon-controls'>
         </section>
         {{/if}}
@@ -16,7 +16,7 @@
             <span style='padding-top: 5px;'>
                 {{#if (and
                     (getSetting 'hackmaster5e' 'armorDegredation')
-                    (not system.shield.checked)
+                    (not system.isShield)
                     )}}
                 Armor Damage:
                 <input class='editable' style='padding-right: 2px;' type='number' value={{system.damage}} min='0'

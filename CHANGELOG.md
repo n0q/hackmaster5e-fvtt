@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.4.10] - 2024-06-02
+### Added
+- Fatigue Factor rating to armors.
+- Added fatigue factor rating to armors in basic compendium.
+
+### Changed
+- Revamped armor sheet.
+- Removed shield checkbox in favor of armortype.
+- Changed button labels on ability checks to (hopefully) be more clear.
+
+### Fixed
+- Ranged weapon timers summed incorrectly in weapon sheets.
+- Beasts with no ToP auto-saving against trauma.
+
 ## [0.4.9] - 2024-04-20
 ### Fixed
 - Shield issues.
