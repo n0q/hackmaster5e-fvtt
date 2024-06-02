@@ -7,11 +7,16 @@ export class InitNoteBuilder extends ChatBuilder {
     }
 
     /**
-     * @param {string} name - Combatant name.
-     * @param {boolean} hidden - If this receipt should be hidden.
-     * @param {number} delta - Difference between oldInit and newInit.
-     * @param {number} oldInit
-     * @param {number} newInit
+     * @typedef {Object} initData
+     * @prop {string} name - Combatant name.
+     * @prop {boolean} hidden - If this receipt should be hidden.
+     * @prop {number} delta - Difference between oldInit and newInit.
+     * @prop {number} oldInit - The initial init value.
+     * @prop {number} newInit - The updated init value.
+     */
+
+    /**
+     * @param {initData[]} batch
      */
     async createChatMessage() {
         const {batch} = this.data;

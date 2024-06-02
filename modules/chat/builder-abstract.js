@@ -28,24 +28,25 @@ export class ChatBuilder {
     /**
      * Returns a chatMessageData object for creating a chat message.
      * @param {Object} obj - An object containing data for the ChatMessage.
+     * @param {string[]} obj.rolls - An array of roll.render(). Supercedes data.roll if present.
      */
     getChatMessageData(obj) {
         const chatMessageData = {
+            ...obj,
             user: game.user.id,
-            flavor: obj.flavor,
-            content: obj.content,
-            type: obj.type || CONST.CHAT_MESSAGE_TYPES.OTHER,
-            whisper: obj.whisper,
+            type: obj.type ?? CONST.CHAT_MESSAGE_TYPES.OTHER,
         };
 
-        if (this.data.roll) {
+        const {roll} = this.data;
+        if (obj.rolls ?? roll) {
             const rollData = {
-                rolls: [this.data.roll],
-                rollMode: obj.rollMode ?? game.settings.get('core', 'rollMode'),
                 type: CONST.CHAT_MESSAGES_TYPES.ROLL,
                 sound: CONFIG.sounds.dice,
             };
-            return {...chatMessageData, ...rollData};
+
+            if (!obj.rolls) rollData.rolls = Array.isArray(roll) ? roll : [roll];
+            if (!obj.rollMode) rollData.rollMode = game.settings.get('core', 'rollMode');
+            Object.assign(chatMessageData, rollData);
         }
         return chatMessageData;
     }
@@ -69,5 +70,15 @@ export class ChatBuilder {
             if (u.isGM) arr.push(u.id);
             return arr;
         }, []);
+    }
+
+    static getDiceSum(roll) {
+        let sum = 0;
+        for (let i = 0; i < roll.terms.length; i++) {
+            for (let j = 0; j < roll.terms[i]?.results?.length; j++) {
+                sum += roll.terms[i].results[j].result;
+            }
+        }
+        return sum;
     }
 }
