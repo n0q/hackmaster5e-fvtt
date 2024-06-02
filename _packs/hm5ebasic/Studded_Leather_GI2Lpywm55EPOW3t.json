@@ -17,7 +17,7 @@
       "med": 90,
       "low": 75
     },
-    "armortype": "medium",
+    "armortype": 3,
     "proficiency": "Medium Armors",
     "damage": 0,
     "bonus": {
@@ -46,14 +46,15 @@
     "qn": 0,
     "shield": {
       "checked": false
-    }
+    },
+    "ff": 1
   },
   "_stats": {
     "systemId": "hackmaster5e",
     "systemVersion": "0",
-    "coreVersion": "11.305",
+    "coreVersion": "11.315",
     "createdTime": 1688862705211,
-    "modifiedTime": 1688862705226,
+    "modifiedTime": 1717364406403,
     "lastModifiedBy": "6PGvwKmaOsPz0R2y"
   },
   "_id": "GI2Lpywm55EPOW3t",

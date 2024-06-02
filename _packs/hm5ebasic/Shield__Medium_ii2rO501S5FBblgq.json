@@ -17,7 +17,7 @@
       "med": 85,
       "low": 75
     },
-    "armortype": "none",
+    "armortype": 1,
     "proficiency": "Shields",
     "damage": 0,
     "bonus": {
@@ -45,15 +45,16 @@
     },
     "qn": 0,
     "shield": {
-      "checked": true
-    }
+      "checked": false
+    },
+    "ff": 1
   },
   "_stats": {
     "systemId": "hackmaster5e",
     "systemVersion": "0",
-    "coreVersion": "11.305",
+    "coreVersion": "11.315",
     "createdTime": 1688862700045,
-    "modifiedTime": 1688862705226,
+    "modifiedTime": 1717364391152,
     "lastModifiedBy": "6PGvwKmaOsPz0R2y"
   },
   "_id": "ii2rO501S5FBblgq",

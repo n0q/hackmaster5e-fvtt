@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 ### Added
 - Fatigue Factor rating to armors.
+- Added fatigue factor rating to armors in basic compendium.
 
 ### Changed
 - Revamped armor sheet.
