@@ -68,7 +68,7 @@ export class HMActor extends Actor {
         Object.keys(wounds).forEach((a) => { value -= wounds[a].system.hp; });
 
         const topCf = HMTABLES.top[type] + (system.bonus.total.top || 0);
-        const topValue = Math.ceil(max * topCf);
+        const topValue = system.bonus.total.trauma ? Math.ceil(max * topCf) : undefined;
         system.hp = {max, value, top: topValue};
     }
 
@@ -196,7 +196,7 @@ export class HMActor extends Actor {
         }
 
         const hpToP = this.system.hp.top;
-        if (hpToP >= (hp + assn)) return {woundData};
+        if (!hpToP || hpToP >= (hp + assn)) return {woundData};
 
         const cardtype = HMCONST.CARD_TYPE.ALERT;
         const dataset = {context, top: hpToP, wound: hp};

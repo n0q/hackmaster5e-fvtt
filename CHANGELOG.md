@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 ### Fixed
 - Ranged weapon timers summed incorrectly in weapon sheets.
+- Beasts with no ToP auto-saving against trauma.
 
 ## [0.4.9] - 2024-04-20
 ### Fixed
