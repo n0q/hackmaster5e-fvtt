@@ -1,3 +1,4 @@
+/* eslint-disable */
 export class HMDie extends Die {
     static MODIFIERS = {...this.MODIFIERS, p: 'penetrate'};
 
@@ -7,8 +8,8 @@ export class HMDie extends Die {
         return this.results.reduce((t, r) => t + (r.bias ?? 0), rv);
     }
 
-    roll({minimize=false, maximize=false, bias=false, faces=false}={}) {
-        const roll = super.roll({minimize, maximize});
+    async roll({minimize=false, maximize=false, bias=false, faces=false}={}) {
+        const roll = await super.roll({minimize, maximize});
         this.results[this.results.length -1] = roll;
 
         if (faces) {
@@ -20,7 +21,7 @@ export class HMDie extends Die {
         return roll;
     }
 
-    penetrate(modifier, {recursive=true}={}) {
+    async penetrate(modifier, {recursive=true}={}) {
         // Match the "penetrate" modifier
         const rgx = /p([0-9]+)?([<>=]+)?([0-9]+)?/i;
         const match = modifier.match(rgx);
@@ -61,9 +62,9 @@ export class HMDie extends Die {
             // Determine whether to penetrate the result and roll again!
             if (r.faces) target = r.faces;
 
-            if (DiceTerm.compareResult(r.result, comparison, target)) {
+            if (foundry.dice.terms.DiceTerm.compareResult(r.result, comparison, target)) {
                 r.penetrated = true;
-                this.roll({faces: pFaces, bias: -1});
+                await this.roll({faces: pFaces, bias: -1});
                 if (max !== null) max -= 1;
             }
 
