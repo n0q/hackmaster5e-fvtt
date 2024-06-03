@@ -4,7 +4,7 @@ import { HMCONST } from '../tables/constants.js';
 
 export class HMPrompt extends Application {
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             classes: ['form', 'dialog'],
             popOut: true,
             minimizable: false,
@@ -14,7 +14,7 @@ export class HMPrompt extends Application {
 
     constructor(dialogData, options) {
         super();
-        mergeObject(this.options, options);
+        foundry.utils.mergeObject(this.options, options);
         this.dialogData = dialogData;
     }
 

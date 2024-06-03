@@ -1,7 +1,7 @@
 export class HMItemSheet extends ItemSheet {
   /** @override */
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             classes: ['hackmaster', 'sheet', 'item'],
             width: 520,
             height: 480,

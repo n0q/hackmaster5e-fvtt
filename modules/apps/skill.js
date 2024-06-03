@@ -3,7 +3,7 @@ import { HMCONST } from '../tables/constants.js';
 
 export class SkillPrompt extends HMPrompt {
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             template: 'systems/hackmaster5e/templates/dialog/getSkill.hbs',
             id: 'skillPrompt',
         });
@@ -12,7 +12,7 @@ export class SkillPrompt extends HMPrompt {
     constructor(dialogData, options) {
         super(dialogData, options);
         const {system} = this.dialogData.skill;
-        mergeObject(this.dialogData, {
+        foundry.utils.mergeObject(this.dialogData, {
             dc: HMCONST.SKILL.DIFF.AUTO,
             language: system.language,
             hasVerbal: system.bonus.total.verbal > 0,

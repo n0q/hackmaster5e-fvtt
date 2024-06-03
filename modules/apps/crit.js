@@ -9,7 +9,7 @@ function getSeverity({atkRoll, defRoll, dmg, dr}) {
 
 export class CritPrompt extends HMPrompt {
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             template: 'systems/hackmaster5e/templates/dialog/crit.hbs',
             id: 'critPrompt',
         });
@@ -23,7 +23,7 @@ export class CritPrompt extends HMPrompt {
         const atkSize = callerRace ? callerRace.getScale('hp') : HMCONST.SCALE.MEDIUM;
         const defSize = HMCONST.SCALE.MEDIUM;
         const [atkRoll, defRoll] = [0, 0];
-        mergeObject(this.dialogData, {
+        foundry.utils.mergeObject(this.dialogData, {
             atkSize,
             defSize,
             atkRoll,

@@ -16,7 +16,7 @@ function getSpeed(ranged, wData, specialMove=0) {
 
 export class DefendPrompt extends HMPrompt {
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             template: 'systems/hackmaster5e/templates/dialog/defend.hbs',
             id: 'attackPrompt',
         });
@@ -33,7 +33,7 @@ export class DefendPrompt extends HMPrompt {
         const ranged = wData.ranged.checked;
         const spd = getSpeed(ranged, wData);
 
-        mergeObject(this.dialogData, {
+        foundry.utils.mergeObject(this.dialogData, {
             capList,
             specialMove: HMCONST.SPECIAL.STANDARD,
             defDie: wData.defdie,

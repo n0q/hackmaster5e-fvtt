@@ -17,7 +17,7 @@ function prepareCharacterItems(sheetData) {
 export class HMCharacterActorSheet extends HMActorSheet {
     /** @override */
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             classes: ['hackmaster', 'sheet', 'actor'],
             width: 835,
             height: 930,
@@ -37,7 +37,7 @@ export class HMCharacterActorSheet extends HMActorSheet {
         return data;
     }
 
-    _HMprepareSheet(sheetData) {
+    _HMprepareSheet(sheetData) { /* eslint-disable-line class-methods-use-this */
         const actorData = sheetData.actor;
 
         // Saves

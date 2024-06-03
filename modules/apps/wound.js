@@ -3,7 +3,7 @@ import { HMPrompt } from './prompt.js';
 
 export class WoundPrompt extends HMPrompt {
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             template: 'systems/hackmaster5e/templates/dialog/wound.hbs',
             id: 'woundPrompt',
             width: 275,
