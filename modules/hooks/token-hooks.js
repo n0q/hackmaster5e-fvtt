@@ -33,8 +33,11 @@ export class HMTokenHooks {
     }
 
     static drawToken(token) {
+        // token.reach ??= canvas.grid.reach.addChild(new PIXI.Graphics());
         // eslint-disable-next-line no-param-reassign
-        token.reach ??= canvas.grid.reach.addChild(new PIXI.Graphics());
+        token.reach ??= token.addChildAt(new PIXI.Graphics(), 0);
+        // eslint-disable-next-line no-param-reassign
+        token.reach.position = token.getCenterPoint({x: 0, y: 0});
         const {reach, interactionState} = token;
         const {INTERACTION_STATES} = MouseInteractionManager;
         const isDragged = interactionState === INTERACTION_STATES.DRAG;
@@ -63,10 +66,5 @@ export class HMTokenHooks {
             t.drawReach(fillType);
         });
         /* eslint-enable-line no-param-reassign */
-    }
-
-    static refreshToken(token) {
-        const {reach} = token;
-        reach.position = token.center;
     }
 }

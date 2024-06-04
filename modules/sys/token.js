@@ -18,12 +18,11 @@ export class HMToken extends Token {
         if (this.__isSecret) return;
         const showReach = game.settings.get(SYSTEM_ID, 'showReach');
 
-        const {center, hover, reach, interactionState} = this;
+        const {hover, reach, interactionState} = this;
         const isDragged = interactionState === MouseInteractionManager.INTERACTION_STATES.DRAG;
 
         reach.clear();
         if (!showReach) return;
-        reach.position = center;
         const geometry = this.getGeometry();
         const color = this.getColor();
         if (!geometry || !color) return;
