@@ -33,15 +33,10 @@ export class HMTokenHooks {
     }
 
     static drawToken(token) {
-        // token.reach ??= canvas.grid.reach.addChild(new PIXI.Graphics());
-        // eslint-disable-next-line no-param-reassign
-        token.reach ??= token.addChildAt(new PIXI.Graphics(), 0);
-        // eslint-disable-next-line no-param-reassign
-        token.reach.position = token.getCenterPoint({x: 0, y: 0});
-        const {reach, interactionState} = token;
-        const {INTERACTION_STATES} = MouseInteractionManager;
-        const isDragged = interactionState === INTERACTION_STATES.DRAG;
-        reach.visible = !!token.combatant && (token.visibleByDefault() || isDragged);
+        token.reach ??= token.addChildAt(new PIXI.Graphics(), 0); // eslint-disable-line
+        token.reach.position = token.getCenterPoint({x: 0, y: 0}); // eslint-disable-line
+        const {reach, isPreview} = token;
+        reach.visible = !!token.combatant && (token.visibleByDefault() || isPreview);
         token.drawReach();
     }
 
