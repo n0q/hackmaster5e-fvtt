@@ -2,9 +2,7 @@
     <span class='form-group'>
         <label>{{localize 'HM.weapon'}}</label>
         <select name='widx' class='bind' data-prop='widx' data-render=true>
-            {{#select widx}}{{#each weapons}}
-                <option value='{{@index}}'>{{name}}</option>
-            {{/each}}{{/select}}
+            {{selectOptions weaponsList selected=widx}}
         </select>
     </span>
     <span class='form-group'>

@@ -1,11 +1,7 @@
 <form class='hackmaster'>
     <span class='form-group'>
         <label>{{localize 'HM.spell'}}</label>
-        <select name='sidx' class='bind' data-prop='sidx' data-render=true>
-            {{#select sidx}}{{#each spells}}
-                <option value='{{@index}}'>{{name}}</option>
-            {{/each}}{{/select}}
-        </select>
+        <label style="text-align: right;"><b>{{spellName}}</b></label>
     </span>
     <section class='form-group'>
         <span style='flex: 1 0 auto;'>

@@ -35,6 +35,7 @@ export class AttackPrompt extends HMPrompt {
     constructor(dialogData, options) {
         super(dialogData, options);
         const weapon = dialogData.weapons[0];
+        const weaponsList = HMPrompt.getSelectFromProperty(dialogData.weapons, 'name');
         const capList = this.getCapList(weapon, dialogData?.caller);
         const defense = getDefense(dialogData?.caller.effects);
 
@@ -53,6 +54,7 @@ export class AttackPrompt extends HMPrompt {
             ranged,
             reach,
             spd,
+            weaponsList,
             widx: 0,
             range: HMCONST.RANGED.REACH.SHORT,
             advance: dialogData.inCombat,

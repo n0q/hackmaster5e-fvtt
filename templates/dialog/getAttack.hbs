@@ -2,9 +2,7 @@
     <span class='form-group'>
         <label>{{localize 'HM.weapon'}}</label>
         <select name='widx' class='bind' data-prop='widx' data-render=true>
-            {{#select widx}}{{#each weapons}}
-                <option value='{{@index}}'>{{name}}</option>
-            {{/each}}{{/select}}
+            {{selectOptions weaponsList selected=widx}}
         </select>
     </span>
     <span class='form-group'>
@@ -18,11 +16,7 @@
             {{#if ranged}}
             <label>{{localize 'HM.dialog.getAttackRangeBody'}}</label>
             <select name='range' class='bind' data-prop='range' data-render=true>
-                {{#select range}}{{#each (mapSelect reach 'reach' 'ft')}}
-                    {{#unless @first}}
-                    <option value='{{@index}}'>{{localize this}}</option>
-                    {{/unless}}
-                {{/each}}{{/select}}
+                {{selectOptions (findConfigObj 'reach') selected=range localize=true}}
             </select>
             {{else if (eq SPECIAL.CHARGE specialMove)}}
             <label>{{localize 'HM.dialog.getChargeSpdBody'}}</label>

@@ -28,6 +28,7 @@ export class DefendPrompt extends HMPrompt {
         const {caller} = dialogData;
 
         const capList = this.getCapList(weapon, caller);
+        const weaponsList = HMPrompt.getSelectFromProperty(dialogData.weapons, 'name');
         const canDodge = caller[SYSTEM_ID].talent.flag.dodge;
         const wData = weapon.system;
         const ranged = wData.ranged.checked;
@@ -35,6 +36,7 @@ export class DefendPrompt extends HMPrompt {
 
         foundry.utils.mergeObject(this.dialogData, {
             capList,
+            weaponsList,
             specialMove: HMCONST.SPECIAL.STANDARD,
             defDie: wData.defdie,
             rDefDie: HMCONST.DIE.D20P,

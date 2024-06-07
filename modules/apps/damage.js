@@ -16,11 +16,13 @@ export class DamagePrompt extends HMPrompt {
         const capList = this.getCapList(weapon, dialogData?.caller);
         const wData = weapon.system;
         const canStrBonus = wData.ranged.checked ? !wData.ranged?.mechanical : false;
+        const weaponsList = HMPrompt.getSelectFromProperty(dialogData.weapons, 'name');
 
         foundry.utils.mergeObject(this.dialogData, {
             capList,
             specialMove: 0,
             widx: 0,
+            weaponsList,
             canStrBonus,
         });
     }
