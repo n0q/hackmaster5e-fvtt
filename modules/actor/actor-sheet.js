@@ -341,7 +341,7 @@ export class HMActorSheet extends ActorSheet {
             const {context, resp} = dialogResp;
             const {hackmaster5e, system} = context;
             const rollContext = {...system, resp, talent: hackmaster5e.talent};
-            if (formula) cData.roll = await new Roll(formula, rollContext).evaluate({async: true});
+            if (formula) cData.roll = await new Roll(formula, rollContext).evaluate();
 
             const chatMgr = new HMChatMgr();
             const card = await chatMgr.getCard(cData);

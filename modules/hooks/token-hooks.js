@@ -22,7 +22,7 @@ export class HMTokenHooks {
 
         const {formula} = actor.system.hp;
         if (Roll.validate(formula)) {
-            const r = await new Roll(formula).evaluate({'async': true});
+            const r = await new Roll(formula).evaluate({allowInteractive: false});
             const tokenHp = {value: r.total, max: r.total};
             await actor.update({'system.hp': tokenHp});
         }

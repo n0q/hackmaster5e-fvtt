@@ -120,7 +120,7 @@ async function saveExtendedTrauma(content, roll) {
         context.special = 'HM.failed';
 
         if (getDiceSum(roll) > 19) {
-            let newroll = await new Roll('5d6p').evaluate({async: true});
+            let newroll = await new Roll('5d6p').evaluate();
             rolls.push(newroll);
             let flavor = `${game.i18n.localize('HM.knockout')} ${game.i18n.localize('HM.duration')}`;
             exContent += `<br> ${await newroll.render({flavor})}`;
@@ -129,7 +129,7 @@ async function saveExtendedTrauma(content, roll) {
             context.status   = 'HM.knockedout';
             context.special  = 'HM.critical';
 
-            newroll = await new Roll('d20').evaluate({async: true});
+            newroll = await new Roll('d20').evaluate();
             rolls.push(newroll);
             flavor = `${game.i18n.localize('HM.comatose')} ${game.i18n.localize('HM.check')}`;
             exContent += `<br> ${await newroll.render({flavor})}`;
@@ -140,7 +140,7 @@ async function saveExtendedTrauma(content, roll) {
                 context.status   = 'HM.comatose';
                 context.special  = 'HM.doublecritical';
 
-                newroll = await new Roll('d20').evaluate({async: true});
+                newroll = await new Roll('d20').evaluate();
                 rolls.push(newroll);
                 flavor = `${game.i18n.localize('HM.comatose')} ${game.i18n.localize('HM.duration')}`;
                 exContent += `<br> ${await newroll.render({flavor})}`;

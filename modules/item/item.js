@@ -157,7 +157,7 @@ export class HMItem extends Item {
             const formula = HMTABLES.formula.skill[resp.formulaType];
             const {bonus} = callerObj.context.system;
             const rollData = {resp, bonus};
-            dataset.roll = await new Roll(formula, rollData).evaluate({async: true});
+            dataset.roll = await new Roll(formula, rollData).evaluate();
 
             const card = await chatMgr.getCard({dataset});
             await ChatMessage.create(card);
