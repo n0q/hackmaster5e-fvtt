@@ -34,7 +34,7 @@ export class ChatBuilder {
         const chatMessageData = {
             ...obj,
             user: game.user.id,
-            type: obj.type ?? CONST.CHAT_MESSAGE_TYPES.OTHER,
+            type: obj.type ?? CONST.CHAT_MESSAGE_STYLES.OTHER,
         };
 
         const {roll} = this.data;

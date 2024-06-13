@@ -55,14 +55,13 @@ export class HMChatMgr {
             user:    this._user,
             flavor:  cData?.flavor || dialogResp?.caller?.name,
             content: cData.content,
-            type:    cData?.type || CONST.CHAT_MESSAGE_TYPES.OTHER,
+            type:    cData?.type || CONST.CHAT_MESSAGE_STYLES.OTHER,
             whisper: cData?.whisper,
         };
 
         if (!cData.squelch && (roll || dataset?.roll)) {
             chatData.rolls    = Array.isArray(roll) ? roll : [cData?.roll || roll];
             chatData.rollMode = cData.rollMode ? cData.rollMode : game.settings.get('core', 'rollMode');
-            chatData.type     = CONST.CHAT_MESSAGE_TYPES.ROLL;
             chatData.sound    = CONFIG.sounds.dice;
         }
 
