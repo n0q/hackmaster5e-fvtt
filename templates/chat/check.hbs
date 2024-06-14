@@ -1,1 +1,7 @@
-<b>{{specialRow}}</b>
+{{localize 'HM.ability.ability'}}:
+<b>{{localize (concat 'HM.ability.' mdata.ability)}}</b><br>
+{{localize 'HM.score'}}:
+<b>{{mdata.score}}</b><br>
+<hr>
+{{#if resultString}}<b>{{{resultString}}}</b>{{/if}}
+{{{rollContent}}}

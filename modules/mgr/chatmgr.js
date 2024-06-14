@@ -40,11 +40,6 @@ export class HMChatMgr {
                 case 'save':
                     cData = await createSaveCard(roll, dataset, dialogResp);
                     break;
-                case 'ability':
-                    cData = dialogResp.resp.save
-                        ? await createSaveCard(roll, dataset, dialogResp)
-                        : await createAbilityCard(roll, dataset);
-                    break;
                 default:
             }
         } else if (cardtype === HMCONST.CARD_TYPE.ALERT) {
@@ -322,21 +317,6 @@ async function createSpellCard(dataset) {
 
     const content = await renderTemplate(template, {...dataset, rollContent});
     return {content, whisper, roll, squelch, flavor: caller.name};
-}
-
-async function createAbilityCard(roll, dataset) {
-    const saveType    = game.i18n.localize(`HM.abilityLong.${dataset.ability.toLowerCase()}`);
-    const flavor      = `${saveType} ${game.i18n.localize('HM.check')}`;
-    const rollContent = await roll.render({flavor});
-
-    const sumDice       = getDiceSum(roll);
-    const specialRow    = sumDice === 1 ? game.i18n.localize('HM.critfail') : undefined;
-    const templateData  = {specialRow};
-    const template      = 'systems/hackmaster5e/templates/chat/check.hbs';
-    const resultContent = await renderTemplate(template, templateData);
-
-    const content = resultContent + rollContent;
-    return {content};
 }
 
 async function createToPAlert(dataset) {

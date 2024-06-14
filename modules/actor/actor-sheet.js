@@ -2,6 +2,7 @@ import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMContainer } from '../item/container.js';
 import { HMCONST, HMTABLES, SYSTEM_ID } from '../tables/constants.js';
+import { HMChatFactory, CFTYPE } from '../chat/chat-factory.js';
 import { idx } from '../tables/dictionary.js';
 
 export class HMActorSheet extends ActorSheet {
@@ -311,6 +312,10 @@ export class HMActorSheet extends ActorSheet {
         const {dialog} = dataset;
         const {actor} = this;
 
+        let cardType = false;
+
+        if (dialog === 'ability') cardType = CFTYPE.ABILITY_CHECK;
+
         if (dialog === 'atk') {
             return game[SYSTEM_ID].HMWeaponItem.rollAttack({weapon: dataset.itemId, caller: actor});
         }
@@ -342,6 +347,16 @@ export class HMActorSheet extends ActorSheet {
             const {hackmaster5e, system} = context;
             const rollContext = {...system, resp, talent: hackmaster5e.talent};
             if (formula) cData.roll = await new Roll(formula, rollContext).evaluate();
+
+            if (cardType) {
+                const bData = {
+                    ...cData.dialogResp,
+                    mdata: cData.dataset,
+                    roll: cData.roll,
+                };
+                const builder = new HMChatFactory(cardType, bData);
+                return builder.createChatMessage();
+            }
 
             const chatMgr = new HMChatMgr();
             const card = await chatMgr.getCard(cData);
