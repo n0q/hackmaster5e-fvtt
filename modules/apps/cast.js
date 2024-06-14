@@ -19,6 +19,7 @@ export class CastPrompt extends HMPrompt {
         foundry.utils.mergeObject(this.dialogData, {
             cost: getSpellCost(spell, caller),
             spd: getSpellSpeed(sData, caller),
+            spellName: spell.name,
             divine,
             advance: dialogData.inCombat,
             sidx: 0,
