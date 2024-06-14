@@ -2,8 +2,10 @@ import { BuilderSchema } from './builder-schema.js';
 
 export const CBRESULT_TYPE = {
     NONE:       0,  // No special result.
-    CRITFAIL:   1,  // Critical failure.
-    FUMBLE:     2,  // Fumble.
+    CRITFAIL:   1,
+    FUMBLE:     2,
+    PASSED:     3,
+    FAILED:     4,
 };
 
 /**
@@ -106,6 +108,8 @@ export class ChatBuilder {
 
         if (rv === type.CRITFAIL) return '<b>Critical Failure</b>';
         if (rv === type.FUMBLE) return '<b>Fumble</b>';
+        if (rv === type.PASSED) return '<b>Passed</b>';
+        if (rv === type.FAILED) return '<b>Failed</b>';
         return `<b style="color: red">Unknown result type ${rv}</b>`;
     }
 }

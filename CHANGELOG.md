@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 ### Added
 - Foundry v12 API support.
-- Ability Checks correctly declare crit fails and fumbles.
+- Ability Checks correctly declare passes, fails, crit fails, and fumbles.
 
 ### Changed
 - Changed button labels on ability checks to be (even) more clear.

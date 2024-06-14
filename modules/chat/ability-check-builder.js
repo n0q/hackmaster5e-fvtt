@@ -25,6 +25,7 @@ export class AbilityCheckBuilder extends ChatBuilder {
 
         if (!isCompeting) {
             flavor = 'Ability Check';
+            rv = roll.total < 1 ? CBRESULT_TYPE.PASSED : CBRESULT_TYPE.FAILED;
             if (dieSum > 19) rv = CBRESULT_TYPE.FUMBLE;
         }
 
