@@ -110,6 +110,6 @@ export class ChatBuilder {
         if (rv === type.FUMBLE) return '<b>Fumble</b>';
         if (rv === type.PASSED) return '<b>Passed</b>';
         if (rv === type.FAILED) return '<b>Failed</b>';
-        return `<b style="color: red">Unknown result type ${rv}</b>`;
+        return `Unknown result type: <b>${rv}</b></span>`;
     }
 }
