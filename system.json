@@ -59,9 +59,6 @@
             "path": "lang/en.json"
         }
     ],
-    "relationships": {
-        "recommends": [{ "id": "drag-ruler", "type": "module" }]
-    },
     "grid": {"distance": 5, "units": "ft"},
     "initiative": "@bonus.total.init",
     "primaryTokenAttribute": "hp",

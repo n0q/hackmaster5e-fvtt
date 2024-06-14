@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 - Changed button labels on ability checks to be (even) more clear.
+- Removed Drag Ruler from recommended module list until it is v12 compatible.
 
 ### Removed
 - Foundry v11 API support.
