@@ -16,6 +16,7 @@
     "features": {
       "sp": true,
       "atk": true,
+      "dmg": false,
       "def": false,
       "spd": false,
       "spdm": false,
@@ -23,7 +24,8 @@
       "init": true,
       "back": false,
       "luck": false,
-      "assn": false
+      "assn": false,
+      "slvl": false
     },
     "caps": {
       "fcast": false,
@@ -456,10 +458,12 @@
   "_stats": {
     "systemId": "hackmaster5e",
     "systemVersion": "0",
-    "coreVersion": "11.305",
+    "coreVersion": "12.325",
     "createdTime": 1688862766873,
     "modifiedTime": 1688862766905,
-    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y",
+    "compendiumSource": null,
+    "duplicateSource": null
   },
   "_id": "GERp0iqbrU3WdSW0",
   "sort": 100000,
