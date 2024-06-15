@@ -274,7 +274,7 @@ async function createSaveCard(roll, dataset, dialogResp) {
     if (dataset.formulaType === 'trauma') {
         const extended = await saveExtendedTrauma(content, roll);
         content = extended.content;
-        const pool = PoolTerm.fromRolls(extended.rolls);
+        const pool = foundry.dice.terms.PoolTerm.fromRolls(extended.rolls);
         roll = Roll.fromTerms([pool]);
     }
     return {content, roll, rollMode};

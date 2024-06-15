@@ -44,7 +44,7 @@ export const transformDamageFormula = (stringTerms, operation=new Set()) => {
                 }
 
                 const {modifiers} = terms[i];
-                terms[i] = PoolTerm.fromRolls(terms[i].rolls);
+                terms[i] = foundry.dice.terms.PoolTerm.fromRolls(terms[i].rolls);
                 terms[i].modifiers = modifiers;
             }
 
