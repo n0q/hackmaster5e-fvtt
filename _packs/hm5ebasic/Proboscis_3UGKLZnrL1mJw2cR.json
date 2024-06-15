@@ -75,6 +75,13 @@
         "2": 0,
         "3": 0,
         "4": 0
+      },
+      "timing": {
+        "load": 0,
+        "draw": 0,
+        "aim": 0,
+        "fire": 0,
+        "recover": 0
       }
     }
   },
@@ -86,10 +93,12 @@
   "_stats": {
     "systemId": "hackmaster5e",
     "systemVersion": "0",
-    "coreVersion": "11.305",
+    "coreVersion": "12.325",
     "createdTime": 1688864904749,
     "modifiedTime": 1688864904749,
-    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y",
+    "compendiumSource": null,
+    "duplicateSource": null
   },
   "_id": "3UGKLZnrL1mJw2cR",
   "sort": 0,

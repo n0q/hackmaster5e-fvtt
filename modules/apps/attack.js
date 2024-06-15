@@ -26,7 +26,7 @@ function getDefense(effects) {
 
 export class AttackPrompt extends HMPrompt {
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             template: 'systems/hackmaster5e/templates/dialog/getAttack.hbs',
             id: 'attackPrompt',
         });
@@ -35,6 +35,7 @@ export class AttackPrompt extends HMPrompt {
     constructor(dialogData, options) {
         super(dialogData, options);
         const weapon = dialogData.weapons[0];
+        const weaponsList = HMPrompt.getSelectFromProperty(dialogData.weapons, 'name');
         const capList = this.getCapList(weapon, dialogData?.caller);
         const defense = getDefense(dialogData?.caller.effects);
 
@@ -45,7 +46,7 @@ export class AttackPrompt extends HMPrompt {
         if (ranged) spd.declareMode = spd.declare;
         const {SPECIAL} = HMCONST;
 
-        mergeObject(this.dialogData, {
+        foundry.utils.mergeObject(this.dialogData, {
             capList,
             canShoot: true,
             specialMove: ranged ? SPECIAL.RSTANDARD : SPECIAL.STANDARD,
@@ -53,6 +54,7 @@ export class AttackPrompt extends HMPrompt {
             ranged,
             reach,
             spd,
+            weaponsList,
             widx: 0,
             range: HMCONST.RANGED.REACH.SHORT,
             advance: dialogData.inCombat,

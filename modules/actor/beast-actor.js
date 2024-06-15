@@ -63,7 +63,7 @@ export class HMBeastActor extends HMActor {
             const formula = HMTABLES.formula.save.trauma;
             const {system, hackmaster5e} = this;
             const rollContext = {...system, talent: hackmaster5e.talent};
-            const roll = await new Roll(formula, rollContext).evaluate({async: true});
+            const roll = await new Roll(formula, rollContext).evaluate();
 
             const resp = {rollMode: CONST.DICE_ROLL_MODES.PRIVATE};
             const dialogResp = {resp};

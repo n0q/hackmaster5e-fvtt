@@ -4,7 +4,7 @@ import { idx } from '../tables/dictionary.js';
 
 export class DamagePrompt extends HMPrompt {
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             template: 'systems/hackmaster5e/templates/dialog/getDamage.hbs',
             id: 'damagePrompt',
         });
@@ -16,11 +16,13 @@ export class DamagePrompt extends HMPrompt {
         const capList = this.getCapList(weapon, dialogData?.caller);
         const wData = weapon.system;
         const canStrBonus = wData.ranged.checked ? !wData.ranged?.mechanical : false;
+        const weaponsList = HMPrompt.getSelectFromProperty(dialogData.weapons, 'name');
 
-        mergeObject(this.dialogData, {
+        foundry.utils.mergeObject(this.dialogData, {
             capList,
             specialMove: 0,
             widx: 0,
+            weaponsList,
             canStrBonus,
         });
     }

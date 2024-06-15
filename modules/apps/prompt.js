@@ -4,7 +4,7 @@ import { HMCONST } from '../tables/constants.js';
 
 export class HMPrompt extends Application {
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             classes: ['form', 'dialog'],
             popOut: true,
             minimizable: false,
@@ -14,8 +14,25 @@ export class HMPrompt extends Application {
 
     constructor(dialogData, options) {
         super();
-        mergeObject(this.options, options);
+        foundry.utils.mergeObject(this.options, options);
         this.dialogData = dialogData;
+    }
+
+    /**
+     * Transforms an array into an object with keys as the index and a
+     * property as the array elements.
+     * This is suitable for the selectOptions handlebar helper.
+     *
+     * @param {Array} arr - The array to be transformed.
+     * @param {string} prop - The property to be used as a key.
+     * @returns {Object} An object with the array indices as keys and
+     * the array elements as values.
+     */
+    static getSelectFromProperty(arr, prop) {
+        return arr.reduce((obj, element, i) => {
+            const value = foundry.utils.getProperty(element, prop);
+            return {...obj, [i]: value};
+        }, {});
     }
 
     getCapList(weapon, actor=null) {

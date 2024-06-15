@@ -70,10 +70,12 @@
   "_stats": {
     "systemId": "hackmaster5e",
     "systemVersion": "0",
-    "coreVersion": "11.315",
+    "coreVersion": "12.325",
     "createdTime": 1688863353625,
     "modifiedTime": 1712881965186,
-    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y",
+    "compendiumSource": null,
+    "duplicateSource": null
   },
   "_id": "bCgxchLai1Ws2nFz",
   "sort": 300000,

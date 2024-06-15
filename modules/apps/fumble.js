@@ -2,7 +2,7 @@ import { HMPrompt } from './prompt.js';
 
 export class FumblePrompt extends HMPrompt {
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             template: 'systems/hackmaster5e/templates/dialog/fumble.hbs',
             id: 'fumblePrompt',
         });

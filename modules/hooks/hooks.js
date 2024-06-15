@@ -32,22 +32,15 @@ export const registerHooks = () => {
     Hooks.on('createItem', HMItemHooks.createItem);
     Hooks.on('preCreateItem', HMItemHooks.preCreateItem);
     Hooks.on('updateItem', HMItemHooks.updateItem);
-    Hooks.on('drawGridLayer', drawGridLayer);
     Hooks.on('renderSceneControls', HMSceneControlHooks.renderSceneControls);
     Hooks.on('getSceneControlButtons', HMSceneControlHooks.getSceneControlButtons);
     Hooks.on('createToken', HMTokenHooks.createToken);
     Hooks.on('destroyToken', HMTokenHooks.destroyToken);
     Hooks.on('drawToken', HMTokenHooks.drawToken);
     Hooks.on('hoverToken', HMTokenHooks.hoverToken);
-    Hooks.on('refreshToken', HMTokenHooks.refreshToken);
     Hooks.on('hotbarDrop', HMMacroHooks.hotbarDrop);
     game.socket.on(SYSTEM_SOCKET, handleSocketEvent);
 };
-
-function drawGridLayer(layer) {
-    // eslint-disable-next-line no-param-reassign
-    layer.reach = layer.addChildAt(new PIXI.Container(), layer.getChildIndex(layer.borders));
-}
 
 async function ready() {
     // if (game.modules.get('_dev-mode')?.api?.getPackageDebugValue(SYSTEM_ID)) {

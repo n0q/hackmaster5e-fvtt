@@ -1,5 +1,13 @@
 import { BuilderSchema } from './builder-schema.js';
 
+export const CBRESULT_TYPE = {
+    NONE:       0,  // No special result.
+    CRITFAIL:   1,
+    FUMBLE:     2,
+    PASSED:     3,
+    FAILED:     4,
+};
+
 /**
  * Chat card builder.
  * @class
@@ -16,6 +24,7 @@ export class ChatBuilder {
      * @param {Roll} dataset.roll - A dice roll the chat pertains to.
      * @param {Object} dataset.resp - Data polled from the user from an Application.
      * @param {Object[]} dataset.batch - Bulk object data for batch processing.
+     * @param {Object} dataset.mdata - Details for chat card enrichment.
      * @param {Object} dataset.options - Options passed directly to ChatMessage.create().
      */
     constructor(dataset, options) {
@@ -34,13 +43,12 @@ export class ChatBuilder {
         const chatMessageData = {
             ...obj,
             user: game.user.id,
-            type: obj.type ?? CONST.CHAT_MESSAGE_TYPES.OTHER,
+            type: obj.type ?? CONST.CHAT_MESSAGE_STYLES.OTHER,
         };
 
         const {roll} = this.data;
         if (obj.rolls ?? roll) {
             const rollData = {
-                type: CONST.CHAT_MESSAGES_TYPES.ROLL,
                 sound: CONFIG.sounds.dice,
             };
 
@@ -72,6 +80,12 @@ export class ChatBuilder {
         }, []);
     }
 
+    /**
+     * Extracts the sum of the dice rolled from a Roll object,
+     * ignoring any constants or other terms.
+     * @param {Roll} roll - The Roll object containing the dice and other terms.
+     * @returns {number} The sum of the dice rolled.
+     */
     static getDiceSum(roll) {
         let sum = 0;
         for (let i = 0; i < roll.terms.length; i++) {
@@ -80,5 +94,22 @@ export class ChatBuilder {
             }
         }
         return sum;
+    }
+
+    /**
+     * Returns HTML for a given CBRESULT_TYPE.
+     *
+     * @param {number} rv - Result value of type CBRESULT.TYPE.
+     * @returns {string} HTML string for result type.
+     */
+    static getResult(rv) {
+        if (!rv) return false;
+        const type = CBRESULT_TYPE;
+
+        if (rv === type.CRITFAIL) return '<b>Critical Failure</b>';
+        if (rv === type.FUMBLE) return '<b>Fumble</b>';
+        if (rv === type.PASSED) return '<b>Passed</b>';
+        if (rv === type.FAILED) return '<b>Failed</b>';
+        return `Unknown result type: <b>${rv}</b></span>`;
     }
 }

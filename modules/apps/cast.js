@@ -3,7 +3,7 @@ import { HMTABLES, SYSTEM_ID } from '../tables/constants.js';
 
 export class CastPrompt extends HMPrompt {
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             template: 'systems/hackmaster5e/templates/dialog/cast.hbs',
             id: 'castPrompt',
         });
@@ -16,9 +16,10 @@ export class CastPrompt extends HMPrompt {
         const sData = spell.system;
         const {divine, lidx, prepped} = sData;
 
-        mergeObject(this.dialogData, {
+        foundry.utils.mergeObject(this.dialogData, {
             cost: getSpellCost(spell, caller),
             spd: getSpellSpeed(sData, caller),
+            spellName: spell.name,
             divine,
             advance: dialogData.inCombat,
             sidx: 0,

@@ -19,7 +19,7 @@ export const FUMBLETABLE = {
     evaluate: async (formula, type, innate) => {
         if (!formula) return false;
 
-        const roll = await new Roll(formula).evaluate({async: true});
+        const roll = await new Roll(formula).evaluate();
         let rollIdx = FUMBLETABLE.rollIdx[type].findIndex((x) => x >= roll.total);
         const typeIdx = FUMBLETABLE.typeIdx[type].findIndex((x) => x >= roll.total);
 

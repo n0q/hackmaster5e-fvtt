@@ -16,7 +16,7 @@ function getSpeed(ranged, wData, specialMove=0) {
 
 export class DefendPrompt extends HMPrompt {
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             template: 'systems/hackmaster5e/templates/dialog/defend.hbs',
             id: 'attackPrompt',
         });
@@ -28,13 +28,15 @@ export class DefendPrompt extends HMPrompt {
         const {caller} = dialogData;
 
         const capList = this.getCapList(weapon, caller);
+        const weaponsList = HMPrompt.getSelectFromProperty(dialogData.weapons, 'name');
         const canDodge = caller[SYSTEM_ID].talent.flag.dodge;
         const wData = weapon.system;
         const ranged = wData.ranged.checked;
         const spd = getSpeed(ranged, wData);
 
-        mergeObject(this.dialogData, {
+        foundry.utils.mergeObject(this.dialogData, {
             capList,
+            weaponsList,
             specialMove: HMCONST.SPECIAL.STANDARD,
             defDie: wData.defdie,
             rDefDie: HMCONST.DIE.D20P,

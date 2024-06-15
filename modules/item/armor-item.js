@@ -65,7 +65,7 @@ export class HMArmorItem extends HMItem {
         const value = Number(input) || 0;
         const {bonus, damage} = this.system;
         const maxDamage = 10 * (bonus.base.dr + bonus.mod.dr + (bonus?.qual?.dr || 0));
-        const newDamage = Math.clamped(damage + value, 0, maxDamage);
+        const newDamage = Math.clamp(damage + value, 0, maxDamage);
         this.update({'system.damage': newDamage});
     }
 }

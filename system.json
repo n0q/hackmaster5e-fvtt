@@ -5,8 +5,8 @@
     "url": null,
     "version": null,
     "compatibility": {
-        "minimum": "11",
-        "verified": "11"
+        "minimum": "12",
+        "verified": "12"
     },
     "manifestPlusVersion": "1.2.0",
     "templateVersion": 1,
@@ -59,11 +59,7 @@
             "path": "lang/en.json"
         }
     ],
-    "relationships": {
-        "recommends": [{ "id": "drag-ruler", "type": "module" }]
-    },
-    "gridDistance": 5,
-    "gridUnits": "ft",
+    "grid": {"distance": 5, "units": "ft"},
     "initiative": "@bonus.total.init",
     "primaryTokenAttribute": "hp",
     "flags": { "allowBugReporter": true },

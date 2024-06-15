@@ -21,11 +21,11 @@ export class HMClassItem extends HMItem {
         // initialize new cclass object ptable
         if (Object.entries(pTable).length === 0) {
             const {pData} = HMTABLES.cclass;
-            for (let z = 1; z < 21; z++) pTable[z] = deepClone(pData);
+            for (let z = 1; z < 21; z++) pTable[z] = foundry.utils.deepClone(pData);
             this.update({'system.ptable': pTable});
         }
 
-        system.level = Math.clamped((system.level || 0), 0, 20);
+        system.level = Math.clamp((system.level || 0), 0, 20);
     }
 
     setHP() {

@@ -46,14 +46,27 @@
         "startRound": null,
         "startTurn": null
       },
-      "icon": null,
       "origin": null,
-      "tint": null,
+      "tint": "#ffffff",
       "transfer": true,
       "flags": {},
       "name": "Tough Hide",
       "description": "",
       "statuses": [],
+      "_stats": {
+        "coreVersion": "12.325",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
+      },
+      "img": null,
+      "type": "base",
+      "system": {},
+      "sort": 0,
       "_key": "!items.effects!33GTL2toZJ6nd1qv.qQMMtzS5te4PsBJa"
     }
   ],
@@ -63,10 +76,12 @@
   "_stats": {
     "systemId": "hackmaster5e",
     "systemVersion": "0",
-    "coreVersion": "11.305",
+    "coreVersion": "12.325",
     "createdTime": 1670826658651,
     "modifiedTime": 1688864414312,
-    "lastModifiedBy": "6PGvwKmaOsPz0R2y"
+    "lastModifiedBy": "6PGvwKmaOsPz0R2y",
+    "compendiumSource": null,
+    "duplicateSource": null
   },
   "folder": "429dg9Q5COUeMH1T",
   "_id": "33GTL2toZJ6nd1qv",

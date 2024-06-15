@@ -1,9 +1,7 @@
 <label class='resource-label'>{{localize 'HM.spelllibrary'}}</label>
 <select name='system.cslevel'>
     <option value='all'>{{localize 'HM.spellLevels.all'}}</option>
-    {{#select actor.system.cslevel}}{{#each actor.slevels as |slevel|}}
-    <option value='{{slevel}}'>{{localize (concat 'HM.spellLevels.' slevel)}}</option>
-    {{/each}}{{/select}}
+    {{selectOptions actor.slevels selected=actor.system.cslevel localize=true}}
 </select>
 <ol class='card-list scrollable' style='height: 29rem;'>
     {{#each actor.spells}}

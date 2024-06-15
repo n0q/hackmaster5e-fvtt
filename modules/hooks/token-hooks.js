@@ -22,7 +22,7 @@ export class HMTokenHooks {
 
         const {formula} = actor.system.hp;
         if (Roll.validate(formula)) {
-            const r = await new Roll(formula).evaluate({'async': true});
+            const r = await new Roll(formula).evaluate({allowInteractive: false});
             const tokenHp = {value: r.total, max: r.total};
             await actor.update({'system.hp': tokenHp});
         }
@@ -33,12 +33,10 @@ export class HMTokenHooks {
     }
 
     static drawToken(token) {
-        // eslint-disable-next-line no-param-reassign
-        token.reach ??= canvas.grid.reach.addChild(new PIXI.Graphics());
-        const {reach, interactionState} = token;
-        const {INTERACTION_STATES} = MouseInteractionManager;
-        const isDragged = interactionState === INTERACTION_STATES.DRAG;
-        reach.visible = !!token.combatant && (token.visibleByDefault() || isDragged);
+        token.reach ??= token.addChildAt(new PIXI.Graphics(), 0); // eslint-disable-line
+        token.reach.position = token.getCenterPoint({x: 0, y: 0}); // eslint-disable-line
+        const {reach, isPreview} = token;
+        reach.visible = !!token.combatant && (token.visibleByDefault() || isPreview);
         token.drawReach();
     }
 
@@ -63,10 +61,5 @@ export class HMTokenHooks {
             t.drawReach(fillType);
         });
         /* eslint-enable-line no-param-reassign */
-    }
-
-    static refreshToken(token) {
-        const {reach} = token;
-        reach.position = token.center;
     }
 }

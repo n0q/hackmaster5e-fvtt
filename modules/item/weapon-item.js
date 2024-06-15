@@ -142,7 +142,7 @@ export class HMWeaponItem extends HMItem {
             const {atk} = HMTABLES.formula;
             const formula = specialMove < 16 ? atk[SPECIAL.STANDARD] : atk[specialMove];
             const rollContext = {resp, ...context.system};
-            dataset.roll = await new Roll(formula, rollContext).evaluate({async: true});
+            dataset.roll = await new Roll(formula, rollContext).evaluate();
         }
 
         dataset.resp = resp;
@@ -185,7 +185,7 @@ export class HMWeaponItem extends HMItem {
             ? getDerivedDamageBonus(actor, context, addStrBonus)
             : undefined;
 
-        const contextSystem = deepClone(context.system);
+        const contextSystem = foundry.utils.deepClone(context.system);
         contextSystem.bonus.total.back = actor.system.bonus.total.back;
         const rollContext = {resp, derived, ...contextSystem};
 
@@ -199,7 +199,7 @@ export class HMWeaponItem extends HMItem {
 
         const r = new Roll(formula, rollContext);
         const terms = transformDamageFormula(r.terms, opSet);
-        dataset.roll = await Roll.fromTerms(terms).evaluate({async: true});
+        dataset.roll = await Roll.fromTerms(terms).evaluate();
 
         dataset.resp = resp;
         dataset.context = context;
@@ -229,7 +229,7 @@ export class HMWeaponItem extends HMItem {
         dataset.resp.freeAttack = !!(dataset.roll.total % 2);
 
         if (dataset.resp.comp) {
-            dataset.resp.compRoll = await new Roll('d6').evaluate({async: true});
+            dataset.resp.compRoll = await new Roll('d6').evaluate();
         }
 
         const chatMgr = new HMChatMgr();
@@ -247,7 +247,7 @@ export class HMWeaponItem extends HMItem {
 
         if (resp.atkRoll <= resp.defRoll) return;
         const formula = CRITTABLE.formula(resp.atkSize, resp.defSize);
-        dataset.roll = await new Roll(formula).evaluate({async: true});
+        dataset.roll = await new Roll(formula).evaluate();
 
         const chatMgr = new HMChatMgr();
         const card = await chatMgr.getCard({dataset});
@@ -283,7 +283,7 @@ export class HMWeaponItem extends HMItem {
 
         const formula = HMTABLES.formula.def[resp.specialMove];
         const rollContext = {resp, ...context.system};
-        dataset.roll = await new Roll(formula, rollContext).evaluate({async: true});
+        dataset.roll = await new Roll(formula, rollContext).evaluate();
 
         dataset.resp = resp;
         dataset.context = context;

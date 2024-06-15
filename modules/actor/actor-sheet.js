@@ -2,6 +2,8 @@ import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMContainer } from '../item/container.js';
 import { HMCONST, HMTABLES, SYSTEM_ID } from '../tables/constants.js';
+import { HMChatFactory, CFTYPE } from '../chat/chat-factory.js';
+import { idx } from '../tables/dictionary.js';
 
 export class HMActorSheet extends ActorSheet {
     visibleItemId = {};
@@ -90,9 +92,10 @@ export class HMActorSheet extends ActorSheet {
             (a, b) => Number(a.system.lidx) - Number(b.system.lidx) || a.name.localeCompare(b.name),
         );
 
-        const slevels = [...new Set(spell.map((s) => Number(s.system.lidx)))];
-        actor.slevels = slevels.sort((a, b) => a - b);
-
+        const {spellLevels} = idx;
+        const maxLevel = Math.max(...spell.map((s) => s.system.lidx));
+        const spellLevelArray = Object.entries(spellLevels).filter(([k]) => k <= maxLevel);
+        actor.slevels = Object.fromEntries(spellLevelArray);
         actor.talents = actor.itemTypes.talent.sort((a, b) => a.name.localeCompare(b.name));
         actor.money = this.money();
     }
@@ -309,6 +312,10 @@ export class HMActorSheet extends ActorSheet {
         const {dialog} = dataset;
         const {actor} = this;
 
+        let cardType = false;
+
+        if (dialog === 'ability') cardType = CFTYPE.ABILITY_CHECK;
+
         if (dialog === 'atk') {
             return game[SYSTEM_ID].HMWeaponItem.rollAttack({weapon: dataset.itemId, caller: actor});
         }
@@ -339,7 +346,17 @@ export class HMActorSheet extends ActorSheet {
             const {context, resp} = dialogResp;
             const {hackmaster5e, system} = context;
             const rollContext = {...system, resp, talent: hackmaster5e.talent};
-            if (formula) cData.roll = await new Roll(formula, rollContext).evaluate({async: true});
+            if (formula) cData.roll = await new Roll(formula, rollContext).evaluate();
+
+            if (cardType) {
+                const bData = {
+                    ...cData.dialogResp,
+                    mdata: cData.dataset,
+                    roll: cData.roll,
+                };
+                const builder = new HMChatFactory(cardType, bData);
+                return builder.createChatMessage();
+            }
 
             const chatMgr = new HMChatMgr();
             const card = await chatMgr.getCard(cData);

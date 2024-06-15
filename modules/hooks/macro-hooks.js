@@ -22,7 +22,7 @@ async function createItemMacro(data, slot) {
         macro = await Macro.create({
             folder: f.id,
             name: fullName,
-            permission: {default: CONST.DOCUMENT_PERMISSION_LEVELS.LIMITED},
+            ownership: {default: CONST.DOCUMENT_OWNERSHIP_LEVELS.LIMITED},
             type: 'script',
             img,
             command,

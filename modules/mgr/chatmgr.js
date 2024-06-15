@@ -40,11 +40,6 @@ export class HMChatMgr {
                 case 'save':
                     cData = await createSaveCard(roll, dataset, dialogResp);
                     break;
-                case 'ability':
-                    cData = dialogResp.resp.save
-                        ? await createSaveCard(roll, dataset, dialogResp)
-                        : await createAbilityCard(roll, dataset);
-                    break;
                 default:
             }
         } else if (cardtype === HMCONST.CARD_TYPE.ALERT) {
@@ -55,14 +50,13 @@ export class HMChatMgr {
             user:    this._user,
             flavor:  cData?.flavor || dialogResp?.caller?.name,
             content: cData.content,
-            type:    cData?.type || CONST.CHAT_MESSAGE_TYPES.OTHER,
+            type:    cData?.type || CONST.CHAT_MESSAGE_STYLES.OTHER,
             whisper: cData?.whisper,
         };
 
         if (!cData.squelch && (roll || dataset?.roll)) {
             chatData.rolls    = Array.isArray(roll) ? roll : [cData?.roll || roll];
             chatData.rollMode = cData.rollMode ? cData.rollMode : game.settings.get('core', 'rollMode');
-            chatData.type     = CONST.CHAT_MESSAGE_TYPES.ROLL;
             chatData.sound    = CONFIG.sounds.dice;
         }
 
@@ -121,7 +115,7 @@ async function saveExtendedTrauma(content, roll) {
         context.special = 'HM.failed';
 
         if (getDiceSum(roll) > 19) {
-            let newroll = await new Roll('5d6p').evaluate({async: true});
+            let newroll = await new Roll('5d6p').evaluate();
             rolls.push(newroll);
             let flavor = `${game.i18n.localize('HM.knockout')} ${game.i18n.localize('HM.duration')}`;
             exContent += `<br> ${await newroll.render({flavor})}`;
@@ -130,7 +124,7 @@ async function saveExtendedTrauma(content, roll) {
             context.status   = 'HM.knockedout';
             context.special  = 'HM.critical';
 
-            newroll = await new Roll('d20').evaluate({async: true});
+            newroll = await new Roll('d20').evaluate();
             rolls.push(newroll);
             flavor = `${game.i18n.localize('HM.comatose')} ${game.i18n.localize('HM.check')}`;
             exContent += `<br> ${await newroll.render({flavor})}`;
@@ -141,7 +135,7 @@ async function saveExtendedTrauma(content, roll) {
                 context.status   = 'HM.comatose';
                 context.special  = 'HM.doublecritical';
 
-                newroll = await new Roll('d20').evaluate({async: true});
+                newroll = await new Roll('d20').evaluate();
                 rolls.push(newroll);
                 flavor = `${game.i18n.localize('HM.comatose')} ${game.i18n.localize('HM.duration')}`;
                 exContent += `<br> ${await newroll.render({flavor})}`;
@@ -280,7 +274,7 @@ async function createSaveCard(roll, dataset, dialogResp) {
     if (dataset.formulaType === 'trauma') {
         const extended = await saveExtendedTrauma(content, roll);
         content = extended.content;
-        const pool = PoolTerm.fromRolls(extended.rolls);
+        const pool = foundry.dice.terms.PoolTerm.fromRolls(extended.rolls);
         roll = Roll.fromTerms([pool]);
     }
     return {content, roll, rollMode};
@@ -323,21 +317,6 @@ async function createSpellCard(dataset) {
 
     const content = await renderTemplate(template, {...dataset, rollContent});
     return {content, whisper, roll, squelch, flavor: caller.name};
-}
-
-async function createAbilityCard(roll, dataset) {
-    const saveType    = game.i18n.localize(`HM.abilityLong.${dataset.ability.toLowerCase()}`);
-    const flavor      = `${saveType} ${game.i18n.localize('HM.check')}`;
-    const rollContent = await roll.render({flavor});
-
-    const sumDice       = getDiceSum(roll);
-    const specialRow    = sumDice === 1 ? game.i18n.localize('HM.critfail') : undefined;
-    const templateData  = {specialRow};
-    const template      = 'systems/hackmaster5e/templates/chat/check.hbs';
-    const resultContent = await renderTemplate(template, templateData);
-
-    const content = resultContent + rollContent;
-    return {content};
 }
 
 async function createToPAlert(dataset) {

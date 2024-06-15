@@ -70,7 +70,7 @@ export const registerHandlebarsHelpers = () => {
     Handlebars.registerHelper('findBonus', (arg1, arg2, opts) => {
         const {bonus} = opts.data.root.actor.system;
         const vector = bonus[arg1];
-        return getProperty(vector, arg2);
+        return foundry.utils.getProperty(vector, arg2);
     });
 
     Handlebars.registerHelper('mapSelect', (obj1, obj2, suffix) => {

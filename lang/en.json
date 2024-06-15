@@ -17,13 +17,14 @@
         },
 
         "ability": {
-            "str": "Strength",
-            "int": "Intelligence",
-            "wis": "Wisdom",
-            "dex": "Dexterity",
-            "con": "Constitution",
-            "lks": "Looks",
-            "cha": "Charisma"
+            "ability":  "Ability",
+            "str":      "Strength",
+            "int":      "Intelligence",
+            "wis":      "Wisdom",
+            "dex":      "Dexterity",
+            "con":      "Constitution",
+            "lks":      "Looks",
+            "cha":      "Charisma"
         },
 
         "abilityLong": {
@@ -342,8 +343,8 @@
             "getInitDieBody":    "Initiative Die",
             "getAttackTitle":    "Roll an Attack",
             "getAttackRangeBody":"Range",
-            "getAbilityButtonL": "Opposed",
-            "getAbilityButtonR": "Roll Under",
+            "getAbilityButtonL": "Competing Check",
+            "getAbilityButtonR": "Ability Check",
             "getCastTitle":      "Cast a Spell",
             "getChargeSpdBody":  "Speed",
             "getCritTitle":      "Roll for Critical",
@@ -741,6 +742,7 @@
         "save":         "Save",
         "scale":        "Scale",
         "schedule":     "Schedule",
+        "score":        "Score",
         "second":       "Second",
         "seconds":      "Seconds",
         "seffect":      "Status Effect",
