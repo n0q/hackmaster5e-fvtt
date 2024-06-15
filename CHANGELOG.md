@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [0.4.11] - 2024-06-15
 ### Added
 - Foundry v12 API support.
 - Ability Checks correctly declare passes, fails, crit fails, and fumbles.
@@ -13,7 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Removed Drag Ruler from recommended module list until it is v12 compatible.
 
 ### Fixed
-- Legacy races could have NaN ability mods, which could fail to load.
+- Race items failed to validate under certain circumstances.
 
 ### Removed
 - Foundry v11 API support.
