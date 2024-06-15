@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+### Fixed
+- Ability checks display calling actor, again.
+
 ## [0.4.11] - 2024-06-15
 ### Added
 - Foundry v12 API support.

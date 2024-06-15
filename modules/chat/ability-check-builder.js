@@ -9,22 +9,20 @@ export class AbilityCheckBuilder extends ChatBuilder {
     async createChatMessage() {
         const {context, mdata, resp, roll} = this.data;
 
-        let flavor = 'Ability Check';
+        const isCompeting = resp.oper === '+';
 
         const rolls = [roll];
-        const rollContent = await roll.render({flavor});
+        const rollFlavor = isCompeting ? 'Competing Ability Check' : 'Ability Check';
+        const rollContent = await roll.render({flavor: rollFlavor});
 
         let rv = false;
         const dieSum = ChatBuilder.getDiceSum(roll);
-        const isCompeting = resp.oper === '+';
 
         if (isCompeting) {
-            flavor = 'Competing Ability Check';
             if (dieSum === 1) rv = CBRESULT_TYPE.CRITFAIL;
         }
 
         if (!isCompeting) {
-            flavor = 'Ability Check';
             rv = roll.total < 1 ? CBRESULT_TYPE.PASSED : CBRESULT_TYPE.FAILED;
             if (dieSum > 19) rv = CBRESULT_TYPE.FUMBLE;
         }
