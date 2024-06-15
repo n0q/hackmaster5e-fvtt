@@ -51,6 +51,17 @@ export class HMRaceSchema extends foundry.abstract.DataModel {
                 source.bonus.move = 1;
             }
         }
+
+        // 0.4.11 - Enforce value and fvalue as numbers.
+        if ('abilities' in source) {
+            const {abilities} = source;
+            const abilitiesEntries = Object.entries(abilities).map(([k, v]) => [
+                k,
+                {value: v.value || 0, fvalue: v.fvalue || 0},
+            ]);
+            source.abilities = Object.fromEntries(abilitiesEntries);
+        }
+
         return super.migrateData(source);
     }
     /* eslint-enable no-param-reassign */
