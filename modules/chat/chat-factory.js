@@ -4,12 +4,12 @@ import { AbilityCheckBuilder } from './ability-check-builder.js';
 
 /**
  * Enumeration for chat factory types.
- * @enum {number}
+ * @enum {Symbol}
  */
-export const CFTYPE = {
-    INIT_NOTE:      0,  // Initiative updates.
-    ABILITY_CHECK:  1,  // Ability checks.
-};
+export const CFTYPE = Object.freeze({
+    INIT_NOTE: Symbol('cftype_init_note'),
+    ABILITY_CHECK: Symbol('cftype_abil_check'),
+});
 
 /**
  * Handler for creating instances of chat builders based on the specified type.

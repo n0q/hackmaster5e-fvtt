@@ -1,12 +1,16 @@
 import { BuilderSchema } from './builder-schema.js';
 
-export const CBRESULT_TYPE = {
-    NONE:       0,  // No special result.
-    CRITFAIL:   1,
-    FUMBLE:     2,
-    PASSED:     3,
-    FAILED:     4,
-};
+/**
+ * Enumeration for chat result codes.
+ * @enum {Symbol}
+ */
+export const CBRESULT_TYPE = Object.freeze({
+    NONE: false,
+    CRITFAIL: Symbol('cbresult_critfail'),
+    FUMBLE: Symbol('cbresult_fumble'),
+    PASSED: Symbol('cbresult_passed'),
+    FAILED: Symbol('cbresult_failed'),
+});
 
 /**
  * Chat card builder.
