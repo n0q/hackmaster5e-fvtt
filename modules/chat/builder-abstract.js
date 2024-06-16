@@ -1,18 +1,6 @@
 import { BuilderSchema } from './builder-schema.js';
 
 /**
- * Enumeration for chat result codes.
- * @enum {Symbol}
- */
-export const CBRESULT_TYPE = Object.freeze({
-    NONE: false,
-    CRITFAIL: Symbol('cbresult_critfail'),
-    FUMBLE: Symbol('cbresult_fumble'),
-    PASSED: Symbol('cbresult_passed'),
-    FAILED: Symbol('cbresult_failed'),
-});
-
-/**
  * Chat card builder.
  * @class
  * @abstract
@@ -35,8 +23,21 @@ export class ChatBuilder {
         if (new.target === ChatBuilder) {
             throw new Error('ChatBuilder cannot be instantiated directly.');
         }
+        this.RESULT_TYPE = ChatBuilder.RESULT_TYPE;
         this.data = new BuilderSchema({...dataset, options});
     }
+
+    /**
+    * Enumeration for chat result codes.
+    * @enum {Symbol}
+    */
+    static RESULT_TYPE = Object.freeze({
+        NONE: false,
+        CRITFAIL: Symbol('result_critfail'),
+        FUMBLE: Symbol('result_fumble'),
+        PASSED: Symbol('result_passed'),
+        FAILED: Symbol('result_failed'),
+    });
 
     /**
      * Returns a chatMessageData object for creating a chat message.
@@ -112,7 +113,7 @@ export class ChatBuilder {
      */
     static getResult(rv) {
         if (!rv) return false;
-        const type = CBRESULT_TYPE;
+        const type = ChatBuilder.RESULT_TYPE;
 
         if (rv === type.CRITFAIL) return '<b>Critical Failure</b>';
         if (rv === type.FUMBLE) return '<b>Fumble</b>';

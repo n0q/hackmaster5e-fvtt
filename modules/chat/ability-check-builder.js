@@ -1,4 +1,4 @@
-import { ChatBuilder, CBRESULT_TYPE } from './builder-abstract.js';
+import { ChatBuilder } from './builder-abstract.js';
 
 export class AbilityCheckBuilder extends ChatBuilder {
     constructor(...args) {
@@ -19,12 +19,12 @@ export class AbilityCheckBuilder extends ChatBuilder {
         const dieSum = ChatBuilder.getDiceSum(roll);
 
         if (isCompeting) {
-            if (dieSum === 1) rv = CBRESULT_TYPE.CRITFAIL;
+            if (dieSum === 1) rv = this.RESULT_TYPE.CRITFAIL;
         }
 
         if (!isCompeting) {
-            rv = roll.total < 1 ? CBRESULT_TYPE.PASSED : CBRESULT_TYPE.FAILED;
-            if (dieSum > 19) rv = CBRESULT_TYPE.FUMBLE;
+            rv = roll.total < 1 ? this.RESULT_TYPE.PASSED : this.RESULT_TYPE.FAILED;
+            if (dieSum > 19) rv = this.RESULT_TYPE.FUMBLE;
         }
 
         const resultString = ChatBuilder.getResult(rv);

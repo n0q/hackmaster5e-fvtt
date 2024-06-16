@@ -3,7 +3,7 @@ import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { HMStates } from '../sys/effects.js';
 import { HMSkillSchema } from './schema/skill-item-schema.js';
-import { HMChatFactory, CFTYPE } from '../chat/chat-factory.js';
+import { HMChatFactory, CHAT_TYPE } from '../chat/chat-factory.js';
 
 // Remember: Items may not alter Actors under any circumstances.
 // You will create a free fire shooting gallery if you do this, and
@@ -186,7 +186,7 @@ export async function advanceClock(comData, dialogResp, smartInit=false) {
         oldInit,
         newInit,
     }];
-    const builder = new HMChatFactory(CFTYPE.INIT_NOTE, {batch});
+    const builder = new HMChatFactory(CHAT_TYPE.INIT_NOTE, {batch});
     builder.createChatMessage();
 }
 
