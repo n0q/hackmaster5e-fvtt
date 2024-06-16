@@ -1,6 +1,18 @@
 import { BuilderSchema } from './builder-schema.js';
 
 /**
+* Enumeration for chat result codes.
+* @enum {Symbol}
+*/
+const RESULT_TYPE = Object.freeze({
+    NONE: false,
+    CRITFAIL: Symbol('result_critfail'),
+    FUMBLE: Symbol('result_fumble'),
+    PASSED: Symbol('result_passed'),
+    FAILED: Symbol('result_failed'),
+});
+
+/**
  * Chat card builder.
  * @class
  * @abstract
@@ -23,21 +35,9 @@ export class ChatBuilder {
         if (new.target === ChatBuilder) {
             throw new Error('ChatBuilder cannot be instantiated directly.');
         }
-        this.RESULT_TYPE = ChatBuilder.RESULT_TYPE;
+        this.RESULT_TYPE = RESULT_TYPE;
         this.data = new BuilderSchema({...dataset, options});
     }
-
-    /**
-    * Enumeration for chat result codes.
-    * @enum {Symbol}
-    */
-    static RESULT_TYPE = Object.freeze({
-        NONE: false,
-        CRITFAIL: Symbol('result_critfail'),
-        FUMBLE: Symbol('result_fumble'),
-        PASSED: Symbol('result_passed'),
-        FAILED: Symbol('result_failed'),
-    });
 
     /**
      * Returns a chatMessageData object for creating a chat message.
@@ -106,19 +106,21 @@ export class ChatBuilder {
     }
 
     /**
-     * Returns HTML for a given CBRESULT_TYPE.
+     * Returns HTML for a given RESULT_TYPE.
      *
-     * @param {number} rv - Result value of type CBRESULT.TYPE.
+     * @param {Symbol} rv - Result symbol of type RESULT_TYPE.
      * @returns {string} HTML string for result type.
      */
     static getResult(rv) {
         if (!rv) return false;
-        const type = ChatBuilder.RESULT_TYPE;
 
-        if (rv === type.CRITFAIL) return '<b>Critical Failure</b>';
-        if (rv === type.FUMBLE) return '<b>Fumble</b>';
-        if (rv === type.PASSED) return '<b>Passed</b>';
-        if (rv === type.FAILED) return '<b>Failed</b>';
-        return `Unknown result type: <b>${rv}</b></span>`;
+        const resultMapping = {
+            [RESULT_TYPE.CRITFAIL]: '<b>Critical Failure</b>',
+            [RESULT_TYPE.FUMBLE]: '<b>Fumble</b>',
+            [RESULT_TYPE.PASSED]: '<b>Passed</b>',
+            [RESULT_TYPE.FAILED]: '<b>Failed</b>',
+        };
+
+        return resultMapping[rv] || `Unknown result type: <b>${rv}</b>`;
     }
 }
