@@ -40,6 +40,18 @@ export class ChatBuilder {
     }
 
     /**
+     * Mapping of result types to their corresponding HTML representations.
+     * @type {Object.<Symbol, string>}
+     * @private
+     */
+    static #resultMapping = {
+        [RESULT_TYPE.CRITFAIL]: '<b>Critical Failure</b>',
+        [RESULT_TYPE.FUMBLE]: '<b>Fumble</b>',
+        [RESULT_TYPE.PASSED]: '<b>Passed</b>',
+        [RESULT_TYPE.FAILED]: '<b>Failed</b>',
+    };
+
+    /**
      * Returns a chatMessageData object for creating a chat message.
      * @param {Object} obj - An object containing data for the ChatMessage.
      * @param {string[]} obj.rolls - An array of roll.render(). Supercedes data.roll if present.
@@ -113,14 +125,6 @@ export class ChatBuilder {
      */
     static getResult(rv) {
         if (!rv) return false;
-
-        const resultMapping = {
-            [RESULT_TYPE.CRITFAIL]: '<b>Critical Failure</b>',
-            [RESULT_TYPE.FUMBLE]: '<b>Fumble</b>',
-            [RESULT_TYPE.PASSED]: '<b>Passed</b>',
-            [RESULT_TYPE.FAILED]: '<b>Failed</b>',
-        };
-
-        return resultMapping[rv] || `Unknown result type: <b>${rv}</b>`;
+        return this.#resultMapping[rv] || `Unknown result type: <b>${rv}</b>`;
     }
 }
