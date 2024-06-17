@@ -1,7 +1,7 @@
 import { ChatBuilder } from './chat-builder-abstract.js';
 import { HMCONST, HMTABLES } from '../tables/constants.js';
 
-export class SkillCheckBuilder extends ChatBuilder {
+export class SkillCheckChatBuilder extends ChatBuilder {
     constructor(...args) {
         super(...args);
         this.template = 'systems/hackmaster5e/templates/chat/skill.hbs';
