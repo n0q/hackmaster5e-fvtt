@@ -1,7 +1,7 @@
-import { ChatBuilder } from './builder-abstract.js';
-import { InitNoteBuilder } from './initnote-builder.js';
-import { AbilityCheckBuilder } from './ability-check-builder.js';
-import { SkillCheckBuilder } from './skill-check-builder.js';
+import { ChatBuilder } from './chat-builder-abstract.js';
+import { InitNoteBuilder } from './initnote-chat-builder.js';
+import { AbilityCheckBuilder } from './ability-check-chat-builder.js';
+import { SkillCheckBuilder } from './skill-check-chat-builder.js';
 
 /**
  * Enumeration for chat factory types.

@@ -1,4 +1,4 @@
-import { ChatBuilder } from './builder-abstract.js';
+import { ChatBuilder } from './chat-builder-abstract.js';
 import { HMCONST, HMTABLES } from '../tables/constants.js';
 
 export class SkillCheckBuilder extends ChatBuilder {

@@ -1,4 +1,4 @@
-import { BuilderSchema } from './builder-schema.js';
+import { BuilderSchema } from './chat-builder-schema.js';
 
 /**
 * Enumeration for chat result codes.

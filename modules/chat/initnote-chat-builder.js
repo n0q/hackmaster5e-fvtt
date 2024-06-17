@@ -1,4 +1,4 @@
-import { ChatBuilder } from './builder-abstract.js';
+import { ChatBuilder } from './chat-builder-abstract.js';
 
 export class InitNoteBuilder extends ChatBuilder {
     constructor(...args) {
