@@ -1,6 +1,7 @@
-import { ChatBuilder } from './chat-builder-abstract.js';
-import { InitNoteBuilder } from './initnote-chat-builder.js';
 import { AbilityCheckBuilder } from './ability-check-chat-builder.js';
+import { ChatBuilder } from './chat-builder-abstract.js';
+import { CriticalChatBuilder } from './critical-chat-builder.js';
+import { InitNoteBuilder } from './initnote-chat-builder.js';
 import { SkillCheckBuilder } from './skill-check-chat-builder.js';
 
 /**
@@ -11,6 +12,7 @@ export const CHAT_TYPE = Object.freeze({
     INIT_NOTE: Symbol('cftype_init_note'),
     ABILITY_CHECK: Symbol('cftype_abil_check'),
     SKILL_CHECK: Symbol('cftype_skill_check'),
+    CRITICAL: Symbol('cftype_critical')
 });
 
 /**
@@ -26,6 +28,7 @@ const handler = {
         if (type === CHAT_TYPE.INIT_NOTE) return new InitNoteBuilder(...bArgs);
         if (type === CHAT_TYPE.ABILITY_CHECK) return new AbilityCheckBuilder(...bArgs);
         if (type === CHAT_TYPE.SKILL_CHECK) return new SkillCheckBuilder(...bArgs);
+        if (type === CHAT_TYPE.CRITICAL) return new CriticalChatBuilder(...bArgs);
         throw new Error(`Unknown type: ${type}.`);
     },
 };

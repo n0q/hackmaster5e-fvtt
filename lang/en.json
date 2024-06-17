@@ -876,8 +876,8 @@
         },
 
         "CRIT": {
-            "left":     "Left",
-            "right":    "Right"
+            "primary": "Primary",
+            "secondary": "Secondary"
         },
 
         "FUMBLE": {

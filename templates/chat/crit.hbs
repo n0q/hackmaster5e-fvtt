@@ -3,15 +3,16 @@
 {{localize 'HM.severity'}}:
 <b>{{resp.severity}}</b><br>
 {{localize 'HM.location'}}:
-<b>{{critData.location}}</b><br>
+<b>{{mdata.location}}</b><br>
 {{localize 'HM.side'}}:
-{{#if critData.side}}
-    <b>{{localize 'HM.CRIT.left'}}</b>
+{{#if mdata.side}}
+    <b>{{localize 'HM.CRIT.secondary'}}</b>
 {{else}}
-    <b>{{localize 'HM.CRIT.right'}}</b>
+    <b>{{localize 'HM.CRIT.primary'}}</b>
 {{/if}}
 <hr>
-{{critData.result}}
+{{mdata.result}}
 {{#if (getSetting 'hackmaster5e' 'armorDegredation')}}
 <hr>{{localize 'HM.admg'}}: <b>1</b>
 {{/if}}
+{{{rollContent}}}
