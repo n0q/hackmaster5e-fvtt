@@ -1,6 +1,7 @@
 import { ChatBuilder } from './builder-abstract.js';
 import { InitNoteBuilder } from './initnote-builder.js';
 import { AbilityCheckBuilder } from './ability-check-builder.js';
+import { SkillCheckBuilder } from './skill-check-builder.js';
 
 /**
  * Enumeration for chat factory types.
@@ -9,6 +10,7 @@ import { AbilityCheckBuilder } from './ability-check-builder.js';
 export const CHAT_TYPE = Object.freeze({
     INIT_NOTE: Symbol('cftype_init_note'),
     ABILITY_CHECK: Symbol('cftype_abil_check'),
+    SKILL_CHECK: Symbol('cftype_skill_check'),
 });
 
 /**
@@ -23,6 +25,7 @@ const handler = {
         const [type, ...bArgs] = args;
         if (type === CHAT_TYPE.INIT_NOTE) return new InitNoteBuilder(...bArgs);
         if (type === CHAT_TYPE.ABILITY_CHECK) return new AbilityCheckBuilder(...bArgs);
+        if (type === CHAT_TYPE.SKILL_CHECK) return new SkillCheckBuilder(...bArgs);
         throw new Error(`Unknown type: ${type}.`);
     },
 };

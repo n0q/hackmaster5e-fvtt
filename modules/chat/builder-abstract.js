@@ -4,13 +4,18 @@ import { BuilderSchema } from './builder-schema.js';
 * Enumeration for chat result codes.
 * @enum {Symbol}
 */
-const RESULT_TYPE = Object.freeze({
+const RESULT_TYPE = {
     NONE: false,
     CRITFAIL: Symbol('result_critfail'),
+    FAILED: Symbol('result_failed'),
     FUMBLE: Symbol('result_fumble'),
     PASSED: Symbol('result_passed'),
-    FAILED: Symbol('result_failed'),
-});
+    SKILL4: Symbol('result_skill_trivial'),
+    SKILL3: Symbol('result_skill_easy'),
+    SKILL2: Symbol('result_skill_avg'),
+    SKILL1: Symbol('result_skill_diff'),
+    SKILL0: Symbol('result_skill_vdiff'),
+};
 
 /**
  * Chat card builder.
@@ -46,9 +51,14 @@ export class ChatBuilder {
      */
     static #resultMapping = {
         [RESULT_TYPE.CRITFAIL]: '<b>Critical Failure</b>',
+        [RESULT_TYPE.FAILED]: '<b>Failed</b>',
         [RESULT_TYPE.FUMBLE]: '<b>Fumble</b>',
         [RESULT_TYPE.PASSED]: '<b>Passed</b>',
-        [RESULT_TYPE.FAILED]: '<b>Failed</b>',
+        [RESULT_TYPE.SKILL4]: '<b>Trivial Success</b>',
+        [RESULT_TYPE.SKILL3]: '<b>Easy Success</b>',
+        [RESULT_TYPE.SKILL2]: '<b>Average Success</b>',
+        [RESULT_TYPE.SKILL1]: '<b>Difficult Success</b>',
+        [RESULT_TYPE.SKILL0]: '<b>Very Difficult Success</b>',
     };
 
     /**

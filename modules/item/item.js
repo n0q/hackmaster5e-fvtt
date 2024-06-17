@@ -1,5 +1,4 @@
 import { DEFAULT_ICON, HMTABLES, SYSTEM_ID } from '../tables/constants.js';
-import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { HMStates } from '../sys/effects.js';
 import { HMSkillSchema } from './schema/skill-item-schema.js';
@@ -146,21 +145,20 @@ export class HMItem extends Item {
         const {resp} = dialogResp;
 
         Object.values(callers).forEach(async (callerObj) => {
-            const chatMgr = new HMChatMgr();
-            const dataset = {
-                dialog: 'skill',
-                context: callerObj.context,
-                caller:  callerObj.caller,
-                resp,
-            };
-
             const formula = HMTABLES.formula.skill[resp.formulaType];
             const {bonus} = callerObj.context.system;
             const rollData = {resp, bonus};
-            dataset.roll = await new Roll(formula, rollData).evaluate();
+            const roll = await new Roll(formula, rollData).evaluate();
 
-            const card = await chatMgr.getCard({dataset});
-            await ChatMessage.create(card);
+            const bData = {
+                caller: callerObj.caller,
+                context: callerObj.context,
+                resp,
+                roll,
+            };
+
+            const builder = new HMChatFactory(CHAT_TYPE.SKILL_CHECK, bData);
+            return builder.createChatMessage();
         });
     }
 
