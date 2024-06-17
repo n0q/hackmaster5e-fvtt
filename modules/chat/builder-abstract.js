@@ -5,7 +5,7 @@ import { BuilderSchema } from './builder-schema.js';
 * @enum {Symbol}
 */
 const RESULT_TYPE = {
-    NONE: false,
+    NONE: Symbol('result_none'),
     CRITFAIL: Symbol('result_critfail'),
     FAILED: Symbol('result_failed'),
     FUMBLE: Symbol('result_fumble'),
@@ -46,20 +46,33 @@ export class ChatBuilder {
 
     /**
      * Mapping of result types to their corresponding HTML representations.
-     * @type {Object.<Symbol, string>}
+     * @type {Object.<Symbol, string|undefined>}
      * @private
      */
-    static #resultMapping = {
-        [RESULT_TYPE.CRITFAIL]: '<b>Critical Failure</b>',
-        [RESULT_TYPE.FAILED]: '<b>Failed</b>',
-        [RESULT_TYPE.FUMBLE]: '<b>Fumble</b>',
-        [RESULT_TYPE.PASSED]: '<b>Passed</b>',
-        [RESULT_TYPE.SKILL4]: '<b>Trivial Success</b>',
-        [RESULT_TYPE.SKILL3]: '<b>Easy Success</b>',
-        [RESULT_TYPE.SKILL2]: '<b>Average Success</b>',
-        [RESULT_TYPE.SKILL1]: '<b>Difficult Success</b>',
-        [RESULT_TYPE.SKILL0]: '<b>Very Difficult Success</b>',
-    };
+    static #resultCache;
+
+    /**
+     * Initializes #resultCache with the mapping of result types to their corresponding HTML.
+     * Called only once when the cache isn't created yet.
+     * @return {Object.<Symbol, string|undefined} - The initialized result mapping object.
+     * @private
+     * @static
+     */
+    static #initializeResultCache() {
+        this.#resultCache = {
+            [RESULT_TYPE.NONE]: undefined,
+            [RESULT_TYPE.CRITFAIL]: `<b>${game.i18n.localize('HM.CHAT.RESULT.critfail')}</b>`,
+            [RESULT_TYPE.FAILED]: `<b>${game.i18n.localize('HM.CHAT.RESULT.failed')}</b>`,
+            [RESULT_TYPE.FUMBLE]: `<b>${game.i18n.localize('HM.CHAT.RESULT.fumble')}</b>`,
+            [RESULT_TYPE.PASSED]: `<b>${game.i18n.localize('HM.CHAT.RESULT.passed')}</b>`,
+            [RESULT_TYPE.SKILL4]: `<b>${game.i18n.localize('HM.CHAT.RESULT.skill4')}</b>`,
+            [RESULT_TYPE.SKILL3]: `<b>${game.i18n.localize('HM.CHAT.RESULT.skill3')}</b>`,
+            [RESULT_TYPE.SKILL2]: `<b>${game.i18n.localize('HM.CHAT.RESULT.skill2')}</b>`,
+            [RESULT_TYPE.SKILL1]: `<b>${game.i18n.localize('HM.CHAT.RESULT.skill1')}</b>`,
+            [RESULT_TYPE.SKILL0]: `<b>${game.i18n.localize('HM.CHAT.RESULT.skill0')}</b>`,
+        };
+        return this.#resultCache;
+    }
 
     /**
      * Returns a chatMessageData object for creating a chat message.
@@ -134,7 +147,8 @@ export class ChatBuilder {
      * @returns {string} HTML string for result type.
      */
     static getResult(rv) {
-        if (!rv) return false;
-        return this.#resultMapping[rv] || `Unknown result type: <b>${rv}</b>`;
+        if (!rv || rv === RESULT_TYPE.NONE) return false;
+        this.#resultCache ||= this.#initializeResultCache();
+        return this.#resultCache[rv] || `Unknown result type: <b>${rv}</b>`;
     }
 }

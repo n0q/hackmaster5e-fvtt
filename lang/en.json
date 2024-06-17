@@ -84,7 +84,18 @@
             "sthrow":   "Saving Throw",
             "sfc":      "Volatility Check",
             "smc":      "Maximum Mishap Tier",
-            "svr":      "Volatility Rating"
+            "svr":      "Volatility Rating",
+            "RESULT": {
+                "critfail": "Critical Failure",
+                "failed": "Failed",
+                "fumble": "Fumble",
+                "passed": "Passed",
+                "skill4": "Trivial Success",
+                "skill3": "Easy Success",
+                "skill2": "Average Success",
+                "skill1": "Difficult Success",
+                "skill0": "Very Difficult Success"
+            }
         },
 
         "defenseSelect": {
@@ -1098,7 +1109,7 @@
         "TypeWeapon":       "Weapon",
         "TypeWound":        "Wound"
     },
-    
+
     "TYPES": {
         "Actor": {
             "beast":        "Beast",
