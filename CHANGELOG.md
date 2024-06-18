@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [0.4.12] - 2024-06-18
 ### Added
 - Critical hits alert for invalid crits.
 
@@ -12,7 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Fixed
 - Ability checks display calling actor, again.
-- Wounds populating as 0 hp (Sorry!)
+- Corrected damage allocation logic.
 
 ## [0.4.11] - 2024-06-15
 ### Added
