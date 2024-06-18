@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+### Fixed
+- Reach visiblity logic.
+
 ## [0.4.12] - 2024-06-18
 ### Added
 - Critical hits alert for invalid crits.
