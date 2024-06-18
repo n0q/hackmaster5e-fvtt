@@ -1,6 +1,6 @@
-import { ChatBuilder, CBRESULT_TYPE } from './builder-abstract.js';
+import { ChatBuilder } from './chat-builder-abstract.js';
 
-export class AbilityCheckBuilder extends ChatBuilder {
+export class AbilityCheckChatBuilder extends ChatBuilder {
     constructor(...args) {
         super(...args);
         this.template = 'systems/hackmaster5e/templates/chat/check.hbs';
@@ -9,24 +9,22 @@ export class AbilityCheckBuilder extends ChatBuilder {
     async createChatMessage() {
         const {context, mdata, resp, roll} = this.data;
 
-        let flavor = 'Ability Check';
+        const isCompeting = resp.oper === '+';
 
         const rolls = [roll];
-        const rollContent = await roll.render({flavor});
+        const rollFlavor = isCompeting ? 'Competing Ability Check' : 'Ability Check';
+        const rollContent = await roll.render({flavor: rollFlavor});
 
         let rv = false;
         const dieSum = ChatBuilder.getDiceSum(roll);
-        const isCompeting = resp.oper === '+';
 
         if (isCompeting) {
-            flavor = 'Competing Ability Check';
-            if (dieSum === 1) rv = CBRESULT_TYPE.CRITFAIL;
+            if (dieSum === 1) rv = this.RESULT_TYPE.CRITFAIL;
         }
 
         if (!isCompeting) {
-            flavor = 'Ability Check';
-            rv = roll.total < 1 ? CBRESULT_TYPE.PASSED : CBRESULT_TYPE.FAILED;
-            if (dieSum > 19) rv = CBRESULT_TYPE.FUMBLE;
+            rv = roll.total < 1 ? this.RESULT_TYPE.PASSED : this.RESULT_TYPE.FAILED;
+            if (dieSum > 19) rv = this.RESULT_TYPE.FUMBLE;
         }
 
         const resultString = ChatBuilder.getResult(rv);

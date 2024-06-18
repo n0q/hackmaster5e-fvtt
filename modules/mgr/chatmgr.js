@@ -3,9 +3,7 @@
  * @deprecated Use chat/chat-factory.js instead.
  * Abandon all hope, ye who enter here.
  */
-import { HMTABLES, HMCONST, SYSTEM_ID } from '../tables/constants.js';
-import { CRITTABLE } from '../tables/crits.js';
-import { idx } from '../tables/dictionary.js';
+import { HMCONST, SYSTEM_ID } from '../tables/constants.js';
 import { calculateArmorDamage } from '../sys/utils.js';
 
 export class HMChatMgr {
@@ -27,12 +25,6 @@ export class HMChatMgr {
                     break;
                 case 'cast':
                     cData = await createSpellCard(dataset);
-                    break;
-                case 'skill':
-                    cData = await createSkillCard(dataset);
-                    break;
-                case 'crit':
-                    cData = await createCritCard(dataset);
                     break;
                 case 'fumble':
                     cData = await createFumbleCard(dataset);
@@ -180,32 +172,6 @@ async function createFumbleCard(dataset) {
     return {content, roll};
 }
 
-async function createCritCard(dataset) {
-    const {caller, roll, resp} = dataset;
-
-    const critHitString = game.i18n.localize('HM.chatCard.critHit');
-    const dmgTypeString = game.i18n.localize(idx.dmgType[resp.dmgType]);
-    const rollFlavor = `${critHitString} (${dmgTypeString})`;
-    const rollContent = await roll.render({flavor: rollFlavor});
-
-    const rollIdx = CRITTABLE.rollIdx.findIndex((x) => x >= roll.total);
-    const sevIdx = CRITTABLE.sevIdx.findIndex((x) => x >= resp.severity);
-    const critData = {
-        result: CRITTABLE[rollIdx][resp.dmgType][sevIdx],
-        location: CRITTABLE[rollIdx].label,
-        side: roll.total % 2,
-    };
-
-    const template = 'systems/hackmaster5e/templates/chat/crit.hbs';
-    const resultContent = await renderTemplate(template, {resp, critData});
-    const content = resultContent + rollContent;
-
-    const useArmorDegredation = game.settings.get(SYSTEM_ID, 'armorDegredation');
-    if (useArmorDegredation) Hooks.callAll('armorDamage', 1, game.user.id);
-
-    return {content, roll, flavor: caller?.name};
-}
-
 async function createAttackCard(dataset) {
     const {caller, context, roll, resp} = dataset;
 
@@ -347,44 +313,4 @@ async function createDamageCard(dataset) {
     const resultContent = await renderTemplate(template, templateData);
     const content = resultContent + rollContent;
     return {content, roll, flavor: caller.name};
-}
-
-async function createSkillCard(dataset) {
-    const {caller, context, roll, resp} = dataset;
-    const {rollMode, formulaType, dc} = resp;
-    const {TYPE} = HMCONST.SKILL;
-
-    const isSkill = formulaType === TYPE.SKILL || formulaType === TYPE.OPPOSED;
-    let flavor = formulaType === TYPE.OPPOSED ? `${game.i18n.localize('HM.opposed')} ` : '';
-    flavor += isSkill
-        ? ` ${game.i18n.localize('HM.skill')}`
-        : ` ${game.i18n.localize(`HM.${formulaType}`)}`;
-    flavor += ` ${game.i18n.localize('HM.check')}`;
-
-    const rollContent = await roll.render({flavor});
-
-    let specialRow;
-    if (formulaType !== 'opposed') {
-        const {difficulty} = HMTABLES.skill;
-        const rollIdx = difficulty(roll.total);
-        const isQualified = rollIdx === -1;
-
-        if (dc === HMCONST.SKILL.DIFF.AUTO && !isQualified) {
-            specialRow = `${game.i18n.localize(idx.skillLevel[rollIdx])}
-                          ${game.i18n.localize('HM.success')}`;
-        } else {
-            const success = !isQualified && dc - rollIdx >= 0;
-            specialRow = game.i18n.localize(success ? 'HM.passed' : 'HM.failed');
-        }
-    }
-
-    const {specname, system} = context;
-    const level = system.level[isSkill ? TYPE.SKILL : formulaType];
-    const mastery = system.mastery[isSkill ? TYPE.SKILL : formulaType];
-    const templateData = {dc, specialRow, formulaType, mastery, level, specname};
-    const template = 'systems/hackmaster5e/templates/chat/skill.hbs';
-
-    let content = await renderTemplate(template, templateData);
-    content += rollContent;
-    return {content, roll, rollMode, flavor: caller.name};
 }

@@ -3,6 +3,7 @@ import { CRITTABLE } from '../tables/crits.js';
 import { FUMBLETABLE } from '../tables/fumbles.js';
 import { HMItem, advanceClock, setStatusEffectOnToken, unsetStatusEffectOnToken } from './item.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
+import { HMChatFactory, CHAT_TYPE } from '../chat/chat-factory.js';
 import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { transformDamageFormula } from '../sys/utils.js';
 import { HMSocket, SOCKET_TYPES } from '../sys/sockets.js';
@@ -237,21 +238,28 @@ export class HMWeaponItem extends HMItem {
         await ChatMessage.create(card);
     }
 
+    /**
+     * Initiates a critical roll. Shows dialog for a crit, processes the response, then
+     * creates and displays a chat message.
+     *
+     * @param {Object} [options] - The options object.
+     * @param {HMActor} [options.caller] - The calling context.
+     * @returns {Promise<void>}
+     * @static
+     * @async
+     */
     static async rollCrit({caller} = {}) {
         const {actor} = fromCaller(caller);
-
         const dataset = {dialog : 'crit', caller: actor};
         const dialogResp = await HMDialogFactory(dataset, actor);
         const {resp} = dialogResp;
-        dataset.resp = resp;
 
-        if (resp.atkRoll <= resp.defRoll) return;
         const formula = CRITTABLE.formula(resp.atkSize, resp.defSize);
-        dataset.roll = await new Roll(formula).evaluate();
+        const roll = (resp.atkRoll <= resp.defRoll) ? false : await new Roll(formula).evaluate();
 
-        const chatMgr = new HMChatMgr();
-        const card = await chatMgr.getCard({dataset});
-        await ChatMessage.create(card);
+        const bData = {caller, resp, roll};
+        const builder = new HMChatFactory(CHAT_TYPE.CRITICAL, bData);
+        builder.createChatMessage();
     }
 
     static async rollDefend({weapon, caller}={}) {

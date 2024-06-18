@@ -195,10 +195,10 @@ export const HMCONST = {
             MASTER:     5,
         },
         TYPE: {
-            SKILL:      'value',
-            OPPOSED:    'opposed',
-            VERBAL:     'verbal',
-            WRITTEN:    'literacy',
+            SKILL:      0,
+            OPPOSED:    1,
+            VERBAL:     2,
+            WRITTEN:    3,
         },
     },
     SPECIAL: {

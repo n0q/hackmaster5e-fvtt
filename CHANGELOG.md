@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.4.12] - 2024-06-18
+### Added
+- Critical hits alert for invalid crits.
+
+### Changed
+- Critical hits specify Primary or Secondary side, rather than Right or Left.
+
+### Fixed
+- Ability checks display calling actor, again.
+- Corrected damage allocation logic.
+
 ## [0.4.11] - 2024-06-15
 ### Added
 - Foundry v12 API support.

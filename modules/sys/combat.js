@@ -1,7 +1,7 @@
 /* eslint max-classes-per-file: ['error', 2] */
 import { SYSTEM_ID } from '../tables/constants.js';
 import { HMDialogFactory } from '../dialog/dialog-factory.js';
-import { HMChatFactory, CFTYPE } from '../chat/chat-factory.js';
+import { HMChatFactory, CHAT_TYPE } from '../chat/chat-factory.js';
 
 export class HMCombat extends Combat {
     /** @override */
@@ -71,7 +71,7 @@ export class HMCombat extends Combat {
             };
         });
 
-        const builder = new HMChatFactory(CFTYPE.INIT_NOTE, {batch});
+        const builder = new HMChatFactory(CHAT_TYPE.INIT_NOTE, {batch});
         builder.createChatMessage();
     }
 }

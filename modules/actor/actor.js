@@ -174,8 +174,8 @@ export class HMActor extends Actor {
 
         if (!hp) return false;
 
-        const data = {hp, timer: hp, embed, isEmbedded, note};
-        const itemData = {name: 'Wound', type: 'wound', data};
+        const system = {hp, timer: hp, embed, isEmbedded, note};
+        const itemData = {name: 'Wound', type: 'wound', system};
         const context = await Item.create(itemData, {parent: this});
 
         if (notify) {

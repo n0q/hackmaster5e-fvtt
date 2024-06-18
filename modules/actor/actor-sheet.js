@@ -2,7 +2,7 @@ import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMContainer } from '../item/container.js';
 import { HMCONST, HMTABLES, SYSTEM_ID } from '../tables/constants.js';
-import { HMChatFactory, CFTYPE } from '../chat/chat-factory.js';
+import { HMChatFactory, CHAT_TYPE } from '../chat/chat-factory.js';
 import { idx } from '../tables/dictionary.js';
 
 export class HMActorSheet extends ActorSheet {
@@ -314,7 +314,7 @@ export class HMActorSheet extends ActorSheet {
 
         let cardType = false;
 
-        if (dialog === 'ability') cardType = CFTYPE.ABILITY_CHECK;
+        if (dialog === 'ability') cardType = CHAT_TYPE.ABILITY_CHECK;
 
         if (dialog === 'atk') {
             return game[SYSTEM_ID].HMWeaponItem.rollAttack({weapon: dataset.itemId, caller: actor});
