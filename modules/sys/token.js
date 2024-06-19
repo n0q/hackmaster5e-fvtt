@@ -43,7 +43,7 @@ export class HMToken extends Token {
         if (!owner) {
             const {'default': _, ...ownership} = actor.ownership;
             const userId = Object.keys(ownership).find((a) => {
-                const isOwner = ownership[a] === CONST.DOCUMENT_PERMISSION_LEVELS.OWNER;
+                const isOwner = ownership[a] === CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER;
                 const isPlayer = !game.users.get(a)?.isGM;
                 return isOwner && isPlayer;
             });
@@ -149,7 +149,7 @@ export class HMToken extends Token {
         if (!owner) {
             const {'default': _, ...ownership} = actor.ownership;
             const userId = Object.keys(ownership).find((a) => {
-                const isOwner = ownership[a] === CONST.DOCUMENT_PERMISSION_LEVELS.OWNER;
+                const isOwner = ownership[a] === CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER;
                 const isPlayer = !game.users.get(a)?.isGM;
                 return isOwner && isPlayer;
             });

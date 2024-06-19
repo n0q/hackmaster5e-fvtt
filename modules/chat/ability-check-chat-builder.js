@@ -1,10 +1,7 @@
 import { ChatBuilder } from './chat-builder-abstract.js';
 
 export class AbilityCheckChatBuilder extends ChatBuilder {
-    constructor(...args) {
-        super(...args);
-        this.template = 'systems/hackmaster5e/templates/chat/check.hbs';
-    }
+    static template = 'systems/hackmaster5e/templates/chat/check.hbs';
 
     async createChatMessage() {
         const {context, mdata, resp, roll} = this.data;

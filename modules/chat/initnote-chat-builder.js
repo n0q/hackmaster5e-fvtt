@@ -1,10 +1,7 @@
 import { ChatBuilder } from './chat-builder-abstract.js';
 
 export class InitNoteChatBuilder extends ChatBuilder {
-    constructor(...args) {
-        super(...args);
-        this.template = 'systems/hackmaster5e/templates/chat/initNote.hbs';
-    }
+    static template = 'systems/hackmaster5e/templates/chat/initNote.hbs';
 
     /**
      * @typedef {Object} initData

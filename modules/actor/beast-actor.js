@@ -1,4 +1,3 @@
-import { HMTABLES } from '../tables/constants.js';
 import { HMActor } from './actor.js';
 import { HMChatMgr } from '../mgr/chatmgr.js';
 
@@ -60,19 +59,15 @@ export class HMBeastActor extends HMActor {
             const card = await chatmgr.getCard(cardData);
             await ChatMessage.create(card);
 
-            const formula = HMTABLES.formula.save.trauma;
-            const {system, hackmaster5e} = this;
-            const rollContext = {...system, talent: hackmaster5e.talent};
-            const roll = await new Roll(formula, rollContext).evaluate();
-
-            const resp = {rollMode: CONST.DICE_ROLL_MODES.PRIVATE};
-            const dialogResp = {resp};
-
-            cardData.dialog = 'save';
-            cardData.formulaType = 'trauma';
-
-            const topcard = await chatmgr.getCard({dataset: cardData, roll, dialogResp});
-            await ChatMessage.create(topcard);
+            const rollSaveData = {
+                dialog: 'save',
+                formulaType: 'trauma',
+                bData: {
+                    caller: this,
+                    resp: {bonus: 0, rollMode: CONST.DICE_ROLL_MODES.PRIVATE},
+                },
+            };
+            this.rollSave(rollSaveData);
         }
         return woundData;
     }

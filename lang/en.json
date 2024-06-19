@@ -87,8 +87,10 @@
             "svr":      "Volatility Rating",
             "RESULT": {
                 "critfail": "Critical Failure",
+                "dcritfail": "Double Critical Failure",
                 "failed": "Failed",
                 "fumble": "Fumble",
+                "goodbye": "Goodbye",
                 "passed": "Passed",
                 "skill4": "Trivial Success",
                 "skill3": "Easy Success",

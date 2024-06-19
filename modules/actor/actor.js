@@ -3,6 +3,8 @@ import { HMACTOR_TUNABLES } from '../tables/tunables.js';
 import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { HMWeaponProfile } from '../item/weapon-profile.js';
 import { HMItemContainer } from './container-abstract.js';
+import { HMChatFactory, CHAT_TYPE } from '../chat/chat-factory.js';
+import { getDiceSum } from '../sys/utils.js';
 
 export class HMActor extends Actor {
     constructor(...args) {
@@ -188,6 +190,59 @@ export class HMActor extends Actor {
         const dataset = {context, top: hpToP, wound: hp};
         const cardData = {cardtype, dataset};
         return {woundData, cardData};
+    }
+
+    async rollSave(dataset) {
+        const {dialog, formulaType} = dataset;
+        const chatType = formulaType === 'trauma' ? CHAT_TYPE.TRAUMA_CHECK : false;
+        const bData = dataset.bData || await HMDialogFactory({dialog}, this);
+
+        const formula = HMTABLES.formula[dialog][formulaType];
+
+        const rollContext = {
+            ...this.system,
+            resp: bData.resp,
+            talent: this.hackmaster5e.talent,
+        };
+        bData.roll = await new Roll(formula, rollContext).evaluate();
+
+        // Trauma checks may need additional rules..
+        if (chatType === CHAT_TYPE.TRAUMA_CHECK) {
+            const failType = HMCONST.TRAUMA_FAILSTATE;
+
+            let failState = failType.PASSED;
+            bData.batch = [bData.roll];
+
+            // Failure.
+            if (bData.roll.total > 0) {
+                failState = failType.FAILED;
+
+                // KO
+                if (getDiceSum(bData.roll) > 19) {
+                    failState = failType.KO;
+
+                    const {comaCheck, comaDuration, koDuration} = HMTABLES.formula.trauma;
+                    const comaCheckRoll = await new Roll(comaCheck).evaluate();
+                    bData.batch.push(comaCheckRoll);
+
+                    // Coma check
+                    if (comaCheckRoll.total > 19) failState = failType.COMA;
+
+                    const durationFormula = failState === failType.COMA ? comaDuration : koDuration;
+                    const durationRoll = await new Roll(durationFormula).evaluate();
+
+                    if (failState === failType.COMA && durationRoll.total > 19) {
+                        failState = failType.VEGETABLE;
+                    }
+
+                    bData.batch.push(durationRoll);
+                }
+            }
+            bData.mdata = {failState};
+        }
+
+        const builder = new HMChatFactory(chatType, bData);
+        builder.createChatMessage();
     }
 
     async modifyTokenAttribute(attribute, value, isDelta=false, isBar=true) {

@@ -2,14 +2,11 @@ import { ChatBuilder } from './chat-builder-abstract.js';
 import { HMCONST, HMTABLES } from '../tables/constants.js';
 
 export class SkillCheckChatBuilder extends ChatBuilder {
-    constructor(...args) {
-        super(...args);
-        this.template = 'systems/hackmaster5e/templates/chat/skill.hbs';
-    }
+    static template = 'systems/hackmaster5e/templates/chat/skill.hbs';
 
     async createChatMessage() {
         const {resp, roll} = this.data;
-        const {dc, formulaType, rollMode} = resp;
+        const {dc, formulaType} = resp;
         const {SKILL} = HMCONST;
 
         const mdata = this.getMetadata(formulaType, dc);
@@ -33,7 +30,7 @@ export class SkillCheckChatBuilder extends ChatBuilder {
         const chatData = {rollContent, mdata, resultString};
         const content = await renderTemplate(this.template, chatData);
 
-        const chatMessageData = this.getChatMessageData({content, rolls, rollMode});
+        const chatMessageData = this.getChatMessageData({content, rolls, resp});
         await ChatMessage.create(chatMessageData);
     }
 

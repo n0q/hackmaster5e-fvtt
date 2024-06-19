@@ -4,10 +4,7 @@ import { CRITTABLE } from '../tables/crits.js';
 import { idx } from '../tables/dictionary.js';
 
 export class CriticalChatBuilder extends ChatBuilder {
-    constructor(...args) {
-        super(...args);
-        this.template = 'systems/hackmaster5e/templates/chat/crit.hbs';
-    }
+    static template = 'systems/hackmaster5e/templates/chat/crit.hbs';
 
     async createChatMessage() {
         const {resp, roll} = this.data;

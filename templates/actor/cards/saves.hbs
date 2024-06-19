@@ -1,14 +1,16 @@
-{{#if (findBonus 'total' this) includeZero=true}}
-<li class='card'>
+{{#if (findBonus "total" this) includeZero=true}}
+<li class="card">
     <summary>
         <header>
-            <label for='{{this}}'>
-                <img src='{{findConfigValue 'savesImg' this}}' title='{{this}}' height=32'/>
-                <h4 class='card-name'>{{localize (findConfigValue 'saves' @this)}}</h4>
+            <label for="{{this}}">
+                <img src="{{findConfigValue 'savesImg' this}}" title="{{this}}" height=32/>
+                <h4 class="card-name">{{localize (findConfigValue 'saves' @this)}}</h4>
             </label>
         </header>
-        <input class='rollable' type='number' value='{{findBonus 'total' this}}' read-only
-            data-dialog='save' data-formula-type='{{this}}' style='text-align: center;'/>
+        <input class="rollable" type="number" value="{{findBonus 'total' this}}" read-only
+               data-dialog="save"
+               data-formula-type="{{this}}"
+               style="text-align: center;"/>
     </summary>
 </li>
 {{/if}}

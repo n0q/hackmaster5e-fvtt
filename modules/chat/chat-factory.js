@@ -3,16 +3,18 @@ import { AbilityCheckChatBuilder } from './ability-check-chat-builder.js';
 import { CriticalChatBuilder } from './critical-chat-builder.js';
 import { InitNoteChatBuilder } from './initnote-chat-builder.js';
 import { SkillCheckChatBuilder } from './skill-check-chat-builder.js';
+import { TraumaCheckChatBuilder } from './trauma-check-builder.js';
 
 /**
  * Enumeration for chat factory types.
  * @enum {Symbol}
  */
 export const CHAT_TYPE = Object.freeze({
-    INIT_NOTE: Symbol('cftype_init_note'),
     ABILITY_CHECK: Symbol('cftype_abil_check'),
-    SKILL_CHECK: Symbol('cftype_skill_check'),
     CRITICAL: Symbol('cftype_critical'),
+    INIT_NOTE: Symbol('cftype_init_note'),
+    SKILL_CHECK: Symbol('cftype_skill_check'),
+    TRAUMA_CHECK: Symbol('cftype_trauma_check'),
 });
 
 /**
@@ -25,10 +27,11 @@ export const CHAT_TYPE = Object.freeze({
 const handler = {
     construct(_, args) {
         const [type, ...bArgs] = args;
-        if (type === CHAT_TYPE.INIT_NOTE) return new InitNoteChatBuilder(...bArgs);
         if (type === CHAT_TYPE.ABILITY_CHECK) return new AbilityCheckChatBuilder(...bArgs);
-        if (type === CHAT_TYPE.SKILL_CHECK) return new SkillCheckChatBuilder(...bArgs);
         if (type === CHAT_TYPE.CRITICAL) return new CriticalChatBuilder(...bArgs);
+        if (type === CHAT_TYPE.INIT_NOTE) return new InitNoteChatBuilder(...bArgs);
+        if (type === CHAT_TYPE.SKILL_CHECK) return new SkillCheckChatBuilder(...bArgs);
+        if (type === CHAT_TYPE.TRAUMA_CHECK) return new TraumaCheckChatBuilder(...bArgs);
         throw new Error(`Unknown type: ${type}.`);
     },
 };
