@@ -2,10 +2,7 @@ import { ChatBuilder } from './chat-builder-abstract.js';
 import { HMCONST, HMTABLES } from '../tables/constants.js';
 
 export class SkillCheckChatBuilder extends ChatBuilder {
-    constructor(...args) {
-        super(...args);
-        this.template = 'systems/hackmaster5e/templates/chat/skill.hbs';
-    }
+    static template = 'systems/hackmaster5e/templates/chat/skill.hbs';
 
     async createChatMessage() {
         const {resp, roll} = this.data;

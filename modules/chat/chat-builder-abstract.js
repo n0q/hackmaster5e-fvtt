@@ -40,8 +40,14 @@ export class ChatBuilder {
         if (new.target === ChatBuilder) {
             throw new Error('ChatBuilder cannot be instantiated directly.');
         }
+
+        if (!new.target.template) {
+            throw new Error('Subclasses must define a static template property.');
+        }
+
         this.RESULT_TYPE = RESULT_TYPE;
         this.data = new BuilderSchema({...dataset, options});
+        this.template = new.target.template;
     }
 
     /**
