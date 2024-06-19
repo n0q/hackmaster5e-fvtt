@@ -1,8 +1,10 @@
-<b>{{localize special}}</b><br>
-{{#if forever}}
-<i>{{localize status}}</i> <u>{{localize unit}}</u>.
-{{else}}
-    {{#if (gt duration 0)}}
-    <i>{{localize status}}</i> {{toLowerCase (localize 'HM.for')}} <b>{{duration}}</b> {{toLowerCase (localize unit)}}.
-    {{/if}}
+{{#if mdata.failState}}
+    {{localize 'HM.result'}}:
+    <b>{{mdata.result}}</b>
+    <br>
+    {{localize 'HM.duration'}}:
+    <b>{{mdata.duration}} {{mdata.unit}}</b>
 {{/if}}
+<hr>
+{{#if resultString}}{{{resultString}}}{{/if}}
+{{#each rollContent}}{{{this}}}{{/each}}

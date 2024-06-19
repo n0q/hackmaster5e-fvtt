@@ -74,3 +74,19 @@ export const transformDamageFormula = (stringTerms, operation=new Set()) => {
     };
     return setComparator(stringTerms, operation);
 };
+
+/**
+ * Extracts the sum of the dice rolled from a Roll object,
+ * ignoring any constants or other terms.
+ * @param {Roll} roll - The Roll object containing the dice and other terms.
+ * @returns {number} The sum of the dice rolled.
+ */
+export const getDiceSum = (roll) => {
+    let sum = 0;
+    for (let i = 0; i < roll.terms.length; i++) {
+        for (let j = 0; j < roll.terms[i]?.results?.length; j++) {
+            sum += roll.terms[i].results[j].result;
+        }
+    }
+    return sum;
+};

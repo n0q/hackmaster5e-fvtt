@@ -309,12 +309,13 @@ export class HMActorSheet extends ActorSheet {
         ev.stopPropagation();
         const element = ev.currentTarget;
         const {dataset} = element;
-        const {dialog} = dataset;
+        const {dialog, formulaType} = dataset;
         const {actor} = this;
 
         let cardType = false;
 
         if (dialog === 'ability') cardType = CHAT_TYPE.ABILITY_CHECK;
+        if (formulaType === 'trauma') return actor.rollSave(dataset);
 
         if (dialog === 'atk') {
             return game[SYSTEM_ID].HMWeaponItem.rollAttack({weapon: dataset.itemId, caller: actor});
@@ -341,7 +342,6 @@ export class HMActorSheet extends ActorSheet {
             const cData = {dataset, dialogResp};
 
             let {formula} = dataset;
-            const {formulaType} = dataset;
             if (formulaType) formula = HMTABLES.formula[dialog][formulaType];
             const {context, resp} = dialogResp;
             const {hackmaster5e, system} = context;

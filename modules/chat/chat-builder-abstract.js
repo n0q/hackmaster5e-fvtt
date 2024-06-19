@@ -7,8 +7,10 @@ import { BuilderSchema } from './chat-builder-schema.js';
 const RESULT_TYPE = {
     NONE: Symbol('result_none'),
     CRITFAIL: Symbol('result_critfail'),
+    DCRITFAIL: Symbol('result_dcritfail'),
     FAILED: Symbol('result_failed'),
     FUMBLE: Symbol('result_fumble'),
+    GOODBYE: Symbol('result_goodbye'),
     PASSED: Symbol('result_passed'),
     SKILL4: Symbol('result_skill_trivial'),
     SKILL3: Symbol('result_skill_easy'),
@@ -35,6 +37,7 @@ export class ChatBuilder {
      * @param {Object[]} dataset.batch - Bulk object data for batch processing.
      * @param {Object} dataset.mdata - Details for chat card enrichment.
      * @param {Object} dataset.options - Options passed directly to ChatMessage.create().
+     * @prop {string} template - Path to hbs template. Must be defined by subclasses.
      */
     constructor(dataset, options) {
         if (new.target === ChatBuilder) {
@@ -68,8 +71,10 @@ export class ChatBuilder {
         this.#resultCache = {
             [RESULT_TYPE.NONE]: undefined,
             [RESULT_TYPE.CRITFAIL]: `<b>${game.i18n.localize('HM.CHAT.RESULT.critfail')}</b>`,
+            [RESULT_TYPE.DCRITFAIL]: `<b>${game.i18n.localize('HM.CHAT.RESULT.dcritfail')}</b>`,
             [RESULT_TYPE.FAILED]: `<b>${game.i18n.localize('HM.CHAT.RESULT.failed')}</b>`,
             [RESULT_TYPE.FUMBLE]: `<b>${game.i18n.localize('HM.CHAT.RESULT.fumble')}</b>`,
+            [RESULT_TYPE.GOODBYE]: `<b>${game.i18n.localize('HM.CHAT.RESULT.goodbye')}</b>`,
             [RESULT_TYPE.PASSED]: `<b>${game.i18n.localize('HM.CHAT.RESULT.passed')}</b>`,
             [RESULT_TYPE.SKILL4]: `<b>${game.i18n.localize('HM.CHAT.RESULT.skill4')}</b>`,
             [RESULT_TYPE.SKILL3]: `<b>${game.i18n.localize('HM.CHAT.RESULT.skill3')}</b>`,

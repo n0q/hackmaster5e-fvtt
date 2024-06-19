@@ -4,8 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+### Changed
+- Extended trauma checks now specify 'Coma Check' instead of 'Comatose Check'.
+- Improved trauma check chat cards.
+
 ### Fixed
 - Reach visiblity logic.
+- Comatose results on trauma checks used KO duration formula.
 
 ## [0.4.12] - 2024-06-18
 ### Added

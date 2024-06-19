@@ -92,59 +92,6 @@ function getSpecialMoveFlavor(resp) {
     return mods.length ? ` (${mods.join(', ')})` : '';
 }
 
-async function saveExtendedTrauma(content, roll) {
-    const rolls = [roll];
-    let exContent = content;
-    const context = {
-        'duration': Math.max(roll.total * 5, 0),
-        'special': 'HM.passed',
-        'forever': false,
-    };
-
-    if (roll.total > 0) {
-        context.unit    = 'HM.seconds';
-        context.status  = 'HM.incapacitated';
-        context.special = 'HM.failed';
-
-        if (getDiceSum(roll) > 19) {
-            let newroll = await new Roll('5d6p').evaluate();
-            rolls.push(newroll);
-            let flavor = `${game.i18n.localize('HM.knockout')} ${game.i18n.localize('HM.duration')}`;
-            exContent += `<br> ${await newroll.render({flavor})}`;
-            context.duration = newroll.total;
-            context.unit     = 'HM.minutes';
-            context.status   = 'HM.knockedout';
-            context.special  = 'HM.critical';
-
-            newroll = await new Roll('d20').evaluate();
-            rolls.push(newroll);
-            flavor = `${game.i18n.localize('HM.comatose')} ${game.i18n.localize('HM.check')}`;
-            exContent += `<br> ${await newroll.render({flavor})}`;
-
-            if (newroll.total === 20) {
-                context.duration = newroll.total;
-                context.unit     = 'HM.days';
-                context.status   = 'HM.comatose';
-                context.special  = 'HM.doublecritical';
-
-                newroll = await new Roll('d20').evaluate();
-                rolls.push(newroll);
-                flavor = `${game.i18n.localize('HM.comatose')} ${game.i18n.localize('HM.duration')}`;
-                exContent += `<br> ${await newroll.render({flavor})}`;
-                if (newroll.total === 20) {
-                    context.forever = true;
-                    context.special = 'HM.goodbye';
-                    context.unit    = 'HM.indefinitely';
-                }
-            }
-        }
-    }
-
-    const template = 'systems/hackmaster5e/templates/chat/trauma.hbs';
-    const label = await renderTemplate(template, context);
-    return {content: label + exContent, rolls};
-}
-
 function getGMs() {
     return game.users.reduce((arr, u) => {
         if (u.isGM) arr.push(u.id);
@@ -235,14 +182,8 @@ async function createSaveCard(roll, dataset, dialogResp) {
         saveType += game.i18n.localize(`HM.saves.${dataset.formulaType}`);
     }
     const flavor = `${saveType} ${game.i18n.localize('HM.save')}`;
-    let content = await roll.render({flavor});
+    const content = await roll.render({flavor});
 
-    if (dataset.formulaType === 'trauma') {
-        const extended = await saveExtendedTrauma(content, roll);
-        content = extended.content;
-        const pool = foundry.dice.terms.PoolTerm.fromRolls(extended.rolls);
-        roll = Roll.fromTerms([pool]);
-    }
     return {content, roll, rollMode};
 }
 

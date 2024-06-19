@@ -236,6 +236,13 @@ export const HMCONST = {
         WEAPON: 0,
         EFFECT: 1,
     },
+    TRAUMA_FAILSTATE: {
+        PASSED: 0,
+        FAILED: 1,
+        KO: 2,
+        COMA: 3,
+        VEGETABLE: 4,
+    },
 };
 
 // system rules
@@ -612,6 +619,7 @@ export const HMTABLES = {
             [HMCONST.SKILL.TYPE.VERBAL]:    'd100 - (@resp.bonus + @bonus.total.verbal)',
             [HMCONST.SKILL.TYPE.WRITTEN]:   'd100 - (@resp.bonus + @bonus.total.literacy)',
         },
+        trauma: {comaCheck: 'd20', comaDuration: 'd20', koDuration: '5d6p'},
     },
     bracket: {
         fame: (value) => {
