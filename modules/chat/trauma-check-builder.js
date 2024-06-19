@@ -29,7 +29,7 @@ export class TraumaCheckChatBuilder extends ChatBuilder {
 
         const content = await renderTemplate(this.template, chatData);
 
-        const chatMessageData = this.getChatMessageData({content});
+        const chatMessageData = this.getChatMessageData({content, resp});
         await ChatMessage.create(chatMessageData);
     }
 

@@ -108,7 +108,9 @@ export class ChatBuilder {
             };
 
             if (!obj.rolls) rollData.rolls = Array.isArray(roll) ? roll : [roll];
-            if (!obj.rollMode) rollData.rollMode = game.settings.get('core', 'rollMode');
+            rollData.rollMode = obj.rollMode
+                ?? obj.resp?.rollMode
+                ?? game.settings.get('core', 'rollMode');
             Object.assign(chatMessageData, rollData);
         }
         return chatMessageData;

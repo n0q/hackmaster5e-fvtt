@@ -6,7 +6,7 @@ export class SkillCheckChatBuilder extends ChatBuilder {
 
     async createChatMessage() {
         const {resp, roll} = this.data;
-        const {dc, formulaType, rollMode} = resp;
+        const {dc, formulaType} = resp;
         const {SKILL} = HMCONST;
 
         const mdata = this.getMetadata(formulaType, dc);
@@ -30,7 +30,7 @@ export class SkillCheckChatBuilder extends ChatBuilder {
         const chatData = {rollContent, mdata, resultString};
         const content = await renderTemplate(this.template, chatData);
 
-        const chatMessageData = this.getChatMessageData({content, rolls, rollMode});
+        const chatMessageData = this.getChatMessageData({content, rolls, resp});
         await ChatMessage.create(chatMessageData);
     }
 
