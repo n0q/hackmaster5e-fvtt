@@ -3,10 +3,11 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [0.4.13] - 2024-06-19
 ### Changed
 - Extended trauma checks now specify 'Coma Check' instead of 'Comatose Check'.
 - Improved trauma check chat cards.
+- Automatic ToP checks now specify beast token name.
 
 ### Fixed
 - Reach visiblity logic.
