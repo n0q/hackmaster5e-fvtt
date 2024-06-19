@@ -195,7 +195,8 @@ export class HMActor extends Actor {
     async rollSave(dataset) {
         const {dialog, formulaType} = dataset;
         const chatType = formulaType === 'trauma' ? CHAT_TYPE.TRAUMA_CHECK : false;
-        const bData = await HMDialogFactory({dialog}, this);
+        const bData = dataset.bData || await HMDialogFactory({dialog}, this);
+
         const formula = HMTABLES.formula[dialog][formulaType];
 
         const rollContext = {
