@@ -314,8 +314,8 @@ export class HMActorSheet extends ActorSheet {
 
         let cardType = false;
 
+        if (dialog === 'save') return actor.rollSave(dataset);
         if (dialog === 'ability') cardType = CHAT_TYPE.ABILITY_CHECK;
-        if (formulaType === 'trauma') return actor.rollSave(dataset);
 
         if (dialog === 'atk') {
             return game[SYSTEM_ID].HMWeaponItem.rollAttack({weapon: dataset.itemId, caller: actor});

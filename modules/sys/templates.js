@@ -61,6 +61,7 @@ export const preloadHandlebarsTemplates = () => {
         `${templatePath}/chat/fumble.hbs`,
         `${templatePath}/chat/top.hbs`,
         `${templatePath}/chat/trauma.hbs`,
+        `${templatePath}/chat/chat-save.hbs`,
         `${templatePath}/chat/skill.hbs`,
         `${templatePath}/chat/spell.hbs`,
         `${templatePath}/chat/parts/volatility.hbs`,

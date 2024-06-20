@@ -29,9 +29,6 @@ export class HMChatMgr {
                 case 'fumble':
                     cData = await createFumbleCard(dataset);
                     break;
-                case 'save':
-                    cData = await createSaveCard(roll, dataset, dialogResp);
-                    break;
                 default:
             }
         } else if (cardtype === HMCONST.CARD_TYPE.ALERT) {
