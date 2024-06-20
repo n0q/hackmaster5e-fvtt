@@ -4,7 +4,7 @@
  * Abandon all hope, ye who enter here.
  */
 import { HMCONST, SYSTEM_ID } from '../tables/constants.js';
-import { calculateArmorDamage } from '../sys/utils.js';
+import { calculateArmorDamage, getDiceSum } from '../sys/utils.js';
 
 export class HMChatMgr {
     constructor() { this._user = game.user.id; }
@@ -51,16 +51,6 @@ export class HMChatMgr {
 
         return {...chatData, ...options};
     }
-}
-
-function getDiceSum(roll) {
-    let sum = 0;
-    for (let i = 0; i < roll.terms.length; i++) {
-        for (let j = 0; j < roll.terms[i]?.results?.length; j++) {
-            sum += roll.terms[i].results[j].result;
-        }
-    }
-    return sum;
 }
 
 function getSpecialMoveFlavor(resp) {
@@ -168,20 +158,6 @@ async function createDefenseCard(dataset) {
     const resultContent = await renderTemplate(template, templateData);
     const content = resultContent + rollContent;
     return {content, roll, flavor: caller.name};
-}
-
-async function createSaveCard(roll, dataset, dialogResp) {
-    const {rollMode} = dialogResp.resp;
-    let saveType = (dataset.formulaType === 'fos' || dataset.formulaType === 'foa') ? 'Feat of ' : '';
-    if (dataset.ability) {
-        saveType = game.i18n.localize(`HM.abilityLong.${dataset.ability.toLowerCase()}`);
-    } else {
-        saveType += game.i18n.localize(`HM.saves.${dataset.formulaType}`);
-    }
-    const flavor = `${saveType} ${game.i18n.localize('HM.save')}`;
-    const content = await roll.render({flavor});
-
-    return {content, roll, rollMode};
 }
 
 async function createSpellCard(dataset) {
