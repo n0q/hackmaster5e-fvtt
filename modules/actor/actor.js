@@ -192,11 +192,22 @@ export class HMActor extends Actor {
         return {woundData, cardData};
     }
 
+    /**
+     * Performs a roll save based on the provided dataset. If the roll type is 'trauma',
+     * it applies additional trauma rules.
+     *
+     * @async
+     * @param {Object} dataset - The dataset containing necessary information for the roll.
+     * @param {stgring} dataset.dialog - The dialog type for the roll.
+     * @param {string} dataset.formulaType - The formula type for the roll (e.g., 'trauma').
+     * @param {Object} [dataset.bData] - Optional base data for the roll.
+     * @returns {Promise<void>}
+     */
     async rollSave(dataset) {
         const {dialog, formulaType} = dataset;
-        const chatType = formulaType === 'trauma' ? CHAT_TYPE.TRAUMA_CHECK : false;
-        const bData = dataset.bData || await HMDialogFactory({dialog}, this);
-
+        const chatType = formulaType === 'trauma' ? CHAT_TYPE.TRAUMA_CHECK : CHAT_TYPE.SAVE_CHECK;
+        let bData = dataset.bData || await HMDialogFactory({dialog}, this);
+        bData.mdata = dataset;
         const formula = HMTABLES.formula[dialog][formulaType];
 
         const rollContext = {
@@ -204,42 +215,9 @@ export class HMActor extends Actor {
             resp: bData.resp,
             talent: this.hackmaster5e.talent,
         };
+
         bData.roll = await new Roll(formula, rollContext).evaluate();
-
-        // Trauma checks may need additional rules..
-        if (chatType === CHAT_TYPE.TRAUMA_CHECK) {
-            const failType = HMCONST.TRAUMA_FAILSTATE;
-
-            let failState = failType.PASSED;
-            bData.batch = [bData.roll];
-
-            // Failure.
-            if (bData.roll.total > 0) {
-                failState = failType.FAILED;
-
-                // KO
-                if (getDiceSum(bData.roll) > 19) {
-                    failState = failType.KO;
-
-                    const {comaCheck, comaDuration, koDuration} = HMTABLES.formula.trauma;
-                    const comaCheckRoll = await new Roll(comaCheck).evaluate();
-                    bData.batch.push(comaCheckRoll);
-
-                    // Coma check
-                    if (comaCheckRoll.total > 19) failState = failType.COMA;
-
-                    const durationFormula = failState === failType.COMA ? comaDuration : koDuration;
-                    const durationRoll = await new Roll(durationFormula).evaluate();
-
-                    if (failState === failType.COMA && durationRoll.total > 19) {
-                        failState = failType.VEGETABLE;
-                    }
-
-                    bData.batch.push(durationRoll);
-                }
-            }
-            bData.mdata = {failState};
-        }
+        if (chatType === CHAT_TYPE.TRAUMA_CHECK) bData = await getTraumaBData(bData);
 
         const builder = new HMChatFactory(chatType, bData);
         builder.createChatMessage();
@@ -274,4 +252,48 @@ export class HMActor extends Actor {
 
         this.setHP();
     }
+}
+
+/**
+ * Processes trauma-specific logic based on the initial roll data.
+ * Evaluates additional rolls for coma and KO duration as needed.
+ *
+ * @param {Object} bData - The base data from the initial roll.
+ * @param {Roll} bData.roll = The initial roll result.
+ * @param {Array|Roll} bData.batch - An array to store additional roll results.
+ * @returns {Promise<Object>} - Resolves to the updated bData object.
+ * @async
+ */
+async function getTraumaBData(bData) {
+    const traumaData = bData;
+    const failType = HMCONST.TRAUMA_FAILSTATE;
+
+    let failState = failType.PASSED;
+    traumaData.batch = [traumaData.roll];
+
+    if (traumaData.roll.total <= 0) return {...traumaData, mdata: {failState}};
+
+    // Extended Trauma rules.
+    failState = failType.FAILED;
+    if (getDiceSum(traumaData.roll) > 19) {
+        failState = failType.KO;
+
+        const {comaCheck, comaDuration, koDuration} = HMTABLES.formula.trauma;
+        const comaCheckRoll = await new Roll(comaCheck).evaluate();
+        traumaData.batch.push(comaCheckRoll);
+
+        // Coma check
+        if (comaCheckRoll.total > 19) failState = failType.COMA;
+
+        const durationFormula = failState === failType.COMA ? comaDuration : koDuration;
+        const durationRoll = await new Roll(durationFormula).evaluate();
+
+        if (failState === failType.COMA && durationRoll.total > 19) {
+            failState = failType.VEGETABLE;
+        }
+
+        traumaData.batch.push(durationRoll);
+    }
+    traumaData.mdata = {failState};
+    return traumaData;
 }

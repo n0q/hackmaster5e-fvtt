@@ -97,6 +97,19 @@
                 "skill2": "Average Success",
                 "skill1": "Difficult Success",
                 "skill0": "Very Difficult Success"
+            },
+            "SAVE": {
+                "dodge": "Dodge Save",
+                "foa": "Feat of Agility",
+                "fos": "Feat of Strength",
+                "mental": "Mental Save",
+                "morale": "Morale Check",
+                "physical": "Physical Save",
+                "poison": "Poison Save",
+                "tenacity": "Tenacity Check",
+                "trauma": "Trauma Save",
+                "turning": "Turning Check",
+                "will": "Will Save"
             }
         },
 
