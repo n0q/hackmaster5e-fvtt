@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.4.15] - 2024-06-21
+### Fixed
+- Spell fatigue timing issues for v11.
+
+## [0.4.14] - 2024-06-21
+### Fixed
+- Spell fatigue timing issues.
+
+## [0.4.13] - 2024-06-19
+### Changed
+- Extended trauma checks now specify 'Coma Check' instead of 'Comatose Check'.
+- Improved trauma check chat cards.
+- Automatic ToP checks now specify beast token name.
+
+### Fixed
+- Reach visiblity logic.
+- Comatose results on trauma checks used KO duration formula.
+
+## [0.4.12] - 2024-06-18
+### Added
+- Critical hits alert for invalid crits.
+
+### Changed
+- Critical hits specify Primary or Secondary side, rather than Right or Left.
+
+### Fixed
+- Ability checks display calling actor, again.
+- Corrected damage allocation logic.
+
+## [0.4.11] - 2024-06-15
+### Added
+- Foundry v12 API support.
+- Ability Checks correctly declare passes, fails, crit fails, and fumbles.
+
+### Changed
+- Changed button labels on ability checks to be (even) more clear.
+- Removed Drag Ruler from recommended module list until it is v12 compatible.
+
+### Fixed
+- Race items failed to validate under certain circumstances.
+
+### Removed
+- Foundry v11 API support.
+
 ## [0.4.10] - 2024-06-02
 ### Added
 - Fatigue Factor rating to armors.
