@@ -11,11 +11,16 @@ export class HMCombatHooks {
             const effects = combatant.actor.effects.filter((y) => y.isTemporary === true);
             effects.map(async (effect) => {
                 const {remaining, startRound} = effect.duration;
+
+                // effects without a duration have duration.remaining set to null.
+                if (remaining === null) return;
+
                 const started = startRound <= combat.round;
                 if ((!started &&               !effect.disabled)        // Case 1: Before effect
                   || (started &&  remaining &&  effect.disabled)        // Case 2: During effect
                   || (started && !remaining && !effect.disabled)) {     // Case 3: After effect
                     await effect.update({disabled: !effect.disabled});
+
                     combatant.token._object.drawReach();
                     const {tokenId} = combatant;
                     HMSocket.emit(SOCKET_TYPES.DRAW_REACH, tokenId);
