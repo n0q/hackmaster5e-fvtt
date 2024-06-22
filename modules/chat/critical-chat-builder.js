@@ -9,7 +9,8 @@ export class CriticalChatBuilder extends ChatBuilder {
     async createChatMessage() {
         const {resp, roll} = this.data;
         if (Object.keys(roll).length === 0) {
-            ui.notifications.info('Not a crit.');
+            const badcrit = game.i18n.localize('HM.CHAT.STRING.badcrit');
+            ui.notifications.info(badcrit);
             return;
         }
 
