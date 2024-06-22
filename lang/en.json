@@ -85,6 +85,7 @@
             "sfc":      "Volatility Check",
             "smc":      "Maximum Mishap Tier",
             "svr":      "Volatility Rating",
+
             "RESULT": {
                 "critfail": "Critical Failure",
                 "dcritfail": "Double Critical Failure",
@@ -98,6 +99,7 @@
                 "skill1": "Difficult Success",
                 "skill0": "Very Difficult Success"
             },
+
             "SAVE": {
                 "dodge": "Dodge Save",
                 "foa": "Feat of Agility",
@@ -110,6 +112,10 @@
                 "trauma": "Trauma Save",
                 "turning": "Turning Check",
                 "will": "Will Save"
+            },
+
+            "STRING": {
+                "badcrit": "Invalid: Critical attacks require the attack roll to be greater than the defense roll."
             }
         },
 

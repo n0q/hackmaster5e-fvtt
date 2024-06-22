@@ -9,14 +9,13 @@ export const actorHasEffects = (actor, statusList) => {
 
 export class HMStates {
     static async setStatusEffect(token, id, duration=null) {
-        const {effects} = token.actor;
+        const {actor} = token;
+        const {effects} = actor;
         let effect = effects.find((fx) => fx.statuses.has(id));
         if (effect && !duration) return;
 
         if (!effect) {
-            const idx = CONFIG.statusEffects.findIndex((x) => x.id === id);
-            const obj = token.document ? token.document : token;
-            await obj.toggleActiveEffect(CONFIG.statusEffects[idx]);
+            await actor.toggleStatusEffect(id);
             effect = effects.find((fx) => fx.statuses.has(id));
         }
 
@@ -24,13 +23,12 @@ export class HMStates {
     }
 
     static async unsetStatusEffect(token, id) {
-        const effects = token.actor.effects;
+        const {actor} = token;
+        const effects = actor.effects;
         const effect = effects.find((fx) => fx.statuses.has(id));
         if (effect && !effect.disabled) {
-            const idx = CONFIG.statusEffects.findIndex((x) => x.id === id);
             await effect.update({disabled: true});
-            const obj = token.document ? token.document : token;
-            await obj.toggleActiveEffect(CONFIG.statusEffects[idx]);
+            await actor.toggleStatusEffect(id);
         }
     }
 }
