@@ -735,55 +735,55 @@ export const HMTABLES = {
         ],
         statusEffects: {
             blind: {
-                label: 'EFFECT.StatusBlind',
-                icon: 'icons/svg/blind.svg',
+                name: 'EFFECT.StatusBlind',
+                img: 'icons/svg/blind.svg',
                 changes: [
                     {key: 'system.bonus.state.def', value: '-8', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
                     {key: 'system.bonus.state.atk', value: '-8', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
                 ],
             },
             defense1: {
-                label: 'EFFECT.defense1',
-                icon: 'systems/hackmaster5e/styles/icons/swords-emblem1.svg',
+                name: 'EFFECT.defense1',
+                img: 'systems/hackmaster5e/styles/icons/swords-emblem1.svg',
                 changes: [
                     {key: 'system.bonus.state.def', value:  '1', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
                     {key: 'system.bonus.state.atk', value: '-2', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
                 ],
             },
             defense2: {
-                label: 'EFFECT.defense2',
-                icon: 'systems/hackmaster5e/styles/icons/swords-emblem2.svg',
+                name: 'EFFECT.defense2',
+                img: 'systems/hackmaster5e/styles/icons/swords-emblem2.svg',
                 changes: [
                     {key: 'system.bonus.state.def', value:  '2', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
                     {key: 'system.bonus.state.atk', value: '-4', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
                 ],
             },
             defense3: {
-                label: 'EFFECT.defense3',
-                icon: 'systems/hackmaster5e/styles/icons/swords-emblem3.svg',
+                name: 'EFFECT.defense3',
+                img: 'systems/hackmaster5e/styles/icons/swords-emblem3.svg',
                 changes: [
                     {key: 'system.bonus.state.def', value:  '3', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
                     {key: 'system.bonus.state.atk', value: '-6', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
                 ],
             },
             defense4: {
-                label: 'EFFECT.defense4',
-                icon: 'systems/hackmaster5e/styles/icons/swords-emblem4.svg',
+                name: 'EFFECT.defense4',
+                img: 'systems/hackmaster5e/styles/icons/swords-emblem4.svg',
                 changes: [
                     {key: 'system.bonus.state.def', value:  '4', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
                     {key: 'system.bonus.state.atk', value: '-8', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
                 ],
             },
             aggressive: {
-                label: 'EFFECT.aggressive',
-                icon: 'systems/hackmaster5e/styles/icons/saber-slash.svg',
+                name: 'EFFECT.aggressive',
+                img: 'systems/hackmaster5e/styles/icons/saber-slash.svg',
                 changes: [
                     {key: 'system.bonus.state.def', value: '-2', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
                 ],
             },
             charge: {
-                label: 'EFFECT.charge',
-                icon: 'systems/hackmaster5e/styles/icons/shield-bash.svg',
+                name: 'EFFECT.charge',
+                img: 'systems/hackmaster5e/styles/icons/shield-bash.svg',
                 changes: [{
                     key: 'system.bonus.state.def',
                     value: [
@@ -797,29 +797,29 @@ export const HMTABLES = {
                 ],
             },
             fullparry: {
-                label: 'EFFECT.fullparry',
-                icon: 'systems/hackmaster5e/styles/icons/sword-clash.svg',
+                name: 'EFFECT.fullparry',
+                img: 'systems/hackmaster5e/styles/icons/sword-clash.svg',
                 changes: [
                     {key: 'system.bonus.state.def', value: '5', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
                 ],
             },
             gground: {
-                label: 'EFFECT.gground',
-                icon: 'systems/hackmaster5e/styles/icons/swordman.svg',
+                name: 'EFFECT.gground',
+                img: 'systems/hackmaster5e/styles/icons/swordman.svg',
                 changes: [
                     {key: 'system.bonus.state.atk', value: '-1', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
                 ],
             },
             scamper: {
-                label: 'EFFECT.scamper',
-                icon: 'systems/hackmaster5e/styles/icons/dodging.svg',
+                name: 'EFFECT.scamper',
+                img: 'systems/hackmaster5e/styles/icons/dodging.svg',
                 changes: [
                     {key: 'system.bonus.state.atk', value: '-4', mode: CONST.ACTIVE_EFFECT_MODES.ADD},
                 ],
             },
             sfatigue: {
-                label: 'EFFECT.sfatigue',
-                icon: 'systems/hackmaster5e/styles/icons/stoned-skull.svg',
+                name: 'EFFECT.sfatigue',
+                img: 'systems/hackmaster5e/styles/icons/stoned-skull.svg',
                 changes: [
                     {
                         key: 'system.bonus.state.def',
@@ -833,8 +833,8 @@ export const HMTABLES = {
                 ],
             },
             incap: {
-                label: 'EFFECT.incap',
-                icon: 'systems/hackmaster5e/styles/icons/nailed-head.svg',
+                name: 'EFFECT.incap',
+                img: 'systems/hackmaster5e/styles/icons/nailed-head.svg',
             },
         },
     },
