@@ -64,7 +64,7 @@ export class HMSpellItem extends HMItem {
                 return;
             }
             sp.value -= sum;
-            await actor.update({'data.sp': sp});
+            await actor.update({'system.sp': sp});
         }
 
         if (resp.divine && resp.button === 'cast') {

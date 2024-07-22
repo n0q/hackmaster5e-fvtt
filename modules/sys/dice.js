@@ -1,5 +1,5 @@
 /* eslint-disable */
-export class HMDie extends Die {
+export class HMDie extends foundry.dice.terms.Die {
     static MODIFIERS = {...this.MODIFIERS, p: 'penetrate'};
 
     get total() {

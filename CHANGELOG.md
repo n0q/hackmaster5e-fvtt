@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.4.18] - 2024-07-22
+### Changed
+- Improved spell library logic.
+
+### Fixed
+- Spell Point totals subtract while casting, again (oops).
+
 ## [0.4.17] - 2024-06-22
 ### Fixed
 - Permanent status effect timing issues.

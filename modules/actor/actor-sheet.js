@@ -93,8 +93,13 @@ export class HMActorSheet extends ActorSheet {
         );
 
         const {spellLevels} = idx;
+        const minLevel = actor.spells[0]?.system?.lidx;
         const maxLevel = Math.max(...spell.map((s) => s.system.lidx));
-        const spellLevelArray = Object.entries(spellLevels).filter(([k]) => k <= maxLevel);
+
+        const spellLevelArray = Object.entries(spellLevels).filter(
+            ([k]) => Math.clamp(k, minLevel, maxLevel) === Number(k),
+        );
+
         actor.slevels = Object.fromEntries(spellLevelArray);
         actor.talents = actor.itemTypes.talent.sort((a, b) => a.name.localeCompare(b.name));
         actor.money = this.money();
