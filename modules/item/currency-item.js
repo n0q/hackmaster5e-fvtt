@@ -1,28 +1,15 @@
-import { DEFAULT_ICON_CURRENCY, HMTABLES, SYSTEM_ID } from '../tables/constants.js';
+import { HMTABLES, SYSTEM_ID } from '../tables/constants.js';
 import { HMItem } from './item.js';
 
 const COIN_CFG = HMTABLES.currency;
 
 export class HMCurrencyItem extends HMItem {
-    static DEFAULT_ICON = DEFAULT_ICON_CURRENCY;
-
     prepareBaseData() {
         super.prepareBaseData();
-        this._prepCurrencyData();
     }
 
     prepareDerivedData() {
         super.prepareDerivedData();
-    }
-
-    _prepCurrencyData() {
-        const {system} = this;
-        if (!this.isOwner) return;
-        if (!system?.coins || !Object.entries(system.coins).length) {
-            const coins = {};
-            Object.keys(COIN_CFG.coins).forEach((coin) => { coins[coin] = {qty: 0}; });
-            this.update({'system.coins': coins});
-        }
     }
 
     get _currencyData() {

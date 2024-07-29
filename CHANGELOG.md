@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.4.19] - 2024-07-28
+### Added
+- Elevation Ruler native support.
+
+### Fixed
+- No longer possible to have a null qty of coins.
+- New currency items use proper default image again.
+- New armor was not instantiating under some circumstances.
+
+### Removed
+- DevMode native support.
+
 ## [0.4.18] - 2024-07-22
 ### Changed
 - Improved spell library logic.

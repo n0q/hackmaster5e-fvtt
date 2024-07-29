@@ -13,7 +13,6 @@ import { handleSocketEvent } from '../sys/sockets.js';
 export const registerHooks = () => {
     Hooks.once('ready', ready);
     Hooks.once('setup', HMActiveEffectHooks.setupStatusEffects);
-    Hooks.once('devModeReady', HMSupportHooks.devModeReady);
     Hooks.once('dragRuler.ready', HMSupportHooks.dragRuler_ready);
     Hooks.on('diceSoNiceRollStart', HMSupportHooks.diceSoNiceRollStart);
     Hooks.on('applyActiveEffect', HMActiveEffectHooks.applyActiveEffect);
@@ -43,7 +42,8 @@ export const registerHooks = () => {
 };
 
 async function ready() {
-    // if (game.modules.get('_dev-mode')?.api?.getPackageDebugValue(SYSTEM_ID)) {
+    HMSupportHooks.registerSupportModules();
+
     if (game.user.isGM) {
         const tItem = game.items.contents.find((a) => a.name === 'test');
         if (tItem) { tItem.sheet.render(true); }
