@@ -3,8 +3,17 @@
 /* eslint class-methods-use-this: 0 */
 import { SYSTEM_ID } from '../tables/constants.js';
 import { HMDie } from '../sys/dice.js';
+import { tokenHPAttribute, HM_ER_SPEED } from '../integrations/elevationruler.js';
 
 export class HMSupportHooks {
+    static registerSupportModules() {
+        if (CONFIG.elevationruler) {
+            const {SPEED} = CONFIG.elevationruler;
+            CONFIG.elevationruler.tokenHPAttribute = tokenHPAttribute;
+            CONFIG.elevationruler.SPEED = foundry.utils.mergeObject(SPEED, HM_ER_SPEED);
+        }
+    }
+
     static async devModeReady({ registerPackageDebugFlag }) {
         registerPackageDebugFlag(SYSTEM_ID);
     }

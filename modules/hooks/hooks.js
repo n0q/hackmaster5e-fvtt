@@ -43,7 +43,8 @@ export const registerHooks = () => {
 };
 
 async function ready() {
-    // if (game.modules.get('_dev-mode')?.api?.getPackageDebugValue(SYSTEM_ID)) {
+    HMSupportHooks.registerSupportModules();
+
     if (game.user.isGM) {
         const tItem = game.items.contents.find((a) => a.name === 'test');
         if (tItem) { tItem.sheet.render(true); }
