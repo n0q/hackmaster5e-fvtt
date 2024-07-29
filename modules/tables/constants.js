@@ -1,7 +1,10 @@
 export const SYSTEM_ID = 'hackmaster5e';
 export const SYSTEM_SOCKET = `system.${SYSTEM_ID}`;
-export const DEFAULT_ICON = 'icons/magic/symbols/question-stone-yellow.webp';
-export const DEFAULT_ICON_CURRENCY = 'icons/commodities/currency/coins-plain-stack-gold-yellow.webp';
+
+export const HM_ICON = {
+    default: 'icons/magic/symbols/question-stone-yellow.webp',
+    currency: 'icons/commodities/currency/coins-plain-stack-gold-yellow.webp',
+};
 
 // TODO: ITEM_STATE and itemstate are the same table.
 export const HMCONST = {

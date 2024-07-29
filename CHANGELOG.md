@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Fixed
 - No longer possible to have a null qty of coins.
+- New currency items use proper default image again.
 
 ### Removed
 - DevMode native support.
