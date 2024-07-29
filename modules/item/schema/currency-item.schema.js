@@ -1,4 +1,4 @@
-import { HMCONST } from '../../tables/constants.js';
+import { HMCONST, HMTABLES } from '../../tables/constants.js';
 
 export class HMCurrencySchema extends foundry.abstract.DataModel {
     static defineSchema() {
@@ -11,4 +11,14 @@ export class HMCurrencySchema extends foundry.abstract.DataModel {
             coins: new fields.ObjectField({required: false, initial: {}}),
         };
     }
+
+    /* eslint-disable no-param-reassign */
+    static migrateData(source) {
+        if ('coins' in source) {
+            const coins = foundry.utils.deepClone(HMTABLES.currency.coins);
+            Object.keys(coins).forEach((coin) => { coins[coin].qty = 0; });
+            source.coins = foundry.utils.mergeObject(coins, source.coins);
+        }
+    }
+    /* eslint-enable no-param-reassign */
 }

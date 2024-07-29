@@ -8,21 +8,10 @@ export class HMCurrencyItem extends HMItem {
 
     prepareBaseData() {
         super.prepareBaseData();
-        this._prepCurrencyData();
     }
 
     prepareDerivedData() {
         super.prepareDerivedData();
-    }
-
-    _prepCurrencyData() {
-        const {system} = this;
-        if (!this.isOwner) return;
-        if (!system?.coins || !Object.entries(system.coins).length) {
-            const coins = {};
-            Object.keys(COIN_CFG.coins).forEach((coin) => { coins[coin] = {qty: 0}; });
-            this.update({'system.coins': coins});
-        }
     }
 
     get _currencyData() {

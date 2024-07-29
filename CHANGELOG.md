@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 ### Added
 - Elevation Ruler native support.
+
+### Fixed
+- No longer possible to have a null qty of coins.
+
 ### Removed
 - DevMode native support.
 
