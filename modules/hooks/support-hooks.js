@@ -14,10 +14,6 @@ export class HMSupportHooks {
         }
     }
 
-    static async devModeReady({ registerPackageDebugFlag }) {
-        registerPackageDebugFlag(SYSTEM_ID);
-    }
-
     static diceSoNiceRollStart(...args) {
         return diceSoNiceRollStartHandler(...args);
     }
