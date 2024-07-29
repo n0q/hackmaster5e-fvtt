@@ -24,7 +24,7 @@ export class HMArmorSchema extends foundry.abstract.DataModel {
             ...new ThingSchema(),
             description: new fields.HTMLField({required: false, initial: undefined}),
             armortype: new fields.NumberField(typeOpts),
-            proficiency: new fields.StringField({required: false, initial: null}),
+            proficiency: new fields.StringField({required: false, initial: undefined}),
             damage: new fields.NumberField({required: false, initial: 0, integer: true}),
             bonus: new fields.SchemaField({
                 total: getVectorSchema(),
