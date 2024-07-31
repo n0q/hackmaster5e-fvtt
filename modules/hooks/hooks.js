@@ -13,7 +13,7 @@ import { handleSocketEvent } from '../sys/sockets.js';
 export const registerHooks = () => {
     Hooks.once('ready', ready);
     Hooks.once('setup', HMActiveEffectHooks.setupStatusEffects);
-    Hooks.once('dragRuler.ready', HMSupportHooks.dragRuler_ready);
+    Hooks.once('dragRuler.ready', HMSupportHooks.dragRulerReady);
     Hooks.on('diceSoNiceRollStart', HMSupportHooks.diceSoNiceRollStart);
     Hooks.on('applyActiveEffect', HMActiveEffectHooks.applyActiveEffect);
     Hooks.on('createActiveEffect', HMActiveEffectHooks.createActiveEffect);
