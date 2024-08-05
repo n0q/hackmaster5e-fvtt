@@ -10,10 +10,13 @@ function getSpeed(ranged, wData, specialMove=0) {
     }
 
     const s4c = HMTABLES.weapons.s4c.spd;
+    const minSpd = HMTABLES.weapons.scale[wData.scale].minspd;
+    const resetSpd = Math.ceil(spd / 2) || 0;
 
     return {
         declare: Number(specialMove) === HMCONST.SPECIAL.SET4CHARGE ? s4c : spd,
         melee: Number(specialMove) === HMCONST.SPECIAL.JAB ? jspd : spd,
+        reset: Math.max(resetSpd, minSpd),
     };
 }
 
@@ -36,7 +39,8 @@ export class AttackPrompt extends HMPrompt {
         super(dialogData, options);
         const weapon = dialogData.weapons[0];
         const weaponsList = HMPrompt.getSelectFromProperty(dialogData.weapons, 'name');
-        const capList = this.getCapList(weapon, dialogData?.caller);
+        const inCombat = dialogData.inCombat ?? false;
+        const capList = this.getCapList(weapon, dialogData?.caller, inCombat);
         const defense = getDefense(dialogData?.caller.effects);
 
         const wData = weapon.system;
@@ -57,21 +61,21 @@ export class AttackPrompt extends HMPrompt {
             weaponsList,
             widx: 0,
             range: HMCONST.RANGED.REACH.SHORT,
-            advance: dialogData.inCombat,
+            advance: inCombat,
             SPECIAL,
             charge: SPECIAL.CHARGE4,
         });
     }
 
     update(options) {
-        const {weapons, widx, caller} = this.dialogData;
+        const {weapons, widx, caller, inCombat} = this.dialogData;
         const {SPECIAL} = HMCONST;
         let specialMove = Number(this.dialogData.specialMove);
         const weapon  = weapons[widx];
         const wData   = weapon.system;
         const ranged  = wData.ranged.checked;
         const reach   = wData.ranged?.reach ?? wData.reach;
-        const capList = this.getCapList(weapons[widx], caller);
+        const capList = this.getCapList(weapons[widx], caller, inCombat ?? false);
 
         if (!(specialMove in capList)) specialMove = Object.keys(capList)[0];
 
@@ -95,11 +99,14 @@ export class AttackPrompt extends HMPrompt {
 
         const ranged = !!weapons[widx].system.ranged.checked;
         const advance = ranged && button !== 'shoot' ? spd[specialMove] : spd[button];
+        const defense = specialMove === HMCONST.SPECIAL.FULLPARRY
+            ? HMCONST.DEFENSE.FULLPARRY
+            : Number(this.dialogData.defense);
 
         const dialogResp = {
             widx,
             specialMove,
-            defense: Number(this.dialogData.defense),
+            defense,
             ranged,
             reach: Number(this.dialogData.range),
             reachmod: HMTABLES.weapons.ranged.reach[this.dialogData.range],

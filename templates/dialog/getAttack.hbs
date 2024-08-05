@@ -80,6 +80,13 @@
                 {{#if (and advance inCombat)}}<sub>{{spd.melee}}</sub>{{/if}}
             </span>
         </button>
+        {{else if (eq SPECIAL.RESET specialMove)}}
+        <button type='submit' class='dialog-button normal default' data-button='reset'>
+            <span class='hm-clock'>
+                <label>{{localize 'HM.reset'}}</label>
+                {{#if (and advance inCombat)}}<sub>{{spd.reset}}</sub>{{/if}}
+            </span>
+        </button>
         {{else}}
         <button type='submit' class='dialog-button normal default' data-button='melee'>
             <span class='hm-clock'>

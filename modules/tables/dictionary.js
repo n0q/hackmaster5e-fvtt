@@ -112,6 +112,7 @@ idx.special = {
     [HMCONST.SPECIAL.BACKSTAB]:   'HM.specSelect.stab',
     [HMCONST.SPECIAL.FLEEING]:    'HM.specSelect.flee',
     [HMCONST.SPECIAL.SET4CHARGE]: 'HM.specSelect.s4c',
+    [HMCONST.SPECIAL.RESET]:      'HM.specSelect.reset',
     [HMCONST.SPECIAL.RSTANDARD]:  'HM.specSelect.rstd',
     [HMCONST.SPECIAL.SNAPSHOT]:   'HM.specSelect.snap',
     [HMCONST.SPECIAL.LOAD]:       'HM.specSelect.load',

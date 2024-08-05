@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [0.4.19] - 2024-07-28
 ### Added
 - Elevation Ruler native support.
+- Reset Weapon Count shifts actor init to half weapon speed.
 
 ### Fixed
 - No longer possible to have a null qty of coins.

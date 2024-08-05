@@ -36,6 +36,7 @@ export class DamagePrompt extends HMPrompt {
         delete capsObj[SPECIAL.FULLPARRY];
         delete capsObj[SPECIAL.WITHDRAWL];
         delete capsObj[SPECIAL.CHARGE];
+        delete capsObj[SPECIAL.RESET];
         if (actor.canBackstab && !ranged) capsObj[SPECIAL.BACKSTAB] = special[SPECIAL.BACKSTAB];
         return capsObj;
     }
