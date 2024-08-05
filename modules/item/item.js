@@ -10,8 +10,11 @@ import { HMChatFactory, CHAT_TYPE } from '../chat/chat-factory.js';
 
 export class HMItem extends Item {
     static getDefaultArtwork(data = {}) {
-        const img = HM_ICON[data.type] ?? HM_ICON.default;
-        return {img};
+        const {img, texture} = super.getDefaultArtwork(data);
+        return {
+            img: HM_ICON[data.type] ?? HM_ICON.default ?? img,
+            texture: {src: texture},
+        };
     }
 
     /** @override */
