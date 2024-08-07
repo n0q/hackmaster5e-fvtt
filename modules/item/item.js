@@ -1,4 +1,4 @@
-import { HM_ICON, HMTABLES, SYSTEM_ID } from '../tables/constants.js';
+import { HM_ICON, HMCONST, HMTABLES, SYSTEM_ID } from '../tables/constants.js';
 import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { HMStates } from '../sys/effects.js';
 import { HMSkillSchema } from './schema/skill-item-schema.js';
@@ -10,8 +10,11 @@ import { HMChatFactory, CHAT_TYPE } from '../chat/chat-factory.js';
 
 export class HMItem extends Item {
     static getDefaultArtwork(data = {}) {
-        const img = HM_ICON[data.type] ?? HM_ICON.default;
-        return {img};
+        const {img, texture} = super.getDefaultArtwork(data);
+        return {
+            img: HM_ICON[data.type] ?? HM_ICON.default ?? img,
+            texture: {src: texture},
+        };
     }
 
     /** @override */
@@ -171,13 +174,17 @@ export class HMItem extends Item {
 }
 
 export async function advanceClock(comData, dialogResp, smartInit=false) {
-    const {active}    = game.combats;
-    const {combatant} = comData;
-    const delta       = Number(dialogResp.resp.advance);
-    const oldInit     = smartInit
-        ? Math.max(comData.initiative, comData.round)
-        : comData.round;
-    const newInit     = oldInit + delta;
+    const {active} = game.combats;
+    const {resp} = dialogResp;
+    const {combatant, round, initiative} = comData;
+    const isReset = resp.specialMove === HMCONST.SPECIAL.RESET;
+    const delta = isReset
+        ? Number(resp.advance + round - initiative) || 0
+        : Number(resp.advance) || 0;
+    const oldInit = smartInit
+        ? Math.max(initiative, round)
+        : round;
+    const newInit = oldInit + delta;
     active.setInitiative(combatant.id, newInit);
 
     const batch = [{

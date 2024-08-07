@@ -4,7 +4,7 @@ export class BuilderSchema extends foundry.abstract.DataModel {
         const datasetOpts = {
             required: false,
             initial: undefined,
-            readonly: true,
+            readonly: false,
         };
 
         /**

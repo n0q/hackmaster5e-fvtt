@@ -3,7 +3,12 @@
     <section class='hm-chat-note-row'>
         <span>
             <b>{{delta}}</b><i class='fa fa-hourglass-half'></i>
-            {{name}} ({{oldInit}} <i class='fa fa-arrow-right'></i> {{newInit}})
+            {{name}}
+            {{#if (gt newInit oldInit)}}
+            ({{oldInit}} <i class='fa fa-arrow-right'></i> {{newInit}})
+            {{else}}
+            ({{newInit}} <i class='fa fa-arrow-left'></i> {{oldInit}})
+            {{/if}}
         </span>
         {{#unless @index}}
         <a class='button message-delete'><i class='fas fa-trash'></i></a>

@@ -205,26 +205,27 @@ export const HMCONST = {
         },
     },
     SPECIAL: {
-        STANDARD:    0,
-        JAB:         1,
-        BACKSTAB:    2,
-        FLEEING:     3,
-        FULLPARRY:   4,
-        SET4CHARGE:  5,
-        AGGRESSIVE: 16,
-        WITHDRAWL:  17,
-        CHARGE:     18,
-        CHARGE4:    18,
-        CHARGE2:    19,
-        RSTANDARD:  32,
-        SNAPSHOT:   33,
-        LOAD:       34,
-        DRAW:       35,
-        AIM:        36,
-        DEFEND:     64,
-        RDEFEND:    65,
-        GGROUND:    66,
-        SCAMPER:    67,
+        STANDARD:   0b00000000,
+        JAB:        0b00000001,
+        BACKSTAB:   0b00000010,
+        FLEEING:    0b00000011,
+        FULLPARRY:  0b00000100,
+        SET4CHARGE: 0b00000101,
+        RESET:      0b00001000,
+        AGGRESSIVE: 0b00010000,
+        WITHDRAWL:  0b00010001,
+        CHARGE:     0b00010010,
+        CHARGE4:    0b00010010,
+        CHARGE2:    0b00010011,
+        RSTANDARD:  0b00100000,
+        SNAPSHOT:   0b00100001,
+        LOAD:       0b00100010,
+        DRAW:       0b00100011,
+        AIM:        0b00100100,
+        DEFEND:     0b01000000,
+        RDEFEND:    0b01000001,
+        GGROUND:    0b01000010,
+        SCAMPER:    0b01000011,
     },
     SVR: {
         NORMAL:     0,
@@ -856,6 +857,7 @@ export const HMTABLES = {
                 HMCONST.SPECIAL.AGGRESSIVE,
                 HMCONST.SPECIAL.WITHDRAWL,
                 HMCONST.SPECIAL.CHARGE,
+                HMCONST.SPECIAL.RESET,
             ],
             ranged: [
                 HMCONST.SPECIAL.RSTANDARD,
@@ -910,7 +912,7 @@ export const HMTABLES = {
                 const tlength = timingOrder.length;
                 for (let i = 0; i < tlength; i++) adjArr[i] = Math.ceil((dt - i) / tlength);
 
-                const timingNew = duplicate(timing);
+                const timingNew = foundry.utils.duplicate(timing);
 
                 // We run through the array twice to ensure all possible bonuses are applied.
                 for (let j = 2*tlength - 1; j >= 0; j--) {

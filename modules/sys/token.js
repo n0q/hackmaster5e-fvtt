@@ -1,5 +1,6 @@
 import { SYSTEM_ID, HMCONST, HMTABLES } from '../tables/constants.js';
 import { actorHasEffects } from './effects.js';
+import { HMWoundItem } from '../item/wound-item.js';
 
 export const FILL_TYPE = {
     ZERO:       0b00,
@@ -160,12 +161,9 @@ export class HMToken extends Token {
     }
 
     async addWound(wdata) {
-        if (arguments.length === 2 && wdata === undefined) {
-            ui.notifications.error('This macro is obsolete. Please get a new copy from the system compendium.');
-            return undefined;
-        }
         if (!this.actor) return false;
-        return this.actor.addWound({notify: true, wdata});
+        const notify = true;
+        return HMWoundItem.addWound(notify, this.actor, wdata);
     }
 }
 

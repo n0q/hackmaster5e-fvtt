@@ -1,5 +1,4 @@
 import { HMActor } from './actor.js';
-import { HMChatMgr } from '../mgr/chatmgr.js';
 
 export class HMBeastActor extends HMActor {
     prepareBaseData() {
@@ -51,24 +50,23 @@ export class HMBeastActor extends HMActor {
     // Placeholder value.
     getAbilityBonus() { return 2; } // eslint-disable-line
 
-    async addWound(...args) {
-        const {woundData, cardData} = await super.addWound(...args);
-        if (cardData) {
-            cardData.dataset.hidden = true;
-            const chatmgr = new HMChatMgr();
-            const card = await chatmgr.getCard(cardData);
-            await ChatMessage.create(card);
+    /**
+     * onWound event handler.
+     * @param {...*} args - Passed to parent handler.
+     */
+    onWound(traumaCheck, tenacityCheck) {
+        const whisper = game.users.filter((u) => u.isGM).map((u) => u.id);
+        const options = {whisper};
+        super.onWound(traumaCheck, tenacityCheck, options);
 
-            const rollSaveData = {
-                dialog: 'save',
-                formulaType: 'trauma',
-                bData: {
-                    caller: this,
-                    resp: {bonus: 0, rollMode: CONST.DICE_ROLL_MODES.PRIVATE},
-                },
-            };
-            this.rollSave(rollSaveData);
-        }
-        return woundData;
+        const rollSaveData = {
+            caller: this,
+            context: this,
+            dialog: 'save',
+            resp: {bonus: 0, rollMode: CONST.DICE_ROLL_MODES.PRIVATE},
+        };
+
+        if (traumaCheck) this.rollSave({...rollSaveData, formulaType: 'trauma'});
+        if (tenacityCheck) this.rollSave({...rollSaveData, formulaType: 'tenacity'});
     }
 }

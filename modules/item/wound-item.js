@@ -1,4 +1,6 @@
+import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { HMItem } from './item.js';
+import { HMCONST } from '../tables/constants.js';
 
 export class HMWoundItem extends HMItem {
     prepareBaseData() {
@@ -11,6 +13,36 @@ export class HMWoundItem extends HMItem {
 
     onClick(ev) {
         this.WoundAction(ev);
+    }
+
+    static async addWound(notify, context, wdata) {
+        const woundData = wdata ?? (await HMDialogFactory({dialog: 'wound'})).resp;
+        const {hp, assn, armorDamage, embed, isEmbedded, note} = woundData;
+
+        if (armorDamage) {
+            const armor = context.itemTypes.armor.find((a) => (
+                a.system.state === HMCONST.ITEM_STATE.EQUIPPED
+                && !a.system.isShield
+            ));
+            if (armor) armor.damageArmorBy(armorDamage);
+        }
+
+        if (!hp) return;
+
+        const system = {hp, timer: hp, embed, isEmbedded, note};
+        const itemData = {name: 'Wound', type: 'wound', system};
+        await Item.create(itemData, {parent: context});
+
+        if (notify) {
+            ui.notifications.info(`<b>${context.name}</b> receives <b>${hp}</b> HP of damage.`);
+        }
+
+        const hpTrauma = context.system.hp.top;
+        const hpTenacity = context.system.hp.tenacity;
+        const traumaCheck = hpTrauma < (hp + assn);
+        const tenacityCheck = hpTenacity < hp;
+
+        context.onWound(traumaCheck, tenacityCheck);
     }
 
     async WoundAction(event) {

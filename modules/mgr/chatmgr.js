@@ -31,8 +31,6 @@ export class HMChatMgr {
                     break;
                 default:
             }
-        } else if (cardtype === HMCONST.CARD_TYPE.ALERT) {
-            cData = await createToPAlert(dataset);
         }
 
         const chatData = {
@@ -77,13 +75,6 @@ function getSpecialMoveFlavor(resp) {
     if (resp.dodge) mods.push(game.i18n.localize('HM.dodged'));
     if (resp.strBonus) mods.push(game.i18n.localize('HM.ability.str'));
     return mods.length ? ` (${mods.join(', ')})` : '';
-}
-
-function getGMs() {
-    return game.users.reduce((arr, u) => {
-        if (u.isGM) arr.push(u.id);
-        return arr;
-    }, []);
 }
 
 async function createFumbleCard(dataset) {
@@ -197,14 +188,6 @@ async function createSpellCard(dataset) {
 
     const content = await renderTemplate(template, {...dataset, rollContent});
     return {content, whisper, roll, squelch, flavor: caller.name};
-}
-
-async function createToPAlert(dataset) {
-    const template = 'systems/hackmaster5e/templates/chat/top.hbs';
-    const content = await renderTemplate(template, dataset);
-    const flavor = dataset.context.parent.name;
-    const whisper = dataset?.hidden ? getGMs() : undefined;
-    return {content, flavor, whisper};
 }
 
 async function createDamageCard(dataset) {

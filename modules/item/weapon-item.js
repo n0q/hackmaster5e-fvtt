@@ -125,10 +125,15 @@ export class HMWeaponItem extends HMItem {
         const {context, resp} = dialogResp;
 
         const {SPECIAL} = HMCONST;
-        const {specialMove, defense} = resp;
+        const {specialMove, button, defense} = resp;
 
-        // Full Parry, Defensive Fighting exclusivity.
         if (active && opt.isCombatant) {
+            if (specialMove === SPECIAL.RESET) {
+                await advanceClock(comData, dialogResp, true);
+                return;
+            }
+
+            // Full Parry, Defensive Fighting exclusivity.
             specialMove === SPECIAL.FULLPARRY
                 ? setStatusEffectOnToken(comData, 'fullparry', resp.advance)
                 : await unsetStatusEffectOnToken(comData, 'fullparry');
@@ -139,7 +144,7 @@ export class HMWeaponItem extends HMItem {
             if (defense) setStatusEffectOnToken(comData, HMTABLES.effects.defense[defense]);
         }
 
-        if (dialogResp.resp.button !== 'declare') {
+        if (button !== 'declare') {
             const {atk} = HMTABLES.formula;
             const formula = specialMove < 16 ? atk[SPECIAL.STANDARD] : atk[specialMove];
             const rollContext = {resp, ...context.system};

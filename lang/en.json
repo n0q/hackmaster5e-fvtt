@@ -73,6 +73,12 @@
         },
 
         "CHAT": {
+            "ALERT": {
+                "TENACITY.flavor": "Tenacity Alert",
+                "TENACITY.text": "Damage exceeds <i>Tenacity Limit.</i>",
+                "TRAUMA.flavor": "Trauma Alert",
+                "TRAUMA.text": "Damage exceeds <i>Threshold of Pain.</i>"
+            },
             "cspell":   "Clerical Spell",
             "ctime":    "Casting Time",
             "def":      "Defense Roll",
@@ -248,25 +254,26 @@
         },
 
         "specSelect": {
+            "aim":      "Aim Only",
             "agg":      "Aggressive Attack",
             "charge":   "Charge",
             "def":      "Standard Defense",
-            "rstd":     "Ranged Attack",
-            "load":     "Load Only",
             "draw":     "Draw Only",
-            "aim":      "Aim Only",
-            "snap":     "Snapshot",
-            "rdef":     "Ranged Defense",
-            "jab":      "Jab Attack",
             "flee":     "Fleeing Opponent",
             "fparry":   "Full Parry",
-            "wdrawl":   "Fighting Withdrawl",
             "ggnd":     "Give Ground",
-            "s4c":      "Set for Charge",
+            "jab":      "Jab Attack",
+            "load":     "Load Only",
+            "rdef":     "Ranged Defense",
+            "reset":    "Reset Weapon Count",
+            "rstd":     "Ranged Attack",
             "sback":    "Scamper Back",
             "sfatigue": "Spell Fatigue",
+            "snap":     "Snapshot",
             "stab":     "Backstab",
-            "std":      "Standard Attack"
+            "std":      "Standard Attack",
+            "s4c":      "Set for Charge",
+            "wdrawl":   "Fighting Withdrawl"
         },
 
         "statbonus": {
@@ -754,6 +761,7 @@
         "quantity":     "Quantity",
         "quirks":       "Quirks",
         "qty":          "Qty",
+        "reset":        "Reset",
         "tactics":      "Tactics",
         "talents":      "Talents",
         "tenacity":     "Tenacity",
