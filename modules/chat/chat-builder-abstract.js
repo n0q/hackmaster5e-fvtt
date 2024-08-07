@@ -54,6 +54,16 @@ export class ChatBuilder {
     }
 
     /**
+     * Updates this.data with new information after builder instantiation.
+     * @param {string} key - this.data key to update.
+     * @param {Object} value - An object containing data to merge into this.data[key].
+     */
+    update(key, value) {
+        this.data[key] ??= {};
+        foundry.utils.mergeObject(this.data[key], value);
+    }
+
+    /**
      * Mapping of result types to their corresponding HTML representations.
      * @type {Object.<Symbol, string|undefined>}
      * @private
@@ -108,10 +118,12 @@ export class ChatBuilder {
             };
 
             if (!obj.rolls) rollData.rolls = Array.isArray(roll) ? roll : [roll];
-            rollData.rollMode = obj.rollMode
+            Object.assign(chatMessageData, rollData);
+
+            const rollMode = obj.rollMode
                 ?? obj.resp?.rollMode
                 ?? game.settings.get('core', 'rollMode');
-            Object.assign(chatMessageData, rollData);
+            ChatMessage.applyRollMode(chatMessageData, rollMode);
         }
         return chatMessageData;
     }
@@ -127,14 +139,21 @@ export class ChatBuilder {
     }
 
     /**
+     * Generates a message to send to chat.
+     * Contents of this.data.options overrides chatMessageData, if present.
+     * @param {Object} chatMessageData - object to pass to ChatMessage.create()
+     */
+    render(chatMessageData) {
+        const obj = {...chatMessageData, ...this.data.options};
+        ChatMessage.create(obj);
+    }
+
+    /**
      * @static
      * @return {string[]} List of GM ids on the game.
      */
-    static getGMs() {
-        return game.users.reduce((arr, u) => {
-            if (u.isGM) arr.push(u.id);
-            return arr;
-        }, []);
+    static get getGMs() {
+        return game.users.filter((u) => u.isGM).map((u) => u.id);
     }
 
     /**

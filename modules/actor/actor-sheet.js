@@ -3,6 +3,7 @@ import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMContainer } from '../item/container.js';
 import { HMCONST, HMTABLES, SYSTEM_ID } from '../tables/constants.js';
 import { HMChatFactory, CHAT_TYPE } from '../chat/chat-factory.js';
+import { HMWoundItem } from '../item/wound-item.js';
 import { idx } from '../tables/dictionary.js';
 
 export class HMActorSheet extends ActorSheet {
@@ -213,7 +214,7 @@ export class HMActorSheet extends ActorSheet {
         const itemData = {name: itemName, type};
 
         const {dialog} = dataset;
-        if (dialog === 'wound') { await this.actor.addWound(); } else
+        if (dialog === 'wound') { await HMWoundItem.addWound(true, this.actor); } else
         if (dialog) {
             const dialogResp = await HMDialogFactory(dataset, this.actor);
             itemData.data = dialogResp.data;

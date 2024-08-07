@@ -3,10 +3,17 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+### Added
+- Reset Weapon Count shifts actor init to half weapon speed.
+- Tenacity alerts and auto-saves.
+
+### Fixed
+- Blind rolls were not always coming up blind.
+
 ## [0.4.19] - 2024-07-28
 ### Added
 - Elevation Ruler native support.
-- Reset Weapon Count shifts actor init to half weapon speed.
 
 ### Fixed
 - No longer possible to have a null qty of coins.

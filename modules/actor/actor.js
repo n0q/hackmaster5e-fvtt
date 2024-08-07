@@ -162,39 +162,26 @@ export class HMActor extends Actor {
         console.error(`${cName} does not have a getAbilityBonus() function.`);
     }
 
-    async addWound({notify, wdata} = {}) {
-        const woundData = wdata ?? (await HMDialogFactory({dialog: 'wound'})).resp;
-        const {hp, assn, armorDamage, embed, isEmbedded, note} = woundData;
+    onWound(traumaCheck, tenacityCheck, options) {
+        const bData = {caller: this};
+        const builder = new HMChatFactory(CHAT_TYPE.ALERT_NOTE, bData, options);
+        const ALERT_TYPE = builder.ALERT_TYPE;
 
-        if (armorDamage) {
-            const armor = this.itemTypes.armor.find((a) => (
-                a.system.state === HMCONST.ITEM_STATE.EQUIPPED
-                && !a.system.isShield
-            ));
-            if (armor) armor.damageArmorBy(armorDamage);
+        if (traumaCheck) {
+            builder.update('mdata', {type: ALERT_TYPE.TRAUMA});
+            builder.createChatMessage();
         }
 
-        if (!hp) return false;
-
-        const system = {hp, timer: hp, embed, isEmbedded, note};
-        const itemData = {name: 'Wound', type: 'wound', system};
-        const context = await Item.create(itemData, {parent: this});
-
-        if (notify) {
-            ui.notifications.info(`<b>${this.name}</b> receives <b>${hp}</b> HP of damage.`);
+        if (tenacityCheck) {
+            builder.update('mdata', {type: ALERT_TYPE.TENACITY});
+            builder.createChatMessage();
         }
-
-        const hpToP = this.system.hp.top;
-        if (!hpToP || hpToP >= (hp + assn)) return {woundData};
-        const cardtype = HMCONST.CARD_TYPE.ALERT;
-        const dataset = {context, top: hpToP, wound: hp};
-        const cardData = {cardtype, dataset};
-        return {woundData, cardData};
     }
 
     /**
      * Performs a roll save based on the provided dataset. If the roll type is 'trauma',
      * it applies additional trauma rules.
+     * NOTE: Desperate need of refactor once mgr/chatmgr.js is gone.
      *
      * @async
      * @param {Object} dataset - The dataset containing necessary information for the roll.
@@ -206,10 +193,11 @@ export class HMActor extends Actor {
     async rollSave(dataset) {
         const {dialog, formulaType} = dataset;
         const chatType = formulaType === 'trauma' ? CHAT_TYPE.TRAUMA_CHECK : CHAT_TYPE.SAVE_CHECK;
-        let bData = dataset.bData || await HMDialogFactory({dialog}, this);
-        bData.mdata = dataset;
-        const formula = HMTABLES.formula[dialog][formulaType];
+        let bData = dataset;
+        if (!bData.resp) bData = {...bData, ...(await HMDialogFactory({dialog}, this))};
+        bData.mdata = {formulaType};
 
+        const formula = HMTABLES.formula[dialog][formulaType];
         const rollContext = {
             ...this.system,
             resp: bData.resp,
@@ -218,7 +206,6 @@ export class HMActor extends Actor {
 
         bData.roll = await new Roll(formula, rollContext).evaluate();
         if (chatType === CHAT_TYPE.TRAUMA_CHECK) bData = await getTraumaBData(bData);
-
         const builder = new HMChatFactory(chatType, bData);
         builder.createChatMessage();
     }
