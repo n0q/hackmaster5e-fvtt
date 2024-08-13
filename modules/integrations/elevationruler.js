@@ -5,15 +5,39 @@
 export const tokenHPAttribute='actor.system.hp.value';
 
 /**
- * Array of non-combat speed color.
+ * Returns the distance a token moved last round.
+ * @param {Token} token - Token to inspect.
+ * @param {number} round - The current round of combat.
+ * @returns {number} distance the token moved last round.
+ */
+export const getLastMovedDistance = (token, round) => {
+    const {combatMoveData} = token.flags.elevationruler.movementHistory;
+    const lastRound = Object.values(combatMoveData).find((d) => d.lastRound === round - 1);
+    return lastRound?.lastMoveDistance ?? 0;
+};
+
+/**
+ * Array of non-combat speed colors.
  * @type {Array<Color>}
  */
 const nonCombatColor = [
-    Color.from(0x00ff00), // Green (Walk)
-    Color.from(0xffff00), // Yellow (Jog)
-    Color.from(0xff8000), // Orange (Run)
-    Color.from(0xff0000), // Red (Sprint)
-    Color.from(0x000000), // Black (Illegal)
+    Color.from(0x00ff00), // Green (walk)
+    Color.from(0xffff00), // Yellow (jog)
+    Color.from(0xff8000), // Orange (run)
+    Color.from(0xff0000), // Red (sprint)
+    Color.from(0x000000), // Black (invalid)
+];
+
+/**
+ * Array of combat speed colors.
+ * @type {Array<Color>}
+ */
+const combatColor = [
+    Color.from(0x00ff00), // Green (0)
+    Color.from(0xffff00), // Yellow (±1)
+    Color.from(0xff8000), // Orange (±2)
+    Color.from(0x000000), // Black (invalid)
+    Color.from(0x000000), // Black (invalid)
 ];
 
 /**
@@ -27,14 +51,40 @@ function getNonCombatColorFromIndex(idx) {
 
 /**
  * Get the color based on the token's prior movement distance.
- * Presently treats everything as non-combat.
- * @todo Smart/combat color banding.
- * @param {Object} token
+ * @param {Token} token
  * @param {number} idx
  * @returns {Color}
  */
 function getColorFromPriorMoveDistance(token, idx) {
-    return getNonCombatColorFromIndex(idx);
+    const {combat} = game;
+    if (!combat) return getNonCombatColorFromIndex(idx);
+    const {round} = game.combat;
+    const combatant = combat.getCombatantByToken(token.id);
+    if (!combatant || !round) return getNonCombatColorFromIndex(idx);
+
+    // Illegal.
+    if (idx === 5) return combatColor[4];
+
+    const moved = token.document.prevLastMovedDistance || 0;
+    const movespdSet = new Set([0, ...token.actor.movespd.slice(1), Infinity]);
+    const movespd = Array.from(movespdSet);
+
+    const colorMask = [0, 1, 2, 3, 3, 2, 1];
+
+    const ridx = moved === 0 ? -1 : Math.clamp(movespd.findIndex((a) => moved <= a) - 1, 0, 4);
+    const colorMaskRot = rotateArray(colorMask, ridx);
+    return combatColor[colorMaskRot[idx - 1]];
+}
+
+/**
+ * Rotates an array.
+ * @param {Array} arr - Array to be rotated.
+ * @param {number} count - number of elements to be rotated. Negative to rotate left.
+ * @returns {Array} Rotated array.
+ */
+function rotateArray(arr, count) {
+    const r = count % arr.length;
+    return arr.slice(-r).concat(arr.slice(0, -r));
 }
 
 /**
