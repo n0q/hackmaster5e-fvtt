@@ -1,3 +1,6 @@
-<hr>
+{{#if (and (eq mdata.formulaType 'tenacity') mdata.alert)}}
+{{{localize 'HM.CHAT.ALERT.TENACITY.text'}}}
+<br>
+{{/if}}
 {{#if resultString}}{{{resultString}}}{{/if}}
 {{{rollContent}}}

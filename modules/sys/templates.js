@@ -51,7 +51,7 @@ export const preloadHandlebarsTemplates = () => {
         `${templatePath}/actor/parts/setup/setup-talents.hbs`,
         `${templatePath}/actor/parts/skills/base-skills.hbs`,
 
-        `${templatePath}/chat/alert.hbs`,
+        `${templatePath}/chat/chat-alert.hbs`,
         `${templatePath}/chat/attack.hbs`,
         `${templatePath}/chat/check.hbs`,
         `${templatePath}/chat/crit.hbs`,

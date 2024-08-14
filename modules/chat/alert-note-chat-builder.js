@@ -6,7 +6,7 @@ const ALERT_TYPE = {
 };
 
 export class AlertNoteChatBuilder extends ChatBuilder {
-    static template = 'systems/hackmaster5e/templates/chat/alert.hbs';
+    static template = 'systems/hackmaster5e/templates/chat/chat-alert.hbs';
 
     constructor(...args) {
         super(...args);
@@ -28,6 +28,6 @@ export class AlertNoteChatBuilder extends ChatBuilder {
         const chatData = {mdata};
         const content = await renderTemplate(this.template, chatData);
         const chatMessageData = this.getChatMessageData({content});
-        this.render(chatMessageData);
+        await this.render(chatMessageData);
     }
 }
