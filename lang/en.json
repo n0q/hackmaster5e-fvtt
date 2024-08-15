@@ -265,7 +265,7 @@
             "jab":      "Jab Attack",
             "load":     "Load Only",
             "rdef":     "Ranged Defense",
-            "reset":    "Reset Weapon Count",
+            "reset":    "Reset Count to Half",
             "rstd":     "Ranged Attack",
             "sback":    "Scamper Back",
             "sfatigue": "Spell Fatigue",
