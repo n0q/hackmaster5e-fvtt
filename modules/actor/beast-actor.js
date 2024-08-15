@@ -52,18 +52,16 @@ export class HMBeastActor extends HMActor {
 
     /**
      * onWound event handler.
-     * @param {...*} args - Passed to parent handler.
+     * @param {boolean} traumaCheck - True if a trauma check is required.
+     * @param {boolean} tenacityCheck - True if a tenacity check is required.
      */
     onWound(traumaCheck, tenacityCheck) {
-        const whisper = game.users.filter((u) => u.isGM).map((u) => u.id);
-        const options = {whisper};
-        super.onWound(traumaCheck, tenacityCheck, options);
-
         const rollSaveData = {
             caller: this,
             context: this,
             dialog: 'save',
             resp: {bonus: 0, rollMode: CONST.DICE_ROLL_MODES.PRIVATE},
+            mdata: {alert: true},
         };
 
         if (traumaCheck) this.rollSave({...rollSaveData, formulaType: 'trauma'});

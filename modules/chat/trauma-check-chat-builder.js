@@ -4,7 +4,7 @@ import { HMCONST } from '../tables/constants.js';
 const failType = HMCONST.TRAUMA_FAILSTATE;
 
 export class TraumaCheckChatBuilder extends ChatBuilder {
-    static template = 'systems/hackmaster5e/templates/chat/trauma.hbs';
+    static template = 'systems/hackmaster5e/templates/chat/chat-trauma.hbs';
 
     async createChatMessage() {
         const {batch, resp} = this.data;

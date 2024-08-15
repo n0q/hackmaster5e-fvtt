@@ -1,3 +1,7 @@
+{{#if mdata.alert}}
+    {{{localize 'HM.CHAT.ALERT.TRAUMA.text'}}}
+    {{#if mdata.failState}}<hr>{{/if}}
+{{/if}}
 {{#if mdata.failState}}
     {{localize 'HM.result'}}:
     <b>{{mdata.result}}</b>

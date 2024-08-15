@@ -191,7 +191,7 @@ export class HMActor extends Actor {
      * @returns {Promise<void>}
      */
     async rollSave(dataset) {
-        const {dialog, formulaType} = dataset;
+        const {dialog, formulaType, mdata} = dataset;
         const chatType = formulaType === 'trauma' ? CHAT_TYPE.TRAUMA_CHECK : CHAT_TYPE.SAVE_CHECK;
         let bData = dataset;
         if (!bData.resp) bData = {...bData, ...(await HMDialogFactory({dialog}, this))};
@@ -206,6 +206,7 @@ export class HMActor extends Actor {
 
         bData.roll = await new Roll(formula, rollContext).evaluate();
         if (chatType === CHAT_TYPE.TRAUMA_CHECK) bData = await getTraumaBData(bData);
+        foundry.utils.mergeObject(bData.mdata, mdata);
         const builder = new HMChatFactory(chatType, bData);
         builder.createChatMessage();
     }

@@ -141,11 +141,12 @@ export class ChatBuilder {
     /**
      * Generates a message to send to chat.
      * Contents of this.data.options overrides chatMessageData, if present.
+     * @async
      * @param {Object} chatMessageData - object to pass to ChatMessage.create()
      */
-    render(chatMessageData) {
+    async render(chatMessageData) {
         const obj = {...chatMessageData, ...this.data.options};
-        ChatMessage.create(obj);
+        await ChatMessage.create(obj);
     }
 
     /**

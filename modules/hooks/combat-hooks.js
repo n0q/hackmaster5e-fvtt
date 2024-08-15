@@ -1,5 +1,6 @@
 import { SYSTEM_ID } from '../tables/constants.js';
 import { HMSocket, SOCKET_TYPES } from '../sys/sockets.js';
+import { getLastMovedDistance } from '../integrations/elevationruler.js';
 
 export class HMCombatHooks {
     static async updateCombat(combat, _roundData, _, userId) {
@@ -7,6 +8,13 @@ export class HMCombatHooks {
 
         const combatants = combat.turns;
         combatants.forEach((combatant) => {
+            const {token} = combatant;
+
+            // elevation ruler support
+            if (foundry.utils.hasProperty(token, 'flags.elevationruler')) {
+                token.prevLastMovedDistance = getLastMovedDistance(token, combat.round);
+            }
+
             // Toggle status effects on/off based on their timers.
             const effects = combatant.actor.effects.filter((y) => y.isTemporary === true);
             effects.map(async (effect) => {
@@ -21,7 +29,7 @@ export class HMCombatHooks {
                   || (started && !remaining && !effect.disabled)) {     // Case 3: After effect
                     await effect.update({disabled: !effect.disabled});
 
-                    combatant.token._object.drawReach();
+                    token._object.drawReach();
                     const {tokenId} = combatant;
                     HMSocket.emit(SOCKET_TYPES.DRAW_REACH, tokenId);
 
