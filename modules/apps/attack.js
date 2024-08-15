@@ -10,13 +10,12 @@ function getSpeed(ranged, wData, specialMove=0) {
     }
 
     const s4c = HMTABLES.weapons.s4c.spd;
-    const minSpd = HMTABLES.weapons.scale[wData.scale].minspd;
     const resetSpd = Math.ceil(spd / 2) || 0;
 
     return {
         declare: Number(specialMove) === HMCONST.SPECIAL.SET4CHARGE ? s4c : spd,
         melee: Number(specialMove) === HMCONST.SPECIAL.JAB ? jspd : spd,
-        reset: Math.max(resetSpd, minSpd),
+        reset: resetSpd,
     };
 }
 

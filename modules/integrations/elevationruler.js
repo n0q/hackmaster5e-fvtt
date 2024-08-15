@@ -2,7 +2,7 @@
  * @file Support functions for elevationruler.
  */
 
-export const tokenHPAttribute='actor.system.hp.value';
+export const tokenHPAttribute = 'actor.system.hp.value';
 
 /**
  * Returns the distance a token moved last round.
@@ -11,7 +11,8 @@ export const tokenHPAttribute='actor.system.hp.value';
  * @returns {number} distance the token moved last round.
  */
 export const getLastMovedDistance = (token, round) => {
-    const {combatMoveData} = token.flags.elevationruler.movementHistory;
+    const {combatMoveData} = token.flags?.elevationruler?.movementHistory;
+    if (!combatMoveData) return 0;
     const lastRound = Object.values(combatMoveData).find((d) => d.lastRound === round - 1);
     return lastRound?.lastMoveDistance ?? 0;
 };
@@ -46,7 +47,7 @@ const combatColor = [
  * @returns {Color}
  */
 function getNonCombatColorFromIndex(idx) {
-    return nonCombatColor[idx - 1];
+    return nonCombatColor[idx];
 }
 
 /**
@@ -63,7 +64,7 @@ function getColorFromPriorMoveDistance(token, idx) {
     if (!combatant || !round) return getNonCombatColorFromIndex(idx);
 
     // Illegal.
-    if (idx === 5) return combatColor[4];
+    if (idx === 4) return combatColor[4];
 
     const moved = token.document.prevLastMovedDistance || 0;
     const movespdSet = new Set([0, ...token.actor.movespd.slice(1), Infinity]);
@@ -73,7 +74,7 @@ function getColorFromPriorMoveDistance(token, idx) {
 
     const ridx = moved === 0 ? -1 : Math.clamp(movespd.findIndex((a) => moved <= a) - 1, 0, 4);
     const colorMaskRot = rotateArray(colorMask, ridx);
-    return combatColor[colorMaskRot[idx - 1]];
+    return combatColor[colorMaskRot[idx]];
 }
 
 /**
@@ -90,10 +91,10 @@ function rotateArray(arr, count) {
 /**
  * @typedef {Object} SpeedCategory
  * @property {string} name
- * @property {function} color
+ * @property {function} color - Returns a color based on the combat situation.
  * @property {number} multiplier
- * @property {number} idx
- * @property {Object|null} token
+ * @property {number} idx - Color index for non-combat speeds.
+ * @property {Object|null} token - Placeholder, populated by maximumCategoryDistance.
  */
 
 /**
@@ -103,7 +104,7 @@ const WalkSpeedCategory = {
     name: 'Walk',
     get color() { return getColorFromPriorMoveDistance(this.token, this.idx); },
     multiplier: 1,
-    idx: 1,
+    idx: 0,
     token: null,
 };
 
@@ -114,7 +115,7 @@ const JogSpeedCategory = {
     name: 'Jog',
     get color() { return getColorFromPriorMoveDistance(this.token, this.idx); },
     multiplier: 1,
-    idx: 2,
+    idx: 1,
     token: null,
 };
 
@@ -125,7 +126,7 @@ const RunSpeedCategory = {
     name: 'Run',
     get color() { return getColorFromPriorMoveDistance(this.token, this.idx); },
     multiplier: 1,
-    idx: 3,
+    idx: 2,
     token: null,
 };
 
@@ -136,7 +137,7 @@ const SprintSpeedCategory = {
     name: 'Sprint',
     get color() { return getColorFromPriorMoveDistance(this.token, this.idx); },
     multiplier: 1,
-    idx: 4,
+    idx: 3,
     token: null,
 };
 
@@ -147,7 +148,7 @@ const IllegalSpeedCategory = {
     name: 'Illegal',
     get color() { return getColorFromPriorMoveDistance(this.token, this.idx); },
     multiplier: Number.POSITIVE_INFINITY,
-    idx: 5,
+    idx: 4,
     token: null,
 };
 
@@ -179,6 +180,6 @@ export const HM_ER_SPEED = {
     maximumCategoryDistance: (token, speedCategory, tokenSpeed) => {
         const {idx} = speedCategory;
         speedCategory.token = token; // eslint-disable-line no-param-reassign
-        return speedCategory.multiplier * tokenSpeed[idx];
+        return speedCategory.multiplier * tokenSpeed[idx + 1];
     },
 };

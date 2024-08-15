@@ -423,10 +423,11 @@
 
         "moveSpds": {
             "crawl":    "Crawl",
-            "walk":     "Walk",
+            "illegal":  "Illegal",
             "jog":      "Jog",
             "run":      "Run",
-            "sprint":   "Sprint"
+            "sprint":   "Sprint",
+            "walk":     "Walk"
         },
 
         "scaleFull": {
