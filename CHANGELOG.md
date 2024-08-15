@@ -3,10 +3,10 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [0.4.21] - 2024-08-15
 ## Added
 - Improved Elevation Ruler support.
-  - Known Issue: Color bands are inaccurate for heavy armor wearers.
+  - Known Issue: Colors are inaccurate for heavy armor wearers.
 
 ## Changed
 - Combined alerts and rolls for Beast Tenacity and Trauma checks.
