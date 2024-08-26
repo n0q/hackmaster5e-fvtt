@@ -177,4 +177,18 @@ export const HMContainer = {
             ? HMContainer.push(destCon, item)
             : HMContainer.deserialize(actor, item);
     },
+
+    /**
+     * Provides a hm.items aware dragstart handler.
+     * @param {Event} event
+     * @param {HMActor} actor
+     */
+    dragStartHandler(event, actor) {
+        const li = event.currentTarget;
+        const item = actor.hm.items.get(li.dataset.itemId);
+        const dragData = item.toDragData();
+        console.warn(dragData);
+        if (!dragData) return;
+        event.dataTransfer.setData('text/plain', JSON.stringify(dragData));
+    },
 };
