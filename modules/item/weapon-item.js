@@ -296,15 +296,11 @@ export class HMWeaponItem extends HMItem {
 
         const formula = HMTABLES.formula.def[resp.specialMove];
         const rollContext = {resp, ...context.system};
-        dataset.roll = await new Roll(formula, rollContext).evaluate();
+        const roll = await new Roll(formula, rollContext).evaluate();
 
-        dataset.resp = resp;
-        dataset.context = context;
-        dataset.caller = actor;
-
-        const chatMgr = new HMChatMgr();
-        const card = await chatMgr.getCard({dataset});
-        await ChatMessage.create(card);
+        const bData = {caller: actor, context, resp, roll};
+        const builder = new HMChatFactory(CHAT_TYPE.DEFENSE, bData);
+        builder.createChatMessage();
 
         if (opt.isCombatant) {
             unsetStatusEffectOnToken(comData, 'aggressive');

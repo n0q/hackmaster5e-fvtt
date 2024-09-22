@@ -57,7 +57,7 @@ export const preloadHandlebarsTemplates = () => {
         `${templatePath}/chat/crit.hbs`,
         `${templatePath}/chat/damage.hbs`,
         `${templatePath}/chat/declare.hbs`,
-        `${templatePath}/chat/defend.hbs`,
+        `${templatePath}/chat/chat-defend.hbs`,
         `${templatePath}/chat/initNote.hbs`,
         `${templatePath}/chat/fumble.hbs`,
         `${templatePath}/chat/chat-trauma.hbs`,
