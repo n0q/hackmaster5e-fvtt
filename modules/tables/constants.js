@@ -571,11 +571,11 @@ export const HMTABLES = {
         },
     },
     encumbrance: {
-        [HMCONST.ENCUMBRANCE.NONE]:     {dr: 0, def:  0, init: 0, spd: 0},
-        [HMCONST.ENCUMBRANCE.LIGHT]:    {dr: 0, def: -1, init: 0, spd: 0},
-        [HMCONST.ENCUMBRANCE.MEDIUM]:   {dr: 1, def: -2, init: 1, spd: 1},
-        [HMCONST.ENCUMBRANCE.HEAVY]:    {dr: 2, def: -4, init: 2, spd: 2},
-        [HMCONST.ENCUMBRANCE.OVER]:     {dr: 4, def: -8, init: 4, spd: 4},
+        [HMCONST.ENCUMBRANCE.NONE]:     {dr: 0, def:  0, init: 0, spd: 0, ff: 0},
+        [HMCONST.ENCUMBRANCE.LIGHT]:    {dr: 0, def: -1, init: 0, spd: 0, ff: 1},
+        [HMCONST.ENCUMBRANCE.MEDIUM]:   {dr: 1, def: -2, init: 1, spd: 1, ff: 3},
+        [HMCONST.ENCUMBRANCE.HEAVY]:    {dr: 2, def: -4, init: 2, spd: 2, ff: 6},
+        [HMCONST.ENCUMBRANCE.OVER]:     {dr: 4, def: -8, init: 4, spd: 4, ff: 6},
     },
     formula: {
         atk: {
