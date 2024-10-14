@@ -62,7 +62,7 @@ export const preloadHandlebarsTemplates = () => {
         `${templatePath}/chat/fumble.hbs`,
         `${templatePath}/chat/chat-trauma.hbs`,
         `${templatePath}/chat/chat-save.hbs`,
-        `${templatePath}/chat/skill.hbs`,
+        `${templatePath}/chat/chat-skill.hbs`,
         `${templatePath}/chat/spell.hbs`,
         `${templatePath}/chat/parts/volatility.hbs`,
 
@@ -78,7 +78,7 @@ export const preloadHandlebarsTemplates = () => {
         `${templatePath}/dialog/getDamage.hbs`,
         `${templatePath}/dialog/defend.hbs`,
         `${templatePath}/dialog/getSave.hbs`,
-        `${templatePath}/dialog/getSkill.hbs`,
+        `${templatePath}/dialog/dialog-skill.hbs`,
         `${templatePath}/dialog/getInitDie.hbs`,
         `${templatePath}/dialog/wound.hbs`,
         `${templatePath}/dialog/parts/getRollMode.hbs`,

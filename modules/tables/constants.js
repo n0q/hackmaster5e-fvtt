@@ -189,6 +189,10 @@ export const HMCONST = {
             EASY:        3,
             TRIVIAL:     4,
         },
+        FORM: {
+            CHECK:      0,
+            OPPOSED:    1,
+        },
         MASTERY: {
             UNSKILLED:  0,
             NOVICE:     1,
@@ -199,9 +203,8 @@ export const HMCONST = {
         },
         TYPE: {
             SKILL:      0,
-            OPPOSED:    1,
-            VERBAL:     2,
-            WRITTEN:    3,
+            VERBAL:     1,
+            WRITTEN:    2,
         },
     },
     SPECIAL: {
@@ -618,10 +621,9 @@ export const HMTABLES = {
             will:     'd20p +  @bonus.total.will     + @resp.bonus',
         },
         skill: {
-            [HMCONST.SKILL.TYPE.SKILL]:     'd100 - (@resp.bonus + @bonus.total.value)',
-            [HMCONST.SKILL.TYPE.OPPOSED]:   'd100 + (@resp.bonus + @bonus.total.value)',
-            [HMCONST.SKILL.TYPE.VERBAL]:    'd100 - (@resp.bonus + @bonus.total.verbal)',
-            [HMCONST.SKILL.TYPE.WRITTEN]:   'd100 - (@resp.bonus + @bonus.total.literacy)',
+            baseroll:                     'd100',
+            [HMCONST.SKILL.FORM.CHECK]:   '@baseroll - (@resp.bonus + @value)',
+            [HMCONST.SKILL.FORM.OPPOSED]: '@baseroll + (@resp.bonus + @value)',
         },
         trauma: {comaCheck: 'd20', comaDuration: 'd20', koDuration: '5d6p'},
     },
