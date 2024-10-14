@@ -13,19 +13,19 @@
     {{> 'systems/hackmaster5e/templates/dialog/parts/getRollMode.hbs'}}
     <div class='dialog-buttons'>
     {{#if language}}
-        <button type='submit' class='dialog-button normal default'
-            {{#unless hasVerbal}}disabled{{/unless}}    
-            data-prop='formulaType'
-            data-value='{{HMCONST "SKILL.TYPE.VERBAL"}}'
-            data-render=false>
-            {{localize 'HM.language'}}
-        </button>
         <button type='submit' class='dialog-button normal'
             {{#unless hasLiteracy}}disabled{{/unless}}    
             data-prop='formulaType'
             data-value='{{HMCONST "SKILL.TYPE.WRITTEN"}}'
             data-render=false>
             {{localize 'HM.literacy'}}
+        </button>
+        <button type='submit' class='dialog-button normal default'
+            {{#unless hasVerbal}}disabled{{/unless}}    
+            data-prop='formulaType'
+            data-value='{{HMCONST "SKILL.TYPE.VERBAL"}}'
+            data-render=false>
+            {{localize 'HM.language'}}
         </button>
     {{else}}
         <button type='submit' class='dialog-button normal default'
