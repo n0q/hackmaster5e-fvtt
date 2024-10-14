@@ -187,9 +187,17 @@ export class HMActorSheet extends ActorSheet {
         html.find('.editable').change(this._onEdit.bind(this));
         html.find('.selectable').change(this._onSelect.bind(this));
 
-        // Drag events for macros.
+        // Drag events.
         if (this.actor.isOwner) {
-            const handler = (ev) => this._onDragStart(ev);
+            const handler = (ev) => {
+                try {
+                    this._onDragStart(ev);
+                } catch (error) {
+                    if (!(error instanceof TypeError)) throw error;
+                    HMContainer.dragStartHandler(ev, this.actor);
+                }
+            };
+
             html.find('li.item').each((_i, li) => {
                 if (li.classList.contains('inventory-header')) return;
                 li.setAttribute('draggable', true);

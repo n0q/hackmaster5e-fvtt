@@ -189,6 +189,10 @@ export const HMCONST = {
             EASY:        3,
             TRIVIAL:     4,
         },
+        FORM: {
+            CHECK:      0,
+            OPPOSED:    1,
+        },
         MASTERY: {
             UNSKILLED:  0,
             NOVICE:     1,
@@ -199,9 +203,8 @@ export const HMCONST = {
         },
         TYPE: {
             SKILL:      0,
-            OPPOSED:    1,
-            VERBAL:     2,
-            WRITTEN:    3,
+            VERBAL:     1,
+            WRITTEN:    2,
         },
     },
     SPECIAL: {
@@ -571,11 +574,11 @@ export const HMTABLES = {
         },
     },
     encumbrance: {
-        [HMCONST.ENCUMBRANCE.NONE]:     {dr: 0, def:  0, init: 0, spd: 0},
-        [HMCONST.ENCUMBRANCE.LIGHT]:    {dr: 0, def: -1, init: 0, spd: 0},
-        [HMCONST.ENCUMBRANCE.MEDIUM]:   {dr: 1, def: -2, init: 1, spd: 1},
-        [HMCONST.ENCUMBRANCE.HEAVY]:    {dr: 2, def: -4, init: 2, spd: 2},
-        [HMCONST.ENCUMBRANCE.OVER]:     {dr: 4, def: -8, init: 4, spd: 4},
+        [HMCONST.ENCUMBRANCE.NONE]:     {dr: 0, def:  0, init: 0, spd: 0, ff: 0},
+        [HMCONST.ENCUMBRANCE.LIGHT]:    {dr: 0, def: -1, init: 0, spd: 0, ff: 1},
+        [HMCONST.ENCUMBRANCE.MEDIUM]:   {dr: 1, def: -2, init: 1, spd: 1, ff: 3},
+        [HMCONST.ENCUMBRANCE.HEAVY]:    {dr: 2, def: -4, init: 2, spd: 2, ff: 6},
+        [HMCONST.ENCUMBRANCE.OVER]:     {dr: 4, def: -8, init: 4, spd: 4, ff: 6},
     },
     formula: {
         atk: {
@@ -618,10 +621,9 @@ export const HMTABLES = {
             will:     'd20p +  @bonus.total.will     + @resp.bonus',
         },
         skill: {
-            [HMCONST.SKILL.TYPE.SKILL]:     'd100 - (@resp.bonus + @bonus.total.value)',
-            [HMCONST.SKILL.TYPE.OPPOSED]:   'd100 + (@resp.bonus + @bonus.total.value)',
-            [HMCONST.SKILL.TYPE.VERBAL]:    'd100 - (@resp.bonus + @bonus.total.verbal)',
-            [HMCONST.SKILL.TYPE.WRITTEN]:   'd100 - (@resp.bonus + @bonus.total.literacy)',
+            baseroll:                     'd100',
+            [HMCONST.SKILL.FORM.CHECK]:   '@baseroll - (@resp.bonus + @value)',
+            [HMCONST.SKILL.FORM.OPPOSED]: '@baseroll + (@resp.bonus + @value)',
         },
         trauma: {comaCheck: 'd20', comaDuration: 'd20', koDuration: '5d6p'},
     },

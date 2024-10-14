@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+## Changed
+- Skill rolls now display check and opposed results simultaneously.
+- Swapped Literacy and Verbal dialog button positions.
+
+## Fixed
+- Elevation Ruler displays appropriate color banding, again.
+- Ranged weapons no longer offered reset to half speed.
+
 ## [0.4.21] - 2024-08-15
 ## Added
 - Improved Elevation Ruler support.

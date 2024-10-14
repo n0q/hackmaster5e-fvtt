@@ -4,7 +4,7 @@ import { HMCONST } from '../tables/constants.js';
 export class SkillPrompt extends HMPrompt {
     static get defaultOptions() {
         return foundry.utils.mergeObject(super.defaultOptions, {
-            template: 'systems/hackmaster5e/templates/dialog/getSkill.hbs',
+            template: 'systems/hackmaster5e/templates/dialog/dialog-skill.hbs',
             id: 'skillPrompt',
         });
     }

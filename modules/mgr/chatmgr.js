@@ -20,9 +20,6 @@ export class HMChatMgr {
                 case 'atk':
                     cData = await createAttackCard(dataset);
                     break;
-                case 'def':
-                    cData = await createDefenseCard(dataset);
-                    break;
                 case 'cast':
                     cData = await createSpellCard(dataset);
                     break;
@@ -124,28 +121,6 @@ async function createAttackCard(dataset) {
     const template = 'systems/hackmaster5e/templates/chat/attack.hbs';
     const shake = sumDice >= 20;
     const templateData = {resp, specialRow, context, shake};
-    const resultContent = await renderTemplate(template, templateData);
-    const content = resultContent + rollContent;
-    return {content, roll, flavor: caller.name};
-}
-
-async function createDefenseCard(dataset) {
-    const {caller, context, roll, resp} = dataset;
-
-    const flavor = game.i18n.localize('HM.CHAT.def') + getSpecialMoveFlavor(resp);
-    const rollContent = await roll.render({flavor});
-
-    let specialRow = '';
-    const sumDice = getDiceSum(roll);
-    if (sumDice >=  20) { specialRow += 'Perfect!';     } else
-    if (sumDice === 19) { specialRow += 'Near Perfect'; } else
-    if (sumDice === 18) { specialRow += 'Superior';     } else
-    if (sumDice === 1)  { specialRow += 'Fumble';       }
-
-    const dr = caller.drObj;
-
-    const template = 'systems/hackmaster5e/templates/chat/defend.hbs';
-    const templateData = {resp, dr, specialRow, context};
     const resultContent = await renderTemplate(template, templateData);
     const content = resultContent + rollContent;
     return {content, roll, flavor: caller.name};

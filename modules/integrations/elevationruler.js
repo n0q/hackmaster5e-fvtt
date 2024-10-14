@@ -168,18 +168,17 @@ export const HM_ER_SPEED = {
         IllegalSpeedCategory,
     ],
 
-    tokenSpeed: (token) => token.actor.movespd,
-
     /**
      * Get the maximum distance a token can move for a given speed category.
      * @param {HMToken} token - The token object.
      * @param {SpeedCategory} speedCategory - The speed category object.
-     * @param {number} tokenSpeed - The speed of the token.
+     * @param {number} tokenSpeed - The speed of the token (not used).
      * @returns {number} - The maximum distance the token can move.
      */
-    maximumCategoryDistance: (token, speedCategory, tokenSpeed) => {
+    maximumCategoryDistance: (token, speedCategory) => {
+        const {movespd} = token.actor;
         const {idx} = speedCategory;
         speedCategory.token = token; // eslint-disable-line no-param-reassign
-        return speedCategory.multiplier * tokenSpeed[idx + 1];
+        return speedCategory.multiplier * movespd[idx + 1];
     },
 };

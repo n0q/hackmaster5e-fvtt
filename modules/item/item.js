@@ -151,14 +151,13 @@ export class HMItem extends Item {
         const {resp} = dialogResp;
 
         Object.values(callers).forEach(async (callerObj) => {
-            const formula = HMTABLES.formula.skill[resp.formulaType];
-            const {bonus} = callerObj.context.system;
-            const rollData = {resp, bonus};
-            const roll = await new Roll(formula, rollData).evaluate();
+            const formula = HMTABLES.formula.skill.baseroll;
+            const roll = await new Roll(formula).evaluate();
 
             const bData = {
                 caller: callerObj.caller,
                 context: callerObj.context,
+                mdata: callerObj.context.system,
                 resp,
                 roll,
             };

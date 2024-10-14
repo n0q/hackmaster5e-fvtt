@@ -98,12 +98,15 @@
                 "failed": "Failed",
                 "fumble": "Fumble",
                 "goodbye": "Goodbye",
+                "nperfect": "Near Perfect",
                 "passed": "Passed",
+                "perfect": "Perfect!",
                 "skill4": "Trivial Success",
                 "skill3": "Easy Success",
                 "skill2": "Average Success",
                 "skill1": "Difficult Success",
-                "skill0": "Very Difficult Success"
+                "skill0": "Very Difficult Success",
+                "superior": "Superior"
             },
 
             "SAVE": {
@@ -395,6 +398,7 @@
             "getSaveTitle":      "Save",
             "getSkillTitle1":    "Skill Check",
             "getSkillTitle2":    "Skill Checks",
+            "halfSpeed":         "Half speed?",
             "optNote":           "optional comment",
             "rollMode":          "Roll Mode",
             "setInitTitle":      "Set Initiative",
