@@ -38,10 +38,18 @@
     </section>
     {{#if inCombat}}
     <hr>
-    <span class='form-group'>
-        <label>{{localize 'HM.dialog.advCombatTracker'}}</label>
-        <input type='checkbox' class='bind' data-prop='advance' {{checked advance}} data-render=true>
-    </span>
+    <section class='grid-2col' style='gap: 0 20px;'>
+        <span class='form-group'>
+            <label>{{localize 'HM.dialog.advCombatTracker'}}</label>
+            <input type='checkbox' class='bind' data-prop='advance' {{checked advance}} data-render=true>
+        </span>
+    {{#unless ranged}}
+        <span class='form-group'>
+            <label>{{localize 'HM.dialog.halfSpeed'}}</label>
+            <input type='checkbox' class='bind' data-prop='halfspd' {{checked halfspd}} data-render=true>
+        </span>
+    {{/unless}}
+    </section>
     {{/if}}
     <section class='dialog-buttons'>
         {{#if ranged}}

@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## Fixed
 - Elevation Ruler displays appropriate color banding, again.
+- Ranged weapons no longer offered reset to half speed.
 
 ## [0.4.21] - 2024-08-15
 ## Added
