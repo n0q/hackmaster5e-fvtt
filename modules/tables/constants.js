@@ -679,6 +679,15 @@ export const HMTABLES = {
         [HMCONST.DIE.D12P]:     'd12p',
         [HMCONST.DIE.D8P]:      'd8p',
     },
+    fatigue: {
+        wound: (hp) => {
+            if (hp.value === hp.max) return 0;
+            const ratio = 1 - hp.value / hp.max;
+            const idx = [0, 0.5, 0.9, Infinity].findIndex((m) => m > ratio) - 1;
+            const penalty = [1, 4, 8];
+            return penalty[idx];
+        },
+    },
     'movespd': {
         [HMCONST.MOVE.CRAWL]:   2.5,
         [HMCONST.MOVE.WALK]:    5.0,

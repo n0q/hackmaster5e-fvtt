@@ -72,6 +72,13 @@ export class HMActor extends Actor {
         const topCf = HMTABLES.top[type] + (system.bonus.total.top || 0);
         const topValue = system.bonus.total.trauma ? Math.ceil(max * topCf) : undefined;
         system.hp = {max, value, top: topValue};
+
+        // HACK: Workaround to avoid temporal couple between setBonusTotal() and setHP().
+        // setHP() directly modifies bonus, here. Bad craziness.
+        // TODO: Create a bonus state object before this becomes as bad as the old chatmgr.
+        const ff = HMTABLES.fatigue.wound({value, max}) || 0;
+        system.bonus.hp = {ff};
+        system.bonus.total.ff += ff;
     }
 
     prepareWeaponProfiles() {

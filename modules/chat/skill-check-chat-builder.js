@@ -19,9 +19,6 @@ export class SkillCheckChatBuilder extends ChatBuilder {
         const mdata = this.getMetadata(formulaType, dc);
         mdata.bonus = resp.bonus;
 
-        const rolls = [roll];
-        const rollContent = await roll.render({flavor: mdata.rollFlavor});
-
         const skillCheck = this.getSkillChecks();
 
         let result = this.RESULT_TYPE.FAILED;
@@ -35,10 +32,11 @@ export class SkillCheckChatBuilder extends ChatBuilder {
 
         const resultString = ChatBuilder.getResult(result);
 
-        const chatData = {rollContent, mdata, resultString, skillCheck};
+        mdata.inline = unescape(roll);
+        const chatData = {mdata, resultString, skillCheck, roll};
         const content = await renderTemplate(this.template, chatData);
 
-        const chatMessageData = this.getChatMessageData({content, rolls, resp});
+        const chatMessageData = this.getChatMessageData({content, resp});
         await ChatMessage.create(chatMessageData);
     }
 
@@ -52,9 +50,12 @@ export class SkillCheckChatBuilder extends ChatBuilder {
         const evalData = {baseroll, resp, value};
         const formula = HMTABLES.formula.skill;
 
+        const checkFormula = Roll.replaceFormulaData(formula[FORM.CHECK], evalData);
+        const opposedFormula = Roll.replaceFormulaData(formula[FORM.OPPOSED], evalData);
+
         return {
-            check: Roll.safeEval(Roll.replaceFormulaData(formula[FORM.CHECK], evalData)),
-            opposed: Roll.safeEval(Roll.replaceFormulaData(formula[FORM.OPPOSED], evalData)),
+            check: Roll.safeEval(checkFormula),
+            opposed: Roll.safeEval(opposedFormula),
         };
     }
 
