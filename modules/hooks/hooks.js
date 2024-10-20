@@ -1,6 +1,7 @@
 import { SYSTEM_SOCKET } from '../tables/constants.js';
 import { HMActiveEffectHooks } from './effect-hooks.js';
 import { HMActorHooks } from './actor-hooks.js';
+import { HMCanvasHooks } from './canvas-hooks.js';
 import { HMChatHooks } from './chat-hooks.js';
 import { HMCombatHooks } from './combat-hooks.js';
 import { HMItemHooks } from './item-hooks.js';
@@ -19,6 +20,7 @@ export const registerHooks = () => {
     Hooks.on('createActiveEffect', HMActiveEffectHooks.createActiveEffect);
     Hooks.on('deleteActiveEffect', HMActiveEffectHooks.deleteActiveEffect);
     Hooks.on('createActor', HMActorHooks.createActor);
+    Hooks.on('dropCanvasData', HMCanvasHooks.dropCanvasData);
     Hooks.on('renderChatMessage', HMChatHooks.renderChatMessage);
     Hooks.on('deleteCombat', HMCombatHooks.deleteCombat);
     Hooks.on('preDeleteCombat', HMCombatHooks.preDeleteCombat);
