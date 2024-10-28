@@ -1,0 +1,54 @@
+{{localize 'HM.spell'}}: <strong>{{context.name}}</strong><br>
+{{localize 'HM.components'}}: <strong>{{mdata.components}}</strong><br>
+{{#unless context.system.divine}}
+    {{localize 'HM.cost'}}: <strong>{{resp.cost}} {{localize 'HM.sp'}}</strong>
+    {{#if resp.schedule}}+ <strong>{{resp.schedule}} {{localize 'HM.sp'}}</strong>{{/if}}<br>
+{{/unless}}
+{{#if resp.advance}}
+    {{localize 'HM.CHAT.ctime'}}: <strong>{{resp.advance}}</strong><br>
+{{/if}}
+{{#if resp.sfatigue}}
+    {{localize 'HM.CHAT.sfatigue'}}: <strong>{{resp.sfatigue}} {{localize 'HM.seconds'}}.</strong><br>
+{{/if}}
+{{#if mdata.inline}}
+    {{localize 'HM.rolled'}}:
+    <span data-tooltip="{{mdata.inline}}">
+        <i class="fa-solid fa-dice"></i> <strong>{{roll.total}}</strong>
+    </span>
+    <hr>
+{{localize 'HM.CHAT.sthrow'}}:
+{{#with context.system.save}}
+    {{#if (eq type 0)}}
+        <strong>{{localize 'HM.saves.none'}}</strong>
+    {{else if (eq type 1)}}
+        <strong>{{localize 'HM.saves.special'}}</strong>
+    {{else}}
+        <strong>{{../mdata.check.save}}</strong>
+        vs. {{localize (findConfigValue 'saveSelect' type)}}
+        ({{localize (findConfigValue 'saveActionSelect' action)}})
+    {{/if}}<br>
+{{/with}}
+{{/if}}
+{{#unless context.system.divine}}
+    {{#if mdata.check}}
+        {{localize 'HM.CHAT.sfc'}}:
+        <strong {{#if mdata.check.mishap}}style="color: red;"{{/if}}>
+            {{localize (findConfigValue 'spellMishap' mdata.check.mishap)}}
+        </strong><br>
+        {{#if (gt mdata.check.mishap 2)}}
+            {{localize 'HM.CHAT.smc'}}: <strong>{{resp.smc}}</strong><br>
+        {{/if}}
+    {{else}}
+        <hr>
+        {{localize 'HM.CHAT.svr'}}: <strong>{{resp.svr}}</strong>
+        (<span{{#if (gt resp.stage 1)}} style='color: red;'{{/if}}
+            >{{localize (findConfigValue 'spellVolatility' resp.stage)}}</span>)<br>
+        {{localize 'HM.CHAT.sfc'}}: <strong>{{resp.sfc}}</strong><br>
+        {{localize 'HM.CHAT.smc'}}: <strong>{{resp.smc}}</strong><br>
+    {{/if}}
+{{/unless}}
+<div class='dice-roll'>
+    <div class='dice-flavor'>
+        {{mdata.rollFlavor}}
+    </div>
+</div>

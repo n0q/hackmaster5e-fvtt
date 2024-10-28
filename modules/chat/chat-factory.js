@@ -6,6 +6,7 @@ import { DefenseChatBuilder } from './defense-chat-builder.js';
 import { InitNoteChatBuilder } from './initnote-chat-builder.js';
 import { SaveCheckChatBuilder } from './save-check-chat-builder.js';
 import { SkillCheckChatBuilder } from './skill-check-chat-builder.js';
+import { SpellChatBuilder } from './spell-chat-builder.js';
 import { TraumaCheckChatBuilder } from './trauma-check-chat-builder.js';
 
 /**
@@ -20,6 +21,7 @@ export const CHAT_TYPE = Object.freeze({
     INIT_NOTE: Symbol('cftype_init_note'),
     SAVE_CHECK: Symbol('cftype_save_check'),
     SKILL_CHECK: Symbol('cftype_skill_check'),
+    SPELL: Symbol('cftype_spell'),
     TRAUMA_CHECK: Symbol('cftype_trauma_check'),
 });
 
@@ -40,6 +42,7 @@ const handler = {
         if (type === CHAT_TYPE.INIT_NOTE) return new InitNoteChatBuilder(...bArgs);
         if (type === CHAT_TYPE.SAVE_CHECK) return new SaveCheckChatBuilder(...bArgs);
         if (type === CHAT_TYPE.SKILL_CHECK) return new SkillCheckChatBuilder(...bArgs);
+        if (type === CHAT_TYPE.SPELL) return new SpellChatBuilder(...bArgs);
         if (type === CHAT_TYPE.TRAUMA_CHECK) return new TraumaCheckChatBuilder(...bArgs);
         throw new Error(`Unknown type: ${type}.`);
     },

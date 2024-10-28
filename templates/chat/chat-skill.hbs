@@ -1,26 +1,26 @@
-<label>{{localize 'HM.skill'}}</label>:
-<b>{{mdata.specname}}</b><br>
-<label>{{localize 'HM.skillmastery'}}</label>:
-<b>{{mdata.level}}
-({{localize (lookup (findConfigObj 'skillMastery') mdata.mastery)}})</b><br>
+{{localize 'HM.skill'}}:
+<strong>{{mdata.specname}}</strong><br>
+{{localize 'HM.skillmastery'}}:
+<strong>{{mdata.level}}
+({{localize (lookup (findConfigObj 'skillMastery') mdata.mastery)}})</strong><br>
 {{#if mdata.bonus}}
-    <label>{{localize 'HM.bonus'}}</label>:
-    <b>{{mdata.bonus}}</b><br>
+    {{localize 'HM.bonus'}}:
+    <strong>{{mdata.bonus}}</strong><br>
 {{/if}}
 {{#unless (eq mdata.dc (HMCONST 'SKILL.DIFF.AUTO'))}}
-    <label>{{localize 'HM.target'}}</label>:
-    <b>{{localize (lookup (findConfigObj 'skillLevel') mdata.dc)}}</b>
+    {{localize 'HM.target'}}:
+    <strong>{{localize (lookup (findConfigObj 'skillLevel') mdata.dc)}}</strong>
     <br>
 {{/unless}}
-<label>{{localize 'HM.rolled'}}</label>:
-<span class="inline-roll" data-tooltip="{{mdata.inline}}" style="background: none;">
-    <i class="fa-solid fa-dice"></i> <b>{{roll.total}}</b>
+{{localize 'HM.rolled'}}:
+<span data-tooltip="{{mdata.inline}}">
+    <i class="fa-solid fa-dice"></i> <strong>{{roll.total}}</strong>
 </span>
 <hr>
-<label>{{localize 'HM.opposed'}}</label>:
-<b>{{skillCheck.opposed}}</b><br>
-<label>{{localize 'HM.check'}}</label>:
-{{{resultString}}} ({{skillCheck.check}})
+{{localize 'HM.opposed'}}:
+<strong>{{skillCheck.opposed}}</strong><br>
+{{localize 'HM.check'}}:
+{{{resultString}}}
 <div class="dice-roll">
     <div class="dice-flavor">{{mdata.rollFlavor}}</div>
 </div>

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.4.24] - 2024-10-28
+## Added
+- Can drop items directly onto tokens.
+
+## Changed
+- Cleaned up skill roll chat cards.
+- Spell rolls now display volatility and save results simultaneously.
+
 ## [0.4.23] - 2024-10-14
 ## Fixed
 - Skill rolls display dice rolled.

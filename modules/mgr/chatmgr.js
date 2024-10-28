@@ -20,9 +20,6 @@ export class HMChatMgr {
                 case 'atk':
                     cData = await createAttackCard(dataset);
                     break;
-                case 'cast':
-                    cData = await createSpellCard(dataset);
-                    break;
                 case 'fumble':
                     cData = await createFumbleCard(dataset);
                     break;
@@ -124,45 +121,6 @@ async function createAttackCard(dataset) {
     const resultContent = await renderTemplate(template, templateData);
     const content = resultContent + rollContent;
     return {content, roll, flavor: caller.name};
-}
-
-async function createSpellCard(dataset) {
-    const {caller, context, roll, resp} = dataset;
-    const {system} = context;
-
-    const components = [];
-    if (system.component.verbal)   { components.push('V');  }
-    if (system.component.somatic)  { components.push('S');  }
-    if (system.component.material) { components.push('M');  }
-    if (system.component.catalyst) { components.push('C');  }
-    if (system.component.divine)   { components.push('DI'); }
-    resp.components = components.join(', ');
-
-    let whisper;
-    if (resp.private) {
-        whisper = game.users.reduce((arr, u) => {
-            if (u.isGM) arr.push(u.id);
-            return arr;
-        }, []);
-    }
-
-    const sLevel = game.i18n.localize(`HM.spellLevels.${system.lidx}`);
-    const sType = system.divine
-        ? game.i18n.localize('HM.CHAT.cspell')
-        : game.i18n.localize('HM.CHAT.mspell');
-    const rollContent = {flavor: `${sLevel} ${game.i18n.localize('HM.level')} ${sType}`};
-
-    let squelch = false;
-    system.save.type && resp.button === 'cast'
-        ? rollContent.html = await roll.render({flavor: rollContent.flavor})
-        : squelch = true;
-
-    const template = resp.button === 'declare'
-        ? 'systems/hackmaster5e/templates/chat/declare.hbs'
-        : 'systems/hackmaster5e/templates/chat/spell.hbs';
-
-    const content = await renderTemplate(template, {...dataset, rollContent});
-    return {content, whisper, roll, squelch, flavor: caller.name};
 }
 
 async function createDamageCard(dataset) {
