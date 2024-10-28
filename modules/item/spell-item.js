@@ -1,6 +1,6 @@
 import { HMItem, advanceClock, setStatusEffectOnToken } from './item.js';
-import { HMChatMgr } from '../mgr/chatmgr.js';
 import { HMDialogFactory } from '../dialog/dialog-factory.js';
+import { HMChatFactory, CHAT_TYPE } from '../chat/chat-factory.js';
 import { HMTABLES } from '../tables/constants.js';
 
 export class HMSpellItem extends HMItem {
@@ -67,37 +67,43 @@ export class HMSpellItem extends HMItem {
             await actor.update({'system.sp': sp});
         }
 
+        /*
+         * This behavior is annoying. It's better broken than fixed.
+         * TODO: A useful spell UI. This one is garbage.
         if (resp.divine && resp.button === 'cast') {
             let {prepped} = context.system;
-            if (prepped > 0) await context.update({'data.prepped': --prepped});
+            if (prepped > 0) await context.update({'system.prepped': --prepped});
         }
-
-        const chatMgr = new HMChatMgr();
-        const dataset = {
-            dialog,
-            context,
-            caller: dialogResp.caller,
-            resp,
-        };
-
-        if (resp.button === 'cast') {
-            const {system} = caller;
-            const roll = await new Roll(HMTABLES.formula.save.spell, system).evaluate();
-            dataset.sfc = {value: roll.dice[0].total + actor.system.bonus.total.sfc};
-            dataset.sfc.mishap = HMTABLES.spell.mishap(resp.sfc, resp.smc, dataset.sfc.value);
-            dataset.roll = roll;
-        }
-
-        const card = await chatMgr.getCard({dataset});
-        await ChatMessage.create(card);
+        */
 
         if (opt.isCombatant) {
             if (resp.advance) await advanceClock(comData, dialogResp, true);
             if (resp.sfatigue) setStatusEffectOnToken(comData, 'sfatigue', resp.sfatigue);
         }
+
+        const bData = {caller: actor, context, resp};
+
+        if (shouldPerformRoll(resp, context)) {
+            bData.roll = await new Roll(HMTABLES.formula.spell.baseroll).evaluate();
+        }
+
+        const builder = new HMChatFactory(CHAT_TYPE.SPELL, bData);
+        builder.createChatMessage();
     }
 
     get baseSPC() {
         return HMTABLES.cast.baseSPC(this.system.lidx);
     }
+}
+
+/**
+ * Determines if a roll should be performed based on dialog response and context.
+ *
+ * @param {Object} resp - Dialog response.
+ * @param {HMSpellItem} context - Spell being evaluated.
+ */
+function shouldPerformRoll(resp, context) {
+    if (resp.button !== 'cast') return false;
+    const {system} = context;
+    return !system.divine || !!system.save.type;
 }
