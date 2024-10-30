@@ -1,5 +1,5 @@
 import { HMPrompt } from './prompt.js';
-import { HMCONST } from '../tables/constants.js';
+import { HMCONST, SYSTEM_ID } from '../tables/constants.js';
 import { idx } from '../tables/dictionary.js';
 
 export class DamagePrompt extends HMPrompt {
@@ -12,7 +12,9 @@ export class DamagePrompt extends HMPrompt {
 
     constructor(dialogData, options) {
         super(dialogData, options);
-        const weapon = dialogData.weapons[0];
+
+        const widx = HMPrompt.getLastWeaponIndex(dialogData);
+        const weapon = dialogData.weapons[widx];
         const capList = this.getCapList(weapon, dialogData?.caller);
         const wData = weapon.system;
         const canStrBonus = wData.ranged.checked ? !wData.ranged?.mechanical : false;
@@ -21,7 +23,7 @@ export class DamagePrompt extends HMPrompt {
         foundry.utils.mergeObject(this.dialogData, {
             capList,
             specialMove: 0,
-            widx: 0,
+            widx,
             weaponsList,
             canStrBonus,
         });
@@ -59,7 +61,9 @@ export class DamagePrompt extends HMPrompt {
 
     get dialogResp() {
         const {DMGFORM, SPECIAL} = HMCONST;
-        const {addStrBonus, weapons, widx} = this.dialogData;
+        const {addStrBonus, caller, weapons, widx} = this.dialogData;
+        caller.setFlag(SYSTEM_ID, 'lastWeapon', weapons[widx].weapon.id);
+
         const wData = weapons[widx].system;
         const specialMove  = Number(this.dialogData.specialMove);
         const shieldHit    = this.dialogData.shieldHit === 'true';

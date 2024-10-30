@@ -24,7 +24,8 @@ export class DefendPrompt extends HMPrompt {
 
     constructor(dialogData, options) {
         super(dialogData, options);
-        const [weapon] = dialogData.weapons;
+        const widx = HMPrompt.getLastWeaponIndex(dialogData);
+        const weapon = dialogData.weapons[widx];
         const {caller} = dialogData;
 
         const capList = this.getCapList(weapon, caller);
@@ -44,7 +45,7 @@ export class DefendPrompt extends HMPrompt {
             dodge: canDodge,
             ranged,
             spd,
-            widx: 0,
+            widx,
             range: 0,
             advance: dialogData.inCombat,
             SPECIAL: HMCONST.SPECIAL,
@@ -75,13 +76,15 @@ export class DefendPrompt extends HMPrompt {
     }
 
     get dialogResp() {
-        const {button, spd, defDie, rDefDie} = this.dialogData;
+        const {caller, button, spd, defDie, rDefDie, widx, weapons} = this.dialogData;
+        caller.setFlag(SYSTEM_ID, 'lastWeapon', weapons[widx].weapon.id);
+
         const specialMove = Number(this.dialogData.specialMove);
         const {SPECIAL} = HMCONST;
         const dialogResp = {
             defdie: specialMove === SPECIAL.RDEFEND ? HMTABLES.die[rDefDie] : HMTABLES.die[defDie],
             dodge: this.dialogData.dodge ? this.dialogData.dodge : 0,
-            widx: this.dialogData.widx,
+            widx,
             specialMove,
             range: Number(this.dialogData.range),
             bonus: parseInt(this.dialogData.bonus, 10) || 0,

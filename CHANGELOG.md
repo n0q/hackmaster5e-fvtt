@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+## Added
+- Attack/Defend/Damage macros now remember your last used weapon.
+
 ## [0.4.24] - 2024-10-28
 ## Added
 - Can drop items directly onto tokens.
