@@ -7,6 +7,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## Added
 - Attack/Defend/Damage macros now remember your last used weapon.
 
+## Changed
+- Updated Thief class backstab damage to errata.
+
 ## Fixed
 - Cleric spells are unprepared after casting, again.
 
