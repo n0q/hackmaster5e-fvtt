@@ -67,14 +67,10 @@ export class HMSpellItem extends HMItem {
             await actor.update({'system.sp': sp});
         }
 
-        /*
-         * This behavior is annoying. It's better broken than fixed.
-         * TODO: A useful spell UI. This one is garbage.
         if (resp.divine && resp.button === 'cast') {
             let {prepped} = context.system;
             if (prepped > 0) await context.update({'system.prepped': --prepped});
         }
-        */
 
         if (opt.isCombatant) {
             if (resp.advance) await advanceClock(comData, dialogResp, true);
