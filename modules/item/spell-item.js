@@ -50,7 +50,6 @@ export class HMSpellItem extends HMItem {
 
         const dialog = 'cast';
         const dialogDataset = {dialog, itemId: spell};
-        dialogDataset.isNPC = comData?.combatant?.isNPC || false;
         const dialogResp = await HMDialogFactory(dialogDataset, actor, opt);
 
         const {resp} = dialogResp;
@@ -77,7 +76,8 @@ export class HMSpellItem extends HMItem {
             if (resp.sfatigue) setStatusEffectOnToken(comData, 'sfatigue', resp.sfatigue);
         }
 
-        const bData = {caller: actor, context, resp};
+        const mdata = {isNPC: comData?.combatant?.isNPC || false};
+        const bData = {caller: actor, context, mdata, resp};
 
         if (shouldPerformRoll(resp, context)) {
             bData.roll = await new Roll(HMTABLES.formula.spell.baseroll).evaluate();

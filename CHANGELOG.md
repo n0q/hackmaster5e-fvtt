@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## Fixed
 - Cleric spells are unprepared after casting, again.
+- Beast spellcasting is hidden from players, again.
 
 ## [0.4.24] - 2024-10-28
 ## Added
