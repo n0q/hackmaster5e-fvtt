@@ -49,6 +49,7 @@ function registerSheets() {
 
 function registerConfig() {
     CONFIG.ActiveEffect.documentClass = HMActiveEffect;
+    CONFIG.ActiveEffect.legacyTransferral = false;
     CONFIG.Actor.documentClass = HMActorFactory;
     CONFIG.Combat.documentClass = HMCombat;
     CONFIG.Item.documentClass = HMItemFactory;

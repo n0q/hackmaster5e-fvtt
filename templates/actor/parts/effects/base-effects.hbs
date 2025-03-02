@@ -10,17 +10,18 @@
         <th style='text-align: left;'>{{localize 'HM.disabled'}}</th>
     </thead>
     <tbody>
-{{#each actor.collections.effects}}{{#with this}}
+{{#each actor.allApplicableEffects}}{{#with this}}
     {{#each changes}}
     <tr>
         <td>{{../name}}</td>
-        <td>{{#if ../flags.core.statusId}}{{localize 'HM.seffect'}}
+        <td>{{#if ../statuses}}{{localize 'HM.seffect'}}
             {{else}}{{localize 'ITEM.TypeTalent'}}
             {{/if}}
         </td>
         <td>{{key}}</td>
+            {{log foo level="warn"}}
         <td>{{#if mode}}{{value}}
-            {{else}}{{../hackmaster5e.customChanges}}
+            {{else}}{{foo}}
             {{/if}}
         </td>
         <td>{{#with ../duration}}

@@ -8,6 +8,15 @@ export const HM_ICON = {
 
 // TODO: ITEM_STATE and itemstate are the same table.
 export const HMCONST = {
+    AFFIX: {
+        TYPE: {
+            UNDEF:  0,
+            BUFF:   1,
+            DEBUFF: 2,
+            STATUS: 3,
+            TALENT: 4,
+        },
+    },
     ARMOR: {
         SHIELD: {
             BUCKLER:    0,

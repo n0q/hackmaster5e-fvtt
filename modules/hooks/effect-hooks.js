@@ -13,11 +13,12 @@ export class HMActiveEffectHooks {
         });
     }
 
-    static async applyActiveEffect(actor, change, current, metadata, changes) {
-        const [mode, ...modeArgs] = metadata.split(',');
-        const delta = applyCustomActiveEffect(mode, actor, modeArgs);
-        const update = current + delta;
-        changes[change.key] = update; // eslint-disable-line
+    static async applyActiveEffect(actor, change, current, delta, changes) {
+        const [mode, ...modeArgs] = delta.split(',');
+        const customDelta = applyCustomActiveEffect(mode, actor, modeArgs);
+        const update = current + customDelta;
+        foundry.utils.setProperty(actor, change.key, update);
+//        console.warn(arguments);
     }
 
     static createActiveEffect(effect, _data, userId) {
