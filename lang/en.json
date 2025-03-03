@@ -792,7 +792,6 @@
         "score":        "Score",
         "second":       "Second",
         "seconds":      "Seconds",
-        "seffect":      "Status Effect",
         "setup":        "Setup",
         "sex":          "Sex",
         "s4c":          "Set for Charge",
@@ -903,7 +902,7 @@
             "undef":    "Other",
             "buff":     "Buff",
             "debuff":   "Debuff",
-            "status":   "Status",
+            "status":   "Status Effect",
             "talent":   "Talent"
         },
 
