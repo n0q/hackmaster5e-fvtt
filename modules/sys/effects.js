@@ -38,6 +38,19 @@ export class HMActiveEffect extends ActiveEffect {
         const {disabled} = this;
         this.update({disabled: !disabled});
     }
+
+    /*
+     * Returns effect type based on if the effect has statuses or not.
+     * This is a temporary measure until effects are more sophisticated.
+     *
+     * @returns {enum} - Effect type.
+     */
+    get effectType() {
+        const {TYPE} = HMCONST.AFFIX;
+        // Temporary until system is more sophisticated.
+        const eType = this.statuses.size ? TYPE.STATUS : TYPE.TALENT;
+        return eType;
+    }
 }
 
 export function applyCustomActiveEffect(mode, actor, modeArgs) {

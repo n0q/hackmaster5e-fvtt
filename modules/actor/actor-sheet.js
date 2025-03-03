@@ -39,6 +39,7 @@ export class HMActorSheet extends ActorSheet {
      */
     #prepareEffects(data) {
         this.actor.processedEffects = [...data.actor.allApplicableEffects()].map((effect) => {
+            const type = effect.effectType;
             const processedChanges = effect.changes.map((change) => {
                 if (change.mode === CONST.ACTIVE_EFFECT_MODES.CUSTOM) {
                     const [cfx, prop] = change.value.split(',');
@@ -47,7 +48,7 @@ export class HMActorSheet extends ActorSheet {
                 }
                 return change;
             });
-            return { ...effect, changes: processedChanges };
+            return { ...effect, changes: processedChanges, type };
         });
     }
 
