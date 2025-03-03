@@ -1,5 +1,5 @@
-import { HMCONST, HMTABLES } from '../tables/constants.js';
-import { HMStates } from '../sys/effects.js';
+import { HMTABLES } from '../tables/constants.js';
+import { HMStates, applyCustomActiveEffect } from '../sys/effects.js';
 import { HMSocket, SOCKET_TYPES } from '../sys/sockets.js';
 
 export class HMActiveEffectHooks {
@@ -13,12 +13,12 @@ export class HMActiveEffectHooks {
         });
     }
 
+    // eslint-disable-next-line no-unused-vars
     static async applyActiveEffect(actor, change, current, delta, changes) {
         const [mode, ...modeArgs] = delta.split(',');
         const customDelta = applyCustomActiveEffect(mode, actor, modeArgs);
         const update = current + customDelta;
         foundry.utils.setProperty(actor, change.key, update);
-//        console.warn(arguments);
     }
 
     static createActiveEffect(effect, _data, userId) {
@@ -49,6 +49,7 @@ export class HMActiveEffectHooks {
     }
 }
 
+/*
 function applyCustomActiveEffect(mode, actor, modeArgs) {
     const {MODE} = HMCONST.CFX;
     if (Number(mode) === MODE.ABILITY_BONUS) return modeAbilityBonus(actor, modeArgs);
@@ -67,3 +68,4 @@ function modeAbilityBonus(actor, [ability, bonus, mode]) {
 function modeGetProperty(actor, [prop]) {
     return foundry.utils.getProperty(actor, prop) ?? 0;
 }
+*/

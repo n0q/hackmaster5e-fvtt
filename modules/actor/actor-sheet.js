@@ -4,6 +4,7 @@ import { HMContainer } from '../item/container.js';
 import { HMCONST, HMTABLES, SYSTEM_ID } from '../tables/constants.js';
 import { HMChatFactory, CHAT_TYPE } from '../chat/chat-factory.js';
 import { HMWoundItem } from '../item/wound-item.js';
+import { applyCustomActiveEffect } from '../sys/effects.js';
 import { idx } from '../tables/dictionary.js';
 
 export class HMActorSheet extends ActorSheet {
@@ -21,8 +22,33 @@ export class HMActorSheet extends ActorSheet {
         data.dtypes = ['String', 'Number', 'Boolean'];
 
         this._prepareBaseItems(data);
+        this.#prepareEffects(data);
         this._HMprepareSheet(data);
         return data;
+    }
+
+    /**
+     * Preps and processes active effects. Necessary for custom effect handling.
+     * Custom effect values are stored in displayValue.
+     *
+     * @private
+     * @param {Object} data - sheet data from getData()
+     * @param {HMActor} data.actor - Actor who's effects are being processed.
+     *
+     * @returns {void}
+     */
+    #prepareEffects(data) {
+        this.actor.processedEffects = [...data.actor.allApplicableEffects()].map((effect) => {
+            const processedChanges = effect.changes.map((change) => {
+                if (change.mode === CONST.ACTIVE_EFFECT_MODES.CUSTOM) {
+                    const [cfx, prop] = change.value.split(',');
+                    const displayValue = applyCustomActiveEffect(cfx, this.actor, [prop]);
+                    return { ...change, displayValue };
+                }
+                return change;
+            });
+            return { ...effect, changes: processedChanges };
+        });
     }
 
     _prepareBaseItems(sheetData) {

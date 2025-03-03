@@ -1,4 +1,4 @@
-import { SYSTEM_ID } from '../tables/constants.js';
+import { HMCONST } from '../tables/constants.js';
 
 /* eslint max-classes-per-file: ['error', 2] */
 export const actorHasEffects = (actor, statusList) => {
@@ -38,11 +38,23 @@ export class HMActiveEffect extends ActiveEffect {
         const {disabled} = this;
         this.update({disabled: !disabled});
     }
+}
 
-    _applyCustom(...args) {
-        super._applyCustom(...args);
-        const changes = args[4];
-        const [customChanges] = Object.values(changes);
-        this[SYSTEM_ID] = {customChanges};
-    }
+export function applyCustomActiveEffect(mode, actor, modeArgs) {
+    const {MODE} = HMCONST.CFX;
+    if (Number(mode) === MODE.ABILITY_BONUS) return modeAbilityBonus(actor, modeArgs);
+    if (Number(mode) === MODE.GET_PROPERTY) return modeGetProperty(actor, modeArgs);
+    return 0;
+}
+
+function modeAbilityBonus(actor, [ability, bonus, mode]) {
+    const {OPT} = HMCONST.CFX;
+    const value = Number(actor.getAbilityBonus(ability, bonus)) || 0;
+    if (Number(mode) === OPT.BONUS) return Math.max(0, value);
+    if (Number(mode) === OPT.MALUS) return Math.min(0, -value);
+    return value;
+}
+
+function modeGetProperty(actor, [prop]) {
+    return foundry.utils.getProperty(actor, prop) ?? 0;
 }

@@ -10,7 +10,7 @@
         <th style='text-align: left;'>{{localize 'HM.disabled'}}</th>
     </thead>
     <tbody>
-{{#each actor.allApplicableEffects}}{{#with this}}
+{{#each actor.processedEffects}}{{#with this}}
     {{#each changes}}
     <tr>
         <td>{{../name}}</td>
@@ -19,9 +19,9 @@
             {{/if}}
         </td>
         <td>{{key}}</td>
-            {{log foo level="warn"}}
-        <td>{{#if mode}}{{value}}
-            {{else}}{{foo}}
+        <td>
+            {{#if mode}}{{value}}
+            {{else}}{{displayValue}}
             {{/if}}
         </td>
         <td>{{#with ../duration}}
