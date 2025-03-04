@@ -792,7 +792,6 @@
         "score":        "Score",
         "second":       "Second",
         "seconds":      "Seconds",
-        "seffect":      "Status Effect",
         "setup":        "Setup",
         "sex":          "Sex",
         "s4c":          "Set for Charge",
@@ -897,6 +896,14 @@
                 "spdr": "Ranged Speed",
                 "dmg":  "Damage Bonus"
             }
+        },
+
+        "EFFECT.TYPE": {
+            "undef":    "Other",
+            "buff":     "Buff",
+            "debuff":   "Debuff",
+            "status":   "Status Effect",
+            "talent":   "Talent"
         },
 
         "UI": {

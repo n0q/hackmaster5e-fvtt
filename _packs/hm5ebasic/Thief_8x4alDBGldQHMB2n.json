@@ -45,7 +45,7 @@
           "value": -1
         },
         "back": {
-          "value": "0"
+          "value": "d4p"
         },
         "luck": {
           "value": 21
@@ -63,7 +63,7 @@
           "value": -1
         },
         "back": {
-          "value": "0"
+          "value": "d4p"
         },
         "luck": {
           "value": 22
@@ -81,7 +81,7 @@
           "value": -1
         },
         "back": {
-          "value": "0"
+          "value": "d4p"
         },
         "luck": {
           "value": 23
@@ -99,7 +99,7 @@
           "value": -1
         },
         "back": {
-          "value": "0"
+          "value": "d4p"
         },
         "luck": {
           "value": 24
@@ -117,7 +117,7 @@
           "value": -2
         },
         "back": {
-          "value": "0"
+          "value": "2d4p"
         },
         "luck": {
           "value": 25
@@ -135,7 +135,7 @@
           "value": -2
         },
         "back": {
-          "value": "0"
+          "value": "2d4p"
         },
         "luck": {
           "value": 26
@@ -153,7 +153,7 @@
           "value": -2
         },
         "back": {
-          "value": "0"
+          "value": "2d4p"
         },
         "luck": {
           "value": 27
@@ -171,7 +171,7 @@
           "value": -2
         },
         "back": {
-          "value": "0"
+          "value": "2d4p"
         },
         "luck": {
           "value": 28
@@ -189,7 +189,7 @@
           "value": -2
         },
         "back": {
-          "value": "d4p"
+          "value": "3d4p"
         },
         "luck": {
           "value": 29
@@ -207,7 +207,7 @@
           "value": -3
         },
         "back": {
-          "value": "d4p"
+          "value": "3d4p"
         },
         "luck": {
           "value": 30
@@ -225,7 +225,7 @@
           "value": -3
         },
         "back": {
-          "value": "d4p"
+          "value": "3d4p"
         },
         "luck": {
           "value": 31
@@ -243,7 +243,7 @@
           "value": -3
         },
         "back": {
-          "value": "d4p"
+          "value": "3d4p"
         },
         "luck": {
           "value": 32
@@ -261,7 +261,7 @@
           "value": -3
         },
         "back": {
-          "value": "d4p"
+          "value": "4d4p"
         },
         "luck": {
           "value": 33
@@ -279,7 +279,7 @@
           "value": -3
         },
         "back": {
-          "value": "d4p"
+          "value": "4d4p"
         },
         "luck": {
           "value": 34
@@ -297,7 +297,7 @@
           "value": -3
         },
         "back": {
-          "value": "d4p"
+          "value": "4d4p"
         },
         "luck": {
           "value": 35
@@ -315,7 +315,7 @@
           "value": -4
         },
         "back": {
-          "value": "d4p"
+          "value": "4d4p"
         },
         "luck": {
           "value": 36
@@ -333,7 +333,7 @@
           "value": -4
         },
         "back": {
-          "value": "2d4p"
+          "value": "5d4p"
         },
         "luck": {
           "value": 37
@@ -351,7 +351,7 @@
           "value": -4
         },
         "back": {
-          "value": "2d4p"
+          "value": "5d4p"
         },
         "luck": {
           "value": 38
@@ -369,7 +369,7 @@
           "value": -4
         },
         "back": {
-          "value": "2d4p"
+          "value": "5d4p"
         },
         "luck": {
           "value": 39
@@ -387,7 +387,7 @@
           "value": -4
         },
         "back": {
-          "value": "2d4p"
+          "value": "5d4p"
         },
         "luck": {
           "value": 40
@@ -398,9 +398,9 @@
   "_stats": {
     "systemId": "hackmaster5e",
     "systemVersion": "0",
-    "coreVersion": "12.325",
+    "coreVersion": "12.331",
     "createdTime": 1688862769055,
-    "modifiedTime": 1688862769055,
+    "modifiedTime": 1731278550095,
     "lastModifiedBy": "6PGvwKmaOsPz0R2y",
     "compendiumSource": null,
     "duplicateSource": null

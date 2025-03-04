@@ -5,15 +5,22 @@ export class SpellChatBuilder extends ChatBuilder {
     static template = 'systems/hackmaster5e/templates/chat/chat-spell.hbs';
 
     async createChatMessage() {
-        const {context, resp, roll} = this.data;
+        const {context, mdata, resp, roll} = this.data;
 
-        const mdata = this.getMetadata();
+        foundry.utils.mergeObject(mdata, this.getMetadata());
         if (roll) mdata.inline = unescape(roll);
 
-        const chatData = {context, mdata, roll, resp};
-        const content = await renderTemplate(this.template, chatData);
+        const templateData = {context, mdata, roll, resp};
+        const content = await renderTemplate(this.template, templateData);
 
-        const chatMessageData = this.getChatMessageData({content, resp});
+        const chatData = {content, resp};
+        if (mdata.isNPC) {
+            chatData.whisper = ChatBuilder.getGMs;
+            chatData.rollMode = CONST.DICE_ROLL_MODES.PRIVATE;
+        }
+
+        // const chatMessageData = this.getChatMessageData({content, resp, whisper});
+        const chatMessageData = this.getChatMessageData(chatData);
         await ChatMessage.create(chatMessageData);
     }
 

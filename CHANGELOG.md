@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.4.25] - 2025-03-04
+## Added
+- Attack/Defend/Damage macros now remember your last used weapon.
+
+## Changed
+- Updated Thief class backstab damage to errata.
+
+## Fixed
+- Cleric spells are unprepared after casting, again.
+- Beast spellcasting is hidden from players, again.
+- Effects panel correctly displays effect types, again.
+
 ## [0.4.24] - 2024-10-28
 ## Added
 - Can drop items directly onto tokens.

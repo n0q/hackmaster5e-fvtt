@@ -1,5 +1,5 @@
 import { HMPrompt } from './prompt.js';
-import { HMCONST, HMTABLES } from '../tables/constants.js';
+import { HMCONST, HMTABLES, SYSTEM_ID } from '../tables/constants.js';
 
 function getSpeed(ranged, wData, specialMove=0) {
     const {spd, jspd} = wData.bonus.total;
@@ -36,7 +36,9 @@ export class AttackPrompt extends HMPrompt {
 
     constructor(dialogData, options) {
         super(dialogData, options);
-        const weapon = dialogData.weapons[0];
+
+        const widx = HMPrompt.getLastWeaponIndex(dialogData);
+        const weapon = dialogData.weapons[widx];
         const weaponsList = HMPrompt.getSelectFromProperty(dialogData.weapons, 'name');
         const inCombat = dialogData.inCombat ?? false;
         const capList = this.getCapList(weapon, dialogData?.caller, inCombat);
@@ -58,7 +60,7 @@ export class AttackPrompt extends HMPrompt {
             reach,
             spd,
             weaponsList,
-            widx: 0,
+            widx,
             range: HMCONST.RANGED.REACH.SHORT,
             advance: inCombat,
             SPECIAL,
@@ -91,7 +93,7 @@ export class AttackPrompt extends HMPrompt {
     }
 
     get dialogResp() {
-        const {button, charge, spd, weapons, widx} = this.dialogData;
+        const {button, caller, charge, spd, weapons, widx} = this.dialogData;
 
         let specialMove = Number(this.dialogData.specialMove);
         if (specialMove === HMCONST.SPECIAL.CHARGE) specialMove = Number(charge);
@@ -101,6 +103,8 @@ export class AttackPrompt extends HMPrompt {
         const defense = specialMove === HMCONST.SPECIAL.FULLPARRY
             ? HMCONST.DEFENSE.FULLPARRY
             : Number(this.dialogData.defense);
+
+        caller.setFlag(SYSTEM_ID, 'lastWeapon', weapons[widx].weapon.id);
 
         const dialogResp = {
             widx,

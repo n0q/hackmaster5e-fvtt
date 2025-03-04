@@ -1,6 +1,6 @@
 /* eslint class-methods-use-this: ['error', {'exceptMethods': ['dialogResp', 'getCapList']}] */
 import { idx } from '../tables/dictionary.js';
-import { HMCONST } from '../tables/constants.js';
+import { HMCONST, SYSTEM_ID } from '../tables/constants.js';
 
 export class HMPrompt extends Application {
     static get defaultOptions() {
@@ -33,6 +33,21 @@ export class HMPrompt extends Application {
             const value = foundry.utils.getProperty(element, prop);
             return {...obj, [i]: value};
         }, {});
+    }
+
+    /*
+     * Retrieves the id of the last weapon used by this actor. Returns 0 if this weapon
+     * is no longer present in the provided list of weapons.
+     * @param {Object} data - Data containing caller and weapons list.
+     * @param {HMActor} data.caller - The actor making the attack.
+     * @param {HMWeaponProfile[]} data.weapons - List of weapons.
+     * @returns {number} Index of the last weapon, or 0 if not found.
+     */
+    static getLastWeaponIndex(data) {
+        const {caller, weapons} = data;
+        const lastWeaponId = caller.getFlag(SYSTEM_ID, 'lastWeapon');
+        const wIdx = weapons.findIndex((w) => w.weapon.id === lastWeaponId);
+        return wIdx === -1 ? 0 : wIdx;
     }
 
     getCapList(weapon, actor=null, inCombat=true) {

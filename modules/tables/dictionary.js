@@ -32,6 +32,14 @@ idx.ability = {
     'cha': 'HM.cha',
 };
 
+idx.affix = {
+    [HMCONST.AFFIX.TYPE.UNDEF]:     'HM.EFFECT.TYPE.undef',
+    [HMCONST.AFFIX.TYPE.BUFF]:      'HM.EFFECT.TYPE.buff',
+    [HMCONST.AFFIX.TYPE.DEBUFF]:    'HM.EFFECT.TYPE.debuff',
+    [HMCONST.AFFIX.TYPE.STATUS]:    'HM.EFFECT.TYPE.status',
+    [HMCONST.AFFIX.TYPE.TALENT]:    'HM.EFFECT.TYPE.talent',
+};
+
 idx.alignment = {
     'lg':  'HM.alignmentSelect.lg',
     'ng':  'HM.alignmentSelect.ng',
