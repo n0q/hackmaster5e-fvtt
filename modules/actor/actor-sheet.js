@@ -42,13 +42,13 @@ export class HMActorSheet extends ActorSheet {
             const type = effect.effectType;
             const processedChanges = effect.changes.map((change) => {
                 if (change.mode === CONST.ACTIVE_EFFECT_MODES.CUSTOM) {
-                    const [cfx, prop] = change.value.split(',');
-                    const displayValue = applyCustomActiveEffect(cfx, this.actor, [prop]);
+                    const [cfx, ...prop] = change.value.split(',');
+                    const displayValue = applyCustomActiveEffect(cfx, this.actor, prop);
                     return { ...change, displayValue };
                 }
                 return change;
             });
-            return { ...effect, changes: processedChanges, type };
+            return { ...effect, changes: processedChanges, type, id: effect.id };
         });
     }
 

@@ -15,6 +15,7 @@ export class HMActiveEffectHooks {
 
     // eslint-disable-next-line no-unused-vars
     static async applyActiveEffect(actor, change, current, delta, changes) {
+        if (!delta) return;
         const [mode, ...modeArgs] = delta.split(',');
         const customDelta = applyCustomActiveEffect(mode, actor, modeArgs);
         const update = current + customDelta;
