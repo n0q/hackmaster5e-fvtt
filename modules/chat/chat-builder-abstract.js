@@ -33,9 +33,9 @@ export class ChatBuilder {
      * @constructor
      * @throws {Error} - If instantiated directly.
      * @param {Object} dataset - The dataset object for the builder.
-     * @param {HMActor} dataset.caller - The actor the chat pertains to.
-     * @param {HMItem} dataset.context - The item the chat pertains to.
-     * @param {Roll} dataset.roll - A dice roll the chat pertains to.
+     * @param {Object} dataset.caller - Uuid for the actor the chat pertains to.
+     * @param {Object} dataset.context - Uuid for the item the chat pertains to.
+     * @param {Object} dataset.roll - Json data for a dice roll the chat pertains to.
      * @param {Object} dataset.resp - Data polled from the user from an Application.
      * @param {Object[]} dataset.batch - Bulk object data for batch processing.
      * @param {Object} dataset.mdata - Details for chat card enrichment.
@@ -53,7 +53,19 @@ export class ChatBuilder {
 
         this.RESULT_TYPE = RESULT_TYPE;
         this.data = new BuilderSchema({...dataset, options});
+        if (dataset.caller) this.data.caller = foundry.utils.fromUuidSync(dataset.caller);
+        if (dataset.context) this.data.context = foundry.utils.fromUuidSync(dataset.context);
+        if (dataset.roll) this.data.roll = Roll.fromData(dataset.roll);
         this.template = new.target.template;
+    }
+
+    /**
+     * A shortcut to Foundry's handlebars template system.
+     *
+     * @returns {typeof foundry.applications.handlebars}
+     */
+    static get handlebars() {
+        return foundry.applications.handlebars;
     }
 
     /**

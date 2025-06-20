@@ -8,17 +8,17 @@ export class BuilderSchema extends foundry.abstract.DataModel {
         };
 
         /**
-         * @param {HMActor} caller - The actor the chat pertains to.
-         * @param {HMItem} context - The item the chat pertains to.
-         * @param {Roll} roll - A dice roll the chat pertains to.
+         * @param {string} caller - Uuid for the actor the chat pertains to.
+         * @param {string} context - Uuid for the item the chat pertains to.
+         * @param {Object} roll - Json data for a dice roll the chat pertains to.
          * @param {Object} resp - Data polled from the user from an Application.
          * @param {Object} mdata - Details for chat card enrichment.
          * @param {Object[]} batch - Bulk object data for batch processing.
          * @param {Object} options - Options passed directly to ChatMessage.create().
          */
         return {
-            caller: new fields.ObjectField(datasetOpts),
-            context: new fields.ObjectField(datasetOpts),
+            caller: new fields.DocumentUUIDField(datasetOpts),
+            context: new fields.DocumentUUIDField(datasetOpts),
             roll: new fields.ObjectField(datasetOpts),
             resp: new fields.ObjectField(datasetOpts),
             mdata: new fields.ObjectField(datasetOpts),
