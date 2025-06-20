@@ -28,7 +28,7 @@ export class AbilityCheckChatBuilder extends ChatBuilder {
 
         mdata.score = context.system.abilities.total[mdata.ability].value;
         const chatData = {rollContent, mdata, resultString};
-        const content = await renderTemplate(this.template, chatData);
+        const content = await ChatBuilder.handlebars.renderTemplate(this.template, chatData);
 
         const chatMessageData = this.getChatMessageData({content, rolls});
         await ChatMessage.create(chatMessageData);
