@@ -155,11 +155,11 @@ export class HMItem extends Item {
             const roll = await new Roll(formula).evaluate();
 
             const bData = {
-                caller: callerObj.caller,
-                context: callerObj.context,
+                caller: callerObj.caller.uuid,
+                context: callerObj.context.uuid,
                 mdata: callerObj.context.system,
                 resp,
-                roll,
+                roll: roll.toJSON(),
             };
 
             const builder = new HMChatFactory(CHAT_TYPE.SKILL_CHECK, bData);
