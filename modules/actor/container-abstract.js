@@ -2,12 +2,13 @@ export class HMItemContainer extends foundry.abstract.DataModel {
     static defineSchema() {
         const {fields} = foundry.data;
         return {
-            actor: new fields.ObjectField({blank: false, required: true, readonly: true}),
+            actor: new fields.DocumentUUIDField({blank: false, required: true, readonly: true}),
         };
     }
 
     get items() {
-        const icItems = new foundry.utils.Collection(this.actor.items.entries());
+        const actor = foundry.utils.fromUuidSync(this.actor);
+        const icItems = new foundry.utils.Collection(actor.items.entries());
         const stack = icItems.filter((item) => item.system?.container?.enabled);
 
         while (stack.length) {

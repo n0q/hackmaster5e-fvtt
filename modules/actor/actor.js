@@ -9,7 +9,7 @@ import { getDiceSum } from '../sys/utils.js';
 export class HMActor extends Actor {
     constructor(...args) {
         super(...args);
-        this.hm = new HMItemContainer({actor: this});
+        this.hm = new HMItemContainer({actor: this.uuid});
     }
 
     prepareBaseData() {
