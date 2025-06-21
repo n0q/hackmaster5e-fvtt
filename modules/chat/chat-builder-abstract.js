@@ -29,8 +29,16 @@ const RESULT_TYPE = {
  */
 export class ChatBuilder {
     /**
+     * Internal schema wrapper for normalizing input data.
+     * @type {BuilderSchema}
+     * @private
+     */
+    #raw;
+
+    /**
      * Creates an instance of ChatBuilder.
      * @constructor
+     * @todo Implement an 'init' method to support async uuid resolution.
      * @throws {Error} - If instantiated directly.
      * @param {Object} dataset - The dataset object for the builder.
      * @param {Object} dataset.caller - Uuid for the actor the chat pertains to.
@@ -52,11 +60,29 @@ export class ChatBuilder {
         }
 
         this.RESULT_TYPE = RESULT_TYPE;
-        this.data = new BuilderSchema({...dataset, options});
-        if (dataset.caller) this.data.caller = foundry.utils.fromUuidSync(dataset.caller);
-        if (dataset.context) this.data.context = foundry.utils.fromUuidSync(dataset.context);
-        if (dataset.roll) this.data.roll = Roll.fromData(dataset.roll);
+        this.#raw = new BuilderSchema({...dataset, options});
+        this.data = {
+            caller: this.#raw.caller ? foundry.utils.fromUuidSync(dataset.caller) : null,
+            context: this.#raw.context ? foundry.utils.fromUuidSync(dataset.context) : null,
+            roll: this.#raw.roll ? Roll.fromData(dataset.roll) : null,
+            resp: this.#raw.resp ?? {},
+            mdata: this.#raw.mdata ?? {},
+            batch: this.#parseBatchRolls(this.#raw.batch),
+            options: this.#raw.options ?? {},
+        };
         this.template = new.target.template;
+    }
+
+    /**
+     * Parses bulk roll data from dataset.
+     * @param {Object[]} batchData - Array of raw roll data.
+     * @returns {Roll[]} Array of parsed Roll instances.
+     * @private
+     */
+    /* eslint-disable-next-line class-methods-use-this */
+    #parseBatchRolls(batchData) {
+        if (!Array.isArray(batchData)) return [];
+        return batchData.map((data) => Roll.fromData(data));
     }
 
     /**

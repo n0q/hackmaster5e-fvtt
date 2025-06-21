@@ -200,8 +200,11 @@ export class HMActor extends Actor {
     async rollSave(dataset) {
         const {dialog, formulaType, mdata} = dataset;
         const chatType = formulaType === 'trauma' ? CHAT_TYPE.TRAUMA_CHECK : CHAT_TYPE.SAVE_CHECK;
-        let bData = dataset;
+        let bData = {...dataset};
         if (!bData.resp) bData = {...bData, ...(await HMDialogFactory({dialog}, this))};
+
+        bData.caller = bData.caller.uuid;
+        bData.context = bData.context.uuid;
         bData.mdata = {formulaType};
 
         const formula = HMTABLES.formula[dialog][formulaType];
@@ -211,8 +214,10 @@ export class HMActor extends Actor {
             talent: this.hackmaster5e.talent,
         };
 
-        bData.roll = await new Roll(formula, rollContext).evaluate();
-        if (chatType === CHAT_TYPE.TRAUMA_CHECK) bData = await getTraumaBData(bData);
+        const roll = await new Roll(formula, rollContext).evaluate();
+        if (chatType === CHAT_TYPE.TRAUMA_CHECK) bData = await getTraumaBData(roll, bData);
+        bData.roll = roll.toJSON();
+
         foundry.utils.mergeObject(bData.mdata, mdata);
         const builder = new HMChatFactory(chatType, bData);
         builder.createChatMessage();
@@ -254,28 +259,28 @@ export class HMActor extends Actor {
  * Evaluates additional rolls for coma and KO duration as needed.
  *
  * @param {Object} bData - The base data from the initial roll.
- * @param {Roll} bData.roll = The initial roll result.
- * @param {Array|Roll} bData.batch - An array to store additional roll results.
+ * @param {Roll} roll = The initial roll result.
+ * @param {Array|Object} bData.batch - An array to store additional roll results.
  * @returns {Promise<Object>} - Resolves to the updated bData object.
  * @async
  */
-async function getTraumaBData(bData) {
+async function getTraumaBData(roll, bData) {
     const traumaData = bData;
     const failType = HMCONST.TRAUMA_FAILSTATE;
 
     let failState = failType.PASSED;
-    traumaData.batch = [traumaData.roll];
+    const batch = [roll];
 
-    if (traumaData.roll.total <= 0) return {...traumaData, mdata: {failState}};
+    if (roll.total <= 0) return {...traumaData, mdata: {failState}};
 
     // Extended Trauma rules.
     failState = failType.FAILED;
-    if (getDiceSum(traumaData.roll) > 19) {
+    if (getDiceSum(roll) > 19) {
         failState = failType.KO;
 
         const {comaCheck, comaDuration, koDuration} = HMTABLES.formula.trauma;
         const comaCheckRoll = await new Roll(comaCheck).evaluate();
-        traumaData.batch.push(comaCheckRoll);
+        batch.push(comaCheckRoll);
 
         // Coma check
         if (comaCheckRoll.total > 19) failState = failType.COMA;
@@ -287,8 +292,9 @@ async function getTraumaBData(bData) {
             failState = failType.VEGETABLE;
         }
 
-        traumaData.batch.push(durationRoll);
+        batch.push(durationRoll);
     }
+    traumaData.batch = batch.map((r) => r.toJSON());
     traumaData.mdata = {failState};
     return traumaData;
 }
