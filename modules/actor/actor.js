@@ -84,11 +84,8 @@ export class HMActor extends Actor {
     prepareWeaponProfiles() {
         this.wprofiles = new Collection();
         this.itemTypes.weapon.forEach((weapon) => {
-            const _id = foundry.utils.randomID();
-            weapon.profileId = _id; // eslint-disable-line no-param-reassign
-            const profileData = {name: weapon.name, weapon, actor: this, _id};
+            const profileData = {weapon, actor: this};
             const profile = new HMWeaponProfile(profileData);
-            profile.evaluate();
             this.wprofiles.set(profile.id, profile);
         });
     }
