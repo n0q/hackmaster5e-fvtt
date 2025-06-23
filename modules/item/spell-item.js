@@ -77,13 +77,14 @@ export class HMSpellItem extends HMItem {
         }
 
         const mdata = {isNPC: comData?.combatant?.isNPC || false};
-        const bData = {caller: actor, context, mdata, resp};
+        const bData = {caller: actor.uuid, context: context.uuid, mdata, resp};
 
         if (shouldPerformRoll(resp, context)) {
-            bData.roll = await new Roll(HMTABLES.formula.spell.baseroll).evaluate();
+            const roll = await new Roll(HMTABLES.formula.spell.baseroll).evaluate();
+            bData.roll = roll.toJSON();
         }
 
-        const builder = new HMChatFactory(CHAT_TYPE.SPELL, bData);
+        const builder = await HMChatFactory.create(CHAT_TYPE.SPELL, bData);
         builder.createChatMessage();
     }
 
