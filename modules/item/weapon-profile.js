@@ -3,13 +3,9 @@ import { HMCONST, HMTABLES } from '../tables/constants.js';
 export class HMWeaponProfile {
     constructor(schemaData) {
         this._id = foundry.utils.randomID();
-
         this.actor = schemaData.actor;
         this.weapon = schemaData.weapon;
-
-        const {system} = this.weapon;
-        const {bonus, ...weaponSystem} = system;
-        this.system = weaponSystem;
+        this.system = this.weapon.system;
     }
 
     get minspd() {

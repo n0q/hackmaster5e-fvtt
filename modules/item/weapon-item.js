@@ -298,8 +298,13 @@ export class HMWeaponItem extends HMItem {
         const rollContext = {resp, ...context.system};
         const roll = await new Roll(formula, rollContext).evaluate();
 
-        const bData = {caller: actor, context, resp, roll};
-        const builder = new HMChatFactory(CHAT_TYPE.DEFENSE, bData);
+        const bData = {
+            caller: actor.uuid,
+            context: context.uuid,
+            resp,
+            roll: roll.toJSON(),
+        };
+        const builder = await HMChatFactory.create(CHAT_TYPE.DEFENSE, bData);
         builder.createChatMessage();
 
         if (opt.isCombatant) {

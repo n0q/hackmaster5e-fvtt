@@ -86,6 +86,7 @@ export class HMActor extends Actor {
         this.itemTypes.weapon.forEach((weapon) => {
             const profileData = {weapon, actor: this};
             const profile = new HMWeaponProfile(profileData);
+            profile.evaluate();
             this.wprofiles.set(profile.id, profile);
         });
     }
