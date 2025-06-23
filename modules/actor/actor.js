@@ -216,8 +216,8 @@ export class HMActor extends Actor {
         bData.roll = roll.toJSON();
 
         foundry.utils.mergeObject(bData.mdata, mdata);
-        const builder = new HMChatFactory(chatType, bData);
-        builder.createChatMessage();
+        const builder = await HMChatFactory.create(chatType, bData);
+        await builder.createChatMessage();
     }
 
     async modifyTokenAttribute(attribute, value, isDelta=false, isBar=true) {
@@ -268,7 +268,7 @@ async function getTraumaBData(roll, bData) {
     let failState = failType.PASSED;
     const batch = [roll];
 
-    if (roll.total <= 0) return {...traumaData, mdata: {failState}};
+    if (roll.total <= 0) return {...traumaData, batch: [roll.toJSON()], mdata: {failState}};
 
     // Extended Trauma rules.
     failState = failType.FAILED;

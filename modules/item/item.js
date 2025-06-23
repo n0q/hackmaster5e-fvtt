@@ -162,7 +162,7 @@ export class HMItem extends Item {
                 roll: roll.toJSON(),
             };
 
-            const builder = new HMChatFactory(CHAT_TYPE.SKILL_CHECK, bData);
+            const builder = await HMChatFactory.create(CHAT_TYPE.SKILL_CHECK, bData);
             return builder.createChatMessage();
         });
     }

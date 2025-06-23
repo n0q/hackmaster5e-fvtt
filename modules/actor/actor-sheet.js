@@ -397,7 +397,7 @@ export class HMActorSheet extends ActorSheet {
                     resp: cData.dialogResp.resp,
                     roll: cData.roll.toJSON(),
                 };
-                const builder = new HMChatFactory(cardType, bData);
+                const builder = await HMChatFactory.create(cardType, bData);
                 return builder.createChatMessage();
             }
 

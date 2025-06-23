@@ -9,7 +9,7 @@ export class TraumaCheckChatBuilder extends ChatBuilder {
     async createChatMessage() {
         const {batch, resp} = this.data;
         let {mdata} = this.data;
-        const [traumaRoll, , durationRoll] = batch;
+        const [traumaRoll, durationRoll] = batch;
         const {failState} = mdata;
 
         const rFlavor = ['Trauma Check', 'Coma Check', 'Extended Duration'];

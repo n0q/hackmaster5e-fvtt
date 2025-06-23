@@ -33,10 +33,16 @@ export class ChatBuilder {
      * @type {BuilderSchema}
      * @private
      */
-    #raw;
+    #schema;
 
     /**
-     * Creates an instance of ChatBuilder.
+     * Base ChatBuilder constructor (abstract).
+     *
+     * Stores dataset and options in normalized form using BuilderSchema.
+     * Each subclass must define a static 'template' property.
+     * Use the static 'create()' method instead of calling 'new' directly.
+     *
+     * @abstract
      * @constructor
      * @todo Implement an 'init' method to support async uuid resolution.
      * @throws {Error} - If instantiated directly.
@@ -49,28 +55,61 @@ export class ChatBuilder {
      * @param {Object} dataset.mdata - Details for chat card enrichment.
      * @param {Object} dataset.options - Options passed directly to ChatMessage.create().
      * @prop {string} template - Path to hbs template. Must be defined by subclasses.
+     * @throws {Error} If instantiated directly or if 'template' is undefined in subclass.
      */
     constructor(dataset, options) {
         if (new.target === ChatBuilder) {
-            throw new Error('ChatBuilder cannot be instantiated directly.');
+            throw new Error('ChatBuilder cannot be instantiated directly. Use Class.create() instead.');
         }
 
         if (!new.target.template) {
             throw new Error('Subclasses must define a static template property.');
         }
 
-        this.RESULT_TYPE = RESULT_TYPE;
-        this.#raw = new BuilderSchema({...dataset, options});
-        this.data = {
-            caller: this.#raw.caller ? foundry.utils.fromUuidSync(dataset.caller) : null,
-            context: this.#raw.context ? foundry.utils.fromUuidSync(dataset.context) : null,
-            roll: this.#raw.roll ? Roll.fromData(dataset.roll) : null,
-            resp: this.#raw.resp ?? {},
-            mdata: this.#raw.mdata ?? {},
-            batch: this.#parseBatchRolls(this.#raw.batch),
-            options: this.#raw.options ?? {},
-        };
         this.template = new.target.template;
+        this.RESULT_TYPE = RESULT_TYPE;
+        this.#schema = new BuilderSchema({...dataset, options});
+    }
+
+    /**
+     * Creates and initializes an instance of a ChatBuilder subclass.
+     *
+     * Use this method, instead of 'new'.
+     *
+     * @async
+     * @static
+     * @param {Object} dataset - The dataset to initialize the builder with.
+     * @param {Object} [options] - Options passed directoy to ChatMessage.create()
+     * @returns {Promise<ChatBuilder>} A fully initialized ChatBuilder instance.
+     */
+    static async create(dataset, options) {
+        const instance = new this(dataset, options);
+        return instance.init();
+    }
+
+    /**
+     * Populates instance data post-construction.
+     *
+     * Hydreates resolved actor/item references from UUIDs, parses roll and batch data.
+     * Prepares the builder's internal 'data' structure for chat rendering.
+     *
+     * Automatically called from 'create()' and should not be called manually.
+     *
+     * @async
+     * @returns {Promise<this>} Initialized ChatBuilder instance.
+     */
+    async init() {
+        const schema = this.#schema;
+        this.data = {
+            caller: schema.caller ? await foundry.utils.fromUuid(schema.caller) : null,
+            context: schema.context ? await foundry.utils.fromUuid(schema.context) : null,
+            roll: schema.roll ? Roll.fromData(schema.roll) : null,
+            resp: schema.resp ?? {},
+            mdata: schema.mdata ?? {},
+            batch: this.#parseBatchRolls(schema.batch),
+            options: schema.options ?? {},
+        };
+        return this;
     }
 
     /**
