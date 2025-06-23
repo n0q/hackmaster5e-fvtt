@@ -7,7 +7,7 @@ import { HMWoundItem } from '../item/wound-item.js';
 import { applyCustomActiveEffect } from '../sys/effects.js';
 import { idx } from '../tables/dictionary.js';
 
-export class HMActorSheet extends ActorSheet {
+export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
     visibleItemId = {};
 
     /** @override */
