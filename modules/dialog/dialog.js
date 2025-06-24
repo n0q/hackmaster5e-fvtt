@@ -228,7 +228,7 @@ export class HMDialog {
         const dialogData = {};
         const dialogResp = {caller};
 
-        dialogData.ability = dataset.ability;
+        dialogData.ability = game.i18n.localize(`HM.ability.${dataset.ability}`);
         const title = `${caller.name}: ${dialogData.ability} ${game.i18n.localize('HM.roll')}`;
         const template = 'systems/hackmaster5e/templates/dialog/getAbility.hbs';
 

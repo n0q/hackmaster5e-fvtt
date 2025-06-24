@@ -199,7 +199,7 @@ export class HMActor extends Actor {
         const {dialog, formulaType, mdata} = dataset;
         const chatType = formulaType === 'trauma' ? CHAT_TYPE.TRAUMA_CHECK : CHAT_TYPE.SAVE_CHECK;
         let bData = {...dataset};
-        if (!bData.resp) bData = {...bData, ...(await HMDialogFactory({dialog}, this))};
+        if (!bData.resp) bData = {...bData, ...(await HMDialogFactory({...dataset}, this))};
 
         bData.caller = bData.caller.uuid;
         bData.context = bData.context.uuid;
