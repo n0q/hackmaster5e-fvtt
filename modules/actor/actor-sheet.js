@@ -95,7 +95,12 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
                 i.update({'system.state': INNATE});
                 weapons[HMTABLES.itemstate[INNATE]].push(i);
             } else {
-                const itemState = HMTABLES.itemstate[(i.system.state)];
+                // TODO: Make this into a helper function.
+                // We need to start doing validation everywhere.
+                const validStates = Object.values(HMCONST.ITEM_STATE);
+                const isValidState = validStates.includes(i.system.state);
+                const systemState = isValidState ? i.system.state : HMCONST.ITEM_STATE.OWNED;
+                const itemState = HMTABLES.itemstate[systemState];
                 weapons[itemState].push(i);
             }
         });
@@ -281,8 +286,11 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
         const li = $(ev.currentTarget).parents('.card');
         const item = this.actor.items.get(li.data('itemId'));
         const {system} = item;
-        system.state = (++system.state || 0) % 3;
-        await this.actor.updateEmbeddedDocuments('Item', [{_id:item.id, system}]);
+        const nextState = (Number(system.state) + 1) % 3;
+        await this.actor.updateEmbeddedDocuments('Item', [{
+            _id: item.id,
+            'system.state': nextState || 0,
+        }]);
     }
 
     async _onSpellPrep(ev) {
@@ -297,7 +305,10 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
         dataset.itemPrepare ? prepped++ : prepped--;
         system.prepped = prepped;
 
-        await this.actor.updateEmbeddedDocuments('Item', [{_id:item.id, system}]);
+        await this.actor.updateEmbeddedDocuments('Item', [{
+            _id: item.id,
+            'system.prepped': prepped,
+         }]);
     }
 
     _onClick(ev) {
