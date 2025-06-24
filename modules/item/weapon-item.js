@@ -262,8 +262,12 @@ export class HMWeaponItem extends HMItem {
         const formula = CRITTABLE.formula(resp.atkSize, resp.defSize);
         const roll = (resp.atkRoll <= resp.defRoll) ? false : await new Roll(formula).evaluate();
 
-        const bData = {caller, resp, roll};
-        const builder = new HMChatFactory(CHAT_TYPE.CRITICAL, bData);
+        const bData = {
+            caller: caller?.uuid,
+            resp,
+            roll: roll.toJSON(),
+        };
+        const builder = await HMChatFactory.create(CHAT_TYPE.CRITICAL, bData);
         builder.createChatMessage();
     }
 
