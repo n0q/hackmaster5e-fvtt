@@ -16,17 +16,30 @@ export class InitNoteChatBuilder extends ChatBuilder {
      * @param {initData[]} batch
      */
     async createChatMessage() {
-        const {batch} = this.data;
+        const { batch } = this.data;
         const hiddenCombatants = Object.groupBy(batch, (c) => c.hidden);
 
-        Object.keys(hiddenCombatants).map(async (foo) => {
-            const sortByName = (a, b) => a.name.localeCompare(b.name);
-            const sortedContext = hiddenCombatants[foo].sort(sortByName);
-            const content = await renderTemplate(this.template, sortedContext);
-            const whisper = foo === 'true' ? ChatBuilder.getGMs() : undefined;
+        await Promise.all(
+            Object.keys(hiddenCombatants).map(async (foo) => {
+                const sortByName = (a, b) => a.name.localeCompare(b.name);
+                const sortedContext = hiddenCombatants[foo].sort(sortByName);
+                const content = await renderTemplate(this.template, sortedContext);
+                const whisper = foo === 'true' ? ChatBuilder.getGMs() : undefined;
 
-            const chatMessageData = this.getChatMessageData({content, whisper});
-            await ChatMessage.create(chatMessageData);
-        });
+                const chatMessageData = this.getChatMessageData({ content, whisper });
+                await ChatMessage.create(chatMessageData);
+            }),
+        );
+    }
+
+    /**
+     * @override
+     * @param {initData[]} batchData
+     * @returns {initData[]}
+     */
+    /* eslint-disable-next-line class-methods-use-this */
+    _prepareBatchData(batchData) {
+        if (!batchData) return [];
+        return batchData;
     }
 }

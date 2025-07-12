@@ -10,10 +10,10 @@ import { HMChatFactory, CHAT_TYPE } from '../chat/chat-factory.js';
 
 export class HMItem extends Item {
     static getDefaultArtwork(data = {}) {
-        const {img, texture} = super.getDefaultArtwork(data);
+        const { img, texture } = super.getDefaultArtwork(data);
         return {
             img: HM_ICON[data.type] ?? HM_ICON.default ?? img,
-            texture: {src: texture},
+            texture: { src: texture },
         };
     }
 
@@ -36,32 +36,32 @@ export class HMItem extends Item {
 
     /** @override */
     async delete(...args) {
-        const {_id, container} = this;
+        const { _id, container } = this;
         if (container) {
-            let {_manifest} = container.system.container;
+            let { _manifest } = container.system.container;
             _manifest = _manifest.filter((a) => JSON.parse(a)._id !== _id);
-            container.update({'system.container._manifest': _manifest});
+            container.update({ 'system.container._manifest': _manifest });
         } else super.delete(...args);
     }
 
     /** @override */
     async update(...args) {
-        const {_id, container} = this;
+        const { _id, container } = this;
         if (container) {
             const [data] = args;
             const cIdx = container._manifestData.findIndex((a) => a._id === _id);
             this.updateSource(data);
-            const {_manifest} = container.system.container;
+            const { _manifest } = container.system.container;
             _manifest[cIdx] = JSON.stringify(this);
             container.apps[this.appId] = this;
-            container.update({'system.container._manifest': _manifest});
+            container.update({ 'system.container._manifest': _manifest });
         } else super.update(...args);
     }
 
     get quality() {
-        const {system} = this;
+        const { system } = this;
         const qKey = system?.ranged?.checked ? 'ranged' : this.type;
-        const {bonus, qn} = system;
+        const { bonus, qn } = system;
         const values = HMTABLES.quality[qKey].map((a) => a * qn);
         const keys = Object.keys(bonus.total);
         return Object.fromEntries(keys.map((_, i) => [keys[i], values[i] ?? 0]));
@@ -70,20 +70,20 @@ export class HMItem extends Item {
     get specname() {
         const rawName = this.name;
         if (this.type !== 'skill') return rawName;
-        const {specialty} = this.system;
+        const { specialty } = this.system;
         if (specialty.checked && specialty.value.length) return `${rawName} (${specialty.value})`;
         return rawName;
     }
 
     get weight() {
-        const {weight, qty} = this.system;
-        const {items} = this;
+        const { weight, qty } = this.system;
+        const { items } = this;
 
         const intrinsic = (Math.max(weight, 0) || 0) * (Math.max(qty, 1) || 1);
         const contents = items ? items.reduce((acc, item) => acc + item.weight.total, 0) || 0 : 0;
         const total = intrinsic + contents;
 
-        return {intrinsic, contents, total};
+        return { intrinsic, contents, total };
     }
 
     // HACK: Temporary measure until future inventory overhaul.
@@ -99,12 +99,12 @@ export class HMItem extends Item {
      * @param {string} itemId
      * @todo Move this horrible function somewhere else.
      */
-    static async rollSkill({skillName, specialty=null, caller, itemId}) {
+    static async rollSkill({ skillName, specialty = null, caller, itemId }) {
         const callers = [];
 
         if (caller) {
             // Named caller.
-            callers.push({caller, context: caller.items.get(itemId)});
+            callers.push({ caller, context: caller.items.get(itemId) });
         } else {
             // Anonymous caller. Get all selected tokens.
             const actors = canvas.tokens.controlled.map((token) => token.actor);
@@ -112,7 +112,7 @@ export class HMItem extends Item {
             if (!actors.length && !game.user.isGM) {
                 // No tokens were selected.
                 const smartSelect = game.settings.get(SYSTEM_ID, 'smartSelect');
-                const {character} = game.user;
+                const { character } = game.user;
                 if (smartSelect && character) actors.push(character);
             }
 
@@ -129,13 +129,13 @@ export class HMItem extends Item {
                     const system = new HMSkillSchema();
                     let specname = skillName;
                     if (specialty) {
-                        system.specialty = {checked: true, value: specialty};
+                        system.specialty = { checked: true, value: specialty };
                         specname += ` (${specialty})`;
                     }
-                    context = {name: skillName, specname, system};
+                    context = { name: skillName, specname, system };
                 }
 
-                callers.push({caller: actor, context});
+                callers.push({ caller: actor, context });
             });
         }
 
@@ -148,7 +148,7 @@ export class HMItem extends Item {
         };
 
         const dialogResp = await HMDialogFactory(dialogDataset, dialogCaller.caller);
-        const {resp} = dialogResp;
+        const { resp } = dialogResp;
 
         Object.values(callers).forEach(async (callerObj) => {
             const formula = HMTABLES.formula.skill.baseroll;
@@ -172,10 +172,10 @@ export class HMItem extends Item {
     }
 }
 
-export async function advanceClock(comData, dialogResp, smartInit=false) {
-    const {active} = game.combats;
-    const {resp} = dialogResp;
-    const {combatant, round, initiative} = comData;
+export async function advanceClock(comData, dialogResp, smartInit = false) {
+    const { active } = game.combats;
+    const { resp } = dialogResp;
+    const { combatant, round, initiative } = comData;
     const isReset = resp.specialMove === HMCONST.SPECIAL.RESET;
     const delta = isReset
         ? Number(resp.advance + round - initiative) || 0
@@ -193,26 +193,26 @@ export async function advanceClock(comData, dialogResp, smartInit=false) {
         oldInit,
         newInit,
     }];
-    const builder = new HMChatFactory(CHAT_TYPE.INIT_NOTE, {batch});
+    const builder = await HMChatFactory.create(CHAT_TYPE.INIT_NOTE, { batch });
     builder.createChatMessage();
 }
 
 // TODO: Convert to using world timer.
-export async function setStatusEffectOnToken(comData, effect, rounds=null) {
-    const {active} = game.combats;
-    const {combatant} = comData;
+export async function setStatusEffectOnToken(comData, effect, rounds = null) {
+    const { active } = game.combats;
+    const { combatant } = comData;
     const combatToken = canvas.scene.tokens.get(combatant.tokenId);
     const duration = rounds ? {
         combat: active.id,
         startRound: active.round,
         rounds,
         type: 'rounds',
-        } : null;
+    } : null;
     await HMStates.setStatusEffect(combatToken, effect, duration);
 }
 
 export async function unsetStatusEffectOnToken(comData, effect) {
-    const {combatant} = comData;
+    const { combatant } = comData;
     const combatToken = canvas.scene.tokens.get(combatant.tokenId);
     await HMStates.unsetStatusEffect(combatToken, effect);
 }

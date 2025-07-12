@@ -68,7 +68,7 @@ export class ChatBuilder {
 
         this.template = new.target.template;
         this.RESULT_TYPE = RESULT_TYPE;
-        this.#schema = new BuilderSchema({...dataset, options});
+        this.#schema = new BuilderSchema({ ...dataset, options });
     }
 
     /**
@@ -106,7 +106,7 @@ export class ChatBuilder {
             roll: schema.roll ? Roll.fromData(schema.roll) : null,
             resp: schema.resp ?? {},
             mdata: schema.mdata ?? {},
-            batch: this.#parseBatchRolls(schema.batch),
+            batch: this._prepareBatchData(schema.batch),
             options: schema.options ?? {},
         };
         return this;
@@ -114,12 +114,16 @@ export class ChatBuilder {
 
     /**
      * Parses bulk roll data from dataset.
+     *
+     * Subclasses can override this method to customize batch handling.
+     *
+     * @protected
      * @param {Object[]} batchData - Array of raw roll data.
      * @returns {Roll[]} Array of parsed Roll instances.
-     * @private
      */
     /* eslint-disable-next-line class-methods-use-this */
-    #parseBatchRolls(batchData) {
+    _prepareBatchData(batchData) {
+        if (!batchData) return [];
         if (!Array.isArray(batchData)) return [];
         return batchData.map((data) => Roll.fromData(data));
     }
@@ -194,7 +198,7 @@ export class ChatBuilder {
         const hasFlavor = Object.prototype.hasOwnProperty.call(chatMessageData, 'flavor');
         if (!hasFlavor) chatMessageData.flavor = this.data.caller?.name;
 
-        const {roll} = this.data;
+        const { roll } = this.data;
         if (obj.rolls ?? roll) {
             const rollData = {
                 sound: CONFIG.sounds.dice,
@@ -228,7 +232,7 @@ export class ChatBuilder {
      * @param {Object} chatMessageData - object to pass to ChatMessage.create()
      */
     async render(chatMessageData) {
-        const obj = {...chatMessageData, ...this.data.options};
+        const obj = { ...chatMessageData, ...this.data.options };
         await ChatMessage.create(obj);
     }
 
