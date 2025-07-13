@@ -32,7 +32,6 @@ export const registerHooks = () => {
     Hooks.on('createItem', HMItemHooks.createItem);
     Hooks.on('preCreateItem', HMItemHooks.preCreateItem);
     Hooks.on('updateItem', HMItemHooks.updateItem);
-    Hooks.on('renderSceneControls', HMSceneControlHooks.renderSceneControls);
     Hooks.on('getSceneControlButtons', HMSceneControlHooks.getSceneControlButtons);
     Hooks.on('createToken', HMTokenHooks.createToken);
     Hooks.on('destroyToken', HMTokenHooks.destroyToken);
@@ -55,5 +54,5 @@ async function ready() {
     if (!game.user.isGM) return;
     const folderName = game.i18n.localize('HM.sys.folders.skillmacro');
     let f = game.folders.find((a) => a.type === 'Macro' && a.name === folderName);
-    if (!f) f = await Folder.create({type: 'Macro', name: folderName, parent: null});
+    if (!f) f = await Folder.create({ type: 'Macro', name: folderName, parent: null });
 }
