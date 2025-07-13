@@ -1051,7 +1051,7 @@
     },
     "COMBAT": {
         "HueAndCry": "Hue and Cry!",
-        "Round": "Count",
+        "Round": "Count {round}",
         "Rounds": "Counts"
     },
     "EFFECT": {
@@ -1118,8 +1118,5 @@
         "reachOpacityHint": "Opacity level of weapon reach and threat range.",
         "smartSelect": "Smart Select",
         "smartSelectHint": "Combat macros use player's character if no token is selected (Not used by GMs)."
-    },
-    "dragRuler": {
-        "current": "current"
     }
 }
