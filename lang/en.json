@@ -1049,6 +1049,9 @@
             }
         }
     },
+    "CHAT": {
+        "delete": "Delete"
+    },
     "COMBAT": {
         "HueAndCry": "Hue and Cry!",
         "Round": "Count {round}",

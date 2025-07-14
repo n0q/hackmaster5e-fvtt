@@ -1,17 +1,21 @@
-<div class='hm-chat-note noWhisper'>
+<div class='hm-chat-note noWhisper chat-message message-content'>
     {{#each this}}
     <section class='hm-chat-note-row'>
         <span>
-            <b>{{delta}}</b><i class='fa fa-hourglass-half'></i>
+            <strong>{{delta}}</strong><i class='fa fa-hourglass-half'></i>
             {{name}}
             {{#if (gt newInit oldInit)}}
-            ({{oldInit}} <i class='fa fa-arrow-right'></i> {{newInit}})
+                ({{oldInit}} <i class='fa fa-arrow-right'></i> {{newInit}})
             {{else}}
-            ({{newInit}} <i class='fa fa-arrow-left'></i> {{oldInit}})
+                ({{newInit}} <i class='fa fa-arrow-left'></i> {{oldInit}})
             {{/if}}
         </span>
         {{#unless @index}}
-        <a class='button message-delete'><i class='fas fa-trash'></i></a>
+        <header class="message-header">
+            <a aria-label={{localize 'HM.CHAT.delete'}} class="message-delete" data-action="deleteMessage">
+                <i class="fa-solid fa-trash"></i>
+            </a>
+        </header>
         {{/unless}}
     </section>
     {{/each}}
