@@ -2,10 +2,10 @@ import { ChatBuilder } from './chat-builder-abstract.js';
 import { HMCONST } from '../tables/constants.js';
 
 /**
-  * DefenseChatBuilder handles defense-related chat messages.
-  *
-  * @extends ChatBuilder
-  */
+ * DefenseChatBuilder handles defense-related chat messages.
+ *
+ * @extends ChatBuilder
+ */
 export class DefenseChatBuilder extends ChatBuilder {
     static template = 'systems/hackmaster5e/templates/chat/chat-defend.hbs';
 
@@ -29,12 +29,12 @@ export class DefenseChatBuilder extends ChatBuilder {
 }
 
 /**
-  * Determines the result category based on the sum of dice rolled.
-  *
-  * @this ChatBuilder
-  * @param {number} sumDice - The total of all dice rolled.
-  * @returns {symbol} A result type from `RESULT_TYPE`.
-  */
+ * Determines the result category based on the sum of dice rolled.
+ *
+ * @this ChatBuilder
+ * @param {number} sumDice - The total of all dice rolled.
+ * @returns {symbol} A result type from `RESULT_TYPE`.
+ */
 function getDiceResult(sumDice) {
     if (sumDice >= 20) return this.RESULT_TYPE.PERFECT;
     if (sumDice === 19) return this.RESULT_TYPE.NEAR_PERFECT;
@@ -44,14 +44,14 @@ function getDiceResult(sumDice) {
 }
 
 /**
-  * BUilds a flavor text string for the roll based on special movement types
-  * and dodge status.
-  *
-  * @param {object} resp - The response data associated with the roll.
-  * @param {symbol} [resp.specialMove] - The special move code, if any.
-  * @param {boolean} [resp.dodge] - If the character dodged.
-  * @returns {string} A localized string indicating special effects or modifiers.
-  */
+ * BUilds a flavor text string for the roll based on special movement types
+ * and dodge status.
+ *
+ * @param {object} resp - The response data associated with the roll.
+ * @param {symbol} [resp.specialMove] - The special move code, if any.
+ * @param {boolean} [resp.dodge] - If the character dodged.
+ * @returns {string} A localized string indicating special effects or modifiers.
+ */
 function getRollFlavor(resp) {
     const mods = [];
     const { specialMove } = resp;

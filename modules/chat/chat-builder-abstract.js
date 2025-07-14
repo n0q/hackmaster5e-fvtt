@@ -1,9 +1,9 @@
 import { BuilderSchema } from './chat-builder-schema.js';
 
 /**
-* Enumeration for chat result codes.
-* @enum {Symbol}
-*/
+ * Enumeration for chat result codes.
+ * @enum {Symbol}
+ */
 const RESULT_TYPE = {
     NONE: Symbol('result_none'),
     CRITFAIL: Symbol('result_critfail'),
