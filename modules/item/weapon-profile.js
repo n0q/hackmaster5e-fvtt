@@ -6,6 +6,7 @@ export class HMWeaponProfile {
         this.actor = schemaData.actor;
         this.weapon = schemaData.weapon;
         this.system = this.weapon.system;
+        this.weapon.profileId = this._id;
     }
 
     get minspd() {

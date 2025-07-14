@@ -1,8 +1,8 @@
 import { HMPrompt } from './prompt.js';
 import { HMCONST, HMTABLES, SYSTEM_ID } from '../tables/constants.js';
 
-function getSpeed(ranged, wData, specialMove=0) {
-    const {spd, jspd} = wData.bonus.total;
+function getSpeed(ranged, wData, specialMove = 0) {
+    const { spd, jspd } = wData.bonus.total;
     if (!ranged) {
         return {
             declare: spd,
@@ -10,7 +10,7 @@ function getSpeed(ranged, wData, specialMove=0) {
         };
     }
 
-    const {timing} = wData.ranged;
+    const { timing } = wData.ranged;
     return HMTABLES.weapons.ranged.timing(timing, spd);
 }
 
@@ -26,7 +26,7 @@ export class DefendPrompt extends HMPrompt {
         super(dialogData, options);
         const widx = HMPrompt.getLastWeaponIndex(dialogData);
         const weapon = dialogData.weapons[widx];
-        const {caller} = dialogData;
+        const { caller } = dialogData;
 
         const capList = this.getCapList(weapon, caller);
         const weaponsList = HMPrompt.getSelectFromProperty(dialogData.weapons, 'name');
@@ -52,18 +52,18 @@ export class DefendPrompt extends HMPrompt {
         });
     }
 
-    getCapList(weapon, actor=null) {
+    getCapList(weapon, actor = null) {
         const capsObj = super.getCapList(weapon, actor);
         delete capsObj[HMCONST.SPECIAL.BACKSTAB];
         return capsObj;
     }
 
     update(options) {
-        const {weapons, widx, caller} = this.dialogData;
-        let {specialMove} = this.dialogData;
-        const weapon  = weapons[widx];
-        const wData   = weapon.system;
-        const ranged  = wData.ranged.checked;
+        const { weapons, widx, caller } = this.dialogData;
+        let { specialMove } = this.dialogData;
+        const weapon = weapons[widx];
+        const wData = weapon.system;
+        const ranged = wData.ranged.checked;
         const capList = this.getCapList(weapons[widx], caller);
 
         if (!(specialMove in capList)) specialMove = Object.keys(capList)[0];
@@ -76,12 +76,13 @@ export class DefendPrompt extends HMPrompt {
     }
 
     get dialogResp() {
-        const {caller, button, spd, defDie, rDefDie, widx, weapons} = this.dialogData;
+        const { caller, button, spd, defDie, rDefDie, widx, weapons } = this.dialogData;
         caller.setFlag(SYSTEM_ID, 'lastWeapon', weapons[widx].weapon.id);
 
         const specialMove = Number(this.dialogData.specialMove);
-        const {SPECIAL} = HMCONST;
+        const { SPECIAL } = HMCONST;
         const dialogResp = {
+            context: weapons[widx].weapon.uuid,
             defdie: specialMove === SPECIAL.RDEFEND ? HMTABLES.die[rDefDie] : HMTABLES.die[defDie],
             dodge: this.dialogData.dodge ? this.dialogData.dodge : 0,
             widx,

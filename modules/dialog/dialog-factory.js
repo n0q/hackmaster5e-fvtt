@@ -1,7 +1,7 @@
 import { HMDialog } from './dialog.js';
 
-export const HMDialogFactory = (dataset, caller=null, opt={}) => {
-    const {dialog} = dataset;
+export const HMDialogFactory = (dataset, caller = null, opt = {}) => {
+    const { dialog } = dataset;
     if (dialog === 'ability') return HMDialog.getAbilityDialog(dataset, caller);
     if (dialog === 'atk') return HMDialog.getAttackDialog(dataset, caller, opt);
     if (dialog === 'cast') return HMDialog.getCastDialog(dataset, caller, opt);
