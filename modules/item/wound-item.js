@@ -42,43 +42,50 @@ export class HMWoundItem extends HMItem {
         const traumaCheck = hpTrauma < (hp + assn);
         const tenacityCheck = hpTenacity < hp;
 
-        context.onWound(traumaCheck, tenacityCheck);
+        await context.onWound(traumaCheck, tenacityCheck);
     }
 
     async WoundAction(event) {
         const element = event.currentTarget;
         const {action} = element.dataset;
-        const {system} = this;
+        let {hp, isEmbedded, timer, treated} = this.system;
 
         switch (action) {
             case 'decTimer': {
-                system.timer--;
-                if (!system.timer && system.hp) system.timer = --system.hp;
-                system.treated = true;
+                timer--;
+                if (!timer && hp) timer = --hp;
+                treated = true;
                 break;
             }
             case 'decHp': {
-                system.hp = Math.max(0, system.hp - 1);
-                const limit = Math.sign(system.hp);
-                system.timer = Math.max(limit, --system.timer);
-                system.treated = true;
+                hp = Math.max(0, hp - 1);
+                const limit = Math.sign(hp);
+                timer = Math.max(limit, --timer);
+                treated = true;
                 break;
             }
             case 'treat': {
-                system.treated = !system.treated;
+                treated = !treated;
                 break;
             }
             case 'toggleEmbed': {
-                system.isEmbedded = !system.isEmbedded;
-                system.treated = true;
+                isEmbedded = !isEmbedded;
+                treated = true;
             }
             // no default
         }
 
-        if (system.hp < 1) {
-            system.hp = 0;
-            system.timer = 0;
-        }
-        system.hp < 1 && !system.isEmbedded ? this.delete() : this.update({system});
+        if (hp < 1) [hp, timer] = [0, 0];
+
+        const updateData = {
+            'system.hp': hp,
+            'system.isEmbedded': isEmbedded,
+            'system.timer': timer,
+            'system.treated': treated,
+        };
+
+        hp < 1 && !isEmbedded
+            ? await this.delete()
+            : await this.update(updateData);
     }
 }

@@ -31,7 +31,8 @@
     scrollbar-color: unset;
 }
 
-#chat-log {
+#chat,
+#chat-notifications {
     @import 'overrides/chat';
 }
 

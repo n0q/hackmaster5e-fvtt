@@ -34,7 +34,7 @@ export class SkillCheckChatBuilder extends ChatBuilder {
 
         mdata.inline = unescape(roll);
         const chatData = {mdata, resultString, skillCheck, roll};
-        const content = await renderTemplate(this.template, chatData);
+        const content = await ChatBuilder.handlebars.renderTemplate(this.template, chatData);
 
         const chatMessageData = this.getChatMessageData({content, resp});
         await ChatMessage.create(chatMessageData);

@@ -4,13 +4,13 @@ export class AbilityCheckChatBuilder extends ChatBuilder {
     static template = 'systems/hackmaster5e/templates/chat/check.hbs';
 
     async createChatMessage() {
-        const {context, mdata, resp, roll} = this.data;
+        const { context, mdata, resp, roll } = this.data;
 
         const isCompeting = resp.oper === '+';
 
         const rolls = [roll];
         const rollFlavor = isCompeting ? 'Competing Ability Check' : 'Ability Check';
-        const rollContent = await roll.render({flavor: rollFlavor});
+        const rollContent = await roll.render({ flavor: rollFlavor });
 
         let rv = false;
         const dieSum = ChatBuilder.getDiceSum(roll);
@@ -27,10 +27,10 @@ export class AbilityCheckChatBuilder extends ChatBuilder {
         const resultString = ChatBuilder.getResult(rv);
 
         mdata.score = context.system.abilities.total[mdata.ability].value;
-        const chatData = {rollContent, mdata, resultString};
-        const content = await renderTemplate(this.template, chatData);
+        const chatData = { rollContent, mdata, resultString };
+        const content = await ChatBuilder.handlebars.renderTemplate(this.template, chatData);
 
-        const chatMessageData = this.getChatMessageData({content, rolls});
+        const chatMessageData = this.getChatMessageData({ content, rolls });
         await ChatMessage.create(chatMessageData);
     }
 }

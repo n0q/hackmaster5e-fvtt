@@ -1,13 +1,12 @@
 import { HMCONST, HMTABLES } from '../tables/constants.js';
 
-export class HMWeaponProfile extends foundry.abstract.DataModel {
-    constructor(...args) {
-        super(...args);
-
-        const {img, system} = this.weapon;
-        const {bonus, ...weaponSystem} = system;
-        this.img = img;
-        this.system = weaponSystem;
+export class HMWeaponProfile {
+    constructor(schemaData) {
+        this._id = foundry.utils.randomID();
+        this.actor = schemaData.actor;
+        this.weapon = schemaData.weapon;
+        this.system = this.weapon.system;
+        this.weapon.profileId = this._id;
     }
 
     get minspd() {
@@ -18,7 +17,11 @@ export class HMWeaponProfile extends foundry.abstract.DataModel {
         return HMTABLES.weapons.scale[system.scale].minspd;
     }
 
+    get name() { return this.weapon.name; }
+
     get id() { return this._id; }
+
+    get img() { return this.weapon.img; }
 
     get weaponId() { return this.weapon.id; }
 
@@ -27,16 +30,6 @@ export class HMWeaponProfile extends foundry.abstract.DataModel {
     get capabilities() { return this.weapon.capabilities; }
 
     get canBackstab() { return this.weapon.canBackstab; }
-
-    static defineSchema() {
-        const {fields} = foundry.data;
-        return {
-            _id: new fields.DocumentIdField({initial: foundry.utils.randomID()}),
-            name: new fields.StringField({blank: false}),
-            weapon: new fields.ObjectField({blank: false, required: true}),
-            actor: new fields.ObjectField({blank: false, required: true}),
-        };
-    }
 
     _getWeaponSpeed(vector) {
         const {spd, spdm, spdr} = vector;

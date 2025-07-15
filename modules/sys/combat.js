@@ -17,12 +17,12 @@ export class HMCombat extends Combat {
     /** @override */
     async _getInitiativeDie(ids) {
         const caller = ids.length ? this.combatants.get(ids[0]).actor : null;
-        const dialogResp = await HMDialogFactory({dialog: 'initdie'}, caller);
+        const dialogResp = await HMDialogFactory({ dialog: 'initdie' }, caller);
         return dialogResp.resp.die;
     }
 
-    async rollInitiative(ids, {formula=null, updateTurn=true, messageOptions={}}={}) {
-        const {round} = this;
+    async rollInitiative(ids, { formula = null, updateTurn = true, messageOptions = {} } = {}) {
+        const { round } = this;
         let initFormula = formula;
         if (!initFormula) {
             const initDie = await this._getInitiativeDie(ids);
@@ -34,16 +34,16 @@ export class HMCombat extends Combat {
             }
         }
 
-        const rollData = {formula: initFormula, updateTurn, messageOptions};
+        const rollData = { formula: initFormula, updateTurn, messageOptions };
         return super.rollInitiative(ids, rollData);
     }
 
     async doHueAndCry() {
-        const {combatants, round} = this;
-        const {user} = game;
+        const { combatants, round } = this;
+        const { user } = game;
         const canHaC = combatants.filter((c) => c.initiative > round && !c.getFlag(SYSTEM_ID, 'acted'));
 
-        const {controlled} = canvas.tokens;
+        const { controlled } = canvas.tokens;
 
         const allCombatants = user.isGM
             ? canHaC.filter((a) => a.isNPC)
@@ -71,7 +71,7 @@ export class HMCombat extends Combat {
             };
         });
 
-        const builder = new HMChatFactory(CHAT_TYPE.INIT_NOTE, {batch});
+        const builder = await HMChatFactory.create(CHAT_TYPE.INIT_NOTE, { batch });
         builder.createChatMessage();
     }
 }

@@ -1,9 +1,9 @@
 import { BuilderSchema } from './chat-builder-schema.js';
 
 /**
-* Enumeration for chat result codes.
-* @enum {Symbol}
-*/
+ * Enumeration for chat result codes.
+ * @enum {Symbol}
+ */
 const RESULT_TYPE = {
     NONE: Symbol('result_none'),
     CRITFAIL: Symbol('result_critfail'),
@@ -29,31 +29,112 @@ const RESULT_TYPE = {
  */
 export class ChatBuilder {
     /**
-     * Creates an instance of ChatBuilder.
+     * Internal schema wrapper for normalizing input data.
+     * @type {BuilderSchema}
+     * @private
+     */
+    #schema;
+
+    /**
+     * Base ChatBuilder constructor (abstract).
+     *
+     * Stores dataset and options in normalized form using BuilderSchema.
+     * Each subclass must define a static 'template' property.
+     * Use the static 'create()' method instead of calling 'new' directly.
+     *
+     * @abstract
      * @constructor
+     * @todo Implement an 'init' method to support async uuid resolution.
      * @throws {Error} - If instantiated directly.
      * @param {Object} dataset - The dataset object for the builder.
-     * @param {HMActor} dataset.caller - The actor the chat pertains to.
-     * @param {HMItem} dataset.context - The item the chat pertains to.
-     * @param {Roll} dataset.roll - A dice roll the chat pertains to.
+     * @param {Object} dataset.caller - Uuid for the actor the chat pertains to.
+     * @param {Object} dataset.context - Uuid for the item the chat pertains to.
+     * @param {Object} dataset.roll - Json data for a dice roll the chat pertains to.
      * @param {Object} dataset.resp - Data polled from the user from an Application.
      * @param {Object[]} dataset.batch - Bulk object data for batch processing.
      * @param {Object} dataset.mdata - Details for chat card enrichment.
      * @param {Object} dataset.options - Options passed directly to ChatMessage.create().
      * @prop {string} template - Path to hbs template. Must be defined by subclasses.
+     * @throws {Error} If instantiated directly or if 'template' is undefined in subclass.
      */
     constructor(dataset, options) {
         if (new.target === ChatBuilder) {
-            throw new Error('ChatBuilder cannot be instantiated directly.');
+            throw new Error('ChatBuilder cannot be instantiated directly. Use Class.create() instead.');
         }
 
         if (!new.target.template) {
             throw new Error('Subclasses must define a static template property.');
         }
 
-        this.RESULT_TYPE = RESULT_TYPE;
-        this.data = new BuilderSchema({...dataset, options});
         this.template = new.target.template;
+        this.RESULT_TYPE = RESULT_TYPE;
+        this.#schema = new BuilderSchema({ ...dataset, options });
+    }
+
+    /**
+     * Creates and initializes an instance of a ChatBuilder subclass.
+     *
+     * Use this method, instead of 'new'.
+     *
+     * @async
+     * @static
+     * @param {Object} dataset - The dataset to initialize the builder with.
+     * @param {Object} [options] - Options passed directoy to ChatMessage.create()
+     * @returns {Promise<ChatBuilder>} A fully initialized ChatBuilder instance.
+     */
+    static async create(dataset, options) {
+        const instance = new this(dataset, options);
+        return instance.init();
+    }
+
+    /**
+     * Populates instance data post-construction.
+     *
+     * Hydreates resolved actor/item references from UUIDs, parses roll and batch data.
+     * Prepares the builder's internal 'data' structure for chat rendering.
+     *
+     * Automatically called from 'create()' and should not be called manually.
+     *
+     * @async
+     * @returns {Promise<this>} Initialized ChatBuilder instance.
+     */
+    async init() {
+        const schema = this.#schema;
+        this.data = {
+            caller: schema.caller ? await foundry.utils.fromUuid(schema.caller) : null,
+            context: schema.context ? await foundry.utils.fromUuid(schema.context) : null,
+            roll: schema.roll ? Roll.fromData(schema.roll) : null,
+            resp: schema.resp ?? {},
+            mdata: schema.mdata ?? {},
+            batch: this._prepareBatchData(schema.batch),
+            options: schema.options ?? {},
+        };
+        return this;
+    }
+
+    /**
+     * Parses bulk roll data from dataset.
+     *
+     * Subclasses can override this method to customize batch handling.
+     *
+     * @protected
+     * @param {Object[]} batchData - Array of raw roll data.
+     * @returns {Roll[]} Array of parsed Roll instances.
+     */
+    /* eslint-disable-next-line class-methods-use-this */
+    _prepareBatchData(batchData) {
+        if (!batchData) return [];
+        if (!Array.isArray(batchData)) return [];
+        return batchData.map((data) => Roll.fromData(data));
+    }
+
+    /**
+     * A shortcut to Foundry's handlebars template system.
+     *
+     * @returns {typeof foundry.applications.handlebars}
+     */
+    static get handlebars() {
+        return foundry.applications.handlebars;
     }
 
     /**
@@ -117,7 +198,7 @@ export class ChatBuilder {
         const hasFlavor = Object.prototype.hasOwnProperty.call(chatMessageData, 'flavor');
         if (!hasFlavor) chatMessageData.flavor = this.data.caller?.name;
 
-        const {roll} = this.data;
+        const { roll } = this.data;
         if (obj.rolls ?? roll) {
             const rollData = {
                 sound: CONFIG.sounds.dice,
@@ -151,7 +232,7 @@ export class ChatBuilder {
      * @param {Object} chatMessageData - object to pass to ChatMessage.create()
      */
     async render(chatMessageData) {
-        const obj = {...chatMessageData, ...this.data.options};
+        const obj = { ...chatMessageData, ...this.data.options };
         await ChatMessage.create(obj);
     }
 

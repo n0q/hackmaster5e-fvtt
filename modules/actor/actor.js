@@ -9,7 +9,7 @@ import { getDiceSum } from '../sys/utils.js';
 export class HMActor extends Actor {
     constructor(...args) {
         super(...args);
-        this.hm = new HMItemContainer({actor: this});
+        this.hm = new HMItemContainer({actor: this.uuid});
     }
 
     prepareBaseData() {
@@ -84,9 +84,7 @@ export class HMActor extends Actor {
     prepareWeaponProfiles() {
         this.wprofiles = new Collection();
         this.itemTypes.weapon.forEach((weapon) => {
-            const _id = foundry.utils.randomID();
-            weapon.profileId = _id; // eslint-disable-line no-param-reassign
-            const profileData = {name: weapon.name, weapon, actor: this, _id};
+            const profileData = {weapon, actor: this};
             const profile = new HMWeaponProfile(profileData);
             profile.evaluate();
             this.wprofiles.set(profile.id, profile);
@@ -169,9 +167,9 @@ export class HMActor extends Actor {
         console.error(`${cName} does not have a getAbilityBonus() function.`);
     }
 
-    onWound(traumaCheck, tenacityCheck, options) {
-        const bData = {caller: this};
-        const builder = new HMChatFactory(CHAT_TYPE.ALERT_NOTE, bData, options);
+    async onWound(traumaCheck, tenacityCheck, options) {
+        const bData = {caller: this.uuid};
+        const builder = await HMChatFactory.create(CHAT_TYPE.ALERT_NOTE, bData, options);
         const ALERT_TYPE = builder.ALERT_TYPE;
 
         if (traumaCheck) {
@@ -200,8 +198,11 @@ export class HMActor extends Actor {
     async rollSave(dataset) {
         const {dialog, formulaType, mdata} = dataset;
         const chatType = formulaType === 'trauma' ? CHAT_TYPE.TRAUMA_CHECK : CHAT_TYPE.SAVE_CHECK;
-        let bData = dataset;
-        if (!bData.resp) bData = {...bData, ...(await HMDialogFactory({dialog}, this))};
+        let bData = {...dataset};
+        if (!bData.resp) bData = {...bData, ...(await HMDialogFactory({...dataset}, this))};
+
+        bData.caller = bData.caller.uuid;
+        bData.context = bData.context.uuid;
         bData.mdata = {formulaType};
 
         const formula = HMTABLES.formula[dialog][formulaType];
@@ -211,41 +212,98 @@ export class HMActor extends Actor {
             talent: this.hackmaster5e.talent,
         };
 
-        bData.roll = await new Roll(formula, rollContext).evaluate();
-        if (chatType === CHAT_TYPE.TRAUMA_CHECK) bData = await getTraumaBData(bData);
+        const roll = await new Roll(formula, rollContext).evaluate();
+        if (chatType === CHAT_TYPE.TRAUMA_CHECK) bData = await getTraumaBData(roll, bData);
+        bData.roll = roll.toJSON();
+
         foundry.utils.mergeObject(bData.mdata, mdata);
-        const builder = new HMChatFactory(chatType, bData);
-        builder.createChatMessage();
+        const builder = await HMChatFactory.create(chatType, bData);
+        await builder.createChatMessage();
     }
 
+    /**
+     * Modifies a token attribute, with special handling for HP changes.
+     *
+     * @param {string} attribute - The attribute being modified (e.g., "hp").
+     * @param {number} value - The new value or delta to apply.
+     * @param {boolean} [isDelta=false] - If value is a delta (true) or an abs value (false).
+     * @param {boolean} [isBar=true] - Whether the change originated from the token bar UI.
+     * @returns {Promise<void>}
+     */
     async modifyTokenAttribute(attribute, value, isDelta=false, isBar=true) {
-        super.modifyTokenAttribute(attribute, value, isDelta, isBar);
-        if (attribute !== 'hp') return;
+        if (attribute !== 'hp') {
+            super.modifyTokenAttribute(attribute, value, isDelta, isBar);
+            return;
+        }
 
         const hpCurrent = this.system.hp.value;
-        const delta = isDelta ? value : value - hpCurrent;
+        const hpDelta = isDelta ? value : value - hpCurrent;
 
-        if (delta > 0) {
-            const wound = this.itemTypes.wound.filter((w) => w.system.hp);
-            const woundSum = wound.reduce((acc, x) => x.system.hp + acc, 0);
-            let healing = Math.min(delta, woundSum);
+        if (!hpDelta) return;
 
-            let i = 0;
-            while (healing && i < wound.length) {
-                const system = wound[i].system;
-                if (system.hp) {
-                    const limit = Math.sign(--system.hp);
-                    system.timer = Math.max(limit, --system.timer);
-                    healing--;
-                }
-                i = ++i % wound.length;
-            }
-
-            const newWounds = wound.map((w) => ({_id: w._id, system: w.system}));
-            await this.updateEmbeddedDocuments('Item', newWounds);
-        } else await this.addWound(-delta);
+        hpDelta > 0
+            ? await this.healWounds(hpDelta)
+            : await this.addWound(true, {hp: -hpDelta});
 
         this.setHP();
+    }
+
+    /**
+     * Distributes a specified amount of healing among the actor's wounds in a round-robin fashion.
+     * Each point of healing reduces a wound's hp by 1 and decrements its timer.
+     * Wounds reduced to 0 hp are deleted, unless they have a note attached.
+     *
+     * @param {number} healingRequested - The total amount of healing to distribute among wounds.
+     * @returns {Promise<void>} Resolves when all updates and deletions are complete.
+     */
+    async healWounds(healingRequested) {
+        const wounds = this.itemTypes.wound.filter((w) => w.system.hp);
+        const healingMaximum = wounds.reduce((acc, x) => x.system.hp + acc, 0);
+        const woundsData = wounds.map((w) => ({
+            _id: w.id,
+            hp: w.system.hp,
+            note: w.system.note,
+            timer: w.system.timer,
+            treated: w.system.treated,
+        }));
+
+        let healingLeft = Math.min(healingRequested, healingMaximum);
+
+        // Round robin healing.
+        while (healingLeft > 0) {
+            let healedThisPass = false;
+
+            // eslint-disable-next-line no-restricted-syntax
+            for (const wound of woundsData) {
+                if (wound.hp > 0 && healingLeft > 0) {
+                    wound.hp--;
+                    wound.timer = Math.max(1, --wound.timer);
+                    if (!wound.treated) wound.treated = true;
+                    healingLeft--;
+                    healedThisPass = true;
+                }
+            }
+            if (!healedThisPass) break;
+        }
+
+        const woundsToUpdate = woundsData.filter((w) => w.hp > 0);
+
+        // Only delete wounds with 0 hp and no annotation.
+        const woundsToDelete = woundsData
+            .filter((w) => w.hp === 0 && typeof w.note === 'undefined')
+            .map((w) => w._id);
+
+        const woundsUpdate = woundsToUpdate.map((w) => ({
+            _id: w._id,
+            'system.hp': w.hp,
+            'system.timer': w.timer,
+            'system.treated': w.treated,
+        }));
+
+        await Promise.all([
+            woundsUpdate.length && this.updateEmbeddedDocuments('Item', woundsUpdate),
+            woundsToDelete.length && this.deleteEmbeddedDocuments('Item', woundsToDelete),
+        ]);
     }
 }
 
@@ -254,28 +312,28 @@ export class HMActor extends Actor {
  * Evaluates additional rolls for coma and KO duration as needed.
  *
  * @param {Object} bData - The base data from the initial roll.
- * @param {Roll} bData.roll = The initial roll result.
- * @param {Array|Roll} bData.batch - An array to store additional roll results.
+ * @param {Roll} roll = The initial roll result.
+ * @param {Array|Object} bData.batch - An array to store additional roll results.
  * @returns {Promise<Object>} - Resolves to the updated bData object.
  * @async
  */
-async function getTraumaBData(bData) {
+async function getTraumaBData(roll, bData) {
     const traumaData = bData;
     const failType = HMCONST.TRAUMA_FAILSTATE;
 
     let failState = failType.PASSED;
-    traumaData.batch = [traumaData.roll];
+    const batch = [roll];
 
-    if (traumaData.roll.total <= 0) return {...traumaData, mdata: {failState}};
+    if (roll.total <= 0) return {...traumaData, batch: [roll.toJSON()], mdata: {failState}};
 
     // Extended Trauma rules.
     failState = failType.FAILED;
-    if (getDiceSum(traumaData.roll) > 19) {
+    if (getDiceSum(roll) > 19) {
         failState = failType.KO;
 
         const {comaCheck, comaDuration, koDuration} = HMTABLES.formula.trauma;
         const comaCheckRoll = await new Roll(comaCheck).evaluate();
-        traumaData.batch.push(comaCheckRoll);
+        batch.push(comaCheckRoll);
 
         // Coma check
         if (comaCheckRoll.total > 19) failState = failType.COMA;
@@ -287,8 +345,9 @@ async function getTraumaBData(bData) {
             failState = failType.VEGETABLE;
         }
 
-        traumaData.batch.push(durationRoll);
+        batch.push(durationRoll);
     }
+    traumaData.batch = batch.map((r) => r.toJSON());
     traumaData.mdata = {failState};
     return traumaData;
 }

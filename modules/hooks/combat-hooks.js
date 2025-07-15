@@ -8,7 +8,7 @@ export class HMCombatHooks {
 
         const combatants = combat.turns;
         combatants.forEach((combatant) => {
-            const {token} = combatant;
+            const { token } = combatant;
 
             // elevation ruler support
             if (foundry.utils.hasProperty(token, 'flags.elevationruler')) {
@@ -18,19 +18,19 @@ export class HMCombatHooks {
             // Toggle status effects on/off based on their timers.
             const effects = combatant.actor.effects.filter((y) => y.isTemporary === true);
             effects.map(async (effect) => {
-                const {remaining, startRound} = effect.duration;
+                const { remaining, startRound } = effect.duration;
 
                 // effects without a duration have duration.remaining set to null.
                 if (remaining === null) return;
 
                 const started = startRound <= combat.round;
-                if ((!started &&               !effect.disabled)        // Case 1: Before effect
-                  || (started &&  remaining &&  effect.disabled)        // Case 2: During effect
-                  || (started && !remaining && !effect.disabled)) {     // Case 3: After effect
-                    await effect.update({disabled: !effect.disabled});
+                if ((!started && !effect.disabled)                    // Case 1: Before effect
+                    || (started && remaining && effect.disabled)      // Case 2: During effect
+                    || (started && !remaining && !effect.disabled)) { // Case 3: After effect
+                    await effect.update({ disabled: !effect.disabled });
 
                     token._object.drawReach();
-                    const {tokenId} = combatant;
+                    const { tokenId } = combatant;
                     HMSocket.emit(SOCKET_TYPES.DRAW_REACH, tokenId);
 
                     if (effect.disabled) effect._displayScrollingStatus(false);
@@ -53,7 +53,7 @@ export class HMCombatHooks {
         const combatants = combat.turns;
 
         combatants.forEach((c) => {
-            const {actor} = c;
+            const { actor } = c;
             const effects = actor.effects.filter((fx) => fx.isTemporary);
             const effectIds = effects.map((fx) => fx.id);
             actor.deleteEmbeddedDocuments('ActiveEffect', effectIds);
@@ -68,7 +68,7 @@ export class HMCombatHooks {
     static preUpdateCombatant(combatant, delta, opts, userId) {
         if (game.userId !== userId) return;
         const acted = combatant.getFlag(SYSTEM_ID, 'acted');
-        const {initiative} = combatant;
+        const { initiative } = combatant;
         if (!initiative || acted) return;
 
         if (delta.initiative && initiative !== delta.initiative) {
@@ -78,7 +78,7 @@ export class HMCombatHooks {
 
     static renderCombatTrackerConfig(config, html) {
         const formEl = $(html).find('div').has('input[type="checkbox"]');
-        const {position} = config;
+        const { position } = config;
         position.height -= formEl.outerHeight();
         config.setPosition(position);
         formEl.remove('div');
@@ -86,27 +86,25 @@ export class HMCombatHooks {
 
     // TODO: Optimize to do more with fewer searches.
     static renderCombatTracker(tracker, html) {
-        const rootEl = html.get(0);
-
-        doubleClickSetsInitiative(rootEl);
+        doubleClickSetsInitiative(html);
         if (!tracker.viewed?.round) return;
 
-        removeTurnControls(rootEl);
-        removeActiveClass(rootEl);
-        addHACControl(rootEl);
-        highlightInit(rootEl);
+        removeTurnControls(html);
+        removeActiveClass(html);
+        addHACControl(html);
+        highlightInit(html);
 
-        drawDivider(rootEl);
+        drawDivider(html);
         tracker.setPosition();
 
         function drawDivider(domObj) {
-            const {active} = game.combats;
+            const { active } = game.combats;
             let wasNPC = true;
             const combatantElements = domObj.getElementsByClassName('combatant');
 
             for (let i = 0; i < combatantElements.length; i++) {
                 const el = combatantElements[i];
-                const {isNPC} = active.combatants.get(el.getAttribute('data-combatant-id'));
+                const { isNPC } = active.combatants.get(el.getAttribute('data-combatant-id'));
 
                 if (isNPC && !wasNPC) {
                     const divider = document.createElement('hr');
@@ -120,10 +118,10 @@ export class HMCombatHooks {
         }
 
         function removeTurnControls(domObj) {
-            const nextTurnControls = domObj.querySelectorAll('[data-control="nextTurn"]');
+            const nextTurnControls = domObj.querySelectorAll('[data-action="nextTurn"]');
             if (nextTurnControls.length === 0) return;
             nextTurnControls.forEach((el) => el.remove());
-            domObj.querySelector('[data-control="previousTurn"]').remove();
+            domObj.querySelector('[data-action="previousTurn"]').remove();
         }
 
         function removeActiveClass(domObj) {
@@ -146,25 +144,19 @@ export class HMCombatHooks {
         }
 
         function addHACControl(domObj) {
-            const title = domObj.querySelector('h3.encounter-title');
-            title.style.marginLeft = '0';
+            const controlDiv = domObj.querySelector('.control-buttons.left.flexrow');
 
-            const hacButton = document.createElement('a');
-            hacButton.className = 'combat-button combat-control';
+            const hacButton = document.createElement('button');
+            hacButton.setAttribute('type', 'button');
+            hacButton.className = 'inline-control combat-control icon fa-solid fa-megaphone';
             hacButton.setAttribute('data-tooltip', 'COMBAT.HueAndCry');
-            hacButton.setAttribute('data-control', 'doHueAndCry');
-            hacButton.innerHTML = '<i class="fas fa-megaphone"></i>';
+            hacButton.setAttribute('data-action', 'doHueAndCry');
 
-            title.parentNode.insertBefore(hacButton, title);
-
-            const combatControls = domObj.querySelectorAll('.combat-control');
-            combatControls.forEach((button) => {
-                button.addEventListener('click', (ev) => tracker._onCombatControl(ev));
-            });
+            controlDiv.prepend(hacButton);
         }
 
         function highlightInit(domObj) {
-            const {round} = tracker.viewed;
+            const { round } = tracker.viewed;
             const initiativeRows = domObj.getElementsByClassName('initiative');
 
             for (let i = 0; i < initiativeRows.length; i++) {
@@ -178,7 +170,7 @@ export class HMCombatHooks {
 
                 const li = row.closest('li');
                 const combatantId = li.getAttribute('data-combatant-id');
-                const {combatants} = game.combats.active;
+                const { combatants } = game.combats.active;
                 const combatant = combatants.get(combatantId);
 
                 // eslint-disable-next-line no-continue
