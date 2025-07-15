@@ -28,11 +28,17 @@
 /* Styles which override foundry core */
 .window-app {
     --font-primary: 'Korinan', 'Gentium', 'Roboto', serif;
+//    --font-body: 'Korinan', 'Gentium', 'Roboto', serif;
 }
 
 #chat,
 #chat-notifications {
+    --font-body: 'Korinan', 'Gentium', 'Roboto', serif;
     @import 'overrides/chat';
+
+    .message-content, .message-header, .dice-formula, .dice-total {
+        font-family: var(--font-body);
+    }
 }
 
 #combat,
