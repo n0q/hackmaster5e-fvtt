@@ -1,14 +1,27 @@
 export class HMChatHooks {
     /* eslint-disable no-param-reassign */
-    static async renderChatMessage(_app, html) {
-        if (html.find('.noWhisper')) html.find('.whisper-to').remove();
+    static async renderChatMessage(_obj, html) {
+        if (!html) return;
 
-        if (!html.find('.hm-chat-note').length) return;
+        if (html.querySelector('.noWhisper')) {
+            const whisperToElements = html.querySelectorAll('.whisper-to');
+            whisperToElements.forEach((el) => el.remove());
+        }
 
-        html.css('padding', '0px');
-        html.find('.message-sender').text('');
-        html.find('.message-metadata')[0].style.display = 'none';
-        if (!game.user.isGM) html.find('.message-delete').remove();
+        if (!html.querySelector('.hm-chat-note')) return;
+
+        html.style.padding = '0px';
+
+        const sender = html.querySelector('.message-sender');
+        if (sender) sender.textContent = '';
+
+        const metadata = html.querySelector('.message-metadata');
+        if (metadata) metadata.style.display = 'none';
+
+        if (!game.user.isGM) {
+            const deleteButtons = html.querySelector('.message-delete');
+            deleteButtons.button.remove();
+        }
     }
     /* eslint-enable no-param-reassign */
 }

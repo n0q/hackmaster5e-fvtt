@@ -3,14 +3,14 @@ import { actorHasEffects } from './effects.js';
 import { HMWoundItem } from '../item/wound-item.js';
 
 export const FILL_TYPE = {
-    ZERO:       0b00,
-    DEFAULT:    0b01,
-    REACH:      0b01,
-    BASE:       0b10,
-    FULL:       0b11,
+    ZERO: 0b00,
+    DEFAULT: 0b01,
+    REACH: 0b01,
+    BASE: 0b10,
+    FULL: 0b11,
 };
 
-export class HMToken extends Token {
+export class HMToken extends foundry.canvas.placeables.Token {
     get __isSecret() {
         return this.document.disposition === CONST.TOKEN_DISPOSITIONS.SECRET && !this.isOwner;
     }
@@ -19,8 +19,8 @@ export class HMToken extends Token {
         if (this.__isSecret) return;
         const showReach = game.settings.get(SYSTEM_ID, 'showReach');
 
-        const {hover, reach, interactionState} = this;
-        const isDragged = interactionState === MouseInteractionManager.INTERACTION_STATES.DRAG;
+        const { hover, reach, interactionState } = this;
+        const isDragged = interactionState === foundry.canvas.interaction.MouseInteractionManager.INTERACTION_STATES.DRAG;
 
         reach.clear();
         if (!showReach) return;
@@ -34,7 +34,7 @@ export class HMToken extends Token {
     }
 
     getColor() {
-        const {actor} = this;
+        const { actor } = this;
         if (!actor) return false;
 
         const defaultColor = '#ffffff';
@@ -42,7 +42,7 @@ export class HMToken extends Token {
 
         let owner = game.users.find((a) => a.character?.id === actor.id);
         if (!owner) {
-            const {'default': _, ...ownership} = actor.ownership;
+            const { 'default': _, ...ownership } = actor.ownership;
             const userId = Object.keys(ownership).find((a) => {
                 const isOwner = ownership[a] === CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER;
                 const isPlayer = !game.users.get(a)?.isGM;
@@ -57,8 +57,8 @@ export class HMToken extends Token {
 
     getGeometry() {
         if (!this.combatant || !this.actor) return false;
-        const {actor} = this;
-        const {system} = actor;
+        const { actor } = this;
+        const { system } = actor;
 
         const eList = ['dead', 'incap', 'unconscious', 'sfatigue', 'sleep'];
         if (actorHasEffects(actor, eList)) return false;
@@ -72,8 +72,8 @@ export class HMToken extends Token {
         const [race] = actor.itemTypes.race;
         const defaultBaseDiameter = HMTABLES.scale[HMCONST.SCALE.MEDIUM].token;
         let tokenBaseDiameter = defaultBaseDiameter;
-        if (race)         { tokenBaseDiameter = Number(race.system.bonus.token);            } else
-        if (system.scale) { tokenBaseDiameter = HMTABLES.scale[Number(system.scale)].token; }
+        if (race) { tokenBaseDiameter = Number(race.system.bonus.token); } else
+            if (system.scale) { tokenBaseDiameter = HMTABLES.scale[Number(system.scale)].token; }
         tokenBaseDiameter ??= defaultBaseDiameter;
 
         const r1 = (tokenBaseDiameter / 2) * unit;
@@ -85,16 +85,16 @@ export class HMToken extends Token {
     }
 
     getReach() {
-        const {actor} = this;
+        const { actor } = this;
         if (!actor) return null;
 
         const reachHint = actor.getFlag(SYSTEM_ID, 'reachHint');
         const weapons = actor.itemTypes.weapon.filter((a) => !a.system.ranged.checked);
         const STATE = HMCONST.ITEM_STATE;
 
-        const weapon = weapons.find((a) => a.system.state >=  STATE.EQUIPPED && a.id === reachHint)
-                    ?? weapons.find((a) => a.system.state === STATE.EQUIPPED)
-                    ?? weapons.find((a) => a.system.innate);
+        const weapon = weapons.find((a) => a.system.state >= STATE.EQUIPPED && a.id === reachHint)
+            ?? weapons.find((a) => a.system.state === STATE.EQUIPPED)
+            ?? weapons.find((a) => a.system.innate);
         if (!weapon) return null;
         if (weapon.id !== reachHint && actor.isOwner) actor.setFlag(SYSTEM_ID, 'reachHint', weapon.id);
 
@@ -104,11 +104,11 @@ export class HMToken extends Token {
         const distance = Math.max(reach, 0);
         const opacity = game.settings.get(SYSTEM_ID, 'reachOpacity');
 
-        return {distance, opacity};
+        return { distance, opacity };
     }
 
     animReachOpen() {
-        const {reach} = this;
+        const { reach } = this;
         reach.visible = !!this.combatant && this.visibleByDefault() && this.isVisible;
         if (!reach.visible) return;
 
@@ -125,7 +125,7 @@ export class HMToken extends Token {
     }
 
     animReachClose() {
-        const {reach} = this;
+        const { reach } = this;
         if (!reach.visible) return;
 
         game.gsap.to(reach.scale, {
@@ -139,8 +139,8 @@ export class HMToken extends Token {
     }
 
     visibleByDefault() {
-        const {actor} = this;
-        const {isGM, showAllThreats} = game.user;
+        const { actor } = this;
+        const { isGM, showAllThreats } = game.user;
 
         if (!actor) return false;
         if (showAllThreats) return true;
@@ -148,7 +148,7 @@ export class HMToken extends Token {
 
         let owner = game.users.find((a) => a.character?.id === actor.id);
         if (!owner) {
-            const {'default': _, ...ownership} = actor.ownership;
+            const { 'default': _, ...ownership } = actor.ownership;
             const userId = Object.keys(ownership).find((a) => {
                 const isOwner = ownership[a] === CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER;
                 const isPlayer = !game.users.get(a)?.isGM;

@@ -30,21 +30,41 @@ import { registerSchema } from './modules/sys/schema.js';
 import { migrateData } from './modules/sys/migration.js';
 
 function registerSheets() {
-    Actors.unregisterSheet('core', ActorSheet);
-    Actors.registerSheet('hackmaster', HMCharacterActorSheet, {types: ['character'], makeDefault: true});
-    Actors.registerSheet('hackmaster', HMBeastActorSheet, {types: ['beast'], makeDefault: true});
+    const ActorsCollection = foundry.documents.collections.Actors;
+    const ItemsCollection = foundry.documents.collections.Items;
 
-    Items.unregisterSheet('core', ItemSheet);
-    Items.registerSheet('hackmaster', HMItemSheet, {makeDefault: true});
-    Items.registerSheet('hackmaster', HMArmorItemSheet, {types: ['armor'], makeDefault: true});
-    Items.registerSheet('hackmaster', HMClassItemSheet, {types: ['cclass'], makeDefault: true});
-    Items.registerSheet('hackmaster', HMCurrencyItemSheet, {types: ['currency'], makeDefault: true});
-    Items.registerSheet('hackmaster', HMProficiencyItemSheet, {types: ['proficiency'], makeDefault: true});
-    Items.registerSheet('hackmaster', HMRaceItemSheet, {types: ['race'], makeDefault: true});
-    Items.registerSheet('hackmaster', HMSpellItemSheet, {types: ['spell'], makeDefault: true});
-    Items.registerSheet('hackmaster', HMTalentItemSheet, {types: ['talent'], makeDefault: true});
-    Items.registerSheet('hackmaster', HMWeaponItemSheet, {types: ['weapon'], makeDefault: true});
-    Items.registerSheet('hackmaster', HMWoundItemSheet, {types: ['wound'], makeDefault: true});
+    ActorsCollection.unregisterSheet('core', foundry.appv1.sheets.ActorSheet);
+    ItemsCollection.unregisterSheet('core', foundry.appv1.sheets.ItemSheet);
+
+    const actorSheets = [
+        { sheetClass: HMCharacterActorSheet, types: ['character'] },
+        { sheetClass: HMBeastActorSheet, types: ['beast'] },
+    ];
+
+    const itemSheets = [
+        { sheetClass: HMItemSheet },
+        { sheetClass: HMArmorItemSheet, types: ['armor'] },
+        { sheetClass: HMClassItemSheet, types: ['cclass'] },
+        { sheetClass: HMCurrencyItemSheet, types: ['currency'] },
+        { sheetClass: HMProficiencyItemSheet, types: ['proficiency'] },
+        { sheetClass: HMRaceItemSheet, types: ['race'] },
+        { sheetClass: HMSpellItemSheet, types: ['spell'] },
+        { sheetClass: HMTalentItemSheet, types: ['talent'] },
+        { sheetClass: HMWeaponItemSheet, types: ['weapon'] },
+        { sheetClass: HMWoundItemSheet, types: ['wound'] },
+    ];
+
+    actorSheets.forEach(({ sheetClass, types }) => {
+        ActorsCollection.registerSheet('hackmaster', sheetClass, { types, makeDefault: true });
+    });
+
+    itemSheets.forEach(({ sheetClass, types }) => {
+        const options = { makeDefault: true };
+        if (types) {
+            options.types = types;
+        }
+        ItemsCollection.registerSheet('hackmaster', sheetClass, options);
+    });
 }
 
 function registerConfig() {
@@ -67,10 +87,10 @@ function registerConfig() {
     CONFIG.fontDefinitions.Gentium = {
         editor: true,
         fonts: [
-            {urls: ['systems/hackmaster5e/styles/fonts/GenBkBasR.woff2']},
-            {urls: ['systems/hackmaster5e/styles/fonts/GenBkBasB.woff2'], weight: 700},
-            {urls: ['systems/hackmaster5e/styles/fonts/GenBkBasI.woff2'], style: 'italic'},
-            {urls: ['systems/hackmaster5e/styles/fonts/GenBkBasBI.woff2'], style: 'italic', weight: 700},
+            { urls: ['systems/hackmaster5e/styles/fonts/GenBkBasR.woff2'] },
+            { urls: ['systems/hackmaster5e/styles/fonts/GenBkBasB.woff2'], weight: 700 },
+            { urls: ['systems/hackmaster5e/styles/fonts/GenBkBasI.woff2'], style: 'italic' },
+            { urls: ['systems/hackmaster5e/styles/fonts/GenBkBasBI.woff2'], style: 'italic', weight: 700 },
         ],
     };
 

@@ -2,7 +2,7 @@ import { SYSTEM_ID } from '../tables/constants.js';
 
 export const preloadHandlebarsTemplates = () => {
     const templatePath = `systems/${SYSTEM_ID}/templates`;
-    loadTemplates([
+    foundry.applications.handlebars.loadTemplates([
         `${templatePath}/actor/cards/armor.hbs`,
         `${templatePath}/actor/cards/item.hbs`,
         `${templatePath}/actor/cards/item/card-item-currency.hbs`,
