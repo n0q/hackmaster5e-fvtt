@@ -1,4 +1,5 @@
 import { ChatBuilder } from './chat-builder-abstract.js';
+import { getResult } from './chat-constants.js';
 import { HMCONST, HMTABLES } from '../tables/constants.js';
 
 const typeToBonusMap = {
@@ -13,8 +14,8 @@ export class SkillCheckChatBuilder extends ChatBuilder {
     static template = 'systems/hackmaster5e/templates/chat/chat-skill.hbs';
 
     async createChatMessage() {
-        const {resp, roll} = this.data;
-        const {dc, formulaType} = resp;
+        const { resp, roll } = this.data;
+        const { dc, formulaType } = resp;
 
         const mdata = this.getMetadata(formulaType, dc);
         mdata.bonus = resp.bonus;
@@ -30,24 +31,24 @@ export class SkillCheckChatBuilder extends ChatBuilder {
             else if (dc >= rollIndex) result = this.RESULT_TYPE.PASSED;
         }
 
-        const resultString = ChatBuilder.getResult(result);
+        const resultString = getResult(result);
 
         mdata.inline = unescape(roll);
-        const chatData = {mdata, resultString, skillCheck, roll};
+        const chatData = { mdata, resultString, skillCheck, roll };
         const content = await ChatBuilder.handlebars.renderTemplate(this.template, chatData);
 
-        const chatMessageData = this.getChatMessageData({content, resp});
+        const chatMessageData = this.getChatMessageData({ content, resp });
         await ChatMessage.create(chatMessageData);
     }
 
     getSkillChecks() {
-        const {context, resp, roll} = this.data;
-        const {FORM} = SKILL;
+        const { context, resp, roll } = this.data;
+        const { FORM } = SKILL;
 
         const value = context.system.bonus.total[typeToBonusMap[resp.formulaType]];
         const baseroll = roll.total || 0;
 
-        const evalData = {baseroll, resp, value};
+        const evalData = { baseroll, resp, value };
         const formula = HMTABLES.formula.skill;
 
         const checkFormula = Roll.replaceFormulaData(formula[FORM.CHECK], evalData);
@@ -65,20 +66,20 @@ export class SkillCheckChatBuilder extends ChatBuilder {
      * @return {object}
      */
     getMetadata(type, dc) {
-        const {specname, system} = this.data.context;
-        const {level, mastery} = system;
+        const { specname, system } = this.data.context;
+        const { level, mastery } = system;
 
         const getLevelAndMastery = (k) => ({
             level: level[k] ?? 0,
             mastery: mastery[k] ?? 0,
         });
 
-        const {TYPE} = HMCONST.SKILL;
+        const { TYPE } = HMCONST.SKILL;
         const mdataMapping = {
-            [TYPE.SKILL]: {rollFlavor: 'Skill Check', ...getLevelAndMastery('value')},
-            [TYPE.VERBAL]: {rollFlavor: 'Language Check', ...getLevelAndMastery('verbal')},
-            [TYPE.WRITTEN]: {rollFlavor: 'Literacy Check', ...getLevelAndMastery('literacy')},
+            [TYPE.SKILL]: { rollFlavor: 'Skill Check', ...getLevelAndMastery('value') },
+            [TYPE.VERBAL]: { rollFlavor: 'Language Check', ...getLevelAndMastery('verbal') },
+            [TYPE.WRITTEN]: { rollFlavor: 'Literacy Check', ...getLevelAndMastery('literacy') },
         };
-        return {type, specname, dc, ...mdataMapping[type] };
+        return { type, specname, dc, ...mdataMapping[type] };
     }
 }

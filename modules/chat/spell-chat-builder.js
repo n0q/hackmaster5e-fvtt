@@ -5,15 +5,15 @@ export class SpellChatBuilder extends ChatBuilder {
     static template = 'systems/hackmaster5e/templates/chat/chat-spell.hbs';
 
     async createChatMessage() {
-        const {context, mdata, resp, roll} = this.data;
+        const { context, mdata, resp, roll } = this.data;
 
         foundry.utils.mergeObject(mdata, this.getMetadata());
         if (roll) mdata.inline = unescape(roll);
 
-        const templateData = {context, mdata, roll, resp};
-        const content = await renderTemplate(this.template, templateData);
+        const templateData = { context, mdata, roll, resp };
+        const content = await ChatBuilder.handlebars.renderTemplate(this.template, templateData);
 
-        const chatData = {content, resp};
+        const chatData = { content, resp };
         if (mdata.isNPC) {
             chatData.whisper = ChatBuilder.getGMs;
             chatData.rollMode = CONST.DICE_ROLL_MODES.PRIVATE;
@@ -26,7 +26,7 @@ export class SpellChatBuilder extends ChatBuilder {
 
     getMetadata() {
         const mdata = {};
-        const {system} = this.data.context;
+        const { system } = this.data.context;
         mdata.components = getComponentsString(system.component);
 
         const sLevel = game.i18n.localize(`HM.spellLevels.${system.lidx}`);
@@ -40,14 +40,14 @@ export class SpellChatBuilder extends ChatBuilder {
     }
 
     getSpellChecks() {
-        const {caller, resp, roll} = this.data;
+        const { caller, resp, roll } = this.data;
 
         if (!roll) return undefined;
-        const {bonus} = caller.system;
+        const { bonus } = caller.system;
 
         const formula = HMTABLES.formula.spell;
         const baseroll = roll.total || 0;
-        const evalData = {baseroll, bonus};
+        const evalData = { baseroll, bonus };
 
         const check = {
             save: Roll.safeEval(Roll.replaceFormulaData(formula.save, evalData)),

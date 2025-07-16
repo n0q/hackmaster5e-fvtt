@@ -14,7 +14,7 @@ export class AlertNoteChatBuilder extends ChatBuilder {
     }
 
     async createChatMessage() {
-        const {type} = this.data.mdata;
+        const { type } = this.data.mdata;
         const mdata = {
             flavor: 'HM.CHAT.ALERT.TRAUMA.flavor',
             text: 'HM.CHAT.ALERT.TRAUMA.text',
@@ -25,9 +25,9 @@ export class AlertNoteChatBuilder extends ChatBuilder {
             mdata.text = 'HM.CHAT.ALERT.TENACITY.text';
         }
 
-        const chatData = {mdata};
-        const content = await renderTemplate(this.template, chatData);
-        const chatMessageData = this.getChatMessageData({content});
+        const chatData = { mdata };
+        const content = await ChatBuilder.handlebars.renderTemplate(this.template, chatData);
+        const chatMessageData = this.getChatMessageData({ content });
         await this.render(chatMessageData);
     }
 }

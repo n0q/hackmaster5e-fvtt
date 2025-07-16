@@ -1,26 +1,5 @@
 import { BuilderSchema } from './chat-builder-schema.js';
-
-/**
- * Enumeration for chat result codes.
- * @enum {Symbol}
- */
-const RESULT_TYPE = {
-    NONE: Symbol('result_none'),
-    CRITFAIL: Symbol('result_critfail'),
-    DCRITFAIL: Symbol('result_dcritfail'),
-    FAILED: Symbol('result_failed'),
-    FUMBLE: Symbol('result_fumble'),
-    GOODBYE: Symbol('result_goodbye'),
-    NEAR_PERFECT: Symbol('result_near_perfect'),
-    PASSED: Symbol('result_passed'),
-    PERFECT: Symbol('result_perfect'),
-    SKILL4: Symbol('result_skill_trivial'),
-    SKILL3: Symbol('result_skill_easy'),
-    SKILL2: Symbol('result_skill_avg'),
-    SKILL1: Symbol('result_skill_diff'),
-    SKILL0: Symbol('result_skill_vdiff'),
-    SUPERIOR: Symbol('result_superior'),
-};
+import { RESULT_TYPE } from './chat-constants.js';
 
 /**
  * Chat card builder.
@@ -148,41 +127,6 @@ export class ChatBuilder {
     }
 
     /**
-     * Mapping of result types to their corresponding HTML representations.
-     * @type {Object.<Symbol, string|undefined>}
-     * @private
-     */
-    static #resultCache;
-
-    /**
-     * Initializes #resultCache with the mapping of result types to their corresponding HTML.
-     * Called only once when the cache isn't created yet.
-     * @return {Object.<Symbol, string|undefined} - The initialized result mapping object.
-     * @private
-     * @static
-     */
-    static #initializeResultCache() {
-        this.#resultCache = {
-            [RESULT_TYPE.NONE]: undefined,
-            [RESULT_TYPE.CRITFAIL]: `<b>${game.i18n.localize('HM.CHAT.RESULT.critfail')}</b>`,
-            [RESULT_TYPE.DCRITFAIL]: `<b>${game.i18n.localize('HM.CHAT.RESULT.dcritfail')}</b>`,
-            [RESULT_TYPE.FAILED]: `<b>${game.i18n.localize('HM.CHAT.RESULT.failed')}</b>`,
-            [RESULT_TYPE.FUMBLE]: `<b>${game.i18n.localize('HM.CHAT.RESULT.fumble')}</b>`,
-            [RESULT_TYPE.GOODBYE]: `<b>${game.i18n.localize('HM.CHAT.RESULT.goodbye')}</b>`,
-            [RESULT_TYPE.NEAR_PERFECT]: `<b>${game.i18n.localize('HM.CHAT.RESULT.nperfect')}</b>`,
-            [RESULT_TYPE.PASSED]: `<b>${game.i18n.localize('HM.CHAT.RESULT.passed')}</b>`,
-            [RESULT_TYPE.PERFECT]: `<b>${game.i18n.localize('HM.CHAT.RESULT.perfect')}</b>`,
-            [RESULT_TYPE.SKILL4]: `<b>${game.i18n.localize('HM.CHAT.RESULT.skill4')}</b>`,
-            [RESULT_TYPE.SKILL3]: `<b>${game.i18n.localize('HM.CHAT.RESULT.skill3')}</b>`,
-            [RESULT_TYPE.SKILL2]: `<b>${game.i18n.localize('HM.CHAT.RESULT.skill2')}</b>`,
-            [RESULT_TYPE.SKILL1]: `<b>${game.i18n.localize('HM.CHAT.RESULT.skill1')}</b>`,
-            [RESULT_TYPE.SKILL0]: `<b>${game.i18n.localize('HM.CHAT.RESULT.skill0')}</b>`,
-            [RESULT_TYPE.SUPERIOR]: `<b>${game.i18n.localize('HM.CHAT.RESULT.superior')}</b>`,
-        };
-        return this.#resultCache;
-    }
-
-    /**
      * Returns a chatMessageData object for creating a chat message.
      * @param {Object} obj - An object containing data for the ChatMessage.
      * @param {string[]} obj.rolls - An array of roll.render(). Supercedes data.roll if present.
@@ -258,17 +202,5 @@ export class ChatBuilder {
             }
         }
         return sum;
-    }
-
-    /**
-     * Returns HTML for a given RESULT_TYPE.
-     *
-     * @param {Symbol} rv - Result symbol of type RESULT_TYPE.
-     * @returns {string} HTML string for result type.
-     */
-    static getResult(rv) {
-        if (!rv || rv === RESULT_TYPE.NONE) return false;
-        this.#resultCache ||= this.#initializeResultCache();
-        return this.#resultCache[rv] || `Unknown result type: <b>${rv}</b>`;
     }
 }
