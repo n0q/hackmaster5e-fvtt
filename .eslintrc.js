@@ -29,7 +29,7 @@ module.exports = {
         'import/newline-after-import': 'off',
         'indent': 'off',
         'key-spacing': 'off',
-        'max-len': ['error', { 'code': 110 }],
+        'max-len': ['error', { 'code': 125 }],
         'no-bitwise': 'off',
         'no-continue': 'warn',
         'no-extra-boolean-cast': 'off',
