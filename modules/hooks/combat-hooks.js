@@ -65,7 +65,7 @@ export class HMCombatHooks {
     }
 
     // Track if combatant's init ever changes, for hue and cry.
-    static preUpdateCombatant(combatant, delta, opts, userId) {
+    static preUpdateCombatant(combatant, delta, _opts, userId) {
         if (game.userId !== userId) return;
         const acted = combatant.getFlag(SYSTEM_ID, 'acted');
         const { initiative } = combatant;
@@ -157,11 +157,11 @@ export class HMCombatHooks {
 
         function highlightInit(domObj) {
             const { round } = tracker.viewed;
-            const initiativeRows = domObj.getElementsByClassName('initiative');
+            const initiativeRows = domObj.getElementsByClassName('initiative-input');
 
             for (let i = 0; i < initiativeRows.length; i++) {
                 const row = initiativeRows[i];
-                const initiativeValue = parseInt(row.textContent, 10);
+                const initiativeValue = parseInt(row.value, 10);
 
                 // eslint-disable-next-line no-continue
                 if (initiativeValue > round) continue;
@@ -170,12 +170,17 @@ export class HMCombatHooks {
 
                 const li = row.closest('li');
                 const combatantId = li.getAttribute('data-combatant-id');
-                const { combatants } = game.combats.active;
+                const { combatants } = game.combat;
                 const combatant = combatants.get(combatantId);
 
-                // eslint-disable-next-line no-continue
-                if (!combatant.isOwner || game.user.isGM) continue;
+                const shouldHilight = game.user.isGM
+                    ? combatant.isNPC
+                    : combatant.isOwner;
 
+                // eslint-disable-next-line no-continue
+                if (!shouldHilight) continue;
+
+                game.gsap.killTweensOf(row, 'color', 'textShadow');
                 const orange2 = '#ff6400';
                 const orange1 = '#ffa660';
                 game.gsap.to(row, {
