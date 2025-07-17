@@ -1,4 +1,5 @@
 import { ChatBuilder } from './chat-builder-abstract.js';
+import { getResult } from './chat-constants.js';
 
 export class AbilityCheckChatBuilder extends ChatBuilder {
     static template = 'systems/hackmaster5e/templates/chat/check.hbs';
@@ -24,7 +25,7 @@ export class AbilityCheckChatBuilder extends ChatBuilder {
             if (dieSum > 19) rv = this.RESULT_TYPE.FUMBLE;
         }
 
-        const resultString = ChatBuilder.getResult(rv);
+        const resultString = getResult(rv);
 
         mdata.score = context.system.abilities.total[mdata.ability].value;
         const chatData = { rollContent, mdata, resultString };

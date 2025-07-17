@@ -23,7 +23,7 @@ export class InitNoteChatBuilder extends ChatBuilder {
             Object.keys(hiddenCombatants).map(async (foo) => {
                 const sortByName = (a, b) => a.name.localeCompare(b.name);
                 const sortedContext = hiddenCombatants[foo].sort(sortByName);
-                const content = await renderTemplate(this.template, sortedContext);
+                const content = await ChatBuilder.handlebars.renderTemplate(this.template, sortedContext);
                 const whisper = foo === 'true' ? ChatBuilder.getGMs() : undefined;
 
                 const chatMessageData = this.getChatMessageData({ content, whisper });

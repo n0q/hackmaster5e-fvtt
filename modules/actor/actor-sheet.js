@@ -299,16 +299,10 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
         const {dataset} = element;
         const li = $(ev.currentTarget).parents('.card');
         const item = this.actor.items.get(li.data('itemId'));
-        const {system} = item;
 
         let {prepped} = item.system || 0;
         dataset.itemPrepare ? prepped++ : prepped--;
-        system.prepped = prepped;
-
-        await this.actor.updateEmbeddedDocuments('Item', [{
-            _id: item.id,
-            'system.prepped': prepped,
-         }]);
+        await item.update({'system.prepped': prepped});
     }
 
     _onClick(ev) {

@@ -1,4 +1,4 @@
 {
-    "include": ["hm.js", "modules/**/*", "foundry/scripts/*.js"],
+    "include": ["hm.js", "modules/**/*", "foundry/**/scripts/*.mjs"],
     "exclude": ["node_modules"]
 }

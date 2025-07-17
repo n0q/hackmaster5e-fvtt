@@ -26,14 +26,18 @@
 }
 
 /* Styles which override foundry core */
-:root {
+.window-app {
     --font-primary: 'Korinan', 'Gentium', 'Roboto', serif;
-    scrollbar-color: unset;
 }
 
 #chat,
 #chat-notifications {
+    --font-body: 'Korinan', 'Gentium', 'Roboto', serif;
     @import 'overrides/chat';
+
+    .message-content, .message-header, .dice-formula, .dice-total {
+        font-family: var(--font-body);
+    }
 }
 
 #combat,

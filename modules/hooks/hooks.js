@@ -20,7 +20,7 @@ export const registerHooks = () => {
     Hooks.on('deleteActiveEffect', HMActiveEffectHooks.deleteActiveEffect);
     Hooks.on('createActor', HMActorHooks.createActor);
     Hooks.on('dropCanvasData', HMCanvasHooks.dropCanvasData);
-    Hooks.on('renderChatMessage', HMChatHooks.renderChatMessage);
+    Hooks.on('renderChatMessageHTML', HMChatHooks.renderChatMessage);
     Hooks.on('deleteCombat', HMCombatHooks.deleteCombat);
     Hooks.on('preDeleteCombat', HMCombatHooks.preDeleteCombat);
     Hooks.on('updateCombat', HMCombatHooks.updateCombat);

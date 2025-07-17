@@ -1,4 +1,5 @@
 import { ChatBuilder } from './chat-builder-abstract.js';
+import { getResult } from './chat-constants.js';
 import { HMCONST } from '../tables/constants.js';
 
 /**
@@ -15,7 +16,7 @@ export class DefenseChatBuilder extends ChatBuilder {
 
         const sumDice = ChatBuilder.getDiceSum(roll);
         const result = getDiceResult.call(this, sumDice);
-        const resultString = ChatBuilder.getResult(result);
+        const resultString = getResult(result);
 
         const flavor = game.i18n.localize('HM.CHAT.def') + getRollFlavor(resp);
         const rollContent = await roll.render({ flavor });

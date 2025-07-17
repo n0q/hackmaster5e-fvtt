@@ -1,4 +1,5 @@
 import { ChatBuilder } from './chat-builder-abstract.js';
+import { getResult } from './chat-constants.js';
 import { HMCONST } from '../tables/constants.js';
 
 const failType = HMCONST.TRAUMA_FAILSTATE;
@@ -7,13 +8,13 @@ export class TraumaCheckChatBuilder extends ChatBuilder {
     static template = 'systems/hackmaster5e/templates/chat/chat-trauma.hbs';
 
     async createChatMessage() {
-        const {batch, resp} = this.data;
-        let {mdata} = this.data;
+        const { batch, resp } = this.data;
+        let { mdata } = this.data;
         const [traumaRoll, durationRoll] = batch;
-        const {failState} = mdata;
+        const { failState } = mdata;
 
         const rFlavor = ['Trauma Check', 'Coma Check', 'Extended Duration'];
-        const rollContent = await Promise.all(batch.map((r, i) => r.render({flavor: rFlavor[i]})));
+        const rollContent = await Promise.all(batch.map((r, i) => r.render({ flavor: rFlavor[i] })));
 
         mdata.duration = ({
             [failType.FAILED]: traumaRoll.total * 5,
@@ -22,13 +23,13 @@ export class TraumaCheckChatBuilder extends ChatBuilder {
             [failType.VEGETABLE]: 'Indefinite',
         })[failState];
 
-        mdata = {...mdata, ...this.getResultData(failState)};
+        mdata = { ...mdata, ...this.getResultData(failState) };
 
-        const resultString = ChatBuilder.getResult(mdata.rv);
-        const chatData = {resultString, rollContent, mdata, resp};
+        const resultString = getResult(mdata.rv);
+        const chatData = { resultString, rollContent, mdata, resp };
 
-        const content = await renderTemplate(this.template, chatData);
-        const chatMessageData = this.getChatMessageData({content, resp});
+        const content = await ChatBuilder.handlebars.renderTemplate(this.template, chatData);
+        const chatMessageData = this.getChatMessageData({ content, resp });
         this.render(chatMessageData);
     }
 
