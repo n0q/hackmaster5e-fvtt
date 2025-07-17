@@ -1,12 +1,15 @@
+/**
+ * @deprecated
+ */
 import { HMCONST } from '../tables/constants.js';
-import { AttackPrompt } from '../apps/attack.js';
-import { CastPrompt } from '../apps/cast.js';
-import { CritPrompt } from '../apps/crit.js';
-import { DamagePrompt } from '../apps/damage.js';
-import { DefendPrompt } from '../apps/defend.js';
-import { FumblePrompt } from '../apps/fumble.js';
-import { SkillPrompt } from '../apps/skill.js';
-import { WoundPrompt } from '../apps/wound.js';
+import { AttackPrompt } from '../apps/legacy/attack.js';
+import { CastPrompt } from '../apps/legacy/cast.js';
+import { CritPrompt } from '../apps/legacy/crit.js';
+import { DamagePrompt } from '../apps/legacy/damage.js';
+import { DefendPrompt } from '../apps/legacy/defend.js';
+import { FumblePrompt } from '../apps/legacy/fumble.js';
+import { SkillPrompt } from '../apps/legacy/skill.js';
+import { WoundPrompt } from '../apps/legacy/wound.js';
 
 function getDialogData() {
     return {
@@ -26,7 +29,7 @@ function getWeapons(actor, itemId) {
     const weapons = weaponList.sort(
         (a, b) => a.system.state - b.system.state || a.name.localeCompare(b.name),
     );
-    return {weapons};
+    return { weapons };
 }
 
 function getSpells(actor, itemId) {
@@ -40,14 +43,14 @@ function focusById(id) {
 
 export class HMDialog {
     static async getAttackDialog(dataset, caller, opt) {
-        const dialogResp = {caller};
+        const dialogResp = { caller };
         const dialogData = getWeapons(caller, dataset?.itemId);
         dialogData.caller = caller;
         if (opt.isCombatant) dialogData.inCombat = true;
 
         const title = `${caller.name}: ${game.i18n.localize('HM.dialog.getAttackTitle')}`;
         dialogResp.resp = await new Promise((resolve) => {
-            const options = {resolve, title};
+            const options = { resolve, title };
             new AttackPrompt(dialogData, options).render(true);
         });
 
@@ -57,7 +60,7 @@ export class HMDialog {
     }
 
     static async getCastDialog(dataset, caller, opt) {
-        const dialogResp = {caller};
+        const dialogResp = { caller };
         const dialogData = getDialogData();
 
         dialogData.spells = getSpells(caller, dataset?.itemId);
@@ -69,7 +72,7 @@ export class HMDialog {
 
         const title = game.i18n.localize('HM.dialog.getCastTitle');
         dialogResp.resp = await new Promise((resolve) => {
-            const options = {resolve, title};
+            const options = { resolve, title };
             new CastPrompt(dialogData, options).render(true);
         });
 
@@ -77,7 +80,7 @@ export class HMDialog {
     }
 
     static async getFumbleDialog(_dataset, caller) {
-        const dialogResp = {caller};
+        const dialogResp = { caller };
         const dialogData = getDialogData();
         dialogData.caller = caller;
 
@@ -85,7 +88,7 @@ export class HMDialog {
             ? `${caller.name}: ${game.i18n.localize('HM.dialog.getFumbleTitle')}`
             : `${game.i18n.localize('HM.dialog.getFumbleTitle')}`;
         dialogResp.resp = await new Promise((resolve) => {
-            const options = {resolve, title};
+            const options = { resolve, title };
             new FumblePrompt(dialogData, options).render(true);
         });
 
@@ -93,7 +96,7 @@ export class HMDialog {
     }
 
     static async getCritDialog(_dataset, caller) {
-        const dialogResp = {caller};
+        const dialogResp = { caller };
         const dialogData = getDialogData();
         dialogData.caller = caller;
 
@@ -101,7 +104,7 @@ export class HMDialog {
             ? `${caller.name}: ${game.i18n.localize('HM.dialog.getCritTitle')}`
             : `${game.i18n.localize('HM.dialog.getCritTitle')}`;
         dialogResp.resp = await new Promise((resolve) => {
-            const options = {resolve, title};
+            const options = { resolve, title };
             new CritPrompt(dialogData, options).render(true);
         });
 
@@ -109,13 +112,13 @@ export class HMDialog {
     }
 
     static async getDamageDialog(dataset, caller) {
-        const dialogResp = {caller};
+        const dialogResp = { caller };
         const dialogData = getWeapons(caller, dataset?.itemId);
         dialogData.caller = caller;
 
         const title = `${caller.name}: ${game.i18n.localize('HM.dialog.getDamageTitle')}`;
         dialogResp.resp = await new Promise((resolve) => {
-            const options = {resolve, title};
+            const options = { resolve, title };
             new DamagePrompt(dialogData, options).render(true);
         });
 
@@ -124,13 +127,13 @@ export class HMDialog {
     }
 
     static async getDefendDialog(dataset, caller) {
-        const dialogResp = {caller};
+        const dialogResp = { caller };
         const dialogData = getWeapons(caller, dataset?.itemId);
         dialogData.caller = caller;
 
         const title = `${caller.name}: ${game.i18n.localize('HM.dialog.getDefendTitle')}`;
         dialogResp.resp = await new Promise((resolve) => {
-            const options = {resolve, title};
+            const options = { resolve, title };
             new DefendPrompt(dialogData, options).render(true);
         });
 
@@ -139,7 +142,7 @@ export class HMDialog {
     }
 
     static async getSkillDialog(dataset, caller) {
-        const dialogResp = {caller};
+        const dialogResp = { caller };
         const dialogData = getDialogData();
         dialogData.skill = dataset.context;
 
@@ -149,7 +152,7 @@ export class HMDialog {
             : game.i18n.localize('HM.dialog.getSkillTitle1');
         const title = `${titlePre} ${game.i18n.localize(dialogData.skill.name)} ${titlePost}`;
         dialogResp.resp = await new Promise((resolve) => {
-            const options = {resolve, title};
+            const options = { resolve, title };
             new SkillPrompt(dialogData, options).render(true);
         });
         dialogResp.context = dialogData.skill;
@@ -158,7 +161,7 @@ export class HMDialog {
 
     static async getInitDieDialog(caller) {
         const dialogData = getDialogData();
-        const dialogResp = {caller};
+        const dialogResp = { caller };
         const template = 'systems/hackmaster5e/templates/dialog/getInitDie.hbs';
 
         dialogResp.resp = await Dialog.wait({
@@ -167,21 +170,21 @@ export class HMDialog {
             buttons: {
                 getdie: {
                     label: game.i18n.localize('HM.roll'),
-                    callback: () => ({die: document.getElementById('choices').value}),
+                    callback: () => ({ die: document.getElementById('choices').value }),
                 },
                 start: {
                     label: game.i18n.localize('HM.immediate'),
-                    callback: () => ({die: false}),
+                    callback: () => ({ die: false }),
                 },
             },
             default: 'getdie',
-        }, {width: 300});
+        }, { width: 300 });
 
         return dialogResp;
     }
 
     static async setWoundDialog(caller) {
-        const dialogResp = {caller};
+        const dialogResp = { caller };
         const dialogData = getDialogData();
         dialogData.caller = caller;
 
@@ -189,7 +192,7 @@ export class HMDialog {
             ? `${caller.name}: ${game.i18n.localize('HM.dialog.setWoundTitle')}`
             : `${game.i18n.localize('HM.dialog.setWoundTitle')}`;
         dialogResp.resp = await new Promise((resolve) => {
-            const options = {resolve, title};
+            const options = { resolve, title };
             new WoundPrompt(dialogData, options).render(true);
         });
 
@@ -198,7 +201,7 @@ export class HMDialog {
 
     static async getSaveDialog(dataset, caller) {
         const dialogData = getDialogData();
-        const dialogResp = {caller};
+        const dialogResp = { caller };
 
         const formulaTypeName = game.i18n.localize(`HM.saves.${dataset.formulaType}`);
         const title = `${formulaTypeName} ${game.i18n.localize('HM.dialog.getSaveTitle')}`;
@@ -218,7 +221,7 @@ export class HMDialog {
                 },
             },
             default: 'save',
-        }, {width: 300});
+        }, { width: 300 });
 
         dialogResp.context = caller;
         return dialogResp;
@@ -226,7 +229,7 @@ export class HMDialog {
 
     static async getAbilityDialog(dataset, caller) {
         const dialogData = {};
-        const dialogResp = {caller};
+        const dialogResp = { caller };
 
         dialogData.ability = game.i18n.localize(`HM.ability.${dataset.ability}`);
         const title = `${caller.name}: ${dialogData.ability} ${game.i18n.localize('HM.roll')}`;

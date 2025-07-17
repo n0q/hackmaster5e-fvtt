@@ -1,11 +1,11 @@
 import { HMPrompt } from './prompt.js';
-import { HMCONST, HMTABLES, SYSTEM_ID } from '../tables/constants.js';
+import { HMCONST, HMTABLES, SYSTEM_ID } from '../../tables/constants.js';
 
-function getSpeed(ranged, wData, specialMove=0) {
-    const {spd, jspd} = wData.bonus.total;
+function getSpeed(ranged, wData, specialMove = 0) {
+    const { spd, jspd } = wData.bonus.total;
 
     if (ranged) {
-        const {timing} = wData.ranged;
+        const { timing } = wData.ranged;
         return HMTABLES.weapons.ranged.timing(timing, spd);
     }
 
@@ -49,7 +49,7 @@ export class AttackPrompt extends HMPrompt {
         const reach = wData.ranged?.reach ?? wData.reach;
         const spd = getSpeed(ranged, wData);
         if (ranged) spd.declareMode = spd.declare;
-        const {SPECIAL} = HMCONST;
+        const { SPECIAL } = HMCONST;
 
         foundry.utils.mergeObject(this.dialogData, {
             capList,
@@ -69,13 +69,13 @@ export class AttackPrompt extends HMPrompt {
     }
 
     update(options) {
-        const {weapons, widx, caller, inCombat} = this.dialogData;
-        const {SPECIAL} = HMCONST;
+        const { weapons, widx, caller, inCombat } = this.dialogData;
+        const { SPECIAL } = HMCONST;
         let specialMove = Number(this.dialogData.specialMove);
-        const weapon  = weapons[widx];
-        const wData   = weapon.system;
-        const ranged  = wData.ranged.checked;
-        const reach   = wData.ranged?.reach ?? wData.reach;
+        const weapon = weapons[widx];
+        const wData = weapon.system;
+        const ranged = wData.ranged.checked;
+        const reach = wData.ranged?.reach ?? wData.reach;
         const capList = this.getCapList(weapons[widx], caller, inCombat ?? false);
 
         if (!(specialMove in capList)) specialMove = Object.keys(capList)[0];
@@ -93,7 +93,7 @@ export class AttackPrompt extends HMPrompt {
     }
 
     get dialogResp() {
-        const {button, caller, charge, spd, weapons, widx} = this.dialogData;
+        const { button, caller, charge, spd, weapons, widx } = this.dialogData;
 
         let specialMove = Number(this.dialogData.specialMove);
         if (specialMove === HMCONST.SPECIAL.CHARGE) specialMove = Number(charge);

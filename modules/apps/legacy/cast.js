@@ -1,5 +1,5 @@
 import { HMPrompt } from './prompt.js';
-import { HMTABLES, SYSTEM_ID } from '../tables/constants.js';
+import { HMTABLES, SYSTEM_ID } from '../../tables/constants.js';
 
 export class CastPrompt extends HMPrompt {
     static get defaultOptions() {
@@ -11,10 +11,10 @@ export class CastPrompt extends HMPrompt {
 
     constructor(dialogData, options) {
         super(dialogData, options);
-        const {caller} = dialogData;
+        const { caller } = dialogData;
         const spell = dialogData.spells[0];
         const sData = spell.system;
-        const {divine, lidx, prepped} = sData;
+        const { divine, lidx, prepped } = sData;
 
         foundry.utils.mergeObject(this.dialogData, {
             cost: getSpellCost(spell, caller),
@@ -30,10 +30,10 @@ export class CastPrompt extends HMPrompt {
     }
 
     update(options) {
-        const {spells, sidx, caller} = this.dialogData;
+        const { spells, sidx, caller } = this.dialogData;
         const spell = spells[sidx];
         const sData = spell.system;
-        const {divine, lidx} = sData;
+        const { divine, lidx } = sData;
 
         this.dialogData.cost = getSpellCost(spell, caller);
         this.dialogData.spd = getSpellSpeed(sData, caller);
@@ -43,14 +43,14 @@ export class CastPrompt extends HMPrompt {
     }
 
     get dialogResp() {
-        const {button, caller, divine, sidx, spd, spells} = this.dialogData;
+        const { button, caller, divine, sidx, spd, spells } = this.dialogData;
         const schedule = parseInt(this.dialogData.schedule, 10) || 0;
         const stage = getVolatilityStage(spells[sidx], schedule, caller);
         const svr = getSpellVolatility(spells[sidx], schedule, stage, caller);
 
         if (!divine) {
             if (button === 'declare') {
-                const lastSpell = {id: spells[0].id, schedule};
+                const lastSpell = { id: spells[0].id, schedule };
                 caller.setFlag(SYSTEM_ID, 'lastSpell', lastSpell);
             } else if (button === 'cast') {
                 caller.unsetFlag(SYSTEM_ID, 'lastSpell');
@@ -84,8 +84,8 @@ function getSpellSpeed(sData, caller) {
 }
 
 function getSpellCost(spell, caller) {
-    const {prepped} = spell.system;
-    const {baseSPC} = spell;
+    const { prepped } = spell.system;
+    const { baseSPC } = spell;
 
     const [callerClass] = caller.itemTypes.cclass;
     const freeCast = callerClass ? callerClass.system.caps.fcast : false;
@@ -95,8 +95,8 @@ function getSpellCost(spell, caller) {
 
 // TODO: Extended stages via leyline.
 function getVolatilityStage(spell, schedule, caller) {
-    const {baseSPC, system} = spell;
-    const {prepped} = system;
+    const { baseSPC, system } = spell;
+    const { prepped } = system;
     const [callerClass] = caller.itemTypes.cclass;
 
     const freeCast = callerClass ? callerClass.system.caps.fcast : false;
@@ -107,7 +107,7 @@ function getVolatilityStage(spell, schedule, caller) {
 }
 
 function getSpellVolatility(spell, schedule, stage, caller) {
-    const {lidx} = spell.system;
+    const { lidx } = spell.system;
     const [callerClass] = caller.itemTypes.cclass;
     const freeCast = callerClass ? callerClass.system.caps.fcast : false;
     const svr = HMTABLES.spell.svr(Number(lidx), stage);

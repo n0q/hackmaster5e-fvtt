@@ -1,9 +1,9 @@
 import { HMPrompt } from './prompt.js';
-import { HMCONST } from '../tables/constants.js';
+import { HMCONST } from '../../tables/constants.js';
 
-function getSeverity({atkRoll, defRoll, dmg, dr}) {
+function getSeverity({ atkRoll, defRoll, dmg, dr }) {
     const attacker = (Number(atkRoll) || 0) + (Number(dmg) || 0);
-    const defender = (Number(defRoll) || 0) + (Number(dr)  || 0);
+    const defender = (Number(defRoll) || 0) + (Number(dr) || 0);
     return attacker - defender;
 }
 
@@ -17,7 +17,7 @@ export class CritPrompt extends HMPrompt {
 
     constructor(dialogData, options) {
         super(dialogData, options);
-        const {caller} = dialogData;
+        const { caller } = dialogData;
         const callerRace = caller?.itemTypes?.race[0] ?? undefined;
 
         const atkSize = callerRace ? callerRace.getScale('hp') : HMCONST.SCALE.MEDIUM;
@@ -39,9 +39,9 @@ export class CritPrompt extends HMPrompt {
     }
 
     get dialogResp() {
-        const {atkRoll, defRoll, dmg, dr} = this.dialogData;
+        const { atkRoll, defRoll, dmg, dr } = this.dialogData;
         const dialogResp = {
-            severity: getSeverity({atkRoll, defRoll, dmg, dr}),
+            severity: getSeverity({ atkRoll, defRoll, dmg, dr }),
             atkRoll: Number(this.dialogData.atkRoll),
             defRoll: Number(this.dialogData.defRoll),
             atkSize: Number(this.dialogData.atkSize),
