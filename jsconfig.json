@@ -1,4 +1,28 @@
 {
-    "include": ["hm.js", "modules/**/*", "foundry/**/scripts/*.mjs"],
-    "exclude": ["node_modules"]
+    "compilerOptions": {
+        "module": "ES2022",
+        "target": "ES2022",
+        "paths": {
+            "@client/*": [
+                "./foundry/client/*"
+            ],
+            "@common/*": [
+                "./foundry/common/*"
+            ]
+        },
+    },
+    "include": [
+        "hm.js",
+        "modules/**/*",
+        "foundry/client/global.d.mts",
+    ],
+    "exclude": [
+        "node_modules",
+        "**/node_modules/*"
+    ],
+    "typeAcquisition": {
+        "include": [
+            "jquery"
+        ]
+    }
 }

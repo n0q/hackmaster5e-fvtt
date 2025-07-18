@@ -9,7 +9,7 @@ module.exports = {
     'parser': '@babel/eslint-parser',
     'parserOptions': {
         'requireConfigFile': false,
-        'ecmaVersion': 2020,
+        'ecmaVersion': 2022,
         'sourceType': 'module',
         'ecmaFeatures': { 'jsx': true },
     },
@@ -20,7 +20,6 @@ module.exports = {
         'PIXI': false,
         'Color': false,
         'PoolTerm': false,
-        'DOMPurify': false,
     },
     'rules': {
         'brace-style': ['error', '1tbs', { 'allowSingleLine': true }],
