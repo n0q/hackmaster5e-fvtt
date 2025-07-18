@@ -20,6 +20,7 @@ import { HMWoundItemSheet } from './modules/item/sheets/wound-item-sheet.js';
 import { HMCombat, HMCombatTracker } from './modules/sys/combat.js';
 import { HMDie } from './modules/sys/dice.js';
 import { HMToken } from './modules/sys/token.js';
+import { HMRuler } from './modules/sys/ruler.js';
 import { HMActiveEffect } from './modules/sys/effects.js';
 import { registerSystemSettings } from './modules/sys/settings.js';
 import { registerHooks } from './modules/hooks/hooks.js';
@@ -81,6 +82,9 @@ function registerConfig() {
         : CONFIG.Dice.types.push(HMDie);
 
     CONFIG.Token.objectClass = HMToken;
+    CONFIG.Token.rulerClass = HMRuler;
+    const { walk, displace } = CONFIG.Token.movement.actions;
+    CONFIG.Token.movement.actions = { displace, walk };
     CONFIG.ui.combat = HMCombatTracker;
     CONFIG.canvasTextStyle.fontFamily = 'Gentium';
 
