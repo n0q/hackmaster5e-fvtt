@@ -1,3 +1,7 @@
+@use "../helpers/colors";
+@use "../helpers/mixins";
+@use "../helpers/variables";
+
 .cards-list {
     list-style: none;
     margin: 0;
@@ -23,36 +27,36 @@
 }
 
 .card {
-    border: $card_border solid $c-grey;
-    border-top-left-radius: $card-border-radius; 
-    border-bottom-left-radius: $card-border-radius; 
+    border: variables.$card_border solid colors.$c-grey;
+    border-top-left-radius: variables.$card-border-radius; 
+    border-bottom-left-radius: variables.$card-border-radius; 
     display: flex;
     flex-direction: column;
     overflow: visible;
     margin: 3px;
 
     &.item {
-        &.character { max-width: calc(#{$character-width} - 6px); }
-        &.beast { max-width: calc(#{$beast-width} - 6px); }
+        &.character { max-width: calc(#{variables.$character-width} - 6px); }
+        &.beast { max-width: calc(#{variables.$beast-width} - 6px); }
     }
 
     header em { font-style: normal; }
 
     .toggleswitch header:hover {
-        @include text-glow($shad-1px);
-        em { @include text-glow('reset'); }
+        @include mixins.text-glow(colors.$shad-1px);
+        em { @include mixins.text-glow('reset'); }
     }
 
-    .hide { @include hide; }
+    .hide { @include mixins.hide; }
 
     .container {
-        padding: 0 0 $padding-sm $padding-md;
+        padding: 0 0 variables.$padding-sm variables.$padding-md;
         margin-top: 2px;
-        margin-bottom: -$padding-md;
-        margin-right: -$padding-sm;
+        margin-bottom: -(variables.$padding-md);
+        margin-right: -(variables.$padding-sm);
     }
 
-    @include table-basic;
+    @include mixins.table-basic;
 
     input {
         margin-top: 1px;
@@ -113,7 +117,7 @@
         flex: 1;
         display: flex;
         flex-direction: column;
-        margin-right: $padding-md;
+        margin-right: variables.$padding-md;
         min-width: 0;
 
         h4 {
@@ -129,7 +133,7 @@
             flex: 0 0 auto;
             align-self: flex-start;
             display: block;
-            @include card-border-left($card-border-radius);
+            @include mixins.card-border-left(variables.$card-border-radius);
         }
 
         label {
@@ -141,7 +145,7 @@
                 flex: 0 0 28px;
                 justify-content: center;
                 height: 100%;
-                border-right: $card_border solid $c-grey;
+                border-right: variables.$card_border solid colors.$c-grey;
             }
         }
     }
@@ -149,11 +153,11 @@
     .card-expanded {
         display: grid;
         grid-template-columns: 1fr auto auto;
-        column-gap: $padding-sm;
+        column-gap: variables.$padding-sm;
 
         .reach, 
         .secondary-controls {
-            padding-top: $padding-sm;
+            padding-top: variables.$padding-sm;
         }
 
         .secondary-controls {
@@ -162,9 +166,9 @@
             justify-self: start;
             grid-template-columns: 1fr;
             grid-template-rows: repeat(4, 1fr);
-            border-right: $vert-break;
-            padding-right: $padding-sm;
-            column-gap: $padding-sm;
+            border-right: variables.$vert-break;
+            padding-right: variables.$padding-sm;
+            column-gap: variables.$padding-sm;
         }
     }
 
@@ -184,7 +188,7 @@
 
 .card section.currency-card {
     margin-left: 24px;
-    margin-right: -$padding-sm;
+    margin-right: -(variables.$padding-sm);
     display: flex;
     justify-content: space-between;
 }

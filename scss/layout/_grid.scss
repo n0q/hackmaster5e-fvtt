@@ -1,10 +1,12 @@
+@use "../helpers/variables";
+
 $max_grid_cols: 12;
 @for $i from 1 through $max_grid_cols {
     .grid-#{$i}col {
         display: grid;
         grid-column: span $i / span $i;
         grid-template-columns: repeat($i, minmax(0, 1fr));
-        grid-gap: $padding-sm $padding-md;
+        grid-gap: variables.$padding-sm variables.$padding-md;
         margin: 0;
         padding: 0;
     }

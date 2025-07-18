@@ -1,6 +1,8 @@
+@use "../helpers/variables";
+
 .hm-chat-note {
   border: none;
-  padding: 0 $padding-sm;
+  padding: 0 variables.$padding-sm;
 
   > .hm-chat-note-row {
     display: flex;

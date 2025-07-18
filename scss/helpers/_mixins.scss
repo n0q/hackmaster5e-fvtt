@@ -1,3 +1,6 @@
+@use "colors";
+@use "variables";
+
 @mixin element-invisible {
   position: absolute;
 
@@ -48,7 +51,7 @@
      border-radius: #{$_border-radius};
      border-top-right-radius: 0;
      border-bottom-right-radius: 0;
-     margin: -$card_border;
+     margin: -(variables.$card_border);
      margin-right: inherit;
  }
 
@@ -59,8 +62,8 @@
     -moz-border-radius: #{$_border-radius};
     border-radius: #{$_border-radius};
     &:hover {
-        border-color: $c-orange;
-        box-shadow: 0 0 2px $c-orange;
+        border-color: colors.$c-orange;
+        box-shadow: 0 0 2px colors.$c-orange;
         &:active {
             padding: 2px;
             background: black;
@@ -95,7 +98,7 @@
     }
 
     .item-controls {
-        padding-right: $padding-md;
+        padding-right: variables.$padding-md;
         align-self: center;
     }
 }
@@ -183,7 +186,7 @@ $dogear-size: 10px;
     }
 }
 
-@mixin text-glow($_textShadow: $shad-red,) {
+@mixin text-glow($_textShadow: colors.$shad-red,) {
     @if $_textShadow == 'reset' {
         font-weight: initial;
         text-shadow: initial;

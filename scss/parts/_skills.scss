@@ -1,3 +1,5 @@
+@use "../helpers/colors";
+
 .skills-list {
     list-style: none;
     margin: -3px 0;
@@ -12,7 +14,7 @@
     }
 
     section {
-        background: $cs-light;
+        background: colors.$cs-light;
         
         .button {
             border: 1px solid;

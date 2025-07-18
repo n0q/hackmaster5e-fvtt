@@ -1,3 +1,5 @@
+@use "../helpers/colors";
+
 hr.npc-divider {
     border-top: 0;
     border-bottom: 2px groove var(--color-border-dark-4);
@@ -9,17 +11,17 @@ li.combatant.defeated .initiative {
 }
 
 .initiative {
-    color: $c-white;
+    color: colors.$c-white;
 
     &.ready-to-act {
-        color: $c-orange;
-        text-shadow: 0 0 5px $c-orange;
+        color: colors.$c-orange;
+        text-shadow: 0 0 5px colors.$c-orange;
     }
 
     &:hover {
-        border: 1px solid $c-orange;
+        border: 1px solid colors.$c-orange;
         border-radius: 2px;
-        box-shadow: 0 0 5px $c-orange;
+        box-shadow: 0 0 5px colors.$c-orange;
         padding: 0 3px;
     }
 }
