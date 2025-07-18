@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - v12 support.
 - dragRuler support.
+- Elevation Ruler support.
 
 ## [0.4.25] - 2025-03-04
 
