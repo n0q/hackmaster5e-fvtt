@@ -3,9 +3,24 @@ import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { HMChatFactory, CHAT_TYPE } from '../chat/chat-factory.js';
 
 export class HMCombat extends foundry.documents.Combat {
-    /** @override */
-    nextTurn() {
-        return this.nextRound();
+    /**
+     * Advance the combat to the next round.
+     * Records total movement cost to system.prevMovementCost.
+     * @override
+     * @async
+     *
+     * @returns {Promise<this>}
+     */
+    async nextRound() {
+        const updates = this.combatants.map((combatant) => {
+            const movementHistory = combatant.token.movementHistory;
+            const prevMovementCost = movementHistory.reduce((acc, wp) => acc + wp.cost, 0);
+            return { _id: combatant.id, 'system.prevMovementCost': prevMovementCost };
+        });
+
+        await this.updateEmbeddedDocuments('Combatant', updates);
+
+        return super.nextRound();
     }
 
     /** @override */
