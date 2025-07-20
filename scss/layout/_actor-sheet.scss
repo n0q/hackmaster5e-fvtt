@@ -1,3 +1,7 @@
+@use "../helpers/colors";
+@use "../helpers/mixins";
+@use "../helpers/variables";
+
 $actor-gridgap-h: 4px;
 $actor-gridgap-v: 2px;
 $actor-portrait-dim: 130px;
@@ -6,7 +10,7 @@ $actor-wounds-dim: 180px;
 $actor-logo-dim: 40%;
 
 #beast-sheet {
-    width: $beast-width;
+    width: variables.$beast-width;
 
     .sheet-middle {
         grid-template-columns: $actor-saves-dim 1fr $actor-saves-dim $actor-wounds-dim;
@@ -25,7 +29,7 @@ $actor-logo-dim: 40%;
 
 .actor-sheet {
     display: grid;
-    width: $character-width;
+    width: variables.$character-width;
     grid-gap: $actor-gridgap-v $actor-gridgap-h;
     grid-template-rows: repeat(3, min-content) 1fr;
     overflow: hidden;
@@ -37,21 +41,21 @@ $actor-logo-dim: 40%;
     >header {
         display: grid;
         grid-template-columns: 1fr $actor-logo-dim;
-        column-gap: $padding-md;
+        column-gap: variables.$padding-md;
         padding-bottom: 0;
         border-bottom: 1px solid #AAA;
-        margin-bottom: $padding-sm;
+        margin-bottom: variables.$padding-sm;
 
         .header-portrait {
             font-size: 1.25em;
             img {
-                border: $card_border solid black;
+                border: variables.$card_border solid black;
                 flex: 0 0 $actor-portrait-dim;
                 max-width: $actor-portrait-dim;
                 max-height: $actor-portrait-dim;
                 object-fit: cover;
                 object-position: 50% 0;
-                margin-right: $padding-md;
+                margin-right: variables.$padding-md;
             }
 
             .name {
@@ -90,16 +94,16 @@ $actor-logo-dim: 40%;
     display: grid;
     grid-gap: $actor-gridgap-h;
     width: inherit;
-    padding-right: $padding-sm;
+    padding-right: variables.$padding-sm;
     grid-template-columns: $actor-portrait-dim $actor-saves-dim 1fr $actor-saves-dim $actor-wounds-dim;
     grid-template-areas:
         "abilities middle-saves-l middle-stats middle-saves-r middle-wounds";
 
     .middle-wounds {
         margin-top: 3px;
-        border-left: 2px solid $c-grey;
+        border-left: 2px solid colors.$c-grey;
 
-        @include table-basic;
+        @include mixins.table-basic;
         table {
             margin: 0;
             table-layout: fixed;
@@ -148,7 +152,7 @@ $actor-logo-dim: 40%;
         column-gap: 10px;
         >span {
             text-align: end;
-            font-size: $font-lg;
+            font-size: variables.$font-lg;
         }
 
         >label {
@@ -164,7 +168,7 @@ $actor-logo-dim: 40%;
     }
 
     .setup-abilities {
-        @include table-basic;
+        @include mixins.table-basic;
     }
 
     .statbonuses {
@@ -174,7 +178,7 @@ $actor-logo-dim: 40%;
 }
 
 .base-combat {
-    @include flexgrid;
+    @include mixins.flexgrid;
 }
 
 .scrollable {

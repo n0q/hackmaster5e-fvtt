@@ -1,3 +1,5 @@
+@use "../helpers/mixins";
+
 .inventory {
     display: flex;
     flex-direction: column;
@@ -11,7 +13,7 @@
         margin: 2px 22px 2px 3px;
         display: grid;
         grid-template-columns: min-content 1fr;
-        @include details-hor;
+        @include mixins.details-hor;
     }
 
     header select {

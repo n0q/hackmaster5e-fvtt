@@ -1,12 +1,15 @@
+@use "../base/typography";
+@use "../helpers/mixins";
+
 .window-app {
-    font-family: $font-primary;
+    font-family: typography.$font-primary;
 }
 
 .rollable {
     &:hover,
     &:focus {
         color: #000;
-        @include text-glow;
+        @include mixins.text-glow;
         cursor: pointer;
     }
 }

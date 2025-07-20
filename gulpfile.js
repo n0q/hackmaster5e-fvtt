@@ -1,6 +1,5 @@
-'use strict';
 const gulp = require('gulp');
-const sass = require('gulp-dart-sass');
+const gulpSass = require('gulp-sass')(require('sass'));
 const cache = require('gulp-cached');
 const eslint = require('gulp-eslint-new');
 
@@ -8,7 +7,7 @@ const sourceJS = ['hm.js', './modules/**/*.js'];
 const sourceSASS = './scss/**/*.scss';
 
 gulp.task('sass', () => gulp.src(sourceSASS)
-    .pipe(sass.sync().on('error', sass.logError))
+    .pipe(gulpSass.sync().on('error', gulpSass.logError))
     .pipe(gulp.dest('./styles')));
 
 gulp.task('eslint', () => gulp.src(sourceJS)

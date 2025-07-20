@@ -1,3 +1,8 @@
+@use "../base/typography";
+@use "../helpers/colors";
+@use "../helpers/mixins";
+@use "../helpers/variables";
+
 .form-group {
     input[type="text"],
     input[type="number"] {
@@ -14,17 +19,17 @@
 
 .newform {
     .col_rborder {
-        padding-right: $padding-md;
+        padding-right: variables.$padding-md;
         border-right: 1px solid;
     }
 
     .button {
         &:hover {
-            @include text-glow($shad-1px);
+            @include mixins.text-glow(colors.$shad-1px);
         }
     }
 
-    @include table-basic;
+    @include mixins.table-basic;
     table {
         input[type="text"],
         input[type="number"] {
@@ -86,7 +91,7 @@
 }
 
 .item-form {
-    font-family: $font-primary;
+    font-family: typography.$font-primary;
     display: grid;
     grid-template-columns: auto auto 1fr;
     input[type="text"],
@@ -104,7 +109,7 @@
         background: none;
     }
 
-    @include table-basic;
+    @include mixins.table-basic;
 
     .sidepanel {
         .options-block {
@@ -137,7 +142,7 @@
         }
     }
 
-    .item-table { @include flexgrid; }
+    .item-table { @include mixins.flexgrid; }
 }
 
 
@@ -193,7 +198,7 @@
 
 .tox {
   .tox-editor-container {
-    background: $c-white;
+    background: colors.$c-white;
   }
 
   .tox-edit-area {

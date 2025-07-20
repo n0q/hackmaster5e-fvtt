@@ -1,15 +1,17 @@
+@use "../helpers/variables";
+
 .bio {
     display: grid;
     grid-template-columns: repeat(2,1fr);
     grid-template-rows: 12em 20em;
-    column-gap: $padding-sm;
-    row-gap: $padding-md;
+    column-gap: variables.$padding-sm;
+    row-gap: variables.$padding-md;
 }
 
 .beast-bio {
     display: grid;
     grid-template-columns: repeat(2,1fr);
     grid-template-rows: 12em 10em;
-    column-gap: $padding-sm;
-    row-gap: $padding-md;
+    column-gap: variables.$padding-sm;
+    row-gap: variables.$padding-md;
 }

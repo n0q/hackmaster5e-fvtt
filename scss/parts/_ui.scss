@@ -1,8 +1,13 @@
+@use "../base/typography";
+@use "../helpers/colors";
+@use "../helpers/mixins";
+@use "../helpers/variables";
+
 .hmstyle {
     .tablerow {
         margin: 2px 0;
         &:nth-child(2n-1) {
-           background: $cs-light;
+           background: colors.$cs-light;
         }
     }
 
@@ -10,12 +15,12 @@
         text-align: center;
         margin-left: 2px;
         &:hover {
-            @include text-glow;
+            @include mixins.text-glow;
         }
     }
 
     .imgbutton {
-        @include button-border(5px);
+        @include mixins.button-border(5px);
     }
 }
 
@@ -50,7 +55,7 @@
         text-align: center;
         width: 85%;
         border-bottom: 2px solid;
-        border-image: $grad-line 1;
+        border-image: colors.$grad-line 1;
     }
 
     .bracket {
@@ -77,9 +82,9 @@
         background: none;
         box-shadow: unset;
         text-align: center;
-        height: $font-primary-size;
+        height: typography.$font-primary-size;
         &:hover {
-            @include text-glow;
+            @include mixins.text-glow;
         }
     }
 }
@@ -94,14 +99,14 @@
     margin-bottom: auto;
     height: 3.5rem;
 
-    .large { font-size: $font-lg; }
+    .large { font-size: variables.$font-lg; }
 
     &.disabled {
         color: var(--color-text-dark-inactive);
         .divisor { background: var(--color-text-dark-inactive); }
         input:disabled {
             color: var(--color-text-dark-inactive);
-            &:hover { @include text-glow('reset'); }
+            &:hover { @include mixins.text-glow('reset'); }
         }
     }
 
@@ -110,14 +115,14 @@
         background: none;
         box-shadow: unset;
         text-align: center;
-        height: $font-primary-size;
-        &:hover { @include text-glow; }
+        height: typography.$font-primary-size;
+        &:hover { @include mixins.text-glow; }
     }
 
     label {
         text-align: center;
         width: 5em;
-        height: $font-primary-size;
+        height: typography.$font-primary-size;
     }
 
     >.divisor {
@@ -145,8 +150,8 @@
     }
 
     &:hover {
-        border-color: $c-orange;
-        box-shadow: 0 0 5px $c-orange, inset 0 0 5px var(--color-border-light-2);
+        border-color: colors.$c-orange;
+        box-shadow: 0 0 5px colors.$c-orange, inset 0 0 5px var(--color-border-light-2);
 
         &:active {
             font-size: 16px;
