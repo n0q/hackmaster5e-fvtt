@@ -14,8 +14,8 @@ export class HMCombat extends foundry.documents.Combat {
     async nextRound() {
         const updates = this.combatants.map((combatant) => {
             const movementHistory = combatant.token.movementHistory;
-            const prevMovementCost = movementHistory.reduce((acc, wp) => acc + wp.cost, 0);
-            return { _id: combatant.id, 'system.prevMovementCost': prevMovementCost };
+            const prevMovementCost = movementHistory.reduce((acc, wp) => acc + wp.cost, 0) || null;
+            return { _id: combatant.id, 'system.cost.prev': prevMovementCost };
         });
 
         await this.updateEmbeddedDocuments('Combatant', updates);

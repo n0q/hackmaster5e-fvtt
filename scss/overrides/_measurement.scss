@@ -1,0 +1,46 @@
+.waypoint-label {
+  font-family: Gentium;
+
+  &__total {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .total-measurement {
+      line-height: 1;
+    }
+  }
+
+  &__metadata {
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    grid-gap: 0;
+
+    .delta-measurement {
+      grid-row: 1;
+    }
+
+  }
+
+  &__total--sub {
+    font-size: var(--font-size-12);
+    font-style: italic;
+    color: var(--color-text-subtle);
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__measurement--prev {
+    font-size: var(--font-size-16);
+    color: var(--color-text-subtle);
+    grid-row: 2;
+  }
+}
+
+.fa-solid.hm-inline-small {
+  font-size: var(--font-size-10);
+  vertical-align: middle;
+  line-height: 1;
+}

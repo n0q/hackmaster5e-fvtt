@@ -45,3 +45,7 @@
 #combat-popout {
     @include meta.load-css('overrides/combat');
 }
+
+#measurement {
+    @include meta.load-css('overrides/measurement');
+}

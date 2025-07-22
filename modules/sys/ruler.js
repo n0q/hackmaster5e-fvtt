@@ -22,10 +22,42 @@ export class HMRuler extends foundry.canvas.placeables.tokens.TokenRuler {
         const { token } = this;
         context.inCombat = token.inCombat;
         if (context.inCombat && token.combatant) {
-            const unscaledPrevMovementCost = token.combatant.system?.prevMovementCost;
-            context.totalPrevMovementCost = unscaledPrevMovementCost.toFixed(2) || 0;
-        }
+            context.cost.prev = this.#getCostPrev();
+            context.cost.totalLabel = this.#getMoveIndex(context.cost.total);
 
+            const movementAction = token.document.movementAction;
+            context.movementActionKeyPath = `movement.action.${movementAction}`;
+        }
         return context;
+    }
+
+    /**
+    * Gets the formatted previous movement cost from a token's combatant.
+    * @private
+    *
+    * @returns {string|undefined} Previous movement cost, formatted as a string to two decimal
+    *                             places, or undefined if there was no cost.
+    */
+    #getCostPrev() {
+        const { system } = this.token.combatant;
+        const unscaledPrevCost = Number(system?.cost?.prev);
+        return unscaledPrevCost ? unscaledPrevCost.toFixed(2) : undefined;
+    }
+
+    /**
+     *  Calculates movement tier index based on token's cost.total and actor's movespd.
+     *  @private
+     *
+     *  @param {number|string} cost - Total movement cost to compare against movespd.
+     */
+    #getMoveIndex(cost) {
+        const costValue = Number(cost);
+        if (!costValue) return undefined;
+
+        const movespd = this.token.actor.movespd.slice(1);
+        movespd.push(Infinity);
+
+        const moveidx = movespd.findIndex((m) => m >= costValue);
+        return moveidx;
     }
 }
