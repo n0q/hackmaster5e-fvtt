@@ -2,7 +2,7 @@ import { SYSTEM_ID } from '../tables/constants.js';
 import { HMSocket, SOCKET_TYPES } from '../sys/sockets.js';
 
 export class HMCombatHooks {
-    static async updateCombat(combat, _roundData, _, userId) {
+    static updateCombat(combat, _roundData, _, userId) {
         if (userId !== game.userId) return;
 
         const combatants = combat.turns;
@@ -33,7 +33,7 @@ export class HMCombatHooks {
         });
     }
 
-    static async createCombatant(combatant) {
+    static createCombatant(combatant) {
         const token = combatant.token.object;
         token.animReachOpen();
     }
@@ -43,7 +43,7 @@ export class HMCombatHooks {
         if (token) token.animReachClose();
     }
 
-    static async preDeleteCombat(combat) {
+    static preDeleteCombat(combat) {
         const combatants = combat.turns;
 
         combatants.forEach((c) => {
@@ -68,14 +68,6 @@ export class HMCombatHooks {
         if (delta.initiative && initiative !== delta.initiative) {
             combatant.setFlag(SYSTEM_ID, 'acted', true);
         }
-    }
-
-    static renderCombatTrackerConfig(config, html) {
-        const formEl = $(html).find('div').has('input[type="checkbox"]');
-        const { position } = config;
-        position.height -= formEl.outerHeight();
-        config.setPosition(position);
-        formEl.remove('div');
     }
 
     // TODO: Optimize to do more with fewer searches.
