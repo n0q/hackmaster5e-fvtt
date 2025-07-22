@@ -27,23 +27,24 @@
       "hash": "be8ed466ad93fce8947740c83b07422037a56c3c",
       "sourceId": "Item.qzf1kfd0w4MEnC07"
     },
-    "core": {},
-    "exportSource": {
-      "world": "send-in-the-mob",
-      "system": "hackmaster5e",
-      "coreVersion": "10.290",
-      "systemVersion": "0.2.33"
-    }
+    "core": {}
   },
   "_stats": {
     "systemId": "hackmaster5e",
     "systemVersion": "0",
-    "coreVersion": "12.325",
+    "coreVersion": "13.346",
     "createdTime": 1669247355354,
     "modifiedTime": 1688862886913,
     "lastModifiedBy": "6PGvwKmaOsPz0R2y",
     "compendiumSource": null,
-    "duplicateSource": null
+    "duplicateSource": null,
+    "exportSource": {
+      "worldId": "send-in-the-mob",
+      "uuid": null,
+      "coreVersion": "10.290",
+      "systemId": "hackmaster5e",
+      "systemVersion": "0.2.33"
+    }
   },
   "folder": "aXJYcFpbrAwf8XHZ",
   "_id": "lunxAP9OKSYuZR1d",

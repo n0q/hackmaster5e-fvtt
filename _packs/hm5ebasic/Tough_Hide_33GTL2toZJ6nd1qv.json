@@ -54,14 +54,15 @@
       "description": "",
       "statuses": [],
       "_stats": {
-        "coreVersion": "12.325",
+        "coreVersion": "13.346",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": null,
         "lastModifiedBy": null,
         "compendiumSource": null,
-        "duplicateSource": null
+        "duplicateSource": null,
+        "exportSource": null
       },
       "img": null,
       "type": "base",
@@ -76,12 +77,13 @@
   "_stats": {
     "systemId": "hackmaster5e",
     "systemVersion": "0",
-    "coreVersion": "12.325",
+    "coreVersion": "13.346",
     "createdTime": 1670826658651,
     "modifiedTime": 1688864414312,
     "lastModifiedBy": "6PGvwKmaOsPz0R2y",
     "compendiumSource": null,
-    "duplicateSource": null
+    "duplicateSource": null,
+    "exportSource": null
   },
   "folder": "429dg9Q5COUeMH1T",
   "_id": "33GTL2toZJ6nd1qv",
