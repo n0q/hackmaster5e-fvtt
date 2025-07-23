@@ -124,6 +124,15 @@ export const HMCONST = {
         RUN: 3,
         SPRINT: 4,
     },
+    MOVEACTION: {
+        WALK: {
+            WALK: 0,
+            JOG: 1,
+            RUN: 2,
+            SPRINT: 3,
+            OVER: 4,
+        },
+    },
     RANGED: {
         EMBED: {
             AUTO: -1,

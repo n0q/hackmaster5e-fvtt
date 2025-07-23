@@ -1,5 +1,16 @@
 {
     "HM": {
+        "MOVEMENT": {
+            "action": {
+                "walk": {
+                    "walk": "Walking",
+                    "jog": "Jogging",
+                    "run": "Running",
+                    "sprint": "Sprinting",
+                    "over": "Over!"
+                }
+            }
+        },
         "sys": {
             "folders": {
                 "skillmacro": "System Skill Macros"

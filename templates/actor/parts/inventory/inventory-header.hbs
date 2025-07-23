@@ -1,0 +1,37 @@
+<div class="inventory__controls">
+    {{#if (or (isGM) (getSetting 'hackmaster5e' 'playerNewItems'))}}
+        <a class="item-control item-create" title="New Item" data-render="true" data-type="item">
+            <i class="fas fa-plus"></i>
+        </a>
+    {{/if}}
+</div>
+
+{{#with actor.encumb}}
+    <div class="inventory__stat-list">
+        <div class="inventory__stat-item">
+            <span class="inventory__label">{{localize 'HM.encumbRow.scale'}}:</span>
+            <span class="inventory__value">{{numberFormat total decimals=2}} lbs.</span>
+        </div>
+        <div class="inventory__stat-item">
+            <span class="inventory__label">{{localize 'HM.encumbRow.carried'}}:</span>
+            <span class="inventory__value">{{numberFormat carried decimals=2}} lbs.</span>
+        </div>
+        <div class="inventory__stat-item">
+            <span class="inventory__label">{{localize 'HM.encumbRow.effective'}}:</span>
+            <span class="inventory__value">{{numberFormat effective decimals=2}} lbs.</span>
+        </div>
+        <div class="inventory__stat-item">
+            <span class="inventory__label">{{localize 'HM.encumbRow.penalty'}}:</span>
+            <div class="inventory__value">
+            {{#if (getSetting 'hackmaster5e' 'autoEncumbrance')}}
+                {{lookup (mapSelect @root/actor.encumbrance 'encumbrance' 'lbs.') penalty}}
+            {{else}}
+                <select class="selectable" name="encumbrance" data-flag="encumbrance">
+                    {{selectOptions (mapSelect @root/actor.encumbrance 'encumbrance' 'lbs.')
+                        selected=(getFlag 'hackmaster5e' 'encumbrance')}}
+                </select>
+            {{/if}}
+            </div>
+        </div>
+    </div>
+{{/with}}

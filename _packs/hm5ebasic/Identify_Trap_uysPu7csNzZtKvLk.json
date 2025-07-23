@@ -42,12 +42,13 @@
   "_stats": {
     "systemId": "hackmaster5e",
     "systemVersion": "0",
-    "coreVersion": "12.325",
+    "coreVersion": "13.346",
     "createdTime": 1688863427449,
     "modifiedTime": 1688863549487,
     "lastModifiedBy": "6PGvwKmaOsPz0R2y",
     "compendiumSource": null,
-    "duplicateSource": null
+    "duplicateSource": null,
+    "exportSource": null
   },
   "_id": "uysPu7csNzZtKvLk",
   "sort": 100002,

@@ -1,12 +1,26 @@
-/* eslint max-classes-per-file: ['error', 2] */
 import { SYSTEM_ID } from '../tables/constants.js';
 import { HMDialogFactory } from '../dialog/dialog-factory.js';
 import { HMChatFactory, CHAT_TYPE } from '../chat/chat-factory.js';
 
-export class HMCombat extends Combat {
-    /** @override */
-    nextTurn() {
-        return this.nextRound();
+export class HMCombat extends foundry.documents.Combat {
+    /**
+     * Advance the combat to the next round.
+     * Records total movement cost to system.prevMovementCost.
+     * @override
+     * @async
+     *
+     * @returns {Promise<this>}
+     */
+    async nextRound() {
+        const updates = this.combatants.map((combatant) => {
+            const movementHistory = combatant.token.movementHistory;
+            const prevMovementCost = movementHistory.reduce((acc, wp) => acc + wp.cost, 0) || null;
+            return { _id: combatant.id, 'system.cost.prev': prevMovementCost };
+        });
+
+        await this.updateEmbeddedDocuments('Combatant', updates);
+
+        return super.nextRound();
     }
 
     /** @override */
@@ -73,21 +87,5 @@ export class HMCombat extends Combat {
 
         const builder = await HMChatFactory.create(CHAT_TYPE.INIT_NOTE, { batch });
         builder.createChatMessage();
-    }
-}
-
-export class HMCombatTracker extends foundry.applications.sidebar.tabs.CombatTracker {
-    static get defaultOptions() {
-        const opt = super.defaultOptions;
-        opt.title = game.i18n.localize('HM.countup');
-        return opt;
-    }
-
-    // Shorting out mousedown events on token initiative so dblclicks
-    // don't trigger normal mousedown events (panning and sheet renders).
-    async _onCombatantMouseDown(event) {
-        const html = $(event.target).closest('.token-initiative');
-        if (html.length) return;
-        super._onCombatantMouseDown(event);
     }
 }

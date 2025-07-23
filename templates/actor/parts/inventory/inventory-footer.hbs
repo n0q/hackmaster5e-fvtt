@@ -1,0 +1,20 @@
+{{#with actor.money}}
+    <div class="inventory__controls">
+        {{#if (or (isGM) (getSetting 'hackmaster5e' 'playerNewItems'))}}
+            <a class='item-control item-create' title='New Currency' data-render='true' data-type='currency'>
+                <i class='fas fa-plus'></i>
+            </a>
+    {{else}}<span></span>{{/if}}
+    </div>
+
+    <div class="inventory__stat-list">
+        <div class="inventory__stat-item">
+            <span class="inventory__label">{{localize 'HM.ccurrency'}}:</span>
+            <span class="inventory__value">{{carried}} {{standard}}</span>
+        </div>
+        <div class="inventory__stat-item">
+            <span class="inventory__label">{{localize 'HM.tcurrency'}}:</span>
+            <span class="inventory__value">{{total}} {{standard}}</span>
+        </div>
+    </div>
+{{/with}}

@@ -1,13 +1,13 @@
-<ol class='cards-list inventory'>
-    <header>
-        {{> 'systems/hackmaster5e/templates/actor/parts/inventory/inventory-weight.hbs' }}
+<div class="cards-list inventory">
+    <header class="inventory__header">
+        {{> "systems/hackmaster5e/templates/actor/parts/inventory/inventory-header.hbs" }}
     </header>
 
-    <section class='scrollable'>
-        {{> 'systems/hackmaster5e/templates/actor/parts/inventory/inventory-list.hbs' }}
+    <section class="inventory__list-section scrollable">
+        {{> "systems/hackmaster5e/templates/actor/parts/inventory/inventory-list.hbs" }}
     </section>
 
-    <footer>
-        {{> 'systems/hackmaster5e/templates/actor/parts/inventory/inventory-currency.hbs' }}
+    <footer class="inventory__footer">
+        {{> "systems/hackmaster5e/templates/actor/parts/inventory/inventory-footer.hbs" }}
     </footer>
-</ol>
+</div>

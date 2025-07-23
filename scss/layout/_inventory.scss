@@ -1,28 +1,50 @@
-@use "../helpers/mixins";
-
 .inventory {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &__header, &__footer {
+    flex-shrink: 0;
+    margin: 2px 22px 2px 3px;
+
     display: flex;
-    flex-direction: column;
-    height: 32rem;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+  }
 
-    &.beast {
-        height: 22rem;
-    }
+  &__list-section {
+    background-color: rgba(0, 0, 0, 0.01);
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+  }
 
-    > header, > footer {
-        margin: 2px 22px 2px 3px;
-        display: grid;
-        grid-template-columns: min-content 1fr;
-        @include mixins.details-hor;
-    }
+  &__stat-list {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    flex-grow: 1;
+    justify-content: space-between;
+  }
 
-    header select {
-        margin-top: -2px;
-        height: 20px;
-    }
+  &__stat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
 
-    > section {
-        background-color: rgba(0, 0, 0, 0.01);
-        flex: 1 1 auto;
+  &__label {
+    font-weight: normal;
+  }
+
+  &__value {
+    font-weight: bold;
+
+    select {
+      margin-top: -2px;
+      height: 20px;
     }
+  }
 }

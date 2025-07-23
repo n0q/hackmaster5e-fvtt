@@ -131,7 +131,6 @@
     "randomImg": false,
     "appendNumber": false,
     "prependAdjective": false,
-    "hexagonalShape": 0,
     "occludable": {
       "radius": 0
     },
@@ -146,7 +145,14 @@
         "scale": 1,
         "texture": null
       }
-    }
+    },
+    "turnMarker": {
+      "mode": 1,
+      "animation": null,
+      "src": null,
+      "disposition": false
+    },
+    "movementAction": null
   },
   "items": [
     {
@@ -158,9 +164,7 @@
       "folder": null,
       "sort": 0,
       "flags": {
-        "core": {
-          "sourceId": "Compendium.hackmaster5e.uskills.m3jrJIsJYIAAWuHF"
-        }
+        "core": {}
       },
       "system": {
         "description": "",
@@ -202,12 +206,13 @@
       "_stats": {
         "systemId": "hackmaster5e",
         "systemVersion": "0",
-        "coreVersion": "12.325",
+        "coreVersion": "13.346",
         "createdTime": 1669795798251,
         "modifiedTime": 1669795802623,
         "lastModifiedBy": "6PGvwKmaOsPz0R2y",
-        "compendiumSource": null,
-        "duplicateSource": null
+        "compendiumSource": "Compendium.hackmaster5e.uskills.m3jrJIsJYIAAWuHF",
+        "duplicateSource": null,
+        "exportSource": null
       },
       "_key": "!actors.items!Buhad5M6POqNpGnq.cXSAxr8S3nt45T9l"
     },
@@ -220,9 +225,7 @@
       "folder": null,
       "sort": 0,
       "flags": {
-        "core": {
-          "sourceId": "Compendium.hackmaster5e.uskills.Nn2HevIo0xCoXwFD"
-        }
+        "core": {}
       },
       "system": {
         "description": "",
@@ -264,12 +267,13 @@
       "_stats": {
         "systemId": "hackmaster5e",
         "systemVersion": "0",
-        "coreVersion": "12.325",
+        "coreVersion": "13.346",
         "createdTime": 1669795800145,
         "modifiedTime": 1669795805773,
         "lastModifiedBy": "6PGvwKmaOsPz0R2y",
-        "compendiumSource": null,
-        "duplicateSource": null
+        "compendiumSource": "Compendium.hackmaster5e.uskills.Nn2HevIo0xCoXwFD",
+        "duplicateSource": null,
+        "exportSource": null
       },
       "_key": "!actors.items!Buhad5M6POqNpGnq.MpmnoAE8eUDjsFQB"
     },
@@ -282,9 +286,7 @@
       "folder": null,
       "sort": 0,
       "flags": {
-        "core": {
-          "sourceId": "Compendium.world.weapons.XTUJCSHnudXeuowc"
-        }
+        "core": {}
       },
       "system": {
         "description": "",
@@ -380,12 +382,13 @@
       "_stats": {
         "systemId": "hackmaster5e",
         "systemVersion": "0",
-        "coreVersion": "12.325",
+        "coreVersion": "13.346",
         "createdTime": 1669795830012,
         "modifiedTime": 1669795836993,
         "lastModifiedBy": "6PGvwKmaOsPz0R2y",
-        "compendiumSource": null,
-        "duplicateSource": null
+        "compendiumSource": "Compendium.world.weapons.XTUJCSHnudXeuowc",
+        "duplicateSource": null,
+        "exportSource": null
       },
       "_key": "!actors.items!Buhad5M6POqNpGnq.cPDlsrA7Y8TchNj8"
     },
@@ -398,9 +401,7 @@
       "folder": null,
       "sort": 0,
       "flags": {
-        "core": {
-          "sourceId": "Compendium.world.armors.eWumDSntkO2vBjEe"
-        }
+        "core": {}
       },
       "system": {
         "description": "",
@@ -450,12 +451,13 @@
       "_stats": {
         "systemId": "hackmaster5e",
         "systemVersion": "0",
-        "coreVersion": "12.325",
+        "coreVersion": "13.346",
         "createdTime": 1669795846237,
         "modifiedTime": 1669795849231,
         "lastModifiedBy": "6PGvwKmaOsPz0R2y",
-        "compendiumSource": null,
-        "duplicateSource": null
+        "compendiumSource": "Compendium.world.armors.eWumDSntkO2vBjEe",
+        "duplicateSource": null,
+        "exportSource": null
       },
       "_key": "!actors.items!Buhad5M6POqNpGnq.heUIaqpPduoknT78"
     },
@@ -468,9 +470,7 @@
       "folder": null,
       "sort": 0,
       "flags": {
-        "core": {
-          "sourceId": "Compendium.world.armors.friBLkQNBcNNQxf1"
-        }
+        "core": {}
       },
       "system": {
         "description": "",
@@ -520,12 +520,13 @@
       "_stats": {
         "systemId": "hackmaster5e",
         "systemVersion": "0",
-        "coreVersion": "12.325",
+        "coreVersion": "13.346",
         "createdTime": 1669795848215,
         "modifiedTime": 1669795850126,
         "lastModifiedBy": "6PGvwKmaOsPz0R2y",
-        "compendiumSource": null,
-        "duplicateSource": null
+        "compendiumSource": "Compendium.world.armors.friBLkQNBcNNQxf1",
+        "duplicateSource": null,
+        "exportSource": null
       },
       "_key": "!actors.items!Buhad5M6POqNpGnq.80H2wdVeu2X1F6EY"
     },
@@ -537,9 +538,7 @@
       "folder": null,
       "sort": 0,
       "flags": {
-        "core": {
-          "sourceId": "Item.tJDRLs8iMvHXDVkz"
-        }
+        "core": {}
       },
       "_id": "e6hBb7ar1C3XAtHy",
       "system": {
@@ -628,12 +627,13 @@
       "_stats": {
         "systemId": "hackmaster5e",
         "systemVersion": "0",
-        "coreVersion": "12.325",
+        "coreVersion": "13.346",
         "createdTime": 1670132678941,
         "modifiedTime": 1670132678941,
         "lastModifiedBy": "6PGvwKmaOsPz0R2y",
         "compendiumSource": "Item.tJDRLs8iMvHXDVkz",
-        "duplicateSource": null
+        "duplicateSource": null,
+        "exportSource": null
       },
       "_key": "!actors.items!Buhad5M6POqNpGnq.e6hBb7ar1C3XAtHy"
     }
@@ -643,19 +643,18 @@
     "hackmaster5e": {
       "reachHint": "cPDlsrA7Y8TchNj8"
     },
-    "core": {
-      "sourceId": "Actor.zRnOhI51mzgWv9gk"
-    }
+    "core": {}
   },
   "_stats": {
     "systemId": "hackmaster5e",
     "systemVersion": "0",
-    "coreVersion": "12.325",
+    "coreVersion": "13.346",
     "createdTime": 1669795717754,
     "modifiedTime": 1712883288805,
     "lastModifiedBy": "6PGvwKmaOsPz0R2y",
     "compendiumSource": "Actor.zRnOhI51mzgWv9gk",
-    "duplicateSource": null
+    "duplicateSource": null,
+    "exportSource": null
   },
   "folder": null,
   "sort": 0,

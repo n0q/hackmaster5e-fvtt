@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.4.27] - 2025-07-23
+
+## Added
+
+- First pass on custom ruler.
+
+## Changed
+
+- Style sheets improvements.
+
 ## 0.4.26 - 2025-07-19
 
 ## Added

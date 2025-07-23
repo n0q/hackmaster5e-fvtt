@@ -131,7 +131,6 @@
     "randomImg": false,
     "appendNumber": false,
     "prependAdjective": false,
-    "hexagonalShape": 0,
     "occludable": {
       "radius": 0
     },
@@ -146,7 +145,14 @@
         "scale": 1,
         "texture": null
       }
-    }
+    },
+    "turnMarker": {
+      "mode": 1,
+      "animation": null,
+      "src": null,
+      "disposition": false
+    },
+    "movementAction": null
   },
   "items": [
     {
@@ -158,9 +164,7 @@
       "folder": null,
       "sort": 0,
       "flags": {
-        "core": {
-          "sourceId": "Compendium.world.weapons.XTUJCSHnudXeuowc"
-        }
+        "core": {}
       },
       "system": {
         "description": "",
@@ -256,12 +260,13 @@
       "_stats": {
         "systemId": "hackmaster5e",
         "systemVersion": "0",
-        "coreVersion": "12.325",
+        "coreVersion": "13.346",
         "createdTime": 1670292246871,
         "modifiedTime": 1670292248694,
         "lastModifiedBy": "6PGvwKmaOsPz0R2y",
-        "compendiumSource": null,
-        "duplicateSource": null
+        "compendiumSource": "Compendium.world.weapons.XTUJCSHnudXeuowc",
+        "duplicateSource": null,
+        "exportSource": null
       },
       "_key": "!actors.items!rRppaFRMFWBADDiI.V1SaQwnRquU2g0HE"
     },
@@ -273,9 +278,7 @@
       "folder": null,
       "sort": 0,
       "flags": {
-        "core": {
-          "sourceId": "Item.tJDRLs8iMvHXDVkz"
-        }
+        "core": {}
       },
       "_id": "EuFnpaW3TsFgvv45",
       "system": {
@@ -364,12 +367,13 @@
       "_stats": {
         "systemId": "hackmaster5e",
         "systemVersion": "0",
-        "coreVersion": "12.325",
+        "coreVersion": "13.346",
         "createdTime": 1670292328498,
         "modifiedTime": 1670292448181,
         "lastModifiedBy": "6PGvwKmaOsPz0R2y",
         "compendiumSource": "Item.tJDRLs8iMvHXDVkz",
-        "duplicateSource": null
+        "duplicateSource": null,
+        "exportSource": null
       },
       "_key": "!actors.items!rRppaFRMFWBADDiI.EuFnpaW3TsFgvv45"
     },
@@ -382,9 +386,7 @@
       "folder": null,
       "sort": 0,
       "flags": {
-        "core": {
-          "sourceId": "Compendium.world.armors.friBLkQNBcNNQxf1"
-        }
+        "core": {}
       },
       "system": {
         "description": "",
@@ -434,12 +436,13 @@
       "_stats": {
         "systemId": "hackmaster5e",
         "systemVersion": "0",
-        "coreVersion": "12.325",
+        "coreVersion": "13.346",
         "createdTime": 1670292520222,
         "modifiedTime": 1670292522500,
         "lastModifiedBy": "6PGvwKmaOsPz0R2y",
-        "compendiumSource": null,
-        "duplicateSource": null
+        "compendiumSource": "Compendium.world.armors.friBLkQNBcNNQxf1",
+        "duplicateSource": null,
+        "exportSource": null
       },
       "_key": "!actors.items!rRppaFRMFWBADDiI.KArcxejCGRRhgRM7"
     },
@@ -452,9 +455,7 @@
       "folder": null,
       "sort": 0,
       "flags": {
-        "core": {
-          "sourceId": "Compendium.world.armors.eWumDSntkO2vBjEe"
-        }
+        "core": {}
       },
       "system": {
         "description": "",
@@ -504,12 +505,13 @@
       "_stats": {
         "systemId": "hackmaster5e",
         "systemVersion": "0",
-        "coreVersion": "12.325",
+        "coreVersion": "13.346",
         "createdTime": 1670292595070,
         "modifiedTime": 1670292645240,
         "lastModifiedBy": "6PGvwKmaOsPz0R2y",
-        "compendiumSource": null,
-        "duplicateSource": null
+        "compendiumSource": "Compendium.world.armors.eWumDSntkO2vBjEe",
+        "duplicateSource": null,
+        "exportSource": null
       },
       "_key": "!actors.items!rRppaFRMFWBADDiI.GhLOKbuZwzbyuAGa"
     }
@@ -523,19 +525,18 @@
     "hackmaster5e": {
       "reachHint": "V1SaQwnRquU2g0HE"
     },
-    "core": {
-      "sourceId": "Actor.Slh8A4a74RRtfgCn"
-    }
+    "core": {}
   },
   "_stats": {
     "systemId": "hackmaster5e",
     "systemVersion": "0",
-    "coreVersion": "12.325",
+    "coreVersion": "13.346",
     "createdTime": 1670292045564,
     "modifiedTime": 1712883302723,
     "lastModifiedBy": "6PGvwKmaOsPz0R2y",
     "compendiumSource": "Actor.Slh8A4a74RRtfgCn",
-    "duplicateSource": null
+    "duplicateSource": null,
+    "exportSource": null
   },
   "folder": null,
   "sort": 0,
