@@ -300,7 +300,7 @@ export class HMWeaponItem extends HMItem {
         }
 
         const formula = HMTABLES.formula.def[resp.specialMove];
-        const rollContext = { resp, ...context.system };
+        const rollContext = { resp, ...dialogResp.caller.system };
         const roll = await new Roll(formula, rollContext).evaluate();
 
         const bData = {
