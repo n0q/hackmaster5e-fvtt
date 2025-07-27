@@ -14,24 +14,24 @@ export const calculateArmorDamage = (obj) => {
             stack.push(term.rolls[idx]);
         } else
 
-        if (term.constructor.name === 'Roll') {
-            stack.push(...term.terms.filter((t) => !t.isDeterministic));
-        } else
+            if (term.constructor.name === 'Roll') {
+                stack.push(...term.terms.filter((t) => !t.isDeterministic));
+            } else
 
-        if (term.constructor.name === 'HMDie') {
-            armorDamage = term.results.reduce((acc, result) => {
-                if (result.penetrated && !result.bias) return acc + 1;
-                return acc;
-            }, armorDamage);
-        }
+                if (term.constructor.name === 'HMDie') {
+                    armorDamage = term.results.reduce((acc, result) => {
+                        if (result.penetrated && !result.bias) return acc + 1;
+                        return acc;
+                    }, armorDamage);
+                }
     }
 
     return armorDamage;
 };
 
-export const transformDamageFormula = (stringTerms, operation=new Set()) => {
-    const {FORMULA_MOD} = HMCONST;
-    const setComparator = (sterms, oper, r=5) => {
+export const transformDamageFormula = (stringTerms, operation = new Set()) => {
+    const { FORMULA_MOD } = HMCONST;
+    const setComparator = (sterms, oper, r = 5) => {
         if (r < 0) return;
 
         const terms = Roll.simplifyTerms(sterms);
@@ -43,20 +43,20 @@ export const transformDamageFormula = (stringTerms, operation=new Set()) => {
                     if (subTerms) terms[i].rolls[j] = Roll.fromTerms(Roll.simplifyTerms(subTerms));
                 }
 
-                const {modifiers} = terms[i];
+                const { modifiers } = terms[i];
                 terms[i] = foundry.dice.terms.PoolTerm.fromRolls(terms[i].rolls);
                 terms[i].modifiers = modifiers;
             }
 
             if (!terms[i].isDeterministic && terms[i].faces) {
-                const {faces, modifiers, number} = terms[i];
+                const { faces, modifiers, number } = terms[i];
 
                 if (oper.has(FORMULA_MOD.DOUBLE)) terms[i].number *= 2;
 
                 if (oper.has(FORMULA_MOD.HALVE)) {
                     number > 1
                         ? terms[i].number = Math.floor(number / 2)
-                        : terms[i].faces  = Math.max(Math.floor(faces / 2), 1);
+                        : terms[i].faces = Math.max(Math.floor(faces / 2), 1);
                 }
 
                 if (oper.has(FORMULA_MOD.NOPENETRATE)) {
@@ -90,3 +90,31 @@ export const getDiceSum = (roll) => {
     }
     return sum;
 };
+
+/**
+ * A map of data type names to parser functions.
+ * Used to parse string inputs into appropriate types for updating `system.coins`.
+ *
+ * @type {Object<string, (val: string) => number>}
+ */
+export const DATA_TYPE_PARSERS = {
+    'Number': (val) => parseInt(val, 10),
+    'uint': (val) => Math.max(parseInt(val, 10) || 0, 0),
+    'Float': (val) => parseFloat(val),
+    'Percent': (val) => parsePercent(val),
+};
+
+/**
+ * Parse a percentage value from a string.
+ * Used by DATA_TYPE_PARSERS.
+ *
+ * @param {string|number} value - The input value to parse.
+ * @returns {number} The parsed float between 0 and 1.
+ */
+function parsePercent(value) {
+    const stringValue = String(value).trim();
+
+    if (stringValue.endsWith('%')) return parseFloat(stringValue) / 100;
+    if (stringValue.includes('.')) return parseFloat(stringValue);
+    return parseFloat(stringValue) / 100;
+}

@@ -1,5 +1,7 @@
+import { DATA_TYPE_PARSERS } from '../../sys/utils.js';
+
 export class HMItemSheet extends foundry.appv1.sheets.ItemSheet {
-  /** @override */
+    /** @override */
     static get defaultOptions() {
         return foundry.utils.mergeObject(super.defaultOptions, {
             classes: ['hackmaster', 'sheet', 'item'],
@@ -34,7 +36,7 @@ export class HMItemSheet extends foundry.appv1.sheets.ItemSheet {
         return position;
     }
 
-  /* -------------------------------------------- */
+    /* -------------------------------------------- */
 
     /** @override */
     activateListeners(html) {
@@ -46,28 +48,20 @@ export class HMItemSheet extends foundry.appv1.sheets.ItemSheet {
         $(document).ready(() => $('.autoselect').focus(function autoselect() { $(this).select(); }));
     }
 
-    async _onEdit(ev) {
-        ev.preventDefault();
-        ev.stopPropagation();
-        const {dataset} = ev.currentTarget;
-        const {item}    = this;
+    async _onEdit(event) {
+        event.preventDefault();
+        event.stopPropagation();
 
-        if (dataset.itemProp) {
-            const {itemProp, dtype} = dataset;
-            let targetValue = ev.target.value;
-            if (dtype === 'Number') { targetValue = parseInt(targetValue, 10);                   } else
-            if (dtype === 'uint')   { targetValue = Math.max(parseInt(targetValue, 10) || 0, 0); } else
-            if (dtype === 'Float')  { targetValue = parseFloat(targetValue);                     } else
-            if (dtype === 'Percent') {
-                const pctMatch = targetValue.match(/^([0-9]+)%$/);
-                const floatMatch = targetValue.match(/^([0-9]?\.[0-9]+)$/);
-                if (pctMatch)   { targetValue = parseFloat(pctMatch[1]) / 100;   } else
-                if (floatMatch) { targetValue = parseFloat(floatMatch[1]);       } else
-                                { targetValue = parseInt(targetValue, 10) / 100; } // eslint-disable-line
-            }
-            foundry.utils.setProperty(item, itemProp, targetValue);
-            await this.item.update({system:item.system});
-            this.render(true);
-        }
+        const { dataset } = event.currentTarget;
+        const { itemProp, dtype } = dataset;
+        if (!itemProp) return;
+
+        const rawValue = event.target.value;
+        const parser = DATA_TYPE_PARSERS[dtype];
+
+        const targetValue = parser ? parser(rawValue) : rawValue;
+
+        await this.item.update({ [itemProp]: targetValue });
+        this.render(true);
     }
 }
