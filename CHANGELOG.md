@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+
+## Fixed
+
+- Issues with updating coin values.
+- Phantom tooltip display on character class sheets.
+
 ## 0.4.28 - 2025-07-25
 
 ## Fixed
