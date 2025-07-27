@@ -6,6 +6,7 @@ import { HMChatFactory, CHAT_TYPE } from '../chat/chat-factory.js';
 import { HMWoundItem } from '../item/wound-item.js';
 import { applyCustomActiveEffect } from '../sys/effects.js';
 import { idx } from '../tables/dictionary.js';
+import { DATA_TYPE_PARSERS } from '../sys/utils.js';
 
 export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
     visibleItemId = {};
@@ -53,12 +54,12 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
     }
 
     _prepareBaseItems(sheetData) {
-        const {actor} = sheetData;
-        const {spell} = actor.itemTypes;
-        const gear = {weapons: [], armors: [], items: []};
-        const armors = {owned: [], carried: [], equipped: []};
-        const weapons = {owned: [], carried: [], equipped: [], innate: []};
-        const skills = {uskills: [], oskills: [], iskills: []};
+        const { actor } = sheetData;
+        const { spell } = actor.itemTypes;
+        const gear = { weapons: [], armors: [], items: [] };
+        const armors = { owned: [], carried: [], equipped: [] };
+        const weapons = { owned: [], carried: [], equipped: [], innate: [] };
+        const skills = { uskills: [], oskills: [], iskills: [] };
 
         const containers = HMContainer.getContainers(actor);
         const containerList = containers.map((a) => [a._id, a.name]);
@@ -88,11 +89,11 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
         actor.itemTypes.weapon.forEach((i) => {
             gear.weapons.push(i);
 
-            const {INNATE} = HMCONST.ITEM_STATE;
-            const {innate, state} = i.system;
+            const { INNATE } = HMCONST.ITEM_STATE;
+            const { innate, state } = i.system;
             if (state !== INNATE && innate) {
                 // Stopgap until inventory overhaul.
-                i.update({'system.state': INNATE});
+                i.update({ 'system.state': INNATE });
                 weapons[HMTABLES.itemstate[INNATE]].push(i);
             } else {
                 // TODO: Make this into a helper function.
@@ -112,7 +113,7 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
 
         function skillsort(a, b) {
             return `${game.i18n.localize(a.name)} ${a.system.specialty.value || ''}`
-                 > `${game.i18n.localize(b.name)} ${b.system.specialty.value || ''}` ? 1 : -1;
+                > `${game.i18n.localize(b.name)} ${b.system.specialty.value || ''}` ? 1 : -1;
         }
 
         Object.keys(skills).forEach((skillType) => skills[skillType].sort(skillsort));
@@ -125,7 +126,7 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
             (a, b) => Number(a.system.lidx) - Number(b.system.lidx) || a.name.localeCompare(b.name),
         );
 
-        const {spellLevels} = idx;
+        const { spellLevels } = idx;
         const minLevel = actor.spells[0]?.system?.lidx;
         const maxLevel = Math.max(...spell.map((s) => s.system.lidx));
 
@@ -139,7 +140,7 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
     }
 
     money() {
-        const {ITEM_STATE} = HMCONST;
+        const { ITEM_STATE } = HMCONST;
         const config = HMTABLES.currency;
         const moneyRaw = this.actor.hm.itemTypes.currency.reduce((acc, c) => {
             acc.total += c.value || 0;
@@ -148,9 +149,9 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
             if (c.rootId && root.system.state === ITEM_STATE.OWNED) return acc;
             acc.carried += c.value || 0;
             return acc;
-        }, {total: 0, carried: 0});
+        }, { total: 0, carried: 0 });
 
-        const {standard} = config;
+        const { standard } = config;
         const standardValue = config.coins[standard].value;
         const precision = standardValue.toString().length;
         return {
@@ -240,7 +241,7 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
 
     // Getters
     _getOwnedItem(itemId) {
-        const {actor} = this;
+        const { actor } = this;
         return actor.hm.items.get(itemId)
             ?? actor.effects.get(itemId)
             ?? actor.wprofiles.get(itemId);
@@ -248,20 +249,20 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
 
     async _onItemCreate(ev) {
         ev.preventDefault();
-        const {dataset} = ev.currentTarget;
-        const {type} = dataset;
+        const { dataset } = ev.currentTarget;
+        const { type } = dataset;
         const itemName = `New ${type.capitalize()}`;
-        const itemData = {name: itemName, type};
+        const itemData = { name: itemName, type };
 
-        const {dialog} = dataset;
+        const { dialog } = dataset;
         if (dialog === 'wound') { await HMWoundItem.addWound(true, this.actor); } else
-        if (dialog) {
-            const dialogResp = await HMDialogFactory(dataset, this.actor);
-            itemData.data = dialogResp.data;
-        } else {
-            const newItem = await Item.create(itemData, {parent: this.actor});
-            if (dataset.render === 'true') newItem.sheet.render(true);
-        }
+            if (dialog) {
+                const dialogResp = await HMDialogFactory(dataset, this.actor);
+                itemData.data = dialogResp.data;
+            } else {
+                const newItem = await Item.create(itemData, { parent: this.actor });
+                if (dataset.render === 'true') newItem.sheet.render(true);
+            }
     }
 
     _updateOwnedItem(item) {
@@ -276,7 +277,7 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
         this.visibleItemId[cId] = tState;
 
         const element = ev.currentTarget;
-        const target  = $(element).parent().parent().find('[toggle]');
+        const target = $(element).parent().parent().find('[toggle]');
         $(target).toggleClass('hide');
     }
 
@@ -285,7 +286,7 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
         ev.preventDefault();
         const li = $(ev.currentTarget).parents('.card');
         const item = this.actor.items.get(li.data('itemId'));
-        const {system} = item;
+        const { system } = item;
         const nextState = (Number(system.state) + 1) % 3;
         await this.actor.updateEmbeddedDocuments('Item', [{
             _id: item.id,
@@ -296,23 +297,23 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
     async _onSpellPrep(ev) {
         ev.preventDefault();
         const element = ev.currentTarget;
-        const {dataset} = element;
+        const { dataset } = element;
         const li = $(ev.currentTarget).parents('.card');
         const item = this.actor.items.get(li.data('itemId'));
 
-        let {prepped} = item.system || 0;
+        let { prepped } = item.system || 0;
         dataset.itemPrepare ? prepped++ : prepped--;
-        await item.update({'system.prepped': prepped});
+        await item.update({ 'system.prepped': prepped });
     }
 
     _onClick(ev) {
         ev.preventDefault();
         const item = this._getOwnedItem(getItemId(ev));
         item.onClick(ev);
-        const {dataset} = ev.currentTarget;
+        const { dataset } = ev.currentTarget;
         if (dataset.toggle) {
             const id = getItemId(ev);
-            const {visibleItemId} = this;
+            const { visibleItemId } = this;
             visibleItemId[id] = !visibleItemId[id];
         }
     }
@@ -320,43 +321,54 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
     async _onSelect(ev) {
         ev.preventDefault();
         ev.stopPropagation();
-        const {dataset, value} = ev.currentTarget;
-        const {flag, oper} = dataset;
+        const { dataset, value } = ev.currentTarget;
+        const { flag, oper } = dataset;
         if (flag) this.actor.setFlag(SYSTEM_ID, flag, value);
         if (oper) HMContainer.moveToContainer(this.actor, ev.currentTarget);
     }
 
-    async _onEdit(ev) {
-        ev.preventDefault();
-        ev.stopPropagation();
-        const element = ev.currentTarget;
-        const dataset = element.dataset;
-        const item    = this._getOwnedItem(getItemId(ev));
+    /**
+     * Handles edits to items directly from the actor sheet.
+     *
+     * @async
+     * @private
+     * @hack This function contains a necessary workaround for updating currency items,
+     * which presently use a schema-less ObjectField for their 'coins' data. For a full
+     * explanation, see {@link HMCurrencyItemSheet#_onEdit}.
+     *
+     * @param {jQuery.Event} event - The originating change event.
+     */
+    async _onEdit(event) {
+        event.preventDefault();
+        event.stopPropagation();
 
-        if (dataset.itemProp) {
-            const {itemProp, dtype} = dataset;
-            let targetValue = ev.target.value;
-            if (dtype === 'Number')  { targetValue = parseInt(targetValue, 10) || 0;              } else
-            if (dtype === 'uint')    { targetValue = Math.max(parseInt(targetValue, 10), 0) || 0; } else
-            if (dtype === 'Float')   { targetValue = parseFloat(targetValue) || 0;                } else
-            if (dtype === 'Percent') {
-                const pctMatch = targetValue.match(/^([0-9]+)%$/);
-                const floatMatch = targetValue.match(/^([0-9]?\.[0-9]+)$/);
-                if (pctMatch)   { targetValue = parseFloat(pctMatch[1]) / 100;   } else
-                if (floatMatch) { targetValue = parseFloat(floatMatch[1]);       } else
-                                { targetValue = parseInt(targetValue, 10) / 100; } // eslint-disable-line
-            }
-            await item.update({[itemProp]: targetValue});
-        }
+        const element = event.currentTarget;
+        const dataset = element.dataset;
+        const item = this._getOwnedItem(getItemId(event));
+
+        const { itemProp, dtype } = dataset;
+        if (!itemProp) return;
+
+        const rawValue = event.target.value;
+        const parser = DATA_TYPE_PARSERS[dtype];
+
+        const targetValue = parser ? parser(rawValue) : rawValue;
+
+        if (item.type === 'currency' && itemProp.startsWith('system.coins')) {
+            const coins = foundry.utils.deepClone(item.system.coins);
+            const targetKey = itemProp.replace('system.coins.', '');
+            const isDirty = foundry.utils.setProperty(coins, targetKey, targetValue);
+            if (isDirty) await item.update({ 'system.coins': coins });
+        } else await item.update({ [itemProp]: targetValue });
     }
 
     async _onRoll(ev) {
         ev.preventDefault();
         ev.stopPropagation();
         const element = ev.currentTarget;
-        const {dataset} = element;
-        const {dialog, formulaType} = dataset;
-        const {actor} = this;
+        const { dataset } = element;
+        const { dialog, formulaType } = dataset;
+        const { actor } = this;
 
         let cardType = false;
 
@@ -364,41 +376,41 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
         if (dialog === 'ability') cardType = CHAT_TYPE.ABILITY_CHECK;
 
         if (dialog === 'atk') {
-            return game[SYSTEM_ID].HMWeaponItem.rollAttack({weapon: dataset.itemId, caller: actor});
+            return game[SYSTEM_ID].HMWeaponItem.rollAttack({ weapon: dataset.itemId, caller: actor });
         }
 
         if (dialog === 'dmg') {
-            return game[SYSTEM_ID].HMWeaponItem.rollDamage({weapon: dataset.itemId, caller: actor});
+            return game[SYSTEM_ID].HMWeaponItem.rollDamage({ weapon: dataset.itemId, caller: actor });
         }
 
         if (dialog === 'def') {
-            return game[SYSTEM_ID].HMWeaponItem.rollDefend({weapon: dataset.itemId, caller: actor});
+            return game[SYSTEM_ID].HMWeaponItem.rollDefend({ weapon: dataset.itemId, caller: actor });
         }
 
         if (dialog === 'skill') {
-            return game[SYSTEM_ID].HMItem.rollSkill({itemId: dataset.itemId, caller: actor});
+            return game[SYSTEM_ID].HMItem.rollSkill({ itemId: dataset.itemId, caller: actor });
         }
 
         if (dialog === 'cast') {
-            return game[SYSTEM_ID].HMSpellItem.rollSpell({spell: dataset.itemId, caller: actor});
+            return game[SYSTEM_ID].HMSpellItem.rollSpell({ spell: dataset.itemId, caller: actor });
         }
 
         if (dialog) {
             const dialogResp = await HMDialogFactory(dataset, actor);
-            const cData = {dataset, dialogResp};
+            const cData = { dataset, dialogResp };
 
-            let {formula} = dataset;
+            let { formula } = dataset;
             if (formulaType) formula = HMTABLES.formula[dialog][formulaType];
-            const {context, resp} = dialogResp;
-            const {hackmaster5e, system} = context;
-            const rollContext = {...system, resp, talent: hackmaster5e.talent};
+            const { context, resp } = dialogResp;
+            const { hackmaster5e, system } = context;
+            const rollContext = { ...system, resp, talent: hackmaster5e.talent };
             if (formula) cData.roll = await new Roll(formula, rollContext).evaluate();
 
             if (cardType) {
                 const bData = {
                     caller: cData.dialogResp.caller.uuid,
                     context: cData.dialogResp.context.uuid,
-                    mdata: {...cData.dataset},
+                    mdata: { ...cData.dataset },
                     resp: cData.dialogResp.resp,
                     roll: cData.roll.toJSON(),
                 };
@@ -415,7 +427,7 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
     }
 }
 
-function getItemId(ev, attr='data-item-id') {
+function getItemId(ev, attr = 'data-item-id') {
     const el = ev.currentTarget;
     return $(el).attr(attr) || $(el).parents('.card, .item').attr(attr);
 }

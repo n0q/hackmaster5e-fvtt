@@ -53,6 +53,8 @@ export const registerHandlebarsHelpers = () => {
     });
 
     /**
+     * Lookup helper to retrieve a value from nested object path in idx.
+     *
      * @param {string} pathString - Path to container object 'foo.bar.baz'
      * @param {string|number} key - Final key to retrieve from idx;
      * @returns {any|string} Found value, or 'INVALID_KEY' if not found.
@@ -61,7 +63,9 @@ export const registerHandlebarsHelpers = () => {
         const pathParts = pathString.split('.');
         const idxChildObj = pathParts.reduce((currentLevel, part) => currentLevel?.[part], idx);
         const finalValue = idxChildObj?.[key];
-        return finalValue === undefined ? 'INVALID_KEY' : finalValue;
+        return finalValue;
+        // HACK: Some templates (like item-cclass-sheet.hbs) assume any return is a valid one.
+        // return finalValue === undefined ? 'INVALID_KEY' : finalValue;
     });
 
     Handlebars.registerHelper('findConfigObj', (obj, opts) => {

@@ -3,33 +3,40 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.4.29] - 2025-07-27
+
+### Fixed
+
+- Issues with updating coin values.
+- Phantom tooltip display on character class sheets.
+
 ## 0.4.28 - 2025-07-25
 
-## Fixed
+### Fixed
 
 - Missing defense scores in defense rolls (oops!)
 
 ## [0.4.27] - 2025-07-23
 
-## Added
+### Added
 
 - First pass on custom ruler.
 
-## Changed
+### Changed
 
 - Style sheets improvements.
 
 ## 0.4.26 - 2025-07-19
 
-## Added
+### Added
 
 - v13 support.
 
-## Fixed
+### Fixed
 
 - Title for saves dialog.
 
-## Removed
+### Removed
 
 - v12 support.
 - dragRuler support.
@@ -37,15 +44,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [0.4.25] - 2025-03-04
 
-## Added
+### Added
 
 - Attack/Defend/Damage macros now remember your last used weapon.
 
-## Changed
+### Changed
 
 - Updated Thief class backstab damage to errata.
 
-## Fixed
+### Fixed
 
 - Cleric spells are unprepared after casting, again.
 - Beast spellcasting is hidden from players, again.
@@ -53,46 +60,46 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [0.4.24] - 2024-10-28
 
-## Added
+### Added
 
 - Can drop items directly onto tokens.
 
-## Changed
+### Changed
 
 - Cleaned up skill roll chat cards.
 - Spell rolls now display volatility and save results simultaneously.
 
 ## [0.4.23] - 2024-10-14
 
-## Fixed
+### Fixed
 
 - Skill rolls display dice rolled.
 
 ## [0.4.22] - 2024-10-13
 
-## Changed
+### Changed
 
 - Skill rolls now display check and opposed results simultaneously.
 - Swapped Literacy and Verbal dialog button positions.
 
-## Fixed
+### Fixed
 
 - Elevation Ruler displays appropriate color banding, again.
 - Ranged weapons no longer offered reset to half speed.
 
 ## [0.4.21] - 2024-08-15
 
-## Added
+### Added
 
 - Improved Elevation Ruler support.
   - Known Issue: Colors are inaccurate for heavy armor wearers.
 
-## Changed
+### Changed
 
 - Combined alerts and rolls for Beast Tenacity and Trauma checks.
 - Reset Weapon Count renamed to Reset Count to Half
 
-## Fixed
+### Fixed
 
 - Reset Count to Half no longer observes minimum weapon speeds.
 
