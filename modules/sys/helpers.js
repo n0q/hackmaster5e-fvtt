@@ -100,13 +100,6 @@ export const registerHandlebarsHelpers = () => {
     Handlebars.registerHelper('eq', (a, b) => a == b); // eslint-disable-line eqeqeq
     Handlebars.registerHelper('neq', (a, b) => a != b); // eslint-disable-line eqeqeq
     Handlebars.registerHelper('ceil', (a) => Math.ceil(a));
-    Handlebars.registerHelper('isEven', (a) => (((a % 2) + 2) % 2));
-
-    Handlebars.registerHelper('isHalf', (a, b, opts) => (
-        opts.hash.ceil
-            ? a === Math.ceil(b / 2)
-            : a === Math.floor(b / 2)
-    ));
 
     Handlebars.registerHelper('pad', (arg1) => {
         let num = (arg1 || 0).toString();

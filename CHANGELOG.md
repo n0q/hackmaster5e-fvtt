@@ -5,9 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [0.4.30] - 2025-07-28
 
+### Changed
+
+- Style sheet improvements.
+
 ### Fixed
 
-- Ruler cleanup.
+- Ruler efficiency and fixes.
 
 ## [0.4.29] - 2025-07-27
 
