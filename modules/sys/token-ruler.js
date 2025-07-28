@@ -6,25 +6,6 @@ import { SYSTEM_ID, systemPath } from '../tables/constants.js';
 export class HMTokenRuler extends foundry.canvas.placeables.tokens.TokenRuler {
     static WAYPOINT_LABEL_TEMPLATE = systemPath('templates/hud/waypoint-label.hbs');
 
-    constructor(...args) {
-        super(...args);
-        this.snapDistance = 50;
-        this.snapTargets = [
-            { x: 400, y: 300, label: '10 ft Movement' },
-            { x: 800, y: 600, label: '10 ft Movement' },
-            { x: 1200, y: 400, label: '10 ft Movement' },
-        ];
-
-        this.isSnapped = false;
-        this.currentSnapTarget = null;
-        this.originalPosition = null;
-    }
-
-    _onMouseMove(event) {
-        console.warn('hi');
-        super._onMouseMove(event);
-    }
-
     /**
      * Adds combat-specific context for rendering a waypoint label.
      * @override
@@ -80,5 +61,21 @@ export class HMTokenRuler extends foundry.canvas.placeables.tokens.TokenRuler {
 
         const moveidx = movespd.findIndex((m) => m >= moveValue);
         return moveidx;
+    }
+
+    /**
+     * Returns the total scaled cost of the token's planned movement.
+     *
+     * @returns {number} Total movement cost.
+     */
+    get plannedMovementCost() {
+        let plannedMovementCost = 0;
+        for (const [userId, movement] of Object.entries(this.token._plannedMovement)) {
+            if (movement.hidden && (userId !== game.user.id)) continue;
+            plannedMovementCost += this.token.measureMovementPath(movement.history).cost;
+            plannedMovementCost += this.token.measureMovementPath(movement.foundPath).cost;
+        }
+
+        return plannedMovementCost;
     }
 }
