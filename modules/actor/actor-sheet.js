@@ -59,26 +59,11 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
         const gear = { weapons: [], armors: [], items: [] };
         const armors = { owned: [], carried: [], equipped: [] };
         const weapons = { owned: [], carried: [], equipped: [], innate: [] };
-        const skills = { uskills: [], oskills: [], iskills: [] };
 
         const containers = HMContainer.getContainers(actor);
         const containerList = containers.map((a) => [a._id, a.name]);
         actor.containers = Object.fromEntries([[null, '']].concat(containerList));
         actor.containerMap = HMContainer.getMap(actor.itemTypes.item);
-
-        actor.itemTypes.skill.forEach((i) => {
-            if (i.system.language) {
-                skills.iskills.push(i);
-                return;
-            }
-
-            if (actor.type !== 'character' || !i.system.universal) {
-                skills.oskills.push(i);
-                return;
-            }
-
-            skills.uskills.push(i);
-        });
 
         actor.itemTypes.armor.forEach((i) => {
             gear.armors.push(i);
@@ -111,14 +96,7 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
             return container || a.name.localeCompare(b.name);
         });
 
-        function skillsort(a, b) {
-            return `${game.i18n.localize(a.name)} ${a.system.specialty.value || ''}`
-                > `${game.i18n.localize(b.name)} ${b.system.specialty.value || ''}` ? 1 : -1;
-        }
-
-        Object.keys(skills).forEach((skillType) => skills[skillType].sort(skillsort));
-
-        actor.skills = skills;
+        actor.skills = prepareSkills(sheetData);
         actor.armors = armors;
         actor.weapons = weapons;
         actor.gear = gear;
@@ -430,4 +408,75 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
 function getItemId(ev, attr = 'data-item-id') {
     const el = ev.currentTarget;
     return $(el).attr(attr) || $(el).parents('.card, .item').attr(attr);
+}
+
+function prepareSkills(sheetData) {
+    const { actor } = sheetData;
+
+    const categorizedSkills = {
+        langSkills: [],
+        otherSkills: [],
+        universalSkills: [],
+        beastSkills: [],
+    };
+
+    for (const skill of actor.itemTypes.skill) {
+        if (skill.system.language) {
+            categorizedSkills.langSkills.push(skill);
+        } else if (actor.type !== 'character') {
+            categorizedSkills.beastSkills.push(skill);
+        } else if (!skill.system.universal) {
+            categorizedSkills.otherSkills.push(skill);
+        } else {
+            categorizedSkills.universalSkills.push(skill);
+        }
+    }
+
+    Object.values(categorizedSkills).forEach((skillList) => {
+        skillList.sort(byNameAndSpecialty);
+    });
+
+    if (actor.type !== 'character') {
+        const { beastSkills, langSkills } = categorizedSkills;
+        const concatedSkills = beastSkills.concat(langSkills);
+        categorizedSkills.beastSkills = concatedSkills;
+    }
+
+    const [col1Skills, col2Skills] = actor.type === 'character'
+        ? splitArray(categorizedSkills.universalSkills)
+        : splitArray(categorizedSkills.beastSkills, Math.ceil);
+
+    return {
+        langSkills: categorizedSkills.langSkills,
+        otherSkills: categorizedSkills.otherSkills,
+        col1Skills,
+        col2Skills,
+    };
+}
+
+/**
+ * Splits an array into two parts at the midpoint, using a customizable rounding function.
+ *
+ * @param {Array} input - Array to split.
+ * @param {(x: number) => number} [roundFn=Math.floor] - Optional rounding function.
+ * @returns {[Array, Array]} - A tuple of two arrays.
+ */
+function splitArray(input, roundFn = Math.floor) {
+    const midpoint = roundFn(input.length / 2);
+    const one = input.slice(0, midpoint);
+    const two = input.slice(midpoint);
+    return [one, two];
+}
+
+/**
+ * Comparitor function for sorting objects by their localized name and specialty.
+ *
+ * @param {Object} a - First object to compare.
+ * @param {Object} b - Second object to compare.
+ * @returns {number} Negative if 'a' sorts before 'b', positive if after, zero if equal.
+ */
+function byNameAndSpecialty(a, b) {
+    const aKey = `${game.i18n.localize(a.name)} ${a.system.specialty.value || ''}`.trim();
+    const bKey = `${game.i18n.localize(b.name)} ${b.system.specialty.value || ''}`.trim();
+    return aKey.localeCompare(bKey);
 }

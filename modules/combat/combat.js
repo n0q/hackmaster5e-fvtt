@@ -5,7 +5,7 @@ import { HMChatFactory, CHAT_TYPE } from '../chat/chat-factory.js';
 export class HMCombat extends foundry.documents.Combat {
     /**
      * Advance the combat to the next round.
-     * Records total movement cost to system.prevMovementCost.
+     * Records total movement cost and distance.
      * @override
      * @async
      *
@@ -13,11 +13,16 @@ export class HMCombat extends foundry.documents.Combat {
      */
     async nextRound() {
         const updates = this.combatants.map((combatant) => {
-            const movementHistory = combatant.token.movementHistory;
-            const prevMovementCost = movementHistory.reduce((acc, wp) => acc + wp.cost, 0) || null;
-            return { _id: combatant.id, 'system.cost.prev': prevMovementCost };
+            const { token } = combatant;
+            const waypoints = token.movementHistory;
+            const measuredMovementPath = token.measureMovementPath(waypoints);
+            const { cost, distance } = measuredMovementPath;
+            return {
+                _id: combatant.id,
+                [`flags.${SYSTEM_ID}.prevCost`]: cost,
+                [`flags.${SYSTEM_ID}.prevDistance`]: distance,
+            };
         });
-
         await this.updateEmbeddedDocuments('Combatant', updates);
 
         return super.nextRound();

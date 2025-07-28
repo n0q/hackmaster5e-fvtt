@@ -1,32 +1,20 @@
 {{#with actor.skills}}
 <div class='skills-list'>
-    {{#if oskills}}
-    <label class='resource-label'>{{localize 'HM.skills'}}</label>
-    <div class='grid-2col'>
-        <span>
-        {{#each oskills}}
-            {{#if (and (isHalf @index ../oskills.length ceil=true) @index)}}
-        </span>
-        <span>
-            {{/if}}
-            {{> 'systems/hackmaster5e/templates/actor/cards/skill.hbs' }}
-        {{/each}}
-        </span>
-    </div>
-    {{/if}}
-    {{#if iskills}}
-    <label class='resource-label'>{{localize 'HM.languages'}}</label>
-    <div class='grid-2col'>
-        <span>
-        {{#each iskills}}
-            {{#if (and (isHalf @index ../oskills.length ceil=true) @index)}}
-        </span>
-        <span>
-            {{/if}}
-            {{> 'systems/hackmaster5e/templates/actor/cards/skill.hbs' }}
-        {{/each}}
-        </span>
-    </div>
+    {{#if col1Skills}}
+        <label class='resource-label'>{{localize 'HM.skills'}}</label>
+        <div class='grid-2col'>
+            <div>
+                {{#each col1Skills}}
+                    {{> 'systems/hackmaster5e/templates/actor/cards/skill.hbs' }}
+                {{/each}}
+            </div>
+
+            <div>
+                {{#each col2Skills}}
+                    {{> 'systems/hackmaster5e/templates/actor/cards/skill.hbs' }}
+                {{/each}}
+            </div>
+        </div>
     {{/if}}
 </div>
 {{/with}}
