@@ -10,9 +10,11 @@
     {{#if cost}}
         <section class="waypoint-label__total">
             <span class="total-measurement">{{cost.total}} {{cost.units}}</span>
-            <span class="waypoint-label__total--sub">
-                {{localize (findConfigValue movementActionKeyPath cost.totalLabel)}}
-            </span>
+            {{#if inCombat}}
+                <span class="waypoint-label__total--sub">
+                    {{localize (findConfigValue movementActionKeyPath cost.totalLabel)}}
+                </span>
+            {{/if}}
         </section>
         <section class="waypoint-label__metadata">
             {{#if cost.delta}}
@@ -26,10 +28,25 @@
             {{/if}}
         </section>
     {{else}}
-        <span class="total-measurement">{{distance.total}} {{units}}</span>
-        {{#if distance.delta}}
-            <span class="delta-measurement">({{distance.delta}})</span>
-        {{/if}}
+        <section class="waypoint-label__total">
+            <span class="total-measurement">{{distance.total}} {{units}}</span>
+            {{#if inCombat}}
+                <span class="waypoint-label__total--sub">
+                    {{localize (findConfigValue movementActionKeyPath distance.totalLabel)}}
+                </span>
+            {{/if}}
+        </section>
+        <section class="waypoint-label__metadata">
+            {{#if distance.delta}}
+                <span class="delta-measurement">({{distance.delta}})</span>
+            {{/if}}
+            {{#if (and inCombat distance.prev)}}
+                <span class="waypoint-label__measurement--prev">
+                    <i class="fa-solid fa-clock-rotate-left hm-inline-small"></i>
+                    {{distance.prev}}
+                </span>
+            {{/if}}
+        </section>
     {{/if}}
 
     {{#if (and elevation (not elevation.hidden))}}

@@ -1,4 +1,4 @@
-import { systemPath } from '../tables/constants.js';
+import { SYSTEM_ID, systemPath } from '../tables/constants.js';
 
 /**
  * @extends foundry.canvas.placeables.tokens.TokenRuler
@@ -22,8 +22,10 @@ export class HMRuler extends foundry.canvas.placeables.tokens.TokenRuler {
         const { token } = this;
         context.inCombat = token.inCombat;
         if (context.inCombat && token.combatant) {
-            context.cost.prev = this.#getCostPrev();
+            context.cost.prev = this.#getFormattedPrevValue('prevCost');
             context.cost.totalLabel = this.#getMoveIndex(context.cost.total);
+            context.distance.prev = this.#getFormattedPrevValue('prevDistance');
+            context.distance.totalLabel = this.#getMoveIndex(context.distance.total);
 
             const movementAction = token.document.movementAction;
             context.movementActionKeyPath = `movement.action.${movementAction}`;
@@ -35,29 +37,29 @@ export class HMRuler extends foundry.canvas.placeables.tokens.TokenRuler {
     * Gets the formatted previous movement cost from a token's combatant.
     * @private
     *
+    * @param {'cost'|'distance'} key - Which system.key to retrieve the value of.
     * @returns {string|undefined} Previous movement cost, formatted as a string to two decimal
     *                             places, or undefined if there was no cost.
     */
-    #getCostPrev() {
-        const { system } = this.token.combatant;
-        const unscaledPrevCost = Number(system?.cost?.prev);
+    #getFormattedPrevValue(key) {
+        const unscaledPrevCost = Number(this.token?.combatant.getFlag(SYSTEM_ID, key));
         return unscaledPrevCost ? unscaledPrevCost.toFixed(2) : undefined;
     }
 
     /**
-     *  Calculates movement tier index based on token's cost.total and actor's movespd.
+     *  Calculates movement tier index based on token's total movement and actor's movespd.
      *  @private
      *
-     *  @param {number|string} cost - Total movement cost to compare against movespd.
+     *  @param {number|string} moved - Total movement to compare against movespd.
      */
-    #getMoveIndex(cost) {
-        const costValue = Number(cost);
-        if (!costValue) return undefined;
+    #getMoveIndex(moved) {
+        const moveValue = Number(moved);
+        if (!moveValue) return undefined;
 
         const movespd = this.token.actor.movespd.slice(1);
         movespd.push(Infinity);
 
-        const moveidx = movespd.findIndex((m) => m >= costValue);
+        const moveidx = movespd.findIndex((m) => m >= moveValue);
         return moveidx;
     }
 }
