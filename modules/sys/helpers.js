@@ -60,7 +60,7 @@ export const registerHandlebarsHelpers = () => {
      * @returns {any|string} Found value, or 'INVALID_KEY' if not found.
      */
     Handlebars.registerHelper('findConfigValue', (pathString, key) => {
-        if (!pathString || !key) return undefined;
+        if (!pathString || key === undefined) return undefined;
         const pathParts = pathString.split('.');
         const idxChildObj = pathParts.reduce((currentLevel, part) => currentLevel?.[part], idx);
         const finalValue = idxChildObj?.[key];

@@ -93,7 +93,7 @@ export const getDiceSum = (roll) => {
 
 /**
  * A map of data type names to parser functions.
- * Used to parse string inputs into appropriate types for updating `system.coins`.
+ * Used to parse string inputs into appropriate types for updating numbers.
  *
  * @type {Object<string, (val: string) => number>}
  */
