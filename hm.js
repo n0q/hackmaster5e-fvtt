@@ -21,7 +21,7 @@ import { HMCombat } from './modules/combat/combat.js';
 import { HMCombatTracker } from './modules/combat/combat-tracker.js';
 import { HMDie } from './modules/sys/dice.js';
 import { HMToken } from './modules/sys/token.js';
-import { HMRuler } from './modules/sys/ruler.js';
+import { HMTokenRuler } from './modules/sys/token-ruler.js';
 import { HMActiveEffect } from './modules/sys/effects.js';
 import { registerSystemSettings } from './modules/sys/settings.js';
 import { registerHooks } from './modules/hooks/hooks.js';
@@ -83,7 +83,7 @@ function registerConfig() {
         : CONFIG.Dice.types.push(HMDie);
 
     CONFIG.Token.objectClass = HMToken;
-    CONFIG.Token.rulerClass = HMRuler;
+    CONFIG.Token.rulerClass = HMTokenRuler;
     const { walk, displace } = CONFIG.Token.movement.actions;
     CONFIG.Token.movement.actions = { displace, walk };
     CONFIG.ui.combat = HMCombatTracker;
