@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [0.5.0] - 2025-07-31
 
 ### Added
 
@@ -17,7 +17,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## Fixed
 
-- Popout chat correctly uses system styles.
+- Pop-out chat correctly uses system styles.
 
 ## [0.4.30] - 2025-07-28
 

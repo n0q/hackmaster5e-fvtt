@@ -13,19 +13,20 @@
 
 /* Styles limited to hackmaster sheets */
 .hackmaster {
-    @include meta.load-css('parts/forms');
-    @include meta.load-css('parts/resource');
-    @include meta.load-css('parts/tabs');
-    @include meta.load-css('parts/tooltips');
-    @include meta.load-css('parts/skills');
-    @include meta.load-css('parts/cards');
-    @include meta.load-css('parts/ui');
-    @include meta.load-css('parts/dialog');
-    @include meta.load-css('layout/actor-sheet');
-    @include meta.load-css('layout/inventory');
-    @include meta.load-css('layout/bio');
+  @include meta.load-css('parts/forms');
+  @include meta.load-css('parts/resource');
+  @include meta.load-css('parts/tabs');
+  @include meta.load-css('parts/tooltips');
+  @include meta.load-css('parts/skills');
+  @include meta.load-css('parts/cards');
+  @include meta.load-css('parts/ui');
+  @include meta.load-css('parts/dialog');
+  @include meta.load-css('layout/actor-sheet');
+  @include meta.load-css('layout/inventory');
+  @include meta.load-css('layout/bio');
 }
 
+/* hackmaster styles 2.0 */
 .hackmaster2 {
   @include meta.load-css('hackmaster2/abstracts/mixins');
   @include meta.load-css('hackmaster2/abstracts/variables');
@@ -37,26 +38,26 @@
 
 /* Styles which override foundry core */
 .window-app {
-    --font-primary: 'Korinan', 'Gentium', 'Roboto', serif;
+  --font-primary: 'Korinan', 'Gentium', 'Roboto', serif;
 }
 
 #chat,
 #chat-popout,
 #chat-notifications {
-    --font-body: 'Korinan', 'Gentium', 'Roboto', serif;
-    @include meta.load-css('overrides/chat');
+  --font-body: 'Korinan', 'Gentium', 'Roboto', serif;
+  @include meta.load-css('overrides/chat');
 
-    .message-content, .message-header, .dice-formula, .dice-total {
-        font-family: var(--font-body);
-    }
+  .message-content, .message-header, .dice-formula, .dice-total {
+    font-family: var(--font-body);
+  }
 }
 
 #combat,
 #combat-popout {
-    @include meta.load-css('overrides/combat');
+  @include meta.load-css('overrides/combat');
 }
 
 
 #measurement {
-    @include meta.load-css('overrides/measurement');
+  @include meta.load-css('overrides/measurement');
 }
