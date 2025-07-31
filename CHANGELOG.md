@@ -5,9 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
-### Changed
+### Added
 
 - New critical hit dialog with added functionality.
+
+### Changed
+
+- Critical hit dialog upgrades.
 - Ruler styling tweaks.
 - Chat style tweaks.
 

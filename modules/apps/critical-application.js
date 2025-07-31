@@ -11,6 +11,7 @@ export class CriticalPrompt extends HMApplication {
     static PARTS = {
         content: {
             template: systemPath("templates/dialog/critical-content-app.hbs"),
+            classes: ["flexrow"],
         },
         control: {
             template: "templates/generic/form-footer.hbs",
@@ -21,6 +22,7 @@ export class CriticalPrompt extends HMApplication {
     static #OVERRIDE_OPTIONS = {
         actions: { rollSubmit: CriticalPrompt.submitAction },
         form: { submitOnChange: true },
+        position: { width: 550 },
     };
 
     /** @inheritdoc */
@@ -64,6 +66,13 @@ export class CriticalPrompt extends HMApplication {
         context.defSize = HMCONST.SCALE.MEDIUM;
     }
 
+    /**
+     * Handles the submit action by marking the action as confirmed
+     * and closing the associated component or dialog.
+     *
+     * @param {SubmitEvent} _event - The form submit event (unused).
+     * @param {HTMLElement} _target - The HTML element that triggered the action (unused).
+     */
     static submitAction(_event, _target) {
         this._setConfirmed(true);
         this.close();

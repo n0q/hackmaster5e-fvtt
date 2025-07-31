@@ -45,7 +45,6 @@ export class HMApplication extends HandlebarsApplicationMixin(ApplicationV2) {
      * A read-only flag indicating whether the application was closed via a confirmation action.
      * @returns {boolean}
      */
-
     get isConfirmed() {
         return this.#isConfirmed;
     }
@@ -74,7 +73,7 @@ export class HMApplication extends HandlebarsApplicationMixin(ApplicationV2) {
     /** @inheritdoc */
     static DEFAULT_OPTIONS = {
         tag: "form",
-        classes: ["hackmaster"],
+        classes: ["hackmaster2", "dialog", "standard-form"],
         form: {
             handler: HMApplication.#formHandler,
             submitOnClose: false,
@@ -85,16 +84,13 @@ export class HMApplication extends HandlebarsApplicationMixin(ApplicationV2) {
             width: 450,
             height: "auto",
         },
-        window: {
-            contentClasses: ["form", "dialog"],
-        },
     }
 
     /**
      * Submission handler.
      * @this {HMApplication}
      * @param {SubmitEvent} event
-     * @param {HTMLFOrmElement} form
+     * @param {HTMLFormElement} form
      * @param {FormDataExtended} formData
      */
     static #formHandler(event, form, formData) {
