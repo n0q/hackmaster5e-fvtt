@@ -28,6 +28,7 @@ export class CriticalCalculatorSchema extends foundry.abstract.DataModel {
             dmg: new fields.NumberField({ ...numberOpts, min: 0 }),
             dmgType: new fields.NumberField(dmgTypeOpts),
             dr: new fields.NumberField({ ...numberOpts, min: 0 }),
+            bonus: new fields.NumberField(numberOpts),
         };
     }
 }

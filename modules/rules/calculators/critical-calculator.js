@@ -27,7 +27,7 @@ export function calculateCritFormula({ atkSize, defSize } = {}) {
     const sizeDelta = (Number(atkSize) || 0) - (Number(defSize) || 0);
     const die = 1000 * (10 - (Math.abs(sizeDelta)));
     const mod = 1000 * Math.max(0, sizeDelta);
-    return mod ? `d${die} + ${mod}` : `d${die}`;
+    return mod ? `1d${die} + ${mod}` : `1d${die}`;
 }
 
 /**
@@ -38,11 +38,13 @@ export function calculateCritFormula({ atkSize, defSize } = {}) {
  * @param {number} [params.dmg=0] - The damage value.
  * @param {number} [params.defRoll=0] - The defense roll value.
  * @param {number} [params.dr=0] - The damage reduction value.
+ * @param {number} [params.bonus=0] - A bonus severity modifier.
  * @returns {number} The severity of the critical hit.
  */
-export function calculateCritSeverity({ atkRoll, dmg, defRoll, dr } = {}) {
+export function calculateCritSeverity({ atkRoll, dmg, defRoll, dr, bonus } = {}) {
     const attacker = (Number(atkRoll) || 0) + (Number(dmg) || 0);
     const defender = (Number(defRoll) || 0) + (Number(dr) || 0);
-    const severity = parseInt(attacker - defender) || 0;
+    const modifier = Number(bonus) || 0;
+    const severity = parseInt(attacker + modifier - defender) || 0;
     return Math.max(severity, 0);
 }
