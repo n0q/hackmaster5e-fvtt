@@ -1,0 +1,50 @@
+@use '../abstracts/variables' as vars;
+
+.form-group {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: vars.$spacing-sm;
+  padding: vars.$spacing-sm 0;
+
+  &--row-full {
+    width: 100%;
+  }
+
+  &--column {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  &--align-start {
+    justify-content: flex-start;
+  }
+
+  &__label {
+    font-weight: bold;
+    flex-shrink: 0;
+    min-width: 4rem;
+
+    &--centered {
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  &__control {
+    flex-grow: 1;
+    width: 100%;
+    min-width: 4rem;
+
+    &--narrow {
+      flex-grow: 0;
+      width: 4rem;
+    }
+
+    &--medium {
+      flex-grow: 0;
+      width: 8rem;
+    }
+  }
+}

@@ -1,0 +1,10 @@
+@mixin text-glow($_textShadow: variables.$color-text-glow,) {
+    @if $_textShadow == 'reset' {
+        font-weight: initial;
+        text-shadow: initial;
+    } @else {
+        font-weight: bold;
+        text-shadow: $_textShadow;
+        transition: text-shadow 0.25s;
+    }
+}

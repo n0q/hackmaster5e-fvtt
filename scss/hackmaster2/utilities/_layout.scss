@@ -1,0 +1,5 @@
+@use '../abstracts/variables' as vars;
+
+.flexrow--gapped-lg {
+  gap: 0 vars.$spacing-lg;
+}
