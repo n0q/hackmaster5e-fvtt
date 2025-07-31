@@ -1,4 +1,4 @@
-<form class='hackmaster'>
+<section>
     <section class='grid-2col' style='gap: 0 20px;'>
         <span>
             <label style='display: block; text-align: center;'>Attacker</label>
@@ -12,13 +12,13 @@
     <section class='grid-2col' style='gap: 0 20px;'>
         <span class='form-group'>
             <label>{{localize 'HM.size'}}</label>
-            <select name='atkSize' class='bind focus' data-prop='atkSize'>
+            <select name="atkSize" data-dtype="Number">
                 {{selectOptions (findConfigObj 'scale' omit='0') selected=atkSize localize=true}}
             </select>
         </span>
         <span class='form-group'>
             <label>{{localize 'HM.size'}}</label>
-            <select name='defSize' class='bind' data-prop='defSize'>
+            <select name='defSize' data-dtype="Number">
                 {{selectOptions (findConfigObj 'scale' omit='0') selected=defSize localize=true}}
             </select>
         </span>
@@ -26,35 +26,27 @@
     <section class='grid-2col' style='gap: 0 20px;'>
         <span class='form-group'>
             <label>{{localize 'HM.attack'}} Roll</label>
-            <input name='atkRoll' value='{{atkRoll}}' class='bind' data-prop='atkRoll' type='number'/>
+            <input name='atkRoll' value='{{atkRoll}}' autofocus type='number'/>
         </span>
         <span class='form-group'>
             <label>{{localize 'HM.defense'}} Roll</label>
-            <input name='defRoll' value='{{defRoll}}' class='bind' data-prop='defRoll' type='number'/>
+            <input name='defRoll' value='{{defRoll}}' type='number'/>
         </span>
     </section>
     <section class='grid-2col' style='gap: 0 20px;'>
         <span class='form-group'>
             <label>{{localize 'HM.damage'}}</label>
-            <input name='dmg' value='{{dmg}}' class='bind' data-prop='dmg' type='number'/>
+            <input name='dmg' value='{{dmg}}' type='number'/>
         </span>
         <span class='form-group'>
             <label>{{localize 'HM.dr'}}</label>
-            <input name='dr' value='{{dr}}' class='bind' data-prop='dr' type='number'/>
+            <input name='dr' value='{{dr}}' type='number'/>
         </span>
     </section>
     <span class='form-group'>
         <label>{{localize 'HM.damage'}} {{localize 'HM.type'}}</label>
-        <select name='dmgType' class='bind' data-prop='dmgType'>
+        <select name='dmgType' data-dtype="Number">
             {{selectOptions (findConfigObj 'dmgType') selected=dmgType localize=true}}
         </select>
     </span>
-    <section class='dialog-buttons'>
-        <button type='submit' class='dialog-button normal default'
-            data-prop='shieldHit'
-            data-value=false
-            data-render=false>
-            {{localize 'HM.roll'}}
-        </button>
-    </section>
-</form>
+</section>

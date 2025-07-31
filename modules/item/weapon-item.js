@@ -1,12 +1,14 @@
-import { SYSTEM_ID, HMCONST, HMTABLES } from '../tables/constants.js';
-import { CRITTABLE } from '../tables/crits.js';
-import { FUMBLETABLE } from '../tables/fumbles.js';
-import { HMItem, advanceClock, setStatusEffectOnToken, unsetStatusEffectOnToken } from './item.js';
-import { HMChatMgr } from '../mgr/chatmgr.js';
-import { HMChatFactory, CHAT_TYPE } from '../chat/chat-factory.js';
-import { HMDialogFactory } from '../dialog/dialog-factory.js';
-import { transformDamageFormula } from '../sys/utils.js';
-import { HMSocket, SOCKET_TYPES } from '../sys/sockets.js';
+import { SYSTEM_ID, HMCONST, HMTABLES } from "../tables/constants.js";
+import { CRITTABLE } from "../tables/crits.js";
+import { FUMBLETABLE } from "../tables/fumbles.js";
+import { HMItem, advanceClock, setStatusEffectOnToken, unsetStatusEffectOnToken } from "./item.js";
+import { HMChatMgr } from "../mgr/chatmgr.js";
+import { HMChatFactory, CHAT_TYPE } from "../chat/chat-factory.js";
+import { HMDialogFactory } from "../dialog/dialog-factory.js";
+import { transformDamageFormula } from "../sys/utils.js";
+import { HMSocket, SOCKET_TYPES } from "../sys/sockets.js";
+import { CriticalPrompt } from "../apps/critical-application.js";
+import { CriticalCalculator } from "../rules/calculators/critical-calculator.js";
 
 function fromCaller(caller = null) {
     let actor;
@@ -22,7 +24,7 @@ function fromCaller(caller = null) {
     }
 
     // Last resort
-    const smartSelect = game.settings.get(SYSTEM_ID, 'smartSelect');
+    const smartSelect = game.settings.get(SYSTEM_ID, "smartSelect");
     if (!actor && !game.user.isGM && game.user.character && smartSelect) {
         actor = game.user.character;
         [token] = actor.getActiveTokens();
@@ -35,7 +37,7 @@ function getDerivedDamageBonus(actor, context, running) {
     const { mechanical } = context.system.ranged;
     if (mechanical) return { dmg: wBonus };
 
-    const strBonus = actor.getAbilityBonus('str', 'dmg');
+    const strBonus = actor.getAbilityBonus("str", "dmg");
     if (running && strBonus < 0) return { dmg: wBonus - strBonus };
     if (!running && strBonus > 0) return { dmg: wBonus - strBonus };
     return { dmg: wBonus };
@@ -48,7 +50,7 @@ export class HMWeaponItem extends HMItem {
 
         const { quality } = this;
         Object.assign(base, { atk: 0, def: 0, dmg: 0 });
-        Object.keys(mod).forEach((key) => { if (!mod[key]) mod[key] = 0; });
+        Object.keys(mod).forEach(key => { if (!mod[key]) mod[key] = 0; });
         this.system.bonus = { total, base, quality, mod };
     }
 
@@ -58,9 +60,9 @@ export class HMWeaponItem extends HMItem {
 
         const { bonus } = this.system;
         const { total } = bonus;
-        Object.keys(total).forEach((stat) => {
+        Object.keys(total).forEach(stat => {
             total[stat] = Object.keys(bonus)
-                .filter((vector) => vector !== 'mod')
+                .filter(vector => vector !== "mod")
                 .reduce((sum, vector) => sum + (bonus[vector][stat] || 0),
                     -total[stat] || 0);
         });
@@ -69,7 +71,7 @@ export class HMWeaponItem extends HMItem {
     get capabilities() {
         const { SPECIAL } = HMCONST;
         const { caps, jab, ranged } = this.system;
-        const capsArr = Object.keys(caps).filter((key) => caps[key].checked).map((x) => Number(x));
+        const capsArr = Object.keys(caps).filter(key => caps[key].checked).map(x => Number(x));
         capsArr.push(...HMTABLES.weapons.caps.std);
         if (jab.checked) capsArr.push(SPECIAL.JAB);
         ranged.checked ? capsArr.push(...HMTABLES.weapons.caps.ranged)
@@ -87,15 +89,15 @@ export class HMWeaponItem extends HMItem {
     async onClick(ev) {
         ev.preventDefault();
         const { dataset } = ev.currentTarget;
-        if (dataset.op === 'setFlag') await this.actor.setFlag(SYSTEM_ID, dataset.key, dataset.value);
-        if (dataset.op === 'setProperty') {
+        if (dataset.op === "setFlag") await this.actor.setFlag(SYSTEM_ID, dataset.key, dataset.value);
+        if (dataset.op === "setProperty") {
             const { key } = dataset;
-            const value = dataset.dtype === 'Number' ? Number(dataset.value) : dataset.value;
+            const value = dataset.dtype === "Number" ? Number(dataset.value) : dataset.value;
             this.update({ [key]: value });
         }
 
         if (dataset.redraw) {
-            this.actor.getActiveTokens().forEach((t) => {
+            this.actor.getActiveTokens().forEach(t => {
                 t.drawReach();
                 HMSocket.emit(SOCKET_TYPES.DRAW_REACH, t.id);
             });
@@ -119,7 +121,7 @@ export class HMWeaponItem extends HMItem {
             opt.isCombatant = Number.isInteger(comData.initiative) && comData.round > 0;
         }
 
-        const dialog = 'atk';
+        const dialog = "atk";
         const dataset = { dialog, itemId: weapon };
         const dialogResp = await HMDialogFactory(dataset, actor, opt);
         const { context, resp } = dialogResp;
@@ -135,16 +137,16 @@ export class HMWeaponItem extends HMItem {
 
             // Full Parry, Defensive Fighting exclusivity.
             specialMove === SPECIAL.FULLPARRY
-                ? setStatusEffectOnToken(comData, 'fullparry', resp.advance)
-                : await unsetStatusEffectOnToken(comData, 'fullparry');
+                ? setStatusEffectOnToken(comData, "fullparry", resp.advance)
+                : await unsetStatusEffectOnToken(comData, "fullparry");
 
             const dList = Object.values(HMTABLES.effects.defense);
             if (defense) dList.splice(defense - 1, 1);
-            dList.map((sfx) => unsetStatusEffectOnToken(comData, sfx));
+            dList.map(sfx => unsetStatusEffectOnToken(comData, sfx));
             if (defense) setStatusEffectOnToken(comData, HMTABLES.effects.defense[defense]);
         }
 
-        if (button !== 'declare') {
+        if (button !== "declare") {
             const { atk } = HMTABLES.formula;
             const formula = specialMove < 16 ? atk[SPECIAL.STANDARD] : atk[specialMove];
             const rollContext = { resp, ...context.system };
@@ -161,15 +163,15 @@ export class HMWeaponItem extends HMItem {
         if (resp.advance) await advanceClock(comData, dialogResp, true);
 
         if (opt.isCombatant) {
-            unsetStatusEffectOnToken(comData, 'gground');
-            unsetStatusEffectOnToken(comData, 'scamper');
+            unsetStatusEffectOnToken(comData, "gground");
+            unsetStatusEffectOnToken(comData, "scamper");
 
             if (specialMove === SPECIAL.AGGRESSIVE) {
-                setStatusEffectOnToken(comData, 'aggressive');
+                setStatusEffectOnToken(comData, "aggressive");
             }
 
             if (specialMove === SPECIAL.CHARGE2 || specialMove === SPECIAL.CHARGE4) {
-                setStatusEffectOnToken(comData, 'charge', 5);
+                setStatusEffectOnToken(comData, "charge", 5);
             }
         }
     }
@@ -178,7 +180,7 @@ export class HMWeaponItem extends HMItem {
         const { actor } = fromCaller(caller);
         if (!actor) return;
 
-        const dialog = 'dmg';
+        const dialog = "dmg";
         const dataset = { dialog, itemId: weapon };
         const dialogResp = await HMDialogFactory(dataset, actor);
         const { context, resp } = dialogResp;
@@ -219,7 +221,7 @@ export class HMWeaponItem extends HMItem {
     static async rollFumble({ caller } = {}) {
         const { actor } = fromCaller(caller);
 
-        const dataset = { dialog: 'fumble', caller: actor };
+        const dataset = { dialog: "fumble", caller: actor };
         const dialogResp = await HMDialogFactory(dataset, actor);
         dataset.resp = dialogResp.resp;
 
@@ -235,7 +237,7 @@ export class HMWeaponItem extends HMItem {
         dataset.resp.freeAttack = !!(dataset.roll.total % 2);
 
         if (dataset.resp.comp) {
-            dataset.resp.compRoll = await new Roll('d6').evaluate();
+            dataset.resp.compRoll = await new Roll("d6").evaluate();
         }
 
         const chatMgr = new HMChatMgr();
@@ -254,20 +256,10 @@ export class HMWeaponItem extends HMItem {
      * @async
      */
     static async rollCrit({ caller } = {}) {
-        const { actor } = fromCaller(caller);
-        const dataset = { dialog: 'crit', caller: actor };
-        const dialogResp = await HMDialogFactory(dataset, actor);
-        const { resp } = dialogResp;
-
-        const formula = CRITTABLE.formula(resp.atkSize, resp.defSize);
-        const roll = (resp.atkRoll <= resp.defRoll) ? false : await new Roll(formula).evaluate();
-
-        const bData = {
-            caller: caller?.uuid,
-            resp,
-            roll: roll.toJSON(),
-        };
-        const builder = await HMChatFactory.create(CHAT_TYPE.CRITICAL, bData);
+        const dialogData = await CriticalPrompt.create();
+        const builderData = await CriticalCalculator.calculate(dialogData);
+        builderData.caller = caller?.uuid;
+        const builder = await HMChatFactory.create(CHAT_TYPE.CRITICAL, builderData);
         builder.createChatMessage();
     }
 
@@ -287,7 +279,7 @@ export class HMWeaponItem extends HMItem {
             opt.isCombatant = Number.isInteger(comData.initiative) && comData.round > 0;
         }
 
-        const dialog = 'def';
+        const dialog = "def";
         const dataset = { dialog, itemId: weapon };
         const dialogResp = await HMDialogFactory(dataset, actor);
         const { resp } = dialogResp;
@@ -295,7 +287,7 @@ export class HMWeaponItem extends HMItem {
 
         if (resp.dodge) {
             resp.dodge = resp.specialMove === HMCONST.SPECIAL.RDEFEND
-                ? Math.max(actor.getAbilityBonus('dex', 'def'), 0)
+                ? Math.max(actor.getAbilityBonus("dex", "def"), 0)
                 : 1;
         }
 
@@ -313,14 +305,14 @@ export class HMWeaponItem extends HMItem {
         builder.createChatMessage();
 
         if (opt.isCombatant) {
-            unsetStatusEffectOnToken(comData, 'aggressive');
+            unsetStatusEffectOnToken(comData, "aggressive");
 
             if (dialogResp.resp.specialMove === HMCONST.SPECIAL.GGROUND) {
-                setStatusEffectOnToken(comData, 'gground');
+                setStatusEffectOnToken(comData, "gground");
             }
 
             if (dialogResp.resp.specialMove === HMCONST.SPECIAL.SCAMPER) {
-                setStatusEffectOnToken(comData, 'scamper');
+                setStatusEffectOnToken(comData, "scamper");
             }
         }
     }

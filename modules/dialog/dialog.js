@@ -1,20 +1,19 @@
 /**
  * @deprecated
  */
-import { HMCONST } from '../tables/constants.js';
-import { AttackPrompt } from '../apps/legacy/attack.js';
-import { CastPrompt } from '../apps/legacy/cast.js';
-import { CritPrompt } from '../apps/legacy/crit.js';
-import { DamagePrompt } from '../apps/legacy/damage.js';
-import { DefendPrompt } from '../apps/legacy/defend.js';
-import { FumblePrompt } from '../apps/legacy/fumble.js';
-import { SkillPrompt } from '../apps/legacy/skill.js';
-import { WoundPrompt } from '../apps/legacy/wound.js';
+import { HMCONST } from "../tables/constants.js";
+import { AttackPrompt } from "../apps/legacy/attack.js";
+import { CastPrompt } from "../apps/legacy/cast.js";
+import { DamagePrompt } from "../apps/legacy/damage.js";
+import { DefendPrompt } from "../apps/legacy/defend.js";
+import { FumblePrompt } from "../apps/legacy/fumble.js";
+import { SkillPrompt } from "../apps/legacy/skill.js";
+import { WoundPrompt } from "../apps/legacy/wound.js";
 
 function getDialogData() {
     return {
         rollModes: CONFIG.Dice.rollModes,
-        rollMode: game.settings.get('core', 'rollMode'),
+        rollMode: game.settings.get("core", "rollMode"),
     };
 }
 
@@ -23,7 +22,7 @@ function getWeapons(actor, itemId) {
     if (itemId) {
         weaponList.push(actor.wprofiles.get(itemId));
     } else {
-        weaponList = actor.wprofiles.filter((a) => HMCONST.ITEM_STATE.EQUIPPED <= a.system.state);
+        weaponList = actor.wprofiles.filter(a => HMCONST.ITEM_STATE.EQUIPPED <= a.system.state);
     }
 
     const weapons = weaponList.sort(
@@ -34,7 +33,7 @@ function getWeapons(actor, itemId) {
 
 function getSpells(actor, itemId) {
     if (itemId) return [actor.items.get(itemId)];
-    return actor.items.filter((a) => a.type === 'spell');
+    return actor.items.filter(a => a.type === "spell");
 }
 
 function focusById(id) {
@@ -48,8 +47,8 @@ export class HMDialog {
         dialogData.caller = caller;
         if (opt.isCombatant) dialogData.inCombat = true;
 
-        const title = `${caller.name}: ${game.i18n.localize('HM.dialog.getAttackTitle')}`;
-        dialogResp.resp = await new Promise((resolve) => {
+        const title = `${caller.name}: ${game.i18n.localize("HM.dialog.getAttackTitle")}`;
+        dialogResp.resp = await new Promise(resolve => {
             const options = { resolve, title };
             new AttackPrompt(dialogData, options).render(true);
         });
@@ -70,8 +69,8 @@ export class HMDialog {
             dialogData.private = dataset.isNPC;
         }
 
-        const title = game.i18n.localize('HM.dialog.getCastTitle');
-        dialogResp.resp = await new Promise((resolve) => {
+        const title = game.i18n.localize("HM.dialog.getCastTitle");
+        dialogResp.resp = await new Promise(resolve => {
             const options = { resolve, title };
             new CastPrompt(dialogData, options).render(true);
         });
@@ -85,27 +84,11 @@ export class HMDialog {
         dialogData.caller = caller;
 
         const title = caller
-            ? `${caller.name}: ${game.i18n.localize('HM.dialog.getFumbleTitle')}`
-            : `${game.i18n.localize('HM.dialog.getFumbleTitle')}`;
-        dialogResp.resp = await new Promise((resolve) => {
+            ? `${caller.name}: ${game.i18n.localize("HM.dialog.getFumbleTitle")}`
+            : `${game.i18n.localize("HM.dialog.getFumbleTitle")}`;
+        dialogResp.resp = await new Promise(resolve => {
             const options = { resolve, title };
             new FumblePrompt(dialogData, options).render(true);
-        });
-
-        return dialogResp;
-    }
-
-    static async getCritDialog(_dataset, caller) {
-        const dialogResp = { caller };
-        const dialogData = getDialogData();
-        dialogData.caller = caller;
-
-        const title = caller
-            ? `${caller.name}: ${game.i18n.localize('HM.dialog.getCritTitle')}`
-            : `${game.i18n.localize('HM.dialog.getCritTitle')}`;
-        dialogResp.resp = await new Promise((resolve) => {
-            const options = { resolve, title };
-            new CritPrompt(dialogData, options).render(true);
         });
 
         return dialogResp;
@@ -116,8 +99,8 @@ export class HMDialog {
         const dialogData = getWeapons(caller, dataset?.itemId);
         dialogData.caller = caller;
 
-        const title = `${caller.name}: ${game.i18n.localize('HM.dialog.getDamageTitle')}`;
-        dialogResp.resp = await new Promise((resolve) => {
+        const title = `${caller.name}: ${game.i18n.localize("HM.dialog.getDamageTitle")}`;
+        dialogResp.resp = await new Promise(resolve => {
             const options = { resolve, title };
             new DamagePrompt(dialogData, options).render(true);
         });
@@ -131,8 +114,8 @@ export class HMDialog {
         const dialogData = getWeapons(caller, dataset?.itemId);
         dialogData.caller = caller;
 
-        const title = `${caller.name}: ${game.i18n.localize('HM.dialog.getDefendTitle')}`;
-        dialogResp.resp = await new Promise((resolve) => {
+        const title = `${caller.name}: ${game.i18n.localize("HM.dialog.getDefendTitle")}`;
+        dialogResp.resp = await new Promise(resolve => {
             const options = { resolve, title };
             new DefendPrompt(dialogData, options).render(true);
         });
@@ -148,10 +131,10 @@ export class HMDialog {
 
         const titlePre = dataset.callers > 1 ? `${dataset.callers}` : `${caller.name}:`;
         const titlePost = dataset.callers > 1
-            ? game.i18n.localize('HM.dialog.getSkillTitle2')
-            : game.i18n.localize('HM.dialog.getSkillTitle1');
+            ? game.i18n.localize("HM.dialog.getSkillTitle2")
+            : game.i18n.localize("HM.dialog.getSkillTitle1");
         const title = `${titlePre} ${game.i18n.localize(dialogData.skill.name)} ${titlePost}`;
-        dialogResp.resp = await new Promise((resolve) => {
+        dialogResp.resp = await new Promise(resolve => {
             const options = { resolve, title };
             new SkillPrompt(dialogData, options).render(true);
         });
@@ -162,22 +145,22 @@ export class HMDialog {
     static async getInitDieDialog(caller) {
         const dialogData = getDialogData();
         const dialogResp = { caller };
-        const template = 'systems/hackmaster5e/templates/dialog/getInitDie.hbs';
+        const template = "systems/hackmaster5e/templates/dialog/getInitDie.hbs";
 
         dialogResp.resp = await Dialog.wait({
-            title: game.i18n.localize('HM.dialog.getInitDieTitle'),
+            title: game.i18n.localize("HM.dialog.getInitDieTitle"),
             content: await renderTemplate(template, dialogData),
             buttons: {
                 getdie: {
-                    label: game.i18n.localize('HM.roll'),
-                    callback: () => ({ die: document.getElementById('choices').value }),
+                    label: game.i18n.localize("HM.roll"),
+                    callback: () => ({ die: document.getElementById("choices").value }),
                 },
                 start: {
-                    label: game.i18n.localize('HM.immediate'),
+                    label: game.i18n.localize("HM.immediate"),
                     callback: () => ({ die: false }),
                 },
             },
-            default: 'getdie',
+            default: "getdie",
         }, { width: 300 });
 
         return dialogResp;
@@ -189,9 +172,9 @@ export class HMDialog {
         dialogData.caller = caller;
 
         const title = caller
-            ? `${caller.name}: ${game.i18n.localize('HM.dialog.setWoundTitle')}`
-            : `${game.i18n.localize('HM.dialog.setWoundTitle')}`;
-        dialogResp.resp = await new Promise((resolve) => {
+            ? `${caller.name}: ${game.i18n.localize("HM.dialog.setWoundTitle")}`
+            : `${game.i18n.localize("HM.dialog.setWoundTitle")}`;
+        dialogResp.resp = await new Promise(resolve => {
             const options = { resolve, title };
             new WoundPrompt(dialogData, options).render(true);
         });
@@ -204,23 +187,23 @@ export class HMDialog {
         const dialogResp = { caller };
 
         const formulaTypeName = game.i18n.localize(`HM.saves.${dataset.formulaType}`);
-        const title = `${formulaTypeName} ${game.i18n.localize('HM.dialog.getSaveTitle')}`;
-        const template = 'systems/hackmaster5e/templates/dialog/getSave.hbs';
+        const title = `${formulaTypeName} ${game.i18n.localize("HM.dialog.getSaveTitle")}`;
+        const template = "systems/hackmaster5e/templates/dialog/getSave.hbs";
 
         dialogResp.resp = await Dialog.wait({
-            render: () => focusById('bonus'),
+            render: () => focusById("bonus"),
             title,
             content: await renderTemplate(template, dialogData),
             buttons: {
                 save: {
-                    label: game.i18n.localize('HM.dialog.getSaveTitle'),
+                    label: game.i18n.localize("HM.dialog.getSaveTitle"),
                     callback: () => ({
-                        bonus: parseInt(document.getElementById('bonus').value, 10) || 0,
-                        rollMode: document.getElementById('rollMode').value,
+                        bonus: parseInt(document.getElementById("bonus").value, 10) || 0,
+                        rollMode: document.getElementById("rollMode").value,
                     }),
                 },
             },
-            default: 'save',
+            default: "save",
         }, { width: 300 });
 
         dialogResp.context = caller;
@@ -232,34 +215,34 @@ export class HMDialog {
         const dialogResp = { caller };
 
         dialogData.ability = game.i18n.localize(`HM.ability.${dataset.ability}`);
-        const title = `${caller.name}: ${dialogData.ability} ${game.i18n.localize('HM.roll')}`;
-        const template = 'systems/hackmaster5e/templates/dialog/getAbility.hbs';
+        const title = `${caller.name}: ${dialogData.ability} ${game.i18n.localize("HM.roll")}`;
+        const template = "systems/hackmaster5e/templates/dialog/getAbility.hbs";
 
         dialogResp.resp = await Dialog.wait({
             title,
             content: await renderTemplate(template, dialogData),
-            render: () => focusById('mod'),
+            render: () => focusById("mod"),
             buttons: {
                 save: {
-                    label: game.i18n.localize('HM.dialog.getAbilityButtonL'),
+                    label: game.i18n.localize("HM.dialog.getAbilityButtonL"),
                     callback: () => ({
                         save: true,
-                        mod: parseInt(document.getElementById('mod').value, 10) || 0,
+                        mod: parseInt(document.getElementById("mod").value, 10) || 0,
                     }),
                 },
                 check: {
-                    label: game.i18n.localize('HM.dialog.getAbilityButtonR'),
+                    label: game.i18n.localize("HM.dialog.getAbilityButtonR"),
                     callback: () => ({
                         save: false,
-                        mod: parseInt(document.getElementById('mod').value, 10) || 0,
+                        mod: parseInt(document.getElementById("mod").value, 10) || 0,
                     }),
                 },
             },
-            default: 'save',
+            default: "save",
         });
 
         dialogResp.context = caller;
-        dialogResp.resp.oper = dialogResp.resp.save ? '+' : '-';
+        dialogResp.resp.oper = dialogResp.resp.save ? "+" : "-";
         return dialogResp;
     }
 }
