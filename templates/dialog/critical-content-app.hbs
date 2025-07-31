@@ -1,0 +1,71 @@
+<section class="flexrow--gapped-lg" style="margin-top: -30px;">
+    <section class="form-group form-group--column">
+        <label class="form-group__label form-group__label--centered">Attacker</label>
+
+        <div class="form-group form-group--row-full">
+            <label class="form-group__label">{{localize "HM.size"}}</label>
+            <div class="form-group__control">
+                <select name="atkSize" data-dtype="Number">
+                    {{selectOptions (findConfigObj "scale" omit="0") selected=atkSize localize=true}}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group form-group--row-full">
+            <label class="form-group__label">{{localize "HM.attack"}} Roll</label>
+            <div class="form-group__control">
+                <input name="atkRoll" value="{{atkRoll}}" autofocus type="number"/>
+            </div>
+        </div>
+
+        <div class="form-group form-group--row-full">
+            <label class="form-group__label">{{localize "HM.damage"}}</label>
+            <div class="form-group__control">
+                <input name="dmg" value="{{dmg}}" autofocus type="number"/>
+            </div>
+        </div>
+
+        <div class="form-group form-group--row-full">
+            <label class="form-group__label">{{localize "HM.damage"}} {{localize "HM.type"}}</label>
+            <div class="form-group__control">
+                <select name="dmgType" data-dtype="Number">
+                    {{selectOptions (findConfigObj "dmgType") selected=dmgType localize=true}}
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <section class="form-group form-group--column">
+        <label class="form-group__label form-group__label--centered">Defender</label>
+
+        <div class="form-group form-group--row-full">
+            <label class="form-group__label">{{localize "HM.size"}}</label>
+            <div class="form-group__control">
+                <select name="defSize" data-dtype="Number">
+                    {{selectOptions (findConfigObj "scale" omit="0") selected=defSize localize=true}}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group form-group--row-full">
+            <label class="form-group__label">{{localize "HM.defense"}} Roll</label>
+            <div class="form-group__control">
+                <input name="defRoll" value="{{defRoll}}" autofocus type="number"/>
+            </div>
+        </div>
+
+        <div class="form-group form-group--row-full">
+            <label class="form-group__label">{{localize "HM.dr"}}</label>
+            <div class="form-group__control">
+                <input name="dr" value="{{dr}}" autofocus type="number"/>
+            </div>
+        </div>
+
+        <div class="form-group form-group--row-full">
+            <label class="form-group__label">Adjustment</label>
+            <div class="form-group__control">
+                <input name="bonus" value="{{bonus}}" autofocus type="number"/>
+            </div>
+        </div>
+    </section>
+</section>

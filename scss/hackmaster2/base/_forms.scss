@@ -1,0 +1,25 @@
+@use '../abstracts/variables' as vars;
+
+.hackmaster2 {
+    input[type='text'],
+    input[type='number'],
+    input[type='select'] {
+        height: 2rem;
+        font-family: vars.$font-primary;
+
+        &[readonly] {
+            background: transparent;
+            border: none;
+            cursor: default;
+        }
+    }
+
+    input[type='number'] {
+        text-align: right;
+    }
+
+    select {
+        height: 2rem;
+        font-family: vars.$font-primary;
+    }
+}
