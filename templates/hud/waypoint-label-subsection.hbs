@@ -1,0 +1,20 @@
+<section class="waypoint-label__total">
+    <span class="total-measurement">{{total}} {{units}}</span>
+    {{#if inCombat}}
+        <span class="waypoint-label__total--sub">
+            {{localize (findConfigValue movementActionKeyPath totalLabel)}}
+        </span>
+    {{/if}}
+</section>
+
+<section class="waypoint-label__metadata {{#if inCombat}}waypoint-label__metadata--in-combat{{/if}}">
+    {{#if delta}}
+        <span class="delta-measurement">({{delta}})</span>
+    {{/if}}
+    {{#if (and inCombat prev)}}
+        <span class="waypoint-label__measurement--prev">
+            <i class="fa-solid fa-clock-rotate-left hm-inline-small"></i>
+            {{prev}}
+        </span>
+    {{/if}}
+</section>

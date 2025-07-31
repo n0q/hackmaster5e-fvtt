@@ -12,9 +12,14 @@
   }
 
   &__metadata {
-    display: grid;
-    grid-template-rows: repeat(2, 1fr);
-    grid-gap: 0;
+    display: flex;
+    justify-content: center;
+
+    &--in-combat {
+      display: grid;
+      grid-template-rows: repeat(2, 1fr);
+      grid-gap: 0;
+    }
 
     .delta-measurement {
       grid-row: 1;

@@ -1,10 +1,10 @@
-import { SYSTEM_ID, systemPath } from '../tables/constants.js';
+import { SYSTEM_ID, systemPath } from "../tables/constants.js";
 
 /**
  * @extends foundry.canvas.placeables.tokens.TokenRuler
  */
 export class HMTokenRuler extends foundry.canvas.placeables.tokens.TokenRuler {
-    static WAYPOINT_LABEL_TEMPLATE = systemPath('templates/hud/waypoint-label.hbs');
+    static WAYPOINT_LABEL_TEMPLATE = systemPath("templates/hud/waypoint-label.hbs");
 
     /**
      * Adds combat-specific context for rendering a waypoint label.
@@ -22,9 +22,9 @@ export class HMTokenRuler extends foundry.canvas.placeables.tokens.TokenRuler {
         const { token } = this;
         context.inCombat = token.inCombat;
         if (context.inCombat && token.combatant) {
-            context.cost.prev = this.#getFormattedPrevValue('prevCost');
+            context.cost.prev = this.#getFormattedPrevValue("prevCost");
             context.cost.totalLabel = this.#getMoveIndex(context.cost.total);
-            context.distance.prev = this.#getFormattedPrevValue('prevDistance');
+            context.distance.prev = this.#getFormattedPrevValue("prevDistance");
             context.distance.totalLabel = this.#getMoveIndex(context.distance.total);
 
             const movementAction = token.document.movementAction;
@@ -59,7 +59,7 @@ export class HMTokenRuler extends foundry.canvas.placeables.tokens.TokenRuler {
         const movespd = this.token.actor.movespd.slice(1);
         movespd.push(Infinity);
 
-        const moveidx = movespd.findIndex((m) => m >= moveValue);
+        const moveidx = movespd.findIndex(m => m >= moveValue);
         return moveidx;
     }
 

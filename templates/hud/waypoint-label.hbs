@@ -8,45 +8,15 @@
     {{/if}}
 
     {{#if cost}}
-        <section class="waypoint-label__total">
-            <span class="total-measurement">{{cost.total}} {{cost.units}}</span>
-            {{#if inCombat}}
-                <span class="waypoint-label__total--sub">
-                    {{localize (findConfigValue movementActionKeyPath cost.totalLabel)}}
-                </span>
-            {{/if}}
-        </section>
-        <section class="waypoint-label__metadata">
-            {{#if cost.delta}}
-                <span class="delta-measurement">({{cost.delta}})</span>
-            {{/if}}
-            {{#if (and inCombat cost.prev)}}
-                <span class="waypoint-label__measurement--prev">
-                    <i class="fa-solid fa-clock-rotate-left hm-inline-small"></i>
-                    {{cost.prev}}
-                </span>
-            {{/if}}
-        </section>
+        {{#with cost}}
+            {{> "systems/hackmaster5e/templates/hud/waypoint-label-subsection.hbs"
+                inCombat=../inCombat movementActionKeyPath=../movementActionKeyPath }}
+        {{/with}}
     {{else}}
-        <section class="waypoint-label__total">
-            <span class="total-measurement">{{distance.total}} {{units}}</span>
-            {{#if inCombat}}
-                <span class="waypoint-label__total--sub">
-                    {{localize (findConfigValue movementActionKeyPath distance.totalLabel)}}
-                </span>
-            {{/if}}
-        </section>
-        <section class="waypoint-label__metadata">
-            {{#if distance.delta}}
-                <span class="delta-measurement">({{distance.delta}})</span>
-            {{/if}}
-            {{#if (and inCombat distance.prev)}}
-                <span class="waypoint-label__measurement--prev">
-                    <i class="fa-solid fa-clock-rotate-left hm-inline-small"></i>
-                    {{distance.prev}}
-                </span>
-            {{/if}}
-        </section>
+        {{#with distance}}
+            {{> "systems/hackmaster5e/templates/hud/waypoint-label-subsection.hbs"
+                inCombat=../inCombat movementActionKeyPath=../movementActionKeyPath }}
+        {{/with}}
     {{/if}}
 
     {{#if (and elevation (not elevation.hidden))}}
