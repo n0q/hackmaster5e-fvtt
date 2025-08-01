@@ -1,19 +1,28 @@
-import { DATA_TYPE_PARSERS } from '../../sys/utils.js';
+import { DATA_TYPE_PARSERS } from "../../sys/utils.js";
 
+/**
+ * Legacy code. Do not enhance.
+ *
+ * This module is actively used but architecturally abandoned and awaiting a complete
+ * rewrite. Do not invest time in refactoring. Just make your minimal needed changes
+ * and then get out.
+ *
+ * @deprecated 0.5.0
+ */
 export class HMItemSheet extends foundry.appv1.sheets.ItemSheet {
     /** @override */
     static get defaultOptions() {
         return foundry.utils.mergeObject(super.defaultOptions, {
-            classes: ['hackmaster', 'sheet', 'item'],
+            classes: ["hackmaster", "sheet", "item"],
             width: 520,
             height: 480,
-            tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'description' }],
+            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }],
         });
     }
 
     /** @override */
     get template() {
-        const path = 'systems/hackmaster5e/templates/item';
+        const path = "systems/hackmaster5e/templates/item";
         return `${path}/item-${this.item.type}-sheet.hbs`;
     }
 
@@ -30,9 +39,9 @@ export class HMItemSheet extends foundry.appv1.sheets.ItemSheet {
     /** @override */
     setPosition(options = {}) {
         const position = super.setPosition(options);
-        const sheetBody = this.element.find('.sheet-body');
+        const sheetBody = this.element.find(".sheet-body");
         const bodyHeight = position.height - 192;
-        sheetBody.css('height', bodyHeight);
+        sheetBody.css("height", bodyHeight);
         return position;
     }
 
@@ -43,9 +52,9 @@ export class HMItemSheet extends foundry.appv1.sheets.ItemSheet {
         super.activateListeners(html);
         if (!this.options.editable) return;
 
-        html.find('.editable').change(this._onEdit.bind(this));
+        html.find(".editable").change(this._onEdit.bind(this));
 
-        $(document).ready(() => $('.autoselect').focus(function autoselect() { $(this).select(); }));
+        $(document).ready(() => $(".autoselect").focus(function autoselect() { $(this).select(); }));
     }
 
     async _onEdit(event) {
