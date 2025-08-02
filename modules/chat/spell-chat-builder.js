@@ -1,8 +1,8 @@
-import { ChatBuilder } from './chat-builder-abstract.js';
-import { HMTABLES } from '../tables/constants.js';
+import { ChatBuilder } from "./chat-builder-abstract.js";
+import { systemPath, HMTABLES } from "../tables/constants.js";
 
 export class SpellChatBuilder extends ChatBuilder {
-    static template = 'systems/hackmaster5e/templates/chat/chat-spell.hbs';
+    static template = systemPath("templates/chat/chat-spell.hbs");
 
     async createChatMessage() {
         const { context, mdata, resp, roll } = this.data;
@@ -11,7 +11,7 @@ export class SpellChatBuilder extends ChatBuilder {
         if (roll) mdata.inline = unescape(roll);
 
         const templateData = { context, mdata, roll, resp };
-        const content = await ChatBuilder.handlebars.renderTemplate(this.template, templateData);
+        const content = await this.renderTemplate(this.template, templateData);
 
         const chatData = { content, resp };
         if (mdata.isNPC) {
@@ -19,7 +19,6 @@ export class SpellChatBuilder extends ChatBuilder {
             chatData.rollMode = CONST.DICE_ROLL_MODES.PRIVATE;
         }
 
-        // const chatMessageData = this.getChatMessageData({content, resp, whisper});
         const chatMessageData = this.getChatMessageData(chatData);
         await ChatMessage.create(chatMessageData);
     }
@@ -31,9 +30,9 @@ export class SpellChatBuilder extends ChatBuilder {
 
         const sLevel = game.i18n.localize(`HM.spellLevels.${system.lidx}`);
         const sType = system.divine
-            ? game.i18n.localize('HM.CHAT.cspell')
-            : game.i18n.localize('HM.CHAT.mspell');
-        mdata.rollFlavor = `${sLevel} ${game.i18n.localize('HM.level')} ${sType}`;
+            ? game.i18n.localize("HM.CHAT.cspell")
+            : game.i18n.localize("HM.CHAT.mspell");
+        mdata.rollFlavor = `${sLevel} ${game.i18n.localize("HM.level")} ${sType}`;
 
         mdata.check = this.getSpellChecks();
         return mdata;
@@ -62,10 +61,10 @@ export class SpellChatBuilder extends ChatBuilder {
 
 function getComponentsString(component) {
     const cList = [];
-    if (component.verbal) cList.push('V');
-    if (component.somatic) cList.push('S');
-    if (component.material) cList.push('M');
-    if (component.catalyst) cList.push('C');
-    if (component.divine) cList.push('DI');
-    return cList.join(', ');
+    if (component.verbal) cList.push("V");
+    if (component.somatic) cList.push("S");
+    if (component.material) cList.push("M");
+    if (component.catalyst) cList.push("C");
+    if (component.divine) cList.push("DI");
+    return cList.join(", ");
 }

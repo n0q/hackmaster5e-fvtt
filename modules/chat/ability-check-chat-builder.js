@@ -1,16 +1,17 @@
-import { ChatBuilder } from './chat-builder-abstract.js';
-import { getResult } from './chat-constants.js';
+import { systemPath } from "../tables/constants.js";
+import { ChatBuilder } from "./chat-builder-abstract.js";
+import { getResult } from "./chat-constants.js";
 
 export class AbilityCheckChatBuilder extends ChatBuilder {
-    static template = 'systems/hackmaster5e/templates/chat/check.hbs';
+    static template = systemPath("templates/chat/check.hbs");
 
     async createChatMessage() {
         const { context, mdata, resp, roll } = this.data;
 
-        const isCompeting = resp.oper === '+';
+        const isCompeting = resp.oper === "+";
 
         const rolls = [roll];
-        const rollFlavor = isCompeting ? 'Competing Ability Check' : 'Ability Check';
+        const rollFlavor = isCompeting ? "Competing Ability Check" : "Ability Check";
         const rollContent = await roll.render({ flavor: rollFlavor });
 
         let rv = false;
@@ -29,7 +30,7 @@ export class AbilityCheckChatBuilder extends ChatBuilder {
 
         mdata.score = context.system.abilities.total[mdata.ability].value;
         const chatData = { rollContent, mdata, resultString };
-        const content = await ChatBuilder.handlebars.renderTemplate(this.template, chatData);
+        const content = await this.renderTemplate(this.template, chatData);
 
         const chatMessageData = this.getChatMessageData({ content, rolls });
         await ChatMessage.create(chatMessageData);

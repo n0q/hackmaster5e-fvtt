@@ -1,12 +1,12 @@
-import { AbilityCheckChatBuilder } from './ability-check-chat-builder.js';
-import { AlertNoteChatBuilder } from './alert-note-chat-builder.js';
-import { CriticalChatBuilder } from './critical-chat-builder.js';
-import { DefenseChatBuilder } from './defense-chat-builder.js';
-import { InitNoteChatBuilder } from './initnote-chat-builder.js';
-import { SaveCheckChatBuilder } from './save-check-chat-builder.js';
-import { SkillCheckChatBuilder } from './skill-check-chat-builder.js';
-import { SpellChatBuilder } from './spell-chat-builder.js';
-import { TraumaCheckChatBuilder } from './trauma-check-chat-builder.js';
+import { AbilityCheckChatBuilder } from "./ability-check-chat-builder.js";
+import { AlertNoteChatBuilder } from "./alert-note-chat-builder.js";
+import { CriticalChatBuilder } from "./critical-chat-builder.js";
+import { DefenseChatBuilder } from "./defense-chat-builder.js";
+import { InitNoteChatBuilder } from "./initnote-chat-builder.js";
+import { SaveCheckChatBuilder } from "./save-check-chat-builder.js";
+import { SkillCheckChatBuilder } from "./skill-check-chat-builder.js";
+import { SpellChatBuilder } from "./spell-chat-builder.js";
+import { TraumaCheckChatBuilder } from "./trauma-check-chat-builder.js";
 
 /**
  * Enumeration for chat factory types.
@@ -15,15 +15,15 @@ import { TraumaCheckChatBuilder } from './trauma-check-chat-builder.js';
  * @enum {Symbol}
  */
 export const CHAT_TYPE = Object.freeze({
-    ABILITY_CHECK: Symbol('cftype_abil_check'),
-    ALERT_NOTE: Symbol('cftype_alert_note'),
-    CRITICAL: Symbol('cftype_critical'),
-    DEFENSE: Symbol('cftype_defense'),
-    INIT_NOTE: Symbol('cftype_init_note'),
-    SAVE_CHECK: Symbol('cftype_save_check'),
-    SKILL_CHECK: Symbol('cftype_skill_check'),
-    SPELL: Symbol('cftype_spell'),
-    TRAUMA_CHECK: Symbol('cftype_trauma_check'),
+    ABILITY_CHECK: Symbol("cftype_abil_check"),
+    ALERT_NOTE: Symbol("cftype_alert_note"),
+    CRITICAL: Symbol("cftype_critical"),
+    DEFENSE: Symbol("cftype_defense"),
+    INIT_NOTE: Symbol("cftype_init_note"),
+    SAVE_CHECK: Symbol("cftype_save_check"),
+    SKILL_CHECK: Symbol("cftype_skill_check"),
+    SPELL: Symbol("cftype_spell"),
+    TRAUMA_CHECK: Symbol("cftype_trauma_check"),
 });
 
 /**
@@ -67,7 +67,7 @@ export class HMChatFactory {
      * @throws {Error} Always throws to prevent direct instantiation.
      */
     constructor() {
-        const msg = '\'new HMChatFactory()\' is unsupported. Use \'HMChatFactory.create(...)\' instead.';
+        const msg = "'new HMChatFactory()' is unsupported. Use 'HMChatFactory.create(...)' instead.";
         throw new TypeError(msg);
     }
 

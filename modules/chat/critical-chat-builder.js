@@ -1,5 +1,3 @@
-const { renderTemplate } = foundry.applications.handlebars;
-
 import { ChatBuilder } from "./chat-builder-abstract.js";
 import { systemPath, SYSTEM_ID } from "../tables/constants.js";
 import { CRITTABLE } from "../tables/crits.js";
@@ -28,7 +26,7 @@ export class CriticalChatBuilder extends ChatBuilder {
         if (useArmorDegredation) Hooks.callAll("armorDamage", 1, game.user.id);
 
         const chatData = { rollContent, mdata, resp };
-        const content = await renderTemplate(this.template, chatData);
+        const content = await this.renderTemplate(this.template, chatData);
         const chatMessageData = this.getChatMessageData({ content });
         await ChatMessage.create(chatMessageData);
     }

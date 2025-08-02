@@ -1,7 +1,8 @@
-import { ChatBuilder } from './chat-builder-abstract.js';
+import { systemPath } from "../tables/constants.js";
+import { ChatBuilder } from "./chat-builder-abstract.js";
 
 export class SaveCheckChatBuilder extends ChatBuilder {
-    static template = 'systems/hackmaster5e/templates/chat/chat-save.hbs';
+    static template = systemPath("templates/chat/chat-save.hbs");
 
     async createChatMessage() {
         const { mdata, resp, roll } = this.data;
@@ -10,7 +11,7 @@ export class SaveCheckChatBuilder extends ChatBuilder {
         const rollContent = await roll.render({ flavor });
 
         const chatData = { rollContent, mdata, resp };
-        const content = await ChatBuilder.handlebars.renderTemplate(this.template, chatData);
+        const content = await renderTemplate(this.template, chatData);
 
         const chatMessageData = this.getChatMessageData({ content, resp });
         await ChatMessage.create(chatMessageData);
