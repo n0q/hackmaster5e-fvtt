@@ -25,8 +25,8 @@ export class HMBeastActorSheet extends HMActorSheet {
     }
 
     /** @override */
-    getData() {
-        const data = super.getData();
+    async getData(options) {
+        const data = await super.getData(options);
         return data;
     }
 

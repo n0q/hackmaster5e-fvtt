@@ -1,3 +1,5 @@
+const { enrichHTML } = foundry.applications.ux.TextEditor.implementation;
+
 import { HMDialogFactory } from "../dialog/dialog-factory.js";
 import { HMChatMgr } from "../mgr/chatmgr.js";
 import { HMContainer } from "../item/container.js";
@@ -27,14 +29,38 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
     }
 
     /** @override */
-    getData() {
-        const data = super.getData();
+    async getData(options) {
+        const data = super.getData(options);
         data.dtypes = ["String", "Number", "Boolean"];
 
         this._prepareBaseItems(data);
         this.#prepareEffects(data);
+        await this.#prepareEnrichedContent(data);
         this._HMprepareSheet(data);
         return data;
+    }
+
+
+    /**
+     * Enriches html content for a sheet's biography fields.
+     *
+     * @param {object} sheetData
+     * @returns {Promise<void>}
+     * @private
+     * @async
+     */
+    async #prepareEnrichedContent(sheetData) {
+        const { system } = sheetData.document;
+        const enrichOpts = { secrets: sheetData.actor?.isOwner, async: true };
+
+        const bioEntries = await Promise.all(
+            Object.entries(system.bio).map(async ([key, value]) => [
+                key,
+                await enrichHTML(value, enrichOpts)
+            ])
+        );
+
+        sheetData.enrichedContent = { bio: Object.fromEntries(bioEntries) };
     }
 
     /**

@@ -39,8 +39,8 @@ export class HMCharacterActorSheet extends HMActorSheet {
     }
 
     /** @override */
-    getData() {
-        const data = super.getData();
+    async getData(options) {
+        const data = await super.getData(options);
 
         prepareCharacterItems(data);
         return data;

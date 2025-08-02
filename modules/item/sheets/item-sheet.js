@@ -1,3 +1,5 @@
+const { enrichHTML } = foundry.applications.ux.TextEditor.implementation;
+
 import { DATA_TYPE_PARSERS } from "../../sys/utils.js";
 
 /**
@@ -29,10 +31,29 @@ export class HMItemSheet extends foundry.appv1.sheets.ItemSheet {
     /* -------------------------------------------- */
 
     /** @override */
-    getData() {
-        const data = super.getData();
-        return data;
+    async getData() {
+        const sheetData = super.getData();
+        await this.#prepareEnrichedContent(sheetData);
+        return sheetData;
     }
+
+    /**
+     * Enriches html content for a sheet's description field.
+     *
+     * @param {object} sheetData
+     * @returns {Promise<void>}
+     * @private
+     * @async
+     */
+    async #prepareEnrichedContent(sheetData) {
+        const { system } = sheetData.document;
+        const enrichOpts = { secrets: sheetData.actor?.isOwner, async: true };
+
+        sheetData.enrichedContent = {
+            description: await enrichHTML(system.description, enrichOpts)
+        };
+    }
+
 
     /* -------------------------------------------- */
 
