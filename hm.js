@@ -75,6 +75,7 @@ function registerConfig() {
     CONFIG.Combat.documentClass = HMCombat;
     CONFIG.Item.documentClass = HMItemFactory;
 
+    Roll.CHAT_TEMPLATE = systemPath("templates/dice/roll.hbs");
     CONFIG.Dice.terms.d = HMDie;
     CONFIG.Dice.types = CONFIG.Dice.types.map(cls => cls.DENOMINATION === "d" ? HMDie : cls);
 

@@ -9,6 +9,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - Added HTML enrichment to item descriptions and actor bios.
 
+### Changed
+
+- Adjusted Roll flavor.
+
 ### Fixed
 
 - Removed 'Minimum' from list of ranged attack ranges.

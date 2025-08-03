@@ -83,7 +83,10 @@ export const preloadHandlebarsTemplates = () => {
         systemPath("templates/dialog/wound.hbs"),
         systemPath("templates/dialog/parts/getRollMode.hbs"),
 
+        systemPath("templates/dice/roll.hbs"),
+
         systemPath("templates/hud/waypoint-label.hbs"),
         systemPath("templates/hud/waypoint-label-subsection.hbs"),
+
     ]);
 };
