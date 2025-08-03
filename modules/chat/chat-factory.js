@@ -1,6 +1,7 @@
 import { AbilityCheckChatBuilder } from "./ability-check-chat-builder.js";
 import { AlertNoteChatBuilder } from "./alert-note-chat-builder.js";
 import { CriticalChatBuilder } from "./critical-chat-builder.js";
+import { DamageChatBuilder } from "./damage-chat-builder.js";
 import { DefenseChatBuilder } from "./defense-chat-builder.js";
 import { InitNoteChatBuilder } from "./initnote-chat-builder.js";
 import { SaveCheckChatBuilder } from "./save-check-chat-builder.js";
@@ -18,6 +19,7 @@ export const CHAT_TYPE = Object.freeze({
     ABILITY_CHECK: Symbol("cftype_abil_check"),
     ALERT_NOTE: Symbol("cftype_alert_note"),
     CRITICAL: Symbol("cftype_critical"),
+    DAMAGE: Symbol("cftype_damage"),
     DEFENSE: Symbol("cftype_defense"),
     INIT_NOTE: Symbol("cftype_init_note"),
     SAVE_CHECK: Symbol("cftype_save_check"),
@@ -40,6 +42,7 @@ const ChatBuilderRegistry = {
     [CHAT_TYPE.ABILITY_CHECK]: AbilityCheckChatBuilder,
     [CHAT_TYPE.ALERT_NOTE]: AlertNoteChatBuilder,
     [CHAT_TYPE.CRITICAL]: CriticalChatBuilder,
+    [CHAT_TYPE.DAMAGE]: DamageChatBuilder,
     [CHAT_TYPE.DEFENSE]: DefenseChatBuilder,
     [CHAT_TYPE.INIT_NOTE]: InitNoteChatBuilder,
     [CHAT_TYPE.SAVE_CHECK]: SaveCheckChatBuilder,

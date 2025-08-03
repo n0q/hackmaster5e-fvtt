@@ -1,3 +1,4 @@
+import { HMCONST } from "../tables/constants.js";
 /**
  * Enumeration for chat result codes.
  * @enum {Symbol}
@@ -18,6 +19,48 @@ export const RESULT_TYPE = {
     SKILL1: Symbol("result_skill_diff"),
     SKILL0: Symbol("result_skill_vdiff"),
     SUPERIOR: Symbol("result_superior"),
+};
+
+/**
+ * Special action modifier chat enumerators.
+ * @enum {string}
+ */
+const COMBAT_MODIFIER_TYPE = {
+    [HMCONST.SPECIAL.JAB]: "HM.jab",
+    [HMCONST.SPECIAL.BACKSTAB]: "HM.backstab",
+    [HMCONST.SPECIAL.FLEEING]: "HM.fleeing",
+    [HMCONST.SPECIAL.SET4CHARGE]: "HM.s4c",
+
+    // Synthetic status flags for boolean inputs.
+    SHIELD_HIT: "HM.blocked",
+    DEFENSIVE: "HM.defensive",
+};
+
+/**
+ * Returns a localized, comma-separated stringh of combat modifier saber-slash
+ * based on special move type and boolean combat states.
+ *
+ * @param {Object} resp - The dialog response object.
+ * @param {number} resp.specialMove - Encoded special move bitflag.
+ * @param {boolean} resp.shieldHit - Is this a shield hit?
+ * @param {boolean} resp.defense - Is the attacker fighting defensively?
+ * @returns {string} Localized modifier description.
+ */
+export const getCombatModifierFlavor = resp => {
+    const { specialMove, shieldHit, defense } = resp;
+
+    const modifierKeys = [
+        COMBAT_MODIFIER_TYPE[specialMove],
+        shieldHit ? COMBAT_MODIFIER_TYPE.SHIELD_HIT : null,
+        defense ? COMBAT_MODIFIER_TYPE.DEFENSIVE : null,
+    ];
+
+    const mods = [];
+    for (const key of modifierKeys) {
+        if (key) mods.push(game.i18n.localize(key));
+    }
+
+    return mods.join(", ");
 };
 
 /**

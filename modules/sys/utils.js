@@ -1,24 +1,34 @@
-import { HMCONST } from '../tables/constants.js';
+import { HMCONST } from "../tables/constants.js";
 
-export const calculateArmorDamage = (obj) => {
+
+/**
+ * Calculates armor damage based on dice roll.
+ *
+ * @param {Roll} obj - The roll object to evaluate.
+ * @param {number} obj.total - Total result of the Roll expression being evaluated.
+ * @param {Roll[]} [obj.rolls] - Roll instances, if obj is a PoolTerm.
+ * @param {RollTerm[]} obj.terms - The identified terms of the Roll.
+ * @returns {number} Total amount of armor damage sustained.
+ */
+export const calculateArmorDamage = obj => {
     let armorDamage = 0;
     const stack = obj.rolls
-        ? [obj.rolls.find((roll) => roll.total === obj.total)]
-        : obj.terms.filter((term) => !term.isDeterministic);
+        ? [obj.rolls.find(roll => roll.total === obj.total)]
+        : obj.terms.filter(term => !term.isDeterministic);
 
     while (stack.length) {
         const term = stack.pop();
 
-        if (term.constructor.name === 'PoolTerm') {
-            const idx = term.results.findIndex((result) => result.active);
+        if (term.constructor.name === "PoolTerm") {
+            const idx = term.results.findIndex(result => result.active);
             stack.push(term.rolls[idx]);
         } else
 
-            if (term.constructor.name === 'Roll') {
-                stack.push(...term.terms.filter((t) => !t.isDeterministic));
+            if (term.constructor.name === "Roll") {
+                stack.push(...term.terms.filter(t => !t.isDeterministic));
             } else
 
-                if (term.constructor.name === 'HMDie') {
+                if (term.constructor.name === "HMDie") {
                     armorDamage = term.results.reduce((acc, result) => {
                         if (result.penetrated && !result.bias) return acc + 1;
                         return acc;
@@ -60,12 +70,12 @@ export const transformDamageFormula = (stringTerms, operation = new Set()) => {
                 }
 
                 if (oper.has(FORMULA_MOD.NOPENETRATE)) {
-                    const mIdx = modifiers.indexOf('p');
+                    const mIdx = modifiers.indexOf("p");
                     if (!Number.isNaN(mIdx)) terms[i].modifiers.splice(mIdx, 1);
                 }
 
                 if (oper.has(FORMULA_MOD.BACKSTAB)) {
-                    const mIdx = modifiers.indexOf('p');
+                    const mIdx = modifiers.indexOf("p");
                     if (!Number.isNaN(mIdx)) terms[i].modifiers[mIdx] = `p>${faces - 2}`;
                 }
             }
@@ -81,7 +91,7 @@ export const transformDamageFormula = (stringTerms, operation = new Set()) => {
  * @param {Roll} roll - The Roll object containing the dice and other terms.
  * @returns {number} The sum of the dice rolled.
  */
-export const getDiceSum = (roll) => {
+export const getDiceSum = roll => {
     let sum = 0;
     for (let i = 0; i < roll.terms.length; i++) {
         for (let j = 0; j < roll.terms[i]?.results?.length; j++) {
@@ -98,10 +108,10 @@ export const getDiceSum = (roll) => {
  * @type {Object<string, (val: string) => number>}
  */
 export const DATA_TYPE_PARSERS = {
-    'Number': (val) => parseInt(val, 10),
-    'uint': (val) => Math.max(parseInt(val, 10) || 0, 0),
-    'Float': (val) => parseFloat(val),
-    'Percent': (val) => parsePercent(val),
+    Number: val => parseInt(val, 10),
+    uint: val => Math.max(parseInt(val, 10) || 0, 0),
+    Float: val => parseFloat(val),
+    Percent: val => parsePercent(val),
 };
 
 /**
@@ -114,7 +124,7 @@ export const DATA_TYPE_PARSERS = {
 function parsePercent(value) {
     const stringValue = String(value).trim();
 
-    if (stringValue.endsWith('%')) return parseFloat(stringValue) / 100;
-    if (stringValue.includes('.')) return parseFloat(stringValue);
+    if (stringValue.endsWith("%")) return parseFloat(stringValue) / 100;
+    if (stringValue.includes(".")) return parseFloat(stringValue);
     return parseFloat(stringValue) / 100;
 }

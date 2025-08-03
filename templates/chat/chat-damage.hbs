@@ -8,11 +8,11 @@
 {{/with}}
 {{localize 'HM.speed'}}:
 {{#with context.system.bonus.total}}
-    {{#if (eq ../resp.specialMove 1)}}
+    {{#if (eq ../mdata.specialMove 1)}}
         {{spd}}(<b>{{jspd}}</b>)<br>
     {{else}}
         <b>{{spd}}</b>{{#if ../context.system.jab.checked}}({{jspd}}){{/if}}<br>
     {{/if}}
 {{/with}}
-{{#if armorDamage}}<hr>{{localize 'HM.admg'}}: <b>{{armorDamage}}</b><br>{{/if}}
-<b>{{specialRow}}</b>
+{{#if mdata.armorDamage}}<hr>{{localize 'HM.admg'}}: <b>{{mdata.armorDamage}}</b><br>{{/if}}
+{{{rollContent}}}
