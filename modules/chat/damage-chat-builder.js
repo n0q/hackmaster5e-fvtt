@@ -37,7 +37,7 @@ export class DamageChatBuilder extends ChatBuilder {
         const content = await this.renderTemplate(this.template, chatData);
 
         const chatMessageData = this.getChatMessageData({ content, resp });
-        await ChatMessage.create(chatMessageData);
+        await this.render(chatMessageData);
     }
 
     /**

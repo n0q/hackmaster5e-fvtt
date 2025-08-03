@@ -28,6 +28,6 @@ export class CriticalChatBuilder extends ChatBuilder {
         const chatData = { rollContent, mdata, resp };
         const content = await this.renderTemplate(this.template, chatData);
         const chatMessageData = this.getChatMessageData({ content });
-        await ChatMessage.create(chatMessageData);
+        await this.render(chatMessageData);
     }
 }

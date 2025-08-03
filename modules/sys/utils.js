@@ -1,6 +1,5 @@
 import { HMCONST } from "../tables/constants.js";
 
-
 /**
  * Calculates armor damage based on dice roll.
  *
@@ -128,3 +127,43 @@ function parsePercent(value) {
     if (stringValue.includes(".")) return parseFloat(stringValue);
     return parseFloat(stringValue) / 100;
 }
+
+/**
+ * Generates ChatSpeakerData from a Token, TokenDocument, or Actor.
+ *
+ * @param {Actor | Token | TokenDocument} caller The caller to extract speaker data from.
+ * @returns {ChatSpeakerData | undefined}
+ */
+export const getSpeaker = caller => {
+    if (!caller) return undefined;
+
+    if (caller instanceof foundry.documents.TokenDocument) {
+        return {
+            actor: caller.actorId,
+            alias: caller.name,
+            scene: caller.parent.id,
+            token: caller.id,
+        };
+    }
+
+    if (caller instanceof foundry.canvas.placeables.Token) {
+        return {
+            actor: caller.actor?.id,
+            alias: caller.name,
+            scene: caller.scene?.id,
+            token: caller.id,
+        };
+    }
+
+    if (caller instanceof foundry.documents.Actor) {
+        const [token] = caller.token ?? caller.getActiveTokens();
+        return {
+            actor: caller.id,
+            alias: token?.name ?? caller.name,
+            scene: token?.scene?.id ?? null,
+            token: token?.id ?? null,
+        };
+    }
+
+    return undefined;
+};

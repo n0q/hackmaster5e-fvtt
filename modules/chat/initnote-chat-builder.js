@@ -21,14 +21,14 @@ export class InitNoteChatBuilder extends ChatBuilder {
         const hiddenCombatants = Object.groupBy(batch, c => c.hidden);
 
         await Promise.all(
-            Object.keys(hiddenCombatants).map(async foo => {
+            Object.keys(hiddenCombatants).map(async combatant => {
                 const sortByName = (a, b) => a.name.localeCompare(b.name);
-                const sortedContext = hiddenCombatants[foo].sort(sortByName);
+                const sortedContext = hiddenCombatants[combatant].sort(sortByName);
                 const content = await this.renderTemplate(this.template, sortedContext);
-                const whisper = foo === "true" ? ChatBuilder.getGMs() : undefined;
+                const whisper = combatant === "true" ? ChatBuilder.getGMs() : undefined;
 
                 const chatMessageData = this.getChatMessageData({ content, whisper });
-                await ChatMessage.create(chatMessageData);
+                await this.render(chatMessageData);
             }),
         );
     }

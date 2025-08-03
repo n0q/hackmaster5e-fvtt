@@ -20,7 +20,7 @@ export class SpellChatBuilder extends ChatBuilder {
         }
 
         const chatMessageData = this.getChatMessageData(chatData);
-        await ChatMessage.create(chatMessageData);
+        await this.render(chatMessageData);
     }
 
     getMetadata() {

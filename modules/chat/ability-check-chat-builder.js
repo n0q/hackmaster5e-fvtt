@@ -33,6 +33,6 @@ export class AbilityCheckChatBuilder extends ChatBuilder {
         const content = await this.renderTemplate(this.template, chatData);
 
         const chatMessageData = this.getChatMessageData({ content, rolls });
-        await ChatMessage.create(chatMessageData);
+        await this.render(chatMessageData);
     }
 }

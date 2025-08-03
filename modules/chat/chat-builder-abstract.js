@@ -1,4 +1,5 @@
 import { BuilderSchema } from "./chat-builder-schema.js";
+import { getSpeaker } from "../sys/utils.js";
 import { RESULT_TYPE } from "./chat-constants.js";
 
 /**
@@ -176,7 +177,8 @@ export class ChatBuilder {
      * @param {Object} chatMessageData - object to pass to ChatMessage.create()
      */
     async render(chatMessageData) {
-        const obj = { ...chatMessageData, ...this.data.options };
+        const speaker = getSpeaker(this.data?.caller);
+        const obj = { ...chatMessageData, speaker, ...this.data.options };
         await ChatMessage.create(obj);
     }
 
