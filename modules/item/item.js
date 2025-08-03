@@ -1,8 +1,8 @@
-import { HM_ICON, HMCONST, HMTABLES, SYSTEM_ID } from '../tables/constants.js';
-import { HMDialogFactory } from '../dialog/dialog-factory.js';
-import { HMStates } from '../sys/effects.js';
-import { HMSkillSchema } from './schema/skill-item-schema.js';
-import { HMChatFactory, CHAT_TYPE } from '../chat/chat-factory.js';
+import { HM_ICON, HMCONST, HMTABLES, SYSTEM_ID } from "../tables/constants.js";
+import { HMDialogFactory } from "../dialog/dialog-factory.js";
+import { HMStates } from "../sys/effects.js";
+import { HMSkillSchema } from "./schema/skill-item-schema.js";
+import { HMChatFactory, CHAT_TYPE } from "../chat/chat-factory.js";
 
 // Remember: Items may not alter Actors under any circumstances.
 // You will create a free fire shooting gallery if you do this, and
@@ -39,8 +39,8 @@ export class HMItem extends Item {
         const { _id, container } = this;
         if (container) {
             let { _manifest } = container.system.container;
-            _manifest = _manifest.filter((a) => JSON.parse(a)._id !== _id);
-            container.update({ 'system.container._manifest': _manifest });
+            _manifest = _manifest.filter(a => JSON.parse(a)._id !== _id);
+            container.update({ "system.container._manifest": _manifest });
         } else super.delete(...args);
     }
 
@@ -49,27 +49,27 @@ export class HMItem extends Item {
         const { _id, container } = this;
         if (container) {
             const [data] = args;
-            const cIdx = container._manifestData.findIndex((a) => a._id === _id);
+            const cIdx = container._manifestData.findIndex(a => a._id === _id);
             this.updateSource(data);
             const { _manifest } = container.system.container;
             _manifest[cIdx] = JSON.stringify(this);
             container.apps[this.appId] = this;
-            container.update({ 'system.container._manifest': _manifest });
+            container.update({ "system.container._manifest": _manifest });
         } else super.update(...args);
     }
 
     get quality() {
         const { system } = this;
-        const qKey = system?.ranged?.checked ? 'ranged' : this.type;
+        const qKey = system?.ranged?.checked ? "ranged" : this.type;
         const { bonus, qn } = system;
-        const values = HMTABLES.quality[qKey].map((a) => a * qn);
+        const values = HMTABLES.quality[qKey].map(a => a * qn);
         const keys = Object.keys(bonus.total);
         return Object.fromEntries(keys.map((_, i) => [keys[i], values[i] ?? 0]));
     }
 
     get specname() {
         const rawName = this.name;
-        if (this.type !== 'skill') return rawName;
+        if (this.type !== "skill") return rawName;
         const { specialty } = this.system;
         if (specialty.checked && specialty.value.length) return `${rawName} (${specialty.value})`;
         return rawName;
@@ -107,21 +107,21 @@ export class HMItem extends Item {
             callers.push({ caller, context: caller.items.get(itemId) });
         } else {
             // Anonymous caller. Get all selected tokens.
-            const actors = canvas.tokens.controlled.map((token) => token.actor);
+            const actors = canvas.tokens.controlled.map(token => token.actor);
 
             if (!actors.length && !game.user.isGM) {
                 // No tokens were selected.
-                const smartSelect = game.settings.get(SYSTEM_ID, 'smartSelect');
+                const smartSelect = game.settings.get(SYSTEM_ID, "smartSelect");
                 const { character } = game.user;
                 if (smartSelect && character) actors.push(character);
             }
 
             if (!actors.length) return;
 
-            actors.forEach((actor) => {
-                const skills = actor.itemTypes.skill.filter((a) => a.name === skillName);
+            actors.forEach(actor => {
+                const skills = actor.itemTypes.skill.filter(a => a.name === skillName);
                 let context = specialty
-                    ? skills.find((a) => a.system.specialty.value === specialty)
+                    ? skills.find(a => a.system.specialty.value === specialty)
                     : skills[0];
 
                 // Unskilled actor.
@@ -140,9 +140,9 @@ export class HMItem extends Item {
         }
 
         // NOTE: We don't know if it's a language if none of the callers have the skill.
-        const dialogCaller = callers.find((a) => a.context._id) ?? callers[0];
+        const dialogCaller = callers.find(a => a.context._id) ?? callers[0];
         const dialogDataset = {
-            dialog: 'skill',
+            dialog: "skill",
             context: dialogCaller.context,
             callers: callers.length,
         };
@@ -150,7 +150,7 @@ export class HMItem extends Item {
         const dialogResp = await HMDialogFactory(dialogDataset, dialogCaller.caller);
         const { resp } = dialogResp;
 
-        Object.values(callers).forEach(async (callerObj) => {
+        Object.values(callers).forEach(async callerObj => {
             const formula = HMTABLES.formula.skill.baseroll;
             const roll = await new Roll(formula).evaluate();
 
@@ -206,7 +206,7 @@ export async function setStatusEffectOnToken(comData, effect, rounds = null) {
         combat: active.id,
         startRound: active.round,
         rounds,
-        type: 'rounds',
+        type: "rounds",
     } : null;
     await HMStates.setStatusEffect(combatToken, effect, duration);
 }

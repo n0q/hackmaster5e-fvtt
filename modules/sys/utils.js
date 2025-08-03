@@ -136,15 +136,7 @@ function parsePercent(value) {
  */
 export const getSpeaker = caller => {
     if (!caller) return undefined;
-
-    if (caller instanceof foundry.documents.TokenDocument) {
-        return {
-            actor: caller.actorId,
-            alias: caller.name,
-            scene: caller.parent.id,
-            token: caller.id,
-        };
-    }
+    window.foo = caller;
 
     if (caller instanceof foundry.canvas.placeables.Token) {
         return {
@@ -155,8 +147,18 @@ export const getSpeaker = caller => {
         };
     }
 
+    // Synthetic actor.
+    if (caller.isToken) {
+        return {
+            actor: caller?.id,
+            alias: caller.name,
+            scene: caller.token.parent?.id,
+            token: caller.token?.id,
+        };
+    }
+
     if (caller instanceof foundry.documents.Actor) {
-        const [token] = caller.token ?? caller.getActiveTokens();
+        const token = caller.token ?? caller.getActiveTokens()[0];
         return {
             actor: caller.id,
             alias: token?.name ?? caller.name,
@@ -165,5 +167,13 @@ export const getSpeaker = caller => {
         };
     }
 
+    if (caller instanceof foundry.documents.TokenDocument) {
+        return {
+            actor: caller.actorId,
+            alias: caller.name,
+            scene: caller.parent.id,
+            token: caller.id,
+        };
+    }
     return undefined;
 };

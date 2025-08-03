@@ -5,7 +5,7 @@ import { HMItem, advanceClock, setStatusEffectOnToken, unsetStatusEffectOnToken 
 import { HMChatMgr } from "../mgr/chatmgr.js";
 import { HMChatFactory, CHAT_TYPE } from "../chat/chat-factory.js";
 import { HMDialogFactory } from "../dialog/dialog-factory.js";
-import { transformDamageFormula } from "../sys/utils.js";
+import { transformDamageFormula, getSpeaker } from "../sys/utils.js";
 import { HMSocket, SOCKET_TYPES } from "../sys/sockets.js";
 import { CriticalPrompt } from "../apps/critical-application.js";
 import { CriticalCalculator } from "../rules/calculators/critical-calculator.js";
@@ -159,7 +159,10 @@ export class HMWeaponItem extends HMItem {
 
         const chatMgr = new HMChatMgr();
         const card = await chatMgr.getCard({ dataset });
-        await ChatMessage.create(card);
+
+        const speaker = getSpeaker(actor);
+
+        await ChatMessage.create({ ...card, speaker });
         if (resp.advance) await advanceClock(comData, dialogResp, true);
 
         if (opt.isCombatant) {
