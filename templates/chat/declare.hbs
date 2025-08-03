@@ -17,7 +17,7 @@
         {{localize 'HM.CHAT.smc'}}: <b>{{resp.smc}}</b><br>
     {{/unless}}
 <div class='dice-roll'>
-    <div class='dice-flavor'>
+    <div class='hm-dice-flavor'>
         {{localize (concat 'HM.spellLevels.' context.system.lidx)}} {{localize 'HM.level'}}
         {{#if context.system.divine}}
             {{localize 'HM.clerical'}}
@@ -36,7 +36,7 @@
         {{/with}}
     {{/unless}}
 <div class='dice-roll'>
-    <div class='dice-flavor'>
+    <div class='hm-dice-flavor'>
     {{#if (eq SPECIAL.FULLPARRY resp.specialMove)}}
         {{localize 'EFFECT.fullparry'}}
     {{else if (eq SPECIAL.SET4CHARGE resp.specialMove)}}
