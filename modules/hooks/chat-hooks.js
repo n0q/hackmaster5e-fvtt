@@ -20,6 +20,9 @@ export class HMChatHooks {
             whisperToElements.forEach(el => el.remove());
         }
 
+        const headerElement = html.querySelector("header");
+        if (headerElement) headerElement.remove();
+
         if (!html.querySelector(".hm-chat-note")) return;
 
         html.style.padding = "0px";
@@ -84,38 +87,22 @@ export class HMChatHooks {
         const token = canvas.tokens.get(tokenId);
         if (!token) return;
 
-
-        if (highlight) {
-            const HIGHLIGHT_ALPHA = 0.75;
-            const BORDER_WIDTH = 5;
-            const dispositionColor = token.getDispositionColor();
-
-            setOtherTokenAlpha(tokenId, HIGHLIGHT_ALPHA);
-
-            if (!token._chatHoverBorder) {
-                token._chatHoverBorder = new PIXI.Graphics();
-                token.addChild(token._chatHoverBorder);
-            }
-
-            const border = token._chatHoverBorder;
-            border.clear();
-            border.lineStyle(BORDER_WIDTH, dispositionColor, 1);
-            border.drawRect(-2, -2, token.w + 4, token.h + 4);
-
-        } else {
-            setOtherTokenAlpha(tokenId, 1.0);
+        if (!highlight) {
             if (token._chatHoverBorder) token._chatHoverBorder.clear();
+            return;
         }
+
+        const BORDER_WIDTH = 5;
+        const dispositionColor = token.getDispositionColor();
+
+        if (!token._chatHoverBorder) {
+            token._chatHoverBorder = new PIXI.Graphics();
+            token.addChild(token._chatHoverBorder);
+        }
+
+        const border = token._chatHoverBorder;
+        border.clear();
+        border.lineStyle(BORDER_WIDTH, dispositionColor, 1);
+        border.drawRect(-2, -2, token.w + 4, token.h + 4);
     }
 }
-
-/**
- * Sets the alpha (opacity) of all tokens except the specified one.
- *
- * @param {string} tokenId - ID of the token to exclude from alpha changes.
- * @param {number} alpha - Alpha value to apply.
- */
-const setOtherTokenAlpha = (tokenId, alpha) => {
-    const otherTokens = canvas.tokens.placeables.filter(t => t.id !== tokenId);
-    otherTokens.forEach(t => t.mesh.alpha = alpha);
-};

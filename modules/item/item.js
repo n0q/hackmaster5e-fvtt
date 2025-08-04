@@ -193,7 +193,9 @@ export async function advanceClock(comData, dialogResp, smartInit = false) {
         oldInit,
         newInit,
     }];
-    const builder = await HMChatFactory.create(CHAT_TYPE.INIT_NOTE, { batch });
+
+    const caller = combatant.token.uuid;
+    const builder = await HMChatFactory.create(CHAT_TYPE.INIT_NOTE, { caller, batch });
     builder.createChatMessage();
 }
 
