@@ -1,17 +1,17 @@
-import { ChatBuilder } from './chat-builder-abstract.js';
-import { getResult } from './chat-constants.js';
-import { HMCONST, HMTABLES } from '../tables/constants.js';
+import { ChatBuilder } from "./chat-builder-abstract.js";
+import { getResult } from "./chat-constants.js";
+import { systemPath, HMCONST, HMTABLES } from "../tables/constants.js";
 
 const typeToBonusMap = {
-    [HMCONST.SKILL.TYPE.SKILL]: 'value',
-    [HMCONST.SKILL.TYPE.VERBAL]: 'verbal',
-    [HMCONST.SKILL.TYPE.WRITTEN]: 'literacy',
+    [HMCONST.SKILL.TYPE.SKILL]: "value",
+    [HMCONST.SKILL.TYPE.VERBAL]: "verbal",
+    [HMCONST.SKILL.TYPE.WRITTEN]: "literacy",
 };
 
 const SKILL = HMCONST.SKILL;
 
 export class SkillCheckChatBuilder extends ChatBuilder {
-    static template = 'systems/hackmaster5e/templates/chat/chat-skill.hbs';
+    static template = systemPath("templates/chat/chat-skill.hbs");
 
     async createChatMessage() {
         const { resp, roll } = this.data;
@@ -35,10 +35,10 @@ export class SkillCheckChatBuilder extends ChatBuilder {
 
         mdata.inline = unescape(roll);
         const chatData = { mdata, resultString, skillCheck, roll };
-        const content = await ChatBuilder.handlebars.renderTemplate(this.template, chatData);
+        const content = await this.renderTemplate(this.template, chatData);
 
         const chatMessageData = this.getChatMessageData({ content, resp });
-        await ChatMessage.create(chatMessageData);
+        await this.render(chatMessageData);
     }
 
     getSkillChecks() {
@@ -69,16 +69,16 @@ export class SkillCheckChatBuilder extends ChatBuilder {
         const { specname, system } = this.data.context;
         const { level, mastery } = system;
 
-        const getLevelAndMastery = (k) => ({
+        const getLevelAndMastery = k => ({
             level: level[k] ?? 0,
             mastery: mastery[k] ?? 0,
         });
 
         const { TYPE } = HMCONST.SKILL;
         const mdataMapping = {
-            [TYPE.SKILL]: { rollFlavor: 'Skill Check', ...getLevelAndMastery('value') },
-            [TYPE.VERBAL]: { rollFlavor: 'Language Check', ...getLevelAndMastery('verbal') },
-            [TYPE.WRITTEN]: { rollFlavor: 'Literacy Check', ...getLevelAndMastery('literacy') },
+            [TYPE.SKILL]: { rollFlavor: "Skill Check", ...getLevelAndMastery("value") },
+            [TYPE.VERBAL]: { rollFlavor: "Language Check", ...getLevelAndMastery("verbal") },
+            [TYPE.WRITTEN]: { rollFlavor: "Literacy Check", ...getLevelAndMastery("literacy") },
         };
         return { type, specname, dc, ...mdataMapping[type] };
     }

@@ -1,11 +1,20 @@
-import { HMItemSheet } from './item-sheet.js';
-import { DATA_TYPE_PARSERS } from '../../sys/utils.js';
+import { HMItemSheet } from "./item-sheet.js";
+import { DATA_TYPE_PARSERS } from "../../sys/utils.js";
 
+/**
+ * Legacy code. Do not enhance.
+ *
+ * This module is actively used but architecturally abandoned and awaiting a complete
+ * rewrite. Do not invest time in refactoring. Just make your minimal needed changes
+ * and then get out.
+ *
+ * @deprecated 0.5.0
+ */
 export class HMCurrencyItemSheet extends HMItemSheet {
     /** @override */
     static get defaultOptions() {
         return foundry.utils.mergeObject(super.defaultOptions, {
-            classes: ['hackmaster', 'sheet', 'item'],
+            classes: ["hackmaster", "sheet", "item"],
             width: 500,
             height: 260,
         });
@@ -38,12 +47,12 @@ export class HMCurrencyItemSheet extends HMItemSheet {
 
         const targetValue = parser ? parser(rawValue) : rawValue;
 
-        if (itemProp.startsWith('system.coins')) {
+        if (itemProp.startsWith("system.coins")) {
             const coins = foundry.utils.deepClone(this.item.system.coins);
-            const targetKey = itemProp.replace('system.coins.', '');
+            const targetKey = itemProp.replace("system.coins.", "");
 
             const isDirty = foundry.utils.setProperty(coins, targetKey, targetValue);
-            if (isDirty) await this.item.update({ 'system.coins': coins });
+            if (isDirty) await this.item.update({ "system.coins": coins });
         } else await this.item.update({ [itemProp]: targetValue });
     }
 }

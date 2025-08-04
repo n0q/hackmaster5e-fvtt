@@ -1,5 +1,6 @@
-import { BuilderSchema } from './chat-builder-schema.js';
-import { RESULT_TYPE } from './chat-constants.js';
+import { BuilderSchema } from "./chat-builder-schema.js";
+import { getSpeaker } from "../sys/utils.js";
+import { RESULT_TYPE } from "./chat-constants.js";
 
 /**
  * Chat card builder.
@@ -38,11 +39,11 @@ export class ChatBuilder {
      */
     constructor(dataset, options) {
         if (new.target === ChatBuilder) {
-            throw new Error('ChatBuilder cannot be instantiated directly. Use Class.create() instead.');
+            throw new Error("ChatBuilder cannot be instantiated directly. Use Class.create() instead.");
         }
 
         if (!new.target.template) {
-            throw new Error('Subclasses must define a static template property.');
+            throw new Error("Subclasses must define a static template property.");
         }
 
         this.template = new.target.template;
@@ -104,16 +105,16 @@ export class ChatBuilder {
     _prepareBatchData(batchData) {
         if (!batchData) return [];
         if (!Array.isArray(batchData)) return [];
-        return batchData.map((data) => Roll.fromData(data));
+        return batchData.map(data => Roll.fromData(data));
     }
 
     /**
      * A shortcut to Foundry's handlebars template system.
      *
-     * @returns {typeof foundry.applications.handlebars}
+     * @returns {function(string, object=): Promise<string>}
      */
-    static get handlebars() {
-        return foundry.applications.handlebars;
+    get renderTemplate() {
+        return foundry.applications.handlebars.renderTemplate;
     }
 
     /**
@@ -139,7 +140,7 @@ export class ChatBuilder {
             type: obj.type ?? CONST.CHAT_MESSAGE_STYLES.OTHER,
         };
 
-        const hasFlavor = Object.prototype.hasOwnProperty.call(chatMessageData, 'flavor');
+        const hasFlavor = Object.prototype.hasOwnProperty.call(chatMessageData, "flavor");
         if (!hasFlavor) chatMessageData.flavor = this.data.caller?.name;
 
         const { roll } = this.data;
@@ -153,7 +154,7 @@ export class ChatBuilder {
 
             const rollMode = obj.rollMode
                 ?? obj.resp?.rollMode
-                ?? game.settings.get('core', 'rollMode');
+                ?? game.settings.get("core", "rollMode");
             ChatMessage.applyRollMode(chatMessageData, rollMode);
         }
         return chatMessageData;
@@ -176,7 +177,8 @@ export class ChatBuilder {
      * @param {Object} chatMessageData - object to pass to ChatMessage.create()
      */
     async render(chatMessageData) {
-        const obj = { ...chatMessageData, ...this.data.options };
+        const speaker = getSpeaker(this.data?.caller);
+        const obj = { ...chatMessageData, speaker, ...this.data.options };
         await ChatMessage.create(obj);
     }
 
@@ -185,7 +187,7 @@ export class ChatBuilder {
      * @return {string[]} List of GM ids on the game.
      */
     static get getGMs() {
-        return game.users.filter((u) => u.isGM).map((u) => u.id);
+        return game.users.filter(u => u.isGM).map(u => u.id);
     }
 
     /**

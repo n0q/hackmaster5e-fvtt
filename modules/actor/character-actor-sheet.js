@@ -1,8 +1,17 @@
-import { HMActorSheet } from './actor-sheet.js';
+import { HMActorSheet } from "./actor-sheet.js";
 
+/**
+ * Legacy code. Do not enhance.
+ *
+ * This module is actively used but architecturally abandoned and awaiting a complete
+ * rewrite. Do not invest time in refactoring. Just make your minimal needed changes
+ * and then get out.
+ *
+ * @deprecated 0.5.0
+ */
 function prepareCharacterItems(sheetData) {
-    const {actor} = sheetData;
-    const {itemTypes} = actor;
+    const { actor } = sheetData;
+    const { itemTypes } = actor;
 
     const proficiency = actor.itemTypes.proficiency;
     actor.proficiency = proficiency.sort(
@@ -18,20 +27,20 @@ export class HMCharacterActorSheet extends HMActorSheet {
     /** @override */
     static get defaultOptions() {
         return foundry.utils.mergeObject(super.defaultOptions, {
-            classes: ['hackmaster', 'sheet', 'actor'],
+            classes: ["hackmaster", "sheet", "actor"],
             width: 835,
             height: 930,
-            scrollY: ['.scrollable'],
+            scrollY: [".scrollable"],
             tabs: [
-                { navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'skills' },
-                { navSelector: '.bio-tabs',   contentSelector: '.bio-body',   initial: 'wealth' },
+                { navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "skills" },
+                { navSelector: ".bio-tabs", contentSelector: ".bio-body", initial: "wealth" },
             ],
         });
     }
 
     /** @override */
-    getData() {
-        const data = super.getData();
+    async getData(options) {
+        const data = await super.getData(options);
 
         prepareCharacterItems(data);
         return data;
@@ -41,8 +50,8 @@ export class HMCharacterActorSheet extends HMActorSheet {
         const actorData = sheetData.actor;
 
         // Saves
-        const left = ['fos', 'foa', 'turning', 'morale'];
-        const right = ['physical', 'mental', 'dodge', 'poison', 'trauma'];
-        actorData.saves = {left, right};
+        const left = ["fos", "foa", "turning", "morale"];
+        const right = ["physical", "mental", "dodge", "poison", "trauma"];
+        actorData.saves = { left, right };
     }
 }

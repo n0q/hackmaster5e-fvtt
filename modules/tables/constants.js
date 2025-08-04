@@ -1,10 +1,10 @@
-export const SYSTEM_ID = 'hackmaster5e';
+export const SYSTEM_ID = "hackmaster5e";
 export const SYSTEM_SOCKET = `system.${SYSTEM_ID}`;
-export const systemPath = (path) => `systems/${SYSTEM_ID}/${path}`;
+export const systemPath = path => `systems/${SYSTEM_ID}/${path}`;
 
 export const HM_ICON = {
-    default: 'icons/magic/symbols/question-stone-yellow.webp',
-    currency: 'icons/commodities/currency/coins-plain-stack-gold-yellow.webp',
+    default: "icons/magic/symbols/question-stone-yellow.webp",
+    currency: "icons/commodities/currency/coins-plain-stack-gold-yellow.webp",
 };
 
 // TODO: ITEM_STATE and itemstate are the same table.
@@ -583,7 +583,7 @@ export const HMTABLES = {
         },
     },
     currency: {
-        standard: 'sp',
+        standard: "sp",
         coins: {
             tc: { value: 1, weight: 0.0050 },
             cp: { value: 10, weight: 0.0125 },
@@ -601,59 +601,59 @@ export const HMTABLES = {
     },
     formula: {
         atk: {
-            [HMCONST.SPECIAL.STANDARD]: 'd20p + @bonus.total.atk                      + @resp.bonus',
-            [HMCONST.SPECIAL.AGGRESSIVE]: 'd20p + @bonus.total.atk                  + 5 + @resp.bonus',
-            [HMCONST.SPECIAL.CHARGE2]: 'd20p + @bonus.total.atk                  + 2 + @resp.bonus',
-            [HMCONST.SPECIAL.CHARGE4]: 'd20p + @bonus.total.atk                  + 4 + @resp.bonus',
-            [HMCONST.SPECIAL.WITHDRAWL]: 'd20p + @bonus.total.atk                  - 2 + @resp.bonus',
-            [HMCONST.SPECIAL.RSTANDARD]: 'd20p + @bonus.total.atk - @resp.reachmod     + @resp.bonus',
-            [HMCONST.SPECIAL.SNAPSHOT]: 'd20p + @bonus.total.atk - @resp.reachmod - 6 + @resp.bonus',
+            [HMCONST.SPECIAL.STANDARD]: "d20p + @bonus.total.atk                      + @resp.bonus",
+            [HMCONST.SPECIAL.AGGRESSIVE]: "d20p + @bonus.total.atk                  + 5 + @resp.bonus",
+            [HMCONST.SPECIAL.CHARGE2]: "d20p + @bonus.total.atk                  + 2 + @resp.bonus",
+            [HMCONST.SPECIAL.CHARGE4]: "d20p + @bonus.total.atk                  + 4 + @resp.bonus",
+            [HMCONST.SPECIAL.WITHDRAWL]: "d20p + @bonus.total.atk                  - 2 + @resp.bonus",
+            [HMCONST.SPECIAL.RSTANDARD]: "d20p + @bonus.total.atk - @resp.reachmod     + @resp.bonus",
+            [HMCONST.SPECIAL.SNAPSHOT]: "d20p + @bonus.total.atk - @resp.reachmod - 6 + @resp.bonus",
         },
         dmg: {
-            [HMCONST.DMGFORM.STD]: '@dmg.normal + @bonus.total.dmg                     + @resp.bonus',
-            [HMCONST.DMGFORM.SHIELD]: '@dmg.shield + @bonus.total.dmg                     + @resp.bonus',
-            [HMCONST.DMGFORM.RSTD]: '@dmg.normal + @derived.dmg                         + @resp.bonus',
-            [HMCONST.DMGFORM.SHIELDRSTD]: '@dmg.shield + @derived.dmg                         + @resp.bonus',
-            [HMCONST.DMGFORM.JAB]: '@jab.normal + @bonus.total.dmg                     + @resp.bonus',
-            [HMCONST.DMGFORM.SHIELDJAB]: '@jab.shield + @bonus.total.dmg                     + @resp.bonus',
-            [HMCONST.DMGFORM.BSTAB]: '@dmg.normal + @bonus.total.dmg + @bonus.total.back + @resp.bonus',
-            [HMCONST.DMGFORM.BSTABSHIELD]: '@dmg.shield + @bonus.total.dmg + @bonus.total.back + @resp.bonus',
+            [HMCONST.DMGFORM.STD]: "@dmg.normal + @bonus.total.dmg                     + @resp.bonus",
+            [HMCONST.DMGFORM.SHIELD]: "@dmg.shield + @bonus.total.dmg                     + @resp.bonus",
+            [HMCONST.DMGFORM.RSTD]: "@dmg.normal + @derived.dmg                         + @resp.bonus",
+            [HMCONST.DMGFORM.SHIELDRSTD]: "@dmg.shield + @derived.dmg                         + @resp.bonus",
+            [HMCONST.DMGFORM.JAB]: "@jab.normal + @bonus.total.dmg                     + @resp.bonus",
+            [HMCONST.DMGFORM.SHIELDJAB]: "@jab.shield + @bonus.total.dmg                     + @resp.bonus",
+            [HMCONST.DMGFORM.BSTAB]: "@dmg.normal + @bonus.total.dmg + @bonus.total.back + @resp.bonus",
+            [HMCONST.DMGFORM.BSTABSHIELD]: "@dmg.shield + @bonus.total.dmg + @bonus.total.back + @resp.bonus",
         },
         def: {
-            [HMCONST.SPECIAL.DEFEND]: '@resp.defdie + @bonus.total.def + @resp.dodge     + @resp.bonus',
-            [HMCONST.SPECIAL.RDEFEND]: '@resp.defdie                    + @resp.dodge     + @resp.bonus',
-            [HMCONST.SPECIAL.SCAMPER]: '@resp.defdie + @bonus.total.def + @resp.dodge + 5 + @resp.bonus',
-            [HMCONST.SPECIAL.GGROUND]: '@resp.defdie + @bonus.total.def + @resp.dodge + 5 + @resp.bonus',
+            [HMCONST.SPECIAL.DEFEND]: "@resp.defdie + @bonus.total.def + @resp.dodge     + @resp.bonus",
+            [HMCONST.SPECIAL.RDEFEND]: "@resp.defdie                    + @resp.dodge     + @resp.bonus",
+            [HMCONST.SPECIAL.SCAMPER]: "@resp.defdie + @bonus.total.def + @resp.dodge + 5 + @resp.bonus",
+            [HMCONST.SPECIAL.GGROUND]: "@resp.defdie + @bonus.total.def + @resp.dodge + 5 + @resp.bonus",
         },
         save: {
-            dodge: 'd20p +  @bonus.total.dodge    + @resp.bonus',
-            foa: 'd20p +  @bonus.total.foa      + @resp.bonus',
-            fos: 'd20p +  @bonus.total.fos      + @resp.bonus',
-            mental: 'd20p +  @bonus.total.mental   + @resp.bonus',
-            morale: 'd20p +  @bonus.total.morale   + @resp.bonus',
-            physical: 'd20p +  @bonus.total.physical + @resp.bonus',
-            poison: 'd20p +  @bonus.total.poison   + @resp.bonus',
-            tenacity: 'd20p +  @bonus.total.tenacity + @resp.bonus',
-            trauma: '@talent.die.trauma - (@bonus.total.trauma + @resp.bonus)',
-            turning: 'd20p +  @bonus.total.turning  + @resp.bonus',
-            will: 'd20p +  @bonus.total.will     + @resp.bonus',
+            dodge: "d20p +  @bonus.total.dodge    + @resp.bonus",
+            foa: "d20p +  @bonus.total.foa      + @resp.bonus",
+            fos: "d20p +  @bonus.total.fos      + @resp.bonus",
+            mental: "d20p +  @bonus.total.mental   + @resp.bonus",
+            morale: "d20p +  @bonus.total.morale   + @resp.bonus",
+            physical: "d20p +  @bonus.total.physical + @resp.bonus",
+            poison: "d20p +  @bonus.total.poison   + @resp.bonus",
+            tenacity: "d20p +  @bonus.total.tenacity + @resp.bonus",
+            trauma: "@talent.die.trauma - (@bonus.total.trauma + @resp.bonus)",
+            turning: "d20p +  @bonus.total.turning  + @resp.bonus",
+            will: "d20p +  @bonus.total.will     + @resp.bonus",
         },
         skill: {
-            baseroll: 'd100',
-            [HMCONST.SKILL.FORM.CHECK]: '@baseroll - (@resp.bonus + @value)',
-            [HMCONST.SKILL.FORM.OPPOSED]: '@baseroll + (@resp.bonus + @value)',
+            baseroll: "d100",
+            [HMCONST.SKILL.FORM.CHECK]: "@baseroll - (@resp.bonus + @value)",
+            [HMCONST.SKILL.FORM.OPPOSED]: "@baseroll + (@resp.bonus + @value)",
         },
         spell: {
-            baseroll: 'd20p',
-            save: '@baseroll + @bonus.total.slvl',
-            sfc: '@baseroll + @bonus.total.sfc',
+            baseroll: "d20p",
+            save: "@baseroll + @bonus.total.slvl",
+            sfc: "@baseroll + @bonus.total.sfc",
         },
-        trauma: { comaCheck: 'd20', comaDuration: 'd20', koDuration: '5d6p' },
+        trauma: { comaCheck: "d20", comaDuration: "d20", koDuration: "5d6p" },
     },
     bracket: {
-        fame: (value) => {
+        fame: value => {
             const fTable = [0, 10, 20, 70, 100, 200, Infinity];
-            return fTable.findIndex((x) => x >= value);
+            return fTable.findIndex(x => x >= value);
         },
         honor: (level, value) => {
             const hTable = [0,
@@ -663,7 +663,7 @@ export const HMTABLES = {
                 level > 5 ? 1 + level * 14 : Infinity,
                 Infinity,
             ];
-            return hTable.findIndex((x) => x >= value);
+            return hTable.findIndex(x => x >= value);
         },
         dishonor: () => ({
             atk: -1,
@@ -684,7 +684,7 @@ export const HMTABLES = {
         }),
     },
     cast: {
-        baseSPC: (lidx) => (parseInt(lidx, 10) * 10) + 30,
+        baseSPC: lidx => (parseInt(lidx, 10) * 10) + 30,
         timing: (spd, caller) => {
             const { fatigue } = caller.system.bonus.total;
             const { basespd } = caller[SYSTEM_ID].talent.sfatigue;
@@ -696,32 +696,32 @@ export const HMTABLES = {
         },
     },
     die: {
-        [HMCONST.DIE.D20P]: 'd20p',
-        [HMCONST.DIE.D20PM4]: 'd20p - 4',
-        [HMCONST.DIE.D10P]: 'd10p',
-        [HMCONST.DIE.D12P]: 'd12p',
-        [HMCONST.DIE.D8P]: 'd8p',
+        [HMCONST.DIE.D20P]: "d20p",
+        [HMCONST.DIE.D20PM4]: "d20p - 4",
+        [HMCONST.DIE.D10P]: "d10p",
+        [HMCONST.DIE.D12P]: "d12p",
+        [HMCONST.DIE.D8P]: "d8p",
     },
     fatigue: {
-        wound: (hp) => {
+        wound: hp => {
             if (hp.value === hp.max) return 0;
             const ratio = 1 - hp.value / hp.max;
-            const idx = [0, 0.5, 0.9, Infinity].findIndex((m) => m > ratio) - 1;
+            const idx = [0, 0.5, 0.9, Infinity].findIndex(m => m > ratio) - 1;
             const penalty = [1, 4, 8];
             return penalty[idx];
         },
     },
-    'movespd': {
+    movespd: {
         [HMCONST.MOVE.CRAWL]: 2.5,
         [HMCONST.MOVE.WALK]: 5.0,
         [HMCONST.MOVE.JOG]: 10.0,
         [HMCONST.MOVE.RUN]: 15.0,
         [HMCONST.MOVE.SPRINT]: 20.0,
     },
-    'quality': {
-        'armor': [1, 1, 0, 0],
-        'weapon': [1, 0, 1, 0],
-        'ranged': [0, 0, 1, 0],
+    quality: {
+        armor: [1, 1, 0, 0],
+        weapon: [1, 0, 1, 0],
+        ranged: [0, 0, 1, 0],
     },
     scale: {
         [HMCONST.SCALE.TINY]: { hp: 0, kb: 5, reach: -2, token: 1, move: 1 / 3 },
@@ -734,19 +734,19 @@ export const HMTABLES = {
         [HMCONST.SCALE.COLOSSAL]: { hp: 70, kb: 75, reach: 12, token: 29, move: 13 },
     },
     skill: {
-        difficulty: (arg) => [10, 0, -40, -80, -90].findIndex((m) => arg + m <= 0),
-        mastery: (arg) => [0, 25, 50, 75, 87, Infinity].findIndex((m) => m >= arg),
+        difficulty: arg => [10, 0, -40, -80, -90].findIndex(m => arg + m <= 0),
+        mastery: arg => [0, 25, 50, 75, 87, Infinity].findIndex(m => m >= arg),
     },
     spell: {
         mishap: (sfc, smc, save) => Math.clamp(sfc - save, 0, smc + 2),
-        sfc: (svr) => {
+        sfc: svr => {
             const svrClamped = Math.clamp(svr, 1, 244);
             return Math.ceil((svrClamped - 4) / 10) + 14;
         },
-        smc: (arg) => [0, 10, 25, 40, 55, 76, 105, 145, Infinity].findIndex((m) => m >= arg),
+        smc: arg => [0, 10, 25, 40, 55, 76, 105, 145, Infinity].findIndex(m => m >= arg),
         svr: (lidx, stage) => {
             const level = lidx + 1;
-            const sTable = [0 + level * 1,
+            const sTable = [0 + Number(level),
             0 + level * 2.5,
             0 + level * 6,
             3 + level * 7,
@@ -759,75 +759,75 @@ export const HMTABLES = {
     },
     effects: {
         defense: {
-            [HMCONST.DEFENSE.DEFENSE1]: 'defense1',
-            [HMCONST.DEFENSE.DEFENSE2]: 'defense2',
-            [HMCONST.DEFENSE.DEFENSE3]: 'defense3',
-            [HMCONST.DEFENSE.DEFENSE4]: 'defense4',
+            [HMCONST.DEFENSE.DEFENSE1]: "defense1",
+            [HMCONST.DEFENSE.DEFENSE2]: "defense2",
+            [HMCONST.DEFENSE.DEFENSE3]: "defense3",
+            [HMCONST.DEFENSE.DEFENSE4]: "defense4",
         },
         exclusiveEffects: [
-            'defense1',
-            'defense2',
-            'defense3',
-            'defense4',
-            'fullparry',
+            "defense1",
+            "defense2",
+            "defense3",
+            "defense4",
+            "fullparry",
         ],
         statusEffects: {
             blind: {
-                name: 'EFFECT.StatusBlind',
-                img: 'icons/svg/blind.svg',
+                name: "EFFECT.StatusBlind",
+                img: "icons/svg/blind.svg",
                 changes: [
-                    { key: 'system.bonus.state.def', value: '-8', mode: CONST.ACTIVE_EFFECT_MODES.ADD },
-                    { key: 'system.bonus.state.atk', value: '-8', mode: CONST.ACTIVE_EFFECT_MODES.ADD },
+                    { key: "system.bonus.state.def", value: "-8", mode: CONST.ACTIVE_EFFECT_MODES.ADD },
+                    { key: "system.bonus.state.atk", value: "-8", mode: CONST.ACTIVE_EFFECT_MODES.ADD },
                 ],
             },
             defense1: {
-                name: 'EFFECT.defense1',
-                img: 'systems/hackmaster5e/styles/icons/swords-emblem1.svg',
+                name: "EFFECT.defense1",
+                img: "systems/hackmaster5e/styles/icons/swords-emblem1.svg",
                 changes: [
-                    { key: 'system.bonus.state.def', value: '1', mode: CONST.ACTIVE_EFFECT_MODES.ADD },
-                    { key: 'system.bonus.state.atk', value: '-2', mode: CONST.ACTIVE_EFFECT_MODES.ADD },
+                    { key: "system.bonus.state.def", value: "1", mode: CONST.ACTIVE_EFFECT_MODES.ADD },
+                    { key: "system.bonus.state.atk", value: "-2", mode: CONST.ACTIVE_EFFECT_MODES.ADD },
                 ],
             },
             defense2: {
-                name: 'EFFECT.defense2',
-                img: 'systems/hackmaster5e/styles/icons/swords-emblem2.svg',
+                name: "EFFECT.defense2",
+                img: "systems/hackmaster5e/styles/icons/swords-emblem2.svg",
                 changes: [
-                    { key: 'system.bonus.state.def', value: '2', mode: CONST.ACTIVE_EFFECT_MODES.ADD },
-                    { key: 'system.bonus.state.atk', value: '-4', mode: CONST.ACTIVE_EFFECT_MODES.ADD },
+                    { key: "system.bonus.state.def", value: "2", mode: CONST.ACTIVE_EFFECT_MODES.ADD },
+                    { key: "system.bonus.state.atk", value: "-4", mode: CONST.ACTIVE_EFFECT_MODES.ADD },
                 ],
             },
             defense3: {
-                name: 'EFFECT.defense3',
-                img: 'systems/hackmaster5e/styles/icons/swords-emblem3.svg',
+                name: "EFFECT.defense3",
+                img: "systems/hackmaster5e/styles/icons/swords-emblem3.svg",
                 changes: [
-                    { key: 'system.bonus.state.def', value: '3', mode: CONST.ACTIVE_EFFECT_MODES.ADD },
-                    { key: 'system.bonus.state.atk', value: '-6', mode: CONST.ACTIVE_EFFECT_MODES.ADD },
+                    { key: "system.bonus.state.def", value: "3", mode: CONST.ACTIVE_EFFECT_MODES.ADD },
+                    { key: "system.bonus.state.atk", value: "-6", mode: CONST.ACTIVE_EFFECT_MODES.ADD },
                 ],
             },
             defense4: {
-                name: 'EFFECT.defense4',
-                img: 'systems/hackmaster5e/styles/icons/swords-emblem4.svg',
+                name: "EFFECT.defense4",
+                img: "systems/hackmaster5e/styles/icons/swords-emblem4.svg",
                 changes: [
-                    { key: 'system.bonus.state.def', value: '4', mode: CONST.ACTIVE_EFFECT_MODES.ADD },
-                    { key: 'system.bonus.state.atk', value: '-8', mode: CONST.ACTIVE_EFFECT_MODES.ADD },
+                    { key: "system.bonus.state.def", value: "4", mode: CONST.ACTIVE_EFFECT_MODES.ADD },
+                    { key: "system.bonus.state.atk", value: "-8", mode: CONST.ACTIVE_EFFECT_MODES.ADD },
                 ],
             },
             aggressive: {
-                name: 'EFFECT.aggressive',
-                img: 'systems/hackmaster5e/styles/icons/saber-slash.svg',
+                name: "EFFECT.aggressive",
+                img: "systems/hackmaster5e/styles/icons/saber-slash.svg",
                 changes: [
-                    { key: 'system.bonus.state.def', value: '-2', mode: CONST.ACTIVE_EFFECT_MODES.ADD },
+                    { key: "system.bonus.state.def", value: "-2", mode: CONST.ACTIVE_EFFECT_MODES.ADD },
                 ],
             },
             charge: {
-                name: 'EFFECT.charge',
-                img: 'systems/hackmaster5e/styles/icons/shield-bash.svg',
+                name: "EFFECT.charge",
+                img: "systems/hackmaster5e/styles/icons/shield-bash.svg",
                 changes: [{
-                    key: 'system.bonus.state.def',
+                    key: "system.bonus.state.def",
                     value: [
                         HMCONST.CFX.MODE.ABILITY_BONUS,
-                        'dex',
-                        'def',
+                        "dex",
+                        "def",
                         HMCONST.CFX.OPT.MALUS,
                     ],
                     mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
@@ -835,48 +835,48 @@ export const HMTABLES = {
                 ],
             },
             fullparry: {
-                name: 'EFFECT.fullparry',
-                img: 'systems/hackmaster5e/styles/icons/sword-clash.svg',
+                name: "EFFECT.fullparry",
+                img: "systems/hackmaster5e/styles/icons/sword-clash.svg",
                 changes: [
-                    { key: 'system.bonus.state.def', value: '5', mode: CONST.ACTIVE_EFFECT_MODES.ADD },
+                    { key: "system.bonus.state.def", value: "5", mode: CONST.ACTIVE_EFFECT_MODES.ADD },
                 ],
             },
             gground: {
-                name: 'EFFECT.gground',
-                img: 'systems/hackmaster5e/styles/icons/swordman.svg',
+                name: "EFFECT.gground",
+                img: "systems/hackmaster5e/styles/icons/swordman.svg",
                 changes: [
-                    { key: 'system.bonus.state.atk', value: '-1', mode: CONST.ACTIVE_EFFECT_MODES.ADD },
+                    { key: "system.bonus.state.atk", value: "-1", mode: CONST.ACTIVE_EFFECT_MODES.ADD },
                 ],
             },
             scamper: {
-                name: 'EFFECT.scamper',
-                img: 'systems/hackmaster5e/styles/icons/dodging.svg',
+                name: "EFFECT.scamper",
+                img: "systems/hackmaster5e/styles/icons/dodging.svg",
                 changes: [
-                    { key: 'system.bonus.state.atk', value: '-4', mode: CONST.ACTIVE_EFFECT_MODES.ADD },
+                    { key: "system.bonus.state.atk", value: "-4", mode: CONST.ACTIVE_EFFECT_MODES.ADD },
                 ],
             },
             sfatigue: {
-                name: 'EFFECT.sfatigue',
-                img: 'systems/hackmaster5e/styles/icons/stoned-skull.svg',
+                name: "EFFECT.sfatigue",
+                img: "systems/hackmaster5e/styles/icons/stoned-skull.svg",
                 changes: [
                     {
-                        key: 'system.bonus.state.def',
+                        key: "system.bonus.state.def",
                         value: [
                             HMCONST.CFX.MODE.GET_PROPERTY,
                             `${SYSTEM_ID}.talent.sfatigue.def`,
                         ],
                         mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
                     },
-                    { key: 'system.bonus.state.skills', value: '-30', mode: CONST.ACTIVE_EFFECT_MODES.ADD },
+                    { key: "system.bonus.state.skills", value: "-30", mode: CONST.ACTIVE_EFFECT_MODES.ADD },
                 ],
             },
             incap: {
-                name: 'EFFECT.incap',
-                img: 'systems/hackmaster5e/styles/icons/nailed-head.svg',
+                name: "EFFECT.incap",
+                img: "systems/hackmaster5e/styles/icons/nailed-head.svg",
             },
         },
     },
-    'top': { 'character': 0.3, 'beast': 0.4 },
+    top: { character: 0.3, beast: 0.4 },
     weapons: {
         caps: {
             std: [
@@ -903,27 +903,27 @@ export const HMTABLES = {
         },
         s4c: { spd: 3 },
         scale: {
-            [HMCONST.SCALE.TINY]: { 'minspd': 1 },
-            [HMCONST.SCALE.SMALL]: { 'minspd': 2 },
-            [HMCONST.SCALE.MEDIUM]: { 'minspd': 3 },
-            [HMCONST.SCALE.LARGE]: { 'minspd': 4 },
-            [HMCONST.SCALE.HUGE]: { 'minspd': 5 },
-            [HMCONST.SCALE.GIGANTIC]: { 'minspd': 6 },
-            [HMCONST.SCALE.ENORMOUS]: { 'minspd': 8 },
-            [HMCONST.SCALE.COLOSSAL]: { 'minspd': 15 },
+            [HMCONST.SCALE.TINY]: { minspd: 1 },
+            [HMCONST.SCALE.SMALL]: { minspd: 2 },
+            [HMCONST.SCALE.MEDIUM]: { minspd: 3 },
+            [HMCONST.SCALE.LARGE]: { minspd: 4 },
+            [HMCONST.SCALE.HUGE]: { minspd: 5 },
+            [HMCONST.SCALE.GIGANTIC]: { minspd: 6 },
+            [HMCONST.SCALE.ENORMOUS]: { minspd: 8 },
+            [HMCONST.SCALE.COLOSSAL]: { minspd: 15 },
         },
         ranged: {
-            embed: (arg) => [0, 1, 3, 9, Infinity].findIndex((m) => m > arg) - 1,
+            embed: arg => [0, 1, 3, 9, Infinity].findIndex(m => m > arg) - 1,
             reach: {
                 [HMCONST.RANGED.REACH.SHORT]: 0,
                 [HMCONST.RANGED.REACH.MEDIUM]: 4,
                 [HMCONST.RANGED.REACH.LONG]: 6,
                 [HMCONST.RANGED.REACH.EXTREME]: 8,
             },
-            minspd: (timing) => {
+            minspd: timing => {
                 if (!timing) return 4;
                 let minRoF = 0;
-                Object.keys(timing).forEach((i) => { if (timing[i]) minRoF++; });
+                Object.keys(timing).forEach(i => { if (timing[i]) minRoF++; });
                 return minRoF;
             },
             timing: (timing, base) => {
@@ -942,7 +942,7 @@ export const HMTABLES = {
                 const dt = spd - base;
 
                 const adjArr = [];
-                const timingOrder = ['aim', 'load', 'recover', 'draw'];
+                const timingOrder = ["aim", "load", "recover", "draw"];
                 const tlength = timingOrder.length;
                 for (let i = 0; i < tlength; i++) adjArr[i] = Math.ceil((dt - i) / tlength);
 
@@ -987,14 +987,14 @@ export const HMTABLES = {
             },
         },
     },
-    'weight': (bmi, height) => {
+    weight: (bmi, height) => {
         const weight = (bmi * height ** 2) / 703;
         return Math.floor(weight);
     },
-    'itemstate': {
-        0: 'owned',
-        1: 'carried',
-        2: 'equipped',
-        3: 'innate',
+    itemstate: {
+        0: "owned",
+        1: "carried",
+        2: "equipped",
+        3: "innate",
     },
 };

@@ -5,7 +5,7 @@ import { HMItem, advanceClock, setStatusEffectOnToken, unsetStatusEffectOnToken 
 import { HMChatMgr } from "../mgr/chatmgr.js";
 import { HMChatFactory, CHAT_TYPE } from "../chat/chat-factory.js";
 import { HMDialogFactory } from "../dialog/dialog-factory.js";
-import { transformDamageFormula } from "../sys/utils.js";
+import { transformDamageFormula, getSpeaker } from "../sys/utils.js";
 import { HMSocket, SOCKET_TYPES } from "../sys/sockets.js";
 import { CriticalPrompt } from "../apps/critical-application.js";
 import { CriticalCalculator } from "../rules/calculators/critical-calculator.js";
@@ -159,7 +159,10 @@ export class HMWeaponItem extends HMItem {
 
         const chatMgr = new HMChatMgr();
         const card = await chatMgr.getCard({ dataset });
-        await ChatMessage.create(card);
+
+        const speaker = getSpeaker(actor);
+
+        await ChatMessage.create({ ...card, speaker });
         if (resp.advance) await advanceClock(comData, dialogResp, true);
 
         if (opt.isCombatant) {
@@ -199,23 +202,36 @@ export class HMWeaponItem extends HMItem {
 
         // Formula transform
         const opSet = new Set();
-        if (specialMove === SPECIAL.JAB && autoFormula) opSet.add(FORMULA_MOD.HALVE); else
-            if (specialMove === SPECIAL.BACKSTAB) opSet.add(FORMULA_MOD.BACKSTAB); else
-                if (specialMove === SPECIAL.FLEEING) opSet.add(FORMULA_MOD.BACKSTAB); else
-                    if (specialMove === SPECIAL.SET4CHARGE) opSet.add(FORMULA_MOD.DOUBLE);
+
+        switch (specialMove) {
+            case SPECIAL.JAB:
+                if (autoFormula) opSet.add(FORMULA_MOD.HALVE);
+                break;
+
+            case SPECIAL.BACKSTAB:
+            case SPECIAL.FLEEING:
+                opSet.add(FORMULA_MOD.BACKSTAB);
+                break;
+
+            case SPECIAL.SET4CHARGE:
+                opSet.add(FORMULA_MOD.DOUBLE);
+                break;
+        }
+
         if (defense) opSet.add(FORMULA_MOD.NOPENETRATE);
 
         const r = new Roll(formula, rollContext);
         const terms = transformDamageFormula(r.terms, opSet);
-        dataset.roll = await Roll.fromTerms(terms).evaluate();
+        const roll = await Roll.fromTerms(terms).evaluate();
 
-        dataset.resp = resp;
-        dataset.context = context;
-        dataset.caller = actor;
-
-        const chatMgr = new HMChatMgr();
-        const card = await chatMgr.getCard({ dataset });
-        await ChatMessage.create(card);
+        const bData = {
+            caller: actor.uuid,
+            context: context.weapon.uuid,
+            resp: resp,
+            roll: roll.toJSON(),
+        };
+        const builder = await HMChatFactory.create(CHAT_TYPE.DAMAGE, bData);
+        builder.createChatMessage();
     }
 
     static async rollFumble({ caller } = {}) {

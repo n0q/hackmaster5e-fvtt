@@ -1,23 +1,66 @@
+import { HMCONST } from "../tables/constants.js";
 /**
  * Enumeration for chat result codes.
  * @enum {Symbol}
  */
 export const RESULT_TYPE = {
-    NONE: Symbol('result_none'),
-    CRITFAIL: Symbol('result_critfail'),
-    DCRITFAIL: Symbol('result_dcritfail'),
-    FAILED: Symbol('result_failed'),
-    FUMBLE: Symbol('result_fumble'),
-    GOODBYE: Symbol('result_goodbye'),
-    NEAR_PERFECT: Symbol('result_near_perfect'),
-    PASSED: Symbol('result_passed'),
-    PERFECT: Symbol('result_perfect'),
-    SKILL4: Symbol('result_skill_trivial'),
-    SKILL3: Symbol('result_skill_easy'),
-    SKILL2: Symbol('result_skill_avg'),
-    SKILL1: Symbol('result_skill_diff'),
-    SKILL0: Symbol('result_skill_vdiff'),
-    SUPERIOR: Symbol('result_superior'),
+    NONE: Symbol("result_none"),
+    CRITFAIL: Symbol("result_critfail"),
+    DCRITFAIL: Symbol("result_dcritfail"),
+    FAILED: Symbol("result_failed"),
+    FUMBLE: Symbol("result_fumble"),
+    GOODBYE: Symbol("result_goodbye"),
+    NEAR_PERFECT: Symbol("result_near_perfect"),
+    PASSED: Symbol("result_passed"),
+    PERFECT: Symbol("result_perfect"),
+    SKILL4: Symbol("result_skill_trivial"),
+    SKILL3: Symbol("result_skill_easy"),
+    SKILL2: Symbol("result_skill_avg"),
+    SKILL1: Symbol("result_skill_diff"),
+    SKILL0: Symbol("result_skill_vdiff"),
+    SUPERIOR: Symbol("result_superior"),
+};
+
+/**
+ * Special action modifier chat enumerators.
+ * @enum {string}
+ */
+const COMBAT_MODIFIER_TYPE = {
+    [HMCONST.SPECIAL.JAB]: "HM.jab",
+    [HMCONST.SPECIAL.BACKSTAB]: "HM.backstab",
+    [HMCONST.SPECIAL.FLEEING]: "HM.fleeing",
+    [HMCONST.SPECIAL.SET4CHARGE]: "HM.s4c",
+
+    // Synthetic status flags for boolean inputs.
+    SHIELD_HIT: "HM.blocked",
+    DEFENSIVE: "HM.defensive",
+};
+
+/**
+ * Returns a localized, comma-separated stringh of combat modifier saber-slash
+ * based on special move type and boolean combat states.
+ *
+ * @param {Object} resp - The dialog response object.
+ * @param {number} resp.specialMove - Encoded special move bitflag.
+ * @param {boolean} resp.shieldHit - Is this a shield hit?
+ * @param {boolean} resp.defense - Is the attacker fighting defensively?
+ * @returns {string} Localized modifier description.
+ */
+export const getCombatModifierFlavor = resp => {
+    const { specialMove, shieldHit, defense } = resp;
+
+    const modifierKeys = [
+        COMBAT_MODIFIER_TYPE[specialMove],
+        shieldHit ? COMBAT_MODIFIER_TYPE.SHIELD_HIT : null,
+        defense ? COMBAT_MODIFIER_TYPE.DEFENSIVE : null,
+    ];
+
+    const mods = [];
+    for (const key of modifierKeys) {
+        if (key) mods.push(game.i18n.localize(key));
+    }
+
+    return mods.join(", ");
 };
 
 /**
@@ -36,20 +79,20 @@ let _resultTextCache;
  */
 function _initializeResultCache() {
     _resultTextCache = new Map([
-        [RESULT_TYPE.CRITFAIL, `<b>${game.i18n.localize('HM.CHAT.RESULT.critfail')}</b>`],
-        [RESULT_TYPE.DCRITFAIL, `<b>${game.i18n.localize('HM.CHAT.RESULT.dcritfail')}</b>`],
-        [RESULT_TYPE.FAILED, `<b>${game.i18n.localize('HM.CHAT.RESULT.failed')}</b>`],
-        [RESULT_TYPE.FUMBLE, `<b>${game.i18n.localize('HM.CHAT.RESULT.fumble')}</b>`],
-        [RESULT_TYPE.GOODBYE, `<b>${game.i18n.localize('HM.CHAT.RESULT.goodbye')}</b>`],
-        [RESULT_TYPE.NEAR_PERFECT, `<b>${game.i18n.localize('HM.CHAT.RESULT.nperfect')}</b>`],
-        [RESULT_TYPE.PASSED, `<b>${game.i18n.localize('HM.CHAT.RESULT.passed')}</b>`],
-        [RESULT_TYPE.PERFECT, `<b>${game.i18n.localize('HM.CHAT.RESULT.perfect')}</b>`],
-        [RESULT_TYPE.SKILL4, `<b>${game.i18n.localize('HM.CHAT.RESULT.skill4')}</b>`],
-        [RESULT_TYPE.SKILL3, `<b>${game.i18n.localize('HM.CHAT.RESULT.skill3')}</b>`],
-        [RESULT_TYPE.SKILL2, `<b>${game.i18n.localize('HM.CHAT.RESULT.skill2')}</b>`],
-        [RESULT_TYPE.SKILL1, `<b>${game.i18n.localize('HM.CHAT.RESULT.skill1')}</b>`],
-        [RESULT_TYPE.SKILL0, `<b>${game.i18n.localize('HM.CHAT.RESULT.skill0')}</b>`],
-        [RESULT_TYPE.SUPERIOR, `<b>${game.i18n.localize('HM.CHAT.RESULT.superior')}</b>`],
+        [RESULT_TYPE.CRITFAIL, `<b>${game.i18n.localize("HM.CHAT.RESULT.critfail")}</b>`],
+        [RESULT_TYPE.DCRITFAIL, `<b>${game.i18n.localize("HM.CHAT.RESULT.dcritfail")}</b>`],
+        [RESULT_TYPE.FAILED, `<b>${game.i18n.localize("HM.CHAT.RESULT.failed")}</b>`],
+        [RESULT_TYPE.FUMBLE, `<b>${game.i18n.localize("HM.CHAT.RESULT.fumble")}</b>`],
+        [RESULT_TYPE.GOODBYE, `<b>${game.i18n.localize("HM.CHAT.RESULT.goodbye")}</b>`],
+        [RESULT_TYPE.NEAR_PERFECT, `<b>${game.i18n.localize("HM.CHAT.RESULT.nperfect")}</b>`],
+        [RESULT_TYPE.PASSED, `<b>${game.i18n.localize("HM.CHAT.RESULT.passed")}</b>`],
+        [RESULT_TYPE.PERFECT, `<b>${game.i18n.localize("HM.CHAT.RESULT.perfect")}</b>`],
+        [RESULT_TYPE.SKILL4, `<b>${game.i18n.localize("HM.CHAT.RESULT.skill4")}</b>`],
+        [RESULT_TYPE.SKILL3, `<b>${game.i18n.localize("HM.CHAT.RESULT.skill3")}</b>`],
+        [RESULT_TYPE.SKILL2, `<b>${game.i18n.localize("HM.CHAT.RESULT.skill2")}</b>`],
+        [RESULT_TYPE.SKILL1, `<b>${game.i18n.localize("HM.CHAT.RESULT.skill1")}</b>`],
+        [RESULT_TYPE.SKILL0, `<b>${game.i18n.localize("HM.CHAT.RESULT.skill0")}</b>`],
+        [RESULT_TYPE.SUPERIOR, `<b>${game.i18n.localize("HM.CHAT.RESULT.superior")}</b>`],
     ]);
     return _resultTextCache;
 }

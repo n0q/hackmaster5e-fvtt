@@ -1,4 +1,4 @@
-import { FILL_TYPE } from '../sys/token.js';
+import { FILL_TYPE } from "../sys/token.js";
 
 export class HMTokenHooks {
     /**
@@ -15,16 +15,16 @@ export class HMTokenHooks {
     */
     static async createToken(token, _options, userId) {
         if (game.user.id !== userId) return;
-        const {actor} = token;
+        const { actor } = token;
 
         // Populate hp.max for beast tokens.
-        if (actor.type !== 'beast' || actor.system.hp.max) return;
+        if (actor.type !== "beast" || actor.system.hp.max) return;
 
-        const {formula} = actor.system.hp;
+        const { formula } = actor.system.hp;
         if (Roll.validate(formula)) {
-            const r = await new Roll(formula).evaluate({allowInteractive: false});
-            const tokenHp = {value: r.total, max: r.total};
-            await actor.update({'system.hp': tokenHp});
+            const r = await new Roll(formula).evaluate({ allowInteractive: false });
+            const tokenHp = { value: r.total, max: r.total };
+            await actor.update({ "system.hp": tokenHp });
         }
     }
 
@@ -33,23 +33,22 @@ export class HMTokenHooks {
     }
 
     static drawToken(token) {
-        token.reach ??= token.addChildAt(new PIXI.Graphics(), 0); // eslint-disable-line
-        token.reach.position = token.getCenterPoint({x: 0, y: 0}); // eslint-disable-line
-        const {reach, isPreview} = token;
+        token.reach ??= token.addChildAt(new PIXI.Graphics(), 0);
+        token.reach.position = token.getCenterPoint({ x: 0, y: 0 });
+        const { reach, isPreview } = token;
         reach.visible = !!token.combatant && (token.visibleByDefault() || isPreview);
         token.drawReach();
     }
 
     static hoverToken(token, hover) {
         if (token.__isSecret) return;
-        /* eslint-disable no-param-reassign */
         if (!token.combatant) return;
         token.drawReach(hover ? FILL_TYPE.FULL : FILL_TYPE.REACH);
-        const {reach} = token;
+        const { reach } = token;
         reach.visible = hover ? true : token.visibleByDefault();
 
-        const otherTokens = canvas.tokens.placeables.filter((t) => t.id !== token.id);
-        otherTokens.forEach((t) => {
+        const otherTokens = canvas.tokens.placeables.filter(t => t.id !== token.id);
+        otherTokens.forEach(t => {
             let fillType = FILL_TYPE.BASE;
             if (hover) {
                 if (t.reach.visible) fillType |= FILL_TYPE.REACH;
@@ -60,6 +59,5 @@ export class HMTokenHooks {
             }
             t.drawReach(fillType);
         });
-        /* eslint-enable-line no-param-reassign */
     }
 }

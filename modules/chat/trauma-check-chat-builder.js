@@ -1,11 +1,11 @@
-import { ChatBuilder } from './chat-builder-abstract.js';
-import { getResult } from './chat-constants.js';
-import { HMCONST } from '../tables/constants.js';
+import { ChatBuilder } from "./chat-builder-abstract.js";
+import { getResult } from "./chat-constants.js";
+import { systemPath, HMCONST } from "../tables/constants.js";
 
 const failType = HMCONST.TRAUMA_FAILSTATE;
 
 export class TraumaCheckChatBuilder extends ChatBuilder {
-    static template = 'systems/hackmaster5e/templates/chat/chat-trauma.hbs';
+    static template = systemPath("templates/chat/chat-trauma.hbs");
 
     async createChatMessage() {
         const { batch, resp } = this.data;
@@ -13,14 +13,14 @@ export class TraumaCheckChatBuilder extends ChatBuilder {
         const [traumaRoll, durationRoll] = batch;
         const { failState } = mdata;
 
-        const rFlavor = ['Trauma Check', 'Coma Check', 'Extended Duration'];
+        const rFlavor = ["Trauma Check", "Coma Check", "Extended Duration"];
         const rollContent = await Promise.all(batch.map((r, i) => r.render({ flavor: rFlavor[i] })));
 
         mdata.duration = ({
             [failType.FAILED]: traumaRoll.total * 5,
             [failType.KO]: durationRoll?.total,
             [failType.COMA]: durationRoll?.total,
-            [failType.VEGETABLE]: 'Indefinite',
+            [failType.VEGETABLE]: "Indefinite",
         })[failState];
 
         mdata = { ...mdata, ...this.getResultData(failState) };
@@ -28,7 +28,7 @@ export class TraumaCheckChatBuilder extends ChatBuilder {
         const resultString = getResult(mdata.rv);
         const chatData = { resultString, rollContent, mdata, resp };
 
-        const content = await ChatBuilder.handlebars.renderTemplate(this.template, chatData);
+        const content = await this.renderTemplate(this.template, chatData);
         const chatMessageData = this.getChatMessageData({ content, resp });
         this.render(chatMessageData);
     }
@@ -42,22 +42,22 @@ export class TraumaCheckChatBuilder extends ChatBuilder {
             },
             [failType.FAILED]: {
                 rv: this.RESULT_TYPE.FAILED,
-                result: 'Incapacitated',
-                unit: 'seconds',
+                result: "Incapacitated",
+                unit: "seconds",
             },
             [failType.KO]: {
                 rv: this.RESULT_TYPE.CRITFAIL,
-                result: 'Knock-Out',
-                unit: 'minutes',
+                result: "Knock-Out",
+                unit: "minutes",
             },
             [failType.COMA]: {
                 rv: this.RESULT_TYPE.DCRITFAIL,
-                result: 'Coma',
-                unit: 'days',
+                result: "Coma",
+                unit: "days",
             },
             [failType.VEGETABLE]: {
                 rv: this.RESULT_TYPE.GOODBYE,
-                result: 'Coma',
+                result: "Coma",
                 unit: undefined,
             },
         })[idx];
