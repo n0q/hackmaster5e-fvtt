@@ -92,7 +92,10 @@ export class HMChatHooks {
             return;
         }
 
-        const BORDER_WIDTH = 5;
+        const dim = canvas.dimensions;
+        const unit = dim.size / dim.distance;
+        const BORDER_WIDTH = unit / 12;
+
         const dispositionColor = token.getDispositionColor();
 
         if (!token._chatHoverBorder) {
