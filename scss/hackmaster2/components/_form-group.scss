@@ -1,6 +1,7 @@
 @use '../abstracts/variables' as vars;
 
 .form-group {
+  font-family: 'Korinan', 'Gentium', 'Roboto', serif;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;

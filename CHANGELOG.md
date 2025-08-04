@@ -9,7 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - Token highlight scaling.
 - Chat messages missing headers.
-- Chat styling sheet fix.
+- Styling sheet fixes.
 
 ## [0.5.1] - 2025-08-03
 
