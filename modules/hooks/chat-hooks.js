@@ -20,10 +20,10 @@ export class HMChatHooks {
             whisperToElements.forEach(el => el.remove());
         }
 
+        if (!html.querySelector(".hm-chat-note")) return;
+
         const headerElement = html.querySelector("header");
         if (headerElement) headerElement.remove();
-
-        if (!html.querySelector(".hm-chat-note")) return;
 
         html.style.padding = "0px";
 
