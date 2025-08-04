@@ -20,10 +20,10 @@ export class HMChatHooks {
             whisperToElements.forEach(el => el.remove());
         }
 
+        if (!html.querySelector(".hm-chat-note")) return;
+
         const headerElement = html.querySelector("header");
         if (headerElement) headerElement.remove();
-
-        if (!html.querySelector(".hm-chat-note")) return;
 
         html.style.padding = "0px";
 
@@ -92,7 +92,10 @@ export class HMChatHooks {
             return;
         }
 
-        const BORDER_WIDTH = 5;
+        const dim = canvas.dimensions;
+        const unit = dim.size / dim.distance;
+        const BORDER_WIDTH = unit / 12;
+
         const dispositionColor = token.getDispositionColor();
 
         if (!token._chatHoverBorder) {
