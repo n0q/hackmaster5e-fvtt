@@ -1,6 +1,6 @@
-import { ChatBuilder } from "./chat-builder-abstract.js";
-import { getResult } from "./chat-constants.js";
-import { systemPath, HMCONST, HMTABLES } from "../tables/constants.js";
+import { ChatBuilder } from "../foundation/chat-builder-abstract.js";
+import { getResult } from "../foundation/chat-builder-constants.js";
+import { systemPath, HMCONST, HMTABLES } from "../../tables/constants.js";
 
 const typeToBonusMap = {
     [HMCONST.SKILL.TYPE.SKILL]: "value",

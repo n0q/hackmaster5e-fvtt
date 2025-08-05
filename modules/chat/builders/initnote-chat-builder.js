@@ -1,5 +1,5 @@
-import { systemPath } from "../tables/constants.js";
-import { ChatBuilder } from "./chat-builder-abstract.js";
+import { systemPath } from "../../tables/constants.js";
+import { ChatBuilder } from "../foundation/chat-builder-abstract.js";
 
 export class InitNoteChatBuilder extends ChatBuilder {
     static template = systemPath("templates/chat/initNote.hbs");

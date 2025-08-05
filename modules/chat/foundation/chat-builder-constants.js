@@ -1,4 +1,4 @@
-import { HMCONST } from "../tables/constants.js";
+import { HMCONST } from "../../tables/constants.js";
 /**
  * Enumeration for chat result codes.
  * @enum {Symbol}

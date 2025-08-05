@@ -1,7 +1,7 @@
-import { ChatBuilder } from "./chat-builder-abstract.js";
-import { systemPath, SYSTEM_ID } from "../tables/constants.js";
-import { calculateArmorDamage } from "../sys/utils.js";
-import { getCombatModifierFlavor } from "./chat-constants.js";
+import { ChatBuilder } from "../foundation/chat-builder-abstract.js";
+import { systemPath, SYSTEM_ID } from "../../tables/constants.js";
+import { calculateArmorDamage } from "../../sys/utils.js";
+import { getCombatModifierFlavor } from "../foundation/chat-builder-constants.js";
 
 export class DamageChatBuilder extends ChatBuilder {
     static template = systemPath("templates/chat/chat-damage.hbs");

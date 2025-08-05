@@ -1,6 +1,6 @@
 import { BuilderSchema } from "./chat-builder-schema.js";
-import { getSpeaker } from "../sys/utils.js";
-import { RESULT_TYPE } from "./chat-constants.js";
+import { getSpeaker } from "../../sys/utils.js";
+import { RESULT_TYPE } from "./chat-builder-constants.js";
 
 /**
  * Chat card builder.

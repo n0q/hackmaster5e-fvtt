@@ -1,5 +1,5 @@
-import { systemPath } from "../tables/constants.js";
-import { ChatBuilder } from "./chat-builder-abstract.js";
+import { systemPath } from "../../tables/constants.js";
+import { ChatBuilder } from "../foundation/chat-builder-abstract.js";
 
 const ALERT_TYPE = {
     TRAUMA: Symbol("alert_type_trauma"),

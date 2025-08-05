@@ -1,7 +1,7 @@
-import { ChatBuilder } from "./chat-builder-abstract.js";
-import { systemPath, SYSTEM_ID } from "../tables/constants.js";
-import { CRITTABLE } from "../tables/crits.js";
-import { idx } from "../tables/dictionary.js";
+import { ChatBuilder } from "../foundation/chat-builder-abstract.js";
+import { systemPath, SYSTEM_ID } from "../../tables/constants.js";
+import { idx } from "../../tables/dictionary.js";
+import { CRITTABLE } from "../../tables/crits.js";
 
 export class CriticalChatBuilder extends ChatBuilder {
     static template = systemPath("templates/chat/crit.hbs");

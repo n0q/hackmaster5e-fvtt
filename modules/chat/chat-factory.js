@@ -1,13 +1,13 @@
-import { AbilityCheckChatBuilder } from "./ability-check-chat-builder.js";
-import { AlertNoteChatBuilder } from "./alert-note-chat-builder.js";
-import { CriticalChatBuilder } from "./critical-chat-builder.js";
-import { DamageChatBuilder } from "./damage-chat-builder.js";
-import { DefenseChatBuilder } from "./defense-chat-builder.js";
-import { InitNoteChatBuilder } from "./initnote-chat-builder.js";
-import { SaveCheckChatBuilder } from "./save-check-chat-builder.js";
-import { SkillCheckChatBuilder } from "./skill-check-chat-builder.js";
-import { SpellChatBuilder } from "./spell-chat-builder.js";
-import { TraumaCheckChatBuilder } from "./trauma-check-chat-builder.js";
+import { AbilityCheckChatBuilder } from "./builders/ability-check-chat-builder.js";
+import { AlertNoteChatBuilder } from "./builders/alert-note-chat-builder.js";
+import { CriticalChatBuilder } from "./builders/critical-chat-builder.js";
+import { DamageChatBuilder } from "./builders/damage-chat-builder.js";
+import { DefenseChatBuilder } from "./builders/defense-chat-builder.js";
+import { InitNoteChatBuilder } from "./builders/initnote-chat-builder.js";
+import { SaveCheckChatBuilder } from "./builders/save-check-chat-builder.js";
+import { SkillCheckChatBuilder } from "./builders/skill-check-chat-builder.js";
+import { SpellChatBuilder } from "./builders/spell-chat-builder.js";
+import { TraumaCheckChatBuilder } from "./builders/trauma-check-chat-builder.js";
 
 /**
  * Enumeration for chat factory types.

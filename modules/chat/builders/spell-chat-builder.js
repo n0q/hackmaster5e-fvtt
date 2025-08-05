@@ -1,5 +1,5 @@
-import { ChatBuilder } from "./chat-builder-abstract.js";
-import { systemPath, HMTABLES } from "../tables/constants.js";
+import { ChatBuilder } from "../foundation/chat-builder-abstract.js";
+import { systemPath, HMTABLES } from "../../tables/constants.js";
 
 export class SpellChatBuilder extends ChatBuilder {
     static template = systemPath("templates/chat/chat-spell.hbs");
