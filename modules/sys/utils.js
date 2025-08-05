@@ -136,12 +136,12 @@ function parsePercent(value) {
  */
 export const getSpeaker = caller => {
     if (!caller) return undefined;
-    window.foo = caller;
+    const alias = game.user.name;
 
     if (caller instanceof foundry.canvas.placeables.Token) {
         return {
+            alias,
             actor: caller.actor?.id,
-            alias: caller.name,
             scene: caller.scene?.id,
             token: caller.id,
         };
@@ -150,8 +150,8 @@ export const getSpeaker = caller => {
     // Synthetic actor.
     if (caller.isToken) {
         return {
+            alias,
             actor: caller?.id,
-            alias: caller.name,
             scene: caller.token.parent?.id,
             token: caller.token?.id,
         };
@@ -160,8 +160,8 @@ export const getSpeaker = caller => {
     if (caller instanceof foundry.documents.Actor) {
         const token = caller.token ?? caller.getActiveTokens()[0];
         return {
+            alias,
             actor: caller.id,
-            alias: token?.name ?? caller.name,
             scene: token?.scene?.id ?? null,
             token: token?.id ?? null,
         };
@@ -169,8 +169,8 @@ export const getSpeaker = caller => {
 
     if (caller instanceof foundry.documents.TokenDocument) {
         return {
+            alias,
             actor: caller.actorId,
-            alias: caller.name,
             scene: caller.parent.id,
             token: caller.id,
         };
