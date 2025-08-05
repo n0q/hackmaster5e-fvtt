@@ -10,7 +10,7 @@ export const RESULT_TYPE = {
     FAILED: Symbol("result_failed"),
     FUMBLE: Symbol("result_fumble"),
     GOODBYE: Symbol("result_goodbye"),
-    NEAR_PERFECT: Symbol("result_near_perfect"),
+    NEAR_PERFECT: Symbol("result_near-perfect"),
     PASSED: Symbol("result_passed"),
     PERFECT: Symbol("result_perfect"),
     SKILL4: Symbol("result_skill_trivial"),
@@ -79,20 +79,20 @@ let _resultTextCache;
  */
 function _initializeResultCache() {
     _resultTextCache = new Map([
-        [RESULT_TYPE.CRITFAIL, `<b>${game.i18n.localize("HM.CHAT.RESULT.critfail")}</b>`],
-        [RESULT_TYPE.DCRITFAIL, `<b>${game.i18n.localize("HM.CHAT.RESULT.dcritfail")}</b>`],
-        [RESULT_TYPE.FAILED, `<b>${game.i18n.localize("HM.CHAT.RESULT.failed")}</b>`],
-        [RESULT_TYPE.FUMBLE, `<b>${game.i18n.localize("HM.CHAT.RESULT.fumble")}</b>`],
-        [RESULT_TYPE.GOODBYE, `<b>${game.i18n.localize("HM.CHAT.RESULT.goodbye")}</b>`],
-        [RESULT_TYPE.NEAR_PERFECT, `<b>${game.i18n.localize("HM.CHAT.RESULT.nperfect")}</b>`],
-        [RESULT_TYPE.PASSED, `<b>${game.i18n.localize("HM.CHAT.RESULT.passed")}</b>`],
-        [RESULT_TYPE.PERFECT, `<b>${game.i18n.localize("HM.CHAT.RESULT.perfect")}</b>`],
-        [RESULT_TYPE.SKILL4, `<b>${game.i18n.localize("HM.CHAT.RESULT.skill4")}</b>`],
-        [RESULT_TYPE.SKILL3, `<b>${game.i18n.localize("HM.CHAT.RESULT.skill3")}</b>`],
-        [RESULT_TYPE.SKILL2, `<b>${game.i18n.localize("HM.CHAT.RESULT.skill2")}</b>`],
-        [RESULT_TYPE.SKILL1, `<b>${game.i18n.localize("HM.CHAT.RESULT.skill1")}</b>`],
-        [RESULT_TYPE.SKILL0, `<b>${game.i18n.localize("HM.CHAT.RESULT.skill0")}</b>`],
-        [RESULT_TYPE.SUPERIOR, `<b>${game.i18n.localize("HM.CHAT.RESULT.superior")}</b>`],
+        [RESULT_TYPE.CRITFAIL, game.i18n.localize("HM.CHAT.RESULT.critfail")],
+        [RESULT_TYPE.DCRITFAIL, game.i18n.localize("HM.CHAT.RESULT.dcritfail")],
+        [RESULT_TYPE.FAILED, game.i18n.localize("HM.CHAT.RESULT.failed")],
+        [RESULT_TYPE.FUMBLE, game.i18n.localize("HM.CHAT.RESULT.fumble")],
+        [RESULT_TYPE.GOODBYE, game.i18n.localize("HM.CHAT.RESULT.goodbye")],
+        [RESULT_TYPE.NEAR_PERFECT, game.i18n.localize("HM.CHAT.RESULT.near-perfect")],
+        [RESULT_TYPE.PASSED, game.i18n.localize("HM.CHAT.RESULT.passed")],
+        [RESULT_TYPE.PERFECT, game.i18n.localize("HM.CHAT.RESULT.perfect")],
+        [RESULT_TYPE.SKILL4, game.i18n.localize("HM.CHAT.RESULT.skill4")],
+        [RESULT_TYPE.SKILL3, game.i18n.localize("HM.CHAT.RESULT.skill3")],
+        [RESULT_TYPE.SKILL2, game.i18n.localize("HM.CHAT.RESULT.skill2")],
+        [RESULT_TYPE.SKILL1, game.i18n.localize("HM.CHAT.RESULT.skill1")],
+        [RESULT_TYPE.SKILL0, game.i18n.localize("HM.CHAT.RESULT.skill0")],
+        [RESULT_TYPE.SUPERIOR, game.i18n.localize("HM.CHAT.RESULT.superior")],
     ]);
     return _resultTextCache;
 }
