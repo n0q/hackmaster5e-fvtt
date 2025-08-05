@@ -859,6 +859,9 @@
             "talent": "Talent"
         },
         "UI": {
+            "WOUND": {
+                "notify": "<strong>{name}</strong> takes <strong>{hp}</strong> HP of damage."
+            },
             "duration": "Duration",
             "key": "Key",
             "label": "Label",

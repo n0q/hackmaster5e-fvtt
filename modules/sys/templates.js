@@ -80,7 +80,7 @@ export const preloadHandlebarsTemplates = () => {
         systemPath("templates/dialog/getSave.hbs"),
         systemPath("templates/dialog/dialog-skill.hbs"),
         systemPath("templates/dialog/getInitDie.hbs"),
-        systemPath("templates/dialog/wound.hbs"),
+        systemPath("templates/dialog/wound-content-app.hbs"),
         systemPath("templates/dialog/parts/getRollMode.hbs"),
 
         systemPath("templates/dice/roll.hbs"),

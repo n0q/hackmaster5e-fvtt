@@ -8,7 +8,6 @@ import { DamagePrompt } from "../apps/legacy/damage.js";
 import { DefendPrompt } from "../apps/legacy/defend.js";
 import { FumblePrompt } from "../apps/legacy/fumble.js";
 import { SkillPrompt } from "../apps/legacy/skill.js";
-import { WoundPrompt } from "../apps/legacy/wound.js";
 
 function getDialogData() {
     return {
@@ -162,22 +161,6 @@ export class HMDialog {
             },
             default: "getdie",
         }, { width: 300 });
-
-        return dialogResp;
-    }
-
-    static async setWoundDialog(caller) {
-        const dialogResp = { caller };
-        const dialogData = getDialogData();
-        dialogData.caller = caller;
-
-        const title = caller
-            ? `${caller.name}: ${game.i18n.localize("HM.dialog.setWoundTitle")}`
-            : `${game.i18n.localize("HM.dialog.setWoundTitle")}`;
-        dialogResp.resp = await new Promise(resolve => {
-            const options = { resolve, title };
-            new WoundPrompt(dialogData, options).render(true);
-        });
 
         return dialogResp;
     }
