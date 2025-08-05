@@ -1,5 +1,5 @@
 import { HMItem } from "./item.js";
-import { HMCONST, HMTABLES } from "../tables/constants.js";
+import { HMCONST, HMTABLES, SYSTEM_ID } from "../tables/constants.js";
 import { WoundPrompt } from "../apps/wound-application.js";
 
 /**
@@ -28,40 +28,28 @@ export class HMWoundItem extends HMItem {
     /**
      *
      * @param {boolean} canNotify - If we should create a notification about this HMWoundItem.
-     * @param {HMActor} context - The actor receiving the HMWoundItem.
+     * @param {HMActor} actor - The actor receiving the HMWoundItem.
      * @param {WoundData} wdata - WoundData pertaining to this HMWoundItem.
      */
-    static async addWound(canNotify, context, wdata) {
-        const receivedData = wdata ?? await WoundPrompt.create(undefined, { context });
-        const woundData = HMWoundItem.normalizeWoundData(receivedData);
-        const { hp, assn, armorDamage, embed, isEmbedded, note } = woundData;
+    static async addWound(_canNotify, actor, wdata) {
+        const receivedData = wdata ?? await WoundPrompt.create(undefined, { context: actor });
+        const { armorDamage, ...woundData } = HMWoundItem.normalizeWoundData(receivedData);
+        if (woundData.hp < 1) return;
 
-        if (armorDamage) {
-            const armor = context.itemTypes.armor.find(a => (
-                a.system.state === HMCONST.ITEM_STATE.EQUIPPED
-                && !a.system.isShield
-            ));
-            if (armor) armor.damageArmorBy(armorDamage);
-        }
+        const itemData = {
+            name: "Wound",
+            type: "wound",
+            system: woundData,
+            flags: {
+                [SYSTEM_ID]: {
+                    assn: Number(woundData.assn) || 0,
+                    armorDamage: Number(armorDamage) || 0,
+                },
 
-        if (!hp) return;
+            },
+        };
 
-        const system = { hp, timer: hp, embed, isEmbedded, note };
-        const itemData = { name: "Wound", type: "wound", system };
-        await Item.create(itemData, { parent: context });
-
-        if (canNotify) {
-            const formatData = { name: context.name, hp };
-            const uiString = game.i18n.format("HM.UI.WOUND.notify", formatData);
-            ui.notifications.info(uiString);
-        }
-
-        const hpTrauma = context.system.hp.top;
-        const hpTenacity = context.system.hp.tenacity;
-        const traumaCheck = hpTrauma < (hp + assn);
-        const tenacityCheck = hpTenacity < hp;
-
-        await context.onWound(traumaCheck, tenacityCheck);
+        await actor.createEmbeddedDocuments("Item", [itemData]);
     }
 
     /**
@@ -71,10 +59,14 @@ export class HMWoundItem extends HMItem {
      * @returns {WoundData}
      */
     static normalizeWoundData(woundData) {
-        if (!woundData.isEmbedded) return woundData;
-        if (woundData.embed !== HMCONST.RANGED.EMBED.AUTO) return woundData;
+        const { EMBED } = HMCONST.RANGED;
         const normalizedData = foundry.utils.deepClone(woundData);
+
+        normalizedData.timer = woundData.hp;
+
+        if (!woundData.isEmbedded || woundData.embed !== EMBED.AUTO) return normalizedData;
         normalizedData.embed = HMTABLES.weapons.ranged.embed(woundData.hp);
+
         return normalizedData;
     }
 
