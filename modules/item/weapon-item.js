@@ -1,11 +1,10 @@
 import { SYSTEM_ID, HMCONST, HMTABLES } from "../tables/constants.js";
-import { CRITTABLE } from "../tables/crits.js";
 import { FUMBLETABLE } from "../tables/fumbles.js";
 import { HMItem, advanceClock, setStatusEffectOnToken, unsetStatusEffectOnToken } from "./item.js";
 import { HMChatMgr } from "../mgr/chatmgr.js";
 import { HMChatFactory, CHAT_TYPE } from "../chat/chat-factory.js";
 import { HMDialogFactory } from "../dialog/dialog-factory.js";
-import { transformDamageFormula, getSpeaker } from "../sys/utils.js";
+import { transformDamageFormula } from "../sys/utils.js";
 import { HMSocket, SOCKET_TYPES } from "../sys/sockets.js";
 import { CriticalPrompt } from "../apps/critical-application.js";
 import { CriticalCalculator } from "../rules/calculators/critical-calculator.js";
@@ -136,9 +135,11 @@ export class HMWeaponItem extends HMItem {
             }
 
             // Full Parry, Defensive Fighting exclusivity.
-            specialMove === SPECIAL.FULLPARRY
-                ? setStatusEffectOnToken(comData, "fullparry", resp.advance)
-                : await unsetStatusEffectOnToken(comData, "fullparry");
+            if (specialMove === SPECIAL.FULLPARRY) {
+                setStatusEffectOnToken(comData, "fullparry", resp.advance);
+            } else {
+                await unsetStatusEffectOnToken(comData, "fullparry");
+            }
 
             const dList = Object.values(HMTABLES.effects.defense);
             if (defense) dList.splice(defense - 1, 1);
@@ -146,23 +147,23 @@ export class HMWeaponItem extends HMItem {
             if (defense) setStatusEffectOnToken(comData, HMTABLES.effects.defense[defense]);
         }
 
+        const bData = {
+            caller: actor.uuid,
+            context: context.weapon.uuid,
+            resp,
+        };
+
         if (button !== "declare") {
             const { atk } = HMTABLES.formula;
             const formula = specialMove < 16 ? atk[SPECIAL.STANDARD] : atk[specialMove];
             const rollContext = { resp, ...context.system };
-            dataset.roll = await new Roll(formula, rollContext).evaluate();
+            const roll = await new Roll(formula, rollContext).evaluate();
+            bData.roll = roll.toJSON();
         }
 
-        dataset.resp = resp;
-        dataset.context = context;
-        dataset.caller = actor;
+        const builder = await HMChatFactory.create(CHAT_TYPE.ATTACK, bData);
+        await builder.createChatMessage();
 
-        const chatMgr = new HMChatMgr();
-        const card = await chatMgr.getCard({ dataset });
-
-        const speaker = getSpeaker(actor);
-
-        await ChatMessage.create({ ...card, speaker });
         if (resp.advance) await advanceClock(comData, dialogResp, true);
 
         if (opt.isCombatant) {

@@ -1,5 +1,6 @@
 import { AbilityCheckChatBuilder } from "./builders/ability-check-chat-builder.js";
 import { AlertNoteChatBuilder } from "./builders/alert-note-chat-builder.js";
+import { AttackBuilder } from "./builders/attack-chat-builder.js";
 import { CriticalChatBuilder } from "./builders/critical-chat-builder.js";
 import { DamageChatBuilder } from "./builders/damage-chat-builder.js";
 import { DefenseChatBuilder } from "./builders/defense-chat-builder.js";
@@ -15,9 +16,10 @@ import { TraumaCheckChatBuilder } from "./builders/trauma-check-chat-builder.js"
  * @const
  * @enum {Symbol}
  */
-export const CHAT_TYPE = Object.freeze({
+export const CHAT_TYPE = {
     ABILITY_CHECK: Symbol("cftype_abil_check"),
     ALERT_NOTE: Symbol("cftype_alert_note"),
+    ATTACK: Symbol("cftype_attack"),
     CRITICAL: Symbol("cftype_critical"),
     DAMAGE: Symbol("cftype_damage"),
     DEFENSE: Symbol("cftype_defense"),
@@ -26,7 +28,7 @@ export const CHAT_TYPE = Object.freeze({
     SKILL_CHECK: Symbol("cftype_skill_check"),
     SPELL: Symbol("cftype_spell"),
     TRAUMA_CHECK: Symbol("cftype_trauma_check"),
-});
+};
 
 /**
  * Registry of available chat builder subclasses mapped to CHAT_TYPE entries.
@@ -40,6 +42,7 @@ export const CHAT_TYPE = Object.freeze({
  */
 const ChatBuilderRegistry = {
     [CHAT_TYPE.ABILITY_CHECK]: AbilityCheckChatBuilder,
+    [CHAT_TYPE.ATTACK]: AttackBuilder,
     [CHAT_TYPE.ALERT_NOTE]: AlertNoteChatBuilder,
     [CHAT_TYPE.CRITICAL]: CriticalChatBuilder,
     [CHAT_TYPE.DAMAGE]: DamageChatBuilder,

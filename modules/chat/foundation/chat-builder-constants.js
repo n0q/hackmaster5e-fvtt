@@ -5,6 +5,7 @@ import { HMCONST } from "../../tables/constants.js";
  */
 export const RESULT_TYPE = {
     NONE: Symbol("result_none"),
+    CRITICAL: Symbol("result_critical"),
     CRITFAIL: Symbol("result_critfail"),
     DCRITFAIL: Symbol("result_dcritfail"),
     FAILED: Symbol("result_failed"),
@@ -13,6 +14,7 @@ export const RESULT_TYPE = {
     NEAR_PERFECT: Symbol("result_near-perfect"),
     PASSED: Symbol("result_passed"),
     PERFECT: Symbol("result_perfect"),
+    POT_FUMBLE: Symbol("result_potential-fumble"),
     SKILL4: Symbol("result_skill_trivial"),
     SKILL3: Symbol("result_skill_easy"),
     SKILL2: Symbol("result_skill_avg"),
@@ -26,18 +28,32 @@ export const RESULT_TYPE = {
  * @enum {string}
  */
 const COMBAT_MODIFIER_TYPE = {
-    [HMCONST.SPECIAL.JAB]: "HM.jab",
+    [HMCONST.SPECIAL.AGGRESSIVE]: "HM.aggressive",
     [HMCONST.SPECIAL.BACKSTAB]: "HM.backstab",
+    [HMCONST.SPECIAL.CHARGE2]: "HM.charged",
+    [HMCONST.SPECIAL.CHARGE4]: "HM.charged",
     [HMCONST.SPECIAL.FLEEING]: "HM.fleeing",
-    [HMCONST.SPECIAL.SET4CHARGE]: "HM.s4c",
+    [HMCONST.SPECIAL.GGROUND]: "EFFECT.gground",
+    [HMCONST.SPECIAL.JAB]: "HM.jab",
+    [HMCONST.SPECIAL.RDEFEND]: "HM.ranged",
+    [HMCONST.SPECIAL.SCAMPER]: "EFFECT.scamper",
+    [HMCONST.SPECIAL.SET4CHARGE]: "HM.specSelect.s4c",
+    [HMCONST.SPECIAL.WITHDRAWL]: "HM.specSelect.wdrawl",
+    [HMCONST.SPECIAL.SNAPSHOT]: "HM.specSelect.snap",
+    [HMCONST.SPECIAL.LOAD]: "HM.loading",
+    [HMCONST.SPECIAL.DRAW]: "HM.drawing",
+    [HMCONST.SPECIAL.AIM]: "HM.aiming",
+    [HMCONST.SPECIAL.FULLPARRY]: "EFFECT.fullparry",
 
     // Synthetic status flags for boolean inputs.
     SHIELD_HIT: "HM.blocked",
     DEFENSIVE: "HM.defensive",
+    DODGED: "HM.dodged",
+    STR_BONUS: "HM.ability.str",
 };
 
 /**
- * Returns a localized, comma-separated stringh of combat modifier saber-slash
+ * Returns a localized, comma-separated string of combat modifiers
  * based on special move type and boolean combat states.
  *
  * @param {Object} resp - The dialog response object.
@@ -47,12 +63,12 @@ const COMBAT_MODIFIER_TYPE = {
  * @returns {string} Localized modifier description.
  */
 export const getCombatModifierFlavor = resp => {
-    const { specialMove, shieldHit, defense } = resp;
-
     const modifierKeys = [
-        COMBAT_MODIFIER_TYPE[specialMove],
-        shieldHit ? COMBAT_MODIFIER_TYPE.SHIELD_HIT : null,
-        defense ? COMBAT_MODIFIER_TYPE.DEFENSIVE : null,
+        COMBAT_MODIFIER_TYPE[resp.specialMove],
+        resp.shieldHit ? COMBAT_MODIFIER_TYPE.SHIELD_HIT : null,
+        resp.defense ? COMBAT_MODIFIER_TYPE.DEFENSIVE : null,
+        resp.dodge ? COMBAT_MODIFIER_TYPE.DODGED : null,
+        resp.strBonus ? COMBAT_MODIFIER_TYPE.STR_BONUS : null,
     ];
 
     const mods = [];
@@ -61,6 +77,22 @@ export const getCombatModifierFlavor = resp => {
     }
 
     return mods.join(", ");
+};
+
+/**
+ * Returns a localized string based on special move type.
+ * This function is intended for declarative attacks.
+ *
+ * @param {Object} resp - The dialog response object.
+ * @param {number} resp.specialMove - Encoded special move bitflag.
+ * @returns {string} Localized modifier description.
+ */
+export const getDeclarativeFlavor = resp => {
+    const modifier = COMBAT_MODIFIER_TYPE[resp.specialMove];
+    if (modifier) return game.i18n.localize(modifier);
+
+    /* HACK: If it's not found, then it's a ranged attack. */
+    return game.i18n.localize("HM.chatCard.prepratk");
 };
 
 /**
@@ -79,6 +111,7 @@ let _resultTextCache;
  */
 function _initializeResultCache() {
     _resultTextCache = new Map([
+        [RESULT_TYPE.CRITICAL, game.i18n.localize("HM.CHAT.RESULT.critical")],
         [RESULT_TYPE.CRITFAIL, game.i18n.localize("HM.CHAT.RESULT.critfail")],
         [RESULT_TYPE.DCRITFAIL, game.i18n.localize("HM.CHAT.RESULT.dcritfail")],
         [RESULT_TYPE.FAILED, game.i18n.localize("HM.CHAT.RESULT.failed")],
@@ -87,6 +120,7 @@ function _initializeResultCache() {
         [RESULT_TYPE.NEAR_PERFECT, game.i18n.localize("HM.CHAT.RESULT.near-perfect")],
         [RESULT_TYPE.PASSED, game.i18n.localize("HM.CHAT.RESULT.passed")],
         [RESULT_TYPE.PERFECT, game.i18n.localize("HM.CHAT.RESULT.perfect")],
+        [RESULT_TYPE.POT_FUMBLE, game.i18n.localize("HM.CHAT.RESULT.potential-fumble")],
         [RESULT_TYPE.SKILL4, game.i18n.localize("HM.CHAT.RESULT.skill4")],
         [RESULT_TYPE.SKILL3, game.i18n.localize("HM.CHAT.RESULT.skill3")],
         [RESULT_TYPE.SKILL2, game.i18n.localize("HM.CHAT.RESULT.skill2")],
