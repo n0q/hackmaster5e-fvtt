@@ -37,7 +37,7 @@ export class HMApplication extends HandlebarsApplicationMixin(ApplicationV2) {
     static async create(options = {}, { initial, context } = {}) {
         const { promise, resolve } = Promise.withResolvers();
         const app = new this(options, { initial, context });
-        app.addEventListener("close", () => resolve(app.isConfirmed ? app.result : null), { once: true });
+        app.addEventListener("close", () => resolve(app.isConfirmed ? app.result : undefined), { once: true });
         app.render({ force: true });
         return promise;
     }

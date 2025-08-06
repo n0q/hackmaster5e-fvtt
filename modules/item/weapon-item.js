@@ -274,6 +274,7 @@ export class HMWeaponItem extends HMItem {
      */
     static async rollCrit({ caller } = {}) {
         const dialogData = await CriticalPrompt.create();
+        if (!dialogData) return;
         const builderData = await CriticalCalculator.calculate(dialogData);
         builderData.caller = caller?.uuid;
         const builder = await HMChatFactory.create(CHAT_TYPE.CRITICAL, builderData);
