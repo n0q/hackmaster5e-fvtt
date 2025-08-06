@@ -28,8 +28,8 @@ export class HMCharacterActorSheet extends HMActorSheet {
     static get defaultOptions() {
         return foundry.utils.mergeObject(super.defaultOptions, {
             classes: ["hackmaster", "sheet", "actor"],
-            width: 835,
-            height: 930,
+            width: 830,
+            height: 932,
             scrollY: [".scrollable"],
             tabs: [
                 { navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "skills" },

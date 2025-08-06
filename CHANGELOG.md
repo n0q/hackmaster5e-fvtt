@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 
 - Refreshed wound dialog to v13.
+- Styling adjustments.
 
 ## [0.5.2] - 2025-08-04
 
