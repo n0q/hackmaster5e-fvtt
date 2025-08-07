@@ -5,7 +5,6 @@ import {
     getDeclarativeFlavor,
 } from "../foundation/chat-builder-constants.js";
 import { systemPath, HMCONST } from "../../tables/constants.js";
-import { HMWeaponItem } from "../../item/weapon-item.js";
 
 export class AttackBuilder extends ChatBuilder {
     static template = systemPath("templates/chat/chat-attack.hbs");
@@ -55,7 +54,7 @@ export class AttackBuilder extends ChatBuilder {
     /**
      * Generates metadata for the attack roll template.
      *
-     * @param {HMWeaponItem} context
+     * @param {Object} context
      * @param {Object} resp
      * @returns {Object}
      */
