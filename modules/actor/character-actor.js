@@ -1,6 +1,5 @@
 import { HMCONST, HMTABLES, SYSTEM_ID } from "../tables/constants.js";
 import { HMActor } from "./actor.js";
-import { HMChatMgr } from "../mgr/chatmgr.js";
 import { HMChatFactory, CHAT_TYPE } from "../chat/chat-factory.js";
 
 export class HMCharacterActor extends HMActor {
@@ -246,15 +245,5 @@ export class HMCharacterActor extends HMActor {
         const ALERT_TYPE = builder.ALERT_TYPE;
         builder.update("mdata", { type: ALERT_TYPE.TRAUMA });
         builder.createChatMessage();
-    }
-
-    async addWound(...args) {
-        const { woundData, cardData } = await super.addWound(...args);
-        if (cardData) {
-            const chatmgr = new HMChatMgr();
-            const card = await chatmgr.getCard(cardData);
-            await ChatMessage.create(card);
-        }
-        return woundData;
     }
 }
