@@ -1,8 +1,8 @@
-import { CalculatorAbstract } from "./calculator-abstract.js";
-import { CriticalCalculatorSchema } from "./schema/critical-calculator-schema.js";
+import { ProcessorAbstract } from "./processor-abstract.js";
+import { CriticalProcessorSchema } from "./schema/critical-processor-schema.js";
 
-export class CriticalCalculator extends CalculatorAbstract {
-    static SCHEMA_CLASS = CriticalCalculatorSchema;
+export class CriticalProcessor extends ProcessorAbstract {
+    static SCHEMA_CLASS = CriticalProcessorSchema;
 
     async run() {
         const formula = calculateCritFormula(this.schema);

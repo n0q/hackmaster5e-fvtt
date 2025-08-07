@@ -1,7 +1,7 @@
 import { HMCONST, systemPath } from "../tables/constants.js";
 import { HMApplication } from "./foundation/application-abstract.js";
 import { FormButtonManager } from "./foundation/components/form-button-manager.js";
-import { calculateCritFormula, calculateCritSeverity } from "../rules/calculators/critical-calculator.js";
+import { calculateCritFormula, calculateCritSeverity } from "../rules/processors/critical-processor.js";
 
 /**
  * Critical hit application.

@@ -1,6 +1,6 @@
 import { HMCONST } from "../../../tables/constants.js";
 
-export class CriticalCalculatorSchema extends foundry.abstract.DataModel {
+export class CriticalProcessorSchema extends foundry.abstract.DataModel {
     static defineSchema() {
         const fields = foundry.data.fields;
 

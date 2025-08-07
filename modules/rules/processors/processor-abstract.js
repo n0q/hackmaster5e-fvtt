@@ -1,11 +1,11 @@
-export class CalculatorAbstract {
+export class ProcessorAbstract {
     /**
      * @param {...any} args - Arguments passed to the parent constructor.
      * @throws {Error} Throws if instantiated directly.
      */
     constructor(data, _options) {
-        if (new.target === CalculatorAbstract) {
-            throw new Error("CalculatorAbstract cannot be instantiated directly.");
+        if (new.target === ProcessorAbstract) {
+            throw new Error("ProcessorAbstract cannot be instantiated directly.");
         }
 
         this.#schema = new this.constructor.SCHEMA_CLASS(data);
@@ -22,9 +22,9 @@ export class CalculatorAbstract {
         return this.#schema;
     }
 
-    static async calculate(data, options) {
-        const calculator = new this(data, options);
-        return await calculator.run();
+    static async process(data, options) {
+        const processor = new this(data, options);
+        return await processor.run();
     }
 
     async run() {

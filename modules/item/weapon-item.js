@@ -7,7 +7,7 @@ import { HMDialogFactory } from "../dialog/dialog-factory.js";
 import { transformDamageFormula } from "../sys/utils.js";
 import { HMSocket, SOCKET_TYPES } from "../sys/sockets.js";
 import { CriticalPrompt } from "../apps/critical-application.js";
-import { CriticalCalculator } from "../rules/calculators/critical-calculator.js";
+import { CriticalProcessor } from "../rules/processors/critical-processor.js";
 
 function fromCaller(caller = null) {
     let actor;
@@ -275,7 +275,7 @@ export class HMWeaponItem extends HMItem {
     static async rollCrit({ caller } = {}) {
         const dialogData = await CriticalPrompt.create();
         if (!dialogData) return;
-        const builderData = await CriticalCalculator.calculate(dialogData);
+        const builderData = await CriticalProcessor.process(dialogData);
         builderData.caller = caller?.uuid;
         const builder = await HMChatFactory.create(CHAT_TYPE.CRITICAL, builderData);
         builder.createChatMessage();
