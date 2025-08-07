@@ -1,5 +1,6 @@
 import { HMCONST, systemPath } from "../tables/constants.js";
-import { HMApplication } from "./application-abstract.js";
+import { HMApplication } from "./foundation/application-abstract.js";
+import { FormButtonManager } from "./foundation/components/form-button-manager.js";
 import { calculateCritFormula, calculateCritSeverity } from "../rules/calculators/critical-calculator.js";
 
 /**
@@ -16,11 +17,11 @@ export class CriticalPrompt extends HMApplication {
         control: {
             template: "templates/generic/form-footer.hbs",
             classes: ["dialog-buttons"],
-        }
+        },
     };
 
     static #OVERRIDE_OPTIONS = {
-        actions: { rollSubmit: CriticalPrompt.submitAction },
+        actions: { rollSubmit: HMApplication.submitAction },
         form: { submitOnChange: true },
         position: { width: 550 },
     };
@@ -33,48 +34,59 @@ export class CriticalPrompt extends HMApplication {
     );
 
     /** @inheritdoc */
-    _onChangeForm(formConfig, event) {
-        super._onChangeForm(formConfig, event);
-        this.render({ parts: ["control"] });
-    }
-
-    /** @inheritdoc */
     async _preparePartContext(partId, context) {
         if (partId === "control") context = this.prepareControlParts(context);
         return super._preparePartContext(partId, context);
     }
 
     prepareControlParts(context) {
-        const formula = calculateCritFormula(this.result || {});
-        const severity = calculateCritSeverity(this.result || {});
-
         context.buttons = [{
             type: "submit",
             icon: "fa-solid fa-dice-d20",
-            label: `Roll ${formula} (Severity ${severity})`,
+            name: "roll-submit",
+            label: this.getButtonLabel(),
             action: "rollSubmit",
-            disabled: severity < 1,
+            disabled: this.isButtonDisabled(),
         }];
 
         return context;
     }
 
     /** @inheritdoc */
-    async _preFirstRender(context, _options) {
-        super._preFirstRender(context, _options);
+    async _preFirstRender(context, options) {
+        super._preFirstRender(context, options);
         context.atkSize = HMCONST.SCALE.MEDIUM;
         context.defSize = HMCONST.SCALE.MEDIUM;
     }
 
-    /**
-     * Handles the submit action by marking the action as confirmed
-     * and closing the associated component or dialog.
-     *
-     * @param {SubmitEvent} _event - The form submit event (unused).
-     * @param {HTMLElement} _target - The HTML element that triggered the action (unused).
-     */
-    static submitAction(_event, _target) {
-        this._setConfirmed(true);
-        this.close();
+    async _onFirstRender(...args) {
+        super._onFirstRender(...args);
+
+        const buttonConfig = {
+            getLabel: override => this.getButtonLabel(override),
+            isDisabled: override => this.isButtonDisabled(override),
+        };
+
+        this.buttonManager = new FormButtonManager(this.element, buttonConfig);
+    }
+
+    _onInputChange(event) {
+        const override = { [event.target.name]: Number(event.target.value) };
+        this.buttonManager.updateButton("roll-submit", override);
+    }
+
+    getButtonLabel(override = {}) {
+        const result = { ...this.result, ...override };
+        const formula = calculateCritFormula(result || {});
+        const severity = calculateCritSeverity(result || {});
+
+        return `Roll ${formula} (Severity ${severity})`;
+    }
+
+    isButtonDisabled(override = {}) {
+        const result = { ...this.result, ...override };
+        const severity = calculateCritSeverity(result || {});
+
+        return severity < 1;
     }
 }

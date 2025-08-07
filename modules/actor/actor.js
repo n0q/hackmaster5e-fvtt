@@ -170,20 +170,15 @@ export class HMActor extends Actor {
         console.error(`${cName} does not have a getAbilityBonus() function.`);
     }
 
-    async onWound(traumaCheck, tenacityCheck, options) {
-        const bData = { caller: this.uuid };
-        const builder = await HMChatFactory.create(CHAT_TYPE.ALERT_NOTE, bData, options);
-        const ALERT_TYPE = builder.ALERT_TYPE;
+    _onArmorDamage(armorDamage) {
+        if (armorDamage < 1) return;
 
-        if (traumaCheck) {
-            builder.update("mdata", { type: ALERT_TYPE.TRAUMA });
-            builder.createChatMessage();
-        }
+        const armor = this.itemTypes.armor.find(a => (
+            a.system.state === HMCONST.ITEM_STATE.EQUIPPED
+            && !a.system.isShield
+        ));
 
-        if (tenacityCheck) {
-            builder.update("mdata", { type: ALERT_TYPE.TENACITY });
-            builder.createChatMessage();
-        }
+        if (armor) armor.damageArmorBy(armorDamage);
     }
 
     /**

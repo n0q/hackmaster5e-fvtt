@@ -12,6 +12,5 @@ export const HMDialogFactory = (dataset, caller = null, opt = {}) => {
     if (dialog === "initdie") return HMDialog.getInitDieDialog(caller);
     if (dialog === "save") return HMDialog.getSaveDialog(dataset, caller);
     if (dialog === "skill") return HMDialog.getSkillDialog(dataset, caller);
-    if (dialog === "wound") return HMDialog.setWoundDialog(caller);
     return undefined;
 };

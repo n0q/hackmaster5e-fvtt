@@ -1,0 +1,36 @@
+{{localize "HM.weapon"}}: <strong>{{context.name}}</strong><br>
+
+{{#unless mdata.isRanged}}
+    {{localize "HM.reach"}}: <strong>{{context.system.reach}}</strong> ft.<br>
+{{/unless}}
+
+{{#if (and mdata.isSetForCharge mdata.isDeclarative)}}
+    {{localize "HM.speed"}}:
+    <strong>3</strong>
+{{/if}}
+
+{{#unless mdata.isSetForCharge}}
+    {{localize "HM.speed"}}:
+    {{#with context.system.bonus.total}}
+        {{#if ../mdata.isJab}}
+            {{spd}}(<strong>{{jspd}}</strong>)<br>
+        {{else}}
+            <strong>{{spd}}</strong>{{#if ../mdata.hasJab}}({{jspd}}){{/if}}<br>
+        {{/if}}
+    {{/with}}
+{{/unless}}
+
+{{#if mdata.isRanged}}
+    {{localize "HM.range"}}:
+    <strong>{{localize (findConfigValue "reach" mdata.reach)}}</strong><br>
+{{/if}}
+
+{{#if resultString}}
+    <hr><strong class="{{mdata.resultClass}}">{{resultString}}</strong>
+{{/if}}
+
+{{#if mdata.isDeclarative}}
+    <div class="dice-roll hm-dice-flavor">{{mdata.declarativeFlavor}}</div>
+{{else}}
+    {{{rollContent}}}
+{{/if}}

@@ -1,0 +1,51 @@
+<section class="flexcol" style="margin-top: -20px;">
+    <div class="form-group form-group--row-full">
+        <label class="form-group__label">{{localize 'HM.dialog.setWoundHP'}}</label>
+        <div class="form-group__control">
+            <input name="hp" value="{{hp}}" autofocus type="number"/>
+        </div>
+    </div>
+
+    {{#if (getSetting "hackmaster5e" "armorDegredation")}}
+    <div class="form-group form-group--row-full">
+        <label class="form-group__label">{{localize 'HM.dialog.setWoundArmor'}}</label>
+        <div class="form-group__control">
+            <input name='armorDamage' value='{{armorDamage}}' type='number'/>
+        </div>
+    </div>
+    {{/if}}
+
+    <div class="form-group form-group--row-full">
+        <label class="form-group__label">{{localize 'HM.dialog.setWoundToP'}}</label>
+        <div class="form-group__control">
+            <input name='assn' value='{{assn}}' type='number'/>
+        </div>
+    </div>
+
+    <hr style="width: 100%; margin: 0.5rem 0;">
+
+    <div class="form-group form-group--row-full">
+        <div class="form-group form-group--row-full">
+            <label class="form-group__label">Embed</label>
+            <div class="form-group__control">
+                <input type='checkbox' name='isEmbedded' {{checked isEmbedded}}>
+            </div>
+        </div>
+
+        <div class="form-group form-group--row-full">
+            <select name="embed" disabled data-dtype="Number" style="width: 100%;">
+                {{selectOptions (findConfigObj 'embedSelect') selected=embed localize=true}}
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group form-group--row-full">
+        <div class="form-group__control">
+        <input
+            style='max-width: unset; text-align: left;'
+            type='text'
+            name='note'
+            placeholder='{{localize "HM.dialog.optNote"}}'
+        </div>
+    </div>
+</section>

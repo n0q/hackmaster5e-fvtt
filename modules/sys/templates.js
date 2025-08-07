@@ -53,11 +53,10 @@ export const preloadHandlebarsTemplates = () => {
 
         // Chat cards
         systemPath("templates/chat/chat-alert.hbs"),
-        systemPath("templates/chat/attack.hbs"),
+        systemPath("templates/chat/chat-attack.hbs"),
         systemPath("templates/chat/check.hbs"),
         systemPath("templates/chat/crit.hbs"),
         systemPath("templates/chat/chat-damage.hbs"),
-        systemPath("templates/chat/declare.hbs"),
         systemPath("templates/chat/chat-defend.hbs"),
         systemPath("templates/chat/initNote.hbs"),
         systemPath("templates/chat/fumble.hbs"),
@@ -80,7 +79,7 @@ export const preloadHandlebarsTemplates = () => {
         systemPath("templates/dialog/getSave.hbs"),
         systemPath("templates/dialog/dialog-skill.hbs"),
         systemPath("templates/dialog/getInitDie.hbs"),
-        systemPath("templates/dialog/wound.hbs"),
+        systemPath("templates/dialog/wound-content-app.hbs"),
         systemPath("templates/dialog/parts/getRollMode.hbs"),
 
         systemPath("templates/dice/roll.hbs"),

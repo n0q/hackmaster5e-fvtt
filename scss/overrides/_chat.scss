@@ -53,6 +53,7 @@ hr {
     -ms-background-clip: text;
     background-clip: text;
     animation: hm-shake-key .8s 1 alternate;
+    padding-left: 4px;
 }
 
 @keyframes hm-shake-key {

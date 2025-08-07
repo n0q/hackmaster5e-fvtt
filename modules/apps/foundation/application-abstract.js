@@ -4,34 +4,48 @@ const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
  * Abstract base class for HackMaster applications using Handlebars templates.
  * @abstract
  * @extends {ApplicationV2}
+ *
+ * @typedef  {Object} HMAppData
+ * @property {Object} [initial] - Initial data to prepopulate the form.
+ * @property {Object} [context] - Supplimentary data for enrichment.
  */
 export class HMApplication extends HandlebarsApplicationMixin(ApplicationV2) {
     /**
      * @param {...any} args - Arguments passed to the parent constructor.
+     * @param {HMAppData} - Data to send to the application.
      * @throws {Error} Throws if instantiated directly.
      */
-    constructor(...args) {
+    constructor(options = {}, { initial, context } = {}) {
         if (new.target === HMApplication) {
             throw new Error("HMApplication cannot be instantiated directly.");
         }
-        super(...args);
+
+        super(options);
+        this.#hmAppData = { initial, context };
     }
 
     /**
      * A static factory method to create, render, and await the result of an application.
-     * @param {object} [options]       Application options.
+     * @param {object} [options={}]    Application configuration options.
+     * @param {HMAppData} [data={}]    Initial data passed to the constructor.
      * @returns {Promise<object|null>} A promise that resolves with the application's
      *                                 result upon a confirmed close, or null if the
      *                                 application is closed without confirmation.
      * @static
      * @async
      */
-    static async create(options) {
+    static async create(options = {}, { initial, context } = {}) {
         const { promise, resolve } = Promise.withResolvers();
-        const app = new this(options);
-        app.addEventListener("close", () => resolve(app.isConfirmed ? app.result : null), { once: true });
+        const app = new this(options, { initial, context });
+        app.addEventListener("close", () => resolve(app.isConfirmed ? app.result : undefined), { once: true });
         app.render({ force: true });
         return promise;
+    }
+
+    #hmAppData;
+
+    get hmAppData() {
+        return this.#hmAppData;
     }
 
     /**
@@ -106,5 +120,50 @@ export class HMApplication extends HandlebarsApplicationMixin(ApplicationV2) {
      */
     _processFormData(_event, _form, formData) {
         return foundry.utils.expandObject(formData.object);
+    }
+
+    /**
+     * Handles the submit action by marking the action as confirmed
+     * and closing the associated component or dialog.
+     *
+     * @param {SubmitEvent} _event - The form submit event (unused).
+     * @param {HTMLElement} _target - The HTML element that triggered the action (unused).
+     */
+    static submitAction(_event, _target) {
+        this._setConfirmed(true);
+        this.close();
+    }
+
+    async _preFirstRender(context, options) {
+        super._preFirstRender(context, options);
+        if (this.#hmAppData.initial) foundry.utils.mergeObject(context, this.#hmAppData.initial);
+    }
+
+    /**
+     * Attach event listeners ot the form's input elements.
+     * Extends the base implementation to listen for input changes
+     * on <input>, <select>, and <textarea> elements.
+     *
+     * @override
+     * @param {...any} args - Arguments passed to the parent method.
+     */
+    _attachFrameListeners(...args) {
+        super._attachFrameListeners(...args);
+
+        this.element.addEventListener("input", event => {
+            if (event.target.matches("input, select, textarea")) {
+                this._onInputChange(event);
+            }
+        });
+    }
+
+    /**
+     * Handles changes to form input elements.
+     * Subclasses may override this method to handle input state changes.
+     *
+     * @param {Event} _event - Input event object.
+     */
+    _onInputChange(_event) {
+        // intentionally empty.
     }
 }

@@ -1,6 +1,6 @@
-import { SYSTEM_ID, HMCONST, HMTABLES } from '../tables/constants.js';
-import { actorHasEffects } from './effects.js';
-import { HMWoundItem } from '../item/wound-item.js';
+import { SYSTEM_ID, HMCONST, HMTABLES } from "../tables/constants.js";
+import { actorHasEffects } from "./effects.js";
+import { HMWoundItem } from "../item/wound-item.js";
 
 export const FILL_TYPE = {
     ZERO: 0b00,
@@ -17,7 +17,7 @@ export class HMToken extends foundry.canvas.placeables.Token {
 
     drawReach(renderMode = FILL_TYPE.DEFAULT) {
         if (this.__isSecret) return;
-        const showReach = game.settings.get(SYSTEM_ID, 'showReach');
+        const showReach = game.settings.get(SYSTEM_ID, "showReach");
 
         const { hover, reach, interactionState } = this;
         const isDragged = interactionState === foundry.canvas.interaction.MouseInteractionManager.INTERACTION_STATES.DRAG;
@@ -37,13 +37,13 @@ export class HMToken extends foundry.canvas.placeables.Token {
         const { actor } = this;
         if (!actor) return false;
 
-        const defaultColor = '#ffffff';
+        const defaultColor = "#ffffff";
         if (!actor.hasPlayerOwner) return Color.from(defaultColor);
 
-        let owner = game.users.find((a) => a.character?.id === actor.id);
+        let owner = game.users.find(a => a.character?.id === actor.id);
         if (!owner) {
-            const { 'default': _, ...ownership } = actor.ownership;
-            const userId = Object.keys(ownership).find((a) => {
+            const { default: _, ...ownership } = actor.ownership;
+            const userId = Object.keys(ownership).find(a => {
                 const isOwner = ownership[a] === CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER;
                 const isPlayer = !game.users.get(a)?.isGM;
                 return isOwner && isPlayer;
@@ -60,7 +60,7 @@ export class HMToken extends foundry.canvas.placeables.Token {
         const { actor } = this;
         const { system } = actor;
 
-        const eList = ['dead', 'incap', 'unconscious', 'sfatigue', 'sleep'];
+        const eList = ["dead", "incap", "unconscious", "sfatigue", "sleep"];
         if (actorHasEffects(actor, eList)) return false;
 
         const reach = this.getReach();
@@ -88,21 +88,21 @@ export class HMToken extends foundry.canvas.placeables.Token {
         const { actor } = this;
         if (!actor) return null;
 
-        const reachHint = actor.getFlag(SYSTEM_ID, 'reachHint');
-        const weapons = actor.itemTypes.weapon.filter((a) => !a.system.ranged.checked);
+        const reachHint = actor.getFlag(SYSTEM_ID, "reachHint");
+        const weapons = actor.itemTypes.weapon.filter(a => !a.system.ranged.checked);
         const STATE = HMCONST.ITEM_STATE;
 
-        const weapon = weapons.find((a) => a.system.state >= STATE.EQUIPPED && a.id === reachHint)
-            ?? weapons.find((a) => a.system.state === STATE.EQUIPPED)
-            ?? weapons.find((a) => a.system.innate);
+        const weapon = weapons.find(a => a.system.state >= STATE.EQUIPPED && a.id === reachHint)
+            ?? weapons.find(a => a.system.state === STATE.EQUIPPED)
+            ?? weapons.find(a => a.system.innate);
         if (!weapon) return null;
-        if (weapon.id !== reachHint && actor.isOwner) actor.setFlag(SYSTEM_ID, 'reachHint', weapon.id);
+        if (weapon.id !== reachHint && actor.isOwner) actor.setFlag(SYSTEM_ID, "reachHint", weapon.id);
 
         const wProfile = actor.wprofiles.get(weapon.profileId);
         const reach = (wProfile.system.reach || 0);
 
         const distance = Math.max(reach, 0);
-        const opacity = game.settings.get(SYSTEM_ID, 'reachOpacity');
+        const opacity = game.settings.get(SYSTEM_ID, "reachOpacity");
 
         return { distance, opacity };
     }
@@ -112,7 +112,7 @@ export class HMToken extends foundry.canvas.placeables.Token {
         reach.visible = !!this.combatant && this.visibleByDefault() && this.isVisible;
         if (!reach.visible) return;
 
-        const ease = 'elastic.out(1, 0.3)';
+        const ease = "elastic.out(1, 0.3)";
         reach.scale.set(1, 1);
         game.gsap.from(reach.scale, {
             x: 0,
@@ -133,7 +133,7 @@ export class HMToken extends foundry.canvas.placeables.Token {
             repeat: 1,
             x: 0,
             y: 0,
-            ease: 'back.in(1)',
+            ease: "back.in(1)",
             onRepeat: () => { reach.visible = false; },
         });
     }
@@ -146,10 +146,10 @@ export class HMToken extends foundry.canvas.placeables.Token {
         if (showAllThreats) return true;
         if (isGM && !actor.hasPlayerOwner) return true;
 
-        let owner = game.users.find((a) => a.character?.id === actor.id);
+        let owner = game.users.find(a => a.character?.id === actor.id);
         if (!owner) {
-            const { 'default': _, ...ownership } = actor.ownership;
-            const userId = Object.keys(ownership).find((a) => {
+            const { default: _, ...ownership } = actor.ownership;
+            const userId = Object.keys(ownership).find(a => {
                 const isOwner = ownership[a] === CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER;
                 const isPlayer = !game.users.get(a)?.isGM;
                 return isOwner && isPlayer;
@@ -162,8 +162,8 @@ export class HMToken extends foundry.canvas.placeables.Token {
 
     async addWound(wdata) {
         if (!this.actor) return false;
-        const notify = true;
-        return HMWoundItem.addWound(notify, this.actor, wdata);
+        const canNotify = true;
+        return HMWoundItem.addWound(canNotify, this.actor, wdata);
     }
 }
 
@@ -171,7 +171,7 @@ function renderGeometry(reach, mode, isHovered, geometry, color) {
     const [r1, r2, r3, op] = geometry;
 
     const fillTypeOps = {
-        [FILL_TYPE.BASE | FILL_TYPE.REACH]: (solid) => {
+        [FILL_TYPE.BASE | FILL_TYPE.REACH]: solid => {
             reach.lineStyle(1, color, 1)
                 .drawCircle(0, 0, r1)
                 .lineStyle(1, color, solid ? 1 : op)

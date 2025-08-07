@@ -86,9 +86,8 @@
             "cspell": "Clerical Spell",
             "ctime": "Casting Time",
             "def": "Defense Roll",
-            "matk": "Melee Attack Roll",
+            "atk": "{attackType} Attack Roll {combatMods}",
             "mspell": "Mage Spell",
-            "ratk": "Ranged Attack Roll",
             "mdmg": "Melee Damage Roll",
             "rdmg": "Ranged Damage Roll",
             "sthrow": "Saving Throw",
@@ -97,14 +96,16 @@
             "smc": "Maximum Mishap Tier",
             "svr": "Volatility Rating",
             "RESULT": {
+                "critical": "Critical!",
                 "critfail": "Critical Failure",
                 "dcritfail": "Double Critical Failure",
                 "failed": "Failed",
                 "fumble": "Fumble",
                 "goodbye": "Goodbye",
-                "nperfect": "Near Perfect",
+                "near-perfect": "Near Perfect",
                 "passed": "Passed",
                 "perfect": "Perfect!",
+                "potential-fumble": "Potential Fumble",
                 "skill4": "Trivial Success",
                 "skill3": "Easy Success",
                 "skill2": "Average Success",
@@ -859,6 +860,9 @@
             "talent": "Talent"
         },
         "UI": {
+            "WOUND": {
+                "notify": "<strong>{name}</strong> takes <strong>{hp}</strong> HP of damage."
+            },
             "duration": "Duration",
             "key": "Key",
             "label": "Label",
