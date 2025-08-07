@@ -1,5 +1,5 @@
 import { HMCONST, systemPath } from "../tables/constants.js";
-import { HMApplication } from "./application-abstract.js";
+import { HMApplication } from "./foundation/application-abstract.js";
 
 /**
  * Wound application.

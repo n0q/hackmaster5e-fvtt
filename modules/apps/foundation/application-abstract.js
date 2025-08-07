@@ -138,4 +138,32 @@ export class HMApplication extends HandlebarsApplicationMixin(ApplicationV2) {
         super._preFirstRender(context, options);
         if (this.#hmAppData.initial) foundry.utils.mergeObject(context, this.#hmAppData.initial);
     }
+
+    /**
+     * Attach event listeners ot the form's input elements.
+     * Extends the base implementation to listen for input changes
+     * on <input>, <select>, and <textarea> elements.
+     *
+     * @override
+     * @param {...any} args - Arguments passed to the parent method.
+     */
+    _attachFrameListeners(...args) {
+        super._attachFrameListeners(...args);
+
+        this.element.addEventListener("input", event => {
+            if (event.target.matches("input, select, textarea")) {
+                this._onInputChange(event);
+            }
+        });
+    }
+
+    /**
+     * Handles changes to form input elements.
+     * Subclasses may override this method to handle input state changes.
+     *
+     * @param {Event} _event - Input event object.
+     */
+    _onInputChange(_event) {
+        // intentionally empty.
+    }
 }
