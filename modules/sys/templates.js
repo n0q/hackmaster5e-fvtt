@@ -73,7 +73,7 @@ export const preloadHandlebarsTemplates = () => {
         systemPath("templates/dialog/getAttack.hbs"),
         systemPath("templates/dialog/cast.hbs"),
         systemPath("templates/dialog/critical-content-app.hbs"),
-        systemPath("templates/dialog/fumble.hbs"),
+        systemPath("templates/dialog/fumble-content-app.hbs"),
         systemPath("templates/dialog/getDamage.hbs"),
         systemPath("templates/dialog/defend.hbs"),
         systemPath("templates/dialog/getSave.hbs"),

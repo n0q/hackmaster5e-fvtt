@@ -140,21 +140,26 @@ export class HMApplication extends HandlebarsApplicationMixin(ApplicationV2) {
     }
 
     /**
-     * Attach event listeners ot the form's input elements.
-     * Extends the base implementation to listen for input changes
-     * on <input>, <select>, and <textarea> elements.
+     * Attaches event listeners to the Application frame.
      *
      * @override
-     * @param {...any} args - Arguments passed to the parent method.
+     * Extends the base implementation by adding a listener for input changes
+     * on <input>, <select>, and <textarea> elements within the form.
+     *
+     * @param {...*} args - Forarded arguments.
      */
     _attachFrameListeners(...args) {
         super._attachFrameListeners(...args);
 
-        this.element.addEventListener("input", event => {
-            if (event.target.matches("input, select, textarea")) {
-                this._onInputChange(event);
-            }
-        });
+        const form = this.form;
+
+        if (form) {
+            form.addEventListener("input", event => {
+                if (event.target.matches("input, select, textarea")) {
+                    this._onInputChange(event);
+                }
+            });
+        }
     }
 
     /**

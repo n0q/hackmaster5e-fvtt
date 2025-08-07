@@ -1,7 +1,6 @@
 const { enrichHTML } = foundry.applications.ux.TextEditor.implementation;
 
 import { HMDialogFactory } from "../dialog/dialog-factory.js";
-import { HMChatMgr } from "../mgr/chatmgr.js";
 import { HMContainer } from "../item/container.js";
 import { HMCONST, HMTABLES, SYSTEM_ID } from "../tables/constants.js";
 import { HMChatFactory, CHAT_TYPE } from "../chat/chat-factory.js";
@@ -238,7 +237,7 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
             const handler = ev => {
                 try {
                     this._onDragStart(ev);
-                } catch (error) {
+                } catch(error) {
                     if (!(error instanceof TypeError)) throw error;
                     HMContainer.dragStartHandler(ev, this.actor);
                 }
@@ -430,10 +429,6 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
                 const builder = await HMChatFactory.create(cardType, bData);
                 return builder.createChatMessage();
             }
-
-            const chatMgr = new HMChatMgr();
-            const card = await chatMgr.getCard(cData);
-            return ChatMessage.create(card);
         }
 
         return false;

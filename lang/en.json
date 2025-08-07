@@ -394,8 +394,7 @@
             "top": "Threshold of Pain",
             "prepratk": "Preparing Ranged Attack",
             "fcounter": "Free Counter-Attack",
-            "mfumble": "Melee Fumble",
-            "rfumble": "Ranged Fumble",
+            "fumble": "{innate} {type} Fumble",
             "comproll": "Sprain/Strain Check"
         },
         "moveSpds": {

@@ -4,6 +4,7 @@ import { AttackBuilder } from "./builders/attack-chat-builder.js";
 import { CriticalChatBuilder } from "./builders/critical-chat-builder.js";
 import { DamageChatBuilder } from "./builders/damage-chat-builder.js";
 import { DefenseChatBuilder } from "./builders/defense-chat-builder.js";
+import { FumbleChatBuilder } from "./builders/fumble-chat-builder.js";
 import { InitNoteChatBuilder } from "./builders/initnote-chat-builder.js";
 import { SaveCheckChatBuilder } from "./builders/save-check-chat-builder.js";
 import { SkillCheckChatBuilder } from "./builders/skill-check-chat-builder.js";
@@ -23,6 +24,7 @@ export const CHAT_TYPE = {
     CRITICAL: Symbol("cftype_critical"),
     DAMAGE: Symbol("cftype_damage"),
     DEFENSE: Symbol("cftype_defense"),
+    FUMBLE: Symbol("cftype_fumble"),
     INIT_NOTE: Symbol("cftype_init_note"),
     SAVE_CHECK: Symbol("cftype_save_check"),
     SKILL_CHECK: Symbol("cftype_skill_check"),
@@ -47,6 +49,7 @@ const ChatBuilderRegistry = {
     [CHAT_TYPE.CRITICAL]: CriticalChatBuilder,
     [CHAT_TYPE.DAMAGE]: DamageChatBuilder,
     [CHAT_TYPE.DEFENSE]: DefenseChatBuilder,
+    [CHAT_TYPE.FUMBLE]: FumbleChatBuilder,
     [CHAT_TYPE.INIT_NOTE]: InitNoteChatBuilder,
     [CHAT_TYPE.SAVE_CHECK]: SaveCheckChatBuilder,
     [CHAT_TYPE.SKILL_CHECK]: SkillCheckChatBuilder,

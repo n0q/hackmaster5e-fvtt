@@ -1,0 +1,43 @@
+<section class="flexcol flexrow--gapped-lg" style="margin-top: -30px;">
+    <section class="form-group form-group--row-full">
+        <section class="form-group form-group--column">
+            <label class="form-group__label form-group__label--centered">Attacker</label>
+            <div class="form-group form-group--row-full">
+                <label class="form-group__label">{{localize "HM.attack"}} Roll</label>
+                <div class="form-group__control">
+                    <input name="atk" value="{{atk}}" autofocus type="number"/>
+                </div>
+            </div>
+        </section>
+
+        <section class="form-group form-group--column">
+            <label class="form-group__label form-group__label--centered">Defender</label>
+            <div class="form-group form-group--row-full">
+                <label class="form-group__label">{{localize "HM.defense"}} Roll</label>
+                <div class="form-group__control">
+                    <input name="def" value="{{def}}" type="number"/>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <section class="form-group form-group--row-full">
+        <section class="form-group form-group--column">
+            <div class="form-group form-group--row-full">
+                <label class="form-group__label">Ranged Attack</label>
+                <div class="form-group__control">
+                    <input type='checkbox' name='isRanged' {{checked isRanged}}>
+                </div>
+            </div>
+        </section>
+
+        <section class="form-group form-group--column">
+            <div class="form-group form-group--row-full">
+                <label class="form-group__label">Innate Attack</label>
+                <div class="form-group__control">
+                    <input type='checkbox' name='isInnate' {{checked isInnate}}>
+                </div>
+            </div>
+        </section>
+    </section>
+</section>

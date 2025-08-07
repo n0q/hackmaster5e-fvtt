@@ -1,13 +1,13 @@
 import { SYSTEM_ID, HMCONST, HMTABLES } from "../tables/constants.js";
-import { FUMBLETABLE } from "../tables/fumbles.js";
 import { HMItem, advanceClock, setStatusEffectOnToken, unsetStatusEffectOnToken } from "./item.js";
-import { HMChatMgr } from "../mgr/chatmgr.js";
 import { HMChatFactory, CHAT_TYPE } from "../chat/chat-factory.js";
 import { HMDialogFactory } from "../dialog/dialog-factory.js";
 import { transformDamageFormula } from "../sys/utils.js";
 import { HMSocket, SOCKET_TYPES } from "../sys/sockets.js";
 import { CriticalPrompt } from "../apps/critical-application.js";
-import { CriticalCalculator } from "../rules/calculators/critical-calculator.js";
+import { CriticalProcessor } from "../rules/processors/critical-processor.js";
+import { FumblePrompt } from "../apps/fumble-application.js";
+import { FumbleProcessor } from "../rules/processors/fumble-processor.js";
 
 function fromCaller(caller = null) {
     let actor;
@@ -236,30 +236,12 @@ export class HMWeaponItem extends HMItem {
     }
 
     static async rollFumble({ caller } = {}) {
-        const { actor } = fromCaller(caller);
-
-        const dataset = { dialog: "fumble", caller: actor };
-        const dialogResp = await HMDialogFactory(dataset, actor);
-        dataset.resp = dialogResp.resp;
-
-        const { atk, def, innate, type } = dataset.resp;
-        const formula = FUMBLETABLE.formula(atk, def);
-        const results = await FUMBLETABLE.evaluate(formula, type, innate);
-        if (!results) return;
-
-        dataset.roll = results.roll;
-        dataset.resp.rollIdx = results.rollIdx;
-        dataset.resp.typeIdx = results.typeIdx;
-        dataset.resp.comp = results.comp;
-        dataset.resp.freeAttack = !!(dataset.roll.total % 2);
-
-        if (dataset.resp.comp) {
-            dataset.resp.compRoll = await new Roll("d6").evaluate();
-        }
-
-        const chatMgr = new HMChatMgr();
-        const card = await chatMgr.getCard({ dataset });
-        await ChatMessage.create(card);
+        const dialogData = await FumblePrompt.create();
+        if (!dialogData) return;
+        const builderData = await FumbleProcessor.process(dialogData);
+        builderData.caller = caller?.uuid;
+        const builder = await HMChatFactory.create(CHAT_TYPE.FUMBLE, builderData);
+        builder.createChatMessage();
     }
 
     /**
@@ -275,7 +257,7 @@ export class HMWeaponItem extends HMItem {
     static async rollCrit({ caller } = {}) {
         const dialogData = await CriticalPrompt.create();
         if (!dialogData) return;
-        const builderData = await CriticalCalculator.calculate(dialogData);
+        const builderData = await CriticalProcessor.process(dialogData);
         builderData.caller = caller?.uuid;
         const builder = await HMChatFactory.create(CHAT_TYPE.CRITICAL, builderData);
         builder.createChatMessage();

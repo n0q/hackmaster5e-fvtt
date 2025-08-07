@@ -1,17 +1,17 @@
-import { HMCONST, systemPath } from "../tables/constants.js";
+import { systemPath } from "../tables/constants.js";
 import { HMApplication } from "./foundation/application-abstract.js";
 import { FormButtonManager } from "./foundation/components/form-button-manager.js";
-import { calculateCritFormula, calculateCritSeverity } from "../rules/processors/critical-processor.js";
+import { calculateFumbleFormula } from "../rules/processors/fumble-processor.js";
 
 /**
- * Critical hit application.
+ * Fumble application.
  * @extends {HMApplication}
  */
-export class CriticalPrompt extends HMApplication {
+export class FumblePrompt extends HMApplication {
     /** @inheritdoc */
     static PARTS = {
         content: {
-            template: systemPath("templates/dialog/critical-content-app.hbs"),
+            template: systemPath("templates/dialog/fumble-content-app.hbs"),
             classes: ["flexrow"],
         },
         control: {
@@ -23,7 +23,7 @@ export class CriticalPrompt extends HMApplication {
     static #OVERRIDE_OPTIONS = {
         actions: { rollSubmit: HMApplication.submitAction },
         form: { submitOnChange: true },
-        position: { width: 550 },
+        position: { width: 400 },
     };
 
     /** @inheritdoc */
@@ -32,6 +32,13 @@ export class CriticalPrompt extends HMApplication {
         this.#OVERRIDE_OPTIONS,
         { inplace: false },
     );
+
+    get title() {
+        const context = this.hmAppData.context;
+        return context
+            ? `${context.name}: ${game.i18n.localize("HM.dialog.getFumbleTitle")}`
+            : game.i18n.localize("HM.dialog.getFumbleTitle");
+    }
 
     /** @inheritdoc */
     async _preparePartContext(partId, context) {
@@ -52,13 +59,6 @@ export class CriticalPrompt extends HMApplication {
         return context;
     }
 
-    /** @inheritdoc */
-    async _preFirstRender(context, options) {
-        super._preFirstRender(context, options);
-        context.atkSize = HMCONST.SCALE.MEDIUM;
-        context.defSize = HMCONST.SCALE.MEDIUM;
-    }
-
     async _onFirstRender(...args) {
         super._onFirstRender(...args);
 
@@ -77,16 +77,14 @@ export class CriticalPrompt extends HMApplication {
 
     getButtonLabel(override = {}) {
         const result = { ...this.result, ...override };
-        const formula = calculateCritFormula(result || {});
-        const severity = calculateCritSeverity(result || {});
-
-        return `Roll ${formula} (Severity ${severity})`;
+        const formula = calculateFumbleFormula(result || {});
+        return formula ? `Roll ${formula}` : "Roll d1000";
     }
 
     isButtonDisabled(override = {}) {
         const result = { ...this.result, ...override };
-        const severity = calculateCritSeverity(result || {});
-
-        return severity < 1;
+        const atk = result.atk ?? 0;
+        const def = result.def ?? 0;
+        return (atk - def) >= 0;
     }
 }

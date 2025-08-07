@@ -1,22 +1,32 @@
-{{#with resp}}
-    {{localize 'HM.attack'}}: <b>{{atk}}</b><br>
-    {{localize 'HM.defense'}}: <b>{{def}}</b>
-    <hr>
-    {{localize 'HM.result'}}:
-    <b>{{localize (concat 'HM.FUMBLE.type.' type '.' typeIdx)}}</b><br>
-    {{#if (lt typeIdx 10)}}
-        {{#if comp}}
-            {{localize 'HM.injury'}}:
-            <b>{{localize (concat 'HM.FUMBLE.injury.' comp)}}</b><br>
-            {{localize 'HM.location'}}: 
-            <b>{{{localize (concat 'HM.FUMBLE.label.' type '.' rollIdx)}}}</b><br>
-        {{else}}
-            {{localize 'HM.details'}}:
-            <b>{{{localize (concat 'HM.FUMBLE.label.' type '.' rollIdx)}}}</b><br>
-        {{/if}}
+{{localize 'HM.attack'}}:
+<strong>{{resp.atk}}</strong><br>
+
+{{localize 'HM.defense'}}:
+<strong>{{resp.def}}</strong>
+
+<hr>
+
+{{localize 'HM.result'}}:
+<strong>{{localize mdata.resultString}}</strong><br>
+
+{{#if (lt mdata.typeIdx 10)}}
+    {{#if mdata.complication}}
+        {{localize 'HM.injury'}}:
+        <strong>{{localize mdata.injuryString}}</strong><br>
+
+        {{localize 'HM.location'}}: 
+        <strong>{{{localize mdata.labelString}}}</strong><br>
+    {{else}}
+        {{localize 'HM.details'}}:
+        <strong>{{{localize mdata.labelString}}}</strong><br>
     {{/if}}
-    {{#if (eq compRoll.total 1)}}{{localize 'HM.comp'}}: 
-    <b>{{localize (concat 'HM.FUMBLE.comp.' comp)}}</b><br>
-    {{/if}}
-    {{#if freeAttack}}<hr><b>{{localize 'HM.chatCard.fcounter'}}</b>{{/if}}
-{{/with}}
+{{/if}}
+
+{{#if mdata.hasComplication}}
+    {{localize 'HM.comp'}}: 
+    <strong>{{localize mdata.compString}}</strong><br>
+{{/if}}
+
+{{#if mdata.freeAttack}}<hr><strong>{{localize 'HM.chatCard.fcounter'}}</strong>{{/if}}
+
+{{{rollContent}}}
