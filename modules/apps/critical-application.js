@@ -1,6 +1,6 @@
 import { HMCONST, systemPath } from "../tables/constants.js";
 import { HMApplication } from "./foundation/application-abstract.js";
-import { FormmButtonManager } from "./foundation/application-form-button.js";
+import { FormButtonManager } from "./foundation/components/form-button-manager.js";
 import { calculateCritFormula, calculateCritSeverity } from "../rules/calculators/critical-calculator.js";
 
 /**
@@ -67,7 +67,7 @@ export class CriticalPrompt extends HMApplication {
             isDisabled: override => this.isButtonDisabled(override),
         };
 
-        this.buttonManager = new FormmButtonManager(this.element, buttonConfig);
+        this.buttonManager = new FormButtonManager(this.element, buttonConfig);
     }
 
     _onInputChange(event) {

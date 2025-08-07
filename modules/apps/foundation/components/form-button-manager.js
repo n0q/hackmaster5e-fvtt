@@ -2,7 +2,7 @@
  * Utility class for managing form button states and labels based on dynamic input changes.
  * Handles updating button disabled state and labels through configurable callbacks.
  */
-export class FormmButtonManager {
+export class FormButtonManager {
     /**
      * Creates a new FormButtonManager instance.
      * @param {HTMLElement} element - The parent element containing the buttons to manage
