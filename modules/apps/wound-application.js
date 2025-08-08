@@ -1,5 +1,6 @@
 import { HMCONST, systemPath } from "../tables/constants.js";
 import { HMApplication } from "./foundation/application-abstract.js";
+import { FormElementLinker } from "./foundation/components/form-element-linker.js";
 
 /**
  * Wound application.
@@ -31,21 +32,24 @@ export class WoundPrompt extends HMApplication {
         position: { width: 350 },
     }
 
-    _onChangeForm(formConfig, event) {
-        super._onChangeForm(formConfig, event);
-
-        const formBlock = this.element;
-        const checkbox = formBlock.querySelector("input[name='isEmbedded']");
-        const select = formBlock.querySelector("select[name='embed']");
-        select.disabled = !checkbox.checked;
-    }
-
     /** @inheritdoc */
     static DEFAULT_OPTIONS = foundry.utils.mergeObject(
         super.DEFAULT_OPTIONS,
         this.#OVERRIDE_OPTIONS,
         { inplace: false },
     );
+
+    async _onFirstRender(context, options) {
+        super._onFirstRender(context, options);
+
+        this.elementLinker = new FormElementLinker(this.element, [{
+            source: "input[name='isEmbedded']",
+            target: "select[name='embed']",
+            sourceProperty: "checked",
+            targetProperty: "disabled",
+            transform: checked => !checked,
+        }]);
+    }
 
     /** @inheritdoc */
     async _preparePartContext(partId, context) {
@@ -65,5 +69,11 @@ export class WoundPrompt extends HMApplication {
     async _preFirstRender(context, options) {
         super._preFirstRender(context, options);
         context.embed = HMCONST.RANGED.EMBED.AUTO;
+    }
+
+    /** @inheritdoc */
+    async close(options) {
+        this.elementLinker.destroy();
+        super.close(options);
     }
 }
