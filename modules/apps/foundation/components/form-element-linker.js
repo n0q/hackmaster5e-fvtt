@@ -54,6 +54,7 @@ export class FormElementLinker {
 
     /**
      * Updates all links that use a specific source element.
+     *
      * @private
      * @param {HTMLElement} source - The source element that changed
      */
@@ -68,6 +69,7 @@ export class FormElementLinker {
 
     /**
      * Updates a single link based on its configuration.
+     *
      * @private
      * @param {Object} link - Link configuration
      */
@@ -95,6 +97,7 @@ export class FormElementLinker {
 
     /**
      * Determines the appropriate event type for an element.
+     *
      * @private
      * @param {HTMLElement} element - The element to check
      * @returns {string} The event type to listen for
@@ -117,6 +120,7 @@ export class FormElementLinker {
 
     /**
      * Add a new link dynamically.
+     *
      * @param {Object} link - Link configuration
      */
     addLink(link) {
@@ -126,6 +130,7 @@ export class FormElementLinker {
 
     /**
      * Remove a link and clean up if necessary.
+     *
      * @param {Object|number} linkOrIndex - The link object or its index
      */
     removeLink(linkOrIndex) {
