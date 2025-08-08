@@ -1,15 +1,21 @@
 {
+  "type": "module",
   "devDependencies": {
     "@babel/eslint-parser": "^7.22.9",
     "@foundryvtt/foundryvtt-cli": "^1.1.0",
+    "@rollup/plugin-commonjs": "^28.0.6",
+    "@rollup/plugin-node-resolve": "^16.0.1",
     "@typhonjs-fvtt/eslint-config-foundry.js": "^0.8.0",
     "gulp": "^5.0.0",
     "gulp-cached": "^1.1.1",
     "gulp-eslint-new": "^1.8.2",
     "gulp-sass": "^6.0.1",
+    "rollup": "^4.46.2",
+    "rollup-plugin-copy": "^3.5.0",
     "sass": "^1.89.2"
   },
   "scripts": {
+    "build": "npx rollup -c",
     "dev": "npx gulp",
     "setup": "npm ci"
   },
