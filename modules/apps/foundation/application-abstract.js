@@ -10,6 +10,8 @@ const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
  * @property {Object} [context] - Supplimentary data for enrichment.
  */
 export class HMApplication extends HandlebarsApplicationMixin(ApplicationV2) {
+    #inputListener = null;
+
     /**
      * @param {...any} args - Arguments passed to the parent constructor.
      * @param {HMAppData} - Data to send to the application.
@@ -154,12 +156,23 @@ export class HMApplication extends HandlebarsApplicationMixin(ApplicationV2) {
         const form = this.form;
 
         if (form) {
-            form.addEventListener("input", event => {
+            this.#inputListener = event => {
                 if (event.target.matches("input, select, textarea")) {
                     this._onInputChange(event);
                 }
-            });
+            };
+            form.addEventListener("input", this.#inputListener);
         }
+    }
+
+    /** @inheritdoc */
+    async close(options) {
+        if (this.form && this.#inputListener) {
+            this.form.removeEventListener("input", this.#inputListener);
+            this.#inputListener = null;
+        }
+
+        return super.close(options);
     }
 
     /**
