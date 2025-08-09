@@ -47,6 +47,10 @@ export class HMChatHooks {
      * @returns {void}
      */
     static _addTokenDataAttributes(message, html) {
+        if (!HMChatHooks._canUserReadMessage(message)) {
+            return;
+        }
+
         const { speaker } = message;
         const element = html[0] || html;
 
@@ -57,11 +61,30 @@ export class HMChatHooks {
     }
 
     /**
+     * Checks if the current user can read the given message.
+     *
+     * @param {ChatMessage} message - The ChatMessage to check.
+     * @returns {boolean} True if the user can read the message, false otherwise.
+     * @private
+     */
+    static _canUserReadMessage(message) {
+        if (message.isAuthor) return true;
+        if (game.user.isGM) return true;
+        if (!message.whisper || message.whisper.length === 0) return true;
+
+        return message.whisper.includes(game.user.id);
+    }
+
+    /**
      * @param {ChatMessage} message - The ChatMessage document being rendered.
      * @param {HTMLElement} html - The pending HT2yyML.
      * @returns {void}
      */
     static _addTokenHoverListeners(message, html) {
+        if (!HMChatHooks._canUserReadMessage(message)) {
+            return;
+        }
+
         const { token, scene } = message.speaker;
         const element = html[0] || html;
 
