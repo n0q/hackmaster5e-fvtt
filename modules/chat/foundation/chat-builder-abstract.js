@@ -134,6 +134,8 @@ export class ChatBuilder {
      * @param {string} obj.flavor - Chat flavor text. Supercedes this.data.caller.name if present.
      */
     getChatMessageData(obj) {
+        const { options, resp, roll } = this.data;
+
         const chatMessageData = {
             ...obj,
             user: game.user.id,
@@ -143,7 +145,12 @@ export class ChatBuilder {
         const hasFlavor = Object.prototype.hasOwnProperty.call(chatMessageData, "flavor");
         if (!hasFlavor) chatMessageData.flavor = this.data.caller?.name;
 
-        const { roll } = this.data;
+        const rollMode = obj.rollMode
+            ?? obj.resp?.rollMode
+            ?? resp?.rollMode
+            ?? options?.rollMode
+            ?? game.settings.get("core", "rollMode");
+
         if (obj.rolls ?? roll) {
             const rollData = {
                 sound: CONFIG.sounds.dice,
@@ -151,12 +158,9 @@ export class ChatBuilder {
 
             if (!obj.rolls) rollData.rolls = Array.isArray(roll) ? roll : [roll];
             Object.assign(chatMessageData, rollData);
-
-            const rollMode = obj.rollMode
-                ?? obj.resp?.rollMode
-                ?? game.settings.get("core", "rollMode");
-            ChatMessage.applyRollMode(chatMessageData, rollMode);
         }
+
+        ChatMessage.applyRollMode(chatMessageData, rollMode);
         return chatMessageData;
     }
 
