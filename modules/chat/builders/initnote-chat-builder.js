@@ -25,9 +25,15 @@ export class InitNoteChatBuilder extends ChatBuilder {
                 const sortByName = (a, b) => a.name.localeCompare(b.name);
                 const sortedContext = hiddenCombatants[combatant].sort(sortByName);
                 const content = await this.renderTemplate(this.template, sortedContext);
-                const whisper = combatant === "true" ? ChatBuilder.getGMs() : undefined;
 
-                const chatMessageData = this.getChatMessageData({ content, whisper });
+                const isHidden = combatant === "true";
+                const chatData = { content };
+
+                if (isHidden) {
+                    chatData.rollMode = CONST.DICE_ROLL_MODES.PRIVATE;
+                }
+
+                const chatMessageData = this.getChatMessageData(chatData);
                 await this.render(chatMessageData);
             }),
         );
@@ -38,7 +44,6 @@ export class InitNoteChatBuilder extends ChatBuilder {
      * @param {initData[]} batchData
      * @returns {initData[]}
      */
-    /* eslint-disable-next-line class-methods-use-this */
     _prepareBatchData(batchData) {
         if (!batchData) return [];
         return batchData;
