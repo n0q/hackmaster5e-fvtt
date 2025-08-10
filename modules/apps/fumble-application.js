@@ -47,13 +47,15 @@ export class FumblePrompt extends HMApplication {
     }
 
     prepareControlParts(context) {
+        const formData = new FormData(this.form);
+
         context.buttons = [{
             type: "submit",
             icon: "fa-solid fa-dice-d20",
             name: "roll-submit",
-            label: this.getButtonLabel(),
             action: "rollSubmit",
-            disabled: this.isButtonDisabled(),
+            label: this.getSubmitButtonLabel(formData),
+            disabled: this.isSubmitButtonDisabled(formData),
         }];
 
         return context;
@@ -62,29 +64,35 @@ export class FumblePrompt extends HMApplication {
     async _onFirstRender(...args) {
         super._onFirstRender(...args);
 
-        const buttonConfig = {
-            getLabel: override => this.getButtonLabel(override),
-            isDisabled: override => this.isButtonDisabled(override),
-        };
+        this.buttonManager = new FormButtonManager(this.element, [{
+            name: "roll-submit",
+            getLabel: formData => this.getSubmitButtonLabel(formData),
+            isDisabled: formData => this.isSubmitButtonDisabled(formData),
+        }]);
 
-        this.buttonManager = new FormButtonManager(this.element, buttonConfig);
     }
 
-    _onInputChange(event) {
-        const override = { [event.target.name]: Number(event.target.value) };
-        this.buttonManager.updateButton("roll-submit", override);
-    }
-
-    getButtonLabel(override = {}) {
-        const result = { ...this.result, ...override };
-        const formula = calculateFumbleFormula(result || {});
+    /**
+     * @param {FormData} formData
+     * @returns {string}
+     */
+    getSubmitButtonLabel(formData) {
+        const formula = calculateFumbleFormula(formData);
         return formula ? `Roll ${formula}` : "Roll d1000";
     }
 
-    isButtonDisabled(override = {}) {
-        const result = { ...this.result, ...override };
-        const atk = result.atk ?? 0;
-        const def = result.def ?? 0;
+    /**
+     * @param {FormData} formData
+     * @returns {boolean}
+     */
+    isSubmitButtonDisabled(formData) {
+        const atk = formData.atk ?? 0;
+        const def = formData.def ?? 0;
         return (atk - def) >= 0;
+    }
+
+    async close(options) {
+        this.buttonManager.destroy();
+        super.close(options);
     }
 }

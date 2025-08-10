@@ -40,13 +40,15 @@ export class CriticalPrompt extends HMApplication {
     }
 
     prepareControlParts(context) {
+        const formData = new FormData(this.form);
+
         context.buttons = [{
             type: "submit",
             icon: "fa-solid fa-dice-d20",
             name: "roll-submit",
-            label: this.getButtonLabel(),
             action: "rollSubmit",
-            disabled: this.isButtonDisabled(),
+            label: this.getSubmitButtonLabel(formData),
+            disabled: this.isSubmitButtonDisabled(formData),
         }];
 
         return context;
@@ -62,31 +64,34 @@ export class CriticalPrompt extends HMApplication {
     async _onFirstRender(...args) {
         super._onFirstRender(...args);
 
-        const buttonConfig = {
-            getLabel: override => this.getButtonLabel(override),
-            isDisabled: override => this.isButtonDisabled(override),
-        };
-
-        this.buttonManager = new FormButtonManager(this.element, buttonConfig);
+        this.buttonManager = new FormButtonManager(this.element, [{
+            name: "roll-submit",
+            getLabel: formData => this.getSubmitButtonLabel(formData),
+            isDisabled: formData => this.isSubmitButtonDisabled(formData),
+        }]);
     }
 
-    _onInputChange(event) {
-        const override = { [event.target.name]: Number(event.target.value) };
-        this.buttonManager.updateButton("roll-submit", override);
-    }
-
-    getButtonLabel(override = {}) {
-        const result = { ...this.result, ...override };
-        const formula = calculateCritFormula(result || {});
-        const severity = calculateCritSeverity(result || {});
-
+    /**
+     * @param {FormData} formData
+     * @returns {string}
+     */
+    getSubmitButtonLabel(formData) {
+        const formula = calculateCritFormula(formData);
+        const severity = calculateCritSeverity(formData);
         return `Roll ${formula} (Severity ${severity})`;
     }
 
-    isButtonDisabled(override = {}) {
-        const result = { ...this.result, ...override };
-        const severity = calculateCritSeverity(result || {});
-
+    /**
+     * @param {FormData} formData
+     * @returns {boolean}
+     */
+    isSubmitButtonDisabled(formData) {
+        const severity = calculateCritSeverity(formData);
         return severity < 1;
+    }
+
+    async close(options) {
+        this.buttonManager.destroy();
+        super.close(options);
     }
 }

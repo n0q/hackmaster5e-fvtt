@@ -3,7 +3,7 @@
  * Handles linking element states (like checkbox controlling another element's disabled state).
  */
 export class FormElementLinker {
-    #listeners = new Map(); // Private registry of source elements -> listener functions
+    #listeners = new Map();
 
     /**
      * Creates a new FormElementLinker instance.
@@ -40,7 +40,6 @@ export class FormElementLinker {
         const source = this.element.querySelector(link.source);
         if (!source) return;
 
-        // Set initial state
         this._updateLink(link);
 
         // Only add listener if we haven't already for this source element

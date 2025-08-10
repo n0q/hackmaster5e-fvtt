@@ -7,7 +7,7 @@ const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
  *
  * @typedef  {Object} HMAppData
  * @property {Object} [defaults] - initial data to prepopulate the form.
- * @property {Object} [subject] - Supplimentary data for enrichment.
+ * @property {Object} [subject] - Supplementary data for enrichment.
  */
 export class HMApplication extends HandlebarsApplicationMixin(ApplicationV2) {
     /** @type {function} Stores _onInputChange callback. */
@@ -50,7 +50,7 @@ export class HMApplication extends HandlebarsApplicationMixin(ApplicationV2) {
 
 
     /**
-     * @returns {object|*} Supplimentary form data. Typically a object, but you do you, boo.
+     * @returns {object|*} Supplementary form data. Typically a object, but you do you, boo.
      */
     get _subject() {
         return this.#hmAppData.subject;
