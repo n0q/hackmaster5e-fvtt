@@ -34,9 +34,9 @@ export class FumblePrompt extends HMApplication {
     );
 
     get title() {
-        const context = this.hmAppData.context;
-        return context
-            ? `${context.name}: ${game.i18n.localize("HM.dialog.getFumbleTitle")}`
+        const subject = this._subject;
+        return subject
+            ? `${subject.name}: ${game.i18n.localize("HM.dialog.getFumbleTitle")}`
             : game.i18n.localize("HM.dialog.getFumbleTitle");
     }
 
