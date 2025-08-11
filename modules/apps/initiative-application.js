@@ -2,7 +2,7 @@ import { systemPath } from "../tables/constants.js";
 import { HMApplication } from "./foundation/application-abstract.js";
 import { FormButtonManager } from "./foundation/components/form-button-manager.js";
 import { FormElementLinker } from "./foundation/components/form-element-linker.js";
-import { HMCombat } from "../combat/combat.js";
+import { getInitiativeFormula } from "../combat/initiative-utils.js";
 
 /**
  * Initiative selection application.
@@ -114,7 +114,7 @@ export class InitiativePrompt extends HMApplication {
         }
 
         const enrichedData = this.getEnrichedFormData(formValue);
-        const formula = HMCombat.getInitiativeFormula(enrichedData);
+        const formula = getInitiativeFormula(enrichedData);
         return `Roll ${formula}`;
     }
 
