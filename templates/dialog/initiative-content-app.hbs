@@ -1,17 +1,17 @@
-<div class="initiative-dialog">
-    <div class="form-group">
-        <label for="selectedDie">{{localize 'HM.dialog.getInitDieBody'}}</label>
-        <select name="selectedDie" id="selectedDie">
-            {{#each diceOptions}}
-            <option value="{{value}}" {{#if (eq value ../selectedDie)}}selected{{/if}}>
-                {{label}}
-            </option>
-            {{/each}}
-        </select>
+<section class="flexcol" style="margin-top: -20px;">
+    <div class="form-group form-group--row-full">
+        <label class="form-group__label">{{localize 'HM.dialog.getInitDieBody'}}</label>
+        <div class="form-group__control">
+            <select name="selectedDie" autofocus>
+                {{selectOptions (findConfigObj "initiativeDice") selected=selectedDie localize=true}}
+            </select>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label for="modifier">{{localize 'HM.mod'}}</label>
-        <input type="number" name="modifier" value="{{modifier}}" step="1" />
+    <div class="form-group form-group--row-full">
+        <label class="form-group__label">{{localize 'HM.modifier'}}</label>
+        <div class="form-group__control">
+            <input type="number" name="modifier" value="{{modifier}}" step="1" />
+        </div>
     </div>
-</div>
+</section>

@@ -346,7 +346,8 @@ idx.itemTypes = {
     currency: "TYPES.Item.currency",
 };
 
-idx.dice = {
+idx.initiativeDice = {
+    immediate: "HM.immediate",
     "1d20": "d20",
     "1d12": "d12",
     "1d10": "d10",

@@ -7,9 +7,9 @@ export class HMCombat extends foundry.documents.Combat {
     /**
      * Advance the combat to the next round.
      * Records total movement cost and distance.
+     *
      * @override
      * @async
-     *
      * @returns {Promise<this>}
      */
     async nextRound() {
@@ -30,54 +30,64 @@ export class HMCombat extends foundry.documents.Combat {
     }
 
     /** @override */
-    _sortCombatants(a, b) { // eslint-disable-line
+    _sortCombatants(a, b) {
         return a.isNPC - b.isNPC || a.name.localeCompare(b.name);
     }
 
     /**
-     * Returns an initiative formula, optionally in templated form.
+     * Returns an initiative formula based on the provided formula object.
      *
-     * @param {object} formvalue - An object of values from which to build a formula.
-     * @param {boolean} isTemplate - If the formula should be templated or not.
+     * @param {object} formulaObj - An object containing formula components.
+     * @param {string} [formulaObj.selectedDie="1d12"] - The die to roll or "immediate".
+     * @param {number} [formulaObj.modifier=0] - Manual modifier to the roll.
+     * @param {number} [formulaObj.bonus=0] - Character's initiative bonus.
+     * @param {number} [formulaObj.round=0] - Current combat round.
+     * @param {boolean} [isTemplate=false] - If the formula should be templated or not.
      * @return {string} The completed formula.
      */
     static getInitiativeFormula(formulaObj, isTemplate = false) {
-        const selectedDie = formulaObj?.selectedDie || "1d12";
-        const round = formulaObj?.round || 0;
+        const {
+            selectedDie = "1d12",
+            modifier = 0,
+            bonus = 0,
+            round = 0
+        } = formulaObj;
 
         if (selectedDie === "immediate") {
             return String(Math.max(1, round));
         }
-
-        const modifier = Number(formulaObj?.modifier) || 0;
-        const bonus = formulaObj?.bonus;
-
-        const bonusTerm = getSignedTerm(bonus);
-        const modTerm = getSignedTerm(modifier);
-        const roundTerm = getSignedTerm(round);
+        const bonusTerm = Number(bonus) ? getSignedTerm(bonus) : "";
+        const modTerm = Number(modifier) ? getSignedTerm(modifier) : "";
+        const roundTerm = Number(round) ? getSignedTerm(round) : "";
 
         let formula = isTemplate
-            ? `{${selectedDie} + ${game.system.initiative} ${modTerm}, 1}kh`
-            : `{${selectedDie} ${bonusTerm} ${modTerm}, 1}kh`;
+            ? `{${selectedDie} + ${game.system.initiative} ${modTerm}, 1}kh ${roundTerm}`
+            : `{${selectedDie} ${bonusTerm} ${modTerm}, 1}kh ${roundTerm}`;
 
-        if (round >= 0) formula += `${roundTerm}`;
         return formula;
     }
 
+    /**
+     * Roll initiative for one or multiple combatants.
+     *
+     * @override
+     */
     async rollInitiative(ids, { formula = null, updateTurn = true, messageOptions = {} } = {}) {
         let initFormula = formula;
 
         if (!initFormula) {
-            const caller = ids.length ? this.combatants.get(ids[0]).actor : null;
+            const caller = ids.length
+                ? this.combatants.get(ids[0]).actor
+                : null;
+
             const result = await InitiativePrompt.create({},
                 { subject: { combat: this, actor: caller } },
             );
 
             if (!result) return;
 
-            const isTemplate = true;
-            initFormula = HMCombat.getInitiativeFormula(result, isTemplate);
-            console.warn(initFormula);
+            initFormula = HMCombat.getInitiativeFormula(result, true);
+
             if (result.isImmediate) {
                 messageOptions.sound = null;
             }
@@ -87,17 +97,27 @@ export class HMCombat extends foundry.documents.Combat {
         return super.rollInitiative(ids, rollData);
     }
 
+    /**
+     * Execute a Hue and Cry action for eligible combatants.
+     */
     async doHueAndCry() {
         const { combatants, round } = this;
         const { user } = game;
-        const canHaC = combatants.filter(c => c.initiative > round && !c.getFlag(SYSTEM_ID, "acted"));
+
+        // Filter combatants who can perform Hue and Cry
+        const canHaC = combatants.filter(c =>
+            c.initiative > round
+            && !c.getFlag(SYSTEM_ID, "acted")
+        );
 
         const { controlled } = canvas.tokens;
 
+        // Determine which combatants the user can control
         const allCombatants = user.isGM
             ? canHaC.filter(a => a.isNPC)
             : canHaC.filter(a => a.players.includes(user));
 
+        // Use controlled tokens if any, otherwise all eligible combatants
         const stack = controlled.length
             ? canHaC.filter(c => controlled.find(t => t.id === c.tokenId))
             : allCombatants;
@@ -107,10 +127,12 @@ export class HMCombat extends foundry.documents.Combat {
             return;
         }
 
+        // Process initiative changes
         const batch = stack.map(c => {
             const oldInit = c.initiative;
             const newInit = Math.max(oldInit - 2, round);
             this.setInitiative(c.id, newInit);
+
             return {
                 delta: newInit - oldInit,
                 hidden: c.hidden,
@@ -120,6 +142,7 @@ export class HMCombat extends foundry.documents.Combat {
             };
         });
 
+        // Create chat message for the action
         const builder = await HMChatFactory.create(CHAT_TYPE.INIT_NOTE, { batch });
         builder.createChatMessage();
     }

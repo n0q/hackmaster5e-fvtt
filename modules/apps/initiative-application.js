@@ -26,10 +26,7 @@ export class InitiativePrompt extends HMApplication {
     static #OVERRIDE_OPTIONS = {
         actions: { rollSubmit: HMApplication.submitAction },
         form: { submitOnChange: true },
-        position: { width: 400 },
-        window: {
-            title: "HM.dialog.getInitDieTitle",
-        },
+        position: { width: 300 },
     };
 
     /** @inheritdoc */
@@ -39,33 +36,22 @@ export class InitiativePrompt extends HMApplication {
         { inplace: false },
     );
 
+    get title() {
+        const name = this._subject.actor.name;
+        return `${name}: ${game.i18n.localize("HM.dialog.getInitDieTitle")}`;
+
+    }
+
     /** @inheritdoc */
     async _preparePartContext(partId, context) {
-        if (partId === "content") context = this.prepareContentContext(context);
-        if (partId === "control") context = this.prepareControlParts(context);
+        if (partId === "control") context = this.prepareControlContext(context);
         return super._preparePartContext(partId, context);
     }
 
-    prepareContentContext(context) {
-        const diceOptions = [
-            { value: "immediate", label: game.i18n.localize("HM.immediate") },
-            { value: "1d20", label: "d20" },
-            { value: "1d12", label: "d12" },
-            { value: "1d10", label: "d10" },
-            { value: "1d8", label: "d8" },
-            { value: "1d6", label: "d6" },
-            { value: "1d4", label: "d4" },
-            { value: "1d3", label: "d3" },
-        ];
-
-        context.diceOptions = diceOptions;
-        context.combat = this._subject?.combat;
-        context.actor = this._subject?.actor;
-
-        return context;
-    }
-
-    prepareControlParts(context) {
+    /**
+     * Prepare the control buttons context.
+     */
+    prepareControlContext(context) {
         context.buttons = [{
             type: "submit",
             icon: "fa-solid fa-dice-d20",
@@ -73,20 +59,18 @@ export class InitiativePrompt extends HMApplication {
             label: this.getButtonLabel(this.formValue),
             action: "rollSubmit",
         }];
-
         return context;
     }
 
     /** @inheritdoc */
     async _preFirstRender(context, options) {
         super._preFirstRender(context, options);
+
         context.selectedDie = context.selectedDie || "1d12";
         context.modifier = context.modifier || 0;
-        context.round = this._subject.combat.current.round;
-        context.bonus = this._subject.actor.system.bonus.total.init;
-        console.warn(context.bonus);
     }
 
+    /** @inheritdoc */
     async _onFirstRender(...args) {
         super._onFirstRender(...args);
 
@@ -107,10 +91,20 @@ export class InitiativePrompt extends HMApplication {
         this.#combatTurnHook = Hooks.on("updateCombat", this._onUpdateCombat.bind(this));
     }
 
+    getEnrichedFormData(formValue = {}) {
+        return {
+            ...formValue,
+            round: this._subject?.combat?.current?.round || 0,
+            bonus: this._subject?.actor?.system?.bonus?.total?.init || 0,
+            isImmediate: formValue.selectedDie === "immediate",
+        };
+    }
+
     /**
-     * Get the label for the roll button based on current form state.
-     * @param {object} formValue - Form data object from FormButtonManager.
-     * @returns {string} The button label.
+     * Callback to button manager to change button label.
+     *
+     * @param {Object} formValues
+     * @returns {string}i
      */
     getButtonLabel(formValue) {
         const selectedDie = formValue?.selectedDie || "1d12";
@@ -119,42 +113,19 @@ export class InitiativePrompt extends HMApplication {
             return game.i18n.localize("HM.immediate");
         }
 
-        // Enrich formValue with round and bonus data like _processFormData does
-        const enrichedFormValue = {
-            ...formValue,
-            round: this._subject.combat.current.round,
-            bonus: this._subject.actor.system.bonus.total.init,
-        };
-
-        const formula = HMCombat.getInitiativeFormula(enrichedFormValue);
+        const enrichedData = this.getEnrichedFormData(formValue);
+        const formula = HMCombat.getInitiativeFormula(enrichedData);
         return `Roll ${formula}`;
     }
 
     /** @inheritdoc */
     _processFormData(_event, _form, formData) {
         const formObject = foundry.utils.expandObject(formData.object);
-        formObject.round = this._subject.combat.current.round;
-        formObject.bonus = this._subject.actor.system.bonus.total.init;
-        formObject.isImmediate = formObject.selectedDie === "immediate";
-        return formObject;
+        return this.getEnrichedFormData(formObject);
     }
-
-    /*
-    _processFormData(event, form, formData) {
-        const selectedDie = formData.get("selectedDie");
-        const modifier = Number(formData.get("modifier")) || 0;
-        return {
-            die: selectedDie === "immediate" ? false : selectedDie,
-            modifier,
-            round: this._subject.combat.current.round,
-        };
-    }
-*/
 
     /**
      * Handle combat turn changes by re-rendering the control part.
-     *
-     * @see Hook: updateCombat — Same parameters as {@link hookEvents.updateDocument}
      */
     _onUpdateCombat(combat, _changed, _options, _userId) {
         if (combat.id !== this._subject?.combat?.id) return;
@@ -163,8 +134,9 @@ export class InitiativePrompt extends HMApplication {
 
     /** @inheritdoc */
     async close(options) {
-        this.buttonManager.destroy();
-        this.elementLinker.destroy();
+        // Clean up managers and hooks
+        this.buttonManager?.destroy();
+        this.elementLinker?.destroy();
 
         if (this.#combatTurnHook !== null) {
             Hooks.off("combatTurnChange", this.#combatTurnHook);
