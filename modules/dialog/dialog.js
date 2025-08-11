@@ -124,30 +124,6 @@ export class HMDialog {
         return dialogResp;
     }
 
-    static async getInitDieDialog(caller) {
-        const dialogData = getDialogData();
-        const dialogResp = { caller };
-        const template = "systems/hackmaster5e/templates/dialog/getInitDie.hbs";
-
-        dialogResp.resp = await Dialog.wait({
-            title: game.i18n.localize("HM.dialog.getInitDieTitle"),
-            content: await renderTemplate(template, dialogData),
-            buttons: {
-                getdie: {
-                    label: game.i18n.localize("HM.roll"),
-                    callback: () => ({ die: document.getElementById("choices").value }),
-                },
-                start: {
-                    label: game.i18n.localize("HM.immediate"),
-                    callback: () => ({ die: false }),
-                },
-            },
-            default: "getdie",
-        }, { width: 300 });
-
-        return dialogResp;
-    }
-
     static async getSaveDialog(dataset, caller) {
         const dialogData = getDialogData();
         const dialogResp = { caller };

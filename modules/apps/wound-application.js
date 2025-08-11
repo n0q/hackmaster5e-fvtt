@@ -20,9 +20,9 @@ export class WoundPrompt extends HMApplication {
     };
 
     get title() {
-        const context = this.hmAppData?.context;
-        return context
-            ? `${context.name}: ${game.i18n.localize("HM.dialog.setWoundTitle")}`
+        const subject = this._subject;
+        return subject
+            ? `${subject.name}: ${game.i18n.localize("HM.dialog.setWoundTitle")}`
             : `${game.i18n.localize("HM.dialog.setWoundTitle")}`;
     }
 

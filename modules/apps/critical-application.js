@@ -44,9 +44,9 @@ export class CriticalPrompt extends HMApplication {
             type: "submit",
             icon: "fa-solid fa-dice-d20",
             name: "roll-submit",
-            label: this.getButtonLabel(),
             action: "rollSubmit",
-            disabled: this.isButtonDisabled(),
+            label: "label",
+            disabled: true,
         }];
 
         return context;
@@ -62,31 +62,38 @@ export class CriticalPrompt extends HMApplication {
     async _onFirstRender(...args) {
         super._onFirstRender(...args);
 
-        const buttonConfig = {
-            getLabel: override => this.getButtonLabel(override),
-            isDisabled: override => this.isButtonDisabled(override),
-        };
-
-        this.buttonManager = new FormButtonManager(this.element, buttonConfig);
+        this.buttonManager = new FormButtonManager(this.element, [{
+            name: "roll-submit",
+            getLabel: formValues => this.getSubmitButtonLabel(formValues),
+            isDisabled: formValues => this.isSubmitButtonDisabled(formValues),
+        }]);
     }
 
-    _onInputChange(event) {
-        const override = { [event.target.name]: Number(event.target.value) };
-        this.buttonManager.updateButton("roll-submit", override);
-    }
-
-    getButtonLabel(override = {}) {
-        const result = { ...this.result, ...override };
-        const formula = calculateCritFormula(result || {});
-        const severity = calculateCritSeverity(result || {});
-
+    /**
+     * Callback to button manager to change button label.
+     *
+     * @param {Object} formValues
+     * @returns {string}i
+     */
+    getSubmitButtonLabel(formValues) {
+        const formula = calculateCritFormula(formValues);
+        const severity = calculateCritSeverity(formValues);
         return `Roll ${formula} (Severity ${severity})`;
     }
 
-    isButtonDisabled(override = {}) {
-        const result = { ...this.result, ...override };
-        const severity = calculateCritSeverity(result || {});
-
+    /**
+     * Callback to button manager to control button state.
+     *
+     * @param {Object} formValues
+     * @returns {boolean}
+     */
+    isSubmitButtonDisabled(formValues) {
+        const severity = calculateCritSeverity(formValues);
         return severity < 1;
+    }
+
+    async close(options) {
+        this.buttonManager.destroy();
+        super.close(options);
     }
 }

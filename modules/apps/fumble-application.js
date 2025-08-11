@@ -34,9 +34,9 @@ export class FumblePrompt extends HMApplication {
     );
 
     get title() {
-        const context = this.hmAppData.context;
-        return context
-            ? `${context.name}: ${game.i18n.localize("HM.dialog.getFumbleTitle")}`
+        const subject = this._subject;
+        return subject
+            ? `${subject.name}: ${game.i18n.localize("HM.dialog.getFumbleTitle")}`
             : game.i18n.localize("HM.dialog.getFumbleTitle");
     }
 
@@ -51,9 +51,9 @@ export class FumblePrompt extends HMApplication {
             type: "submit",
             icon: "fa-solid fa-dice-d20",
             name: "roll-submit",
-            label: this.getButtonLabel(),
             action: "rollSubmit",
-            disabled: this.isButtonDisabled(),
+            label: "label",
+            disabled: true,
         }];
 
         return context;
@@ -62,29 +62,39 @@ export class FumblePrompt extends HMApplication {
     async _onFirstRender(...args) {
         super._onFirstRender(...args);
 
-        const buttonConfig = {
-            getLabel: override => this.getButtonLabel(override),
-            isDisabled: override => this.isButtonDisabled(override),
-        };
+        this.buttonManager = new FormButtonManager(this.element, [{
+            name: "roll-submit",
+            getLabel: formValues => this.getSubmitButtonLabel(formValues),
+            isDisabled: formValues => this.isSubmitButtonDisabled(formValues),
+        }]);
 
-        this.buttonManager = new FormButtonManager(this.element, buttonConfig);
     }
 
-    _onInputChange(event) {
-        const override = { [event.target.name]: Number(event.target.value) };
-        this.buttonManager.updateButton("roll-submit", override);
-    }
-
-    getButtonLabel(override = {}) {
-        const result = { ...this.result, ...override };
-        const formula = calculateFumbleFormula(result || {});
+    /**
+     * Callback to button manager to change button label.
+     *
+     * @param {Object} formValues
+     * @returns {string}
+     */
+    getSubmitButtonLabel(formValues) {
+        const formula = calculateFumbleFormula(formValues);
         return formula ? `Roll ${formula}` : "Roll d1000";
     }
 
-    isButtonDisabled(override = {}) {
-        const result = { ...this.result, ...override };
-        const atk = result.atk ?? 0;
-        const def = result.def ?? 0;
+    /**
+     * Callback to button manager to control button state.
+     *
+     * @param {Object} formValues
+     * @returns {boolean}
+     */
+    isSubmitButtonDisabled(formValues) {
+        const atk = formValues.atk ?? 0;
+        const def = formValues.def ?? 0;
         return (atk - def) >= 0;
+    }
+
+    async close(options) {
+        this.buttonManager.destroy();
+        super.close(options);
     }
 }

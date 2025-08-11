@@ -74,11 +74,11 @@ export const preloadHandlebarsTemplates = () => {
         systemPath("templates/dialog/cast.hbs"),
         systemPath("templates/dialog/critical-content-app.hbs"),
         systemPath("templates/dialog/fumble-content-app.hbs"),
+        systemPath("templates/dialog/initiative-content-app.hbs"),
         systemPath("templates/dialog/getDamage.hbs"),
         systemPath("templates/dialog/defend.hbs"),
         systemPath("templates/dialog/getSave.hbs"),
         systemPath("templates/dialog/dialog-skill.hbs"),
-        systemPath("templates/dialog/getInitDie.hbs"),
         systemPath("templates/dialog/wound-content-app.hbs"),
         systemPath("templates/dialog/parts/getRollMode.hbs"),
 

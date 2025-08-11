@@ -128,6 +128,12 @@ function parsePercent(value) {
     return parseFloat(stringValue) / 100;
 }
 
+export const getSignedTerm = value => {
+    if (value === 0) return "";
+    if (value > 0) return `+ ${value}`;
+    return `- ${Math.abs(value)}`;
+};
+
 /**
  * Generates ChatSpeakerData from a Token, TokenDocument, or Actor.
  *

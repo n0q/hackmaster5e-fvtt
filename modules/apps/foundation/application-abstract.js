@@ -6,48 +6,54 @@ const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
  * @extends {ApplicationV2}
  *
  * @typedef  {Object} HMAppData
- * @property {Object} [initial] - Initial data to prepopulate the form.
- * @property {Object} [context] - Supplimentary data for enrichment.
+ * @property {Object} [defaults] - initial data to prepopulate the form.
+ * @property {Object} [subject] - Supplementary data for enrichment.
  */
 export class HMApplication extends HandlebarsApplicationMixin(ApplicationV2) {
+    /** @type {function} Stores _onInputChange callback. */
     #inputListener = null;
+
+    /** @type {HMAppData} */
+    #hmAppData = null;
 
     /**
      * @param {...any} args - Arguments passed to the parent constructor.
      * @param {HMAppData} - Data to send to the application.
      * @throws {Error} Throws if instantiated directly.
      */
-    constructor(options = {}, { initial, context } = {}) {
+    constructor(options = {}, { defaults, subject } = {}) {
         if (new.target === HMApplication) {
             throw new Error("HMApplication cannot be instantiated directly.");
         }
 
         super(options);
-        this.#hmAppData = { initial, context };
+        this.#hmAppData = { defaults, subject };
     }
 
     /**
      * A static factory method to create, render, and await the result of an application.
      * @param {object} [options={}]    Application configuration options.
-     * @param {HMAppData} [data={}]    Initial data passed to the constructor.
+     * @param {HMAppData} [data={}]    defaults data passed to the constructor.
      * @returns {Promise<object|null>} A promise that resolves with the application's
      *                                 result upon a confirmed close, or null if the
      *                                 application is closed without confirmation.
      * @static
      * @async
      */
-    static async create(options = {}, { initial, context } = {}) {
+    static async create(options = {}, { defaults, subject } = {}) {
         const { promise, resolve } = Promise.withResolvers();
-        const app = new this(options, { initial, context });
+        const app = new this(options, { defaults, subject });
         app.addEventListener("close", () => resolve(app.isConfirmed ? app.result : undefined), { once: true });
         app.render({ force: true });
         return promise;
     }
 
-    #hmAppData;
 
-    get hmAppData() {
-        return this.#hmAppData;
+    /**
+     * @returns {object|*} Supplementary form data. Typically a object, but you do you, boo.
+     */
+    get _subject() {
+        return this.#hmAppData.subject;
     }
 
     /**
@@ -138,7 +144,9 @@ export class HMApplication extends HandlebarsApplicationMixin(ApplicationV2) {
 
     async _preFirstRender(context, options) {
         super._preFirstRender(context, options);
-        if (this.#hmAppData.initial) foundry.utils.mergeObject(context, this.#hmAppData.initial);
+        if (this.#hmAppData.defaults) {
+            foundry.utils.mergeObject(context, this.#hmAppData.defaults);
+        }
     }
 
     /**
@@ -163,6 +171,24 @@ export class HMApplication extends HandlebarsApplicationMixin(ApplicationV2) {
             };
             form.addEventListener("input", this.#inputListener);
         }
+    }
+
+    /**
+     * Get formData as a plain object.
+     *
+     * @returns {Object<string, string>}
+     */
+    get formValues() {
+        if (!this.form) return {};
+
+        const values = {};
+
+        const formData = new FormData(this.form);
+        for (const [name, value] of formData.entries()) {
+            values[name] = value;
+        }
+
+        return values;
     }
 
     /** @inheritdoc */

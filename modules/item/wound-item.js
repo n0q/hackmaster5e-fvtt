@@ -32,8 +32,9 @@ export class HMWoundItem extends HMItem {
      * @param {WoundData} wdata - WoundData pertaining to this HMWoundItem.
      */
     static async addWound(_canNotify, actor, wdata) {
-        const dialogData = wdata ?? await WoundPrompt.create(undefined, { context: actor });
+        const dialogData = wdata ?? await WoundPrompt.create(undefined, { subject: actor });
         if (!dialogData) return;
+
         const { armorDamage, ...woundData } = HMWoundItem.normalizeWoundData(dialogData);
         if (woundData.hp < 1) return;
 
