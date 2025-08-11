@@ -106,16 +106,16 @@ export class FormButtonManager {
         const button = this._getButton(config.name);
         if (!button) return;
 
-        const formData = this._getFormData(config);
+        const formValues = this._getFormValues(config);
 
         if (config.isDisabled) {
-            button.disabled = config.isDisabled(formData);
+            button.disabled = config.isDisabled(formValues);
         }
 
         if (config.getLabel) {
             const labelSpan = button.querySelector("span");
             if (labelSpan) {
-                labelSpan.textContent = config.getLabel(formData);
+                labelSpan.textContent = config.getLabel(formValues);
             }
         }
     }
@@ -127,7 +127,7 @@ export class FormButtonManager {
      * @param {Object} config - Button configuration
      * @returns {Object} Form data object
      */
-    _getFormData(config) {
+    _getFormValues(config) {
         const formData = new FormData(this.#form);
         const data = {};
 
@@ -161,6 +161,7 @@ export class FormButtonManager {
 
     /**
      * Finds a button by its name attribute.
+     *
      * @private
      * @param {string} buttonName - The name attribute value of the button
      * @returns {HTMLElement|null} The button element or null if not found

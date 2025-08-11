@@ -47,15 +47,13 @@ export class FumblePrompt extends HMApplication {
     }
 
     prepareControlParts(context) {
-        const formData = new FormData(this.form);
-
         context.buttons = [{
             type: "submit",
             icon: "fa-solid fa-dice-d20",
             name: "roll-submit",
             action: "rollSubmit",
-            label: this.getSubmitButtonLabel(formData),
-            disabled: this.isSubmitButtonDisabled(formData),
+            label: "label",
+            disabled: true,
         }];
 
         return context;
@@ -66,28 +64,32 @@ export class FumblePrompt extends HMApplication {
 
         this.buttonManager = new FormButtonManager(this.element, [{
             name: "roll-submit",
-            getLabel: formData => this.getSubmitButtonLabel(formData),
-            isDisabled: formData => this.isSubmitButtonDisabled(formData),
+            getLabel: formValues => this.getSubmitButtonLabel(formValues),
+            isDisabled: formValues => this.isSubmitButtonDisabled(formValues),
         }]);
 
     }
 
     /**
-     * @param {FormData} formData
+     * Callback to button manager to change button label.
+     *
+     * @param {Object} formValues
      * @returns {string}
      */
-    getSubmitButtonLabel(formData) {
-        const formula = calculateFumbleFormula(formData);
+    getSubmitButtonLabel(formValues) {
+        const formula = calculateFumbleFormula(formValues);
         return formula ? `Roll ${formula}` : "Roll d1000";
     }
 
     /**
-     * @param {FormData} formData
+     * Callback to button manager to control button state.
+     *
+     * @param {Object} formValues
      * @returns {boolean}
      */
-    isSubmitButtonDisabled(formData) {
-        const atk = formData.atk ?? 0;
-        const def = formData.def ?? 0;
+    isSubmitButtonDisabled(formValues) {
+        const atk = formValues.atk ?? 0;
+        const def = formValues.def ?? 0;
         return (atk - def) >= 0;
     }
 

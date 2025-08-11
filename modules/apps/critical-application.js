@@ -40,15 +40,13 @@ export class CriticalPrompt extends HMApplication {
     }
 
     prepareControlParts(context) {
-        const formData = new FormData(this.form);
-
         context.buttons = [{
             type: "submit",
             icon: "fa-solid fa-dice-d20",
             name: "roll-submit",
             action: "rollSubmit",
-            label: this.getSubmitButtonLabel(formData),
-            disabled: this.isSubmitButtonDisabled(formData),
+            label: "label",
+            disabled: true,
         }];
 
         return context;
@@ -66,27 +64,31 @@ export class CriticalPrompt extends HMApplication {
 
         this.buttonManager = new FormButtonManager(this.element, [{
             name: "roll-submit",
-            getLabel: formData => this.getSubmitButtonLabel(formData),
-            isDisabled: formData => this.isSubmitButtonDisabled(formData),
+            getLabel: formValues => this.getSubmitButtonLabel(formValues),
+            isDisabled: formValues => this.isSubmitButtonDisabled(formValues),
         }]);
     }
 
     /**
-     * @param {FormData} formData
-     * @returns {string}
+     * Callback to button manager to change button label.
+     *
+     * @param {Object} formValues
+     * @returns {string}i
      */
-    getSubmitButtonLabel(formData) {
-        const formula = calculateCritFormula(formData);
-        const severity = calculateCritSeverity(formData);
+    getSubmitButtonLabel(formValues) {
+        const formula = calculateCritFormula(formValues);
+        const severity = calculateCritSeverity(formValues);
         return `Roll ${formula} (Severity ${severity})`;
     }
 
     /**
-     * @param {FormData} formData
+     * Callback to button manager to control button state.
+     *
+     * @param {Object} formValues
      * @returns {boolean}
      */
-    isSubmitButtonDisabled(formData) {
-        const severity = calculateCritSeverity(formData);
+    isSubmitButtonDisabled(formValues) {
+        const severity = calculateCritSeverity(formValues);
         return severity < 1;
     }
 

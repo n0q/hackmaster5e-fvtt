@@ -173,6 +173,24 @@ export class HMApplication extends HandlebarsApplicationMixin(ApplicationV2) {
         }
     }
 
+    /**
+     * Get formData as a plain object.
+     *
+     * @returns {Object<string, string>}
+     */
+    get formValues() {
+        if (!this.form) return {};
+
+        const values = {};
+
+        const formData = new FormData(this.form);
+        for (const [name, value] of formData.entries()) {
+            values[name] = value;
+        }
+
+        return values;
+    }
+
     /** @inheritdoc */
     async close(options) {
         if (this.form && this.#inputListener) {
