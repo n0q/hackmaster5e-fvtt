@@ -873,7 +873,8 @@
             "value": "Value"
         },
         "CONTROLS": {
-            "hmReach": "Reach View"
+            "hmReach": "Reach View",
+            "hmReachP": "When active, displays weapon and threat reach for all combatants."
         },
         "CRIT": {
             "primary": "Primary",

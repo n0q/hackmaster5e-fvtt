@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 
 - Refreshed initiative dialog to v13.
+- Improved reach view toggle tooltip.
 
 ## [0.5.5] - 2025-08-09
 
