@@ -5,6 +5,7 @@
     "@foundryvtt/foundryvtt-cli": "^1.1.0",
     "@rollup/plugin-commonjs": "^28.0.6",
     "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-terser": "^0.4.4",
     "@typhonjs-fvtt/eslint-config-foundry.js": "^0.8.0",
     "gulp": "^5.0.0",
     "gulp-cached": "^1.1.1",
