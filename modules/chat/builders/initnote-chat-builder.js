@@ -18,25 +18,28 @@ export class InitNoteChatBuilder extends ChatBuilder {
      */
     async createChatMessage() {
         const { batch } = this.data;
-        const hiddenCombatants = Object.groupBy(batch, c => c.hidden);
 
-        await Promise.all(
-            Object.keys(hiddenCombatants).map(async combatant => {
-                const sortByName = (a, b) => a.name.localeCompare(b.name);
-                const sortedContext = hiddenCombatants[combatant].sort(sortByName);
-                const content = await this.renderTemplate(this.template, sortedContext);
+        const hasHiddenCombatants = batch.some(c => c.hidden);
+        const isPrivateChat = game.settings.get("core", "rollMode") !== CONST.DICE_ROLL_MODES.PUBLIC;
+        const cssClass = isPrivateChat || hasHiddenCombatants ? "whisper" : undefined;
 
-                const isHidden = combatant === "true";
-                const chatData = { content };
+        const sortByName = (a, b) => a.name.localeCompare(b.name);
 
-                if (isHidden) {
-                    chatData.rollMode = CONST.DICE_ROLL_MODES.PRIVATE;
-                }
+        const chatData = {
+            combatants: batch.sort(sortByName),
+            cssClass,
+        };
 
-                const chatMessageData = this.getChatMessageData(chatData);
-                await this.render(chatMessageData);
-            }),
-        );
+        const content = await this.renderTemplate(this.template, chatData);
+
+        const chatMessageDataConfig = { content };
+
+        if (hasHiddenCombatants) {
+            chatMessageDataConfig.rollMode = CONST.DICE_ROLL_MODES.PRIVATE;
+        }
+
+        const chatMessageData = this.getChatMessageData(chatMessageDataConfig);
+        await this.render(chatMessageData);
     }
 
     /**

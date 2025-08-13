@@ -10,18 +10,27 @@
     },
     "manifestPlusVersion": "1.2.0",
     "templateVersion": 1,
-    "authors": [{"name": "n0q", "discord": "n0qtrnl"}],
-    "media": [{
-        "type": "cover",
-        "url": "https://raw.githubusercontent.com/n0q/hackmaster5e-fvtt/main/header.jpg",
-        "caption": "Hackmaster"
-    }],
+    "authors": [
+        {
+            "name": "n0q",
+            "discord": "n0qtrnl"
+        }
+    ],
+    "media": [
+        {
+            "type": "cover",
+            "url": "https://raw.githubusercontent.com/n0q/hackmaster5e-fvtt/main/header.jpg",
+            "caption": "Hackmaster"
+        }
+    ],
     "socket": true,
     "esmodules": [
         "greensock/esm/all.js",
         "hm.js"
     ],
-    "styles": ["styles/hackmaster.css"],
+    "styles": [
+        "styles/hackmaster.css"
+    ],
     "packs": [
         {
             "label": "Beasts, Basic",
@@ -53,16 +62,20 @@
         }
     ],
     "languages": [
-        {  
+        {
             "lang": "en",
             "name": "English",
             "path": "lang/en.json"
         }
     ],
-    "grid": {"distance": 5, "units": "ft"},
-    "initiative": "@bonus.total.init",
+    "grid": {
+        "distance": 5,
+        "units": "ft"
+    },
     "primaryTokenAttribute": "hp",
-    "flags": { "allowBugReporter": true },
+    "flags": {
+        "allowBugReporter": true
+    },
     "bugs": "https://github.com/n0q/hackmaster5e-fvtt/issues",
     "manifest": null,
     "download": null

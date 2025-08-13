@@ -8,27 +8,26 @@ import { getSignedTerm } from "../sys/utils.js";
  * @param {number} [formulaObj.modifier=0] - Manual modifier to the roll.
  * @param {number} [formulaObj.bonus=0] - Character's initiative bonus.
  * @param {number} [formulaObj.round=0] - Current combat round.
- * @param {boolean} [isTemplate=false] - If the formula should be templated or not.
+ * @param {boolean} [formulaObj.isTemplate=false] - If the formula should be templated or not.
  * @return {string} The completed formula.
  */
-export function getInitiativeFormula(formulaObj, isTemplate = false) {
+export function getInitiativeFormula(formulaObj) {
     const {
         selectedDie = "1d12",
         modifier = 0,
         bonus = 0,
-        round = 0
+        round = 0,
+        isTemplate = false,
     } = formulaObj;
 
     if (selectedDie === "immediate") {
         return String(Math.max(1, round));
     }
-    const bonusTerm = Number(bonus) ? getSignedTerm(bonus) : "";
+
+    const bonusTerm = isTemplate ? "+ @bonus.total.init" : getSignedTerm(bonus);
     const modTerm = Number(modifier) ? getSignedTerm(modifier) : "";
-    const roundTerm = Number(round) ? getSignedTerm(round) : "";
+    const roundTerm = getSignedTerm(round);
 
-    let formula = isTemplate
-        ? `{${selectedDie} + ${game.system.initiative} ${modTerm}, 1}kh ${roundTerm}`
-        : `{${selectedDie} ${bonusTerm} ${modTerm}, 1}kh ${roundTerm}`;
-
-    return formula;
+    return `{${selectedDie} ${bonusTerm} ${modTerm}, 1}kh ${roundTerm}`;
 }
+

@@ -54,7 +54,7 @@ export class HMCombat extends foundry.documents.Combat {
 
             if (!result) return;
 
-            initFormula = getInitiativeFormula(result, true);
+            initFormula = getInitiativeFormula({ ...result, isTemplate: true });
 
             if (result.isImmediate) {
                 messageOptions.sound = null;

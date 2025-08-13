@@ -1,5 +1,6 @@
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
+import terser from "@rollup/plugin-terser";
 import copy from "rollup-plugin-copy";
 
 export default {
@@ -9,12 +10,24 @@ export default {
         format: "es",
         sourcemap: true
     },
+    treeshake: {
+        moduleSideEffects: false
+    },
     external: [
         "/scripts/greensock/esm/all.js"
     ],
     plugins: [
         nodeResolve(),
         commonjs(),
+        terser({
+            compress: {
+                drop_console: false,
+                drop_debugger: true
+            },
+            mangle: {
+                keep_fnames: true
+            }
+        }),
         copy({
             targets: [
                 { src: "styles", dest: "dist" },

@@ -3,11 +3,20 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [0.5.6] - 2025-08-12
+
+### Fixed
+
+- Init message backgrounds not matching their borders.
+
+### Added
+
+- Reach View toolclip.
 
 ### Changed
 
 - Refreshed initiative dialog to v13.
+- Improved loading times.
 
 ## [0.5.5] - 2025-08-09
 
