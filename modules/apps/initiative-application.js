@@ -10,7 +10,7 @@ import { getInitiativeFormula } from "../combat/initiative-utils.js";
  */
 export class InitiativePrompt extends HMApplication {
     /** @type {number|null} */
-    #combatTurnHook = null;
+    #callback = {};
 
     /** @inheritdoc */
     static PARTS = {
@@ -88,7 +88,8 @@ export class InitiativePrompt extends HMApplication {
             transform: value => value === "immediate",
         }]);
 
-        this.#combatTurnHook = Hooks.on("updateCombat", this._onUpdateCombat.bind(this));
+        this.#callback.updateCombat = Hooks.on("updateCombat", this._onUpdateCombat.bind(this));
+        this.#callback.preDeleteCombat = Hooks.on("preDeleteCombat", this._onPreDeleteCombat.bind(this));
     }
 
     getEnrichedFormData(formValue = {}) {
@@ -132,15 +133,25 @@ export class InitiativePrompt extends HMApplication {
         this.render({ parts: ["control"] });
     }
 
+    _onPreDeleteCombat(combat, _options, _userId) {
+        if (combat.id === this._subject.combat.id) {
+            this.close();
+        }
+    }
+
     /** @inheritdoc */
     async close(options) {
-        // Clean up managers and hooks
         this.buttonManager?.destroy();
         this.elementLinker?.destroy();
 
-        if (this.#combatTurnHook !== null) {
-            Hooks.off("combatTurnChange", this.#combatTurnHook);
-            this.#combatTurnHook = null;
+        if (this.#callback.updateCombat !== null) {
+            Hooks.off("updateCombat", this.#callback.updateCombat);
+            this.#callback.updateCombat = null;
+        }
+
+        if (this.#callback.preDeleteCombatHook !== null) {
+            Hooks.off("preDeleteCombat", this.#callback.preDeleteCombat);
+            this.#callback.preDeleteCombat = null;
         }
 
         return super.close(options);
