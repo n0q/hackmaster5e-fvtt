@@ -89,7 +89,7 @@ export class InitiativePrompt extends HMApplication {
         }]);
 
         this.#callback.updateCombat = Hooks.on("updateCombat", this._onUpdateCombat.bind(this));
-        this.#callback.preDeleteCombat = Hooks.on("preDeleteCombat", this._onPreDeleteCombat.bind(this));
+        this.#callback.deleteCombat = Hooks.on("deleteCombat", this._onDeleteCombat.bind(this));
     }
 
     getEnrichedFormData(formValue = {}) {
@@ -133,7 +133,7 @@ export class InitiativePrompt extends HMApplication {
         this.render({ parts: ["control"] });
     }
 
-    _onPreDeleteCombat(combat, _options, _userId) {
+    _onDeleteCombat(combat, _options, _userId) {
         if (combat.id === this._subject.combat.id) {
             this.close();
         }
@@ -150,8 +150,8 @@ export class InitiativePrompt extends HMApplication {
         }
 
         if (this.#callback.preDeleteCombatHook !== null) {
-            Hooks.off("preDeleteCombat", this.#callback.preDeleteCombat);
-            this.#callback.preDeleteCombat = null;
+            Hooks.off("deleteCombat", this.#callback.preDeleteCombat);
+            this.#callback.deleteCombat = null;
         }
 
         return super.close(options);
