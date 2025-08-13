@@ -1,5 +1,8 @@
 {
     "HM": {
+        "DATA": {
+            "invalidBasicAlias": "must be in Basic Alias format"
+        },
         "MOVEMENT": {
             "action": {
                 "walk": {

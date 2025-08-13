@@ -3,6 +3,7 @@ import { HMDialogFactory } from "../dialog/dialog-factory.js";
 import { HMStates } from "../sys/effects.js";
 import { HMSkillSchema } from "./schema/skill-item-schema.js";
 import { HMChatFactory, CHAT_TYPE } from "../chat/chat-factory.js";
+import { sanitizeForAlias, isValidBasicAlias } from "../data/data-utils.js";
 
 // Remember: Items may not alter Actors under any circumstances.
 // You will create a free fire shooting gallery if you do this, and
@@ -90,6 +91,23 @@ export class HMItem extends Item {
     get invstate() {
         const state = parseInt(this.system.state, 10) || 0;
         return HMTABLES.itemstate[state];
+    }
+
+    /**
+     * Generates a basic alias.
+     *
+     * @returns {string} The generated basic alias
+     */
+    _generateBasicAlias() {
+        const type = sanitizeForAlias(this.type);
+        const name = sanitizeForAlias(this.name);
+
+        const ba = `${type}:${name}`;
+        if (isValidBasicAlias(ba)) {
+            return ba;
+        }
+
+        throw new Error(`Invalid BA generation: HMItem, ${this.uuid}`);
     }
 
     /**
