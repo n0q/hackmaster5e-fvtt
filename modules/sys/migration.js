@@ -50,8 +50,6 @@ export const migrateData = async () => {
         await game.settings.set(SYSTEM_ID, "gameVer", newVer);
         ui.notifications.info(`System updated to v${newVer}`);
     }
-
-    await migrateV0506();
 };
 
 /**
