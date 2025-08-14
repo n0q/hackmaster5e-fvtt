@@ -67,23 +67,23 @@ export class HMSkillItem extends HMItem {
      * @returns {string} The generated bob.
      */
     _generateBasicObjectBinding() {
-        const baSuper = super._generateBasicObjectBinding();
+        const superBob = super._generateBasicObjectBinding();
 
         const { specialty } = this.system;
         const hasSpecialty = specialty.checked && specialty.value;
 
         if (!hasSpecialty) {
-            return baSuper;
+            return superBob;
         }
 
-        const sanitizedSpecialty = sanitizeForBasicObjectBinding(specialty.value);
-        const ba = `${baSuper}_${sanitizedSpecialty}`;
+        const subname = sanitizeForBasicObjectBinding(specialty.value);
+        const bob = `${superBob}_${subname}`;
 
-        if (isValidBasicObjectBinding(ba)) {
-            return ba;
+        if (isValidBasicObjectBinding(bob)) {
+            return bob;
         }
 
-        throw new Error(`Invalid AutoBob: HMSkillItem, ${this.uuid}`);
+        throw new Error(`Invalid Bob: '${bob}'.`);
     }
 }
 

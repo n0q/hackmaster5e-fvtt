@@ -117,12 +117,12 @@ export class HMItem extends Item {
         const type = sanitizeForBasicObjectBinding(this.type);
         const name = sanitizeForBasicObjectBinding(this.name);
 
-        const ba = `${type}:${name}`;
-        if (isValidBasicObjectBinding(ba)) {
-            return ba;
+        const bob = `${type}:${name}`;
+        if (isValidBasicObjectBinding(bob)) {
+            return bob;
         }
 
-        throw new Error(`Invalid AutoBob: HMItem, ${this.uuid}`);
+        throw new Error(`Invalid Bob: '${bob}'`);
     }
 
     onClick() {
