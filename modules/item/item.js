@@ -1,9 +1,7 @@
-import { HM_ICON, HMCONST, HMTABLES, SYSTEM_ID } from "../tables/constants.js";
-import { HMDialogFactory } from "../dialog/dialog-factory.js";
+import { HM_ICON, HMCONST, HMTABLES } from "../tables/constants.js";
 import { HMStates } from "../sys/effects.js";
-import { HMSkillSchema } from "./schema/skill-item-schema.js";
 import { HMChatFactory, CHAT_TYPE } from "../chat/chat-factory.js";
-import { sanitizeForAlias, isValidBasicAlias } from "../data/data-utils.js";
+import { sanitizeForBasicObjectBinding, isValidBasicObjectBinding } from "../data/data-utils.js";
 
 // Remember: Items may not alter Actors under any circumstances.
 // You will create a free fire shooting gallery if you do this, and
@@ -94,95 +92,37 @@ export class HMItem extends Item {
     }
 
     /**
-     * Generates a basic alias.
+     * Returns the basic object binding string for this document
+     * If autogen is enabeld or no stored value exists, a new one is generated.
+     * Returns undefined if the object lacks bob support.
      *
-     * @returns {string} The generated basic alias
+     * @returns {string|undefined}
      */
-    _generateBasicAlias() {
-        const type = sanitizeForAlias(this.type);
-        const name = sanitizeForAlias(this.name);
-
-        const ba = `${type}:${name}`;
-        if (isValidBasicAlias(ba)) {
-            return ba;
+    get bob() {
+        if (!this.system.bob) {
+            return undefined;
         }
 
-        throw new Error(`Invalid BA generation: HMItem, ${this.uuid}`);
+        return this.system.bob.auto
+            ? this._generateBasicObjectBinding()
+            : this.system.bob.value || this._generateBasicObjectBinding();
     }
 
     /**
-     * @param {string} skillName
-     * @param {string|null} specialty
-     * @param {HMActor} caller
-     * @param {string} itemId
-     * @todo Move this horrible function somewhere else.
+     * Generates a bob.
+     *
+     * @returns {string} The generated bob.
      */
-    static async rollSkill({ skillName, specialty = null, caller, itemId }) {
-        const callers = [];
+    _generateBasicObjectBinding() {
+        const type = sanitizeForBasicObjectBinding(this.type);
+        const name = sanitizeForBasicObjectBinding(this.name);
 
-        if (caller) {
-            // Named caller.
-            callers.push({ caller, context: caller.items.get(itemId) });
-        } else {
-            // Anonymous caller. Get all selected tokens.
-            const actors = canvas.tokens.controlled.map(token => token.actor);
-
-            if (!actors.length && !game.user.isGM) {
-                // No tokens were selected.
-                const smartSelect = game.settings.get(SYSTEM_ID, "smartSelect");
-                const { character } = game.user;
-                if (smartSelect && character) actors.push(character);
-            }
-
-            if (!actors.length) return;
-
-            actors.forEach(actor => {
-                const skills = actor.itemTypes.skill.filter(a => a.name === skillName);
-                let context = specialty
-                    ? skills.find(a => a.system.specialty.value === specialty)
-                    : skills[0];
-
-                // Unskilled actor.
-                if (!context) {
-                    const system = new HMSkillSchema();
-                    let specname = skillName;
-                    if (specialty) {
-                        system.specialty = { checked: true, value: specialty };
-                        specname += ` (${specialty})`;
-                    }
-                    context = { name: skillName, specname, system };
-                }
-
-                callers.push({ caller: actor, context });
-            });
+        const ba = `${type}:${name}`;
+        if (isValidBasicObjectBinding(ba)) {
+            return ba;
         }
 
-        // NOTE: We don't know if it's a language if none of the callers have the skill.
-        const dialogCaller = callers.find(a => a.context._id) ?? callers[0];
-        const dialogDataset = {
-            dialog: "skill",
-            context: dialogCaller.context,
-            callers: callers.length,
-        };
-
-        const dialogResp = await HMDialogFactory(dialogDataset, dialogCaller.caller);
-        const { resp } = dialogResp;
-
-        Object.values(callers).forEach(async callerObj => {
-            const formula = HMTABLES.formula.skill.baseroll;
-            const roll = await new Roll(formula).evaluate();
-
-            const bData = {
-                caller: callerObj.caller.uuid,
-                context: callerObj.context.uuid,
-                mdata: callerObj.context.system,
-                resp,
-                roll: roll.toJSON(),
-            };
-
-            const builder = await HMChatFactory.create(CHAT_TYPE.SKILL_CHECK, bData);
-            return builder.createChatMessage();
-        });
+        throw new Error(`Invalid AutoBob: HMItem, ${this.uuid}`);
     }
 
     onClick() {

@@ -1,8 +1,8 @@
-import { isValidBasicAlias } from "./data-utils.js";
+import { isValidBasicObjectBinding } from "./data-utils.js";
 
-export class BasicAliasField extends foundry.data.fields.StringField {
+export class BasicObjectBindingField extends foundry.data.fields.StringField {
     _validateType(value) {
-        if (!isValidBasicAlias(value)) {
+        if (!isValidBasicObjectBinding(value)) {
             throw new Error(game.i18n.localize("HM.DATA.invalidBasicAlias"));
         }
     }

@@ -1,5 +1,5 @@
 import { HMCONST, HMTABLES } from "../../tables/constants.js";
-import { BasicAliasField } from "../../data/fields.js";
+import { BasicObjectBindingSchema } from "../../data/bob-schema.js";
 
 export class HMSkillSchema extends foundry.abstract.DataModel {
     static defineSchema() {
@@ -35,7 +35,7 @@ export class HMSkillSchema extends foundry.abstract.DataModel {
             tools: new fields.BooleanField(booleanOpts),
             language: new fields.BooleanField(booleanOpts),
             relevant: new fields.SchemaField(abilityInner),
-            ba: new BasicAliasField(stringOpts),
+            bob: new fields.SchemaField(BasicObjectBindingSchema.getFields()),
         };
     }
 

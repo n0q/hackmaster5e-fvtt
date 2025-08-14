@@ -36,7 +36,6 @@ export const migrateData = async () => {
 
     const migrations = [
         { version: "0.4.25", handler: migrateV0425 },
-        { version: "0.5.6", handler: migrateV0506 }
     ];
 
     for (const migration of migrations) {
@@ -51,50 +50,6 @@ export const migrateData = async () => {
         ui.notifications.info(`System updated to v${newVer}`);
     }
 };
-
-/**
- * Migration for v0.5.6: Add basic aliases to all skill items
- *
- * @async
- * @returns {Promise<void>}
- */
-async function migrateV0506() {
-    ui.notifications.info("Starting v0.5.6 migration: Adding basic aliases to skills...");
-
-    // Migrate actors' embedded skills
-    const actorResults = await migrateActorsWithHandler(async actor => {
-        const updateList = [];
-        const skills = actor.itemTypes.skill;
-
-        for (const skill of skills) {
-            if (skill.system.ba !== undefined) continue;
-
-            const baString = skill._generateBasicAlias();
-            updateList.push({ _id: skill.id, "system.ba": baString });
-        }
-
-        if (updateList.length > 0) {
-            await actor.updateEmbeddedDocuments("Item", updateList);
-        }
-
-        return updateList.length;
-    });
-
-    // Migrate standalone skill items
-    const skillResults = await migrateItemsWithHandler("skill", async skill => {
-        if (skill.system.ba !== undefined) return 0;
-
-        const baString = skill._generateBasicAlias();
-        await skill.update({ "system.ba": baString });
-        return 1;
-    });
-
-    // Report results
-    reportMigrationResults("v0.5.6", {
-        Actors: actorResults,
-        "Skill Items": skillResults
-    });
-}
 
 /**
  * Migration for v0.4.25: Remove legacy effects with origin property

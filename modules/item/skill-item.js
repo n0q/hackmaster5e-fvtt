@@ -1,5 +1,7 @@
 import { HMItem } from "./item.js";
-import { sanitizeForAlias, isValidBasicAlias } from "../data/data-utils.js";
+import { sanitizeForBasicObjectBinding, isValidBasicObjectBinding } from "../data/data-utils.js";
+import { SkillPrompt } from "../apps/skill-application.js";
+import { HMChatFactory, CHAT_TYPE } from "../chat/chat-factory.js";
 
 export class HMSkillItem extends HMItem {
     prepareBaseData() {
@@ -42,15 +44,30 @@ export class HMSkillItem extends HMItem {
         });
     }
 
+    async process(appData) {
+        const result = await SkillPrompt.create({}, appData);
+        if (!result) return;
+        console.warn(result);
+
+        const bData = {
+            caller: appData.actor.uuid,
+            context: this.uuid,
+            resp: result,
+        };
+
+        const builder = await HMChatFactory.create(CHAT_TYPE.SKILL_CHECK, bData);
+        builder.createChatMessage();
+    }
+
     /**
-     * Generates a basic alias for a skill item
+     * Generates a bob for a skill item.
      *
      * @override
-     * @param {Object} skill - The skill item
-     * @returns {string} The generated basic alias
+     * @param {Object} skill - The skill item.
+     * @returns {string} The generated bob.
      */
-    _generateBasicAlias() {
-        const baSuper = super._generateBasicAlias();
+    _generateBasicObjectBinding() {
+        const baSuper = super._generateBasicObjectBinding();
 
         const { specialty } = this.system;
         const hasSpecialty = specialty.checked && specialty.value;
@@ -59,14 +76,14 @@ export class HMSkillItem extends HMItem {
             return baSuper;
         }
 
-        const sanitizedSpecialty = sanitizeForAlias(specialty.value);
+        const sanitizedSpecialty = sanitizeForBasicObjectBinding(specialty.value);
         const ba = `${baSuper}_${sanitizedSpecialty}`;
 
-        if (isValidBasicAlias(ba)) {
+        if (isValidBasicObjectBinding(ba)) {
             return ba;
         }
 
-        throw new Error(`Invalid BA generation: HMSkillItem, ${this.uuid}`);
+        throw new Error(`Invalid AutoBob: HMSkillItem, ${this.uuid}`);
     }
 }
 
