@@ -36,14 +36,18 @@
       "con": true,
       "lks": false,
       "cha": false
+    },
+    "bob": {
+      "value": "skill:survival",
+      "auto": false
     }
   },
   "_stats": {
     "systemId": "hackmaster5e",
     "systemVersion": "0",
-    "coreVersion": "13.346",
+    "coreVersion": "13.347",
     "createdTime": 1689022063907,
-    "modifiedTime": 1689022120027,
+    "modifiedTime": 1755144289939,
     "lastModifiedBy": "6PGvwKmaOsPz0R2y",
     "compendiumSource": null,
     "duplicateSource": null,

@@ -37,14 +37,18 @@
       "con": false,
       "lks": false,
       "cha": false
+    },
+    "bob": {
+      "value": "skill:forgery",
+      "auto": false
     }
   },
   "_stats": {
     "systemId": "hackmaster5e",
     "systemVersion": "0",
-    "coreVersion": "13.346",
+    "coreVersion": "13.347",
     "createdTime": 1688863422230,
-    "modifiedTime": 1688863535340,
+    "modifiedTime": 1755144289935,
     "lastModifiedBy": "6PGvwKmaOsPz0R2y",
     "compendiumSource": null,
     "duplicateSource": null,
