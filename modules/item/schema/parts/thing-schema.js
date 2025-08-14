@@ -1,7 +1,8 @@
-import { HMCONST } from '../../../tables/constants.js';
+import { HMCONST } from "../../../tables/constants.js";
 
 /**
  * Schema template for items which are physical things in the world.
+ *
  * @property {NumberField} state - Specifies if an item is equipped, carried, or owned.
  * @property {NumberField} weight (float) - Item weight in lbs.
  * @property {StringField} price - Price of the item.
@@ -11,12 +12,12 @@ import { HMCONST } from '../../../tables/constants.js';
  * @property {NumberField} avail.high - High availability threshold.
  */
 export class ThingSchema {
-    constructor() {
+    static getFields() {
         const fields = foundry.data.fields;
-        const stateOpts = {required: false, initial: HMCONST.ITEM_STATE.OWNED, integer: true};
-        const floatOpts = {required: false, initial: 0, integer: false};
-        const integerOpts = {required: false, initial: 0, integer: true};
-        const stringOpts = {required: false, initial: undefined};
+        const stateOpts = { required: false, initial: HMCONST.ITEM_STATE.OWNED, integer: true };
+        const floatOpts = { required: false, initial: 0, integer: false };
+        const integerOpts = { required: false, initial: 0, integer: true };
+        const stringOpts = { required: false, initial: undefined };
 
         return {
             state: new fields.NumberField(stateOpts),
