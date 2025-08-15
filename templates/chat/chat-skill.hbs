@@ -1,26 +1,34 @@
 {{localize 'HM.skill'}}:
 <strong>{{mdata.specname}}</strong><br>
+
 {{localize 'HM.skillmastery'}}:
 <strong>{{mdata.level}}
 ({{localize (lookup (findConfigObj 'skillMastery') mdata.mastery)}})</strong><br>
+
 {{#if mdata.bonus}}
     {{localize 'HM.bonus'}}:
     <strong>{{mdata.bonus}}</strong><br>
 {{/if}}
-{{#unless (eq mdata.dc (HMCONST 'SKILL.DIFF.AUTO'))}}
+
+{{#unless mdata.isAuto}}
     {{localize 'HM.target'}}:
-    <strong>{{localize (lookup (findConfigObj 'skillLevel') mdata.dc)}}</strong>
+    <strong>{{localize (lookup (findConfigObj 'skillLevel') resp.dc)}}</strong>
     <br>
 {{/unless}}
+
 {{localize 'HM.rolled'}}:
 <span data-tooltip="{{mdata.inline}}">
     <i class="fa-solid fa-dice"></i> <strong>{{roll.total}}</strong>
 </span>
+
 <hr>
+
 {{localize 'HM.opposed'}}:
-<strong>{{skillCheck.opposed}}</strong><br>
+<strong>{{mdata.opposedResult}}</strong><br>
+
 {{localize 'HM.check'}}:
 <strong>{{resultString}}</strong>
+
 <div class="dice-roll">
     <div class="hm-dice-flavor">{{mdata.rollFlavor}}</div>
 </div>

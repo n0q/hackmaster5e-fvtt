@@ -1,85 +1,62 @@
 import { ChatBuilder } from "../foundation/chat-builder-abstract.js";
 import { getResult } from "../foundation/chat-builder-constants.js";
-import { systemPath, HMCONST, HMTABLES } from "../../tables/constants.js";
+import { systemPath, HMCONST } from "../../tables/constants.js";
 
-const typeToBonusMap = {
-    [HMCONST.SKILL.TYPE.SKILL]: "value",
-    [HMCONST.SKILL.TYPE.VERBAL]: "verbal",
-    [HMCONST.SKILL.TYPE.WRITTEN]: "literacy",
+export const typeToRollFlavorMap = {
+    [HMCONST.SKILL.TYPE.SKILL]: "Skill Check",
+    [HMCONST.SKILL.TYPE.VERBAL]: "Verbal Check",
+    [HMCONST.SKILL.TYPE.WRITTEN]: "Literacy Check",
 };
-
-const SKILL = HMCONST.SKILL;
 
 export class SkillCheckChatBuilder extends ChatBuilder {
     static template = systemPath("templates/chat/chat-skill.hbs");
 
     async createChatMessage() {
         const { resp, roll } = this.data;
-        const { dc, formulaType } = resp;
 
-        const mdata = this.getMetadata(formulaType, dc);
-        mdata.bonus = resp.bonus;
+        const mdata = this.#enrichMdata();
 
-        const skillCheck = this.getSkillChecks();
-
-        let result = this.RESULT_TYPE.FAILED;
-        const rollIndex = HMTABLES.skill.difficulty(skillCheck.check);
-        const NOT_FOUND = -1;
-
-        if (rollIndex !== NOT_FOUND) {
-            if (dc === SKILL.DIFF.AUTO) result = this.RESULT_TYPE[`SKILL${rollIndex}`];
-            else if (dc >= rollIndex) result = this.RESULT_TYPE.PASSED;
-        }
-
-        const resultString = getResult(result);
+        const resultData = this.#getResultData();
+        const resultString = getResult(resultData);
 
         mdata.inline = unescape(roll);
-        const chatData = { mdata, resultString, skillCheck, roll };
+        const chatData = { mdata, resp, resultString, roll };
         const content = await this.renderTemplate(this.template, chatData);
 
         const chatMessageData = this.getChatMessageData({ content, resp });
         await this.render(chatMessageData);
     }
 
-    getSkillChecks() {
-        const { context, resp, roll } = this.data;
-        const { FORM } = SKILL;
+    #enrichMdata() {
+        const { mdata, resp, context } = this.data;
 
-        const value = context.system.bonus.total[typeToBonusMap[resp.formulaType]];
-        const baseroll = roll.total || 0;
+        mdata.specname = context.specname;
+        mdata.mastery = context.system.mastery[resp.masteryType];
+        mdata.level = context.system.bonus.total[resp.masteryType];
+        mdata.isAuto = resp.dc === HMCONST.SKILL.DIFF.AUTO;
 
-        const evalData = { baseroll, resp, value };
-        const formula = HMTABLES.formula.skill;
-
-        const checkFormula = Roll.replaceFormulaData(formula[FORM.CHECK], evalData);
-        const opposedFormula = Roll.replaceFormulaData(formula[FORM.OPPOSED], evalData);
-
-        return {
-            check: Roll.safeEval(checkFormula),
-            opposed: Roll.safeEval(opposedFormula),
-        };
+        const label = typeToRollFlavorMap[resp.masteryType];
+        mdata.rollFlavor = `${context.specname} ${label}`;
+        return mdata;
     }
 
-    /**
-     * Returns mdata for skill card template.
-     * @param {number} type - Formula type to generate mdata for.
-     * @return {object}
-     */
-    getMetadata(type, dc) {
-        const { specname, system } = this.data.context;
-        const { level, mastery } = system;
+    #getResultData() {
+        const { mdata, resp } = this.data;
+        const bestDc = mdata.bestDc;
 
-        const getLevelAndMastery = k => ({
-            level: level[k] ?? 0,
-            mastery: mastery[k] ?? 0,
-        });
+        if (bestDc === null) {
+            return this.RESULT_TYPE.FAILED;
+        }
 
-        const { TYPE } = HMCONST.SKILL;
-        const mdataMapping = {
-            [TYPE.SKILL]: { rollFlavor: "Skill Check", ...getLevelAndMastery("value") },
-            [TYPE.VERBAL]: { rollFlavor: "Language Check", ...getLevelAndMastery("verbal") },
-            [TYPE.WRITTEN]: { rollFlavor: "Literacy Check", ...getLevelAndMastery("literacy") },
-        };
-        return { type, specname, dc, ...mdataMapping[type] };
+        if (resp.dc === HMCONST.SKILL.DIFF.AUTO) {
+            const enumString = `SKILL${bestDc}`;
+            return this.RESULT_TYPE[enumString];
+        }
+
+        if (resp.dc >= bestDc) {
+            return this.RESULT_TYPE.PASSED;
+        }
+
+        return this.RESULT_TYPE.FAILED;
     }
 }

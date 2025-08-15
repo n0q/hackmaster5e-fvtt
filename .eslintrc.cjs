@@ -15,11 +15,7 @@ module.exports = {
     },
     extends: ["@typhonjs-fvtt/eslint-config-foundry.js"],
     globals: {
-        $: false,
-        game: false,
-        PIXI: false,
-        Color: false,
-        PoolTerm: false
+        $: false
     },
     rules: {
         "brace-style": ["error", "1tbs", { allowSingleLine: true }],

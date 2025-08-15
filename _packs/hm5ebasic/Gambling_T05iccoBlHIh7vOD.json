@@ -37,14 +37,18 @@
       "con": false,
       "lks": false,
       "cha": true
+    },
+    "bob": {
+      "value": "skill:gambling",
+      "auto": false
     }
   },
   "_stats": {
     "systemId": "hackmaster5e",
     "systemVersion": "0",
-    "coreVersion": "13.346",
+    "coreVersion": "13.347",
     "createdTime": 1688863423727,
-    "modifiedTime": 1688863537566,
+    "modifiedTime": 1755144289941,
     "lastModifiedBy": "6PGvwKmaOsPz0R2y",
     "compendiumSource": null,
     "duplicateSource": null,

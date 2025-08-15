@@ -36,14 +36,18 @@
       "con": false,
       "lks": false,
       "cha": true
+    },
+    "bob": {
+      "value": "skill:skilled-liar",
+      "auto": false
     }
   },
   "_stats": {
     "systemId": "hackmaster5e",
     "systemVersion": "0",
-    "coreVersion": "13.346",
+    "coreVersion": "13.347",
     "createdTime": 1689022063907,
-    "modifiedTime": 1689022115891,
+    "modifiedTime": 1755144289950,
     "lastModifiedBy": "6PGvwKmaOsPz0R2y",
     "compendiumSource": null,
     "duplicateSource": null,

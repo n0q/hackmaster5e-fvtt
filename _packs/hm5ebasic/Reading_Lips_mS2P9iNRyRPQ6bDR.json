@@ -37,14 +37,18 @@
       "con": false,
       "lks": false,
       "cha": false
+    },
+    "bob": {
+      "value": "skill:reading-lips",
+      "auto": false
     }
   },
   "_stats": {
     "systemId": "hackmaster5e",
     "systemVersion": "0",
-    "coreVersion": "13.346",
+    "coreVersion": "13.347",
     "createdTime": 1688863657637,
-    "modifiedTime": 1689022115891,
+    "modifiedTime": 1755144289945,
     "lastModifiedBy": "6PGvwKmaOsPz0R2y",
     "compendiumSource": null,
     "duplicateSource": null,

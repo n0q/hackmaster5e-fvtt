@@ -37,14 +37,18 @@
       "con": false,
       "lks": false,
       "cha": true
+    },
+    "bob": {
+      "value": "skill:fast-talking",
+      "auto": false
     }
   },
   "_stats": {
     "systemId": "hackmaster5e",
     "systemVersion": "0",
-    "coreVersion": "13.346",
+    "coreVersion": "13.347",
     "createdTime": 1688863415248,
-    "modifiedTime": 1688863533218,
+    "modifiedTime": 1755144289937,
     "lastModifiedBy": "6PGvwKmaOsPz0R2y",
     "compendiumSource": null,
     "duplicateSource": null,

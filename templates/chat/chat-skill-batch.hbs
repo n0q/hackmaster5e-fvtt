@@ -1,0 +1,17 @@
+<h5 style="margin: 0.5rem 0 0.25rem 0; font-size: 1.1em;">Summary: {{specname}}</h5>
+<div class="table-basic" style="margin: 0;">
+    <table style="width: 100%; table-layout: fixed; border-collapse: collapse;">
+        <tbody>
+            {{#each processedBatch}}
+            <tr style="line-height: 1;">
+                <td style="padding: 0.15rem 0.25rem; width: 35%; text-align: left; vertical-align: middle; font-size: 0.9em;">{{name}}</td>
+                <td style="padding: 0.15rem 0.25rem; width: 45%; text-align: center; vertical-align: middle; font-size: 0.9em;">{{success}}</td>
+                <td style="padding: 0.15rem 0.25rem; width: 20%; text-align: right; vertical-align: middle; font-size: 0.9em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{opposed}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+<div class="dice-roll" style="margin-top: 0.25rem;">
+    <div class="hm-dice-flavor" style="font-size: 0.85em; font-style: italic;">{{flavor}}</div>
+</div>

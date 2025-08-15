@@ -1,5 +1,8 @@
 {
     "HM": {
+        "DATA": {
+            "invalidBasicAlias": "must be in Basic Alias format"
+        },
         "MOVEMENT": {
             "action": {
                 "walk": {
@@ -125,9 +128,6 @@
                 "trauma": "Trauma Save",
                 "turning": "Turning Check",
                 "will": "Will Save"
-            },
-            "STRING": {
-                "badcrit": "Invalid: Critical attacks require the attack roll to be greater than the defense roll."
             }
         },
         "defenseSelect": {
@@ -765,7 +765,6 @@
         "spelllibrary": "Spell Library",
         "speedmod": "Speed Mod",
         "skill": "Skill",
-        "skillcheck": "Skill Check",
         "skills": "Skills",
         "somatic": "Somatic",
         "specific": "Specific",

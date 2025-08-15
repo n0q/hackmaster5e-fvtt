@@ -5,6 +5,7 @@ import { HMBeastActorSheet } from "./modules/actor/beast-actor-sheet.js";
 import { HMCharacterActorSheet } from "./modules/actor/character-actor-sheet.js";
 import { HMItem } from "./modules/item/item.js";
 import { HMWeaponItem } from "./modules/item/weapon-item.js";
+import { HMSkillItem } from "./modules/item/skill-item.js";
 import { HMSpellItem } from "./modules/item/spell-item.js";
 import { HMItemFactory } from "./modules/item/item-factory.js";
 import { HMItemSheet } from "./modules/item/sheets/item-sheet.js";
@@ -107,7 +108,7 @@ function registerGsapPlugins() {
 }
 
 Hooks.once("init", async () => {
-    game[SYSTEM_ID] = { HMActor, HMItem, HMWeaponItem, HMSpellItem };
+    game[SYSTEM_ID] = { HMActor, HMItem, HMWeaponItem, HMSkillItem, HMSpellItem };
     registerConfig();
     registerSchema();
     registerSheets();

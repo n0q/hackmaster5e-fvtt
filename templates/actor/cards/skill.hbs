@@ -1,4 +1,4 @@
-<li class='card hmstyle item' data-item-id='{{_id}}'>
+<li class='card hmstyle item' data-item-id='{{_id}}' data-uuid="{{uuid}}">
     <summary class='toggleswitch'>
         <header>
             <label for='{{name}}'>
@@ -15,16 +15,16 @@
         {{#if system.language}}
            <div toggle class='rollable button {{toggleSwitch _id invert=true}}' title='Verbal'
                    data-dialog='skill'
-                   data-skill-type='language'
-                   data-formula-type='language'
+                   data-mastery-type={{HMCONST "SKILL.TYPE.VERBAL"}}
+                   data-uuid="{{uuid}}"
                    data-item-id='{{_id}}'>
                    {{system.bonus.total.verbal}}
                </div>
                {{#if system.bonus.total.literacy}}
             <div toggle class='rollable button {{toggleSwitch _id invert=true}}' title='Literacy'
                    data-dialog='skill'
-                   data-skill-type='literacy'
-                   data-formula-type='literacy'
+                   data-mastery-type={{HMCONST "SKILL.TYPE.WRITTEN"}}
+                   data-uuid="{{uuid}}"
                    data-item-id='{{_id}}'>
                    {{system.bonus.total.literacy}}
                </div>
@@ -32,8 +32,8 @@
         {{else}}
             <div toggle class='rollable button {{toggleSwitch _id invert=true}}'
                 data-dialog='skill'
-                data-skill-type='skill'
-                data-formula-type='skill'
+                data-mastery-type={{HMCONST "SKILL.TYPE.SKILL"}}
+                data-uuid="{{uuid}}"
                 data-item-id='{{_id}}'>
                 {{system.bonus.total.value}}
             </div>

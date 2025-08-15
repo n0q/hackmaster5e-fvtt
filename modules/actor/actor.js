@@ -1,12 +1,11 @@
 import { HMCONST, HMTABLES, SYSTEM_ID } from "../tables/constants.js";
 import { HMACTOR_TUNABLES } from "../tables/tunables.js";
+import { isValidBasicObjectBinding } from "../data/data-utils.js";
 import { HMDialogFactory } from "../dialog/dialog-factory.js";
 import { HMWeaponProfile } from "../item/weapon-profile.js";
 import { HMItemContainer } from "./container-abstract.js";
 import { HMChatFactory, CHAT_TYPE } from "../chat/chat-factory.js";
 import { getDiceSum } from "../sys/utils.js";
-
-// import { HMBonusAggregator } from "../rules/bonus.js";
 
 export class HMActor extends Actor {
     constructor(...args) {
@@ -18,7 +17,6 @@ export class HMActor extends Actor {
         super.prepareBaseData();
         this[SYSTEM_ID] = { talent: foundry.utils.deepClone(HMACTOR_TUNABLES) };
         this.resetBonus();
-        //  this.bonus = new HMBonusAggregator(this);
     }
 
     prepareDerivedData() {
@@ -30,7 +28,6 @@ export class HMActor extends Actor {
     /** @override */
     // effects need to be applied before the other documents, or their effects will be missed.
     // We're relying on effects to be the first embeddedType. This seems to be safe, but...
-    /* eslint-disable no-restricted-syntax */
     prepareEmbeddedDocuments() {
         const embeddedTypes = this.constructor.metadata.embedded || {};
         for (const collectionName of Object.values(embeddedTypes)) {
@@ -38,7 +35,23 @@ export class HMActor extends Actor {
             if (collectionName === "effects") this.applyActiveEffects();
         }
     }
-    /* eslint-enable no-restricted-syntax */
+
+    /**
+     * Retrieve an owned item by its Basic Object Binding string.
+     *
+     * @param {string} bob - The bob string to search for.
+     * @returns {Item|undefined} The matching item, or undefined if not found.
+     * @throws {Error} If the provided BOB string is invalid.
+     */
+    getByBob(bob) {
+        if (!isValidBasicObjectBinding(bob)) {
+            throw new Error(`'${bob}' is an invalid bob.`);
+        }
+
+        const [type, _identifier] = bob.split(":");
+        return this.itemTypes[type].find(i => i.bob === bob);
+    }
+
 
     get canBackstab() {
         const { cclass } = this.itemTypes;

@@ -15,6 +15,7 @@
         "hm.js",
         "modules/**/*",
         "foundry/client/global.d.mts",
+        "types/**/*",
     ],
     "exclude": [
         "node_modules",

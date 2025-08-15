@@ -1,14 +1,15 @@
-import { HMCONST, HMTABLES } from '../../tables/constants.js';
+import { HMCONST, HMTABLES } from "../../tables/constants.js";
+import { BasicObjectBindingSchema } from "../../data/bob-schema.js";
 
 export class HMSkillSchema extends foundry.abstract.DataModel {
     static defineSchema() {
         const fields = foundry.data.fields;
-        const numberOpts = {required: false, initial: 0, integer: true};
-        const booleanOpts = {required: false, initial: false};
-        const stringOpts = {required: false, initial: undefined};
+        const numberOpts = { required: false, initial: 0, integer: true };
+        const booleanOpts = { required: false, initial: false };
+        const stringOpts = { required: false, initial: undefined };
 
-        const abilityKeys = ['str', 'int', 'wis', 'dex', 'con', 'lks', 'cha'];
-        const abilityEntries = abilityKeys.map((k) => [k, new fields.BooleanField(booleanOpts)]);
+        const abilityKeys = ["str", "int", "wis", "dex", "con", "lks", "cha"];
+        const abilityEntries = abilityKeys.map(k => [k, new fields.BooleanField(booleanOpts)]);
         const abilityInner = Object.fromEntries(abilityEntries);
 
         return {
@@ -34,12 +35,13 @@ export class HMSkillSchema extends foundry.abstract.DataModel {
             tools: new fields.BooleanField(booleanOpts),
             language: new fields.BooleanField(booleanOpts),
             relevant: new fields.SchemaField(abilityInner),
+            bob: new fields.SchemaField(BasicObjectBindingSchema.getFields()),
         };
     }
 
     get mastery() {
-        const {bonus} = this;
-        const {MASTERY} = HMCONST.SKILL;
+        const { bonus } = this;
+        const { MASTERY } = HMCONST.SKILL;
 
         return Object.keys(bonus.total).reduce((acc, type) => {
             const isUnskilled = !bonus.mastery[type];

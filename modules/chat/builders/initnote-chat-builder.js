@@ -44,10 +44,11 @@ export class InitNoteChatBuilder extends ChatBuilder {
 
     /**
      * @override
+     * @async
      * @param {initData[]} batchData
-     * @returns {initData[]}
+     * @returns {Promise<initData[]>}
      */
-    _prepareBatchData(batchData) {
+    async _prepareBatchData(batchData) {
         if (!batchData) return [];
         return batchData;
     }

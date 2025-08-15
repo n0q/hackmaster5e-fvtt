@@ -1,0 +1,10 @@
+<div class="form-group form-group--row-full">
+    <label>{{localize 'HM.dialog.rollMode'}}</label>
+    <div class="form-group__control">
+        <select class="form-group__control" name="rollMode">
+            {{#select rollMode}} {{#each rollModes}}
+                <option value="{{@key}}">{{localize this.label}}</option>
+            {{/each}} {{/select}}
+        </select>
+    </div>
+</div>

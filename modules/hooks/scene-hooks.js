@@ -10,7 +10,7 @@ export class HMSceneControlHooks {
             active: false,
             visible: true,
             button: false,
-            order: 5,
+            order: 4,
             onChange: (_event, active) => {
                 game.user.showAllThreats = active;
                 canvas.tokens.draw();
