@@ -237,7 +237,7 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
             const handler = ev => {
                 try {
                     this._onDragStart(ev);
-                } catch(error) {
+                } catch (error) {
                     if (!(error instanceof TypeError)) throw error;
                     HMContainer.dragStartHandler(ev, this.actor);
                 }
@@ -400,7 +400,7 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
         }
 
         if (dialog === "skill") {
-            return game[SYSTEM_ID].HMItem.rollSkill({ itemId: dataset.itemId, caller: actor });
+            return (await fromUuid(dataset.uuid)).process({ subject: actor });
         }
 
         if (dialog === "cast") {

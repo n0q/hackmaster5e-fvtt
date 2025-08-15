@@ -1,4 +1,4 @@
-<li class='card hmstyle item' data-item-id='{{_id}}'>
+<li class='card hmstyle item' data-item-id='{{_id}}' data-uuid="{{uuid}}">
     <summary class='toggleswitch'>
         <header>
             <label for='{{name}}'>
@@ -17,6 +17,7 @@
                    data-dialog='skill'
                    data-skill-type='language'
                    data-formula-type='language'
+                   data-uuid="{{uuid}}"
                    data-item-id='{{_id}}'>
                    {{system.bonus.total.verbal}}
                </div>
@@ -25,6 +26,7 @@
                    data-dialog='skill'
                    data-skill-type='literacy'
                    data-formula-type='literacy'
+                   data-uuid="{{uuid}}"
                    data-item-id='{{_id}}'>
                    {{system.bonus.total.literacy}}
                </div>
@@ -34,6 +36,7 @@
                 data-dialog='skill'
                 data-skill-type='skill'
                 data-formula-type='skill'
+                data-uuid="{{uuid}}"
                 data-item-id='{{_id}}'>
                 {{system.bonus.total.value}}
             </div>

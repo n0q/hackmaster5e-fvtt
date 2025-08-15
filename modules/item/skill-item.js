@@ -2,6 +2,7 @@ import { HMItem } from "./item.js";
 import { sanitizeForBasicObjectBinding, isValidBasicObjectBinding } from "../data/data-utils.js";
 import { SkillPrompt } from "../apps/skill-application.js";
 import { HMChatFactory, CHAT_TYPE } from "../chat/chat-factory.js";
+import { SkillProcessor } from "../rules/processors/skill-processor.js";
 
 export class HMSkillItem extends HMItem {
     prepareBaseData() {
@@ -45,16 +46,16 @@ export class HMSkillItem extends HMItem {
     }
 
     async process(appData) {
-        const result = await SkillPrompt.create({}, appData);
+        const result = await SkillPrompt.create({}, { ...appData, skill: this });
         if (!result) return;
-        console.warn(result);
 
-        const bData = {
-            caller: appData.actor.uuid,
-            context: this.uuid,
-            resp: result,
-        };
+        const { rollMode, ...processorData } = result;
+        processorData.uuid = { context: this.uuid };
 
+        const bData = await SkillProcessor.process(processorData);
+        bData.caller = appData.subject.uuid;
+        console.warn("mdata", bData.mdata);
+        console.warn("resp", bData.resp);
         const builder = await HMChatFactory.create(CHAT_TYPE.SKILL_CHECK, bData);
         builder.createChatMessage();
     }

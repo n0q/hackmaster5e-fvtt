@@ -7,9 +7,9 @@
     {{localize 'HM.bonus'}}:
     <strong>{{mdata.bonus}}</strong><br>
 {{/if}}
-{{#unless (eq mdata.dc (HMCONST 'SKILL.DIFF.AUTO'))}}
+{{#unless mdata.isAuto}}
     {{localize 'HM.target'}}:
-    <strong>{{localize (lookup (findConfigObj 'skillLevel') mdata.dc)}}</strong>
+    <strong>{{localize (lookup (findConfigObj 'skillLevel') resp.dc)}}</strong>
     <br>
 {{/unless}}
 {{localize 'HM.rolled'}}:
@@ -18,7 +18,7 @@
 </span>
 <hr>
 {{localize 'HM.opposed'}}:
-<strong>{{skillCheck.opposed}}</strong><br>
+<strong>{{mdata.opposedResult}}</strong><br>
 {{localize 'HM.check'}}:
 <strong>{{resultString}}</strong>
 <div class="dice-roll">

@@ -271,7 +271,11 @@ export const HMCONST = {
     },
 };
 
-// system rules
+/**
+ * This is like the textbook definition of an antipattern.
+ *
+ * @deprecated
+ */
 export const HMTABLES = {
     abilitymods: {
         clamp: {
@@ -638,11 +642,6 @@ export const HMTABLES = {
             turning: "d20p +  @bonus.total.turning  + @resp.bonus",
             will: "d20p +  @bonus.total.will     + @resp.bonus",
         },
-        skill: {
-            baseroll: "d100",
-            [HMCONST.SKILL.FORM.CHECK]: "@baseroll - (@resp.bonus + @value)",
-            [HMCONST.SKILL.FORM.OPPOSED]: "@baseroll + (@resp.bonus + @value)",
-        },
         spell: {
             baseroll: "d20p",
             save: "@baseroll + @bonus.total.slvl",
@@ -657,10 +656,10 @@ export const HMTABLES = {
         },
         honor: (level, value) => {
             const hTable = [0,
-                3 + level * 2,
-                6 + level * 4,
-                10 + level * 10,
-                level > 5 ? 1 + level * 14 : Infinity,
+                3 + (level * 2),
+                6 + (level * 4),
+                10 + (level * 10),
+                level > 5 ? 1 + (level * 14) : Infinity,
                 Infinity,
             ];
             return hTable.findIndex(x => x >= value);
@@ -734,7 +733,6 @@ export const HMTABLES = {
         [HMCONST.SCALE.COLOSSAL]: { hp: 70, kb: 75, reach: 12, token: 29, move: 13 },
     },
     skill: {
-        difficulty: arg => [10, 0, -40, -80, -90].findIndex(m => arg + m <= 0),
         mastery: arg => [0, 25, 50, 75, 87, Infinity].findIndex(m => m >= arg),
     },
     spell: {
@@ -747,12 +745,12 @@ export const HMTABLES = {
         svr: (lidx, stage) => {
             const level = lidx + 1;
             const sTable = [0 + Number(level),
-            0 + level * 2.5,
-            0 + level * 6,
-            3 + level * 7,
-            7 + level * 8,
-            12 + level * 9,
-            18 + level * 10,
+            0 + (level * 2.5),
+            0 + (level * 6),
+            3 + (level * 7),
+            7 + (level * 8),
+            12 + (level * 9),
+            18 + (level * 10),
             ];
             return Math.ceil(sTable[stage]);
         },
