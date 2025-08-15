@@ -221,9 +221,9 @@ export const HMCONST = {
             MASTER: 5,
         },
         TYPE: {
-            SKILL: 0,
-            VERBAL: 1,
-            WRITTEN: 2,
+            SKILL: "value",
+            VERBAL: "verbal",
+            WRITTEN: "literacy",
         },
     },
     SPECIAL: {

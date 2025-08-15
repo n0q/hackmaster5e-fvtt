@@ -2,6 +2,14 @@ import { HMCONST, systemPath } from "../tables/constants.js";
 import { HMApplication } from "./foundation/application-abstract.js";
 import { FormButtonManager } from "./foundation/components/form-button-manager.js";
 
+const getLabelType = type => {
+    return {
+        [HMCONST.SKILL.TYPE.SKILL]: "Skill Check",
+        [HMCONST.SKILL.TYPE.VERBAL]: "Verbal Check",
+        [HMCONST.SKILL.TYPE.WRITTEN]: "Literacy Check",
+    }[type];
+};
+
 /**
  * Skill check application.
  * @extends {HMApplication}
@@ -35,10 +43,12 @@ export class SkillPrompt extends HMApplication {
     );
 
     get title() {
-        const subject = this._subject;
-        return subject?.name
-            ? `${subject.name}: ${game.i18n.localize("HM.skillcheck")}`
-            : game.i18n.localize("HM.skillcheck");
+        const actorName = this._subject.actor.name;
+        const skillName = this._subject.skill.specname;
+        const mastery = this._subject.mastery;
+        const label = getLabelType(mastery).toLowerCase();
+
+        return `${actorName}: ${skillName} ${label}`;
     }
 
     /** @inheritdoc */
@@ -70,17 +80,10 @@ export class SkillPrompt extends HMApplication {
     async _preFirstRender(context, options) {
         super._preFirstRender(context, options);
 
-        if (this._subject) {
-            const { system } = this._subject;
-            foundry.utils.mergeObject(context, {
-                dc: HMCONST.SKILL.DIFF.AUTO,
-                language: system.language,
-                hasVerbal: system.bonus.total.verbal > 0,
-                hasLiteracy: system.bonus.total.literacy > 0,
-            });
-        } else {
-            context.dc = HMCONST.SKILL.DIFF.AUTO;
-        }
+        foundry.utils.mergeObject(context, {
+            dc: HMCONST.SKILL.DIFF.AUTO,
+            mastery: this._subject.mastery,
+        });
     }
 
     /** @inheritdoc */
@@ -100,16 +103,9 @@ export class SkillPrompt extends HMApplication {
      * @param {Object} formValues
      * @returns {string}
      */
-    getSubmitButtonLabel(formValues) {
-        if (this._subject?.system?.language && formValues.formulaType) {
-            if (formValues.formulaType === HMCONST.SKILL.TYPE.WRITTEN) {
-                return game.i18n.localize("HM.literacy");
-            }
-            if (formValues.formulaType === HMCONST.SKILL.TYPE.VERBAL) {
-                return game.i18n.localize("HM.language");
-            }
-        }
-        return game.i18n.localize("HM.skillcheck");
+    getSubmitButtonLabel(_formValues) {
+        const label = getLabelType(this._subject.mastery);
+        return game.i18n.localize(label);
     }
 
     /** @inheritdoc */
@@ -120,7 +116,7 @@ export class SkillPrompt extends HMApplication {
             dc: Number(formObject.dc),
             rollMode: formObject.rollMode,
             bonus: parseInt(formObject.bonus, 10) || 0,
-            formulaType: formObject.formulaType || HMCONST.SKILL.TYPE.SKILL,
+            mastery: this._subject.mastery,
         };
     }
 

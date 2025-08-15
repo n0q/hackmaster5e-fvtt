@@ -237,7 +237,7 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
             const handler = ev => {
                 try {
                     this._onDragStart(ev);
-                } catch (error) {
+                } catch(error) {
                     if (!(error instanceof TypeError)) throw error;
                     HMContainer.dragStartHandler(ev, this.actor);
                 }
@@ -400,7 +400,10 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
         }
 
         if (dialog === "skill") {
-            return (await fromUuid(dataset.uuid)).process({ subject: actor });
+            // return (await fromUuid(dataset.uuid)).process({ subject: { actor, mastery: dataset.mastery } });
+            const skill = await fromUuid(dataset.uuid);
+            const appData = { actor, mastery: dataset.mastery };
+            return await skill.process(appData);
         }
 
         if (dialog === "cast") {

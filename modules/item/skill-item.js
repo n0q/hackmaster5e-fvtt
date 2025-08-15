@@ -46,16 +46,15 @@ export class HMSkillItem extends HMItem {
     }
 
     async process(appData) {
-        const result = await SkillPrompt.create({}, { ...appData, skill: this });
+        const subject = { ...appData, skill: this };
+        const result = await SkillPrompt.create({}, { subject });
         if (!result) return;
 
         const { rollMode, ...processorData } = result;
         processorData.uuid = { context: this.uuid };
 
         const bData = await SkillProcessor.process(processorData);
-        bData.caller = appData.subject.uuid;
-        console.warn("mdata", bData.mdata);
-        console.warn("resp", bData.resp);
+        bData.caller = appData.actor.uuid;
         const builder = await HMChatFactory.create(CHAT_TYPE.SKILL_CHECK, bData);
         builder.createChatMessage();
     }

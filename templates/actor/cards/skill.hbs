@@ -15,8 +15,7 @@
         {{#if system.language}}
            <div toggle class='rollable button {{toggleSwitch _id invert=true}}' title='Verbal'
                    data-dialog='skill'
-                   data-skill-type='language'
-                   data-formula-type='language'
+                   data-mastery={{HMCONST "SKILL.TYPE.VERBAL"}}
                    data-uuid="{{uuid}}"
                    data-item-id='{{_id}}'>
                    {{system.bonus.total.verbal}}
@@ -24,8 +23,8 @@
                {{#if system.bonus.total.literacy}}
             <div toggle class='rollable button {{toggleSwitch _id invert=true}}' title='Literacy'
                    data-dialog='skill'
-                   data-skill-type='literacy'
-                   data-formula-type='literacy'
+                   data-mastery={{HMCONST "SKILL.TYPE.WRITTEN"}}
+                   data-mastery="literacy"
                    data-uuid="{{uuid}}"
                    data-item-id='{{_id}}'>
                    {{system.bonus.total.literacy}}
@@ -34,8 +33,7 @@
         {{else}}
             <div toggle class='rollable button {{toggleSwitch _id invert=true}}'
                 data-dialog='skill'
-                data-skill-type='skill'
-                data-formula-type='skill'
+               data-mastery={{HMCONST "SKILL.TYPE.SKILL"}}
                 data-uuid="{{uuid}}"
                 data-item-id='{{_id}}'>
                 {{system.bonus.total.value}}

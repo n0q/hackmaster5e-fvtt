@@ -1,11 +1,11 @@
 import { ChatBuilder } from "../foundation/chat-builder-abstract.js";
 import { getResult } from "../foundation/chat-builder-constants.js";
-import { systemPath, HMCONST, HMTABLES } from "../../tables/constants.js";
+import { systemPath, HMCONST } from "../../tables/constants.js";
 
-const typeToBonusMap = {
-    [HMCONST.SKILL.TYPE.SKILL]: "value",
-    [HMCONST.SKILL.TYPE.VERBAL]: "verbal",
-    [HMCONST.SKILL.TYPE.WRITTEN]: "literacy",
+const typeToRollFlavorMap = {
+    [HMCONST.SKILL.TYPE.SKILL]: "Skill Check",
+    [HMCONST.SKILL.TYPE.VERBAL]: "Verbal Check",
+    [HMCONST.SKILL.TYPE.WRITTEN]: "Literacy Check",
 };
 
 export class SkillCheckChatBuilder extends ChatBuilder {
@@ -31,9 +31,12 @@ export class SkillCheckChatBuilder extends ChatBuilder {
         const { mdata, resp, context } = this.data;
 
         mdata.specname = context.specname;
-        mdata.mastery = context.system.mastery.value;
-        mdata.level = context.system.bonus.total.value;
+        mdata.mastery = context.system.mastery[resp.mastery];
+        mdata.level = context.system.bonus.total[resp.mastery];
         mdata.isAuto = resp.dc === HMCONST.SKILL.DIFF.AUTO;
+
+        const label = typeToRollFlavorMap[resp.mastery];
+        mdata.rollFlavor = `${context.specname} ${label}`;
         return mdata;
     }
 
