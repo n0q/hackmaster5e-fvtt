@@ -1,5 +1,5 @@
 import { HMItem } from "./item.js";
-import { HMCONST } from "../tables/constants.js";
+import { HMCONST, SYSTEM_ID } from "../tables/constants.js";
 import { sanitizeForBasicObjectBinding, isValidBasicObjectBinding } from "../data/data-utils.js";
 import { SkillPrompt } from "../apps/skill-application.js";
 import { HMChatFactory, CHAT_TYPE } from "../chat/chat-factory.js";

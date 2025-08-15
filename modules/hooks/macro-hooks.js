@@ -20,7 +20,6 @@ async function createItemMacro(data, slot) {
     }
 
     let macro = game.macros.contents.find(a => a.name === fullName);
-    console.warn(macro);
 
     if (!macro) {
         const folderName = game.i18n.localize("HM.sys.folders.skillmacro");
