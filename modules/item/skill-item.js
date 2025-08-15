@@ -45,6 +45,14 @@ export class HMSkillItem extends HMItem {
         });
     }
 
+    /**
+     * Processes a skill check roll, creating prompts and chat messages.
+     *
+     * @param {Object} appData - Application data containing actor and mastery information
+     * @param {Actor} appData.actor - The actor performing the skill check
+     * @param {string} appData.mastery - The mastery type for the skill check
+     * @returns {Promise<void>}
+     */
     async process(appData) {
         const subject = { ...appData, skill: this };
         const result = await SkillPrompt.create({}, { subject });
@@ -57,6 +65,36 @@ export class HMSkillItem extends HMItem {
         bData.caller = appData.actor.uuid;
         const builder = await HMChatFactory.create(CHAT_TYPE.SKILL_CHECK, bData);
         builder.createChatMessage();
+    }
+
+    /**
+     * Rolls a skill check for the first controlled actor found via bob.
+     * Falls back to user's assigned character if no tokens are controlled and smart select is enabled.
+     *
+     * @param {BasicObjectBinding} bob - The bob to look up and roll.
+     * @static
+     */
+    static rollByBob(bob) {
+        if (!isValidBasicObjectBinding(bob, this.type)) {
+            throw new Error(`Invalid Bob: '${bob}'.`);
+        }
+
+        const actors = canvas.tokens.controlled.map(token => token.actor);
+
+        if (!actors.length && !game.user.isGM) {
+            // No tokens were selected.
+            const smartSelect = game.settings.get(SYSTEM_ID, "smartSelect");
+            const { character } = game.user;
+            if (smartSelect && character) actors.push(character);
+        }
+        if (actors.length < 1) return;
+
+        const actor = actors[0];
+        const skill = actor.getByBob(bob);
+        if (!skill) return;
+
+        const appData = { actor, mastery: "value" };
+        skill.process(appData);
     }
 
     /**
@@ -79,7 +117,7 @@ export class HMSkillItem extends HMItem {
         const subname = sanitizeForBasicObjectBinding(specialty.value);
         const bob = `${superBob}_${subname}`;
 
-        if (isValidBasicObjectBinding(bob)) {
+        if (isValidBasicObjectBinding(bob, this.type)) {
             return bob;
         }
 

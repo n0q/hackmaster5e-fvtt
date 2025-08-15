@@ -7,8 +7,6 @@ import { HMItemContainer } from "./container-abstract.js";
 import { HMChatFactory, CHAT_TYPE } from "../chat/chat-factory.js";
 import { getDiceSum } from "../sys/utils.js";
 
-// import { HMBonusAggregator } from "../rules/bonus.js";
-
 export class HMActor extends Actor {
     constructor(...args) {
         super(...args);
@@ -19,7 +17,6 @@ export class HMActor extends Actor {
         super.prepareBaseData();
         this[SYSTEM_ID] = { talent: foundry.utils.deepClone(HMACTOR_TUNABLES) };
         this.resetBonus();
-        //  this.bonus = new HMBonusAggregator(this);
     }
 
     prepareDerivedData() {

@@ -6,9 +6,14 @@
  * The optional 'subcategory' must be separated by a single underscore (_).
  *
  * @param {string} str - The bob string to validate.
+ * @param {string} bobType - Optional type restriction.
  * @returns {boolean} True is str is valid. False if not.
  */
-export function isValidBasicObjectBinding(str) {
+export function isValidBasicObjectBinding(str, expectedType = undefined) {
+    if (expectedType) {
+        const [actualType, _] = str.split(":");
+        if (expectedType !== actualType) return false;
+    }
     return /^[a-z0-9-]+:[a-z0-9-]+(?:_[a-z0-9-]+)?$/.test(str);
 }
 

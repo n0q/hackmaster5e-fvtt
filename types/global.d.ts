@@ -5,5 +5,6 @@ declare global {
     const Roll: typeof dice.Roll;
     const Color: typeof utils.Color;
     const PoolTerm: typeof dice.PoolTerm;
+    const Macro: typeof foundry.documents.Macro;
 }
 
