@@ -7,8 +7,6 @@ async function createItemMacro(data, slot) {
     if (item.type !== "skill") return;
 
     const { bob, img } = item;
-    console.warn(bob);
-    // const command = `game.${SYSTEM_ID}.HMSkillItem.rollByBob(${bob});`;
     const command = `game.${SYSTEM_ID}.HMSkillItem.rollByBob("${bob}");`;
 
     const fullName = item.specname;
