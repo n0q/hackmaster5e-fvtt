@@ -1,4 +1,5 @@
 import { HMItem } from "./item.js";
+import { HMCONST } from "../tables/constants.js";
 import { sanitizeForBasicObjectBinding, isValidBasicObjectBinding } from "../data/data-utils.js";
 import { SkillPrompt } from "../apps/skill-application.js";
 import { HMChatFactory, CHAT_TYPE } from "../chat/chat-factory.js";
@@ -72,28 +73,29 @@ export class HMSkillItem extends HMItem {
      * Falls back to user's assigned character if no tokens are controlled and smart select is enabled.
      *
      * @param {BasicObjectBinding} bob - The bob to look up and roll.
+     * @param {string} masteryType
      * @static
      */
-    static rollByBob(bob) {
+    static rollByBob({ bob, masteryType = HMCONST.SKILL.TYPE.SKILL }) {
         if (!isValidBasicObjectBinding(bob, this.type)) {
             throw new Error(`Invalid Bob: '${bob}'.`);
         }
 
         const actors = canvas.tokens.controlled.map(token => token.actor);
-
         if (!actors.length && !game.user.isGM) {
             // No tokens were selected.
             const smartSelect = game.settings.get(SYSTEM_ID, "smartSelect");
             const { character } = game.user;
             if (smartSelect && character) actors.push(character);
         }
+
         if (actors.length < 1) return;
 
         const actor = actors[0];
         const skill = actor.getByBob(bob);
         if (!skill) return;
 
-        const appData = { actor, mastery: "value" };
+        const appData = { actor, masteryType };
         skill.process(appData);
     }
 

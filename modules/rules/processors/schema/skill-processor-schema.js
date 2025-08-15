@@ -11,7 +11,7 @@ export class SkillProcessorSchema extends foundry.abstract.DataModel {
         return {
             bonus: new fields.NumberField(numberOpts),
             dc: new fields.NumberField(numberOpts),
-            mastery: new fields.StringField(stringOpts),
+            masteryType: new fields.StringField(stringOpts),
             uuid: new fields.SchemaField({
                 context: new fields.DocumentUUIDField(uuidOpts),
             }),

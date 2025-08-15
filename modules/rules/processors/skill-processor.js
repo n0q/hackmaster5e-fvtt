@@ -20,7 +20,7 @@ export class SkillProcessor extends ProcessorAbstract {
         const roll = await new Roll(formula).evaluate();
         const skill = await fromUuid(uuid.context);
 
-        const skillValue = skill.system.bonus.total[this.schema.mastery];
+        const skillValue = skill.system.bonus.total[this.schema.masteryType];
 
         const mdata = {
             checkResult: roll.total - (this.schema.bonus + skillValue),

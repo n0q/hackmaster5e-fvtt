@@ -31,11 +31,11 @@ export class SkillCheckChatBuilder extends ChatBuilder {
         const { mdata, resp, context } = this.data;
 
         mdata.specname = context.specname;
-        mdata.mastery = context.system.mastery[resp.mastery];
-        mdata.level = context.system.bonus.total[resp.mastery];
+        mdata.mastery = context.system.mastery[resp.masteryType];
+        mdata.level = context.system.bonus.total[resp.masteryType];
         mdata.isAuto = resp.dc === HMCONST.SKILL.DIFF.AUTO;
 
-        const label = typeToRollFlavorMap[resp.mastery];
+        const label = typeToRollFlavorMap[resp.masteryType];
         mdata.rollFlavor = `${context.specname} ${label}`;
         return mdata;
     }

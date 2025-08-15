@@ -45,8 +45,8 @@ export class SkillPrompt extends HMApplication {
     get title() {
         const actorName = this._subject.actor.name;
         const skillName = this._subject.skill.specname;
-        const mastery = this._subject.mastery;
-        const label = getLabelType(mastery).toLowerCase();
+        const masteryType = this._subject.masteryType;
+        const label = getLabelType(masteryType).toLowerCase();
 
         return `${actorName}: ${skillName} ${label}`;
     }
@@ -82,7 +82,7 @@ export class SkillPrompt extends HMApplication {
 
         foundry.utils.mergeObject(context, {
             dc: HMCONST.SKILL.DIFF.AUTO,
-            mastery: this._subject.mastery,
+            masteryType: this._subject.masteryType,
         });
     }
 
@@ -104,7 +104,7 @@ export class SkillPrompt extends HMApplication {
      * @returns {string}
      */
     getSubmitButtonLabel(_formValues) {
-        const label = getLabelType(this._subject.mastery);
+        const label = getLabelType(this._subject.masteryType);
         return game.i18n.localize(label);
     }
 
@@ -116,7 +116,7 @@ export class SkillPrompt extends HMApplication {
             dc: Number(formObject.dc),
             rollMode: formObject.rollMode,
             bonus: parseInt(formObject.bonus, 10) || 0,
-            mastery: this._subject.mastery,
+            masteryType: this._subject.masteryType,
         };
     }
 
