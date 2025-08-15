@@ -36,6 +36,7 @@ export const migrateData = async () => {
 
     const migrations = [
         { version: "0.4.25", handler: migrateV0425 },
+        { version: "0.5.7", handler: migrateV0507 },
     ];
 
     for (const migration of migrations) {
@@ -50,6 +51,63 @@ export const migrateData = async () => {
         ui.notifications.info(`System updated to v${newVer}`);
     }
 };
+
+/**
+ * Migration for v0.5.7: Remove legacy skill macros.
+ *
+ * @returns {Promise<void>}
+ */
+async function migrateV0507() {
+    ui.notifications.info("Starting v0.5.7 migration: Removing legacy skill macros...");
+
+    const result = {
+        attempted: 0,
+        successful: 0,
+        errors: []
+    };
+
+    try {
+        const folderName = game.i18n.localize("HM.sys.folders.skillmacro");
+        const folder = game.folders.find(f =>
+            f.type === "Macro"
+            && f.name === folderName
+        );
+
+        if (!folder) {
+            console.log("Skill macro folder not found, skipping migration");
+            ui.notifications.info("v0.5.7 migration: No skill macro folder found");
+            return;
+        }
+
+        const macros = game.macros.filter(m => m.folder === folder);
+        result.attempted = macros.length;
+
+        if (macros.length === 0) {
+            console.log("No macros found in skill macro folder");
+            ui.notifications.info("v0.5.7 migration: No macros to remove");
+            return;
+        }
+
+        console.log(`Found ${macros.length} macros to remove in folder "${folderName}"`);
+
+        for (const macro of macros) {
+            try {
+                await macro.delete();
+                result.successful++;
+                console.log(`Removed macro: ${macro.name}`);
+            } catch(error) {
+                console.error(`Failed to delete macro ${macro.name}:`, error);
+                result.errors.push(`${macro.name}: ${error.message}`);
+            }
+        }
+
+    } catch(error) {
+        console.error("Migration v0.5.7 failed:", error);
+        result.errors.push(`General error: ${error.message}`);
+    }
+
+    reportMigrationResults("v0.5.7", { "Skill Macros": result });
+}
 
 /**
  * Migration for v0.4.25: Remove legacy effects with origin property
