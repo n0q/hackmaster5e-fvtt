@@ -6,7 +6,6 @@ import { AttackPrompt } from "../apps/legacy/attack.js";
 import { CastPrompt } from "../apps/legacy/cast.js";
 import { DamagePrompt } from "../apps/legacy/damage.js";
 import { DefendPrompt } from "../apps/legacy/defend.js";
-import { SkillPrompt } from "../apps/legacy/skill.js";
 
 function getDialogData() {
     return {
@@ -103,24 +102,6 @@ export class HMDialog {
         });
 
         dialogResp.context = dialogData.weapons[dialogResp.resp.widx];
-        return dialogResp;
-    }
-
-    static async getSkillDialog(dataset, caller) {
-        const dialogResp = { caller };
-        const dialogData = getDialogData();
-        dialogData.skill = dataset.context;
-
-        const titlePre = dataset.callers > 1 ? `${dataset.callers}` : `${caller.name}:`;
-        const titlePost = dataset.callers > 1
-            ? game.i18n.localize("HM.dialog.getSkillTitle2")
-            : game.i18n.localize("HM.dialog.getSkillTitle1");
-        const title = `${titlePre} ${game.i18n.localize(dialogData.skill.name)} ${titlePost}`;
-        dialogResp.resp = await new Promise(resolve => {
-            const options = { resolve, title };
-            new SkillPrompt(dialogData, options).render(true);
-        });
-        dialogResp.context = dialogData.skill;
         return dialogResp;
     }
 

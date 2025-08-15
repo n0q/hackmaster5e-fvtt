@@ -1,0 +1,17 @@
+<section class="flexcol">
+    <div class="form-group form-group--row-full">
+        <label class="form-group__label">{{localize 'HM.difficulty'}}</label>
+        <div class="form-group__control">
+            <select name="dc" class="form-group__control">
+                {{selectOptions (findConfigObj 'skillLevel') selected=dc localize=true}}
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group form-group--row-full">
+        <label class="form-group__label">{{localize 'HM.bonus'}}</label>
+        <div class="form-group__control">
+            <input name="bonus" type="number" placeholder="0" value="{{bonus}}">
+        </div>
+    </div>
+</section>
