@@ -86,7 +86,7 @@ export class ChatBuilder {
             roll: schema.roll ? Roll.fromData(schema.roll) : null,
             resp: schema.resp ?? {},
             mdata: schema.mdata ?? {},
-            batch: this._prepareBatchData(schema.batch),
+            batch: await this._prepareBatchData(schema.batch),
             options: schema.options ?? {},
         };
         return this;
@@ -99,10 +99,10 @@ export class ChatBuilder {
      *
      * @protected
      * @param {Object[]} batchData - Array of raw roll data.
-     * @returns {Roll[]} Array of parsed Roll instances.
+     * @returns {Promise<Roll[]>} Array of parsed Roll instances.
      */
     /* eslint-disable-next-line class-methods-use-this */
-    _prepareBatchData(batchData) {
+    async _prepareBatchData(batchData) {
         if (!batchData) return [];
         if (!Array.isArray(batchData)) return [];
         return batchData.map(data => Roll.fromData(data));

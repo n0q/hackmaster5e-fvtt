@@ -4,6 +4,7 @@ import { sanitizeForBasicObjectBinding, isValidBasicObjectBinding } from "../dat
 import { SkillPrompt } from "../apps/skill-application.js";
 import { HMChatFactory, CHAT_TYPE } from "../chat/chat-factory.js";
 import { SkillProcessor } from "../rules/processors/skill-processor.js";
+import { ChatBuilder } from "../chat/foundation/chat-builder-abstract.js";
 
 export class HMSkillItem extends HMItem {
     prepareBaseData() {
@@ -50,22 +51,60 @@ export class HMSkillItem extends HMItem {
      * Processes a skill check roll, creating prompts and chat messages.
      *
      * @param {Object} appData - Application data containing actor and mastery information
-     * @param {Actor} appData.actor - The actor performing the skill check
-     * @param {string} appData.mastery - The mastery type for the skill check
+     * @param {Actor|Actor[]} appData.actor - The actor performing the skill check
+     * @param {string} appData.masteryType - The mastery type for the skill check
      * @returns {Promise<void>}
      */
     async process(appData) {
-        const subject = { ...appData, skill: this };
+        const actors = Array.isArray(appData.actor) ? appData.actor : [appData.actor];
+        const subject = {
+            actor: actors[0],
+            masteryType: appData.masteryType,
+            skill: this,
+        };
+
         const result = await SkillPrompt.create({}, { subject });
         if (!result) return;
 
-        const { rollMode, ...processorData } = result;
-        processorData.uuid = { context: this.uuid };
+        const { rollMode, ...promptData } = result;
 
-        const bData = await SkillProcessor.process(processorData);
-        bData.caller = appData.actor.uuid;
-        const builder = await HMChatFactory.create(CHAT_TYPE.SKILL_CHECK, bData);
-        builder.createChatMessage();
+        const results = await Promise.all(
+            actors.map(async actor => {
+                const actorSkill = actor.getByBob(this.bob);
+                if (!actorSkill) {
+                    console.warn(`Actor ${actor.name} doesn't have skill ${this.name}`);
+                    return null;
+                }
+
+                const processorData = {
+                    ...promptData,
+                    uuid: { context: actorSkill.uuid }
+                };
+
+                const bData = await SkillProcessor.process(processorData);
+                bData.caller = actor.uuid;
+                return bData;
+            })
+        );
+
+        const validResults = results.filter(r => r !== null);
+        if (validResults.length === 0) return;
+
+        if (validResults.length === 1) {
+            const builder = await HMChatFactory.create(
+                CHAT_TYPE.SKILL_CHECK,
+                validResults[0],
+                { rollMode }
+            );
+            builder.createChatMessage();
+        } else {
+            const builder = await HMChatFactory.create(
+                CHAT_TYPE.BATCH_SKILL_CHECK,
+                { batch: validResults },
+                { rollMode },
+            );
+            builder.createChatMessage();
+        }
     }
 
     /**
@@ -91,11 +130,11 @@ export class HMSkillItem extends HMItem {
 
         if (actors.length < 1) return;
 
-        const actor = actors[0];
-        const skill = actor.getByBob(bob);
+        //        const actor = actors[0];
+        const skill = actors[0].getByBob(bob);
         if (!skill) return;
 
-        const appData = { actor, masteryType };
+        const appData = { actor: actors, masteryType };
         skill.process(appData);
     }
 

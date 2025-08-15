@@ -1,0 +1,17 @@
+<h5>Batched Skill Roll</h5>
+<div class="table-basic">
+    <table>
+        <tbody>
+            {{#each processedBatch}}
+            <tr style="height: 0.5rem;">
+                <td>{{name}}</td>
+                <td>{{success}}</td>
+                <td style="text-align: right;">{{opposed}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+<div class="dice-roll">
+    <div class="hm-dice-flavor">{{flavor}}</div>
+</div>

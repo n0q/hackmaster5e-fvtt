@@ -2,7 +2,7 @@ import { ChatBuilder } from "../foundation/chat-builder-abstract.js";
 import { getResult } from "../foundation/chat-builder-constants.js";
 import { systemPath, HMCONST } from "../../tables/constants.js";
 
-const typeToRollFlavorMap = {
+export const typeToRollFlavorMap = {
     [HMCONST.SKILL.TYPE.SKILL]: "Skill Check",
     [HMCONST.SKILL.TYPE.VERBAL]: "Verbal Check",
     [HMCONST.SKILL.TYPE.WRITTEN]: "Literacy Check",
