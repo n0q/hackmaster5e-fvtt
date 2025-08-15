@@ -39,7 +39,6 @@ export class InitiativePrompt extends HMApplication {
     get title() {
         const name = this._subject.actor.name;
         return `${name}: ${game.i18n.localize("HM.dialog.getInitDieTitle")}`;
-
     }
 
     /** @inheritdoc */
