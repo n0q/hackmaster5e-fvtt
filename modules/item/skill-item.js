@@ -4,7 +4,6 @@ import { sanitizeForBasicObjectBinding, isValidBasicObjectBinding } from "../dat
 import { SkillPrompt } from "../apps/skill-application.js";
 import { HMChatFactory, CHAT_TYPE } from "../chat/chat-factory.js";
 import { SkillProcessor } from "../rules/processors/skill-processor.js";
-import { ChatBuilder } from "../chat/foundation/chat-builder-abstract.js";
 
 export class HMSkillItem extends HMItem {
     prepareBaseData() {

@@ -10,9 +10,10 @@ export class BatchSkillCheckChatBuilder extends ChatBuilder {
         const processedBatch = this.#processBatchData();
         const { context, resp } = this.data.batch[0];
         const label = typeToRollFlavorMap[resp.masteryType];
-        const flavor = `${context.specname} ${label}`;
+        const specname = context.specname;
+        const flavor = `${specname} ${label}`;
 
-        const chatData = { processedBatch, flavor };
+        const chatData = { processedBatch, flavor, specname };
         const content = await this.renderTemplate(this.template, chatData);
         const chatMessageData = this.getChatMessageData({ content });
 

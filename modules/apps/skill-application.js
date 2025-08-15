@@ -83,6 +83,7 @@ export class SkillPrompt extends HMApplication {
         foundry.utils.mergeObject(context, {
             dc: HMCONST.SKILL.DIFF.AUTO,
             masteryType: this._subject.masteryType,
+            rollMode: game.settings.get("core", "rollMode"),
         });
     }
 
