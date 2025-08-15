@@ -21,12 +21,20 @@ export class BatchSkillCheckChatBuilder extends ChatBuilder {
 
     #processBatchData() {
         const batchData = this.data.batch;
-        console.warn(batchData);
-        return batchData.map(obj => ({
-            name: obj.caller.name.split(" ")[0],
-            success: getResult(this.#getResultData(obj.mdata, obj.resp)),
-            opposed: obj.mdata.opposedResult,
-        }));
+
+        return batchData.map(obj => {
+            const firstName = obj.caller.name.split(" ")[0];
+            const resultData = this.#getResultData(obj.mdata, obj.resp);
+            const rawSuccess = getResult(resultData);
+            const success = rawSuccess.replace(/\s+\S+$/, "");
+            const opposed = obj.mdata.opposedResult;
+
+            return {
+                name: firstName,
+                success,
+                opposed,
+            };
+        });
     }
 
     async _prepareBatchData(batchData) {

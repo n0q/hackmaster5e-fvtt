@@ -130,9 +130,18 @@ export class HMSkillItem extends HMItem {
 
         if (actors.length < 1) return;
 
-        //        const actor = actors[0];
-        const skill = actors[0].getByBob(bob);
-        if (!skill) return;
+        // Find the first actor that has this skill to get the skill item
+        let skill = null;
+        for (const actor of actors) {
+            skill = actor.getByBob(bob);
+            if (skill) break;
+        }
+
+        // If no actors have this skill, show a warning and return
+        if (!skill) {
+            ui.notifications.warn(`None of the selected actors have the skill with bob: ${bob}`);
+            return;
+        }
 
         const appData = { actor: actors, masteryType };
         skill.process(appData);
