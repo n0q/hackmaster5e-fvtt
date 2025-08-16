@@ -28,6 +28,12 @@ export class HMItemSheet extends foundry.appv1.sheets.ItemSheet {
         return `${path}/item-${this.item.type}-sheet.hbs`;
     }
 
+    /** @override */
+    get id() {
+        const suffix = this.document.uuid ?? foundry.utils.randomID();
+        return `HMItemSheet-${suffix.replace(/\./g, "-")}`;
+    }
+
     /* -------------------------------------------- */
 
     /** @override */
