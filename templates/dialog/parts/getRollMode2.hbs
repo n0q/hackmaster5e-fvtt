@@ -1,10 +1,9 @@
-<div class="form-group form-group--row-full">
+{{!-- This version uses the hackmaster2 css class. --}}
+<section class="form-group form-group--row-full">
     <label>{{localize 'HM.dialog.rollMode'}}</label>
     <div class="form-group__control">
         <select class="form-group__control" name="rollMode">
-            {{#select rollMode}} {{#each rollModes}}
-                <option value="{{@key}}">{{localize this.label}}</option>
-            {{/each}} {{/select}}
+            {{selectOptions rollModes selected=rollMode localize=true}}
         </select>
     </div>
-</div>
+</section>

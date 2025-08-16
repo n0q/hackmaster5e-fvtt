@@ -2,7 +2,7 @@
     <div class="form-group form-group--row-full">
         <label class="form-group__label">{{localize 'HM.difficulty'}}</label>
         <div class="form-group__control">
-            <select name="dc" class="form-group__control">
+            <select name="dc" class="form-group__control" autofocus>
                 {{selectOptions (findConfigObj 'skillLevel') selected=dc localize=true}}
             </select>
         </div>

@@ -5,9 +5,9 @@
 <strong>{{mdata.level}}
 ({{localize (lookup (findConfigObj 'skillMastery') mdata.mastery)}})</strong><br>
 
-{{#if mdata.bonus}}
+{{#if resp.bonus}}
     {{localize 'HM.bonus'}}:
-    <strong>{{mdata.bonus}}</strong><br>
+    <strong>{{resp.bonus}}</strong><br>
 {{/if}}
 
 {{#unless mdata.isAuto}}
@@ -15,9 +15,8 @@
     <strong>{{localize (lookup (findConfigObj 'skillLevel') resp.dc)}}</strong>
     <br>
 {{/unless}}
-
 {{localize 'HM.rolled'}}:
-<span data-tooltip="{{mdata.inline}}">
+<span data-tooltip="{{roll}}">
     <i class="fa-solid fa-dice"></i> <strong>{{roll.total}}</strong>
 </span>
 

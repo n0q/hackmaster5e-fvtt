@@ -1,0 +1,106 @@
+@use '../abstracts/variables' as vars;
+
+.chat-table {
+  width: 100%;
+
+  &--compact {
+    .chat-table__title {
+      margin: vars.$spacing-md 0 vars.$spacing-sm 0;
+      font-size: var(--font-size-18);
+    }
+
+    .chat-table__row {
+      line-height: 1.2;
+    }
+
+    .chat-table__cell {
+      padding: vars.$spacing-xs vars.$spacing-sm;
+      font-size: var(--font-size-12);
+    }
+  }
+
+  &__title {
+    margin: vars.$spacing-lg 0 vars.$spacing-md 0;
+    font-size: var(--font-size-18);
+    font-weight: 600;
+    color: inherit;
+  }
+
+  &__container {
+    margin: 0;
+    overflow: hidden;
+    border-radius: vars.$border-radius;
+  }
+
+  &__table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-radius: vars.$border-radius;
+    background: rgba(0, 0, 0, 0.05);
+    margin: 0 !important;
+    padding: 0 !important;
+    border-spacing: 0 !important;
+  }
+
+  &__row {
+    line-height: 1.4;
+    transition: background-color 0.1s ease;
+
+    &:nth-child(even) {
+      background: rgba(0, 0, 0, 0.03);
+    }
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.08);
+    }
+  }
+
+  &__header-row {
+    line-height: 1.4;
+    font-weight: 600;
+    background: rgba(0, 0, 0, 0.05);
+    font-style: italic;
+  }
+
+  &__cell {
+    padding: vars.$spacing-sm vars.$spacing-md;
+    vertical-align: middle;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+
+    &:last-child {
+      border-right: none;
+    }
+
+    &--left { text-align: left; }
+    &--center { text-align: center; }
+    &--right { text-align: right; }
+    &--name { font-weight: 500; width: 35%; }
+    &--result { width: 45%; font-style: italic; }
+    &--value {
+      width: 20%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-family: vars.$font-primary;
+    }
+    &--no-overflow {
+      overflow: inherit;
+      text-overflow: inherit;
+    }
+  }
+
+  &__footer {
+    background: rgba(0, 0, 0, 0.02);
+    border-radius: 0 0 vars.$border-radius vars.$border-radius;
+  }
+
+  &__flavor {
+    font-size: var(--font-size-12);
+    font-style: italic;
+    color: rgba(0, 0, 0, 0.7);
+    text-align: center;
+
+    &--right { text-align: right; }
+  }
+}
