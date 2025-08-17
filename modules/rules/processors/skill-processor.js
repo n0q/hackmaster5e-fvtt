@@ -45,3 +45,20 @@ export class SkillProcessor extends ProcessorAbstract {
         return match ? Number(match[0]) : null;
     }
 }
+
+/**
+ * Calculate the percentage chance of success for a skill check.
+ *
+ * @param {Object} [params={}] - Parameters for the skill check.
+ * @param {number} [params.dc=0] - Difficulty constant (enum key from HMCONST.SKILL.DIFF).
+ * @param {number} [params.mastery=0] - Character's base skill level (0–100).
+ * @param {number} [params.bonus=0] - Additional bonus applied to the skill (can be positive or negative).
+ * @returns {number} Chance of success as a percentage (0–100).
+ */
+export const getChanceOfSuccess = ({ dc = 0, mastery = 0, bonus = 0 } = {}) => {
+    const effectiveSkill = (Number(mastery) || 0) + (Number(bonus) || 0);
+    const difficultyPenalty = DIFFICULTY_MODIFIERS[dc];
+    const rawChance = effectiveSkill - difficultyPenalty;
+    return Math.clamp(0, rawChance, 100);
+};
+

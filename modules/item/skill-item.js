@@ -50,7 +50,7 @@ export class HMSkillItem extends HMItem {
      * Processes a skill check roll, creating prompts and chat messages.
      *
      * @param {Object} appData - Application data containing actor and mastery information
-     * @param {Actor|Actor[]} appData.actor - The actor performing the skill check
+     * @param {HMActor|HMActor[]} appData.actor - The actor performing the skill check
      * @param {string} appData.masteryType - The mastery type for the skill check
      * @returns {Promise<void>}
      */
@@ -90,6 +90,7 @@ export class HMSkillItem extends HMItem {
         if (validResults.length === 0) return;
 
         if (validResults.length === 1) {
+            // Single token roll.
             const builder = await HMChatFactory.create(
                 CHAT_TYPE.SKILL_CHECK,
                 validResults[0],
@@ -97,6 +98,7 @@ export class HMSkillItem extends HMItem {
             );
             builder.createChatMessage();
         } else {
+            // Multi token survey report.
             const builder = await HMChatFactory.create(
                 CHAT_TYPE.BATCH_SKILL_CHECK,
                 { batch: validResults },
