@@ -1,5 +1,5 @@
-import { HMPrompt } from './prompt.js';
-import { HMCONST, HMTABLES, SYSTEM_ID } from '../../tables/constants.js';
+import { HMPrompt } from "./prompt.js";
+import { HMCONST, HMTABLES, SYSTEM_ID } from "../../tables/constants.js";
 
 function getSpeed(ranged, wData, specialMove = 0) {
     const { spd, jspd } = wData.bonus.total;
@@ -17,8 +17,8 @@ function getSpeed(ranged, wData, specialMove = 0) {
 export class DefendPrompt extends HMPrompt {
     static get defaultOptions() {
         return foundry.utils.mergeObject(super.defaultOptions, {
-            template: 'systems/hackmaster5e/templates/dialog/defend.hbs',
-            id: 'attackPrompt',
+            template: "systems/hackmaster5e/templates/dialog/defend.hbs",
+            id: "defendPrompt",
         });
     }
 
@@ -29,7 +29,7 @@ export class DefendPrompt extends HMPrompt {
         const { caller } = dialogData;
 
         const capList = this.getCapList(weapon, caller);
-        const weaponsList = HMPrompt.getSelectFromProperty(dialogData.weapons, 'name');
+        const weaponsList = HMPrompt.getSelectFromProperty(dialogData.weapons, "name");
         const canDodge = caller[SYSTEM_ID].talent.flag.dodge;
         const wData = weapon.system;
         const ranged = wData.ranged.checked;
@@ -41,7 +41,7 @@ export class DefendPrompt extends HMPrompt {
             specialMove: HMCONST.SPECIAL.STANDARD,
             defDie: wData.defdie,
             rDefDie: HMCONST.DIE.D20P,
-            canDodge: canDodge || caller.type === 'beast',
+            canDodge: canDodge || caller.type === "beast",
             dodge: canDodge,
             ranged,
             spd,
@@ -77,7 +77,7 @@ export class DefendPrompt extends HMPrompt {
 
     get dialogResp() {
         const { caller, button, spd, defDie, rDefDie, widx, weapons } = this.dialogData;
-        caller.setFlag(SYSTEM_ID, 'lastWeapon', weapons[widx].weapon.id);
+        caller.setFlag(SYSTEM_ID, "lastWeapon", weapons[widx].weapon.id);
         const specialMove = Number(this.dialogData.specialMove);
         const { SPECIAL } = HMCONST;
         const dialogResp = {
