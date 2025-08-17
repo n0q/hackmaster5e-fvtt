@@ -20,9 +20,6 @@ export class HMSkillItem extends HMItem {
         if (this.actor.type === "character") {
             const abilities = actorData.abilities.total;
 
-            // It's not clear why this third term is needed, now.
-            // Sometimes actgorData.abilities.total is null.
-            // TODO: Fix this properly.
             if (universal && !bonus.mastery.value && abilities) {
                 const stack = [];
                 for (const key in relevant) {
@@ -113,7 +110,7 @@ export class HMSkillItem extends HMItem {
      * Falls back to user's assigned character if no tokens are controlled and smart select is enabled.
      *
      * @param {BasicObjectBinding} bob - The bob to look up and roll.
-     * @param {string} masteryType
+     * @param {string} masteryType - The type of skill to check for.
      * @static
      */
     static rollByBob({ bob, masteryType = HMCONST.SKILL.TYPE.SKILL }) {
