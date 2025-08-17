@@ -1,31 +1,61 @@
 <div class="hackmaster2">
-    <section class="chat-table chat-table--compact">
-        <h5 class="chat-table__title">{{specname}} Survey</h5>
+    <section class="chat-table chat-table--compact chat-table--striped chat-table--hoverable">
+        <h5 class="chat-table__title chat-table__title--left">
+            {{specname}} Survey
+        </h5>
+
         <div class="chat-table__container">
             <table class="chat-table__table">
                 <thead class="chat-table__head">
                     <tr class="chat-table__header-row">
-                        <th class="chat-table__cell chat-table__cell--left">
-                            Name
+                        <th class="chat-table__cell
+                                   chat-table__cell--fit
+                                   chat-table__cell--left
+                                   chat-table__cell--strong
+                                   chat-table__cell--emphasis">
+
+                            {{localize "HM.name"}}
                         </th>
-                        <th class="chat-table__cell chat-table__cell--center">
-                            Success
+
+                        <th class="chat-table__cell
+                                   chat-table__cell--expand
+                                   chat-table__cell--center
+                                   chat-table__cell--strong
+                                   chat-table__cell--emphasis">
+                            {{localize "HM.success"}}
                         </th>
-                        <th class="chat-table__cell chat-table__cell--value chat-table__cell-no-overflow chat-table__cell--left">
-                            Oppose
+
+                        <th class="chat-table__cell
+                                   chat-table__cell--fit
+                                   chat-table__cell--left
+                                   chat-table__cell--strong
+                                   chat-table__cell--emphasis">
+                            {{localize "HM.opposed"}}
                         </th>
                     </tr>
                 </thead>
+
                 <tbody class="chat-table__body">
                     {{#each processedBatch}}
                     <tr class="chat-table__row">
-                        <td class="chat-table__cell chat-table__cell--name chat-table__cell--left">
+                        <td class="chat-table__cell
+                                   chat-table__cell--fit
+                                   chat-table__cell--left
+                                   chat-table__cell--strong">
                             {{name}}
                         </td>
-                        <td class="chat-table__cell chat-table__cell--result chat-table__cell--center">
+
+                        <td class="chat-table__cell
+                                   chat-table__cell--expand
+                                   chat-table__cell--center
+                                   chat-table__cell--emphasis">
                             {{success}}
                         </td>
-                        <td class="chat-table__cell chat-table__cell--value chat-table__cell--right">
+
+                        <td class="chat-table__cell
+                                   chat-table__cell--fit
+                                   chat-table__cell--right 
+                                   chat-table__cell--monospace">
                             {{opposed}}
                         </td>
                     </tr>
@@ -33,8 +63,13 @@
                 </tbody>
             </table>
         </div>
+
+        {{#if flavor}}
         <div class="chat-table__footer">
-            <div class="chat-table__flavor chat-table__flavor--right">{{flavor}}</div>
+            <div class="chat-table__caption chat-table__caption--right">
+                {{flavor}}
+            </div>
         </div>
+        {{/if}}
     </section>
 </div>
