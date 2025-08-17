@@ -33,7 +33,7 @@ export class SkillPrompt extends HMApplication {
     static #OVERRIDE_OPTIONS = {
         actions: { rollSubmit: HMApplication.submitAction },
         form: { submitOnChange: true },
-        position: { width: 400 },
+        position: { width: 350 },
     };
 
     /** @inheritdoc */
