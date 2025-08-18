@@ -2,8 +2,8 @@ import { HMItem } from "./item.js";
 import { HMCONST, SYSTEM_ID } from "../tables/constants.js";
 import { sanitizeForBasicObjectBinding, isValidBasicObjectBinding } from "../data/data-utils.js";
 import { SkillPrompt } from "../apps/skill-application.js";
-import { HMChatFactory, CHAT_TYPE } from "../chat/chat-factory.js";
 import { SkillProcessor } from "../rules/processors/skill-processor.js";
+import { HMChatFactory, CHAT_TYPE } from "../chat/chat-factory.js";
 
 export class HMSkillItem extends HMItem {
     prepareBaseData() {
@@ -20,9 +20,6 @@ export class HMSkillItem extends HMItem {
         if (this.actor.type === "character") {
             const abilities = actorData.abilities.total;
 
-            // It's not clear why this third term is needed, now.
-            // Sometimes actgorData.abilities.total is null.
-            // TODO: Fix this properly.
             if (universal && !bonus.mastery.value && abilities) {
                 const stack = [];
                 for (const key in relevant) {
@@ -50,7 +47,7 @@ export class HMSkillItem extends HMItem {
      * Processes a skill check roll, creating prompts and chat messages.
      *
      * @param {Object} appData - Application data containing actor and mastery information
-     * @param {Actor|Actor[]} appData.actor - The actor performing the skill check
+     * @param {HMActor|HMActor[]} appData.actor - The actor performing the skill check
      * @param {string} appData.masteryType - The mastery type for the skill check
      * @returns {Promise<void>}
      */
@@ -90,6 +87,7 @@ export class HMSkillItem extends HMItem {
         if (validResults.length === 0) return;
 
         if (validResults.length === 1) {
+            // Single token roll.
             const builder = await HMChatFactory.create(
                 CHAT_TYPE.SKILL_CHECK,
                 validResults[0],
@@ -97,6 +95,7 @@ export class HMSkillItem extends HMItem {
             );
             builder.createChatMessage();
         } else {
+            // Multi token survey report.
             const builder = await HMChatFactory.create(
                 CHAT_TYPE.BATCH_SKILL_CHECK,
                 { batch: validResults },
@@ -111,7 +110,7 @@ export class HMSkillItem extends HMItem {
      * Falls back to user's assigned character if no tokens are controlled and smart select is enabled.
      *
      * @param {BasicObjectBinding} bob - The bob to look up and roll.
-     * @param {string} masteryType
+     * @param {string} masteryType - The type of skill to check for.
      * @static
      */
     static rollByBob({ bob, masteryType = HMCONST.SKILL.TYPE.SKILL }) {
@@ -150,8 +149,8 @@ export class HMSkillItem extends HMItem {
      * Generates a bob for a skill item.
      *
      * @override
-     * @param {Object} skill - The skill item.
      * @returns {string} The generated bob.
+     * @throws {Error} If the gnereated bob is invalid.
      */
     _generateBasicObjectBinding() {
         const superBob = super._generateBasicObjectBinding();

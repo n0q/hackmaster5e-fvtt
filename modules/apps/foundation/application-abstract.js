@@ -48,7 +48,6 @@ export class HMApplication extends HandlebarsApplicationMixin(ApplicationV2) {
         return promise;
     }
 
-
     /**
      * @returns {object|*} Supplementary form data. Typically a object, but you do you, boo.
      */

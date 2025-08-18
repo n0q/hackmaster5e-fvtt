@@ -1,5 +1,6 @@
 import { HMCONST, systemPath } from "../tables/constants.js";
 import { HMApplication } from "./foundation/application-abstract.js";
+import { getChanceOfSuccess } from "../rules/processors/skill-processor.js";
 import { FormButtonManager } from "./foundation/components/form-button-manager.js";
 
 const getLabelType = type => {
@@ -32,7 +33,7 @@ export class SkillPrompt extends HMApplication {
     static #OVERRIDE_OPTIONS = {
         actions: { rollSubmit: HMApplication.submitAction },
         form: { submitOnChange: true },
-        position: { width: 400 },
+        position: { width: 350 },
     };
 
     /** @inheritdoc */
@@ -104,9 +105,19 @@ export class SkillPrompt extends HMApplication {
      * @param {Object} formValues
      * @returns {string}
      */
-    getSubmitButtonLabel(_formValues) {
-        const label = getLabelType(this._subject.masteryType);
-        return game.i18n.localize(label);
+    getSubmitButtonLabel(formValues) {
+        const labelKey = getLabelType(this._subject.masteryType);
+        const localizedLabel = game.i18n.localize(labelKey);
+
+        if (Number(formValues.dc) === HMCONST.SKILL.DIFF.AUTO) {
+            return localizedLabel;
+        }
+
+        const { masteryType } = this._subject;
+        const mastery = this._subject.skill.system.bonus.total[masteryType];
+        const pSuccess = getChanceOfSuccess({ mastery, ...formValues });
+
+        return `${localizedLabel} (${pSuccess}%)`;
     }
 
     /** @inheritdoc */

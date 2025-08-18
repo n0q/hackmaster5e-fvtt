@@ -35,7 +35,6 @@
   @include meta.load-css('hackmaster2/utilities/layout');
 }
 
-
 /* Styles which override foundry core */
 .window-app {
   --font-primary: 'Korinan', 'Gentium', 'Roboto', serif;
@@ -46,6 +45,10 @@
 #chat-notifications {
   --font-body: 'Korinan', 'Gentium', 'Roboto', serif;
   @include meta.load-css('overrides/chat');
+
+  .hackmaster2 {
+    @include meta.load-css('hackmaster2/components/chat-table');
+  }
 
   .message-content, .message-header, .dice-formula, .dice-total {
     font-family: var(--font-body);

@@ -705,6 +705,7 @@
         "modifier": "Modifier",
         "move": "Move",
         "movece": "Move Coeff",
+        "name": "Name",
         "none": "None",
         "normal": "Normal",
         "note": "Note",
