@@ -149,8 +149,8 @@ export class HMSkillItem extends HMItem {
      * Generates a bob for a skill item.
      *
      * @override
-     * @param {Object} skill - The skill item.
      * @returns {string} The generated bob.
+     * @throws {Error} If the gnereated bob is invalid.
      */
     _generateBasicObjectBinding() {
         const superBob = super._generateBasicObjectBinding();
