@@ -15,7 +15,7 @@ export class HMChatHooks {
      * @returns {void}
      */
     static _modifyChatNote(html) {
-        if (html.querySelector(".noWhisper")) {
+        if (html.querySelector(".no-whisper")) {
             const whisperToElements = html.querySelectorAll(".whisper-to");
             whisperToElements.forEach(el => el.remove());
         }
