@@ -35,7 +35,7 @@ export class HMSkillSchema extends foundry.abstract.DataModel {
             tools: new fields.BooleanField(booleanOpts),
             language: new fields.BooleanField(booleanOpts),
             relevant: new fields.SchemaField(abilityInner),
-            bob: new fields.SchemaField(BasicObjectBindingSchema.getFields()),
+            bob: new fields.EmbeddedDataField(BasicObjectBindingSchema),
         };
     }
 
