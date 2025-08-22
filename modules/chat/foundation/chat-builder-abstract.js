@@ -1,4 +1,5 @@
 import { BuilderSchema } from "./chat-builder-schema.js";
+import { HMAggregator } from "../../rules/aggregator.js";
 import { getSpeaker } from "../../sys/utils.js";
 import { RESULT_TYPE } from "./chat-builder-constants.js";
 
@@ -29,6 +30,7 @@ export class ChatBuilder {
      * @param {Object} dataset - The dataset object for the builder.
      * @param {Object} dataset.caller - Uuid for the actor the chat pertains to.
      * @param {Object} dataset.context - Uuid for the item the chat pertains to.
+     * @param {Map} dataset.itemAgg - Map data for a relevant item's aggregator.
      * @param {Object} dataset.roll - Json data for a dice roll the chat pertains to.
      * @param {Object} dataset.resp - Data polled from the user from an Application.
      * @param {Object[]} dataset.batch - Bulk object data for batch processing.
@@ -83,6 +85,7 @@ export class ChatBuilder {
         this.data = {
             caller: schema.caller ? await foundry.utils.fromUuid(schema.caller) : null,
             context: schema.context ? await foundry.utils.fromUuid(schema.context) : null,
+            itemAgg: schema.itemAgg ? HMAggregator.fromMap(schema.itemAgg) : null,
             roll: schema.roll ? Roll.fromData(schema.roll) : null,
             resp: schema.resp ?? {},
             mdata: schema.mdata ?? {},

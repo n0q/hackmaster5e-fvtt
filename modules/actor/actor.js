@@ -3,6 +3,7 @@ import { HMACTOR_TUNABLES } from "../tables/tunables.js";
 import { isValidBasicObjectBinding } from "../data/data-utils.js";
 import { HMDialogFactory } from "../dialog/dialog-factory.js";
 import { HMWeaponProfile } from "../item/weapon-profile.js";
+import { HMUnit } from "../rules/hmunit.js";
 import { HMItemContainer } from "./container-abstract.js";
 import { HMChatFactory, CHAT_TYPE } from "../chat/chat-factory.js";
 import { getDiceSum } from "../sys/utils.js";
@@ -23,16 +24,26 @@ export class HMActor extends Actor {
         super.prepareDerivedData();
         this.setSkillBonus();
         this.setArmorBonus();
+        this.applySpellFatiguePenalty();
     }
 
-    /** @override */
-    // effects need to be applied before the other documents, or their effects will be missed.
-    // We're relying on effects to be the first embeddedType. This seems to be safe, but...
-    prepareEmbeddedDocuments() {
-        const embeddedTypes = this.constructor.metadata.embedded || {};
-        for (const collectionName of Object.values(embeddedTypes)) {
-            for (const e of this[collectionName]) e._safePrepareData();
-            if (collectionName === "effects") this.applyActiveEffects();
+    applySpellFatiguePenalty() {
+        const penalty = this.system.bonus?.state?.skills;
+        if (penalty === undefined || penalty === 0) return;
+
+        const skills = this.itemTypes.skill;
+        for (const skill of skills) {
+            for (const unit of ["value", "verbal", "literacy"]) {
+                skill.bonus.addUnit(new HMUnit({
+                    value: penalty,
+                    unit,
+                    vector: "sfatigue",
+                    source: this,
+                    label: game.i18n.localize("HM.EFFECT.sfatigue"),
+                    path: null,
+                }));
+            }
+            skill.bonus.refresh();
         }
     }
 
@@ -49,6 +60,7 @@ export class HMActor extends Actor {
         }
 
         const [type, _identifier] = bob.split(":");
+        const item = this.items.find(i => i.bob === bob);
         return this.itemTypes[type].find(i => i.bob === bob);
     }
 
@@ -119,12 +131,12 @@ export class HMActor extends Actor {
         if (shieldItem) bonus.shield = shieldItem.system.bonus.total;
     }
 
-    /* @todo This function is a hack, until the next bonus refactor replaces everything with
-     * a "stats matrix" class.
+    /**
+     * TODO: We'll need a skill synergy sara rule.
      */
     setSkillBonus() {
         const { bonus } = this.system;
-        const arcanelore = this.itemTypes.skill.find(s => s.name === "Arcane Lore");
+        const arcanelore = this.getByBob("skill:arcane-lore");
         if (!arcanelore) return;
 
         const sfc = arcanelore.system.mastery.value - 1;

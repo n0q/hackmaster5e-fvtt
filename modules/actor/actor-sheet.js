@@ -401,8 +401,7 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
 
         if (dialog === "skill") {
             const skill = await fromUuid(dataset.uuid);
-            const appData = { actor, masteryType: dataset.masteryType };
-            return await skill.process(appData);
+            return await skill.process(dataset.masteryType);
         }
 
         if (dialog === "cast") {

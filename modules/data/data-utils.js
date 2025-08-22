@@ -38,3 +38,13 @@ export function sanitizeForBasicObjectBinding(str) {
         .replace(/-+/g, "-")               // Collapse multiple hyphens into one
         .replace(/^-|-$/g, "");            // Trim hyphens from start/end
 }
+
+/**
+ * Validates that a value is a Map instance.
+ *
+ * @param {*} value - The value to validate.
+ * @returns {boolean} True if value is a Map instance.
+ */
+export function isValidMap(value) {
+    return value instanceof Map;
+}

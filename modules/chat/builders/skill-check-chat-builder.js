@@ -13,7 +13,6 @@ export class SkillCheckChatBuilder extends ChatBuilder {
 
     async createChatMessage() {
         const { resp, roll } = this.data;
-
         const mdata = this.#enrichMdata();
 
         const resultData = this.#getResultData();
@@ -27,15 +26,11 @@ export class SkillCheckChatBuilder extends ChatBuilder {
     }
 
     #enrichMdata() {
-        const { mdata, resp, context } = this.data;
+        const { mdata, resp } = this.data;
 
-        mdata.specname = context.specname;
-        mdata.mastery = context.system.mastery[resp.masteryType];
-        mdata.level = context.system.bonus.total[resp.masteryType];
         mdata.isAuto = resp.dc === HMCONST.SKILL.DIFF.AUTO;
-
         const label = typeToRollFlavorMap[resp.masteryType];
-        mdata.rollFlavor = `${context.specname} ${label}`;
+        mdata.rollFlavor = `${mdata.name} ${label}`;
         return mdata;
     }
 

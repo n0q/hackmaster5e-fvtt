@@ -73,12 +73,15 @@ export class HMRaceItem extends HMItem {
         super.prepareDerivedData();
     }
 }
+
 /**
  * Parses a race name to extract the primary race and subrace components.
  *
- * Supports two parenthetical formats commonly found in RPG race names:
- * 1. Reared format: "Race (Subrace Reared)" - indicates cultural upbringing
- * 2. Standard format: "Race (Subrace)" - indicates lineage or variant
+ * Supports two parenthetical formats:
+ * - With Reared: "Race (Subrace Reared)"
+ * - Without Reared: "Race (Subrace)"
+ *
+ * Otherwise you're on your own, buddy.
  *
  * @param {string} str - The race name to parse
  * @returns {Object|null} Parsed race components, or null if no parenthetical found

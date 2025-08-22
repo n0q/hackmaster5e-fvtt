@@ -1,4 +1,6 @@
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
+import { HMAggregator } from "../../rules/aggregator.js";
+
 
 /**
  * Abstract base class for HackMaster applications using Handlebars templates.
@@ -16,6 +18,9 @@ export class HMApplication extends HandlebarsApplicationMixin(ApplicationV2) {
     /** @type {HMAppData} */
     #hmAppData = null;
 
+    /** @type {string[]} */
+    static AGGREGATORS = [];
+
     /**
      * @param {...any} args - Arguments passed to the parent constructor.
      * @param {HMAppData} - Data to send to the application.
@@ -28,6 +33,15 @@ export class HMApplication extends HandlebarsApplicationMixin(ApplicationV2) {
 
         super(options);
         this.#hmAppData = { defaults, subject };
+
+        if (!this.#hmAppData.subject) return;
+        for (const path of this.constructor.AGGREGATORS) {
+            const unitsMap = foundry.utils.getProperty(this.#hmAppData, path);
+            if (unitsMap == null || unitsMap instanceof HMAggregator) continue;
+
+            const agg = HMAggregator.fromMap(unitsMap);
+            foundry.utils.setProperty(this.#hmAppData, path, agg);
+        }
     }
 
     /**

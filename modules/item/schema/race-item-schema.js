@@ -35,7 +35,7 @@ export class HMRaceSchema extends foundry.abstract.DataModel {
                 [HMCONST.PRIORS.BMI.OVER]: getBmiSchema(),
                 [HMCONST.PRIORS.BMI.OBESE]: getBmiSchema(),
             }),
-            bob: new fields.SchemaField(BasicObjectBindingSchema.getFields()),
+            bob: new fields.EmbeddedDataField(BasicObjectBindingSchema),
         };
     }
 

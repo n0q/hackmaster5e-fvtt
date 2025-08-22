@@ -18,7 +18,7 @@
                    data-mastery-type={{HMCONST "SKILL.TYPE.VERBAL"}}
                    data-uuid="{{uuid}}"
                    data-item-id='{{_id}}'>
-                   {{system.bonus.total.verbal}}
+                   {{getTotal this "verbal"}}
                </div>
                {{#if system.bonus.total.literacy}}
             <div toggle class='rollable button {{toggleSwitch _id invert=true}}' title='Literacy'
@@ -26,7 +26,7 @@
                    data-mastery-type={{HMCONST "SKILL.TYPE.WRITTEN"}}
                    data-uuid="{{uuid}}"
                    data-item-id='{{_id}}'>
-                   {{system.bonus.total.literacy}}
+                   {{getTotal this "literacy"}}
                </div>
                {{/if}}
         {{else}}
@@ -35,7 +35,7 @@
                 data-mastery-type={{HMCONST "SKILL.TYPE.SKILL"}}
                 data-uuid="{{uuid}}"
                 data-item-id='{{_id}}'>
-                {{system.bonus.total.value}}
+                {{getTotal this "value"}}
             </div>
         {{/if}}
             <div class='{{toggleSwitch _id}} item-controls' toggle>

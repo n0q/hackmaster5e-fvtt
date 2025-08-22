@@ -63,6 +63,7 @@ export const preloadHandlebarsTemplates = () => {
         systemPath("templates/chat/chat-trauma.hbs"),
         systemPath("templates/chat/chat-save.hbs"),
         systemPath("templates/chat/chat-skill.hbs"),
+        systemPath("templates/chat/chat-skill-survey.hbs"),
         systemPath("templates/chat/chat-spell.hbs"),
 
         systemPath("templates/item/parts/description.hbs"),

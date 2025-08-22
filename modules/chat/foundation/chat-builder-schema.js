@@ -1,6 +1,6 @@
 export class BuilderSchema extends foundry.abstract.DataModel {
     static defineSchema() {
-        const {fields} = foundry.data;
+        const { fields } = foundry.data;
         const datasetOpts = {
             required: false,
             initial: undefined,

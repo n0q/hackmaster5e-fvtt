@@ -37,7 +37,9 @@
 
                 <tbody class="chat-table__body">
                     {{#each processedBatch}}
-                    <tr class="chat-table__row">
+                    <tr class="chat-table__row"
+                        data-token-id="{{speaker.token}}"
+                        data-scene-id="{{speaker.scene}}">
                         <td class="chat-table__cell
                                    chat-table__cell--fit
                                    chat-table__cell--left

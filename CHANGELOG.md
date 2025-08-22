@@ -3,7 +3,21 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [0.5.10] - 2024-08-18
+## 0.5.11 - 2025-08-22
+
+### Changed
+
+- Skill Survey chat cards are now interactive
+  - Hovering over a result highlights the token it belongs to.
+- Behind-the-scenes overhaul of how skill rolls are handled
+  - This may affect existing macros that reference skill values).
+- Reduced the number of event listeners on chat cards, which should slightly improve responsiveness.
+
+### Removed
+
+- Existing skill macros (again). You’ll need to recreate them.
+
+## [0.5.10] - 2025-08-18
 
 ### Added
 
@@ -14,7 +28,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - Style sheet improvements.
 
-## [0.5.9] - 2024-08-15
+## [0.5.9] - 2025-08-15
 
 ### Fixed
 

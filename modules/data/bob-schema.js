@@ -25,8 +25,8 @@ import { BasicObjectBindingField } from "./fields.js";
  * @property {BasicObjectBindingField} value - bob
  * @property {BooleanField} auto - Should getters return an autobob?
  */
-export class BasicObjectBindingSchema {
-    static getFields() {
+export class BasicObjectBindingSchema extends foundry.abstract.DataModel {
+    static defineSchema() {
         const fields = foundry.data.fields;
 
         const stringOpts = {

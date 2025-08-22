@@ -42,6 +42,7 @@ export const registerHooks = () => {
 
 async function ready() {
     HMSupportHooks.registerSupportModules();
+    HMChatHooks.initTokenHoverDelegation();
 
     if (game.user.isGM) {
         const tItem = game.items.contents.find(a => a.name === "test");

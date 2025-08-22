@@ -4,59 +4,116 @@ import { sanitizeForBasicObjectBinding, isValidBasicObjectBinding } from "../dat
 import { SkillPrompt } from "../apps/skill-application.js";
 import { SkillProcessor } from "../rules/processors/skill-processor.js";
 import { HMChatFactory, CHAT_TYPE } from "../chat/chat-factory.js";
+import { HMAggregator } from "../rules/aggregator.js";
+import { HMUnit } from "../rules/hmunit.js";
 
 export class HMSkillItem extends HMItem {
+
+    bonus = null;
+
     prepareBaseData() {
         super.prepareBaseData();
     }
 
     prepareDerivedData() {
         super.prepareDerivedData();
-        if (!this.actor) return;
+        this.bonus = new HMAggregator({ parent: this }, { noprop: true });
+    }
 
-        const actorData = this.actor.system;
-        const { bonus, relevant, universal } = this.system;
+    /**
+     * Custom bonus aggregation handler for skills.
+     *
+     * Handles untrained universal skills by creating an 'untrained' vector
+     * with values based on the lowest relevant ability score.
+     * @param {HMAggregator} aggregator - The bonus aggregator instance
+     */
+    handleBonusAggregation(aggregator) {
+        const { universal } = this.system;
+        const { bonus } = this.system;
 
-        if (this.actor.type === "character") {
-            const abilities = actorData.abilities.total;
+        const isUntrained = !bonus.mastery.value && !bonus.mastery.literacy && !bonus.mastery.verbal;
 
-            if (universal && !bonus.mastery.value && abilities) {
-                const stack = [];
-                for (const key in relevant) {
-                    if (relevant[key]) stack.push(abilities[key].value);
-                }
-                const value = Math.min(...stack);
-                bonus.stats = { value, literacy: value, verbal: value };
-            } else { delete bonus.stats; }
+        const actor = this.parent;
+        if (universal && isUntrained && actor?.system?.abilities?.base) {
+            const relevantAbilities = Object.entries(this.system.relevant)
+                .filter(([_, isRelevant]) => isRelevant)
+                .map(([ability, _]) => ability);
+
+            if (relevantAbilities.length > 0) {
+                const abilityScores = relevantAbilities.map(ability =>
+                    actor.system.abilities.base[ability]?.value || 10
+                );
+                const lowestScore = Math.min(...abilityScores);
+
+                const hmUnitData = {
+                    value: lowestScore,
+                    vector: "untrained",
+                    source: this,
+                    label: "Untrained Universal",
+                    path: null,
+                };
+                aggregator.addUnit(new HMUnit({ ...hmUnitData, unit: "value" }));
+                aggregator.addUnit(new HMUnit({ ...hmUnitData, unit: "literacy" }));
+                aggregator.addUnit(new HMUnit({ ...hmUnitData, unit: "verbal" }));
+            }
         }
 
-        const actorBonus = actorData.bonus;
-        const stateBonus = actorBonus?.state?.skills || 0;
-        const honorBonus = actorBonus?.honor?.skills || 0;
-        bonus.state = { value: stateBonus, literacy: stateBonus, verbal: stateBonus };
-        bonus.honor = { value: honorBonus, literacy: honorBonus, verbal: honorBonus };
+        // Process normal bonus structure
+        if (bonus) {
+            for (const [vector, stats] of Object.entries(bonus)) {
+                if (vector === "total") continue; // Skip item's own totals
+                if (typeof stats !== "object") continue;
 
-        Object.keys(bonus.total).forEach(key => {
-            bonus.total[key] = Object.keys(bonus)
-                .filter(v => v !== "total")
-                .reduce((acc, value) => acc + bonus[value][key] || 0, 0);
+                for (const [unit, value] of Object.entries(stats)) {
+                    if (value == null) continue;
+                    aggregator.addUnit(new HMUnit({ value, unit, vector, source: this }));
+                }
+            }
+        }
+    }
+
+    createSyntheticSkill() {
+        const baseUnitData = {
+            value: 0,
+            vector: "untrained",
+            // source: this,
+            source: null,
+            label: "Untrained Universal",
+            path: null,
+        };
+
+        const unitTypes = ["value", "literacy", "verbal"];
+
+        const mapData = unitTypes.map(unitType => {
+            const unit = new HMUnit({ ...baseUnitData, unit: unitType });
+            return [`untrained.${unitType}`, [unit]];
         });
+
+        return new Map(mapData);
     }
 
     /**
      * Processes a skill check roll, creating prompts and chat messages.
      *
      * @param {Object} appData - Application data containing actor and mastery information
-     * @param {HMActor|HMActor[]} appData.actor - The actor performing the skill check
-     * @param {string} appData.masteryType - The mastery type for the skill check
+     * @param {string} masteryType - The mastery type for the skill check
+     * @param {Object[]|undefined} participants - Optional array of participants for survey checks.
+     * @param {HMActor} participants[].actor - An actor making the survey check.
+     * @param {HMSkillItem} participants[].skill - A skill associated with the actor's survey check.
      * @returns {Promise<void>}
      */
-    async process(appData) {
-        const actors = Array.isArray(appData.actor) ? appData.actor : [appData.actor];
+    async process(masteryType, participants = null) {
+        const processList = participants
+            ? participants
+            : [{ actor: this.parent, skill: this }];
+
         const subject = {
-            actor: actors[0],
-            masteryType: appData.masteryType,
-            skill: this,
+            actor: processList[0].actor,
+            skill: {
+                data: processList[0].skill.bonus.toMap(),
+                name: processList[0].skill.specname,
+                masteryType,
+            },
         };
 
         const result = await SkillPrompt.create({}, { subject });
@@ -65,25 +122,21 @@ export class HMSkillItem extends HMItem {
         const { rollMode, ...promptData } = result;
 
         const results = await Promise.all(
-            actors.map(async actor => {
-                const actorSkill = actor.getByBob(this.bob);
-                if (!actorSkill) {
-                    console.warn(`Actor ${actor.name} doesn't have skill ${this.name}`);
-                    return null;
-                }
-
+            processList.map(async ({ actor, skill }) => {
                 const processorData = {
-                    ...promptData,
-                    uuid: { context: actorSkill.uuid }
+                    resp: promptData,
+                    skillAggregatorMap: skill.bonus.toMap(),
                 };
 
                 const bData = await SkillProcessor.process(processorData);
                 bData.caller = actor.uuid;
+                bData.mdata.name = skill.specname;
                 return bData;
             })
         );
 
         const validResults = results.filter(r => r !== null);
+
         if (validResults.length === 0) return;
 
         if (validResults.length === 1) {
@@ -97,7 +150,7 @@ export class HMSkillItem extends HMItem {
         } else {
             // Multi token survey report.
             const builder = await HMChatFactory.create(
-                CHAT_TYPE.BATCH_SKILL_CHECK,
+                CHAT_TYPE.SKILL_SURVEY_CHECK,
                 { batch: validResults },
                 { rollMode },
             );
@@ -105,44 +158,70 @@ export class HMSkillItem extends HMItem {
         }
     }
 
+    static createSyntheticSkill(skillName, bob) {
+        // Create minimal skill data structure
+        const syntheticData = {
+            name: skillName,
+            type: "skill",
+            system: {
+                bob: { value: bob, auto: false },
+                universal: true,
+            },
+        };
+
+        const syntheticSkill = new HMSkillItem(syntheticData);
+        syntheticSkill.prepareDerivedData();
+        return syntheticSkill;
+    }
+
     /**
-     * Rolls a skill check for the first controlled actor found via bob.
+     * Rolls a skill check for controlled actors via bob.
      * Falls back to user's assigned character if no tokens are controlled and smart select is enabled.
      *
      * @param {BasicObjectBinding} bob - The bob to look up and roll.
+     * @param {string} name - The skill name for synthetic skills.
      * @param {string} masteryType - The type of skill to check for.
      * @static
      */
-    static rollByBob({ bob, masteryType = HMCONST.SKILL.TYPE.SKILL }) {
+    static rollByBob({ bob, name, masteryType = HMCONST.SKILL.TYPE.SKILL }) {
         if (!isValidBasicObjectBinding(bob, this.type)) {
             throw new Error(`Invalid Bob: '${bob}'.`);
         }
 
         const actors = canvas.tokens.controlled.map(token => token.actor);
         if (!actors.length && !game.user.isGM) {
-            // No tokens were selected.
             const smartSelect = game.settings.get(SYSTEM_ID, "smartSelect");
             const { character } = game.user;
             if (smartSelect && character) actors.push(character);
         }
 
-        if (actors.length < 1) return;
-
-        // Find the first actor that has this skill to get the skill item
-        let skill = null;
-        for (const actor of actors) {
-            skill = actor.getByBob(bob);
-            if (skill) break;
-        }
-
-        // If no actors have this skill, show a warning and return
-        if (!skill) {
-            ui.notifications.warn(`None of the selected actors have the skill with bob: ${bob}`);
+        if (actors.length < 1) {
+            ui.notifications.warn("No actors selected");
             return;
         }
 
-        const appData = { actor: actors, masteryType };
-        skill.process(appData);
+        const participants = [];
+        let skillToUse = null;
+
+        for (const actor of actors) {
+            const skill = actor.getByBob(bob);
+
+            if (skill) {
+                participants.push({ actor, skill });
+                if (!skillToUse) skillToUse = skill;
+            } else if (actor.validSyntheticBobs?.includes(bob)) {
+                const syntheticSkill = HMSkillItem.createSyntheticSkill(name, bob);
+                participants.push({ actor, skill: syntheticSkill });
+                if (!skillToUse) skillToUse = syntheticSkill;
+            }
+        }
+
+        if (participants.length === 0) {
+            ui.notifications.warn("No actors can use this skill");
+            return;
+        }
+
+        skillToUse.process(masteryType, participants);
     }
 
     /**

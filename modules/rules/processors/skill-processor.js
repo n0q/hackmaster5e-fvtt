@@ -1,5 +1,6 @@
 import { ProcessorAbstract } from "./processor-abstract.js";
 import { SkillProcessorSchema } from "./schema/skill-processor-schema.js";
+import { HMAggregator } from "../aggregator.js";
 import { HMCONST } from "../../tables/constants.js";
 
 const DIFFICULTY_MODIFIERS = {
@@ -14,25 +15,27 @@ export class SkillProcessor extends ProcessorAbstract {
     static SCHEMA_CLASS = SkillProcessorSchema;
 
     async run() {
-        const { uuid, ...resp } = this.schema;
+        const skill = HMAggregator.fromMap(this.schema.skillAggregatorMap);
+
+        const { bonus, masteryType } = this.schema.resp;
         const formula = "d100";
 
         const roll = await new Roll(formula).evaluate();
-        const skill = await fromUuid(uuid.context);
 
-        const skillValue = skill.system.bonus.total[this.schema.masteryType];
+        const skillValue = skill.vectors.total[masteryType];
+        const checkResult = roll.total - (bonus + skillValue);
 
         const mdata = {
-            checkResult: roll.total - (this.schema.bonus + skillValue),
-            opposedResult: roll.total + (this.schema.bonus + skillValue),
+            checkResult,
+            opposedResult: roll.total + (bonus + skillValue),
+            bestDc: this.getAchievedDifficulty(checkResult),
+            mastery: getMasteryLevel(skillValue),
+            level: skillValue,
         };
 
-        mdata.bestDc = this.getAchievedDifficulty(mdata.checkResult);
-
         return {
-            resp,
             mdata,
-            context: uuid.context,
+            resp: this.schema.resp,
             roll: roll.toJSON(),
         };
     }
@@ -45,6 +48,10 @@ export class SkillProcessor extends ProcessorAbstract {
         return match ? Number(match[0]) : null;
     }
 }
+
+export const getMasteryLevel = skillLevel => {
+    return [0, 25, 50, 75, 87, Infinity].findIndex(m => m >= skillLevel);
+};
 
 /**
  * Calculate the percentage chance of success for a skill check.
