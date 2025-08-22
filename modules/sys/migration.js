@@ -36,7 +36,7 @@ export const migrateData = async () => {
 
     const migrations = [
         { version: "0.4.25", handler: migrateV0425 },
-        { version: "0.5.7", handler: migrateV0507 },
+        { version: "0.5.11", handler: migrateV0511 },
     ];
 
     for (const migration of migrations) {
@@ -53,12 +53,12 @@ export const migrateData = async () => {
 };
 
 /**
- * Migration for v0.5.7: Remove legacy skill macros.
+ * Migration for v0.5.11: Remove legacy skill macros.
  *
  * @returns {Promise<void>}
  */
-async function migrateV0507() {
-    ui.notifications.info("Starting v0.5.7 migration: Removing legacy skill macros...");
+async function migrateV0511() {
+    ui.notifications.info("Starting v0.5.11 migration: Removing legacy skill macros...");
 
     const result = {
         attempted: 0,
@@ -75,7 +75,7 @@ async function migrateV0507() {
 
         if (!folder) {
             console.log("Skill macro folder not found, skipping migration");
-            ui.notifications.info("v0.5.7 migration: No skill macro folder found");
+            ui.notifications.info("v0.5.11 migration: No skill macro folder found");
             return;
         }
 
@@ -84,7 +84,7 @@ async function migrateV0507() {
 
         if (macros.length === 0) {
             console.log("No macros found in skill macro folder");
-            ui.notifications.info("v0.5.7 migration: No macros to remove");
+            ui.notifications.info("v0.5.11 migration: No macros to remove");
             return;
         }
 
@@ -95,18 +95,18 @@ async function migrateV0507() {
                 await macro.delete();
                 result.successful++;
                 console.log(`Removed macro: ${macro.name}`);
-            } catch(error) {
+            } catch (error) {
                 console.error(`Failed to delete macro ${macro.name}:`, error);
                 result.errors.push(`${macro.name}: ${error.message}`);
             }
         }
 
-    } catch(error) {
-        console.error("Migration v0.5.7 failed:", error);
+    } catch (error) {
+        console.error("Migration v0.5.11 failed:", error);
         result.errors.push(`General error: ${error.message}`);
     }
 
-    reportMigrationResults("v0.5.7", { "Skill Macros": result });
+    reportMigrationResults("v0.5.11", { "Skill Macros": result });
 }
 
 /**
@@ -192,7 +192,7 @@ async function processMigrationBatch(uuids, handler, documentType) {
             if (changesCount >= 0) {
                 result.successful++;
             }
-        } catch(error) {
+        } catch (error) {
             console.error(`Failed to migrate ${documentType} ${uuid}:`, error);
             result.errors.push(`${uuid}: ${error.message}`);
         }
