@@ -1,5 +1,6 @@
-import { HMCONST, HMTABLES } from "../../tables/constants.js";
+import { HMCONST } from "../../tables/constants.js";
 import { BasicObjectBindingSchema } from "../../data/bob-schema.js";
+import { getMasteryLevel } from "../../rules/processors/skill-processor.js";
 
 export class HMSkillSchema extends foundry.abstract.DataModel {
     static defineSchema() {
@@ -40,18 +41,18 @@ export class HMSkillSchema extends foundry.abstract.DataModel {
     }
 
     get mastery() {
-        const { bonus } = this;
+        const { bonus } = this.parent;
         const { MASTERY } = HMCONST.SKILL;
 
         return Object.keys(bonus.total).reduce((acc, type) => {
-            const isUnskilled = !bonus.mastery[type];
+            const isUnskilled = !bonus.vectors.mastery[type];
             const mValue = parseInt(bonus.total[type], 10);
-            acc[type] = isUnskilled ? MASTERY.UNSKILLED : HMTABLES.skill.mastery(mValue);
+            acc[type] = isUnskilled ? MASTERY.UNSKILLED : getMasteryLevel(mValue);
             return acc;
         }, {});
     }
 
     get level() {
-        return this.bonus.total;
+        return this.parent.bonus.total;
     }
 }

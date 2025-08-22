@@ -1,7 +1,7 @@
 import { AbilityCheckChatBuilder } from "./builders/ability-check-chat-builder.js";
 import { AlertNoteChatBuilder } from "./builders/alert-note-chat-builder.js";
 import { AttackBuilder } from "./builders/attack-chat-builder.js";
-import { BatchSkillCheckChatBuilder } from "./builders/batch-skill-check-chat-builder.js";
+import { SkillSurveyCheckChatBuilder } from "./builders/skill-survey-check-chat-builder.js";
 import { CriticalChatBuilder } from "./builders/critical-chat-builder.js";
 import { DamageChatBuilder } from "./builders/damage-chat-builder.js";
 import { DefenseChatBuilder } from "./builders/defense-chat-builder.js";
@@ -22,7 +22,6 @@ export const CHAT_TYPE = {
     ABILITY_CHECK: Symbol("cftype_abil_check"),
     ALERT_NOTE: Symbol("cftype_alert_note"),
     ATTACK: Symbol("cftype_attack"),
-    BATCH_SKILL_CHECK: Symbol("cftype_batch_skill_check"),
     CRITICAL: Symbol("cftype_critical"),
     DAMAGE: Symbol("cftype_damage"),
     DEFENSE: Symbol("cftype_defense"),
@@ -30,6 +29,7 @@ export const CHAT_TYPE = {
     INIT_NOTE: Symbol("cftype_init_note"),
     SAVE_CHECK: Symbol("cftype_save_check"),
     SKILL_CHECK: Symbol("cftype_skill_check"),
+    SKILL_SURVEY_CHECK: Symbol("cftype_skill_survey_check"),
     SPELL: Symbol("cftype_spell"),
     TRAUMA_CHECK: Symbol("cftype_trauma_check"),
 };
@@ -48,7 +48,6 @@ const ChatBuilderRegistry = {
     [CHAT_TYPE.ABILITY_CHECK]: AbilityCheckChatBuilder,
     [CHAT_TYPE.ATTACK]: AttackBuilder,
     [CHAT_TYPE.ALERT_NOTE]: AlertNoteChatBuilder,
-    [CHAT_TYPE.BATCH_SKILL_CHECK]: BatchSkillCheckChatBuilder,
     [CHAT_TYPE.CRITICAL]: CriticalChatBuilder,
     [CHAT_TYPE.DAMAGE]: DamageChatBuilder,
     [CHAT_TYPE.DEFENSE]: DefenseChatBuilder,
@@ -56,6 +55,7 @@ const ChatBuilderRegistry = {
     [CHAT_TYPE.INIT_NOTE]: InitNoteChatBuilder,
     [CHAT_TYPE.SAVE_CHECK]: SaveCheckChatBuilder,
     [CHAT_TYPE.SKILL_CHECK]: SkillCheckChatBuilder,
+    [CHAT_TYPE.SKILL_SURVEY_CHECK]: SkillSurveyCheckChatBuilder,
     [CHAT_TYPE.SPELL]: SpellChatBuilder,
     [CHAT_TYPE.TRAUMA_CHECK]: TraumaCheckChatBuilder,
 };

@@ -2,6 +2,9 @@ import { HMActor } from "./actor.js";
 import { SYSTEM_ID } from "../tables/constants.js";
 
 export class HMBeastActor extends HMActor {
+    /** @type {BasicObjectBinding[] | null } */
+    static #validSyntheticBobList = null;
+
     prepareBaseData() {
         super.prepareBaseData();
     }
@@ -13,6 +16,26 @@ export class HMBeastActor extends HMActor {
         this.setSP();
         this.setHP();
         this.prepareWeaponProfiles();
+    }
+
+    get validSyntheticBobs() {
+        if (!HMBeastActor.#validSyntheticBobList) {
+            throw Error("No synthetic cache list.");
+        }
+
+        return HMBeastActor.#validSyntheticBobList;
+    }
+
+    static async preloadValidSyntheticBobs() {
+        if (this.#validSyntheticBobList) return;
+
+        const hmbasic = game.packs.get(`${SYSTEM_ID}.hm5ebasic`);
+        const itemList = await hmbasic.getDocuments({
+            type: "skill",
+            system: { universal: true },
+        });
+
+        this.#validSyntheticBobList = itemList.map(item => item.bob);
     }
 
     get movespd() {

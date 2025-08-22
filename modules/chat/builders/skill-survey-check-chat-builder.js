@@ -1,16 +1,24 @@
 import { ChatBuilder } from "../foundation/chat-builder-abstract.js";
 import { getResult } from "../foundation/chat-builder-constants.js";
 import { typeToRollFlavorMap } from "./skill-check-chat-builder.js";
+import { getSpeaker } from "../../sys/utils.js";
 import { systemPath, HMCONST } from "../../tables/constants.js";
 
-export class BatchSkillCheckChatBuilder extends ChatBuilder {
-    static template = systemPath("templates/chat/chat-skill-batch.hbs");
+export class SkillSurveyCheckChatBuilder extends ChatBuilder {
+    static template = systemPath("templates/chat/chat-skill-survey.hbs");
 
     async createChatMessage() {
         const processedBatch = this.#processBatchData();
-        const { context, resp } = this.data.batch[0];
+        window.processedBatch = processedBatch;
+        if (!this.data.batch || this.data.batch.length === 0) {
+            console.warn("BatchSkillCheckChatBuilder: No batch data available");
+            return;
+        }
+
+        const firstEntry = this.data.batch[0];
+        const { resp } = firstEntry;
         const label = typeToRollFlavorMap[resp.masteryType];
-        const specname = context.specname;
+        const specname = firstEntry.mdata?.name || "Unknown Skill";
         const flavor = `${specname} ${label}`;
 
         const chatData = { processedBatch, flavor, specname };
@@ -24,25 +32,33 @@ export class BatchSkillCheckChatBuilder extends ChatBuilder {
         const batchData = this.data.batch;
 
         return batchData.map(obj => {
-            const firstName = obj.caller.name.split(" ")[0];
+            const activeTokens = obj.caller.getActiveTokens();
+            const tokenName = activeTokens.length > 0
+                ? activeTokens[0].name
+                : obj.caller.prototypeToken.name || obj.caller.name;
+            const speaker = getSpeaker(obj.caller);
             const resultData = this.#getResultData(obj.mdata, obj.resp);
             const rawSuccess = getResult(resultData);
-            const success = rawSuccess.replace(/\s+\S+$/, "");
+            const success = rawSuccess.replace(/ Success$/, "");
             const opposed = obj.mdata.opposedResult;
 
             return {
-                name: firstName,
+                name: tokenName,
                 success,
                 opposed,
+                speaker,
             };
         });
     }
 
     async _prepareBatchData(batchData) {
+        if (!batchData) return [];
+        if (!Array.isArray(batchData)) return [];
+
         return await Promise.all(
             batchData.map(async obj => ({
-                caller: await fromUuid(obj.caller),
-                context: await fromUuid(obj.context),
+                caller: typeof obj.caller === "string" ? await fromUuid(obj.caller) : obj.caller,
+                context: typeof obj.context === "string" ? await fromUuid(obj.context) : obj.context,
                 resp: obj.resp,
                 mdata: obj.mdata,
                 roll: Roll.fromData(obj.roll),

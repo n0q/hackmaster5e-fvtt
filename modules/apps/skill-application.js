@@ -43,10 +43,12 @@ export class SkillPrompt extends HMApplication {
         { inplace: false },
     );
 
+    static AGGREGATORS = ["subject.skill.data"];
+
     get title() {
         const actorName = this._subject.actor.name;
-        const skillName = this._subject.skill.specname;
-        const masteryType = this._subject.masteryType;
+        const skillName = this._subject.skill.name;
+        const masteryType = this._subject.skill.masteryType;
         const label = getLabelType(masteryType).toLowerCase();
 
         return `${actorName}: ${skillName} ${label}`;
@@ -83,7 +85,7 @@ export class SkillPrompt extends HMApplication {
 
         foundry.utils.mergeObject(context, {
             dc: HMCONST.SKILL.DIFF.AUTO,
-            masteryType: this._subject.masteryType,
+            masteryType: this._subject.skill.masteryType,
             rollMode: game.settings.get("core", "rollMode"),
         });
     }
@@ -91,7 +93,6 @@ export class SkillPrompt extends HMApplication {
     /** @inheritdoc */
     async _onFirstRender(...args) {
         super._onFirstRender(...args);
-
         this.buttonManager = new FormButtonManager(this.element, [{
             name: "roll-submit",
             getLabel: formValues => this.getSubmitButtonLabel(formValues),
@@ -106,15 +107,15 @@ export class SkillPrompt extends HMApplication {
      * @returns {string}
      */
     getSubmitButtonLabel(formValues) {
-        const labelKey = getLabelType(this._subject.masteryType);
+        const labelKey = getLabelType(this._subject.skill.masteryType);
         const localizedLabel = game.i18n.localize(labelKey);
 
         if (Number(formValues.dc) === HMCONST.SKILL.DIFF.AUTO) {
             return localizedLabel;
         }
 
-        const { masteryType } = this._subject;
-        const mastery = this._subject.skill.system.bonus.total[masteryType];
+        const { masteryType } = this._subject.skill;
+        const mastery = this._subject.skill.data.total[masteryType];
         const pSuccess = getChanceOfSuccess({ mastery, ...formValues });
 
         return `${localizedLabel} (${pSuccess}%)`;
@@ -128,7 +129,7 @@ export class SkillPrompt extends HMApplication {
             dc: Number(formObject.dc),
             rollMode: formObject.rollMode,
             bonus: parseInt(formObject.bonus, 10) || 0,
-            masteryType: this._subject.masteryType,
+            masteryType: this._subject.skill.masteryType,
         };
     }
 

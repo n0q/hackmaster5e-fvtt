@@ -1,0 +1,410 @@
+import { HMUnit } from "./hmunit.js";
+
+export class HMAggregator {
+    #units = new Map();
+
+    #parent;
+
+    #parentData;
+
+    #items;
+
+    #opts = {
+        noprop: true,
+        readonly: false,
+    };
+
+    #vectorsCache = null;
+
+    #_isDirty = false;
+
+    #_isCalculating = false;
+
+    /**
+    * @param {HMActor|HMItem} parent - The parent document this aggregator is operating under.
+    * @param {object|DataModel} system - Underlying system data for the parent document.
+    *                                    Uses parent.system if undefined.
+    * @param {documents.Item[]|Record<string, documents.Item[]>|undefined} items - Items to aggregate from.
+    *                                    Uses parent.itemTypes or parent.items if undefined.
+    */
+    constructor({ parent, system, items, skipCollection = false } = {}, opts = {}) {
+        this.#parent = parent;
+        this.#parentData = system ?? parent?.system;
+        foundry.utils.mergeObject(this.#opts, opts);
+
+        if (parent?.itemTypes) {
+            this.#items = items ?? parent.itemTypes;
+        } else if (parent?.items) {
+            this.#items = items ?? parent.items;
+        } else {
+            this.#items = items;
+        }
+
+        if (!skipCollection) {
+            this.#collectBonuses();
+        }
+    }
+
+    get parent() {
+        return this.#parent;
+    }
+
+    get isDirty() {
+        return this.#_isDirty;
+    }
+
+    get isReadOnly() {
+        return !!this.#opts?.readonly;
+    }
+
+    /**
+     * Check if this aggregator should propagate its values to parent aggregators.
+     *
+     * @returns {boolean} True if propagation is allowed
+     */
+    get canPropagate() {
+        return !this.#opts?.noprop;
+    }
+
+    /**
+     * Create a HMAggregator from a Map of units.
+     * This is useful for reconstructing aggregators from stored data.
+     *
+     * @param {Map} unitsMap - The Map of units (as returned by toMap())
+     * @param {HMActor|HMItem} [parent] - Optional parent document for context
+     * @returns {HMAggregator} A new aggregator instance with the provided units
+     */
+    static fromMap(unitsMap, parent = null) {
+        const aggregator = new HMAggregator({
+            parent,
+            system: parent?.system,
+            items: null,
+            skipCollection: true,
+        }, {
+            noprop: true,
+            readonly: true,
+        });
+        aggregator._loadFromMap(unitsMap);
+        return aggregator;
+    }
+
+    /**
+     * Load units from a Map. Used internally by fromMap().
+     *
+     * @param {Map} unitsMap - The Map to load units from
+     * @private
+     */
+    _loadFromMap(unitsMap) {
+        this.#units = unitsMap;
+        this.#calculateTotals();
+    }
+
+    /**
+     * Export the aggregator's units as a Map.
+     *
+     * @returns {Map<string, HMUnit[]>}
+     */
+    toMap() {
+        return this.#units;
+    }
+
+    /**
+     * Collects data from parent and embedded items, then calculates total vector.
+     *
+     * @private
+     */
+    #collectBonuses() {
+        this.#collectParentUnits();
+        this.#collectItemUnits();
+        this.#calculateTotals();
+    }
+
+    #collectParentUnits() {
+        const system = this.#parentData;
+
+        if (typeof this.#parent.handleBonusAggregation === "function") {
+            this.#parent.handleBonusAggregation(this);
+            return;
+        }
+
+        if (system.bonus) {
+            for (const [vector, stats] of Object.entries(system.bonus)) {
+                if (vector === "total") continue; // Skip aggregated totals
+                if (typeof stats !== "object") continue;
+
+                for (const [unit, value] of Object.entries(stats)) {
+                    if (value == null) continue;
+                    this.#addUnit(new HMUnit({ value, unit, vector, source: this.#parent }));
+                }
+            }
+        }
+    }
+
+    #collectItemUnits() {
+        if (!this.#items) return;
+
+        if (Array.isArray(this.#items)) {
+            for (const item of this.#items) {
+                this.#processItem(item);
+            }
+        } else if (typeof this.#items === "object") {
+            for (const itemArray of Object.values(this.#items)) {
+                if (!Array.isArray(itemArray)) continue;
+                for (const item of itemArray) {
+                    this.#processItem(item);
+                }
+            }
+        }
+    }
+
+    /**
+     * Process an individual item for bonus collection.
+     *
+     * @param {HMItem} item - The item to process
+     * @private
+     */
+    #processItem(item) {
+        if (typeof item.handleBonusAggregation === "function") {
+            item.handleBonusAggregation(this);
+            return;
+        }
+
+        if (!item.system?.bonus) return;
+
+        for (const [vector, stats] of Object.entries(item.system.bonus)) {
+            if (vector === "total") continue;
+            if (typeof stats !== "object") continue;
+
+            for (const [unit, value] of Object.entries(stats)) {
+                if (value == null) continue;
+                this.#addUnit(new HMUnit({ value, unit, vector, source: item }));
+            }
+        }
+    }
+
+    /**
+     * Add a unit to the aggregator. Used by custom bonus handlers.
+     *
+     * @param {HMUnit} unit - The unit to add
+     */
+    addUnit(unit) {
+        if (unit.vector === "total") {
+            throw new Error("'total' is a reserved vector name.");
+        }
+
+        if (this.isReadOnly) {
+            throw Error("Unable to alter read-only Aggregator.");
+        }
+
+        this.#addUnit(unit);
+    }
+
+    /**
+     * Add a unit to the internal collection.
+     *
+     * @param {HMUnit} unit - The unit to add
+     * @private
+     */
+    #addUnit(unit) {
+        if (!unit.vector || !unit.unit) {
+            throw new Error("Unit must have both vector and unit properties.");
+        }
+
+        if (unit.vector.includes(".") || unit.unit.includes(".")) {
+            throw new Error("Vector and unit names cannot contain dots.");
+        }
+
+        const key = `${unit.vector}.${unit.unit}`;
+        if (!this.#units.has(key)) {
+            this.#units.set(key, []);
+        }
+        this.#units.get(key).push(unit);
+
+        if (null != this.#vectorsCache) {
+            this.#vectorsCache = null;
+        }
+
+        this.#_isDirty = true;
+    }
+
+    #calculateTotals() {
+        if (this.#_isCalculating) {
+            console.warn("Preventing recursive calculation in aggregator");
+            return;
+        }
+
+        this.#_isCalculating = true;
+
+        try {
+            const totals = new Map();
+
+            for (const [key, units] of this.#units.entries()) {
+                const [vector, unit] = key.split(".");
+                const sum = units.reduce((acc, u) => acc + u.value, 0);
+
+                const totalKey = `total.${unit}`;
+                if (!totals.has(totalKey)) {
+                    totals.set(totalKey, 0);
+                }
+
+                totals.set(totalKey, totals.get(totalKey) + sum);
+            }
+
+            for (const [key, value] of totals.entries()) {
+                const [, unit] = key.split(".");
+
+                // Check if all contributing units for this stat have null paths
+                const contributingUnits = this.getUnitsForStat(unit);
+                const allPathsNull = contributingUnits.length > 0
+                    && contributingUnits.every(u => u.path === null);
+
+                const hmUnitData = {
+                    value,
+                    unit,
+                    vector: "total",
+                    source: this.#parent || null,
+                    label: `Total ${unit}`,
+                    path: allPathsNull ? null : undefined
+                };
+                this.#addUnit(new HMUnit(hmUnitData));
+            }
+
+            this.#_isDirty = false;
+        } finally {
+            this.#_isCalculating = false;
+        }
+    }
+
+    /**
+     * Get all units for a specific stat, regardless of vector.
+     *
+     * @param {string} unit - The stat name (e.g., "dr", "init")
+     * @returns {HMUnit[]} Array of all units contributing to this stat
+     */
+    getUnitsForStat(unit) {
+        const results = [];
+        for (const [key, units] of this.#units.entries()) {
+            if (key.endsWith(`.${unit}`)) {
+                results.push(...units);
+            }
+        }
+        return results;
+    }
+
+    #invalidateCache() {
+        this.#vectorsCache = null;
+        this.#_isDirty = true;
+    }
+
+    /**
+     * Returns cached vector objects.
+     * Caches vector objects if the cache is not populated.
+     *
+     * @returns {Object<Object<string|number>>}
+     */
+    get vectors() {
+        if (this.isDirty && !this.#_isCalculating) {
+            this.#calculateTotals();
+        }
+
+        if (!this.#vectorsCache) {
+            const cache = {};
+            for (const [key, units] of this.#units.entries()) {
+                const [vector, unit] = key.split(".");
+                if (!cache[vector]) cache[vector] = {};
+                cache[vector][unit] = units[0]?.value ?? 0;
+            }
+            this.#vectorsCache = foundry.utils.deepFreeze(cache, { strict: true });
+        }
+
+        return this.#vectorsCache;
+    }
+
+    /**
+     * Get all units from a specific vector.
+     *
+     * @param {string} vector - The vector name (e.g., "armor", "race")
+     * @returns {HMUnit[]} Array of all units from this vector
+     */
+    getUnitsForVector(vector) {
+        const results = [];
+        for (const [key, units] of this.#units.entries()) {
+            if (key.startsWith(`${vector}.`)) {
+                results.push(...units);
+            }
+        }
+        return results;
+    }
+
+    /**
+     * Get the total value for a specific stat.
+     *
+     * @param {string} unit - The stat name (e.g., "dr", "init")
+     * @returns {number} The total value for this stat
+     */
+    getTotal(unit) {
+        const totalUnits = this.#units.get(`total.${unit}`);
+        if (!totalUnits || totalUnits.length === 0) return 0;
+        return totalUnits[0].value; // Total should only have one entry
+    }
+
+    /**
+     * Get all vector units as a simple object.
+     *
+     * @param {string} vector - Vector to retrieve.
+     * @returns {Object<string, number>} Object mapping unit names to vector values.
+     */
+    getVector(vector) {
+        const results = {};
+        for (const [key, units] of this.#units.entries()) {
+            const [vectorName, unitName] = key.split(".");
+            if (vector === vectorName) {
+                results[unitName] = units.reduce((sum, u) => sum + u.value, 0);
+            }
+        }
+        return results;
+    }
+
+    /**
+     * Get the aggregated total value for a specific stat.
+     *
+     * @returns {Object} The total vector object with all stat totals
+     */
+    get total() {
+        return this.vectors.total;
+    }
+
+    /**
+     * Depopulates a vector and all its units.
+     * Flags the aggregator as dirty if any action was taken.
+     *
+     * @param {string} vector - The vector to purge.
+     * @throws {Error} If aggregator is read-only.
+     */
+    deleteVector(vector) {
+        if (this.isReadOnly) {
+            throw Error("Unable to alter read-only Aggregator.");
+        }
+
+        let wasChanged = false;
+        for (const [key] of this.#units.entries()) {
+            const [unitVector, _] = key.split(".");
+            if (unitVector === vector) {
+                this.#units.delete(key);
+                wasChanged = true;
+            }
+        }
+
+        if (wasChanged) {
+            this.#invalidateCache();
+        }
+    }
+
+    /**
+     * Force recalculation of totals.
+     */
+    refresh() {
+        this.deleteVector("total");
+        this.#calculateTotals();
+    }
+}

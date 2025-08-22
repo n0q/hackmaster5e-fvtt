@@ -6,10 +6,10 @@ async function createItemMacro(data, slot) {
     const item = await fromUuid(data.uuid);
     if (item.type !== "skill") return;
 
-    const { bob, img } = item;
+    const { bob, img, specname } = item;
     const masteryType = await getSkillMacroType(item);
 
-    const fnOpts = { bob, masteryType };
+    const fnOpts = { name: specname, bob, masteryType };
     const command = `game.${SYSTEM_ID}.HMSkillItem.rollByBob(${JSON.stringify(fnOpts)});`;
 
     let fullName = item.specname;

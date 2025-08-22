@@ -732,9 +732,6 @@ export const HMTABLES = {
         [HMCONST.SCALE.ENORMOUS]: { hp: 35, kb: 40, reach: 5, token: 15, move: 6 },
         [HMCONST.SCALE.COLOSSAL]: { hp: 70, kb: 75, reach: 12, token: 29, move: 13 },
     },
-    skill: {
-        mastery: arg => [0, 25, 50, 75, 87, Infinity].findIndex(m => m >= arg),
-    },
     spell: {
         mishap: (sfc, smc, save) => Math.clamp(sfc - save, 0, smc + 2),
         sfc: svr => {

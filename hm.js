@@ -31,6 +31,7 @@ import { preloadHandlebarsTemplates } from "./modules/sys/templates.js";
 import gsap, { PixiPlugin } from '/scripts/greensock/esm/all.js'; // eslint-disable-line
 import { registerSchema } from "./modules/sys/schema.js";
 import { migrateData } from "./modules/sys/migration.js";
+import { HMBeastActor } from "./modules/actor/beast-actor.js";
 
 function registerSheets() {
     const ActorsCollection = foundry.documents.collections.Actors;
@@ -121,4 +122,5 @@ Hooks.once("init", async () => {
 
 Hooks.once("ready", () => {
     migrateData();
+    HMBeastActor.preloadValidSyntheticBobs(); /** @async Technically */
 });

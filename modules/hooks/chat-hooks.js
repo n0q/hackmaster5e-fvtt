@@ -4,105 +4,126 @@ export class HMChatHooks {
         if (!html) return;
         HMChatHooks._modifyChatNote(html);
         HMChatHooks._addTokenDataAttributes(message, html);
-        HMChatHooks._addTokenHoverListeners(message, html);
     }
 
     /**
-     * Adjusts initNote card HTML to look more pleasing.
-     * Removes whisper-list (in case more than one GM is on).
+     * Sets delegated listeners on #chat and #chat-notifications DOM elements.
+     * Adds listeners to dynamically created #chat-popout
      *
-     * @param {HTMLElement} html - The pending HT2yyML.
+     * @static
      * @returns {void}
+     * @listens mouseenter
+     * @listens mouseleave
+     */
+    static initTokenHoverDelegation() {
+        const containers = ["#chat", "#chat-notifications"];
+        containers.forEach(selector => {
+            const container = document.querySelector(selector);
+            if (container) HMChatHooks._addDelegatedTokenListeners(container);
+        });
+
+        const observer = new MutationObserver(mutations => {
+            for (const mutation of mutations) {
+                for (const node of mutation.addedNodes) {
+                    if (node.nodeType !== Node.ELEMENT_NODE) continue;
+
+                    // There you are!
+                    if (node.id === "chat-popout") {
+                        HMChatHooks._addDelegatedTokenListeners(node);
+                    }
+                }
+            }
+        });
+
+        observer.observe(document.body, { childList: true });
+    }
+
+    /**
+     * Adjusts chat card HTML for nicer presentation.
+     *
+     * @param {HTMLElement} html - The pending HTML.
      */
     static _modifyChatNote(html) {
         if (html.querySelector(".no-whisper")) {
-            const whisperToElements = html.querySelectorAll(".whisper-to");
-            whisperToElements.forEach(el => el.remove());
+            html.querySelectorAll(".whisper-to").forEach(el => el.remove());
         }
 
         if (!html.querySelector(".hm-chat-note")) return;
 
-        const headerElement = html.querySelector("header");
-        if (headerElement) headerElement.remove();
-
         html.style.padding = "0px";
-
-        const sender = html.querySelector(".message-sender");
-        if (sender) sender.textContent = "";
-
-        const metadata = html.querySelector(".message-metadata");
-        if (metadata) metadata.style.display = "none";
+        html.querySelector("header")?.remove();
+        html.querySelector(".message-sender").textContent = "";
+        if (html.querySelector(".message-metadata")) {
+            html.querySelector(".message-metadata").style.display = "none";
+        }
 
         if (!game.user.isGM) {
-            const deleteButtons = html.querySelector(".message-delete");
-            deleteButtons.button.remove();
+            html.querySelector(".message-delete")?.button?.remove?.();
         }
     }
 
     /**
-     * Applies speaker information to the message's root element.
+     * Applies speaker information to the message’s root element.
      *
-     * @param {ChatMessage} message - The ChatMessage document being rendered.
-     * @param {HTMLElement} html - The pending HT2yyML.
-     * @returns {void}
+     * @param {ChatMessage} message - The ChatMessage to apply speaker information to.
+     * @param {HTMLElement} html - The pending HTML.
      */
     static _addTokenDataAttributes(message, html) {
-        if (!HMChatHooks._canUserReadMessage(message)) {
-            return;
-        }
-
+        if (!HMChatHooks._canUserReadMessage(message)) return;
         const { speaker } = message;
-        const element = html[0] || html;
 
-        element.setAttribute("data-token-id", speaker.token);
-        element.setAttribute("data-actor-id", speaker.actor);
-        element.setAttribute("data-scene-id", speaker.scene);
-        element.classList.add("hm-chat-with-token");
+        html.dataset.tokenId = speaker.token;
+        html.dataset.actorId = speaker.actor;
+        html.dataset.sceneId = speaker.scene;
+        html.classList.add("hm-chat-with-token");
     }
 
     /**
      * Checks if the current user can read the given message.
      *
-     * @param {ChatMessage} message - The ChatMessage to check.
-     * @returns {boolean} True if the user can read the message, false otherwise.
-     * @private
+     * @param {ChatMessage} message - The ChatMessage to test.
      */
     static _canUserReadMessage(message) {
         if (message.isAuthor) return true;
         if (game.user.isGM) return true;
-        if (!message.whisper || message.whisper.length === 0) return true;
-
+        if (!message.whisper?.length) return true;
         return message.whisper.includes(game.user.id);
     }
 
     /**
-     * @param {ChatMessage} message - The ChatMessage document being rendered.
-     * @param {HTMLElement} html - The pending HT2yyML.
-     * @returns {void}
+     * Add delegated mouseenter/mouseleave listeners to a chat container.
+     *
+     * @param {HTMLElement} container - Chat container element to attach listeners to.
      */
-    static _addTokenHoverListeners(message, html) {
-        if (!HMChatHooks._canUserReadMessage(message)) {
-            return;
-        }
+    static _addDelegatedTokenListeners(container) {
+        const handler = (event, highlight) => {
+            const target = event.target.closest("[data-token-id][data-scene-id]");
+            if (!target) return;
 
-        const { token, scene } = message.speaker;
-        const element = html[0] || html;
+            const messageElement = target.closest(".message");
+            if (!messageElement) return;
 
-        element.addEventListener("mouseenter", () => {
-            HMChatHooks.highlightToken(token, scene, true);
-        });
+            const messageId = messageElement.dataset.messageId;
+            const message = game.messages.get(messageId);
+            if (!message || !HMChatHooks._canUserReadMessage(message)) return;
 
-        element.addEventListener("mouseleave", () => {
-            HMChatHooks.highlightToken(token, scene, false);
-        });
+            HMChatHooks.highlightToken(
+                target.dataset.tokenId,
+                target.dataset.sceneId,
+                highlight
+            );
+        };
+
+        container.addEventListener("mouseenter", e => handler(e, true), true);
+        container.addEventListener("mouseleave", e => handler(e, false), true);
     }
 
     /**
-     * Highlights or unhighlights a token
+     * Highlights or unhighlights a token in the current scene.
      *
-     * @param {string} tokenId - Token ID to highlight
-     * @param {string} sceneId - Scene ID containing the token
-     * @param {boolean} highlight - Highlight or unhighlight?
+     * @param {string} tokenId - id of the token to highlight.
+     * @param {string} sceneId - id of the scene containing the tken.
+     * @param {boolean} highlight - True if we're highlighting the token. Otherwise false.
      */
     static highlightToken(tokenId, sceneId, highlight) {
         if (sceneId !== canvas.scene?.id) return;
@@ -111,14 +132,13 @@ export class HMChatHooks {
         if (!token) return;
 
         if (!highlight) {
-            if (token._chatHoverBorder) token._chatHoverBorder.clear();
+            token._chatHoverBorder?.clear();
             return;
         }
 
         const dim = canvas.dimensions;
         const unit = dim.size / dim.distance;
         const BORDER_WIDTH = unit / 12;
-
         const dispositionColor = token.getDispositionColor();
 
         if (!token._chatHoverBorder) {
@@ -132,3 +152,4 @@ export class HMChatHooks {
         border.drawRect(-2, -2, token.w + 4, token.h + 4);
     }
 }
+
