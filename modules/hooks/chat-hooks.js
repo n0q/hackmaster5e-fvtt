@@ -52,7 +52,8 @@ export class HMChatHooks {
 
         html.style.padding = "0px";
         html.querySelector("header")?.remove();
-        html.querySelector(".message-sender").textContent = "";
+        const senderElement = html.querySelector(".message-sender");
+        if (senderElement) senderElement.textContent = "";
         if (html.querySelector(".message-metadata")) {
             html.querySelector(".message-metadata").style.display = "none";
         }
