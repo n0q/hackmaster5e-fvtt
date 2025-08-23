@@ -120,22 +120,22 @@ export class HMAggregator {
     }
 
     #collectParentUnits() {
-        const system = this.#parentData;
-
-        if (typeof this.#parent.handleBonusAggregation === "function") {
-            this.#parent.handleBonusAggregation(this);
-            return;
+        this.#processBonusStructure(this.#parentData.bonus, this.#parent);
+        if (typeof this.#parent._postAggregation === "function") {
+            this.#parent._postAggregation(this);
         }
+    }
 
-        if (system.bonus) {
-            for (const [vector, stats] of Object.entries(system.bonus)) {
-                if (vector === "total") continue; // Skip aggregated totals
-                if (typeof stats !== "object") continue;
+    #processBonusStructure(bonus, parent) {
+        if (!bonus) return;
 
-                for (const [unit, value] of Object.entries(stats)) {
-                    if (value == null) continue;
-                    this.#addUnit(new HMUnit({ value, unit, vector, source: this.#parent }));
-                }
+        for (const [vector, stats] of Object.entries(bonus)) {
+            if (vector === "total") continue; // Skip aggregated totals
+            if (typeof stats !== "object") continue;
+
+            for (const [unit, value] of Object.entries(stats)) {
+                if (value == null) continue;
+                this.#addUnit(new HMUnit({ value, unit, vector, source: parent }));
             }
         }
     }

@@ -27,48 +27,37 @@ export class HMSkillItem extends HMItem {
      * with values based on the lowest relevant ability score.
      * @param {HMAggregator} aggregator - The bonus aggregator instance
      */
-    handleBonusAggregation(aggregator) {
-        const { universal } = this.system;
-        const { bonus } = this.system;
+    _postAggregation(aggregator) {
+        const isUniversal = this.system.universal;
+        const masteryUnits = aggregator.getUnitsForVector("mastery");
+        const isUntrained = masteryUnits.length === 0 || masteryUnits.every(u => u.value === 0);
+        if (!isUniversal || !isUntrained) return;
 
-        const isUntrained = !bonus.mastery.value && !bonus.mastery.literacy && !bonus.mastery.verbal;
+        const abilities = this.parent?.system?.abilities;
+        if (!abilities) return;
 
-        const actor = this.parent;
-        if (universal && isUntrained && actor?.system?.abilities?.base) {
-            const relevantAbilities = Object.entries(this.system.relevant)
-                .filter(([_, isRelevant]) => isRelevant)
-                .map(([ability, _]) => ability);
+        const relevantAbilities = Object.entries(this.system.relevant)
+            .filter(([_, isRelevant]) => isRelevant)
+            .map(([ability, _]) => ability);
 
-            if (relevantAbilities.length > 0) {
-                const abilityScores = relevantAbilities.map(ability =>
-                    actor.system.abilities.base[ability]?.value || 10
-                );
-                const lowestScore = Math.min(...abilityScores);
+        if (relevantAbilities.length > 0) {
+            const abilityScores = relevantAbilities.map(ability =>
+                abilities.total[ability]?.value || 10
+            );
 
-                const hmUnitData = {
-                    value: lowestScore,
-                    vector: "untrained",
-                    source: this,
-                    label: "Untrained Universal",
-                    path: null,
-                };
-                aggregator.addUnit(new HMUnit({ ...hmUnitData, unit: "value" }));
-                aggregator.addUnit(new HMUnit({ ...hmUnitData, unit: "literacy" }));
-                aggregator.addUnit(new HMUnit({ ...hmUnitData, unit: "verbal" }));
-            }
-        }
+            const lowestScore = Math.min(...abilityScores);
 
-        // Process normal bonus structure
-        if (bonus) {
-            for (const [vector, stats] of Object.entries(bonus)) {
-                if (vector === "total") continue; // Skip item's own totals
-                if (typeof stats !== "object") continue;
+            const hmUnitData = {
+                value: lowestScore,
+                vector: "untrained",
+                source: this,
+                label: "Untrained Universal",
+                path: null,
+            };
 
-                for (const [unit, value] of Object.entries(stats)) {
-                    if (value == null) continue;
-                    aggregator.addUnit(new HMUnit({ value, unit, vector, source: this }));
-                }
-            }
+            aggregator.addUnit(new HMUnit({ ...hmUnitData, unit: "value" }));
+            aggregator.addUnit(new HMUnit({ ...hmUnitData, unit: "literacy" }));
+            aggregator.addUnit(new HMUnit({ ...hmUnitData, unit: "verbal" }));
         }
     }
 
