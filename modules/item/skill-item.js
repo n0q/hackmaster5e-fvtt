@@ -188,11 +188,17 @@ export class HMSkillItem extends HMItem {
             throw new Error(`Invalid Bob: '${bob}'.`);
         }
 
-        const actors = canvas.tokens.controlled.map(token => token.actor);
+        let actors = canvas.tokens.controlled.map(token => token.actor);
         if (!actors.length && !game.user.isGM) {
             const smartSelect = game.settings.get(SYSTEM_ID, "smartSelect");
             const { character } = game.user;
             if (smartSelect && character) actors.push(character);
+        }
+
+        const hookResult = Hooks.call("hm5e.getSkillActors", actors, { bob, name, masteryType });
+
+        if (Array.isArray(hookResult)) {
+            actors = hookResult;
         }
 
         if (actors.length < 1) {
