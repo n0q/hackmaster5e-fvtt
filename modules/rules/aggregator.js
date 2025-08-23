@@ -120,17 +120,17 @@ export class HMAggregator {
     }
 
     #collectParentUnits() {
-        this.#processBonusStructure(this.#parentData.bonus, this.#parent);
+        this.#aggregate(this.#parentData.bonus, this.#parent);
         if (typeof this.#parent._postAggregation === "function") {
             this.#parent._postAggregation(this);
         }
     }
 
-    #processBonusStructure(bonus, parent) {
+    #aggregate(bonus, parent) {
         if (!bonus) return;
 
         for (const [vector, stats] of Object.entries(bonus)) {
-            if (vector === "total") continue; // Skip aggregated totals
+            if (vector === "total") continue;
             if (typeof stats !== "object") continue;
 
             for (const [unit, value] of Object.entries(stats)) {
@@ -303,6 +303,10 @@ export class HMAggregator {
      * @returns {Object<Object<string|number>>}
      */
     get vectors() {
+        if (this.#_isCalculating) {
+            throw new Error("Cannot access computed vectors during calculation. Use getUnitsForVector() or getUnitsForStat() instead.");
+        }
+
         if (this.isDirty && !this.#_isCalculating) {
             this.#calculateTotals();
         }
