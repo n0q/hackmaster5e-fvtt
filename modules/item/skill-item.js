@@ -2,7 +2,7 @@ import { HMItem } from "./item.js";
 import { HMCONST, SYSTEM_ID } from "../tables/constants.js";
 import { sanitizeForBasicObjectBinding, isValidBasicObjectBinding } from "../data/data-utils.js";
 import { SkillPrompt } from "../apps/skill-application.js";
-import { SkillProcessor } from "../rules/processors/skill-processor.js";
+import { SkillProcessor, getMasteryLevels } from "../rules/processors/skill-processor.js";
 import { HMChatFactory, CHAT_TYPE } from "../chat/chat-factory.js";
 import { HMAggregator } from "../rules/aggregator.js";
 import { HMUnit } from "../rules/hmunit.js";
@@ -42,7 +42,7 @@ export class HMSkillItem extends HMItem {
 
         if (relevantAbilities.length > 0) {
             const abilityScores = relevantAbilities.map(ability =>
-                abilities.total[ability]?.value || 10
+                abilities.total[ability]?.value || 1
             );
 
             const lowestScore = Math.min(...abilityScores);
@@ -55,9 +55,9 @@ export class HMSkillItem extends HMItem {
                 path: null,
             };
 
-            aggregator.addUnit(new HMUnit({ ...hmUnitData, unit: "value" }));
-            aggregator.addUnit(new HMUnit({ ...hmUnitData, unit: "literacy" }));
-            aggregator.addUnit(new HMUnit({ ...hmUnitData, unit: "verbal" }));
+            ["value", "literacy", "verbal"].forEach(unit =>
+                aggregator.addUnit(new HMUnit({ ...hmUnitData, unit })
+                ));
         }
     }
 
@@ -244,6 +244,10 @@ export class HMSkillItem extends HMItem {
         }
 
         throw new Error(`Invalid Bob: '${bob}'.`);
+    }
+
+    get mastery() {
+        return getMasteryLevels(this.bonus);
     }
 }
 
