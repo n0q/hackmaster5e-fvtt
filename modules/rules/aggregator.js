@@ -311,14 +311,16 @@ export class HMAggregator {
 
     /**
      * Get all units for a specific stat, regardless of vector.
+     * Excludes the computed "total" vector.
      *
      * @param {string} unit - The stat name (e.g., "dr", "init")
-     * @returns {HMUnit[]} Array of all units contributing to this stat
+     * @returns {HMUnit[]} Array of all units contributing to this stat (excluding total)
      */
     getUnitsForStat(unit) {
         const results = [];
         for (const [key, units] of this.#units.entries()) {
-            if (key.endsWith(`.${unit}`)) {
+            const [vector, unitName] = key.split(".");
+            if (unitName === unit && vector !== "total") {
                 results.push(...units);
             }
         }

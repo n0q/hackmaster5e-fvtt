@@ -45,20 +45,23 @@ export class HMArmorItem extends HMItem {
         return this.system.state === HMCONST.ITEM_STATE.EQUIPPED;
     }
 
-    get quality() {
-        const vector = super.quality;
-        if (!this.system.isShield) {
-            const { def } = this.bonus.vectors.base;
-            vector.def = Math.min(vector.def, -def);
-        }
-        return vector;
-    }
-
-    damageArmorBy(input) {
+    /**
+     * Apply damage to this armor item.
+     * Maximum damage is based on the armor's undamaged DR value (base + mod + quality).
+     * Excludes wear penalties when calculating maximum damage capacity.
+     *
+     * @async
+     * @param {number} input - Amount of damage to apply
+     */
+    async damageArmorBy(input) {
         const value = Number(input) || 0;
-        const { bonus, damage } = this.system;
-        const maxDamage = 10 * (bonus.base.dr + bonus.mod.dr + (bonus?.qual?.dr || 0));
+        const { damage } = this.system;
+        const maxDamage = 10 * this.bonus
+            .getUnitsForStat("dr")
+            .filter(u => u.vector !== "wear")
+            .reduce((acc, u) => acc + u, 0);
         const newDamage = Math.clamp(damage + value, 0, maxDamage);
-        this.update({ "system.damage": newDamage });
+        await this.update({ "system.damage": newDamage });
     }
 }
+
