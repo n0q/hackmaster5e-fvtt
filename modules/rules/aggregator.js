@@ -9,6 +9,8 @@ export class HMAggregator {
 
     #items;
 
+    #label;
+
     #opts = {
         noprop: true,
         readonly: false,
@@ -27,10 +29,12 @@ export class HMAggregator {
     * @param {documents.Item[]|Record<string, documents.Item[]>|undefined} items - Items to aggregate from.
     *                                    Uses parent.itemTypes or parent.items if undefined.
     */
-    constructor({ parent, system, items, skipCollection = false } = {}, opts = {}) {
+    constructor({ parent, label, system, items, skipCollection = false } = {}, opts = {}) {
         this.#parent = parent;
         this.#parentData = system ?? parent?.system;
+        this.#label = label ? label : parent.type;
         foundry.utils.mergeObject(this.#opts, opts);
+
 
         if (parent?.itemTypes) {
             this.#items = items ?? parent.itemTypes;
@@ -60,10 +64,13 @@ export class HMAggregator {
     /**
      * Check if this aggregator should propagate its values to parent aggregators.
      *
+     * Returns false if the aggregator is set noprop.
+     * Otherwise returns this.#parent.canPropagate
      * @returns {boolean} True if propagation is allowed
      */
     get canPropagate() {
-        return !this.#opts?.noprop;
+        if (this.#opts.noprop) return false;
+        return this.#parent.canPropagate || false;
     }
 
     /**
@@ -200,6 +207,33 @@ export class HMAggregator {
     }
 
     /**
+     * Add multiple units from an object to the aggregator under a specific vector.
+     * Utility method for post-aggregation hooks to easily add calculated bonuses.
+     *
+     * @param {string} vector - The vector name to add units under
+     * @param {Object<string, number>} units - Object mapping unit names to values
+     * @param {HMActor|HMItem} source - Source document for the units
+     * @param {string} label - Base label for the units (unit name will be appended)
+     * @param {string|null} [path=null] - Storage path for updates, null for synthetic units
+     */
+    addVector({ vector, units, source, label, path = null } = {}) {
+        for (const [unit, value] of Object.entries(units)) {
+            if (value == null) continue;
+
+            const hmUnit = new HMUnit({
+                value,
+                unit,
+                vector,
+                source,
+                label: `${label} ${unit}`,
+                path
+            });
+
+            this.addUnit(hmUnit);
+        }
+    }
+
+    /**
      * Add a unit to the internal collection.
      *
      * @param {HMUnit} unit - The unit to add
@@ -240,7 +274,7 @@ export class HMAggregator {
 
             for (const [key, units] of this.#units.entries()) {
                 const [vector, unit] = key.split(".");
-                const sum = units.reduce((acc, u) => acc + u.value, 0);
+                const sum = units.reduce((acc, u) => acc + u, 0);
 
                 const totalKey = `total.${unit}`;
                 if (!totals.has(totalKey)) {

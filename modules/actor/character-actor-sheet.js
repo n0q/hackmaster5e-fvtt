@@ -32,7 +32,8 @@ export class HMCharacterActorSheet extends HMActorSheet {
             height: 932,
             scrollY: [".scrollable"],
             tabs: [
-                { navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "skills" },
+                // { navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "skills" },
+                { navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "combat" },
                 { navSelector: ".bio-tabs", contentSelector: ".bio-body", initial: "wealth" },
             ],
         });

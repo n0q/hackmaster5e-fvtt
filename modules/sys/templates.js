@@ -88,5 +88,7 @@ export const preloadHandlebarsTemplates = () => {
         systemPath("templates/hud/waypoint-label.hbs"),
         systemPath("templates/hud/waypoint-label-subsection.hbs"),
 
+        systemPath("templates/parts/tabulate.hbs"),
+
     ]);
 };

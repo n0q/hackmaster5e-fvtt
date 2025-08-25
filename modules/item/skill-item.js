@@ -17,7 +17,7 @@ export class HMSkillItem extends HMItem {
 
     prepareDerivedData() {
         super.prepareDerivedData();
-        this.bonus = new HMAggregator({ parent: this }, { noprop: true });
+        this.bonus = new HMAggregator({ parent: this });
     }
 
     /**

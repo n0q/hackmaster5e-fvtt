@@ -105,6 +105,7 @@ export const registerHandlebarsHelpers = () => {
     Handlebars.registerHelper("eq", (a, b) => a == b); // eslint-disable-line eqeqeq
     Handlebars.registerHelper("neq", (a, b) => a != b); // eslint-disable-line eqeqeq
     Handlebars.registerHelper("ceil", a => Math.ceil(a));
+    Handlebars.registerHelper("default", (a, b) => a == null ? b : a);
 
     Handlebars.registerHelper("pad", arg1 => {
         let num = (arg1 || 0).toString();
@@ -157,6 +158,49 @@ export const registerHandlebarsHelpers = () => {
         const currencies = currency.sort(compareNames);
 
         return [...weapons, ...armors, ...items, ...currencies];
+    });
+
+    /**
+     * @returns { headers: string[], rows: { vectorName, cells[] } }
+     */
+    Handlebars.registerHelper("tabulate", vectors => {
+        const v = vectors ?? {};
+
+        const headerSet = new Set(Object.keys(v.total ?? {}));
+        if (!v.total) {
+            for (const vec of Object.values(v)) {
+                if (vec && typeof vec === "object") {
+                    for (const k of Object.keys(vec)) headerSet.add(k);
+                }
+            }
+        }
+
+        const headers = Array.from(headerSet);
+
+        // Vector ordering: total first, mod last, rest alphabetical
+        const entries = Object.entries(v).sort(([a], [b]) => {
+            if (a === "total") return -1;
+            if (b === "total") return 1;
+            if (a === "mod") return 1;
+            if (b === "mod") return -1;
+            return a.localeCompare(b);
+        });
+
+        const rows = entries.map(([vectorName, vectorData]) => {
+            const cells = headers.map(unit => {
+                const value = (vectorData && vectorData[unit] != null) ? vectorData[unit] : 0;
+
+                const isPercent = unit === "move" || unit === "mov";
+                const editable = vectorName === "mod";
+                const dtype = isPercent ? "Percent" : "Number";
+                const itemProp = editable ? `system.bonus.mod.${unit}` : null;
+
+                return { unit, value, isPercent, editable, dtype, itemProp };
+            });
+            return { vectorName, cells };
+        });
+
+        return { headers, rows };
     });
 
     Handlebars.registerHelper("delete", (arg1, arg2) => {

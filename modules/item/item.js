@@ -57,6 +57,16 @@ export class HMItem extends Item {
         } else super.update(...args);
     }
 
+    /**
+     * If this item's aggregator is allowed to propagate to parent aggregators.
+     *
+     * Defaults to true. This is meant to be overridden by a child class.
+     * @returns {boolean}
+     */
+    get canPropagate() {
+        return true;
+    }
+
     get quality() {
         const { system } = this;
         const qKey = system?.ranged?.checked ? "ranged" : this.type;
