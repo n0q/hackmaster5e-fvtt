@@ -371,6 +371,9 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
             const targetKey = itemProp.replace("system.coins.", "");
             const isDirty = foundry.utils.setProperty(coins, targetKey, targetValue);
             if (isDirty) await item.update({ "system.coins": coins });
+        } else if (item.type === "armor" && itemProp === "system.damage") {
+            const deltaDamage = targetValue - item.system.damage;
+            await item.damageArmorBy(deltaDamage);
         } else await item.update({ [itemProp]: targetValue });
     }
 

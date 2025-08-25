@@ -60,6 +60,7 @@ export class HMArmorItem extends HMItem {
             .getUnitsForStat("dr")
             .filter(u => u.vector !== "wear")
             .reduce((acc, u) => acc + u, 0);
+        console.warn(maxDamage);
         const newDamage = Math.clamp(damage + value, 0, maxDamage);
         await this.update({ "system.damage": newDamage });
     }
