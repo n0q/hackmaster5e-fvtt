@@ -445,4 +445,15 @@ export class HMAggregator {
         this.deleteVector("total");
         this.#calculateTotals();
     }
+
+    /**
+     * Propagates this aggregator's total data to the mesh network.
+     * Returns an object ready for merging into parent bonus structures.
+     * 
+     * @returns {Object} Object containing this aggregator's total vector, keyed by label
+     */
+    propagateData() {
+        if (!this.canPropagate) return {};
+        return { [this.#label]: this.total };
+    }
 }

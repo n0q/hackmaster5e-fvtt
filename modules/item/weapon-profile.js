@@ -88,8 +88,8 @@ export class HMWeaponProfile {
         const weaponBonus = weapon.system.bonus;
         const actorBonus = actor.system.bonus;
 
-        const {mod} = weaponBonus;
-        const base = weaponBonus.total;
+        const mod = weaponBonus.mod || {};
+        const base = weaponBonus.total || {};
         const bonus = {base, mod};
 
         const {ranged} = this.system;

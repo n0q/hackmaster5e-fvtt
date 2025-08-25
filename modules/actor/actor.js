@@ -127,8 +127,12 @@ export class HMActor extends Actor {
             return acc;
         }, { shieldItem: undefined, armorItem: undefined });
 
-        if (armorItem) bonus.armor = armorItem.system.bonus.total;
-        if (shieldItem) bonus.shield = shieldItem.system.bonus.total;
+        if (armorItem?.bonus) {
+            Object.assign(bonus, armorItem.bonus.propagateData());
+        }
+        if (shieldItem?.bonus) {
+            Object.assign(bonus, shieldItem.bonus.propagateData());
+        }
     }
 
     /**
@@ -159,7 +163,7 @@ export class HMActor extends Actor {
                 });
             }
 
-            Object.keys(bonus[vector]).forEach(key => {
+            Object.keys(bonus[vector] || {}).forEach(key => {
                 const value = bonus[vector][key];
                 if (key !== "_idx" && value !== null) {
                     if (typeof value === "string") {
