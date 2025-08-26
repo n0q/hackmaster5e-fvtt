@@ -10,11 +10,11 @@ Don't worry if updates are slow or sluggish. I work on this project as time allo
 
 ##### 0.5: Cleanup, Refactors, and Restyles
 
-##### 0.6: Combat Revamp
+##### 1.0: Combat Revamp
 
 Better support for melee, ranged, and magical combat. This includes (but is not limited to) fighting styles (and two weapon fighting), grappling, improved ranged combat all around, and spell volatility.
 
-##### 0.7: Magic and Weapon Effects
+##### 1.1: Magic and Weapon Effects
 
 Automatic tracking and handling of spell effects, poisons, and damage types.
 

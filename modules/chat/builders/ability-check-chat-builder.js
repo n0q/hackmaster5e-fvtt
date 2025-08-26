@@ -28,7 +28,10 @@ export class AbilityCheckChatBuilder extends ChatBuilder {
 
         const resultString = getResult(rv);
 
-        mdata.score = context.system.abilities.total[mdata.ability].value;
+        if (!mdata.score) {
+            mdata.score = context.system?.abilities?.total?.[mdata.ability]?.value || 0;
+        }
+
         const chatData = { rollContent, mdata, resultString };
         const content = await this.renderTemplate(this.template, chatData);
 

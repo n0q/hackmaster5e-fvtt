@@ -1,71 +1,67 @@
-import { HMItem } from './item.js';
-import { HMCONST, SYSTEM_ID } from '../tables/constants.js';
+import { HMItem } from "./item.js";
+import { HMAggregator } from "../rules/aggregator.js";
+import { HMCONST } from "../tables/constants.js";
 
 export class HMArmorItem extends HMItem {
     prepareBaseData() {
         super.prepareBaseData();
-        this.hmMigrateData();
-        this.prepArmorData();
     }
 
     prepareDerivedData() {
         super.prepareDerivedData();
+        const label = this.system.isShield ? "shield" : "armor";
+        this.hmagg = new HMAggregator({ parent: this, label }, { noprop: false });
     }
 
-    get quality() {
-        const vector = super.quality;
-        if (!this.system.isShield) {
-            const {def} = this.system.bonus.base;
-            vector.def = Math.min(vector.def, -def);
+    _postAggregation(aggregator) {
+        const { qn, damage } = this.system;
+        if (qn !== 0) {
+            const qualData = {
+                vector: "qual",
+                units: { dr: qn, def: qn },
+                source: this,
+                label: "Quality",
+                path: "system.qn",
+            };
+
+            aggregator.addVector(qualData);
         }
-        return vector;
+
+        if (damage >= 10) {
+            const wear = -Math.floor(damage / 10);
+            const armorDamageData = {
+                vector: "wear",
+                units: { dr: wear },
+                source: this,
+                label: "Damaged",
+                path: null,
+            };
+
+            aggregator.addVector(armorDamageData);
+        }
+    }
+
+    get canPropagate() {
+        return this.system.state === HMCONST.ITEM_STATE.EQUIPPED;
     }
 
     /**
-     * shield.checked is deprecated, so this function tries to set
-     * armortype to SHIELD if it finds shield.checked in use.
+     * Apply damage to this armor item.
+     * Maximum damage is based on the armor's undamaged DR value (base + mod + quality).
+     * Excludes wear penalties when calculating maximum damage capacity.
+     *
+     * @async
+     * @param {number} input - Amount of damage to apply
      */
-    hmMigrateData() {
-        const {armortype, shield} = this.system;
-        const {SHIELD} = HMCONST.ARMOR.TYPE;
-        if (shield.checked && armortype !== SHIELD) {
-            this.update({
-                'system.armortype': SHIELD,
-                'system.shield.checked': false,
-            });
-        }
-    }
-
-    prepArmorData() {
-        if (!this.actor?.system) return;
-
-        const useArmorDegredation = game.settings.get(SYSTEM_ID, 'armorDegredation');
-        const {bonus, damage, qn} = this.system;
-        qn ? bonus.qual = this.quality : delete bonus.qual;
-
-        const adjDamage = Math.max(damage, 0);
-        const armorDmg = useArmorDegredation ? Number(-Math.floor(adjDamage/10)) : 0;
-
-        Object.keys(bonus.base).forEach((key) => {
-            let sum = 0;
-            Object.keys(bonus).filter((x) => x !== 'total').forEach((row) => {
-               sum += (bonus[row][key] || 0);
-            });
-            bonus.total[key] = sum;
-        });
-        const totalArmorDmg = Math.max(-bonus.total.dr, armorDmg);
-        bonus.total.dr += totalArmorDmg;
-
-        this.derived = armorDmg
-            ? {wear: {dr: totalArmorDmg, def: 0, init: 0, spd: 0, move: 0}}
-            : undefined;
-    }
-
-    damageArmorBy(input) {
+    async damageArmorBy(input) {
         const value = Number(input) || 0;
-        const {bonus, damage} = this.system;
-        const maxDamage = 10 * (bonus.base.dr + bonus.mod.dr + (bonus?.qual?.dr || 0));
+        const { damage } = this.system;
+        const maxDamage = 10 * this.hmagg
+            .getUnitsForStat("dr")
+            .filter(u => u.vector !== "wear")
+            .reduce((acc, u) => acc + u, 0);
         const newDamage = Math.clamp(damage + value, 0, maxDamage);
-        this.update({'system.damage': newDamage});
+        await this.update({ "system.damage": newDamage });
     }
 }
+

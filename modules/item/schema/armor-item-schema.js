@@ -13,29 +13,23 @@ import { ThingSchema } from "./parts/thing-schema.js";
  * @property {SchemaField} bonus.mod
  * @property {NumberField} qn - Quality number. Represents a +n armor.
  * @property {NumberField} ff - Fatigue factor.
- * @property {BooleanField} shield.checked - True if armor is a shield.
- * @deprecated since 0.4.7. Use armortype instead.
  */
 export class HMArmorSchema extends foundry.abstract.DataModel {
     static defineSchema() {
         const fields = foundry.data.fields;
         const typeOpts = { required: false, initial: HMCONST.ARMOR.TYPE.NONE, integer: true };
         return {
-            ...ThingSchema.getFields(),
+            ...ThingSchema.defineSchema(),
             description: new fields.HTMLField({ required: false, initial: undefined }),
             armortype: new fields.NumberField(typeOpts),
             proficiency: new fields.StringField({ required: false, initial: undefined }),
-            damage: new fields.NumberField({ required: false, initial: 0, integer: true }),
+            damage: new fields.NumberField({ required: false, initial: 0, integer: true, null: false }),
             bonus: new fields.SchemaField({
-                total: getVectorSchema(),
-                base: getVectorSchema(),
-                mod: getVectorSchema({ move: 0 }),
+                base: new fields.EmbeddedDataField(ArmorBonusSchema),
+                mod: new fields.EmbeddedDataField(ArmorBonusSchema, { initial: { move: 0 } }),
             }),
             qn: new fields.NumberField({ required: false, initial: 0, integer: true }),
             ff: new fields.NumberField({ required: false, initial: 0, integer: true }),
-            shield: new fields.SchemaField({
-                checked: new fields.BooleanField({ required: false, initial: false }),
-            }),
         };
     }
 
@@ -76,23 +70,22 @@ export class HMArmorSchema extends foundry.abstract.DataModel {
 }
 
 /**
- * Defines a vector schema suitable for Armor bonus.
- * @property {dr} NumberField - Damage Reduction modifier (integer).
- * @property {def} NumberField - Defensive modifier (integer).
- * @property {init} NumberField - Initiative modifier (integer).
- * @property {spd} NumberField - Weapon speed modifier (integer).
- * @property {move} NumberField - Movement modifier (float).
+ * Schema for armor bonus fields (dr, def, init, spd, move).
+ * Used by armor items for base and mod bonus vectors.
  */
-function getVectorSchema({ move = 1.0 } = {}) {
-    const fields = foundry.data.fields;
-    const integerOpts = { required: false, initial: 0, integer: true };
-    const floatOpts = { required: false, initial: move, integer: false };
+class ArmorBonusSchema extends foundry.abstract.DataModel {
+    static defineSchema() {
+        const fields = foundry.data.fields;
+        const integerOpts = { required: false, initial: 0, integer: true, null: false };
+        const floatOpts = { required: false, initial: 1.0, integer: false };
 
-    return new fields.SchemaField({
-        dr: new fields.NumberField(integerOpts),
-        def: new fields.NumberField(integerOpts),
-        init: new fields.NumberField(integerOpts),
-        spd: new fields.NumberField(integerOpts),
-        move: new fields.NumberField(floatOpts),
-    });
+        return {
+            dr: new fields.NumberField(integerOpts),
+            def: new fields.NumberField(integerOpts),
+            init: new fields.NumberField(integerOpts),
+            spd: new fields.NumberField(integerOpts),
+            move: new fields.NumberField(floatOpts),
+        };
+    }
 }
+

@@ -1,6 +1,7 @@
 import { ProcessorAbstract } from "./processor-abstract.js";
 import { SkillProcessorSchema } from "./schema/skill-processor-schema.js";
 import { HMAggregator } from "../aggregator.js";
+import { SKILL_TYPES } from "../../item/schema/skill-item-schema.js";
 import { HMCONST } from "../../tables/constants.js";
 
 const DIFFICULTY_MODIFIERS = {
@@ -15,21 +16,21 @@ export class SkillProcessor extends ProcessorAbstract {
     static SCHEMA_CLASS = SkillProcessorSchema;
 
     async run() {
-        const skill = HMAggregator.fromMap(this.schema.skillAggregatorMap);
+        const skillAgg = HMAggregator.fromMap(this.schema.skillAggregatorMap);
 
         const { bonus, masteryType } = this.schema.resp;
         const formula = "d100";
 
         const roll = await new Roll(formula).evaluate();
 
-        const skillValue = skill.vectors.total[masteryType];
+        const skillValue = skillAgg.vectors.total[masteryType];
         const checkResult = roll.total - (bonus + skillValue);
 
         const mdata = {
             checkResult,
             opposedResult: roll.total + (bonus + skillValue),
             bestDc: this.getAchievedDifficulty(checkResult),
-            mastery: getMasteryLevel(skillValue),
+            mastery: getMasteryLevels(skillAgg)[masteryType],
             level: skillValue,
         };
 
@@ -49,8 +50,19 @@ export class SkillProcessor extends ProcessorAbstract {
     }
 }
 
-export const getMasteryLevel = skillLevel => {
-    return [0, 25, 50, 75, 87, Infinity].findIndex(m => m >= skillLevel);
+/**
+ *  Calcualtes skill mastery level, based on the skill's mastery vector.
+ *
+ *  @param {HMAggregator} agg - Aggregator containing data to evaluate.
+ *  @returns {Object} An object of mastery level data.
+ */
+export const getMasteryLevels = agg => {
+    const masteryLookup = v => [0, 25, 50, 75, 87, Infinity].findIndex(m => m >= v);
+    const masteryValues = agg.vectors.mastery;
+    return Object.fromEntries(SKILL_TYPES.map(u => [
+        u,
+        masteryLookup(masteryValues[u]),
+    ]));
 };
 
 /**

@@ -1,0 +1,42 @@
+<table class="table-basic">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      {{#each tab.headers as |unitName|}}
+        <th scope="col"><label class="loud-label">{{unitName}}</label></th>
+      {{/each}}
+    </tr>
+  </thead>
+
+  <tbody>
+    {{#each tab.rows}}
+      <tr>
+        <th scope="row"><label class="resource-label">{{vectorName}}</label></th>
+        {{#each cells}}
+          <td>
+            {{#if editable}}
+              {{#if isPercent}}
+                <input class="editable" type="text"
+                       value="{{pct value}}"
+                       style="width: 2.5rem;"
+                       data-item-prop="{{itemProp}}"
+                       data-dtype="{{dtype}}" />
+              {{else}}
+                <input class="editable" type="number"
+                       value="{{value}}"
+                       data-item-prop="{{itemProp}}"
+                       data-dtype="{{dtype}}" />
+              {{/if}}
+            {{else}}
+              {{#if isPercent}}
+                {{pct value}}
+              {{else}}
+                {{value}}
+              {{/if}}
+            {{/if}}
+          </td>
+        {{/each}}
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

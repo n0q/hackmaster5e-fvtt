@@ -2,7 +2,7 @@ import { HMItem } from "./item.js";
 import { HMCONST, SYSTEM_ID } from "../tables/constants.js";
 import { sanitizeForBasicObjectBinding, isValidBasicObjectBinding } from "../data/data-utils.js";
 import { SkillPrompt } from "../apps/skill-application.js";
-import { SkillProcessor } from "../rules/processors/skill-processor.js";
+import { SkillProcessor, getMasteryLevels } from "../rules/processors/skill-processor.js";
 import { HMChatFactory, CHAT_TYPE } from "../chat/chat-factory.js";
 import { HMAggregator } from "../rules/aggregator.js";
 import { HMUnit } from "../rules/hmunit.js";
@@ -17,7 +17,7 @@ export class HMSkillItem extends HMItem {
 
     prepareDerivedData() {
         super.prepareDerivedData();
-        this.bonus = new HMAggregator({ parent: this }, { noprop: true });
+        this.hmagg = new HMAggregator({ parent: this });
     }
 
     /**
@@ -27,64 +27,51 @@ export class HMSkillItem extends HMItem {
      * with values based on the lowest relevant ability score.
      * @param {HMAggregator} aggregator - The bonus aggregator instance
      */
-    handleBonusAggregation(aggregator) {
-        const { universal } = this.system;
-        const { bonus } = this.system;
+    _postAggregation(aggregator) {
+        const isUniversal = this.system.universal;
+        const masteryUnits = aggregator.getUnitsForVector("mastery");
+        const isUntrained = masteryUnits.length === 0 || masteryUnits.every(u => u.value === 0);
+        if (!isUniversal || !isUntrained) return;
 
-        const isUntrained = !bonus.mastery.value && !bonus.mastery.literacy && !bonus.mastery.verbal;
+        const abilities = this.parent?.system?.abilities;
+        if (!abilities) return;
 
-        const actor = this.parent;
-        if (universal && isUntrained && actor?.system?.abilities?.base) {
-            const relevantAbilities = Object.entries(this.system.relevant)
-                .filter(([_, isRelevant]) => isRelevant)
-                .map(([ability, _]) => ability);
+        const relevantAbilities = Object.entries(this.system.relevant)
+            .filter(([_, isRelevant]) => isRelevant)
+            .map(([ability, _]) => ability);
 
-            if (relevantAbilities.length > 0) {
-                const abilityScores = relevantAbilities.map(ability =>
-                    actor.system.abilities.base[ability]?.value || 10
-                );
-                const lowestScore = Math.min(...abilityScores);
+        if (relevantAbilities.length > 0) {
+            const abilityScores = relevantAbilities.map(ability =>
+                abilities.total[ability]?.value || 1
+            );
 
-                const hmUnitData = {
-                    value: lowestScore,
-                    vector: "untrained",
-                    source: this,
-                    label: "Untrained Universal",
-                    path: null,
-                };
-                aggregator.addUnit(new HMUnit({ ...hmUnitData, unit: "value" }));
-                aggregator.addUnit(new HMUnit({ ...hmUnitData, unit: "literacy" }));
-                aggregator.addUnit(new HMUnit({ ...hmUnitData, unit: "verbal" }));
-            }
-        }
+            const lowestScore = Math.min(...abilityScores);
+            const { SKILL_TYPES } = this.system;
 
-        // Process normal bonus structure
-        if (bonus) {
-            for (const [vector, stats] of Object.entries(bonus)) {
-                if (vector === "total") continue; // Skip item's own totals
-                if (typeof stats !== "object") continue;
+            const untrainedData = {
+                vector: "untrained",
+                units: Object.fromEntries(SKILL_TYPES.map(key => [key, lowestScore])),
+                source: this,
+                label: "Untrained Universal",
+                path: null,
+            };
 
-                for (const [unit, value] of Object.entries(stats)) {
-                    if (value == null) continue;
-                    aggregator.addUnit(new HMUnit({ value, unit, vector, source: this }));
-                }
-            }
+            aggregator.addVector(untrainedData);
+
         }
     }
 
     createSyntheticSkill() {
+        const { SKILL_TYPES } = this.system;
         const baseUnitData = {
             value: 0,
             vector: "untrained",
-            // source: this,
             source: null,
             label: "Untrained Universal",
             path: null,
         };
 
-        const unitTypes = ["value", "literacy", "verbal"];
-
-        const mapData = unitTypes.map(unitType => {
+        const mapData = SKILL_TYPES.map(unitType => {
             const unit = new HMUnit({ ...baseUnitData, unit: unitType });
             return [`untrained.${unitType}`, [unit]];
         });
@@ -110,7 +97,7 @@ export class HMSkillItem extends HMItem {
         const subject = {
             actor: processList[0].actor,
             skill: {
-                data: processList[0].skill.bonus.toMap(),
+                data: processList[0].skill.hmagg.toMap(),
                 name: processList[0].skill.specname,
                 masteryType,
             },
@@ -125,7 +112,7 @@ export class HMSkillItem extends HMItem {
             processList.map(async ({ actor, skill }) => {
                 const processorData = {
                     resp: promptData,
-                    skillAggregatorMap: skill.bonus.toMap(),
+                    skillAggregatorMap: skill.hmagg.toMap(),
                 };
 
                 const bData = await SkillProcessor.process(processorData);
@@ -188,11 +175,17 @@ export class HMSkillItem extends HMItem {
             throw new Error(`Invalid Bob: '${bob}'.`);
         }
 
-        const actors = canvas.tokens.controlled.map(token => token.actor);
+        let actors = canvas.tokens.controlled.map(token => token.actor);
         if (!actors.length && !game.user.isGM) {
             const smartSelect = game.settings.get(SYSTEM_ID, "smartSelect");
             const { character } = game.user;
             if (smartSelect && character) actors.push(character);
+        }
+
+        const hookResult = Hooks.call("hm5e.getSkillActors", actors, { bob, name, masteryType });
+
+        if (Array.isArray(hookResult)) {
+            actors = hookResult;
         }
 
         if (actors.length < 1) {
@@ -249,6 +242,10 @@ export class HMSkillItem extends HMItem {
         }
 
         throw new Error(`Invalid Bob: '${bob}'.`);
+    }
+
+    get mastery() {
+        return getMasteryLevels(this.hmagg);
     }
 }
 

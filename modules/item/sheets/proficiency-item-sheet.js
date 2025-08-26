@@ -19,4 +19,16 @@ export class HMProficiencyItemSheet extends HMItemSheet {
             tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "attributes" }],
         });
     }
+
+    /** @override */
+    activateListeners(html) {
+        super.activateListeners(html);
+
+        // Uncheck mechanical when ranged is unchecked
+        html.find('input[name="system.ranged.checked"]').change(event => {
+            if (!event.target.checked) {
+                html.find('input[name="system.mechanical.checked"]').prop('checked', false).trigger('change');
+            }
+        });
+    }
 }

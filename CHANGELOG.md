@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.5.12] - 2025-08-26
+
+### Added
+
+- hm5e.getSkillActors hook fires while finding actor participants for a skill roll.
+
+### Changed
+
+- Refreshed Ability roll dialog.
+
+### Fixed
+
+- Untrained universal skills key off of total ability score again.
+- Untrained universal skills correctly report their mastery level again.
+
 ## 0.5.11 - 2025-08-22
 
 ### Changed

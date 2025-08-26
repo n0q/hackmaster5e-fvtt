@@ -1,11 +1,11 @@
-import { HMCONST } from "../../tables/constants.js";
 import { BasicObjectBindingSchema } from "../../data/bob-schema.js";
-import { getMasteryLevel } from "../../rules/processors/skill-processor.js";
+
+export const SKILL_TYPES = ["value", "literacy", "verbal"];
 
 export class HMSkillSchema extends foundry.abstract.DataModel {
     static defineSchema() {
         const fields = foundry.data.fields;
-        const numberOpts = { required: false, initial: 0, integer: true };
+        const numberOpts = { required: false, initial: 0, integer: true, null: false };
         const booleanOpts = { required: false, initial: false };
         const stringOpts = { required: false, initial: undefined };
 
@@ -13,19 +13,16 @@ export class HMSkillSchema extends foundry.abstract.DataModel {
         const abilityEntries = abilityKeys.map(k => [k, new fields.BooleanField(booleanOpts)]);
         const abilityInner = Object.fromEntries(abilityEntries);
 
+        const createSkillTypeFields = () => {
+            return Object.fromEntries(
+                SKILL_TYPES.map(type => [type, new fields.NumberField(numberOpts)])
+            );
+        };
+
         return {
             description: new fields.HTMLField(stringOpts),
             bonus: new fields.SchemaField({
-                total: new fields.SchemaField({
-                    value: new fields.NumberField(numberOpts),
-                    literacy: new fields.NumberField(numberOpts),
-                    verbal: new fields.NumberField(numberOpts),
-                }),
-                mastery: new fields.SchemaField({
-                    value: new fields.NumberField(numberOpts),
-                    literacy: new fields.NumberField(numberOpts),
-                    verbal: new fields.NumberField(numberOpts),
-                }),
+                mastery: new fields.SchemaField(createSkillTypeFields()),
             }),
             bp: new fields.NumberField(numberOpts),
             specialty: new fields.SchemaField({
@@ -40,19 +37,21 @@ export class HMSkillSchema extends foundry.abstract.DataModel {
         };
     }
 
-    get mastery() {
-        const { bonus } = this.parent;
-        const { MASTERY } = HMCONST.SKILL;
-
-        return Object.keys(bonus.total).reduce((acc, type) => {
-            const isUnskilled = !bonus.vectors.mastery[type];
-            const mValue = parseInt(bonus.total[type], 10);
-            acc[type] = isUnskilled ? MASTERY.UNSKILLED : getMasteryLevel(mValue);
-            return acc;
-        }, {});
+    get SKILL_TYPES() {
+        return SKILL_TYPES;
     }
 
-    get level() {
-        return this.parent.bonus.total;
+    static migrateData(source) {
+        const migrated = super.migrateData(source);
+
+        if (migrated.bonus?.mastery) {
+            for (const skillType of SKILL_TYPES) {
+                if (migrated.bonus.mastery[skillType] == null) {
+                    migrated.bonus.mastery[skillType] = 0;
+                }
+            }
+        }
+        return migrated;
     }
 }
+

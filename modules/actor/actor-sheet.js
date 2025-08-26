@@ -237,7 +237,7 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
             const handler = ev => {
                 try {
                     this._onDragStart(ev);
-                } catch (error) {
+                } catch(error) {
                     if (!(error instanceof TypeError)) throw error;
                     HMContainer.dragStartHandler(ev, this.actor);
                 }
@@ -371,6 +371,9 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
             const targetKey = itemProp.replace("system.coins.", "");
             const isDirty = foundry.utils.setProperty(coins, targetKey, targetValue);
             if (isDirty) await item.update({ "system.coins": coins });
+        } else if (item.type === "armor" && itemProp === "system.damage") {
+            const deltaDamage = targetValue - item.system.damage;
+            await item.damageArmorBy(deltaDamage);
         } else await item.update({ [itemProp]: targetValue });
     }
 
@@ -385,7 +388,7 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
         let cardType = false;
 
         if (dialog === "save") return actor.rollSave(dataset);
-        if (dialog === "ability") cardType = CHAT_TYPE.ABILITY_CHECK;
+        if (dialog === "ability") return actor.rollAbility(dataset);
 
         if (dialog === "atk") {
             return game[SYSTEM_ID].HMWeaponItem.rollAttack({ weapon: dataset.itemId, caller: actor });

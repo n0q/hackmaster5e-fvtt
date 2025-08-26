@@ -121,14 +121,13 @@ export class HMActor extends Actor {
 
     setArmorBonus() {
         const { bonus } = this.system;
-        const { shieldItem, armorItem } = this.itemTypes.armor.reduce((acc, obj) => {
-            if (obj.system.state !== HMCONST.ITEM_STATE.EQUIPPED) return acc;
-            obj.system.isShield ? acc.shieldItem = obj : acc.armorItem = obj;
-            return acc;
-        }, { shieldItem: undefined, armorItem: undefined });
 
-        if (armorItem) bonus.armor = armorItem.system.bonus.total;
-        if (shieldItem) bonus.shield = shieldItem.system.bonus.total;
+        const armorList = this.itemTypes.armor.filter(obj => obj.hmagg.canPropagate);
+        const shieldItem = armorList.find(obj => obj.system.isShield);
+        const armorItem = armorList.find(obj => !obj.system.isShield);
+
+        if (armorItem?.hmagg) Object.assign(bonus, armorItem.hmagg.propagateData());
+        if (shieldItem?.hmagg) Object.assign(bonus, shieldItem.hmagg.propagateData());
     }
 
     /**
@@ -139,7 +138,7 @@ export class HMActor extends Actor {
         const arcanelore = this.getByBob("skill:arcane-lore");
         if (!arcanelore) return;
 
-        const sfc = arcanelore.system.mastery.value - 1;
+        const sfc = arcanelore.mastery.value - 1;
         if (sfc > 0) bonus.skill = { sfc };
     }
 
@@ -159,7 +158,7 @@ export class HMActor extends Actor {
                 });
             }
 
-            Object.keys(bonus[vector]).forEach(key => {
+            Object.keys(bonus[vector] || {}).forEach(key => {
                 const value = bonus[vector][key];
                 if (key !== "_idx" && value !== null) {
                     if (typeof value === "string") {

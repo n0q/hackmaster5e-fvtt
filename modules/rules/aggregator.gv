@@ -1,0 +1,101 @@
+digraph HMAggregator {
+    rankdir=LR;
+    node [shape=box, style=rounded, fontsize=10];
+
+    constructor -> collectUnits [label="#collectUnits()", style=bold];
+
+    // Collection
+    collectUnits -> collectParentUnits;
+    collectUnits -> collectItemUnits;
+    collectUnits -> calculateTotals;
+
+    collectParentUnits -> aggregate;
+    collectParentUnits -> parentPostAggregation [label="_postAggregation?", style=dashed];
+
+    aggregate -> addUnit_private;
+
+    collectItemUnits -> processItem;
+
+    processItem -> itemHandleBonus [label="handleBonusAggregation?", style=dashed];
+    processItem -> addUnit_private [label="fallback"];
+
+    // Adding units
+    addUnit_public -> addUnit_private;
+    addVector -> addUnit_public;
+
+    // Totals
+    calculateTotals -> getUnitsForStat;
+    calculateTotals -> addUnit_private [label="add total"];
+
+    // Cache invalidation
+    addUnit_private -> invalidateCache [label="clears cache", style=dotted];
+    invalidateCache -> markDirty [label="isDirty=true\n#vectorsCache=null", shape=note, style=dotted];
+
+    deleteVector -> invalidateCache;
+    deleteUnitsByStat -> invalidateCache;
+
+    refresh -> deleteVector;
+    refresh -> calculateTotals;
+
+    // Vectors and totals access
+    vectorsGetter -> calculateTotals [label="if dirty"];
+    vectorsGetter -> buildCache [label="deepFreeze"];
+    getTotal -> unitsMap [label="#units", style=dashed];
+    getVector -> unitsMap [label="#units", style=dashed];
+    getUnitsForVector -> unitsMap [label="#units", style=dashed];
+
+    // Serialization
+    fromMap -> loadFromMap;
+    loadFromMap -> calculateTotals;
+
+    // Propagation
+    propagateData -> vectorsGetter [label="uses total", style=dotted];
+
+    // Groupings
+    subgraph cluster_add {
+        label="Adding Units";
+        addUnit_public [label="addUnit()"];
+        addVector [label="addVector()"];
+        addUnit_private [label="#addUnit()"];
+    }
+
+    subgraph cluster_collect {
+        label="Collection";
+        collectUnits [label="#collectUnits()"];
+        collectParentUnits [label="#collectParentUnits()"];
+        aggregate [label="#aggregate()"];
+        collectItemUnits [label="#collectItemUnits()"];
+        processItem [label="#processItem()"];
+    }
+
+    subgraph cluster_totals {
+        label="Totals/Cache";
+        calculateTotals [label="#calculateTotals()"];
+        getUnitsForStat [label="getUnitsForStat()"];
+        vectorsGetter [label="get vectors"];
+        buildCache [label="freeze cache"];
+        invalidateCache [label="#invalidateCache()"];
+        deleteVector [label="deleteVector()"];
+        deleteUnitsByStat [label="deleteUnitsByStat()"];
+        refresh [label="refresh()"];
+        getTotal [label="getTotal()"];
+        getVector [label="getVector()"];
+        getUnitsForVector [label="getUnitsForVector()"];
+        unitsMap [label="#units Map", shape=folder, style=dashed];
+    }
+
+    subgraph cluster_serialization {
+        label="Serialization";
+        fromMap [label="static fromMap()"];
+        loadFromMap [label="_loadFromMap()"];
+    }
+
+    subgraph cluster_propagation {
+        label="Propagation";
+        propagateData [label="propagateData()"];
+    }
+
+    // External hooks
+    parentPostAggregation [label="parent._postAggregation()", shape=ellipse, style=dashed];
+    itemHandleBonus [label="item.handleBonusAggregation()", shape=ellipse, style=dashed];
+}

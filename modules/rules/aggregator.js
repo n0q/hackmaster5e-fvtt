@@ -9,10 +9,14 @@ export class HMAggregator {
 
     #items;
 
+    #label;
+
     #opts = {
         noprop: true,
         readonly: false,
     };
+
+    #initializing;
 
     #vectorsCache = null;
 
@@ -27,9 +31,11 @@ export class HMAggregator {
     * @param {documents.Item[]|Record<string, documents.Item[]>|undefined} items - Items to aggregate from.
     *                                    Uses parent.itemTypes or parent.items if undefined.
     */
-    constructor({ parent, system, items, skipCollection = false } = {}, opts = {}) {
+    constructor({ parent, label, system, items, skipCollection = false } = {}, opts = {}) {
         this.#parent = parent;
         this.#parentData = system ?? parent?.system;
+        this.#label = label ? label : parent?.type || "unknown";
+        this.#initializing = !skipCollection;
         foundry.utils.mergeObject(this.#opts, opts);
 
         if (parent?.itemTypes) {
@@ -41,7 +47,8 @@ export class HMAggregator {
         }
 
         if (!skipCollection) {
-            this.#collectBonuses();
+            this.#collectUnits();
+            this.#initializing = false;
         }
     }
 
@@ -60,10 +67,28 @@ export class HMAggregator {
     /**
      * Check if this aggregator should propagate its values to parent aggregators.
      *
+     * Returns false if the aggregator is set noprop.
+     * Otherwise returns this.#parent.canPropagate
      * @returns {boolean} True if propagation is allowed
      */
     get canPropagate() {
-        return !this.#opts?.noprop;
+        if (this.#opts.noprop) return false;
+        return this.#parent.canPropagate || false;
+    }
+
+    get isInitializing() {
+        return this.#initializing;
+    }
+
+    /**
+     * Throws an error if the aggregator is read-only and not initializing.
+     *
+     * @throws {Error} If #this.isReadOnly && !#this.isInitializing
+     */
+    assertWritable() {
+        if (this.isReadOnly && !this.isInitializing) {
+            throw Error("Unable to alter read-only Aggregator.");
+        }
     }
 
     /**
@@ -113,29 +138,29 @@ export class HMAggregator {
      *
      * @private
      */
-    #collectBonuses() {
+    #collectUnits() {
         this.#collectParentUnits();
         this.#collectItemUnits();
         this.#calculateTotals();
     }
 
     #collectParentUnits() {
-        const system = this.#parentData;
-
-        if (typeof this.#parent.handleBonusAggregation === "function") {
-            this.#parent.handleBonusAggregation(this);
-            return;
+        this.#aggregate(this.#parentData.agg || this.#parentData.bonus, this.#parent);
+        if (typeof this.#parent._postAggregation === "function") {
+            this.#parent._postAggregation(this);
         }
+    }
 
-        if (system.bonus) {
-            for (const [vector, stats] of Object.entries(system.bonus)) {
-                if (vector === "total") continue; // Skip aggregated totals
-                if (typeof stats !== "object") continue;
+    #aggregate(bonus, parent) {
+        if (!bonus) return;
 
-                for (const [unit, value] of Object.entries(stats)) {
-                    if (value == null) continue;
-                    this.#addUnit(new HMUnit({ value, unit, vector, source: this.#parent }));
-                }
+        for (const [vector, stats] of Object.entries(bonus)) {
+            if (vector === "total") continue;
+            if (typeof stats !== "object") continue;
+
+            for (const [unit, value] of Object.entries(stats)) {
+                if (value == null) continue;
+                this.#addUnit(new HMUnit({ value, unit, vector, source: parent }));
             }
         }
     }
@@ -169,9 +194,10 @@ export class HMAggregator {
             return;
         }
 
-        if (!item.system?.bonus) return;
+        const bonusData = item.system?.agg || item.system?.bonus;
+        if (!bonusData) return;
 
-        for (const [vector, stats] of Object.entries(item.system.bonus)) {
+        for (const [vector, stats] of Object.entries(bonusData)) {
             if (vector === "total") continue;
             if (typeof stats !== "object") continue;
 
@@ -192,11 +218,35 @@ export class HMAggregator {
             throw new Error("'total' is a reserved vector name.");
         }
 
-        if (this.isReadOnly) {
-            throw Error("Unable to alter read-only Aggregator.");
-        }
-
+        this.assertWritable();
         this.#addUnit(unit);
+    }
+
+    /**
+     * Add multiple units from an object to the aggregator under a specific vector.
+     * Utility method for post-aggregation hooks to easily add calculated bonuses.
+     *
+     * @param {string} vector - The vector name to add units under
+     * @param {Object<string, number>} units - Object mapping unit names to values
+     * @param {HMActor|HMItem} source - Source document for the units
+     * @param {string} label - Base label for the units (unit name will be appended)
+     * @param {string|null} [path=null] - Storage path for updates, null for synthetic units
+     */
+    addVector({ vector, units, source, label, path = null } = {}) {
+        for (const [unit, value] of Object.entries(units)) {
+            if (value == null) continue;
+
+            const hmUnit = new HMUnit({
+                value,
+                unit,
+                vector,
+                source,
+                label: `${label} ${unit}`,
+                path
+            });
+
+            this.addUnit(hmUnit);
+        }
     }
 
     /**
@@ -240,7 +290,7 @@ export class HMAggregator {
 
             for (const [key, units] of this.#units.entries()) {
                 const [vector, unit] = key.split(".");
-                const sum = units.reduce((acc, u) => acc + u.value, 0);
+                const sum = units.reduce((acc, u) => acc + u, 0);
 
                 const totalKey = `total.${unit}`;
                 if (!totals.has(totalKey)) {
@@ -277,14 +327,16 @@ export class HMAggregator {
 
     /**
      * Get all units for a specific stat, regardless of vector.
+     * Excludes the computed "total" vector.
      *
      * @param {string} unit - The stat name (e.g., "dr", "init")
-     * @returns {HMUnit[]} Array of all units contributing to this stat
+     * @returns {HMUnit[]} Array of all units contributing to this stat (excluding total)
      */
     getUnitsForStat(unit) {
         const results = [];
         for (const [key, units] of this.#units.entries()) {
-            if (key.endsWith(`.${unit}`)) {
+            const [vector, unitName] = key.split(".");
+            if (unitName === unit && vector !== "total") {
                 results.push(...units);
             }
         }
@@ -303,6 +355,10 @@ export class HMAggregator {
      * @returns {Object<Object<string|number>>}
      */
     get vectors() {
+        if (this.#_isCalculating) {
+            throw new Error("Cannot access computed vectors during calculation. Use getUnitsForVector() or getUnitsForStat() instead.");
+        }
+
         if (this.isDirty && !this.#_isCalculating) {
             this.#calculateTotals();
         }
@@ -359,7 +415,7 @@ export class HMAggregator {
         for (const [key, units] of this.#units.entries()) {
             const [vectorName, unitName] = key.split(".");
             if (vector === vectorName) {
-                results[unitName] = units.reduce((sum, u) => sum + u.value, 0);
+                results[unitName] = units.reduce((sum, u) => sum + u, 0);
             }
         }
         return results;
@@ -382,9 +438,7 @@ export class HMAggregator {
      * @throws {Error} If aggregator is read-only.
      */
     deleteVector(vector) {
-        if (this.isReadOnly) {
-            throw Error("Unable to alter read-only Aggregator.");
-        }
+        this.assertWritable();
 
         let wasChanged = false;
         for (const [key] of this.#units.entries()) {
@@ -401,10 +455,45 @@ export class HMAggregator {
     }
 
     /**
+     * Removes all units for a specific stat, regardless of vector.
+     * Flags the aggregator as dirty if any action was taken.
+     *
+     * @param {string} unit - The stat name to remove (e.g., "def", "dmg").
+     * @throws {Error} If aggregator is read-only.
+     */
+    deleteUnitsByStat(unit) {
+        this.assertWritable();
+
+        let wasChanged = false;
+        for (const [key] of this.#units.entries()) {
+            const [, unitName] = key.split(".");
+            if (unitName === unit) {
+                this.#units.delete(key);
+                wasChanged = true;
+            }
+        }
+
+        if (wasChanged) {
+            this.#invalidateCache();
+        }
+    }
+
+    /**
      * Force recalculation of totals.
      */
     refresh() {
         this.deleteVector("total");
         this.#calculateTotals();
+    }
+
+    /**
+     * Propagates this aggregator's total data to the mesh network.
+     * Returns an object ready for merging into parent bonus structures.
+     *
+     * @returns {Object} Object containing this aggregator's total vector, keyed by label
+     */
+    propagateData() {
+        if (!this.canPropagate) return {};
+        return { [this.#label]: this.total };
     }
 }

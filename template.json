@@ -135,15 +135,7 @@
             "qty":  1
         },
 
-        "proficiency": {
-            "templates": ["base"],
-            "bonus": {"atk": 0, "def": 0, "dmg": 0, "spd": 0},
-            "skill": null,
-            "weapon":     {"checked": false},
-            "ranged":     {"checked": false},
-            "mechanical": {"checked": false}
-        },
-
+        "proficiency": {},
         "race": {},
         "spell": {},
         "skill": {},

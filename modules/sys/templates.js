@@ -70,7 +70,7 @@ export const preloadHandlebarsTemplates = () => {
         systemPath("templates/item/parts/header-logistics.hbs"),
         systemPath("templates/item/parts/header.hbs"),
 
-        systemPath("templates/dialog/getAbility.hbs"),
+        systemPath("templates/dialog/ability-content-app.hbs"),
         systemPath("templates/dialog/getAttack.hbs"),
         systemPath("templates/dialog/cast.hbs"),
         systemPath("templates/dialog/critical-content-app.hbs"),
@@ -87,6 +87,8 @@ export const preloadHandlebarsTemplates = () => {
 
         systemPath("templates/hud/waypoint-label.hbs"),
         systemPath("templates/hud/waypoint-label-subsection.hbs"),
+
+        systemPath("templates/parts/tabulate.hbs"),
 
     ]);
 };
