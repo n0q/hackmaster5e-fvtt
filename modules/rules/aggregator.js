@@ -16,6 +16,8 @@ export class HMAggregator {
         readonly: false,
     };
 
+    #initializing;
+
     #vectorsCache = null;
 
     #_isDirty = false;
@@ -33,8 +35,8 @@ export class HMAggregator {
         this.#parent = parent;
         this.#parentData = system ?? parent?.system;
         this.#label = label ? label : parent?.type || "unknown";
+        this.#initializing = !skipCollection;
         foundry.utils.mergeObject(this.#opts, opts);
-
 
         if (parent?.itemTypes) {
             this.#items = items ?? parent.itemTypes;
@@ -45,7 +47,8 @@ export class HMAggregator {
         }
 
         if (!skipCollection) {
-            this.#collectBonuses();
+            this.#collectUnits();
+            this.#initializing = false;
         }
     }
 
@@ -71,6 +74,21 @@ export class HMAggregator {
     get canPropagate() {
         if (this.#opts.noprop) return false;
         return this.#parent.canPropagate || false;
+    }
+
+    get isInitializing() {
+        return this.#initializing;
+    }
+
+    /**
+     * Throws an error if the aggregator is read-only and not initializing.
+     *
+     * @throws {Error} If #this.isReadOnly && !#this.isInitializing
+     */
+    assertWritable() {
+        if (this.isReadOnly && !this.isInitializing) {
+            throw Error("Unable to alter read-only Aggregator.");
+        }
     }
 
     /**
@@ -120,7 +138,7 @@ export class HMAggregator {
      *
      * @private
      */
-    #collectBonuses() {
+    #collectUnits() {
         this.#collectParentUnits();
         this.#collectItemUnits();
         this.#calculateTotals();
@@ -200,10 +218,7 @@ export class HMAggregator {
             throw new Error("'total' is a reserved vector name.");
         }
 
-        if (this.isReadOnly) {
-            throw Error("Unable to alter read-only Aggregator.");
-        }
-
+        this.assertWritable();
         this.#addUnit(unit);
     }
 
@@ -400,7 +415,7 @@ export class HMAggregator {
         for (const [key, units] of this.#units.entries()) {
             const [vectorName, unitName] = key.split(".");
             if (vector === vectorName) {
-                results[unitName] = units.reduce((sum, u) => sum + u.value, 0);
+                results[unitName] = units.reduce((sum, u) => sum + u, 0);
             }
         }
         return results;
@@ -423,14 +438,36 @@ export class HMAggregator {
      * @throws {Error} If aggregator is read-only.
      */
     deleteVector(vector) {
-        if (this.isReadOnly) {
-            throw Error("Unable to alter read-only Aggregator.");
-        }
+        this.assertWritable();
 
         let wasChanged = false;
         for (const [key] of this.#units.entries()) {
             const [unitVector, _] = key.split(".");
             if (unitVector === vector) {
+                this.#units.delete(key);
+                wasChanged = true;
+            }
+        }
+
+        if (wasChanged) {
+            this.#invalidateCache();
+        }
+    }
+
+    /**
+     * Removes all units for a specific stat, regardless of vector.
+     * Flags the aggregator as dirty if any action was taken.
+     *
+     * @param {string} unit - The stat name to remove (e.g., "def", "dmg").
+     * @throws {Error} If aggregator is read-only.
+     */
+    deleteUnitsByStat(unit) {
+        this.assertWritable();
+
+        let wasChanged = false;
+        for (const [key] of this.#units.entries()) {
+            const [, unitName] = key.split(".");
+            if (unitName === unit) {
                 this.#units.delete(key);
                 wasChanged = true;
             }

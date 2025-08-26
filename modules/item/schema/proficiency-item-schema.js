@@ -3,7 +3,7 @@ import { BasicObjectBindingSchema } from "../../data/bob-schema.js";
 export class HMProficiencySchema extends foundry.abstract.DataModel {
     static defineSchema() {
         const fields = foundry.data.fields;
-        const integerOpts = { required: false, initial: 0, integer: true, null: false };
+        const integerOpts = { required: false, initial: 0, min: 0, integer: true, null: false };
         const booleanOpts = { required: false, initial: false };
         const stringOpts = { required: false, initial: undefined };
 
@@ -34,6 +34,16 @@ export class HMProficiencySchema extends foundry.abstract.DataModel {
      */
     get agg() {
         return { base: this.bonus };
+    }
+
+    static migrateData(source) {
+        // These values should never be negative.
+        if (source.bonus) {
+            source.bonus = Object.keys(source.bonus).reduce((acc, k) => {
+                acc[k] = Math.abs(source.bonus[k]) || 0;
+                return acc;
+            }, {});
+        }
     }
 }
 
