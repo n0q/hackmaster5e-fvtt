@@ -9,6 +9,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - hm5e.getSkillActors hook fires while finding actor participants for a skill roll.
 
+### Changed
+
+- Refreshed Ability roll dialog.
+
 ### Fixed
 
 - Untrained universal skills key off of total ability score again.

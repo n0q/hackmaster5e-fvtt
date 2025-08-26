@@ -1,11 +1,12 @@
 import { HMCONST, HMTABLES, SYSTEM_ID } from "../tables/constants.js";
 import { HMActor } from "./actor.js";
 import { HMChatFactory, CHAT_TYPE } from "../chat/chat-factory.js";
+import { AbilityPrompt } from "../apps/ability-application.js";
+import { AbilityProcessor } from "../rules/processors/ability-processor.js";
 
 export class HMCharacterActor extends HMActor {
     prepareBaseData() {
         super.prepareBaseData();
-        this.hmMigrate();
         this.setRace();
         this.setCClass();
         this.setAbilities();
@@ -20,17 +21,6 @@ export class HMCharacterActor extends HMActor {
         this.setHP();
         this.setExtras();
         this.prepareWeaponProfiles();
-    }
-
-    // Temporary migration code. This will eventually go into a schema file.
-    hmMigrate() {
-        const { priors } = this.system;
-        if (Number.isInteger(priors.sex)) return;
-
-        const { SEX } = HMCONST.PRIORS;
-        const match = priors.sex.toLowerCase().match(/(.).*/)?.[1];
-        const sex = match === "m" ? SEX.MALE : SEX.FEMALE;
-        this.update({ "system.priors.sex": sex });
     }
 
     get movespd() {
@@ -245,5 +235,21 @@ export class HMCharacterActor extends HMActor {
         const ALERT_TYPE = builder.ALERT_TYPE;
         builder.update("mdata", { type: ALERT_TYPE.TRAUMA });
         builder.createChatMessage();
+    }
+
+    async rollAbility({ ability }) {
+        const abilityName = game.i18n.localize(`HM.ability.${ability}`);
+        const subject = { caller: this, ability: abilityName };
+        const dialogResp = await AbilityPrompt.create({}, { subject });
+
+        if (!dialogResp) return false;
+
+        const processorData = { ability, resp: dialogResp, context: this.system };
+        const builderData = await AbilityProcessor.process(processorData);
+        builderData.caller = this.uuid;
+        builderData.context = this.uuid;
+
+        const builder = await HMChatFactory.create(CHAT_TYPE.ABILITY_CHECK, builderData);
+        return builder.createChatMessage();
     }
 }

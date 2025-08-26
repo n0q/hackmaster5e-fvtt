@@ -132,40 +132,4 @@ export class HMDialog {
         dialogResp.context = caller;
         return dialogResp;
     }
-
-    static async getAbilityDialog(dataset, caller) {
-        const dialogData = {};
-        const dialogResp = { caller };
-
-        dialogData.ability = game.i18n.localize(`HM.ability.${dataset.ability}`);
-        const title = `${caller.name}: ${dialogData.ability} ${game.i18n.localize("HM.roll")}`;
-        const template = "systems/hackmaster5e/templates/dialog/getAbility.hbs";
-
-        dialogResp.resp = await Dialog.wait({
-            title,
-            content: await renderTemplate(template, dialogData),
-            render: () => focusById("mod"),
-            buttons: {
-                save: {
-                    label: game.i18n.localize("HM.dialog.getAbilityButtonL"),
-                    callback: () => ({
-                        save: true,
-                        mod: parseInt(document.getElementById("mod").value, 10) || 0,
-                    }),
-                },
-                check: {
-                    label: game.i18n.localize("HM.dialog.getAbilityButtonR"),
-                    callback: () => ({
-                        save: false,
-                        mod: parseInt(document.getElementById("mod").value, 10) || 0,
-                    }),
-                },
-            },
-            default: "save",
-        });
-
-        dialogResp.context = caller;
-        dialogResp.resp.oper = dialogResp.resp.save ? "+" : "-";
-        return dialogResp;
-    }
 }
