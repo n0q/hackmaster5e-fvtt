@@ -127,7 +127,7 @@ export class HMAggregator {
     }
 
     #collectParentUnits() {
-        this.#aggregate(this.#parentData.bonus, this.#parent);
+        this.#aggregate(this.#parentData.agg || this.#parentData.bonus, this.#parent);
         if (typeof this.#parent._postAggregation === "function") {
             this.#parent._postAggregation(this);
         }
@@ -176,9 +176,10 @@ export class HMAggregator {
             return;
         }
 
-        if (!item.system?.bonus) return;
+        const bonusData = item.system?.agg || item.system?.bonus;
+        if (!bonusData) return;
 
-        for (const [vector, stats] of Object.entries(item.system.bonus)) {
+        for (const [vector, stats] of Object.entries(bonusData)) {
             if (vector === "total") continue;
             if (typeof stats !== "object") continue;
 
@@ -451,7 +452,7 @@ export class HMAggregator {
     /**
      * Propagates this aggregator's total data to the mesh network.
      * Returns an object ready for merging into parent bonus structures.
-     * 
+     *
      * @returns {Object} Object containing this aggregator's total vector, keyed by label
      */
     propagateData() {

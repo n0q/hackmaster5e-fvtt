@@ -1,8 +1,13 @@
-import { HMItem } from './item.js';
+import { HMItem } from "./item.js";
+import { HMAggregator } from "../rules/aggregator.js";
 
 export class HMProficiencyItem extends HMItem {
     prepareBaseData() {
         super.prepareBaseData();
+
+        // We're reading vectors from a getter, so pathing will be invalid.
+        this.bonus = new HMAggregator({ parent: this }, { noprop: false, readonly: true });
+
         this._prepProficiencyData();
     }
 
@@ -11,8 +16,8 @@ export class HMProficiencyItem extends HMItem {
     }
 
     _prepProficiencyData() {
-        const {system} = this;
-        const {bonus} = system;
+        const { system } = this;
+        const { bonus } = system;
         const [isMechanical, isRanged] = [system.mechanical.checked, system.ranged.checked];
 
         let dirty = false;
@@ -22,13 +27,13 @@ export class HMProficiencyItem extends HMItem {
         }
 
         if (isMechanical || isRanged) {
-            if (isMechanical && !isRanged) this.update({'system.mechanical.checked': false});
+            if (isMechanical && !isRanged) this.update({ "system.mechanical.checked": false });
 
-            const {def, dmg} = bonus;
+            const { def, dmg } = bonus;
             if (isRanged) bonus.def = 0;
             if (isMechanical) bonus.dmg = 0;
             dirty = dirty || bonus.def !== def || bonus.dmg !== dmg;
         }
-        if (dirty) this.update({'system.bonus': bonus});
+        if (dirty) this.update({ "system.bonus": bonus });
     }
 }

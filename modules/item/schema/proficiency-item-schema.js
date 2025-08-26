@@ -28,5 +28,12 @@ export class HMProficiencySchema extends foundry.abstract.DataModel {
             bob: new fields.EmbeddedDataField(BasicObjectBindingSchema),
         };
     }
+
+    /**
+     * system.bonus contains values, not objects. Unsuitable for intake.
+     */
+    get agg() {
+        return { base: this.bonus };
+    }
 }
 
