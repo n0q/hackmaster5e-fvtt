@@ -4,13 +4,13 @@ import { HMAggregator } from "../rules/aggregator.js";
 export class HMProficiencyItem extends HMItem {
     prepareBaseData() {
         super.prepareBaseData();
-        // We're reading vectors from a getter, so pathing will be invalid.
-        this.hmagg = new HMAggregator({ parent: this }, { noprop: false, readonly: true });
         this._prepProficiencyData();
     }
 
     prepareDerivedData() {
         super.prepareDerivedData();
+        // We're reading vectors from a getter, so pathing will be invalid.
+        this.hmagg = new HMAggregator({ parent: this }, { noprop: false, readonly: true });
     }
 
     /**

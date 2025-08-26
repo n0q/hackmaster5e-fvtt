@@ -37,13 +37,16 @@ export class HMProficiencySchema extends foundry.abstract.DataModel {
     }
 
     static migrateData(source) {
+        const migrated = super.migrateData(source);
+
         // These values should never be negative.
-        if (source.bonus) {
-            source.bonus = Object.keys(source.bonus).reduce((acc, k) => {
-                acc[k] = Math.abs(source.bonus[k]) || 0;
+        if (migrated.bonus) {
+            migrated.bonus = Object.keys(migrated.bonus).reduce((acc, k) => {
+                acc[k] = Math.abs(migrated.bonus[k]) || 0;
                 return acc;
             }, {});
         }
+        return migrated;
     }
 }
 

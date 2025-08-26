@@ -37,18 +37,20 @@ export class HMSkillSchema extends foundry.abstract.DataModel {
         };
     }
 
-    get skillTypes() {
+    get SKILL_TYPES() {
         return SKILL_TYPES;
     }
 
     static migrateData(source) {
         const migrated = super.migrateData(source);
-        for (const skillType of SKILL_TYPES) {
-            if (migrated.bonus.mastery[skillType] == null) {
-                migrated.bonus.mastery[skillType] = 0;
+
+        if (migrated.bonus?.mastery) {
+            for (const skillType of SKILL_TYPES) {
+                if (migrated.bonus.mastery[skillType] == null) {
+                    migrated.bonus.mastery[skillType] = 0;
+                }
             }
         }
-
         return migrated;
     }
 }

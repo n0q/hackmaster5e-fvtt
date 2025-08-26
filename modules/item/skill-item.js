@@ -46,34 +46,32 @@ export class HMSkillItem extends HMItem {
             );
 
             const lowestScore = Math.min(...abilityScores);
+            const { SKILL_TYPES } = this.system;
 
-            const hmUnitData = {
-                value: lowestScore,
+            const untrainedData = {
                 vector: "untrained",
+                units: Object.fromEntries(SKILL_TYPES.map(key => [key, lowestScore])),
                 source: this,
                 label: "Untrained Universal",
                 path: null,
             };
 
-            ["value", "literacy", "verbal"].forEach(unit =>
-                aggregator.addUnit(new HMUnit({ ...hmUnitData, unit })
-                ));
+            aggregator.addVector(untrainedData);
+
         }
     }
 
     createSyntheticSkill() {
+        const { SKILL_TYPES } = this.system;
         const baseUnitData = {
             value: 0,
             vector: "untrained",
-            // source: this,
             source: null,
             label: "Untrained Universal",
             path: null,
         };
 
-        const unitTypes = ["value", "literacy", "verbal"];
-
-        const mapData = unitTypes.map(unitType => {
+        const mapData = SKILL_TYPES.map(unitType => {
             const unit = new HMUnit({ ...baseUnitData, unit: unitType });
             return [`untrained.${unitType}`, [unit]];
         });
