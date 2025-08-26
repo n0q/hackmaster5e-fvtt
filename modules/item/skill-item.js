@@ -17,7 +17,7 @@ export class HMSkillItem extends HMItem {
 
     prepareDerivedData() {
         super.prepareDerivedData();
-        this.bonus = new HMAggregator({ parent: this });
+        this.hmagg = new HMAggregator({ parent: this });
     }
 
     /**
@@ -99,7 +99,7 @@ export class HMSkillItem extends HMItem {
         const subject = {
             actor: processList[0].actor,
             skill: {
-                data: processList[0].skill.bonus.toMap(),
+                data: processList[0].skill.hmagg.toMap(),
                 name: processList[0].skill.specname,
                 masteryType,
             },
@@ -114,7 +114,7 @@ export class HMSkillItem extends HMItem {
             processList.map(async ({ actor, skill }) => {
                 const processorData = {
                     resp: promptData,
-                    skillAggregatorMap: skill.bonus.toMap(),
+                    skillAggregatorMap: skill.hmagg.toMap(),
                 };
 
                 const bData = await SkillProcessor.process(processorData);
@@ -247,7 +247,7 @@ export class HMSkillItem extends HMItem {
     }
 
     get mastery() {
-        return getMasteryLevels(this.bonus);
+        return getMasteryLevels(this.hmagg);
     }
 }
 

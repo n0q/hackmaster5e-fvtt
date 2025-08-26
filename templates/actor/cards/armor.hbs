@@ -26,8 +26,8 @@
             </span>
             <div></div>
 
-            {{#with (tabulate bonus.vectors) as |tab|}}
-                {{> "systems/hackmaster5e/templates/parts/tabulate.hbs" tab=tab bonus=../bonus }}
+            {{#with (tabulate hmagg.vectors) as |tab|}}
+                {{> "systems/hackmaster5e/templates/parts/tabulate.hbs" tab=tab hmagg=../hmagg }}
             {{/with}}
 
         </div>

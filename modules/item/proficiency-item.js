@@ -6,7 +6,7 @@ export class HMProficiencyItem extends HMItem {
         super.prepareBaseData();
 
         // We're reading vectors from a getter, so pathing will be invalid.
-        this.bonus = new HMAggregator({ parent: this }, { noprop: false, readonly: true });
+        this.hmagg = new HMAggregator({ parent: this }, { noprop: false, readonly: true });
 
         this._prepProficiencyData();
     }

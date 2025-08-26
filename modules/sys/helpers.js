@@ -39,8 +39,8 @@ export const registerHandlebarsHelpers = () => {
     });
 
     Handlebars.registerHelper("getTotal", (obj, unit) => {
-        if (!obj?.bonus || !unit) return undefined;
-        return obj.bonus.getTotal(unit);
+        if (!obj?.hmagg || !unit) return undefined;
+        return obj.hmagg.getTotal(unit);
     });
 
     Handlebars.registerHelper("toggleSwitch", (id, opts) => {
@@ -193,7 +193,7 @@ export const registerHandlebarsHelpers = () => {
                 const isPercent = unit === "move" || unit === "mov";
                 const editable = vectorName === "mod";
                 const dtype = isPercent ? "Percent" : "Number";
-                const itemProp = editable ? `system.bonus.mod.${unit}` : null;
+                const itemProp = editable ? `system.hmagg.mod.${unit}` : null;
 
                 return { unit, value, isPercent, editable, dtype, itemProp };
             });

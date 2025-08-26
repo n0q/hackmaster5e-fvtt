@@ -32,7 +32,7 @@ export class HMAggregator {
     constructor({ parent, label, system, items, skipCollection = false } = {}, opts = {}) {
         this.#parent = parent;
         this.#parentData = system ?? parent?.system;
-        this.#label = label ? label : parent.type;
+        this.#label = label ? label : parent?.type || "unknown";
         foundry.utils.mergeObject(this.#opts, opts);
 
 

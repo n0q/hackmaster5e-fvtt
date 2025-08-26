@@ -10,7 +10,7 @@ export class HMArmorItem extends HMItem {
     prepareDerivedData() {
         super.prepareDerivedData();
         const label = this.system.isShield ? "shield" : "armor";
-        this.bonus = new HMAggregator({ parent: this, label }, { noprop: false });
+        this.hmagg = new HMAggregator({ parent: this, label }, { noprop: false });
     }
 
     _postAggregation(aggregator) {
@@ -56,7 +56,7 @@ export class HMArmorItem extends HMItem {
     async damageArmorBy(input) {
         const value = Number(input) || 0;
         const { damage } = this.system;
-        const maxDamage = 10 * this.bonus
+        const maxDamage = 10 * this.hmagg
             .getUnitsForStat("dr")
             .filter(u => u.vector !== "wear")
             .reduce((acc, u) => acc + u, 0);
