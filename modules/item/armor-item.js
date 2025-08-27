@@ -1,5 +1,5 @@
 import { HMItem } from "./item.js";
-import { HMAggregator } from "../rules/aggregator.js";
+import { HMAggregator } from "../rules/aggregator/aggregator.js";
 import { HMCONST } from "../tables/constants.js";
 
 export class HMArmorItem extends HMItem {

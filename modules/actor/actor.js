@@ -3,7 +3,7 @@ import { HMACTOR_TUNABLES } from "../tables/tunables.js";
 import { isValidBasicObjectBinding } from "../data/data-utils.js";
 import { HMDialogFactory } from "../dialog/dialog-factory.js";
 import { HMWeaponProfile } from "../item/weapon-profile.js";
-import { HMUnit } from "../rules/hmunit.js";
+import { HMUnit } from "../rules/aggregator/aggregator-unit.js";
 import { HMItemContainer } from "./container-abstract.js";
 import { HMChatFactory, CHAT_TYPE } from "../chat/chat-factory.js";
 import { getDiceSum } from "../sys/utils.js";

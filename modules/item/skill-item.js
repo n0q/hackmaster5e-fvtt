@@ -4,8 +4,8 @@ import { sanitizeForBasicObjectBinding, isValidBasicObjectBinding } from "../dat
 import { SkillPrompt } from "../apps/skill-application.js";
 import { SkillProcessor, getMasteryLevels } from "../rules/processors/skill-processor.js";
 import { HMChatFactory, CHAT_TYPE } from "../chat/chat-factory.js";
-import { HMAggregator } from "../rules/aggregator.js";
-import { HMUnit } from "../rules/hmunit.js";
+import { HMAggregator } from "../rules/aggregator/aggregator.js";
+import { HMUnit } from "../rules/aggregator/aggregator-unit.js";
 
 export class HMSkillItem extends HMItem {
 

@@ -1,6 +1,6 @@
 import { ProcessorAbstract } from "./processor-abstract.js";
 import { SkillProcessorSchema } from "./schema/skill-processor-schema.js";
-import { HMAggregator } from "../aggregator.js";
+import { HMAggregator } from "../aggregator/aggregator.js";
 import { SKILL_TYPES } from "../../item/schema/skill-item-schema.js";
 import { HMCONST } from "../../tables/constants.js";
 

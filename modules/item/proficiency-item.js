@@ -1,5 +1,5 @@
 import { HMItem } from "./item.js";
-import { HMAggregator } from "../rules/aggregator.js";
+import { HMAggregator } from "../rules/aggregator/aggregator.js";
 
 export class HMProficiencyItem extends HMItem {
     prepareBaseData() {

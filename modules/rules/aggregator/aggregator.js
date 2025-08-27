@@ -1,4 +1,4 @@
-import { HMUnit } from "./hmunit.js";
+import { HMUnit } from "./aggregator-unit.js";
 
 export class HMAggregator {
     #units = new Map();

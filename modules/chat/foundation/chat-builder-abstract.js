@@ -1,5 +1,5 @@
 import { BuilderSchema } from "./chat-builder-schema.js";
-import { HMAggregator } from "../../rules/aggregator.js";
+import { HMAggregator } from "../../rules/aggregator/aggregator.js";
 import { getSpeaker } from "../../sys/utils.js";
 import { RESULT_TYPE } from "./chat-builder-constants.js";
 
