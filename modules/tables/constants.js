@@ -679,7 +679,6 @@ export const HMTABLES = {
             dodge: -1,
             trauma: -1,
             poison: -1,
-            skills: -5,
         }),
     },
     cast: {
