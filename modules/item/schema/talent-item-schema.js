@@ -13,7 +13,7 @@ export class HMTalentSchema extends foundry.abstract.DataModel {
             priority: new fields.NumberField({ required: true, integer: true, min: 0 }),
             value: new fields.StringField({ required: true })
         });
-        const validTypes = Object.values(HMCONST.AFFIX.TYPE);
+        const validTypes = Object.values(HMCONST.TALENT);
 
         return {
             description: new fields.HTMLField(stringOpts),
@@ -39,6 +39,14 @@ export class HMTalentSchema extends foundry.abstract.DataModel {
      */
     get agg() {
         return { base: this.bonus };
+    }
+
+    get isRanged() {
+        return this.weapon.ranged;
+    }
+
+    get isMechanical() {
+        return this.isRanged ? this.weapon.mechanical : false;
     }
 }
 
