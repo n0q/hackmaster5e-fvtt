@@ -122,7 +122,7 @@ export class HMActor extends Actor {
     setArmorBonus() {
         const { bonus } = this.system;
 
-        const armorList = this.itemTypes.armor.filter(obj => obj.hmagg.canPropagate);
+        const armorList = this.itemTypes.armor.filter(obj => obj.hmagg.canPropagate());
         const shieldItem = armorList.find(obj => obj.system.isShield);
         const armorItem = armorList.find(obj => !obj.system.isShield);
 

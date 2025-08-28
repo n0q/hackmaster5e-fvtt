@@ -61,10 +61,11 @@ export class HMItem extends Item {
      * If this item's aggregator is allowed to propagate to parent aggregators.
      *
      * Defaults to true. This is meant to be overridden by a child class.
+     * @param {PropagationContext} _propContext (unused)
      * @returns {boolean}
      */
-    get canPropagate() {
-        return true;
+    canPropagate(_propContext) {
+        return false;
     }
 
     get quality() {

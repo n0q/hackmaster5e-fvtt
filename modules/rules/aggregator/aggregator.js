@@ -1,5 +1,11 @@
 import { HMUnit } from "./aggregator-unit.js";
 
+/**
+ * @typedef {Object} PropagationContext
+ * @property {HMAggregator} consumer - The aggregator requesting data.
+ * @property {HMAggregator} provider - The aggregator providing data.
+ */
+
 export class HMAggregator {
     #units = new Map();
 
@@ -65,15 +71,23 @@ export class HMAggregator {
     }
 
     /**
-     * Check if this aggregator should propagate its values to parent aggregators.
+     * Check if this aggregator should propagate its values to a consumer aggregator.
      *
      * Returns false if the aggregator is set noprop.
      * Otherwise returns this.#parent.canPropagate
+     *
+     * @param {HMAggregator} consumer - The aggregator requesting data.
      * @returns {boolean} True if propagation is allowed
      */
-    get canPropagate() {
+    canPropagate(consumer = null) {
         if (this.#opts.noprop) return false;
-        return this.#parent.canPropagate || false;
+
+        const propContext = {
+            consumer,
+            provider: this,
+        };
+
+        return this?.#parent?.canPropagate?.(propContext) || false;
     }
 
     get isInitializing() {

@@ -1,5 +1,5 @@
 /**
- * @typedef {object} HMUnit - Represents a stat unit.
+ * @typedef {Object} HMUnit - Represents a stat unit.
  * @property {number} value - The value of this unit.
  * @property {string} unit - Individual stat name ("dr", "init", etc)
  * @property {string} vector - Vector this stat belongs to ("armor", "race", etc)
@@ -12,7 +12,7 @@
 /**
  * Creates a new stat unit.
  *
- * @param {object} params - Configuration object for the unit.
+ * @param {Object} params - Configuration object for the unit.
  * @param {number} params.value - The value of this unit.
  * @param {string} params.unit - Individual stat name ("dr", "init", etc)
  * @param {string} params.vector - Vector this stat belongs to ("armor", "race", etc)
