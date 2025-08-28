@@ -17,6 +17,14 @@ export class HMAggregator {
 
     #label;
 
+    /**
+     * Internal aggregator options.
+     *
+     * @private
+     * @type {object}
+     * @property {boolean} noprop - If true, this agg will not provide data to consumers.
+     * @property {boolean} readonly - If true, this agg is locked after initialization.
+     */
     #opts = {
         noprop: true,
         readonly: false,
@@ -24,7 +32,7 @@ export class HMAggregator {
 
     #initializing;
 
-    #vectorsCache = null;
+    #cache = null;
 
     #_isDirty = false;
 
@@ -87,7 +95,7 @@ export class HMAggregator {
             provider: this,
         };
 
-        return this?.#parent?.canPropagate?.(propContext) || false;
+        return this.#parent?.canPropagate?.(propContext) || false;
     }
 
     get isInitializing() {
@@ -197,12 +205,19 @@ export class HMAggregator {
     }
 
     /**
-     * Process an individual item for bonus collection.
+     * Process an individual item for collection if the providing
+     * aggregator's canPropagate returns as true.
      *
-     * @param {HMItem} item - The item to process
+     * NOTE: There's no way this is working, yet.
+     *
+     * @param {HMItem} item - The item to process.
      * @private
      */
     #processItem(item) {
+        if (item.hmagg && !item.hmagg.canPropagate(this)) {
+            return;
+        }
+
         if (typeof item.handleBonusAggregation === "function") {
             item.handleBonusAggregation(this);
             return;
@@ -241,7 +256,7 @@ export class HMAggregator {
      * Utility method for post-aggregation hooks to easily add calculated bonuses.
      *
      * @param {string} vector - The vector name to add units under
-     * @param {Object<string, number>} units - Object mapping unit names to values
+     * @param {object<string, number>} units - Object mapping unit names to values
      * @param {HMActor|HMItem} source - Source document for the units
      * @param {string} label - Base label for the units (unit name will be appended)
      * @param {string|null} [path=null] - Storage path for updates, null for synthetic units
@@ -284,8 +299,8 @@ export class HMAggregator {
         }
         this.#units.get(key).push(unit);
 
-        if (null != this.#vectorsCache) {
-            this.#vectorsCache = null;
+        if (null != this.#cache) {
+            this.#cache = null;
         }
 
         this.#_isDirty = true;
@@ -358,7 +373,7 @@ export class HMAggregator {
     }
 
     #invalidateCache() {
-        this.#vectorsCache = null;
+        this.#cache = null;
         this.#_isDirty = true;
     }
 
@@ -377,17 +392,17 @@ export class HMAggregator {
             this.#calculateTotals();
         }
 
-        if (!this.#vectorsCache) {
+        if (!this.#cache) {
             const cache = {};
             for (const [key, units] of this.#units.entries()) {
                 const [vector, unit] = key.split(".");
                 if (!cache[vector]) cache[vector] = {};
                 cache[vector][unit] = units[0]?.value ?? 0;
             }
-            this.#vectorsCache = foundry.utils.deepFreeze(cache, { strict: true });
+            this.#cache = foundry.utils.deepFreeze(cache, { strict: true });
         }
 
-        return this.#vectorsCache;
+        return this.#cache;
     }
 
     /**
@@ -422,7 +437,7 @@ export class HMAggregator {
      * Get all vector units as a simple object.
      *
      * @param {string} vector - Vector to retrieve.
-     * @returns {Object<string, number>} Object mapping unit names to vector values.
+     * @returns {object<string, number>} Object mapping unit names to vector values.
      */
     getVector(vector) {
         const results = {};
