@@ -2,9 +2,11 @@
 import type { dice, utils } from "@client/_module.mjs";
 
 declare global {
-    const Roll: typeof dice.Roll;
+    const Actor: typeof foundry.documents.Actor
     const Color: typeof utils.Color;
-    const PoolTerm: typeof dice.PoolTerm;
+    const Item: typeof foundry.documents.Item;
     const Macro: typeof foundry.documents.Macro;
+    const PoolTerm: typeof dice.PoolTerm;
+    const Roll: typeof dice.Roll;
 }
 
