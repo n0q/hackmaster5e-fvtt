@@ -191,6 +191,7 @@ export class ChatBuilder {
 
     /**
      * @static
+     * @deprecated
      * @return {string[]} List of GM ids on the game.
      */
     static get getGMs() {
@@ -200,6 +201,9 @@ export class ChatBuilder {
     /**
      * Extracts the sum of the dice rolled from a Roll object,
      * ignoring any constants or other terms.
+     *
+     * @static
+     * @deprecated
      * @param {Roll} roll - The Roll object containing the dice and other terms.
      * @returns {number} The sum of the dice rolled.
      */

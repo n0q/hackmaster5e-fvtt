@@ -11,7 +11,7 @@ export class SaveCheckChatBuilder extends ChatBuilder {
         const rollContent = await roll.render({ flavor });
 
         const chatData = { rollContent, mdata, resp };
-        const content = await renderTemplate(this.template, chatData);
+        const content = await this.renderTemplate(this.template, chatData);
 
         const chatMessageData = this.getChatMessageData({ content, resp });
         await this.render(chatMessageData);

@@ -1,3 +1,13 @@
+/**
+ * @file Temporary processor pattern for rules processing.
+ *
+ * This is an interim solution while the aggregator system is being completed.
+ * These processors are essentially manual dumping grounds for rule logic that will
+ * eventually be replaced by a proper event-driven rules bus system. Do not invest
+ * heavily in extending or improving this pattern - it is destined for replacement.
+ *
+ * @abstract
+ */
 export class ProcessorAbstract {
     /**
      * @param {...any} args - Arguments passed to the parent constructor.

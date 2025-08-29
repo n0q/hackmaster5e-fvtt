@@ -5,9 +5,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- Refreshed Saves dialog.
+
 ### Fixed
 
 - Skill penalty due to dishonor.
+- Trauma saves emit dice rolling sounds.
 
 ## [0.5.12] - 2025-08-26
 
