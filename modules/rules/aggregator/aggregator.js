@@ -519,10 +519,11 @@ export class HMAggregator {
      * Propagates this aggregator's total data to the mesh network.
      * Returns an object ready for merging into parent bonus structures.
      *
+     * @param {HMAggregator} consumer - The aggregator requesting data.
      * @returns {Object} Object containing this aggregator's total vector, keyed by label
      */
-    propagateData() {
-        if (!this.canPropagate) return {};
+    propagateData(consumer = null) {
+        if (!this.canPropagate(consumer)) return {};
         return { [this.#label]: this.total };
     }
 }
