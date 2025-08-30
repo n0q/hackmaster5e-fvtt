@@ -30,12 +30,13 @@ export class HMActor extends Actor {
 
     applySpellFatiguePenalty() {
         const penalty = this.system.bonus?.state?.skills;
+        //        const penalty = -30;
         if (penalty === undefined || penalty === 0) return;
 
         const skills = this.itemTypes.skill;
         for (const skill of skills) {
             for (const unit of ["value", "verbal", "literacy"]) {
-                skill.bonus.addUnit(new HMUnit({
+                skill.hmagg.addUnit(new HMUnit({
                     value: penalty,
                     unit,
                     vector: "sfatigue",
@@ -44,7 +45,7 @@ export class HMActor extends Actor {
                     path: null,
                 }));
             }
-            skill.bonus.refresh();
+            skill.hmagg.refresh();
         }
     }
 
