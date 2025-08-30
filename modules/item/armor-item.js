@@ -1,5 +1,5 @@
 import { HMItem } from "./item.js";
-import { HMAggregator } from "../rules/aggregator.js";
+import { HMAggregator } from "../rules/aggregator/aggregator.js";
 import { HMCONST } from "../tables/constants.js";
 
 export class HMArmorItem extends HMItem {
@@ -41,7 +41,13 @@ export class HMArmorItem extends HMItem {
         }
     }
 
-    get canPropagate() {
+    /**
+     * Only propagate if equipped.
+     *
+     * @override
+     * @param {PropagationContext} _propContext (unused)
+     */
+    canPropagate(_propContext) {
         return this.system.state === HMCONST.ITEM_STATE.EQUIPPED;
     }
 

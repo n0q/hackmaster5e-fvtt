@@ -7,6 +7,5 @@ export const HMDialogFactory = (dataset, caller = null, opt = {}) => {
     if (dialog === "cast") return HMDialog.getCastDialog(dataset, caller, opt);
     if (dialog === "def") return HMDialog.getDefendDialog(dataset, caller);
     if (dialog === "dmg") return HMDialog.getDamageDialog(dataset, caller);
-    if (dialog === "save") return HMDialog.getSaveDialog(dataset, caller);
     return undefined;
 };

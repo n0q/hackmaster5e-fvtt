@@ -629,25 +629,11 @@ export const HMTABLES = {
             [HMCONST.SPECIAL.SCAMPER]: "@resp.defdie + @bonus.total.def + @resp.dodge + 5 + @resp.bonus",
             [HMCONST.SPECIAL.GGROUND]: "@resp.defdie + @bonus.total.def + @resp.dodge + 5 + @resp.bonus",
         },
-        save: {
-            dodge: "d20p +  @bonus.total.dodge    + @resp.bonus",
-            foa: "d20p +  @bonus.total.foa      + @resp.bonus",
-            fos: "d20p +  @bonus.total.fos      + @resp.bonus",
-            mental: "d20p +  @bonus.total.mental   + @resp.bonus",
-            morale: "d20p +  @bonus.total.morale   + @resp.bonus",
-            physical: "d20p +  @bonus.total.physical + @resp.bonus",
-            poison: "d20p +  @bonus.total.poison   + @resp.bonus",
-            tenacity: "d20p +  @bonus.total.tenacity + @resp.bonus",
-            trauma: "@talent.die.trauma - (@bonus.total.trauma + @resp.bonus)",
-            turning: "d20p +  @bonus.total.turning  + @resp.bonus",
-            will: "d20p +  @bonus.total.will     + @resp.bonus",
-        },
         spell: {
             baseroll: "d20p",
             save: "@baseroll + @bonus.total.slvl",
             sfc: "@baseroll + @bonus.total.sfc",
         },
-        trauma: { comaCheck: "d20", comaDuration: "d20", koDuration: "5d6p" },
     },
     bracket: {
         fame: value => {
@@ -679,7 +665,6 @@ export const HMTABLES = {
             dodge: -1,
             trauma: -1,
             poison: -1,
-            skills: -5,
         }),
     },
     cast: {

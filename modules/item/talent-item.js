@@ -1,5 +1,6 @@
-import { HMItem } from './item.js';
-import { HMCONST } from '../tables/constants.js';
+import { HMCONST } from "../tables/constants.js";
+import { HMItem } from "./item.js";
+import { HMAggregator } from "../rules/aggregator/aggregator.js";
 
 export class HMTalentItem extends HMItem {
     prepareBaseData() {
@@ -9,50 +10,64 @@ export class HMTalentItem extends HMItem {
 
     prepareDerivedData() {
         super.prepareDerivedData();
+        // We're reading vectors from a getter, so pathing will be invalid.
+        this.hmagg = new HMAggregator({ parent: this }, { noprop: false, readonly: true });
     }
 
-    _prepTalentData() {
-        const {system} = this;
-        const type = Number(system.type);
+    /**
+     * @param {HMAggregator} aggregator
+     */
+    _postAggregation(aggregator) {
+        if (this.system.type !== HMCONST.TALENT.WEAPON) {
+            aggregator.deleteVector("base");
+            return;
+        }
 
-        if (type === HMCONST.TALENT.WEAPON) {
-            const {weapon} = system;
-            const isRanged = weapon.ranged;
-            let isMechanical = weapon.mechanical;
+        const { isRanged, isMechanical } = this.system;
 
-            if (isMechanical || isRanged) {
-                if (isMechanical && !isRanged) {
-                    weapon.mechanical = false;
-                    isMechanical = false;
-                }
+        if (isRanged) {
+            aggregator.deleteUnitsByStat("def");
+            aggregator.deleteUnitsByStat("reach");
+        }
 
-                const {bonus} = system;
-                if (isRanged) {
-                    bonus.def = 0;
-                    bonus.reach = 0;
-                }
-                if (isMechanical) bonus.dmg = 0;
-            }
-
-            if (this.effects.size) this.effects.forEach((fx) => fx.delete());
-        } else if (type === HMCONST.TALENT.EFFECT) {
-            if (this.effects.size) return;
-            const defaultEffect = [{key: '', value: '0', mode: CONST.ACTIVE_EFFECT_MODES.ADD}];
-            const changes = this.system.changes ?? defaultEffect;
-            const aeData = {label: this.name, changes};
-            this.createEmbeddedDocuments('ActiveEffect', [aeData]);
+        if (isMechanical) {
+            aggregator.deleteUnitsByStat("dmg");
         }
     }
 
-    setWeaponTalent(key) {
-        const {bonus} = this.system;
-        const value = Number(!bonus[key]);
-        bonus[key] = key === 'spd' ? -value : value;
-        this.update({'system.bonus': bonus});
+    _prepTalentData() {
+        const { system } = this;
+        const type = Number(system.type);
+
+        if (type !== HMCONST.TALENT.EFFECT) {
+            if (this.effects.size > 0) {
+                this.effects.forEach(fx => fx.delete());
+            }
+            return;
+        }
+
+        if (this.effects.size) return;
+        const defaultEffect = [{ key: "", value: "0", mode: CONST.ACTIVE_EFFECT_MODES.ADD }];
+        const changes = this.system.changes ?? defaultEffect;
+        const aeData = { label: this.name, changes };
+        this.createEmbeddedDocuments("ActiveEffect", [aeData]);
     }
 
+    /**
+     * @param {string} key
+     */
+    setWeaponTalent(key) {
+        const { bonus } = this.system;
+        const value = Number(!bonus[key]);
+        bonus[key] = key === "spd" ? -value : value;
+        this.update({ "system.bonus": bonus });
+    }
+
+    /**
+     * @param {Event} ev
+     */
     onClick(ev) {
-        const {dataset} = ev.currentTarget;
+        const { dataset } = ev.currentTarget;
         if (dataset.key) this.setWeaponTalent(dataset.key);
     }
 }

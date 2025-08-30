@@ -66,21 +66,23 @@ export class HMWeaponProfile {
         return spec;
     }
 
-    _getWeaponTalent(bonus) {
+    _getWeaponTalent() {
         if (this.actor.type === "beast") return {};
 
         const { proficiency } = this.weapon.system;
-        const itemTalent = this.actor.itemTypes.talent.find(
+        const talent = this.actor.itemTypes.talent.find(
             a => a.name === proficiency && Number(a.system.type) === HMCONST.TALENT.WEAPON,
         );
-        const total = itemTalent ? itemTalent.system.bonus : {};
 
-        if (!bonus) return total;
-        Object.keys(bonus).forEach(stat => {
-            total[stat] = (total[stat] || 0) + (bonus[stat] || 0);
-        });
-
-        return total;
+        const total = talent?.hmagg?.total;
+        return {
+            atk: 0,
+            def: 0,
+            dmg: 0,
+            reach: 0,
+            spd: 0,
+            ...total,
+        };
     }
 
     evaluate() {
@@ -98,7 +100,7 @@ export class HMWeaponProfile {
         let reachOffset = 0;
 
         const spec = this._getSpecialization();
-        const talent = this._getWeaponTalent(actorBonus.talent);
+        const talent = this._getWeaponTalent();
         const bonusObj = { ...actorBonus, spec, talent };
 
         Object.keys(bonusObj).sort().forEach(vector => {

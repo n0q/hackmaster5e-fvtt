@@ -1,5 +1,5 @@
 import { BuilderSchema } from "./chat-builder-schema.js";
-import { HMAggregator } from "../../rules/aggregator.js";
+import { HMAggregator } from "../../rules/aggregator/aggregator.js";
 import { getSpeaker } from "../../sys/utils.js";
 import { RESULT_TYPE } from "./chat-builder-constants.js";
 
@@ -191,6 +191,7 @@ export class ChatBuilder {
 
     /**
      * @static
+     * @deprecated
      * @return {string[]} List of GM ids on the game.
      */
     static get getGMs() {
@@ -200,6 +201,9 @@ export class ChatBuilder {
     /**
      * Extracts the sum of the dice rolled from a Roll object,
      * ignoring any constants or other terms.
+     *
+     * @static
+     * @deprecated
      * @param {Roll} roll - The Roll object containing the dice and other terms.
      * @returns {number} The sum of the dice rolled.
      */

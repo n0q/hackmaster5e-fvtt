@@ -1,12 +1,13 @@
 import { HMCONST, HMTABLES, SYSTEM_ID } from "../tables/constants.js";
 import { HMACTOR_TUNABLES } from "../tables/tunables.js";
 import { isValidBasicObjectBinding } from "../data/data-utils.js";
-import { HMDialogFactory } from "../dialog/dialog-factory.js";
 import { HMWeaponProfile } from "../item/weapon-profile.js";
-import { HMUnit } from "../rules/hmunit.js";
+import { HMUnit } from "../rules/aggregator/aggregator-unit.js";
 import { HMItemContainer } from "./container-abstract.js";
 import { HMChatFactory, CHAT_TYPE } from "../chat/chat-factory.js";
 import { getDiceSum } from "../sys/utils.js";
+import { SavesPrompt } from "../apps/saves-application.js";
+import { SavesProcessor } from "../rules/processors/saves-processor.js";
 
 export class HMActor extends Actor {
     constructor(...args) {
@@ -29,12 +30,13 @@ export class HMActor extends Actor {
 
     applySpellFatiguePenalty() {
         const penalty = this.system.bonus?.state?.skills;
+        //        const penalty = -30;
         if (penalty === undefined || penalty === 0) return;
 
         const skills = this.itemTypes.skill;
         for (const skill of skills) {
             for (const unit of ["value", "verbal", "literacy"]) {
-                skill.bonus.addUnit(new HMUnit({
+                skill.hmagg.addUnit(new HMUnit({
                     value: penalty,
                     unit,
                     vector: "sfatigue",
@@ -43,7 +45,7 @@ export class HMActor extends Actor {
                     path: null,
                 }));
             }
-            skill.bonus.refresh();
+            skill.hmagg.refresh();
         }
     }
 
@@ -122,7 +124,7 @@ export class HMActor extends Actor {
     setArmorBonus() {
         const { bonus } = this.system;
 
-        const armorList = this.itemTypes.armor.filter(obj => obj.hmagg.canPropagate);
+        const armorList = this.itemTypes.armor.filter(obj => obj.hmagg.canPropagate());
         const shieldItem = armorList.find(obj => obj.system.isShield);
         const armorItem = armorList.find(obj => !obj.system.isShield);
 
@@ -206,40 +208,34 @@ export class HMActor extends Actor {
     }
 
     /**
-     * Performs a roll save based on the provided dataset. If the roll type is 'trauma',
-     * it applies additional trauma rules.
-     * NOTE: Desperate need of refactor once mgr/chatmgr.js is gone.
+     * Performs a roll save based on the provided dataset.
      *
      * @async
      * @param {Object} dataset - The dataset containing necessary information for the roll.
-     * @param {stgring} dataset.dialog - The dialog type for the roll.
      * @param {string} dataset.formulaType - The formula type for the roll (e.g., 'trauma').
-     * @param {Object} [dataset.bData] - Optional base data for the roll.
+     * @param {Object} [dataset.mdata] - Optional metadata for the roll.
      * @returns {Promise<void>}
      */
     async rollSave(dataset) {
-        const { dialog, formulaType, mdata } = dataset;
-        const chatType = formulaType === "trauma" ? CHAT_TYPE.TRAUMA_CHECK : CHAT_TYPE.SAVE_CHECK;
-        let bData = { ...dataset };
-        if (!bData.resp) bData = { ...bData, ...(await HMDialogFactory({ ...dataset }, this)) };
+        const { formulaType, mdata } = dataset;
+        const formulaTypeName = game.i18n.localize(`HM.saves.${formulaType}`);
+        const subject = { caller: this, formulaTypeName };
+        const resp = await SavesPrompt.create({}, { subject });
+        if (!resp) return;
 
-        bData.caller = bData.caller.uuid;
-        bData.context = bData.context.uuid;
-        bData.mdata = { formulaType };
-
-        const formula = HMTABLES.formula[dialog][formulaType];
-        const rollContext = {
-            ...this.system,
-            resp: bData.resp,
-            talent: this.hackmaster5e.talent,
+        const processorData = {
+            formulaType,
+            resp,
+            context: { ...this.system, talent: this.hackmaster5e.talent }
         };
 
-        const roll = await new Roll(formula, rollContext).evaluate();
-        if (chatType === CHAT_TYPE.TRAUMA_CHECK) bData = await getTraumaBData(roll, bData);
-        bData.roll = roll.toJSON();
+        const builderData = await SavesProcessor.process(processorData);
+        builderData.caller = this.uuid;
+        builderData.context = this.uuid;
+        if (mdata) foundry.utils.mergeObject(builderData.mdata, mdata);
 
-        foundry.utils.mergeObject(bData.mdata, mdata);
-        const builder = await HMChatFactory.create(chatType, bData);
+        const chatType = formulaType === "trauma" ? CHAT_TYPE.TRAUMA_CHECK : CHAT_TYPE.SAVE_CHECK;
+        const builder = await HMChatFactory.create(chatType, builderData);
         await builder.createChatMessage();
     }
 
@@ -329,47 +325,3 @@ export class HMActor extends Actor {
     }
 }
 
-/**
- * Processes trauma-specific logic based on the initial roll data.
- * Evaluates additional rolls for coma and KO duration as needed.
- *
- * @param {Object} bData - The base data from the initial roll.
- * @param {Roll} roll = The initial roll result.
- * @param {Array|Object} bData.batch - An array to store additional roll results.
- * @returns {Promise<Object>} - Resolves to the updated bData object.
- * @async
- */
-async function getTraumaBData(roll, bData) {
-    const traumaData = bData;
-    const failType = HMCONST.TRAUMA_FAILSTATE;
-
-    let failState = failType.PASSED;
-    const batch = [roll];
-
-    if (roll.total <= 0) return { ...traumaData, batch: [roll.toJSON()], mdata: { failState } };
-
-    // Extended Trauma rules.
-    failState = failType.FAILED;
-    if (getDiceSum(roll) > 19) {
-        failState = failType.KO;
-
-        const { comaCheck, comaDuration, koDuration } = HMTABLES.formula.trauma;
-        const comaCheckRoll = await new Roll(comaCheck).evaluate();
-        batch.push(comaCheckRoll);
-
-        // Coma check
-        if (comaCheckRoll.total > 19) failState = failType.COMA;
-
-        const durationFormula = failState === failType.COMA ? comaDuration : koDuration;
-        const durationRoll = await new Roll(durationFormula).evaluate();
-
-        if (failState === failType.COMA && durationRoll.total > 19) {
-            failState = failType.VEGETABLE;
-        }
-
-        batch.push(durationRoll);
-    }
-    traumaData.batch = batch.map(r => r.toJSON());
-    traumaData.mdata = { failState };
-    return traumaData;
-}

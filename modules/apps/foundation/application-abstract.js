@@ -1,5 +1,5 @@
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
-import { HMAggregator } from "../../rules/aggregator.js";
+import { HMAggregator } from "../../rules/aggregator/aggregator.js";
 
 
 /**

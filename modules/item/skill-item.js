@@ -4,8 +4,9 @@ import { sanitizeForBasicObjectBinding, isValidBasicObjectBinding } from "../dat
 import { SkillPrompt } from "../apps/skill-application.js";
 import { SkillProcessor, getMasteryLevels } from "../rules/processors/skill-processor.js";
 import { HMChatFactory, CHAT_TYPE } from "../chat/chat-factory.js";
-import { HMAggregator } from "../rules/aggregator.js";
-import { HMUnit } from "../rules/hmunit.js";
+import { HMAggregator } from "../rules/aggregator/aggregator.js";
+import { HMUnit } from "../rules/aggregator/aggregator-unit.js";
+import { Dishonor } from "../rules/dishonor.js";
 
 export class HMSkillItem extends HMItem {
 
@@ -23,42 +24,55 @@ export class HMSkillItem extends HMItem {
     /**
      * Custom bonus aggregation handler for skills.
      *
-     * Handles untrained universal skills by creating an 'untrained' vector
-     * with values based on the lowest relevant ability score.
+     * Adds untrained universal skill bonuses and dishonor penalties to the aggregator.
      * @param {HMAggregator} aggregator - The bonus aggregator instance
      */
     _postAggregation(aggregator) {
+        const untrainedData = this.getUntrainedVector(aggregator, this.parent);
+        const dishonorData = Dishonor.getVector(this.type, this.parent);
+
+        if (untrainedData) aggregator.addVector(untrainedData);
+        if (dishonorData) aggregator.addVector(dishonorData);
+
+    }
+
+    /**
+     * Calculates untrained universal skill bonuses based on lowest relevant ability score.
+     *
+     * @param {HMAggregator} aggregator - The bonus aggregator instance
+     * @param {HMActor} actor - The parent actor
+     * @returns {Object|undefined} Vector data for untrained bonuses, or undefined if not applicable
+     */
+    getUntrainedVector(aggregator, actor) {
         const isUniversal = this.system.universal;
         const masteryUnits = aggregator.getUnitsForVector("mastery");
         const isUntrained = masteryUnits.length === 0 || masteryUnits.every(u => u.value === 0);
         if (!isUniversal || !isUntrained) return;
 
-        const abilities = this.parent?.system?.abilities;
+        const abilities = actor?.system?.abilities;
         if (!abilities) return;
 
         const relevantAbilities = Object.entries(this.system.relevant)
             .filter(([_, isRelevant]) => isRelevant)
             .map(([ability, _]) => ability);
+        if (relevantAbilities.length < 1) return;
 
-        if (relevantAbilities.length > 0) {
-            const abilityScores = relevantAbilities.map(ability =>
-                abilities.total[ability]?.value || 1
-            );
+        const abilityScores = relevantAbilities.map(ability =>
+            abilities.total[ability]?.value || 1
+        );
 
-            const lowestScore = Math.min(...abilityScores);
-            const { SKILL_TYPES } = this.system;
+        const lowestScore = Math.min(...abilityScores);
+        const { SKILL_TYPES } = this.system;
 
-            const untrainedData = {
-                vector: "untrained",
-                units: Object.fromEntries(SKILL_TYPES.map(key => [key, lowestScore])),
-                source: this,
-                label: "Untrained Universal",
-                path: null,
-            };
+        const untrainedData = {
+            vector: "untrained",
+            units: Object.fromEntries(SKILL_TYPES.map(key => [key, lowestScore])),
+            source: this,
+            label: "Untrained Universal",
+            path: null,
+        };
 
-            aggregator.addVector(untrainedData);
-
-        }
+        return untrainedData;
     }
 
     createSyntheticSkill() {

@@ -1,4 +1,10 @@
-import { HMUnit } from "./hmunit.js";
+import { HMUnit } from "./aggregator-unit.js";
+
+/**
+ * @typedef {Object} PropagationContext
+ * @property {HMAggregator} consumer - The aggregator requesting data.
+ * @property {HMAggregator} provider - The aggregator providing data.
+ */
 
 export class HMAggregator {
     #units = new Map();
@@ -11,6 +17,14 @@ export class HMAggregator {
 
     #label;
 
+    /**
+     * Internal aggregator options.
+     *
+     * @private
+     * @type {object}
+     * @property {boolean} noprop - If true, this agg will not provide data to consumers.
+     * @property {boolean} readonly - If true, this agg is locked after initialization.
+     */
     #opts = {
         noprop: true,
         readonly: false,
@@ -18,7 +32,7 @@ export class HMAggregator {
 
     #initializing;
 
-    #vectorsCache = null;
+    #cache = null;
 
     #_isDirty = false;
 
@@ -65,15 +79,23 @@ export class HMAggregator {
     }
 
     /**
-     * Check if this aggregator should propagate its values to parent aggregators.
+     * Check if this aggregator should propagate its values to a consumer aggregator.
      *
      * Returns false if the aggregator is set noprop.
      * Otherwise returns this.#parent.canPropagate
+     *
+     * @param {HMAggregator} consumer - The aggregator requesting data.
      * @returns {boolean} True if propagation is allowed
      */
-    get canPropagate() {
+    canPropagate(consumer = null) {
         if (this.#opts.noprop) return false;
-        return this.#parent.canPropagate || false;
+
+        const propContext = {
+            consumer,
+            provider: this,
+        };
+
+        return this.#parent?.canPropagate?.(propContext) || false;
     }
 
     get isInitializing() {
@@ -183,12 +205,19 @@ export class HMAggregator {
     }
 
     /**
-     * Process an individual item for bonus collection.
+     * Process an individual item for collection if the providing
+     * aggregator's canPropagate returns as true.
      *
-     * @param {HMItem} item - The item to process
+     * NOTE: There's no way this is working, yet.
+     *
+     * @param {HMItem} item - The item to process.
      * @private
      */
     #processItem(item) {
+        if (item.hmagg && !item.hmagg.canPropagate(this)) {
+            return;
+        }
+
         if (typeof item.handleBonusAggregation === "function") {
             item.handleBonusAggregation(this);
             return;
@@ -227,7 +256,7 @@ export class HMAggregator {
      * Utility method for post-aggregation hooks to easily add calculated bonuses.
      *
      * @param {string} vector - The vector name to add units under
-     * @param {Object<string, number>} units - Object mapping unit names to values
+     * @param {object<string, number>} units - Object mapping unit names to values
      * @param {HMActor|HMItem} source - Source document for the units
      * @param {string} label - Base label for the units (unit name will be appended)
      * @param {string|null} [path=null] - Storage path for updates, null for synthetic units
@@ -270,8 +299,8 @@ export class HMAggregator {
         }
         this.#units.get(key).push(unit);
 
-        if (null != this.#vectorsCache) {
-            this.#vectorsCache = null;
+        if (null != this.#cache) {
+            this.#cache = null;
         }
 
         this.#_isDirty = true;
@@ -344,7 +373,7 @@ export class HMAggregator {
     }
 
     #invalidateCache() {
-        this.#vectorsCache = null;
+        this.#cache = null;
         this.#_isDirty = true;
     }
 
@@ -363,17 +392,17 @@ export class HMAggregator {
             this.#calculateTotals();
         }
 
-        if (!this.#vectorsCache) {
+        if (!this.#cache) {
             const cache = {};
             for (const [key, units] of this.#units.entries()) {
                 const [vector, unit] = key.split(".");
                 if (!cache[vector]) cache[vector] = {};
                 cache[vector][unit] = units[0]?.value ?? 0;
             }
-            this.#vectorsCache = foundry.utils.deepFreeze(cache, { strict: true });
+            this.#cache = foundry.utils.deepFreeze(cache, { strict: true });
         }
 
-        return this.#vectorsCache;
+        return this.#cache;
     }
 
     /**
@@ -408,7 +437,7 @@ export class HMAggregator {
      * Get all vector units as a simple object.
      *
      * @param {string} vector - Vector to retrieve.
-     * @returns {Object<string, number>} Object mapping unit names to vector values.
+     * @returns {object<string, number>} Object mapping unit names to vector values.
      */
     getVector(vector) {
         const results = {};
@@ -490,10 +519,11 @@ export class HMAggregator {
      * Propagates this aggregator's total data to the mesh network.
      * Returns an object ready for merging into parent bonus structures.
      *
+     * @param {HMAggregator} consumer - The aggregator requesting data.
      * @returns {Object} Object containing this aggregator's total vector, keyed by label
      */
-    propagateData() {
-        if (!this.canPropagate) return {};
+    propagateData(consumer = null) {
+        if (!this.canPropagate(consumer)) return {};
         return { [this.#label]: this.total };
     }
 }

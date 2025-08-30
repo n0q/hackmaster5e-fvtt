@@ -33,10 +33,6 @@ function getSpells(actor, itemId) {
     return actor.items.filter(a => a.type === "spell");
 }
 
-function focusById(id) {
-    return setTimeout(() => { document.getElementById(id).focus(); }, 50);
-}
-
 export class HMDialog {
     static async getAttackDialog(dataset, caller, opt) {
         const dialogResp = { caller };
@@ -102,34 +98,6 @@ export class HMDialog {
         });
 
         dialogResp.context = dialogData.weapons[dialogResp.resp.widx];
-        return dialogResp;
-    }
-
-    static async getSaveDialog(dataset, caller) {
-        const dialogData = getDialogData();
-        const dialogResp = { caller };
-
-        const formulaTypeName = game.i18n.localize(`HM.saves.${dataset.formulaType}`);
-        const title = `${formulaTypeName} ${game.i18n.localize("HM.dialog.getSaveTitle")}`;
-        const template = "systems/hackmaster5e/templates/dialog/getSave.hbs";
-
-        dialogResp.resp = await Dialog.wait({
-            render: () => focusById("bonus"),
-            title,
-            content: await renderTemplate(template, dialogData),
-            buttons: {
-                save: {
-                    label: game.i18n.localize("HM.dialog.getSaveTitle"),
-                    callback: () => ({
-                        bonus: parseInt(document.getElementById("bonus").value, 10) || 0,
-                        rollMode: document.getElementById("rollMode").value,
-                    }),
-                },
-            },
-            default: "save",
-        }, { width: 300 });
-
-        dialogResp.context = caller;
         return dialogResp;
     }
 }

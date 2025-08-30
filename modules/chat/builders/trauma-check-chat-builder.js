@@ -29,7 +29,7 @@ export class TraumaCheckChatBuilder extends ChatBuilder {
         const chatData = { resultString, rollContent, mdata, resp };
 
         const content = await this.renderTemplate(this.template, chatData);
-        const chatMessageData = this.getChatMessageData({ content, resp });
+        const chatMessageData = this.getChatMessageData({ content, resp, rolls: batch });
         this.render(chatMessageData);
     }
 
