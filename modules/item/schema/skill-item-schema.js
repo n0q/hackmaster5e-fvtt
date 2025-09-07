@@ -5,7 +5,7 @@ export const SKILL_TYPES = ["value", "literacy", "verbal"];
 export class HMSkillSchema extends foundry.abstract.DataModel {
     static defineSchema() {
         const fields = foundry.data.fields;
-        const numberOpts = { required: false, initial: 0, integer: true, null: false };
+        const numberOpts = { required: false, initial: 0, integer: true, null: true };
         const booleanOpts = { required: false, initial: false };
         const stringOpts = { required: false, initial: undefined };
 
@@ -45,7 +45,11 @@ export class HMSkillSchema extends foundry.abstract.DataModel {
         const migrated = super.migrateData(source);
 
         if (migrated.bonus?.mastery) {
-            for (const skillType of SKILL_TYPES) {
+            const relevantTypes = migrated.language
+                ? ["verbal", "literacy"]
+                : ["value"];
+
+            for (const skillType of relevantTypes) {
                 if (migrated.bonus.mastery[skillType] == null) {
                     migrated.bonus.mastery[skillType] = 0;
                 }
