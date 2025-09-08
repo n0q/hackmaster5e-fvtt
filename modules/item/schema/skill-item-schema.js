@@ -5,7 +5,7 @@ export const SKILL_TYPES = ["value", "literacy", "verbal"];
 export class HMSkillSchema extends foundry.abstract.DataModel {
     static defineSchema() {
         const fields = foundry.data.fields;
-        const numberOpts = { required: false, initial: 0, integer: true, null: true };
+        const numberOpts = { required: false, initial: 0, integer: true, null: false };
         const booleanOpts = { required: false, initial: false };
         const stringOpts = { required: false, initial: undefined };
 
@@ -44,17 +44,24 @@ export class HMSkillSchema extends foundry.abstract.DataModel {
     static migrateData(source) {
         const migrated = super.migrateData(source);
 
-        if (migrated.bonus?.mastery) {
+        if (migrated.bonus && !migrated.bonus.mastery) {
             const relevantTypes = migrated.language
                 ? ["verbal", "literacy"]
                 : ["value"];
 
+            migrated.bonus.mastery = {};
             for (const skillType of relevantTypes) {
-                if (migrated.bonus.mastery[skillType] == null) {
-                    migrated.bonus.mastery[skillType] = 0;
-                }
+                migrated.bonus.mastery[skillType] = 0;
             }
         }
+
+        // TODO: isNaN check is needed when input is empty, but shouldn't be.
+        if (migrated.bonus?.mastery) {
+            for (const [key, value] of Object.entries(migrated.bonus.mastery)) {
+                if (value == null || Number.isNaN(value)) migrated.bonus.mastery[key] = 0;
+            }
+        }
+
         return migrated;
     }
 }
