@@ -49,7 +49,7 @@ export class HMTalentItem extends HMItem {
         if (this.effects.size) return;
         const defaultEffect = [{ key: "", value: "0", mode: CONST.ACTIVE_EFFECT_MODES.ADD }];
         const changes = this.system.changes ?? defaultEffect;
-        const aeData = { label: this.name, changes };
+        const aeData = { name: this.name, label: this.name, changes };
         this.createEmbeddedDocuments("ActiveEffect", [aeData]);
     }
 
