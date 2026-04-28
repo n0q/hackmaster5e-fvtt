@@ -1,5 +1,4 @@
 import { SYSTEM_ID } from '../tables/constants.js';
-import { HMSocket, SOCKET_TYPES } from '../sys/sockets.js';
 
 export class HMCombatHooks {
     // Re-enable expired effects when the GM rewinds combat past an effect's expiry point.
@@ -60,7 +59,7 @@ export class HMCombatHooks {
 
     // TODO: Optimize to do more with fewer searches.
     static renderCombatTracker(tracker, html) {
-        doubleClickSetsInitiative(html);
+        unlockOwnedInitiative(html);
         if (!tracker.viewed?.round) return;
 
         removeTurnControls(html);
@@ -105,15 +104,18 @@ export class HMCombatHooks {
             });
         }
 
-        function doubleClickSetsInitiative(domObj) {
-            domObj.querySelectorAll('.token-initiative').forEach((el) => {
-                el.removeEventListener('dblclick', onInitiativeDblClick);
-                el.addEventListener('dblclick', onInitiativeDblClick);
-            });
-
-            domObj.querySelectorAll('#combat-tracker li.combatant').forEach((el) => {
-                if (el.classList.contains('active')) return;
-                el.classList.add('turn-done');
+        /**
+         * Remove the readonly attribute from initiative inputs owned by the current player.
+         * Foundry renders editable inputs for GMs natively; this extends that to token owners.
+         * @param {HTMLElement} domObj - The rendered combat tracker element.
+         */
+        function unlockOwnedInitiative(domObj) {
+            if (game.user.isGM) return;
+            domObj.querySelectorAll('.combatant').forEach((el) => {
+                const combatant = game.combat.combatants.get(el.dataset.combatantId);
+                if (combatant?.isOwner) {
+                    el.querySelector('.initiative-input')?.removeAttribute('readonly');
+                }
             });
         }
 
@@ -169,19 +171,3 @@ export class HMCombatHooks {
     }
 }
 
-function onInitiativeDblClick(event) {
-    event.stopPropagation();
-    event.preventDefault();
-    const html = $(event.target).closest('.combatant');
-    const cid = html.data('combatant-id');
-    const combatant = game.combat.combatants.get(cid);
-    if (!combatant.isOwner) return;
-
-    const initiative = html.find('.token-initiative');
-    const input = $(`<input type="number" class="initiative" value="${combatant.initiative}"/>`);
-    initiative.off('dblclick');
-    initiative.empty().append(input);
-    input.focus().select();
-    input.on('change', () => combatant.update({ _id: cid, initiative: input.val() }));
-    input.on('focusout', () => game.combats.render());
-}
