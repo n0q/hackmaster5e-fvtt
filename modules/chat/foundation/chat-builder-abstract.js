@@ -142,7 +142,7 @@ export class ChatBuilder {
         const chatMessageData = {
             ...obj,
             user: game.user.id,
-            type: obj.type ?? CONST.CHAT_MESSAGE_STYLES.OTHER,
+            style: obj.style ?? CONST.CHAT_MESSAGE_STYLES.OTHER,
         };
 
         const hasFlavor = Object.prototype.hasOwnProperty.call(chatMessageData, "flavor");
