@@ -804,15 +804,9 @@ export const HMTABLES = {
                 img: "systems/hackmaster5e/styles/icons/shield-bash.svg",
                 changes: [{
                     key: "system.bonus.state.def",
-                    value: [
-                        HMCONST.CFX.MODE.ABILITY_BONUS,
-                        "dex",
-                        "def",
-                        HMCONST.CFX.OPT.MALUS,
-                    ],
+                    value: `${HMCONST.CFX.MODE.ABILITY_BONUS},dex,def,${HMCONST.CFX.OPT.MALUS}`,
                     mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-                },
-                ],
+                }],
             },
             fullparry: {
                 name: "EFFECT.fullparry",
@@ -841,10 +835,7 @@ export const HMTABLES = {
                 changes: [
                     {
                         key: "system.bonus.state.def",
-                        value: [
-                            HMCONST.CFX.MODE.GET_PROPERTY,
-                            `${SYSTEM_ID}.talent.sfatigue.def`,
-                        ],
+                        value: `${HMCONST.CFX.MODE.GET_PROPERTY},${SYSTEM_ID}.talent.sfatigue.def`,
                         mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
                     },
                     { key: "system.bonus.state.skills", value: "-30", mode: CONST.ACTIVE_EFFECT_MODES.ADD },

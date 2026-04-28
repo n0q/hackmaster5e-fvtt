@@ -173,13 +173,9 @@ export async function setStatusEffectOnToken(comData, effect, rounds = null) {
     const { active } = game.combats;
     const { combatant } = comData;
     const combatToken = canvas.scene.tokens.get(combatant.tokenId);
-    const duration = rounds ? {
-        combat: active.id,
-        startRound: active.round,
-        rounds,
-        type: "rounds",
-    } : null;
-    await HMStates.setStatusEffect(combatToken, effect, duration);
+    const duration = rounds ? { value: rounds, units: "rounds", expiry: "roundStart" } : null;
+    const start = rounds ? ActiveEffect.getEffectStart(active) : null;
+    await HMStates.setStatusEffect(combatToken, effect, duration, start);
 }
 
 export async function unsetStatusEffectOnToken(comData, effect) {

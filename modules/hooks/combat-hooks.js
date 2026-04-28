@@ -2,35 +2,23 @@ import { SYSTEM_ID } from '../tables/constants.js';
 import { HMSocket, SOCKET_TYPES } from '../sys/sockets.js';
 
 export class HMCombatHooks {
-    static updateCombat(combat, _roundData, _, userId) {
-        if (userId !== game.userId) return;
+    // Re-enable expired effects when the GM rewinds combat past an effect's expiry point.
+    static updateCombat(combat, changed, _options, userId) {
+        if (game.userId !== userId) return;
+        if (!('round' in changed)) return;
 
-        const combatants = combat.turns;
-        combatants.forEach((combatant) => {
-            const { token } = combatant;
+        for (const combatant of combat.combatants) {
+            const actor = combatant.actor;
+            if (!actor) continue;
 
-            // Toggle status effects on/off based on their timers.
-            const effects = combatant.actor.effects.filter((y) => y.isTemporary === true);
-            effects.map(async (effect) => {
-                const { remaining, startRound } = effect.duration;
-
-                // effects without a duration have duration.remaining set to null.
-                if (remaining === null) return;
-
-                const started = startRound <= combat.round;
-                if ((!started && !effect.disabled)                    // Case 1: Before effect
-                    || (started && remaining && effect.disabled)      // Case 2: During effect
-                    || (started && !remaining && !effect.disabled)) { // Case 3: After effect
-                    await effect.update({ disabled: !effect.disabled });
-
-                    token._object.drawReach();
-                    const { tokenId } = combatant;
-                    HMSocket.emit(SOCKET_TYPES.DRAW_REACH, tokenId);
-
-                    if (effect.disabled) effect._displayScrollingStatus(false);
-                }
-            });
-        });
+            for (const effect of actor.effects) {
+                if (!effect.duration.expired) continue;
+                if (effect.duration.units !== 'rounds') continue;
+                if (!effect.start?.round) continue;
+                const remaining = effect.duration.value - (combat.round - effect.start.round);
+                if (remaining > 0) effect.update({duration: {expired: false}});
+            }
+        }
     }
 
     static createCombatant(combatant) {

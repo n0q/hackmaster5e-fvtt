@@ -28,6 +28,14 @@ export class HMActor extends Actor {
         this.applySpellFatiguePenalty();
     }
 
+    async onUpdateEffectDurations(effects, event) {
+        if (event === 'roundEnd') return;
+        ui.combat?.render();
+        for (const token of this.getActiveTokens()) {
+            token.drawEffects();
+        }
+    }
+
     applySpellFatiguePenalty() {
         const penalty = this.system.bonus?.state?.skills;
         //        const penalty = -30;

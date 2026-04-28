@@ -29,6 +29,28 @@ export class HMCombat extends foundry.documents.Combat {
         return super.nextRound();
     }
 
+    async _manageTurnEvents() {
+        // Eagerly refresh durations before yielding to the event loop.
+        // updateCombatantActors() fires synchronously during the await and
+        // would otherwise display stale remaining values. This also covers
+        // backward movement, where v14 fires no round events at all.
+        if (this.started) {
+            for (const c of this.combatants) {
+                for (const effect of c.actor?.effects ?? []) {
+                    if (effect.isTemporary) effect.updateDuration();
+                }
+            }
+        }
+
+        await super._manageTurnEvents();
+        for (const c of this.combatants) {
+            for (const token of c.actor?.getActiveTokens() ?? []) {
+                token.drawEffects();
+            }
+        }
+        ui.combat?.render();
+    }
+
     /** @override */
     _sortCombatants(a, b) {
         return a.isNPC - b.isNPC || a.name.localeCompare(b.name);

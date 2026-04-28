@@ -2,13 +2,13 @@ import { HMCONST } from "../tables/constants.js";
 
 /* eslint max-classes-per-file: ['error', 2] */
 export const actorHasEffects = (actor, statusList) => {
-    const effects = actor.effects.filter(fx => !fx.disabled);
+    const effects = actor.effects.filter(fx => fx.active);
     const fxList = effects.flatMap(fx => [...fx.statuses.keys()]);
     return fxList.some(fx => statusList.indexOf(fx) !== -1);
 };
 
 export class HMStates {
-    static async setStatusEffect(token, id, duration = null) {
+    static async setStatusEffect(token, id, duration = null, start = null) {
         const { actor } = token;
         const { effects } = actor;
         let effect = effects.find(fx => fx.statuses.has(id));
@@ -19,7 +19,11 @@ export class HMStates {
             effect = effects.find(fx => fx.statuses.has(id));
         }
 
-        if (duration) await effect.update({ duration, disabled: false });
+        if (duration) {
+            const update = { duration, disabled: false };
+            if (start) update.start = start;
+            await effect.update(update);
+        }
     }
 
     static async unsetStatusEffect(token, id) {

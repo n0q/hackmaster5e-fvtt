@@ -16,7 +16,7 @@ export class HMActiveEffectHooks {
     // eslint-disable-next-line no-unused-vars
     static async applyActiveEffect(actor, change, current, delta, changes) {
         if (!delta) return;
-        const [mode, ...modeArgs] = delta.split(',');
+        const [mode, ...modeArgs] = String(delta).split(',');
         const customDelta = applyCustomActiveEffect(mode, actor, modeArgs);
         const update = current + customDelta;
         foundry.utils.setProperty(actor, change.key, update);
@@ -24,10 +24,10 @@ export class HMActiveEffectHooks {
 
     static createActiveEffect(effect, _data, userId) {
         if (game.userId !== userId) return;
-        if (!effect.flags.core) return;
+        if (!effect.statuses.size) return;
 
         // Enforces exclusivity if status effects are manually set by the user.
-        const {statusId} = effect.flags.core;
+        const [statusId] = effect.statuses;
         const token = effect.parent.getActiveTokens().shift();
         const exclusiveEffects = [...HMTABLES.effects.exclusiveEffects];
         const idx = exclusiveEffects.indexOf(statusId);
@@ -40,9 +40,21 @@ export class HMActiveEffectHooks {
         HMSocket.emit(SOCKET_TYPES.DRAW_REACH, token.id);
     }
 
+    static updateActiveEffect(effect, changed, _options, userId) {
+        if (game.userId !== userId) return;
+        if (!('expired' in (changed.duration ?? {}))) return;
+
+        effect._displayScrollingStatus(!changed.duration.expired);
+        const tokens = effect.parent?.getActiveTokens?.() ?? [];
+        for (const token of tokens) {
+            token.drawReach();
+            HMSocket.emit(SOCKET_TYPES.DRAW_REACH, token.id);
+        }
+    }
+
     static deleteActiveEffect(effect, _data, userId) {
         if (game.userId !== userId) return;
-        if (!effect.flags.core) return;
+        if (!effect.statuses.size) return;
 
         const token = effect.parent.getActiveTokens().shift();
         token.drawReach();
