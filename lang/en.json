@@ -749,6 +749,8 @@
         "scale": "Scale",
         "schedule": "Schedule",
         "score": "Score",
+        "expired": "Expired",
+        "permanent": "Permanent",
         "second": "Second",
         "seconds": "Seconds",
         "setup": "Setup",
@@ -1083,7 +1085,13 @@
         "gground": "Gave Ground",
         "incap": "Incapacitated",
         "scamper": "Scampered Back",
-        "sfatigue": "Spell Fatigued"
+        "sfatigue": "Spell Fatigued",
+        "MODE_CUSTOM": "Custom",
+        "MODE_ADD": "Add",
+        "MODE_MULTIPLY": "Multiply",
+        "MODE_DOWNGRADE": "Downgrade",
+        "MODE_UPGRADE": "Upgrade",
+        "MODE_OVERRIDE": "Override"
     },
     "ACTOR": {
         "TypeBeast": "Beast",

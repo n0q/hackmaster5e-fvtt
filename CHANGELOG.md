@@ -5,9 +5,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added
+
+- v14 support.
+
 ### Fixed
 
 New currency items display proper fields again.
+
+### Removed
+
+- v13 support.
 
 ## [0.5.15] - 2025-09-08
 
