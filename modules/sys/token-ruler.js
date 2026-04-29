@@ -19,6 +19,13 @@ export class HMTokenRuler extends foundry.canvas.placeables.tokens.TokenRuler {
         const context = super._getWaypointLabelContext(...args);
         if (!context) return context;
 
+        const snapTarget = this.token._snapState?.target;
+        if (snapTarget != null) {
+            const formatted = snapTarget.toFixed(2);
+            if (context.cost) context.cost.total = formatted;
+            if (context.distance) context.distance.total = formatted;
+        }
+
         const { token } = this;
         context.inCombat = token.inCombat;
         if (context.inCombat && token.combatant) {
@@ -42,8 +49,16 @@ export class HMTokenRuler extends foundry.canvas.placeables.tokens.TokenRuler {
      *                             places, or undefined if there was no cost.
      */
     #getFormattedPrevValue(key) {
-        const unscaledPrevCost = Number(this.token?.combatant.getFlag(SYSTEM_ID, key));
-        return unscaledPrevCost ? unscaledPrevCost.toFixed(2) : undefined;
+        let value = Number(this.token?.combatant.getFlag(SYSTEM_ID, key));
+        if (!value) return undefined;
+
+        const movespd = this.token.actor?.movespd;
+        if (movespd) {
+            for (const rate of movespd.slice(1)) {
+                if (rate > 0 && Math.abs(value - rate) < 0.1) { value = rate; break; }
+            }
+        }
+        return value.toFixed(2);
     }
 
     /**

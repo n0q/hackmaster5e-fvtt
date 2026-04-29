@@ -5,11 +5,4 @@ export class HMCombatTracker extends foundry.applications.sidebar.tabs.CombatTra
         return opt;
     }
 
-    // Shorting out mousedown events on token initiative so dblclicks
-    // don't trigger normal mousedown events (panning and sheet renders).
-    async _onCombatantMouseDown(event) {
-        const html = $(event.target).closest('.token-initiative');
-        if (html.length) return;
-        super._onCombatantMouseDown(event);
-    }
 }

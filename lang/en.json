@@ -749,6 +749,8 @@
         "scale": "Scale",
         "schedule": "Schedule",
         "score": "Score",
+        "expired": "Expired",
+        "permanent": "Permanent",
         "second": "Second",
         "seconds": "Seconds",
         "setup": "Setup",
@@ -1083,7 +1085,13 @@
         "gground": "Gave Ground",
         "incap": "Incapacitated",
         "scamper": "Scampered Back",
-        "sfatigue": "Spell Fatigued"
+        "sfatigue": "Spell Fatigued",
+        "MODE_CUSTOM": "Custom",
+        "MODE_ADD": "Add",
+        "MODE_MULTIPLY": "Multiply",
+        "MODE_DOWNGRADE": "Downgrade",
+        "MODE_UPGRADE": "Upgrade",
+        "MODE_OVERRIDE": "Override"
     },
     "ACTOR": {
         "TypeBeast": "Beast",
@@ -1136,5 +1144,9 @@
         "reachOpacityHint": "Opacity level of weapon reach and threat range.",
         "smartSelect": "Smart Select",
         "smartSelectHint": "Combat macros use player's character if no token is selected (Not used by GMs)."
+    },
+    "KEYBINDINGS": {
+        "snapBypass": "Bypass Speed Snap",
+        "snapBypassHint": "Hold to disable speed snapping while dragging a token on gridless scenes."
     }
 }

@@ -3,19 +3,35 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.5.16] - 2026-04-29
+
+### Added
+
+- v14 support.
+- Speed snapping.
+- Token pan on init tracker click.
+
+### Fixed
+
+New currency items display proper fields again.
+
+### Removed
+
+- v13 support.
+
 ## [0.5.15] - 2025-09-08
 
-## Changed
+### Changed
 
 - Skill mastery value input improvements.
 
-## Fixed
+### Fixed
 
 - New effect talents can be created again.
 
 ## [0.5.14] - 2025-09-07
 
-## Fixed
+### Fixed
 
 - Literacy skill values were omitted from display.
 - Adding verbal or literacy skill value set literacy or verbal skill to zero.

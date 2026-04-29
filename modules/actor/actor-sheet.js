@@ -76,12 +76,13 @@ export class HMActorSheet extends foundry.appv1.sheets.ActorSheet {
         this.actor.processedEffects = [...data.actor.allApplicableEffects()].map(effect => {
             const type = effect.effectType;
             const processedChanges = effect.changes.map(change => {
-                if (change.mode === CONST.ACTIVE_EFFECT_MODES.CUSTOM) {
-                    const [cfx, ...prop] = change.value.split(",");
+                const { key, value, mode, priority } = change;
+                if (mode === CONST.ACTIVE_EFFECT_MODES.CUSTOM) {
+                    const [cfx, ...prop] = String(value).split(",");
                     const displayValue = applyCustomActiveEffect(cfx, this.actor, prop);
-                    return { ...change, displayValue };
+                    return { key, value, mode, priority, displayValue };
                 }
-                return change;
+                return { key, value, mode, priority };
             });
             return { ...effect, changes: processedChanges, type, id: effect.id };
         });

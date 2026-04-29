@@ -9,7 +9,6 @@ export class SkillSurveyCheckChatBuilder extends ChatBuilder {
 
     async createChatMessage() {
         const processedBatch = this.#processBatchData();
-        window.processedBatch = processedBatch;
         if (!this.data.batch || this.data.batch.length === 0) {
             console.warn("BatchSkillCheckChatBuilder: No batch data available");
             return;

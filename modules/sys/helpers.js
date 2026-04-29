@@ -105,6 +105,7 @@ export const registerHandlebarsHelpers = () => {
     Handlebars.registerHelper("eq", (a, b) => a == b); // eslint-disable-line eqeqeq
     Handlebars.registerHelper("neq", (a, b) => a != b); // eslint-disable-line eqeqeq
     Handlebars.registerHelper("ceil", a => Math.ceil(a));
+    Handlebars.registerHelper("isFinite", a => Number.isFinite(a));
     Handlebars.registerHelper("default", (a, b) => a == null ? b : a);
 
     Handlebars.registerHelper("pad", arg1 => {

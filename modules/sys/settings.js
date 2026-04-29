@@ -82,6 +82,12 @@ export const registerSystemSettings = () => {
         type: String,
         default: undefined,
     });
+
+    game.keybindings.register(SYSTEM_ID, 'snapBypass', {
+        name: 'KEYBINDINGS.snapBypass',
+        hint: 'KEYBINDINGS.snapBypassHint',
+        editable: [{ key: 'ControlLeft' }],
+    });
 };
 
 function renderApps() {

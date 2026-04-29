@@ -8,7 +8,11 @@ export class HMCurrencySchema extends foundry.abstract.DataModel {
             state: new fields.NumberField({ required: false, initial: OWNED, integer: true }),
             weight: new fields.NumberField({ required: false, initial: 0, integer: false }),
             issuer: new fields.StringField({ required: false, initial: undefined }),
-            coins: new fields.ObjectField({ required: false, initial: {} }),
+            coins: new fields.ObjectField({ required: false, initial: () => {
+                const coins = foundry.utils.deepClone(HMTABLES.currency.coins);
+                Object.keys(coins).forEach(coin => { coins[coin].qty = 0; });
+                return coins;
+            }}),
         };
     }
 

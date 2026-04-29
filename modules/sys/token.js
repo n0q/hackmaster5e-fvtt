@@ -10,9 +10,138 @@ export const FILL_TYPE = {
     FULL: 0b11,
 };
 
+const SNAP_FRACTION = 0.08;
+const RELEASE_FRACTION = 0.12;
+const MIN_SNAP_PIXELS = 6;
+
 export class HMToken extends foundry.canvas.placeables.Token {
+    _snapState = null;
+
     get __isSecret() {
         return this.document.disposition === CONST.TOKEN_DISPOSITIONS.SECRET && !this.isOwner;
+    }
+
+    _getDragWaypointPosition(current, changes, { snap = false } = {}) {
+        let result = super._getDragWaypointPosition(current, changes, { snap });
+
+        if (!canvas.grid.isGridless) return result;
+
+        const allContexts =
+            this.layer._draggedToken?.mouseInteractionManager?.interactionData?.contexts;
+        if (allContexts && Object.keys(allContexts).length > 1) return result;
+
+        const snapBypass = game.keybindings.get(SYSTEM_ID, 'snapBypass');
+        if (snapBypass?.some(b => game.keyboard.downKeys.has(b.key))) {
+            this._snapState = null;
+            return result;
+        }
+
+        const movespd = this.actor?.movespd;
+        if (!movespd) return result;
+
+        const boundaries = movespd.slice(1).filter(v => v > 0);
+        if (!boundaries.length) return result;
+
+        const pixelToUnit = canvas.dimensions.distance / canvas.dimensions.size;
+
+        const dragContext =
+            this.layer._draggedToken?.mouseInteractionManager?.interactionData?.contexts?.[
+                this.document.id
+            ];
+
+        let priorDistance = 0;
+        let fromPos = dragContext?.origin ?? this.document._source;
+
+        if (dragContext?.waypoints?.length) {
+            let prev = this.document.getCenterPoint(dragContext.origin);
+            for (const wp of dragContext.waypoints) {
+                const cur = this.document.getCenterPoint(wp);
+                priorDistance += Math.hypot(cur.x - prev.x, cur.y - prev.y) * pixelToUnit;
+                prev = cur;
+            }
+            fromPos = dragContext.waypoints.at(-1);
+        }
+
+        const fromCenter = this.document.getCenterPoint(fromPos);
+        const toCenter = this.document.getCenterPoint(result);
+        const dx = toCenter.x - fromCenter.x;
+        const dy = toCenter.y - fromCenter.y;
+        const segmentPixels = Math.hypot(dx, dy);
+        const totalDistance = priorDistance + segmentPixels * pixelToUnit;
+
+        if (this._snapState) {
+            const releaseZone = Math.max(
+                this._snapState.target * RELEASE_FRACTION,
+                MIN_SNAP_PIXELS * pixelToUnit,
+            );
+            if (Math.abs(totalDistance - this._snapState.target) <= releaseZone) {
+                return this.#projectSnap(
+                    fromCenter, dx, dy, segmentPixels,
+                    this._snapState.target, priorDistance, pixelToUnit, result.elevation,
+                );
+            }
+            this._snapState = null;
+        }
+
+        for (const rate of boundaries) {
+            const snapZone = Math.max(rate * SNAP_FRACTION, MIN_SNAP_PIXELS * pixelToUnit);
+            if (Math.abs(totalDistance - rate) <= snapZone) {
+                this._snapState = { target: rate };
+                return this.#projectSnap(
+                    fromCenter, dx, dy, segmentPixels,
+                    rate, priorDistance, pixelToUnit, result.elevation,
+                );
+            }
+        }
+
+        return result;
+    }
+
+    _onDragLeftDrop(event) {
+        this._snapState = null;
+        return super._onDragLeftDrop(event);
+    }
+
+    _onDragLeftCancel(event) {
+        this._snapState = null;
+        return super._onDragLeftCancel(event);
+    }
+
+    /**
+     * Project the drag endpoint so that prior + segment distance equals targetDistance exactly.
+     * Scales the current segment vector proportionally and rounds final pixel coords to prevent
+     * sub-pixel drift from causing measurement oscillation across speed boundaries.
+     *
+     * @param {{x: number, y: number}} fromCenter - Center of the last waypoint or drag origin.
+     * @param {number} dx - Horizontal component of the segment vector (pixels).
+     * @param {number} dy - Vertical component of the segment vector (pixels).
+     * @param {number} segmentPixels - Euclidean length of the current segment (pixels).
+     * @param {number} targetDistance - Scene-unit distance to snap to.
+     * @param {number} priorDistance - Accumulated distance through previous waypoints.
+     * @param {number} pixelToUnit - Conversion factor: scene units per pixel.
+     * @param {number} elevation - Elevation to preserve in the result.
+     * @returns {{x: number, y: number, elevation: number}} Adjusted top-left position.
+     */
+    #projectSnap(fromCenter, dx, dy, segmentPixels, targetDistance, priorDistance, pixelToUnit, elevation) {
+        const halfW = (this.document.width * canvas.grid.size) / 2;
+        const halfH = (this.document.height * canvas.grid.size) / 2;
+
+        if (segmentPixels < 0.001) {
+            return {
+                x: Math.round(fromCenter.x - halfW),
+                y: Math.round(fromCenter.y - halfH),
+                elevation,
+            };
+        }
+
+        const remainingPixels = (targetDistance - priorDistance) / pixelToUnit;
+        const scale = remainingPixels / segmentPixels;
+
+        return {
+            x: Math.round(fromCenter.x + dx * scale - halfW),
+            y: Math.round(fromCenter.y + dy * scale - halfH),
+            elevation,
+        };
     }
 
     drawReach(renderMode = FILL_TYPE.DEFAULT) {

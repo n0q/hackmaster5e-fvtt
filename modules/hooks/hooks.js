@@ -17,6 +17,7 @@ export const registerHooks = () => {
     Hooks.on("diceSoNiceRollStart", HMSupportHooks.diceSoNiceRollStart);
     Hooks.on("applyActiveEffect", HMActiveEffectHooks.applyActiveEffect);
     Hooks.on("createActiveEffect", HMActiveEffectHooks.createActiveEffect);
+    Hooks.on("updateActiveEffect", HMActiveEffectHooks.updateActiveEffect);
     Hooks.on("deleteActiveEffect", HMActiveEffectHooks.deleteActiveEffect);
     Hooks.on("createActor", HMActorHooks.createActor);
     Hooks.on("dropCanvasData", HMCanvasHooks.dropCanvasData);

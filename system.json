@@ -5,8 +5,8 @@
     "url": null,
     "version": null,
     "compatibility": {
-        "minimum": "13",
-        "verified": "13"
+        "minimum": "14",
+        "verified": "14"
     },
     "manifestPlusVersion": "1.2.0",
     "templateVersion": 1,
