@@ -46,7 +46,7 @@ export class HMToken extends foundry.canvas.placeables.Token {
         const dragContext =
             this.mouseInteractionManager?.interactionData?.contexts?.[this.document.id];
 
-        let priorDistance = 0;
+        let priorDistance = this.measureMovementPath(this.document.movementHistory).distance;
         let fromPos = dragContext?.origin ?? this.document._source;
 
         if (dragContext?.waypoints?.length) {
