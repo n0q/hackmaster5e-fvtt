@@ -24,11 +24,10 @@ export class HMToken extends foundry.canvas.placeables.Token {
     _getDragWaypointPosition(current, changes, { snap = false } = {}) {
         let result = super._getDragWaypointPosition(current, changes, { snap });
 
+        if (!game.settings.get(SYSTEM_ID, 'speedSnapping')) return result;
         if (!canvas.grid.isGridless) return result;
-
-        const allContexts =
-            this.layer._draggedToken?.mouseInteractionManager?.interactionData?.contexts;
-        if (allContexts && Object.keys(allContexts).length > 1) return result;
+        if (!this.inCombat) return result;
+        if (this !== this.layer._draggedToken) return result;
 
         const snapBypass = game.keybindings.get(SYSTEM_ID, 'snapBypass');
         if (snapBypass?.some(b => game.keyboard.downKeys.has(b.key))) {
@@ -45,11 +44,9 @@ export class HMToken extends foundry.canvas.placeables.Token {
         const pixelToUnit = canvas.dimensions.distance / canvas.dimensions.size;
 
         const dragContext =
-            this.layer._draggedToken?.mouseInteractionManager?.interactionData?.contexts?.[
-                this.document.id
-            ];
+            this.mouseInteractionManager?.interactionData?.contexts?.[this.document.id];
 
-        let priorDistance = 0;
+        let priorDistance = this.measureMovementPath(this.document.movementHistory).distance;
         let fromPos = dragContext?.origin ?? this.document._source;
 
         if (dragContext?.waypoints?.length) {

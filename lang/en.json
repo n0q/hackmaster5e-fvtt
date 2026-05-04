@@ -1143,7 +1143,9 @@
         "reachOpacity": "Reach Opacity",
         "reachOpacityHint": "Opacity level of weapon reach and threat range.",
         "smartSelect": "Smart Select",
-        "smartSelectHint": "Combat macros use player's character if no token is selected (Not used by GMs)."
+        "smartSelectHint": "Combat macros use player's character if no token is selected (Not used by GMs).",
+        "speedSnapping": "Speed Snapping",
+        "speedSnappingHint": "Snap token movement to speed boundaries during combat on gridless scenes."
     },
     "KEYBINDINGS": {
         "snapBypass": "Bypass Speed Snap",

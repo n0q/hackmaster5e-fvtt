@@ -30,15 +30,15 @@ export class HMCombatHooks {
         if (token) token.animReachClose();
     }
 
-    static preDeleteCombat(combat) {
-        const combatants = combat.turns;
-
-        combatants.forEach((c) => {
+    static preDeleteCombat(combat, _options, userId) {
+        if (game.userId !== userId) return;
+        for (const c of combat.combatants) {
             const { actor } = c;
-            const effects = actor.effects.filter((fx) => fx.isTemporary);
+            if (!actor) continue;
+            const effects = actor.effects.filter((fx) => fx.isTemporary || fx.statuses.size > 0);
             const effectIds = effects.map((fx) => fx.id);
-            actor.deleteEmbeddedDocuments('ActiveEffect', effectIds);
-        });
+            if (effectIds.length) actor.deleteEmbeddedDocuments('ActiveEffect', effectIds);
+        }
     }
 
     static deleteCombat(combat) {
