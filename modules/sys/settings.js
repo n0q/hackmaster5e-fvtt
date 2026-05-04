@@ -83,6 +83,15 @@ export const registerSystemSettings = () => {
         default: undefined,
     });
 
+    game.settings.register(SYSTEM_ID, 'speedSnapping', {
+        name: 'SETTINGS.speedSnapping',
+        hint: 'SETTINGS.speedSnappingHint',
+        scope: 'world',
+        config: true,
+        type: Boolean,
+        default: true,
+    });
+
     game.keybindings.register(SYSTEM_ID, 'snapBypass', {
         name: 'KEYBINDINGS.snapBypass',
         hint: 'KEYBINDINGS.snapBypassHint',

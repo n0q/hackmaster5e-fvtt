@@ -24,6 +24,7 @@ export class HMToken extends foundry.canvas.placeables.Token {
     _getDragWaypointPosition(current, changes, { snap = false } = {}) {
         let result = super._getDragWaypointPosition(current, changes, { snap });
 
+        if (!game.settings.get(SYSTEM_ID, 'speedSnapping')) return result;
         if (!canvas.grid.isGridless) return result;
         if (!this.inCombat) return result;
         if (this !== this.layer._draggedToken) return result;
