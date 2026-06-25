@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [0.5.18] - 2026-06-25
 
 ### Added
 
@@ -13,7 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - Spell Fatigue can be re-applied after a prior instance expires within the same combat.
 
-## [0.5.17] - 2024-05-04
+## [0.5.17] - 2026-05-04
 
 ### Added
 
