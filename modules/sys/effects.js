@@ -20,7 +20,10 @@ export class HMStates {
         }
 
         if (duration) {
-            const update = { duration, disabled: false };
+            // Clear any stale `expired` flag from a prior natural expiry. The rounds-based
+            // duration path never recomputes it, so a partial update would otherwise leave
+            // the refreshed effect suppressed (compare combat-hooks.js rewind handling).
+            const update = { duration: { ...duration, expired: false }, disabled: false };
             if (start) update.start = start;
             await effect.update(update);
         }
