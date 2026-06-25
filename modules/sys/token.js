@@ -1,5 +1,6 @@
 import { SYSTEM_ID, HMCONST, HMTABLES } from "../tables/constants.js";
 import { actorHasEffects } from "./effects.js";
+import { getMoveCategoryDelta } from "./movement.js";
 import { HMWoundItem } from "../item/wound-item.js";
 
 export const FILL_TYPE = {
@@ -13,6 +14,11 @@ export const FILL_TYPE = {
 const SNAP_FRACTION = 0.08;
 const RELEASE_FRACTION = 0.12;
 const MIN_SNAP_PIXELS = 6;
+
+// Speed-category badge: a small signed integer centered just above the token's top edge.
+const MOVE_BADGE_FONT_SCALE = 0.14;     // Font size as a fraction of the grid size.
+const MOVE_BADGE_DEFAULT_FILL = 0xFFFFFF;
+const MOVE_BADGE_ILLEGAL_FILL = 0xE2492D;
 
 export class HMToken extends foundry.canvas.placeables.Token {
     _snapState = null;
@@ -139,6 +145,98 @@ export class HMToken extends foundry.canvas.placeables.Token {
             y: Math.round(fromCenter.y + dy * scale - halfH),
             elevation,
         };
+    }
+
+    /**
+     * Creates (once) and positions the speed-category badge centered just above the token's top
+     * edge. Called from the drawToken hook for both tokens and drag previews.
+     */
+    drawMoveBadge() {
+        if (!this.moveBadge) {
+            const style = CONFIG.canvasTextStyle.clone();
+            this.moveBadge = this.addChild(new foundry.canvas.containers.PreciseText("0", style));
+            this.moveBadge.anchor.set(0.5, 1);
+        }
+        this.moveBadge.style.fontSize = Math.round(canvas.dimensions.size * MOVE_BADGE_FONT_SCALE);
+        // Centered just above the token's top edge / selection border.
+        this.moveBadge.position.set(this.w / 2, -2 * canvas.dimensions.uiScale);
+        this._refreshMoveBadge();
+    }
+
+    /**
+     * Sets the badge to a signed category delta, or hides it when there is nothing to show.
+     * The number is always present (including 0); the badge turns red when the change exceeds
+     * the legal limit of two categories.
+     *
+     * @param {number|null} delta - Signed speed-category change, or null to hide the badge.
+     */
+    setMoveBadge(delta) {
+        const badge = this.moveBadge;
+        if (!badge) return;
+        if (delta == null) { badge.visible = false; return; }
+
+        badge.text = delta > 0 ? `+${delta}` : `${delta}`;
+        badge.style.fill = Math.abs(delta) > 2 ? MOVE_BADGE_ILLEGAL_FILL : MOVE_BADGE_DEFAULT_FILL;
+        badge.visible = true;
+    }
+
+    /**
+     * Refreshes the badge for the resting/hovered state. The badge shows only on hover (so any
+     * player can read a token's most recent speed change), and is suppressed for secret tokens
+     * and while a drag is in progress, where the live value rides the drag preview instead.
+     */
+    _refreshMoveBadge() {
+        if (!this.moveBadge) return;
+        if (this.__isSecret || this.layer?._draggedToken || !this.hover) {
+            this.moveBadge.visible = false;
+            return;
+        }
+        this.setMoveBadge(this.#getHoverMoveDelta());
+    }
+
+    /**
+     * Computes the badge value shown on hover: the category change of this round's committed
+     * movement if the token has moved, otherwise the persisted change from its last completed
+     * move. Defaults to 0 so a stationary combatant reads "no change" rather than nothing.
+     *
+     * @returns {number|null} Signed category delta, or null when no badge applies.
+     */
+    #getHoverMoveDelta() {
+        const { actor, combatant } = this;
+        const movespd = actor?.movespd;
+        if (!movespd?.length || !combatant) return null;
+
+        const thisRound = this.measureMovementPath(this.document.movementHistory).distance;
+        if (thisRound > 0) {
+            const prev = Number(combatant.getFlag(SYSTEM_ID, "prevDistance")) || 0;
+            return getMoveCategoryDelta(thisRound, prev, movespd);
+        }
+
+        const stored = combatant.getFlag(SYSTEM_ID, "moveCategory");
+        return Number.isFinite(stored) ? stored : 0;
+    }
+
+    /**
+     * Computes the live badge value during a drag: the category change of the planned movement
+     * this round against last round, snap-adjusted when a speed snap is active.
+     *
+     * @returns {number|null} Signed category delta, or null when nothing is planned.
+     */
+    getPlannedMoveDelta() {
+        const { actor, combatant } = this;
+        const movespd = actor?.movespd;
+        if (!movespd?.length || !combatant) return null;
+
+        let total = this._snapState?.target;
+        if (total == null) {
+            const planned = this._plannedMovement?.[game.user.id];
+            const path = [...(planned?.history ?? []), ...(planned?.foundPath ?? [])];
+            if (!path.length) return null;
+            total = this.measureMovementPath(path).distance;
+        }
+
+        const prev = Number(combatant.getFlag(SYSTEM_ID, "prevDistance")) || 0;
+        return getMoveCategoryDelta(total, prev, movespd);
     }
 
     drawReach(renderMode = FILL_TYPE.DEFAULT) {

@@ -30,6 +30,7 @@ export class HMTokenHooks {
 
     static destroyToken(token) {
         token.reach?.destroy();
+        token.moveBadge?.destroy();
     }
 
     static drawToken(token) {
@@ -38,9 +39,11 @@ export class HMTokenHooks {
         const { reach, isPreview } = token;
         reach.visible = !!token.combatant && (token.visibleByDefault() || isPreview);
         token.drawReach();
+        token.drawMoveBadge();
     }
 
     static hoverToken(token, hover) {
+        token._refreshMoveBadge();
         if (token.__isSecret) return;
         if (!token.combatant) return;
         token.drawReach(hover ? FILL_TYPE.FULL : FILL_TYPE.REACH);

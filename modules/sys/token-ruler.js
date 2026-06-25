@@ -41,6 +41,26 @@ export class HMTokenRuler extends foundry.canvas.placeables.tokens.TokenRuler {
     }
 
     /**
+     * Drives the live speed-category badge while a token is dragged. The dragged original is
+     * dimmed by the core, so its badge is hidden and the value is shown on the drag preview,
+     * which tracks the cursor.
+     * @override
+     *
+     * @param {...any} args - Arguments passed to the parent refresh (see FoundryVTT docs).
+     */
+    refresh(...args) {
+        const result = super.refresh(...args);
+
+        const { token } = this;
+        if (!token.isPreview && token.layer?._draggedToken === token) {
+            if (token.moveBadge) token.moveBadge.visible = false;
+            const context = token.mouseInteractionManager?.interactionData?.contexts?.[token.document.id];
+            context?.clonedToken?.setMoveBadge?.(token.getPlannedMoveDelta());
+        }
+        return result;
+    }
+
+    /**
      * Gets the formatted previous movement cost from a token's combatant.
      * @private
      *
