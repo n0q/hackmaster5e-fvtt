@@ -1,6 +1,7 @@
 import { SYSTEM_ID } from "../tables/constants.js";
 import { HMChatFactory, CHAT_TYPE } from "../chat/chat-factory.js";
 import { getInitiativeFormula } from "./initiative-utils.js";
+import { getMoveCategoryDelta } from "../sys/movement.js";
 import { InitiativePrompt } from "../apps/initiative-application.js";
 
 export class HMCombat extends foundry.documents.Combat {
@@ -18,11 +19,21 @@ export class HMCombat extends foundry.documents.Combat {
             const waypoints = token.movementHistory;
             const measuredMovementPath = token.measureMovementPath(waypoints);
             const { cost, distance } = measuredMovementPath;
-            return {
+
+            const update = {
                 _id: combatant.id,
                 [`flags.${SYSTEM_ID}.prevCost`]: cost,
                 [`flags.${SYSTEM_ID}.prevDistance`]: distance,
             };
+
+            // Persist the category change of this round's move so a hovered token keeps showing
+            // its last completed move. Rounds with no movement leave the prior value intact.
+            const movespd = token.actor?.movespd;
+            if (distance > 0 && movespd?.length) {
+                const prevDistance = Number(combatant.getFlag(SYSTEM_ID, "prevDistance")) || 0;
+                update[`flags.${SYSTEM_ID}.moveCategory`] = getMoveCategoryDelta(distance, prevDistance, movespd);
+            }
+            return update;
         });
         await this.updateEmbeddedDocuments("Combatant", updates);
 
