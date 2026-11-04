@@ -39,7 +39,10 @@ export class HMArmorSchema extends foundry.abstract.DataModel {
 
     /* eslint-disable no-param-reassign */
     static migrateData(source) {
-        if (source?.damage == null) source.damage = 0;
+        // Only coerce an explicitly null damage value. Foundry also runs migrateData against
+        // partial update diffs, so unconditionally adding damage here would write 0 back to
+        // the item on every unrelated update (e.g. toggling equip state).
+        if ("damage" in source && source.damage == null) source.damage = 0;
 
         // 0.4.7 - Convert armortype from a string to a reference.
         if (typeof source.armortype === "string") {
@@ -65,6 +68,8 @@ export class HMArmorSchema extends foundry.abstract.DataModel {
                 }
             }
         }
+
+        return super.migrateData(source);
     }
     /* eslint-enable no-param-reassign */
 }
