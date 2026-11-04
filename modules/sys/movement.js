@@ -7,6 +7,13 @@
  */
 
 /**
+ * Float slack on a category boundary. A committed distance is pixels divided by grid size
+ * times grid distance, so a move that sits exactly on a boundary can measure a few ulps over
+ * it. That is never a real "just over" move.
+ */
+const BOUNDARY_EPSILON = 1e-6;
+
+/**
  * Maps a movement distance to its speed category. Crawl (movespd[0]) is ignored entirely for
  * these rules: walking spans (0, movespd[1]], so any movement up to walk speed is category 1.
  * Bands are upper-bound inclusive, matching the rule that a creature is "sprinting" the instant
@@ -19,7 +26,7 @@
 export function getMoveCategory(distance, movespd) {
     if (!(distance > 0)) return 0;
     for (let i = 1; i < movespd.length; i++) {
-        if (distance <= movespd[i]) return i;
+        if (distance <= movespd[i] + BOUNDARY_EPSILON) return i;
     }
     return movespd.length - 1;
 }

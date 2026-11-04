@@ -115,6 +115,12 @@ export class HMToken extends foundry.canvas.placeables.Token {
      * Scales the current segment vector proportionally and rounds final pixel coords to prevent
      * sub-pixel drift from causing measurement oscillation across speed boundaries.
      *
+     * Each axis rounds toward the segment's origin, never away from it. A snap target sits
+     * exactly on a speed boundary and getMoveCategory's edge is inclusive, so an endpoint that
+     * rounds even a fraction of a pixel long measures past the boundary once committed and
+     * lands one category high (5.01 ft reads as jog). Rounding short keeps the committed
+     * measurement at or under the target; the shortfall is under one pixel.
+     *
      * @param {{x: number, y: number}} fromCenter - Center of the last waypoint or drag origin.
      * @param {number} dx - Horizontal component of the segment vector (pixels).
      * @param {number} dy - Vertical component of the segment vector (pixels).
@@ -141,8 +147,8 @@ export class HMToken extends foundry.canvas.placeables.Token {
         const scale = remainingPixels / segmentPixels;
 
         return {
-            x: Math.round(fromCenter.x + dx * scale - halfW),
-            y: Math.round(fromCenter.y + dy * scale - halfH),
+            x: roundShort(fromCenter.x + dx * scale - halfW, dx),
+            y: roundShort(fromCenter.y + dy * scale - halfH, dy),
             elevation,
         };
     }
@@ -389,6 +395,23 @@ export class HMToken extends foundry.canvas.placeables.Token {
         const canNotify = true;
         return HMWoundItem.addWound(canNotify, this.actor, wdata);
     }
+}
+
+/**
+ * Rounds a coordinate to a whole pixel on the side of the segment's origin: down when the
+ * segment runs in the positive direction on this axis, up when it runs negative, nearest when
+ * it has no component here. From a whole-pixel origin, which every drag position Foundry
+ * hands us is, the rounded point is never further along the segment than the exact one, so a
+ * snapped endpoint never measures past its target.
+ *
+ * @param {number} value - Exact coordinate.
+ * @param {number} direction - Sign of the segment's component on this axis.
+ * @returns {number} Whole-pixel coordinate.
+ */
+function roundShort(value, direction) {
+    if (direction > 0) return Math.floor(value);
+    if (direction < 0) return Math.ceil(value);
+    return Math.round(value);
 }
 
 function renderGeometry(reach, mode, isHovered, geometry, color) {
