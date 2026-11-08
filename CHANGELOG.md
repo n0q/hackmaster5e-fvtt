@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.5.19] - 2026-11-08
+
+### Fixed
+
+- Fixed speed snapping rounding error.
+- Armor damage no longer resets to 0 when an armor item is updated without a damage value (e.g. equipping/unequipping).
+
 ## [0.5.18] - 2026-06-25
 
 ### Added
